@@ -1,0 +1,58 @@
+/* Brand fonts: K2D (primary) + Montserrat (Avenir fallback — Avenir is licensed
+   and cannot be bundled; the cascade uses local('Avenir') first, then Montserrat). */
+@import url('https://fonts.googleapis.com/css2?family=K2D:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Prefer a locally-installed licensed Avenir when present. */
+@font-face {
+  font-family: 'Avenir';
+  src: local('Avenir'), local('Avenir Next'), local('AvenirNext');
+  font-display: swap;
+}
+
+@layer base {
+  [x-cloak] {
+    display: none !important;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-brand-black font-sans text-white antialiased;
+  }
+  ::selection {
+    @apply bg-brand-red text-white;
+  }
+}
+
+@layer components {
+  .container-x {
+    @apply mx-auto w-full max-w-7xl px-6 lg:px-10;
+  }
+  .btn-brand {
+    @apply inline-flex items-center justify-center rounded-full bg-brand-red px-7 py-3
+           text-sm font-semibold uppercase tracking-widest text-white transition
+           hover:bg-brand-red-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-red;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center justify-center rounded-full border border-white/30 px-7 py-3
+           text-sm font-semibold uppercase tracking-widest text-white transition hover:border-white hover:bg-white/10;
+  }
+  .lang-pill {
+    @apply rounded-full px-4 py-1.5 text-xs font-semibold uppercase tracking-widest
+           text-white/70 transition hover:text-white;
+  }
+  .lang-pill-active {
+    @apply bg-brand-red text-white;
+  }
+}
+
+/* Respect reduced-motion: GSAP also guards, this is a CSS backstop. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

@@ -12,6 +12,8 @@ use CodeIgniter\Filters\InvalidChars;
 use CodeIgniter\Filters\PageCache;
 use CodeIgniter\Filters\PerformanceMetrics;
 use CodeIgniter\Filters\SecureHeaders;
+use Modules\Auth\Filters\JwtAuthFilter;
+use Modules\Core\Filters\LocaleFilter;
 
 class Filters extends BaseFilters
 {
@@ -34,6 +36,10 @@ class Filters extends BaseFilters
         'forcehttps'    => ForceHTTPS::class,
         'pagecache'     => PageCache::class,
         'performance'   => PerformanceMetrics::class,
+
+        // Norlanka modules
+        'jwt'           => JwtAuthFilter::class,
+        'locale'        => LocaleFilter::class,
     ];
 
     /**

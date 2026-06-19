@@ -1,0 +1,29 @@
+<?php
+
+namespace Modules\Core\Database\Seeds;
+
+use CodeIgniter\Database\Seeder;
+
+/**
+ * Top-level orchestrator. Run with:
+ *   php spark db:seed "Modules\Core\Database\Seeds\DatabaseSeeder"
+ *
+ * Order matters: auth/roles first, then content that references them.
+ */
+class DatabaseSeeder extends Seeder
+{
+    public function run(): void
+    {
+        $this->call('Modules\Auth\Database\Seeds\RoleSeeder');
+        $this->call('Modules\Auth\Database\Seeds\PermissionSeeder');
+        $this->call('Modules\Auth\Database\Seeds\AdminUserSeeder');
+
+        $this->call('Modules\Core\Database\Seeds\SettingSeeder');
+
+        $this->call('Modules\Catalog\Database\Seeds\ProductCategorySeeder');
+
+        // Seeds the CMS Home page + sections/blocks + the launch video,
+        // its per-language audio tracks and subtitle files.
+        $this->call('Modules\Cms\Database\Seeds\HomeContentSeeder');
+    }
+}
