@@ -14,6 +14,11 @@ PHP_BIN="${PHP_BIN:-php}"
 [ -d "$APP_DIR/.git" ] || { echo "$APP_DIR is not a checkout — run setup.sh first."; exit 1; }
 
 cd "$APP_DIR"
+# The tree is owned by $WEB_USER but we run git as root; mark it safe so git
+# won't abort with "dubious ownership" (idempotent).
+git config --global --get-all safe.directory 2>/dev/null | grep -qxF "$APP_DIR" \
+  || git config --global --add safe.directory "$APP_DIR"
+
 echo "==> Pulling $BRANCH"
 git fetch --depth 1 origin "$BRANCH"
 git reset --hard "origin/$BRANCH"

@@ -93,6 +93,12 @@ if [ "$SKIP_NODE" != "1" ] && ! command -v npm >/dev/null; then
 fi
 
 # ---- Source --------------------------------------------------------------
+# We chown the tree to $WEB_USER, but run git here as root. Git refuses to
+# operate on a repo owned by another user ("dubious ownership") unless it's
+# marked safe — register it (idempotently) for root before any git command.
+git config --global --get-all safe.directory 2>/dev/null | grep -qxF "$APP_DIR" \
+  || git config --global --add safe.directory "$APP_DIR"
+
 if [ -d "$APP_DIR/.git" ]; then
   note "Updating existing checkout"
   git -C "$APP_DIR" fetch --depth 1 origin "$BRANCH"
