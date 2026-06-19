@@ -28,6 +28,12 @@ $expertiseMega = [
     :class="scrolled ? 'is-scrolled' : ''"
     class="site-header fixed inset-x-0 top-0 z-50"
 >
+    <!-- Top shade: keeps the logo/nav/buttons legible over light hero media at
+         the top of the page; fades out once the solid header background kicks in. -->
+    <div aria-hidden="true"
+         class="pointer-events-none absolute inset-x-0 top-0 -z-10 h-32 bg-gradient-to-b from-black/85 via-black/50 to-transparent transition-opacity duration-300"
+         :class="scrolled ? 'opacity-0' : 'opacity-100'"></div>
+
     <!-- Scroll progress bar -->
     <div class="absolute inset-x-0 top-0 h-0.5 bg-brand-red origin-left" :style="`transform:scaleX(${progress/100})`"></div>
 
