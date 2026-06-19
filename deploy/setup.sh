@@ -155,13 +155,15 @@ chmod -R ug+rwX "$APP_DIR/writable"
 note "Running migrations + seed"
 sudo -u "$WEB_USER" "$PHP_BIN" spark key:generate --force
 sudo -u "$WEB_USER" "$PHP_BIN" spark migrate --all
-# Seed only on the first deploy (when the pages table is still empty), so a
-# re-run never overwrites content edited via the admin.
-PAGE_COUNT="$(mysql -N -B -e "SELECT COUNT(*) FROM \`${DB_NAME}\`.pages" 2>/dev/null || echo 0)"
-if [ "${PAGE_COUNT:-0}" = "0" ]; then
+# Seed the database. Bootstrap seeders (roles / admin user / settings) skip
+# existing rows; the Home/Corporate/Showroom content seeders re-apply canonical
+# page content (idempotent), so a re-run brings live content in sync with the
+# repo — e.g. the hero video + kinetic copy. Pass SKIP_SEED=1 to skip (e.g. once
+# content is managed via the admin).
+if [ "${SKIP_SEED:-0}" != "1" ]; then
   sudo -u "$WEB_USER" "$PHP_BIN" spark db:seed "Modules\\Core\\Database\\Seeds\\DatabaseSeeder"
 else
-  note "Content already present ($PAGE_COUNT pages) — skipping seed."
+  note "SKIP_SEED=1 — skipping seed."
 fi
 
 # ---- Nginx ---------------------------------------------------------------

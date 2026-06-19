@@ -33,6 +33,14 @@ chmod -R ug+rwX "$APP_DIR/writable"
 echo "==> migrations"
 sudo -u "$WEB_USER" "$PHP_BIN" spark migrate --all
 
+# Refresh seeded content (idempotent: bootstrap seeders skip existing rows; the
+# Home/Corporate/Showroom content seeders re-apply canonical page content, e.g.
+# the hero video + kinetic copy). Pass SKIP_SEED=1 to skip.
+if [ "${SKIP_SEED:-0}" != "1" ]; then
+  echo "==> refreshing seeded content"
+  sudo -u "$WEB_USER" "$PHP_BIN" spark db:seed "Modules\\Core\\Database\\Seeds\\DatabaseSeeder"
+fi
+
 # Reload php-fpm to clear opcache (best-effort).
 systemctl reload "php$($PHP_BIN -r 'echo PHP_MAJOR_VERSION.".".PHP_MINOR_VERSION;')-fpm" 2>/dev/null || true
 echo "==> Done."
