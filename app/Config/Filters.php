@@ -37,9 +37,12 @@ class Filters extends BaseFilters
         'pagecache'     => PageCache::class,
         'performance'   => PerformanceMetrics::class,
 
-        // Norlanka modules
+        // Norlanka modules.
+        // NB: 'applocale' (not 'locale') — CI4's enableFilter prefers an existing
+        // class via class_exists(), and PHP's built-in \Locale would shadow a
+        // 'locale' alias because class names are case-insensitive.
         'jwt'           => JwtAuthFilter::class,
-        'locale'        => LocaleFilter::class,
+        'applocale'     => LocaleFilter::class,
     ];
 
     /**

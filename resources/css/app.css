@@ -50,9 +50,31 @@
   }
 }
 
+@layer components {
+  /* Animated cinematic brand backdrop for the hero when no film is set. */
+  .hero-aurora {
+    background:
+      radial-gradient(60% 80% at 20% 20%, rgba(207, 32, 48, 0.45), transparent 60%),
+      radial-gradient(50% 70% at 80% 30%, rgba(207, 32, 48, 0.25), transparent 60%),
+      radial-gradient(80% 80% at 50% 90%, rgba(40, 0, 4, 0.9), transparent 70%),
+      #000000;
+    background-size: 200% 200%;
+    animation: aurora 18s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes aurora {
+  0% { background-position: 0% 0%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 50% 100%; }
+}
+
 /* Respect reduced-motion: GSAP also guards, this is a CSS backstop. */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+  .hero-aurora {
+    animation: none;
   }
 }
