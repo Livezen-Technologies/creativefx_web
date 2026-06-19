@@ -9,6 +9,7 @@ $nav = [
     ['videos', 'Launch Video', 'admin/videos'],
     ['esg', 'ESG Metrics', 'admin/esg-metrics'],
     ['jobs', 'Jobs', 'admin/jobs'],
+    ['translations', 'Translations', 'admin/translations'],
     ['media', 'Media', 'admin/media'],
     ['contacts', 'Contact Inbox', 'admin/contacts'],
     ['leads', 'Leads', 'admin/leads'],

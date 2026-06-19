@@ -37,6 +37,12 @@ $routes->group('admin', ['namespace' => 'Modules\Admin\Controllers'], static fun
         $routes->get('pages/(:num)/content', 'Content::edit/$1');
         $routes->post('pages/(:num)/content', 'Content::update/$1');
 
+        // Translation Manager.
+        $routes->get('translations', 'Translations::index');
+        $routes->post('translations', 'Translations::save');
+        $routes->post('translations/add', 'Translations::addKey');
+        $routes->post('translations/import', 'Translations::import');
+
         // Launch video manager.
         $routes->get('videos', 'Videos::edit');
         $routes->post('videos', 'Videos::update');

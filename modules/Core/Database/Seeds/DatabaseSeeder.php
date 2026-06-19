@@ -29,5 +29,9 @@ class DatabaseSeeder extends Seeder
         // Corporate content pages (Our Story, Expertise, Manufacturing,
         // Impact, Careers, Contact, Showroom).
         $this->call('Modules\Cms\Database\Seeds\CorporateContentSeeder');
+
+        // Import UI chrome strings into the translations table (editable in the
+        // Translation Manager).
+        $this->call('Modules\Translation\Database\Seeds\TranslationSeeder');
     }
 }
