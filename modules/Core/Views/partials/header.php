@@ -13,12 +13,12 @@ $nav = [
     'contact'       => lang('Site.nav.contact'),
 ];
 
-// Mega-menu contents for "Our Expertise".
+// Mega-menu contents for "Our Expertise" (titles reuse the home capability keys).
 $expertiseMega = [
-    ['title' => 'Apparel Manufacturing', 'text' => 'Full-package knit & woven production at scale.',  'icon' => 'M6 3l-2 4 3 2v12h10V9l3-2-2-4-3 2a4 4 0 01-6 0L6 3z'],
-    ['title' => 'Washing & Finishing',   'text' => 'Water-conscious washing, dyeing & finishing.',    'icon' => 'M12 3s6 6.5 6 11a6 6 0 11-12 0c0-4.5 6-11 6-11z'],
-    ['title' => 'Printing & Embroidery', 'text' => 'In-house print, embroidery & embellishment.',     'icon' => 'M4 20h16M5 16l9-9 3 3-9 9H5v-3zM14 7l3-3 3 3-3 3'],
-    ['title' => 'Design & Development',  'text' => 'R&D studio: concept to shelf-ready, fast.',        'icon' => 'M12 20h9M3 20l2-6 11-11 4 4L9 18l-6 2zM14 6l4 4'],
+    ['title' => lang('Site.home.cap.apparel_t'),  'text' => lang('Site.mega.apparel_d'),  'icon' => 'M6 3l-2 4 3 2v12h10V9l3-2-2-4-3 2a4 4 0 01-6 0L6 3z'],
+    ['title' => lang('Site.home.cap.washing_t'),  'text' => lang('Site.mega.washing_d'),  'icon' => 'M12 3s6 6.5 6 11a6 6 0 11-12 0c0-4.5 6-11 6-11z'],
+    ['title' => lang('Site.home.cap.printing_t'), 'text' => lang('Site.mega.printing_d'), 'icon' => 'M4 20h16M5 16l9-9 3 3-9 9H5v-3zM14 7l3-3 3 3-3 3'],
+    ['title' => lang('Site.home.cap.design_t'),   'text' => lang('Site.mega.design_d'),   'icon' => 'M12 20h9M3 20l2-6 11-11 4 4L9 18l-6 2zM14 6l4 4'],
 ];
 ?>
 <header
@@ -76,7 +76,7 @@ $expertiseMega = [
                                 <?php endforeach; ?>
                                 <a href="<?= esc(locale_url('our-expertise')) ?>"
                                    class="col-span-2 mt-1 flex items-center justify-between rounded-xl bg-brand-red/10 px-4 py-3 text-sm font-semibold uppercase tracking-widest text-brand-red transition hover:bg-brand-red/20">
-                                    See all capabilities
+                                    <?= esc(lang('Site.mega.see_all')) ?>
                                     <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
                                 </a>
                             </div>
@@ -90,7 +90,7 @@ $expertiseMega = [
 
         <!-- Right side -->
         <div class="flex items-center gap-3">
-            <a href="<?= esc(locale_url('contact')) ?>" class="hidden btn-brand !px-5 !py-2.5 !text-xs xl:inline-flex">Get in touch</a>
+            <a href="<?= esc(locale_url('contact')) ?>" class="hidden btn-brand !px-5 !py-2.5 !text-xs xl:inline-flex"><?= esc(lang('Site.cta.get_in_touch')) ?></a>
             <?= $this->include('Modules\Core\Views\partials\lang_switcher') ?>
             <!-- Mobile toggle -->
             <button type="button" @click="mobile=!mobile" :aria-expanded="mobile"
@@ -115,7 +115,7 @@ $expertiseMega = [
                     <svg class="h-4 w-4 text-white/30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </a>
             <?php endforeach; ?>
-            <a href="<?= esc(locale_url('contact')) ?>" @click="mobile=false" class="btn-brand mt-6 w-full">Get in touch</a>
+            <a href="<?= esc(locale_url('contact')) ?>" @click="mobile=false" class="btn-brand mt-6 w-full"><?= esc(lang('Site.cta.get_in_touch')) ?></a>
         </nav>
     </div>
 </header>

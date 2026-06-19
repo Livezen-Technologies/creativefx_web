@@ -27,39 +27,24 @@ $splitWords = static function (string $text): string {
     return $html;
 };
 
-// Capabilities ("What we do") — Hirdaramani-style services grid.
+// Capabilities ("What we do") — Hirdaramani-style services grid (localized).
 $capabilities = [
-    [
-        'title' => 'Apparel Manufacturing',
-        'text'  => 'High-volume, full-package production of knit and woven garments for the world’s leading brands.',
-        'icon'  => 'M6 3l-2 4 3 2v12h10V9l3-2-2-4-3 2a4 4 0 01-6 0L6 3z',
-    ],
-    [
-        'title' => 'Washing & Finishing',
-        'text'  => 'Vertically integrated, water-conscious washing, dyeing and finishing under one roof.',
-        'icon'  => 'M12 3s6 6.5 6 11a6 6 0 11-12 0c0-4.5 6-11 6-11z',
-    ],
-    [
-        'title' => 'Printing & Embroidery',
-        'text'  => 'In-house printing, embroidery and embellishment that bring every design to life.',
-        'icon'  => 'M4 20h16M5 16l9-9 3 3-9 9H5v-3zM14 7l3-3 3 3-3 3',
-    ],
-    [
-        'title' => 'Design & Development',
-        'text'  => 'A dedicated R&D and design studio turning concepts into shelf-ready collections, fast.',
-        'icon'  => 'M12 20h9M3 20l2-6 11-11 4 4L9 18l-6 2zM14 6l4 4',
-    ],
+    ['title' => lang('Site.home.cap.apparel_t'),  'text' => lang('Site.home.cap.apparel_d'),  'icon' => 'M6 3l-2 4 3 2v12h10V9l3-2-2-4-3 2a4 4 0 01-6 0L6 3z'],
+    ['title' => lang('Site.home.cap.washing_t'),  'text' => lang('Site.home.cap.washing_d'),  'icon' => 'M12 3s6 6.5 6 11a6 6 0 11-12 0c0-4.5 6-11 6-11z'],
+    ['title' => lang('Site.home.cap.printing_t'), 'text' => lang('Site.home.cap.printing_d'), 'icon' => 'M4 20h16M5 16l9-9 3 3-9 9H5v-3zM14 7l3-3 3 3-3 3'],
+    ['title' => lang('Site.home.cap.design_t'),   'text' => lang('Site.home.cap.design_d'),   'icon' => 'M12 20h9M3 20l2-6 11-11 4 4L9 18l-6 2zM14 6l4 4'],
 ];
 
 // Sustainability pillars — the heart of a responsible-manufacturing story.
 $impact = [
-    ['title' => 'Net-zero ambition', 'text' => 'Driving renewable energy and efficiency toward carbon-neutral operations.'],
-    ['title' => 'Ethical workplaces', 'text' => 'Safe, fair and empowering livelihoods for every person on our floor.'],
-    ['title' => 'Circular materials',  'text' => 'Lower-impact fibres, less water and waste designed out at the source.'],
+    ['title' => lang('Site.home.impact.p1_t'), 'text' => lang('Site.home.impact.p1_d')],
+    ['title' => lang('Site.home.impact.p2_t'), 'text' => lang('Site.home.impact.p2_d')],
+    ['title' => lang('Site.home.impact.p3_t'), 'text' => lang('Site.home.impact.p3_d')],
 ];
 
-// Global footprint regions.
-$regions = ['Sri Lanka', 'South Asia', 'South-East Asia', 'Europe', 'North America', 'Global brands'];
+// Global footprint regions (localized list).
+$regions = lang('Site.home.footprint.regions');
+if (! is_array($regions)) { $regions = ['Sri Lanka', 'South Asia', 'South-East Asia', 'Europe', 'North America', 'Global brands']; }
 ?>
 
 <?= $this->section('content') ?>
@@ -104,7 +89,7 @@ $regions = ['Sri Lanka', 'South Asia', 'South-East Asia', 'Europe', 'North Ameri
     <div class="hero-red-glow absolute inset-0 -z-10"></div>
 
     <div class="container-x relative w-full pt-28">
-        <p class="eyebrow mb-6" data-gsap="reveal">Responsible Apparel Manufacturing</p>
+        <p class="eyebrow mb-6" data-gsap="reveal"><?= esc(lang('Site.home.hero.eyebrow')) ?></p>
 
         <h1 class="kinetic-hero max-w-4xl text-4xl font-bold leading-[1.05] sm:text-5xl lg:text-6xl xl:text-7xl" aria-label="<?= esc(t_field($heroHeadline), 'attr') ?>">
             <?php if ($kPre !== ''): ?><span class="kline" data-kinetic><?= $splitWords($kPre) ?></span><?php endif; ?>
@@ -124,21 +109,21 @@ $regions = ['Sri Lanka', 'South Asia', 'South-East Asia', 'Europe', 'North Ameri
         <!-- CTA hierarchy: one dominant primary, one quiet secondary -->
         <div class="mt-10 flex flex-wrap items-center gap-6" data-gsap="reveal">
             <a href="<?= esc(locale_url('our-expertise')) ?>" class="btn-brand btn-lg group">
-                Explore our expertise
+                <?= esc(lang('Site.home.hero.primary')) ?>
                 <svg class="ml-2 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </a>
             <a href="<?= esc(locale_url('showroom')) ?>" class="group inline-flex items-center gap-3 text-sm font-semibold uppercase tracking-widest text-white/85 transition hover:text-white">
                 <span class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/30 transition group-hover:border-brand-red group-hover:bg-brand-red/10">
                     <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5l11 7-11 7z"/></svg>
                 </span>
-                Enter the showroom
+                <?= esc(lang('Site.home.hero.secondary')) ?>
             </a>
         </div>
 
         <div class="mt-14 flex items-center gap-4" data-gsap="reveal">
             <span class="h-px w-10 bg-white/20"></span>
             <p class="text-[11px] uppercase tracking-[0.3em] text-white/45">
-                Trusted by the world’s leading brands &amp; retailers
+                <?= esc(lang('Site.home.hero.trust')) ?>
             </p>
         </div>
     </div>
@@ -155,20 +140,18 @@ $regions = ['Sri Lanka', 'South Asia', 'South-East Asia', 'Europe', 'North Ameri
 <section class="bg-brand-black py-24 sm:py-28">
     <div class="container-x grid gap-12 lg:grid-cols-12 lg:items-end">
         <div class="lg:col-span-7" data-gsap="reveal">
-            <p class="eyebrow">Who we are</p>
+            <p class="eyebrow"><?= esc(lang('Site.home.intro.eyebrow')) ?></p>
             <h2 class="mt-5 text-3xl font-bold leading-tight sm:text-5xl">
-                A partner the world’s brands trust to make apparel the right way.
+                <?= esc(lang('Site.home.intro.title')) ?>
             </h2>
         </div>
         <div class="lg:col-span-5" data-gsap="reveal">
             <p class="text-lg leading-relaxed text-white/65">
-                From responsible sourcing to design and innovation, Norlanka delivers full-package
-                manufacturing at global scale — pairing craftsmanship with measurable accountability
-                at every stage of the journey from fibre to finished garment.
+                <?= esc(lang('Site.home.intro.body')) ?>
             </p>
             <a href="<?= esc(locale_url('our-story')) ?>"
                class="mt-6 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-widest text-white transition hover:text-brand-red">
-                Our story
+                <?= esc(lang('Site.cta.our_story')) ?>
                 <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </a>
         </div>
@@ -182,9 +165,9 @@ $regions = ['Sri Lanka', 'South Asia', 'South-East Asia', 'Europe', 'North Ameri
 <section class="bg-brand-black py-24 sm:py-28">
     <div class="container-x">
         <div class="max-w-2xl" data-gsap="reveal">
-            <p class="eyebrow">What we do</p>
-            <h2 class="mt-5 text-3xl font-bold sm:text-5xl">End-to-end manufacturing, under one roof.</h2>
-            <p class="mt-4 text-white/60">Vertically integrated capabilities that take a collection from first sketch to global shelf.</p>
+            <p class="eyebrow"><?= esc(lang('Site.home.cap.eyebrow')) ?></p>
+            <h2 class="mt-5 text-3xl font-bold sm:text-5xl"><?= esc(lang('Site.home.cap.title')) ?></h2>
+            <p class="mt-4 text-white/60"><?= esc(lang('Site.home.cap.intro')) ?></p>
         </div>
 
         <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -210,14 +193,12 @@ $regions = ['Sri Lanka', 'South Asia', 'South-East Asia', 'Europe', 'North Ameri
     <div class="absolute inset-0 -z-10 bg-black/55"></div>
     <div class="container-x grid gap-14 lg:grid-cols-2 lg:items-center">
         <div data-gsap="reveal">
-            <p class="eyebrow">Our impact</p>
-            <h2 class="mt-5 text-3xl font-bold leading-tight sm:text-5xl">Sustainability, woven into every stitch.</h2>
+            <p class="eyebrow"><?= esc(lang('Site.home.impact.eyebrow')) ?></p>
+            <h2 class="mt-5 text-3xl font-bold leading-tight sm:text-5xl"><?= esc(lang('Site.home.impact.title')) ?></h2>
             <p class="mt-5 max-w-xl text-lg leading-relaxed text-white/70">
-                Responsible manufacturing isn’t a programme — it’s how we operate. We measure our
-                footprint, invest in our people and design waste out of the process, so the apparel
-                we make is something everyone can stand behind.
+                <?= esc(lang('Site.home.impact.body')) ?>
             </p>
-            <a href="<?= esc(locale_url('impact')) ?>" class="btn-brand mt-8">Explore our impact</a>
+            <a href="<?= esc(locale_url('impact')) ?>" class="btn-brand mt-8"><?= esc(lang('Site.home.impact.cta')) ?></a>
         </div>
 
         <div class="grid gap-4" data-gsap="reveal">
@@ -239,11 +220,10 @@ $regions = ['Sri Lanka', 'South Asia', 'South-East Asia', 'Europe', 'North Ameri
     <div class="container-x">
         <div class="grid gap-12 lg:grid-cols-12 lg:items-center">
             <div class="lg:col-span-5" data-gsap="reveal">
-                <p class="eyebrow">Global footprint</p>
-                <h2 class="mt-5 text-3xl font-bold sm:text-5xl">Made in Sri Lanka. Delivered to the world.</h2>
+                <p class="eyebrow"><?= esc(lang('Site.home.footprint.eyebrow')) ?></p>
+                <h2 class="mt-5 text-3xl font-bold sm:text-5xl"><?= esc(lang('Site.home.footprint.title')) ?></h2>
                 <p class="mt-5 text-lg leading-relaxed text-white/65">
-                    From our manufacturing heartland we serve leading brands across every major market —
-                    combining local craftsmanship with the reliability of a global supply partner.
+                    <?= esc(lang('Site.home.footprint.body')) ?>
                 </p>
             </div>
             <div class="lg:col-span-7" data-gsap="reveal">
@@ -266,12 +246,12 @@ $regions = ['Sri Lanka', 'South Asia', 'South-East Asia', 'Europe', 'North Ameri
         <div class="overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-[#1a0205] via-brand-black to-brand-black p-10 sm:p-16" data-gsap="reveal">
             <div class="grid gap-8 lg:grid-cols-2 lg:items-center">
                 <div>
-                    <h2 class="text-3xl font-bold leading-tight sm:text-4xl">Let’s build your next collection together.</h2>
-                    <p class="mt-4 max-w-lg text-white/65">Partner with a manufacturer that delivers quality, scale and responsibility — or join a team shaping the future of apparel.</p>
+                    <h2 class="text-3xl font-bold leading-tight sm:text-4xl"><?= esc(lang('Site.home.closing.title')) ?></h2>
+                    <p class="mt-4 max-w-lg text-white/65"><?= esc(lang('Site.home.closing.body')) ?></p>
                 </div>
                 <div class="flex flex-wrap gap-4 lg:justify-end">
-                    <a href="<?= esc(locale_url('contact')) ?>" class="btn-brand">Contact us</a>
-                    <a href="<?= esc(locale_url('careers')) ?>" class="btn-ghost">View careers</a>
+                    <a href="<?= esc(locale_url('contact')) ?>" class="btn-brand"><?= esc(lang('Site.cta.contact_us')) ?></a>
+                    <a href="<?= esc(locale_url('careers')) ?>" class="btn-ghost"><?= esc(lang('Site.cta.view_careers')) ?></a>
                 </div>
             </div>
         </div>

@@ -22,11 +22,14 @@ class Home extends BaseController
 
         $video = (new VideoModel())->findByKeyWithTracks('home_launch');
 
+        helper('norlanka');
+
         return view('Modules\Site\Views\home\index', [
-            'page'     => $page,
-            'sections' => $sections,
-            'video'    => $video,
-            'title'    => 'Norlanka — Responsible Apparel Manufacturing',
+            'page'            => $page,
+            'sections'        => $sections,
+            'video'           => $video,
+            'title'           => 'Norlanka — ' . lang('Site.home.hero.eyebrow'),
+            'metaDescription' => lang('Site.home.intro.title'),
         ]);
     }
 }
