@@ -4,11 +4,6 @@ namespace Modules\Admin\Controllers;
 
 use App\Controllers\BaseController;
 
-/**
- * Admin dashboard — skeleton. Lists the planned CMS modules with live row
- * counts. Full CRUD screens are a later milestone; this proves the JWT gate
- * and the modular admin surface.
- */
 class Dashboard extends BaseController
 {
     public function index()
@@ -24,20 +19,27 @@ class Dashboard extends BaseController
         };
 
         $widgets = [
-            ['Pages', $count('pages'), 'cms'],
-            ['Media', $count('media_library'), 'cms'],
-            ['Product Categories', $count('product_categories'), 'catalog'],
-            ['Showroom Items', $count('showroom_products'), 'showroom'],
-            ['Videos', $count('videos'), 'video'],
-            ['ESG Metrics', $count('esg_metrics'), 'esg'],
-            ['Jobs', $count('jobs'), 'careers'],
-            ['Applications', $count('job_applications'), 'careers'],
-            ['Leads', $count('leads'), 'crm'],
-            ['Contacts', $count('contacts'), 'crm'],
-            ['Users', $count('users'), 'auth'],
-            ['Translations', $count('translations'), 'i18n'],
+            ['Pages', $count('pages'), 'admin/pages'],
+            ['Product Categories', $count('product_categories'), 'admin/categories'],
+            ['ESG Metrics', $count('esg_metrics'), 'admin/esg-metrics'],
+            ['Jobs', $count('jobs'), 'admin/jobs'],
+            ['Contacts', $count('contacts'), 'admin/contacts'],
+            ['Leads', $count('leads'), 'admin/leads'],
+            ['Media', $count('media_library'), 'admin/media'],
+            ['Users', $count('users'), 'admin'],
         ];
 
-        return view('Modules\Admin\Views\dashboard', ['widgets' => $widgets]);
+        $recent = [];
+        try {
+            $recent = $db->table('contacts')->orderBy('id', 'DESC')->limit(5)->get()->getResultArray();
+        } catch (\Throwable $e) {
+        }
+
+        return view('Modules\Admin\Views\dashboard', [
+            'title'   => 'Dashboard',
+            'active'  => 'dashboard',
+            'widgets' => $widgets,
+            'recent'  => $recent,
+        ]);
     }
 }

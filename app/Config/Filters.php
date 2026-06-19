@@ -12,6 +12,7 @@ use CodeIgniter\Filters\InvalidChars;
 use CodeIgniter\Filters\PageCache;
 use CodeIgniter\Filters\PerformanceMetrics;
 use CodeIgniter\Filters\SecureHeaders;
+use Modules\Admin\Filters\AdminAuthFilter;
 use Modules\Auth\Filters\JwtAuthFilter;
 use Modules\Core\Filters\LocaleFilter;
 
@@ -43,6 +44,7 @@ class Filters extends BaseFilters
         // 'locale' alias because class names are case-insensitive.
         'jwt'           => JwtAuthFilter::class,
         'applocale'     => LocaleFilter::class,
+        'adminauth'     => AdminAuthFilter::class,
     ];
 
     /**
@@ -115,5 +117,9 @@ class Filters extends BaseFilters
      *
      * @var array<string, array<string, list<string>>>
      */
-    public array $filters = [];
+    public array $filters = [
+        // CSRF protection for admin form submissions (POSTs). GET is unaffected,
+        // and the public /api/* endpoints are intentionally excluded.
+        'csrf' => ['before' => ['admin', 'admin/*']],
+    ];
 }

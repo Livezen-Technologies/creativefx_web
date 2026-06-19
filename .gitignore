@@ -91,6 +91,11 @@ vendor/
 #-------------------------
 node_modules/
 /public/build/
+
+#-------------------------
+# Admin media uploads (runtime; real assets live on S3/CDN)
+#-------------------------
+/public/media/uploads/
 npm-debug.log*
 yarn-error.log*
 
