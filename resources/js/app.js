@@ -8,6 +8,7 @@ import showroomScene from './alpine/showroomScene.js';
 import { initScrollStory } from './gsap/scroll.js';
 import { initKineticHero } from './gsap/kinetic.js';
 import { initCarousels } from './carousels.js';
+import { initHeroVideo } from './heroVideo.js';
 
 // --- Alpine components ---
 Alpine.data('videoExperience', videoExperience);
@@ -34,6 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initKineticHero();
   initScrollStory();
   initCarousels();
+  initHeroVideo();
 });
 
 // Three.js hero accent is heavy + optional — load it lazily only if requested

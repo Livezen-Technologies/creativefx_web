@@ -69,17 +69,16 @@ $regions = ['Sri Lanka', 'South Asia', 'South-East Asia', 'Europe', 'North Ameri
 <section
     id="hero"
     data-gsap="hero-out"
-    x-data="{ playing: true, toggleVid() { const v = $refs.bgv; if (!v) return; if (v.paused) { v.play(); this.playing = true; } else { v.pause(); this.playing = false; } } }"
+    x-data="{ playing: true, toggleVid() { const v = $refs.bgv; if (!v) return; if (v.paused) { delete v.dataset.userPaused; v.play(); this.playing = true; } else { v.dataset.userPaused = '1'; v.pause(); this.playing = false; } } }"
     class="relative flex min-h-screen items-center overflow-hidden"
 >
     <!-- Background: real launch film if set in the CMS, else the animated brand visual -->
     <?php if (! empty($video['src_path'])): ?>
-        <!-- Poster doubles as instant LCP paint + the mobile background (no heavy autoplay on phones). -->
-        <img src="<?= esc($heroPoster) ?>" alt="" aria-hidden="true" fetchpriority="high"
-             class="absolute inset-0 -z-30 h-full w-full object-cover md:hidden">
+        <!-- Background film. Poster paints instantly (LCP) while it buffers; JS
+             force-plays it (see heroVideo.js) so it loops continuously. -->
         <video x-ref="bgv"
-               class="absolute inset-0 -z-30 hidden h-full w-full object-cover md:block"
-               autoplay muted loop playsinline preload="metadata"
+               class="absolute inset-0 -z-30 h-full w-full object-cover"
+               autoplay muted loop playsinline preload="auto"
                poster="<?= esc($heroPoster) ?>">
             <source src="<?= esc($video['src_path']) ?>" type="video/mp4">
             <?php if (! empty($video['src_path_webm'])): ?>
@@ -88,7 +87,7 @@ $regions = ['Sri Lanka', 'South Asia', 'South-East Asia', 'Europe', 'North Ameri
         </video>
         <!-- Subtle corner control (kept far from the CTAs so it never competes). -->
         <button type="button" @click="toggleVid()"
-                class="absolute bottom-8 right-6 z-20 hidden h-10 w-10 items-center justify-center rounded-full border border-white/25 bg-black/30 text-white/80 backdrop-blur transition hover:border-white hover:text-white md:inline-flex lg:right-10"
+                class="absolute bottom-8 right-6 z-20 inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/25 bg-black/30 text-white/80 backdrop-blur transition hover:border-white hover:text-white lg:right-10"
                 :aria-label="playing ? 'Pause background video' : 'Play background video'">
             <svg x-show="playing" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
             <svg x-show="!playing" x-cloak class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5l12 7-12 7z"/></svg>

@@ -104,6 +104,14 @@ jobs:
             echo "===== running panel/web services ====="
             systemctl list-units --type=service --state=running 2>/dev/null | grep -Ei 'nginx|apache|httpd|lsws|litespeed|cyber|cloudbox|panel|caddy'
             echo
+            echo "===== hero media (served over :443) ====="
+            for f in /media/video/home-hero.mp4 /media/video/home-hero-poster.jpg; do
+              echo "--- $f ---"
+              curl -s -I -k -m 10 "https://127.0.0.1${f}" -H "Host: ${DOMAIN}" 2>&1 | grep -iE 'HTTP/|content-type|content-length|accept-ranges'
+            done
+            echo "--- file on disk ---"
+            ls -la /var/www/norlankamfg/public/media/video/ 2>/dev/null
+            echo
             echo "===== DONE (read-only) ====="
 
       - name: Setup TLS via certbot (scoped to our domain)
