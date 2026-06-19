@@ -15,5 +15,9 @@ $siteOptions = ['filter' => 'applocale', 'namespace' => 'Modules\Site\Controller
 // applocale filter reads + validates it from the URI).
 $routes->get('(:locale)', 'Home::index', $siteOptions);
 
+// Virtual Showroom (3D) — defined before the CMS catch-all so it wins.
+$routes->get('(:locale)/showroom', '\Modules\Showroom\Controllers\Showroom::index/$1', ['filter' => 'applocale']);
+$routes->get('(:locale)/showroom/(:segment)', '\Modules\Showroom\Controllers\Showroom::scene/$1/$2', ['filter' => 'applocale']);
+
 // CMS catch-all: /{locale}/{slug} -> PageController::show($slug)  ($2 = slug)
 $routes->get('(:locale)/(:segment)', 'PageController::show/$2', $siteOptions);

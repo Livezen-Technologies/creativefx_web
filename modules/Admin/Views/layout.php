@@ -7,6 +7,8 @@ $nav = [
     ['pages', 'Pages', 'admin/pages'],
     ['categories', 'Product Categories', 'admin/categories'],
     ['videos', 'Launch Video', 'admin/videos'],
+    ['showroom-cats', 'Showroom Categories', 'admin/showroom-categories'],
+    ['showroom-products', 'Showroom Products', 'admin/showroom-products'],
     ['esg', 'ESG Metrics', 'admin/esg-metrics'],
     ['jobs', 'Jobs', 'admin/jobs'],
     ['translations', 'Translations', 'admin/translations'],

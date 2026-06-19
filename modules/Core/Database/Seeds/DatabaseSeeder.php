@@ -33,5 +33,8 @@ class DatabaseSeeder extends Seeder
         // Import UI chrome strings into the translations table (editable in the
         // Translation Manager).
         $this->call('Modules\Translation\Database\Seeds\TranslationSeeder');
+
+        // Virtual showroom: themed categories + products.
+        $this->call('Modules\Showroom\Database\Seeds\ShowroomSeeder');
     }
 }

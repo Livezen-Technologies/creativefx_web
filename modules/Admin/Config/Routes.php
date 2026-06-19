@@ -23,6 +23,8 @@ $routes->group('admin', ['namespace' => 'Modules\Admin\Controllers'], static fun
             'jobs'        => 'Jobs',
             'contacts'    => 'Contacts',
             'leads'       => 'Leads',
+            'showroom-categories' => 'ShowroomCategories',
+            'showroom-products'   => 'ShowroomProducts',
         ];
         foreach ($resources as $seg => $ctrl) {
             $routes->get($seg, $ctrl . '::index');

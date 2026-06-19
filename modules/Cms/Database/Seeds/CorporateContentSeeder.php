@@ -96,7 +96,7 @@ class CorporateContentSeeder extends Seeder
             'impact'        => $this->impact(),
             'careers'       => $this->careers(),
             'contact'       => $this->contact(),
-            'showroom'      => $this->showroom(),
+            // 'showroom' is now served by the Showroom module (3D experience).
         ];
     }
 
