@@ -15,6 +15,7 @@
             $nav = [
                 'our-story'    => lang('Site.nav.story'),
                 'our-expertise'=> lang('Site.nav.expertise'),
+                'manufacturing'=> lang('Site.nav.manufacturing'),
                 'showroom'     => lang('Site.nav.showroom'),
                 'impact'       => lang('Site.nav.impact'),
                 'careers'      => lang('Site.nav.careers'),

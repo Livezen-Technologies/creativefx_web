@@ -25,5 +25,9 @@ class DatabaseSeeder extends Seeder
         // Seeds the CMS Home page + sections/blocks + the launch video,
         // its per-language audio tracks and subtitle files.
         $this->call('Modules\Cms\Database\Seeds\HomeContentSeeder');
+
+        // Corporate content pages (Our Story, Expertise, Manufacturing,
+        // Impact, Careers, Contact, Showroom).
+        $this->call('Modules\Cms\Database\Seeds\CorporateContentSeeder');
     }
 }

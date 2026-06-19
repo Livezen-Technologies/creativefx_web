@@ -4,6 +4,7 @@ return [
     'nav' => [
         'story'     => 'Our Story',
         'expertise' => 'Our Expertise',
+        'manufacturing' => 'Manufacturing',
         'showroom'  => 'Showroom',
         'impact'    => 'Our Impact',
         'careers'   => 'Careers',
@@ -22,5 +23,13 @@ return [
         'subtitles' => 'Subtitles',
         'language'  => 'Audio language',
         'scroll'    => 'Scroll to explore',
+    ],
+    'contact' => [
+        'name'    => 'Your name',
+        'email'   => 'Email address',
+        'subject' => 'Subject',
+        'message' => 'Your message',
+        'send'    => 'Send message',
+        'success' => 'Thank you — we will be in touch shortly.',
     ],
 ];
