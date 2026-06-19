@@ -1,0 +1,57 @@
+name: Deploy (norlankamfg.livezencloud.com)
+
+# Manual trigger only — never auto-deploys on push.
+# Runs deploy/setup.sh on the server FROM GitHub's runner (which can reach it).
+#
+# Required repository secrets (Settings → Secrets and variables → Actions):
+#   DEPLOY_HOST      = 178.105.165.144
+#   DEPLOY_USER      = root            (or a sudo-capable user)
+#   DEPLOY_PASSWORD  = <server password>     (prefer DEPLOY_SSH_KEY instead — see below)
+# Optional:
+#   DEPLOY_SSH_KEY   = <private key>   (if set, used instead of the password)
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: Branch to deploy
+        default: claude/awesome-planck-01cc95
+        required: true
+
+concurrency:
+  group: deploy-norlankamfg
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Copy bootstrap script to server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          password: ${{ secrets.DEPLOY_PASSWORD }}
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          source: deploy/setup.sh
+          target: /tmp/norlanka-bootstrap
+
+      - name: Run setup.sh on server
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          password: ${{ secrets.DEPLOY_PASSWORD }}
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          command_timeout: 30m
+          # github.token clones the (private) repo from the server during the run.
+          envs: GH_TOKEN
+          script: |
+            set -e
+            export REPO_URL="https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git"
+            export BRANCH="${{ github.event.inputs.branch }}"
+            export ASSUME_YES=1
+            bash /tmp/norlanka-bootstrap/deploy/setup.sh
+            rm -f /tmp/norlanka-bootstrap/deploy/setup.sh

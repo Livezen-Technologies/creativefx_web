@@ -35,6 +35,21 @@ After it finishes:
 - Site: `http://norlankamfg.livezencloud.com/` → redirects to `/en`
 - Admin: `/admin/login` — **admin@norlanka.local / norlanka123** (change immediately)
 
+## Deploy via GitHub Actions (no SSH from your machine)
+
+If you'd rather not SSH in yourself, the workflow at
+`.github/workflows/deploy.yml` runs `setup.sh` on the server from a GitHub
+runner. One-time setup:
+
+1. Repo → **Settings → Secrets and variables → Actions → New repository secret**:
+   - `DEPLOY_HOST` = `178.105.165.144`
+   - `DEPLOY_USER` = `root`
+   - `DEPLOY_PASSWORD` = the server password  *(or `DEPLOY_SSH_KEY` = a private key — preferred)*
+2. Repo → **Actions → "Deploy (norlankamfg.livezencloud.com)" → Run workflow**.
+
+The runner copies `setup.sh` to the server and runs it (cloning this repo with the
+run's `GITHUB_TOKEN`). It's manual-trigger only and never deploys on push.
+
 ## TLS
 The vhost listens on :80. Choose one:
 - **Cloudflare**: install a Cloudflare *Origin Certificate* on the box and set the
