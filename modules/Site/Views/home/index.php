@@ -65,33 +65,49 @@ $regions = ['Sri Lanka', 'South Asia', 'South-East Asia', 'Europe', 'North Ameri
 <?= $this->section('content') ?>
 
 <!-- ===================== HERO ===================== -->
+<?php $heroPoster = $video['poster_path'] ?? '/media/video/home-hero-poster.jpg'; ?>
 <section
     id="hero"
     data-gsap="hero-out"
+    x-data="{ playing: true, toggleVid() { const v = $refs.bgv; if (!v) return; if (v.paused) { v.play(); this.playing = true; } else { v.pause(); this.playing = false; } } }"
     class="relative flex min-h-screen items-center overflow-hidden"
 >
     <!-- Background: real launch film if set in the CMS, else the animated brand visual -->
     <?php if (! empty($video['src_path'])): ?>
-        <video class="absolute inset-0 -z-30 h-full w-full object-cover"
-               autoplay muted loop playsinline preload="auto"
-               poster="<?= esc($video['poster_path'] ?? '') ?>">
+        <!-- Poster doubles as instant LCP paint + the mobile background (no heavy autoplay on phones). -->
+        <img src="<?= esc($heroPoster) ?>" alt="" aria-hidden="true" fetchpriority="high"
+             class="absolute inset-0 -z-30 h-full w-full object-cover md:hidden">
+        <video x-ref="bgv"
+               class="absolute inset-0 -z-30 hidden h-full w-full object-cover md:block"
+               autoplay muted loop playsinline preload="metadata"
+               poster="<?= esc($heroPoster) ?>">
             <source src="<?= esc($video['src_path']) ?>" type="video/mp4">
             <?php if (! empty($video['src_path_webm'])): ?>
                 <source src="<?= esc($video['src_path_webm']) ?>" type="video/webm">
             <?php endif; ?>
         </video>
+        <!-- Subtle corner control (kept far from the CTAs so it never competes). -->
+        <button type="button" @click="toggleVid()"
+                class="absolute bottom-8 right-6 z-20 hidden h-10 w-10 items-center justify-center rounded-full border border-white/25 bg-black/30 text-white/80 backdrop-blur transition hover:border-white hover:text-white md:inline-flex lg:right-10"
+                :aria-label="playing ? 'Pause background video' : 'Play background video'">
+            <svg x-show="playing" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+            <svg x-show="!playing" x-cloak class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5l12 7-12 7z"/></svg>
+        </button>
     <?php else: ?>
         <div class="hero-aurora absolute inset-0 -z-30"></div>
         <div data-three-hero class="absolute inset-0 -z-20 opacity-70"></div>
     <?php endif; ?>
-    <!-- Legibility scrim over whichever background -->
-    <div class="absolute inset-0 -z-10 bg-gradient-to-b from-black/60 via-black/35 to-brand-black"></div>
+
+    <!-- Lighter, directional scrim (legible text on the left, the film stays visible on the right) -->
+    <div class="absolute inset-0 -z-20 bg-gradient-to-r from-black/85 via-black/45 to-transparent"></div>
+    <div class="absolute inset-0 -z-20 bg-gradient-to-t from-brand-black via-brand-black/10 to-transparent"></div>
+    <!-- Brand-red glow to break the monochrome -->
+    <div class="hero-red-glow absolute inset-0 -z-10"></div>
 
     <div class="container-x relative w-full pt-28">
-        <p class="mb-5 text-xs font-semibold uppercase tracking-[0.35em] text-brand-red" data-gsap="reveal">
-            Responsible Apparel Manufacturing
-        </p>
-        <h1 class="kinetic-hero max-w-5xl text-4xl font-bold leading-[1.04] sm:text-6xl lg:text-7xl" aria-label="<?= esc(t_field($heroHeadline), 'attr') ?>">
+        <p class="eyebrow mb-6" data-gsap="reveal">Responsible Apparel Manufacturing</p>
+
+        <h1 class="kinetic-hero max-w-4xl text-4xl font-bold leading-[1.05] sm:text-5xl lg:text-6xl xl:text-7xl" aria-label="<?= esc(t_field($heroHeadline), 'attr') ?>">
             <?php if ($kPre !== ''): ?><span class="kline" data-kinetic><?= $splitWords($kPre) ?></span><?php endif; ?>
             <?php if ($kRotators !== []): ?>
                 <span class="rotator-wrap text-brand-red" data-rotator aria-hidden="true">
@@ -103,20 +119,36 @@ $regions = ['Sri Lanka', 'South Asia', 'South-East Asia', 'Europe', 'North Ameri
             <?php endif; ?>
             <?php if ($kPost !== ''): ?><span class="kline" data-kinetic><?= $splitWords($kPost) ?></span><?php endif; ?>
         </h1>
-        <p class="mt-6 max-w-2xl text-lg text-white/70" data-gsap="reveal"><?= esc(t_field($heroSubhead)) ?></p>
 
-        <div class="mt-10 flex flex-wrap items-center gap-4" data-gsap="reveal">
-            <a href="<?= esc(locale_url('our-expertise')) ?>" class="btn-brand">Explore our expertise</a>
-            <a href="<?= esc(locale_url('showroom')) ?>" class="btn-ghost">Enter the showroom</a>
+        <p class="mt-6 max-w-xl text-lg leading-relaxed text-white/75" data-gsap="reveal"><?= esc(t_field($heroSubhead)) ?></p>
+
+        <!-- CTA hierarchy: one dominant primary, one quiet secondary -->
+        <div class="mt-10 flex flex-wrap items-center gap-6" data-gsap="reveal">
+            <a href="<?= esc(locale_url('our-expertise')) ?>" class="btn-brand btn-lg group">
+                Explore our expertise
+                <svg class="ml-2 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <a href="<?= esc(locale_url('showroom')) ?>" class="group inline-flex items-center gap-3 text-sm font-semibold uppercase tracking-widest text-white/85 transition hover:text-white">
+                <span class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/30 transition group-hover:border-brand-red group-hover:bg-brand-red/10">
+                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5l11 7-11 7z"/></svg>
+                </span>
+                Enter the showroom
+            </a>
         </div>
 
-        <p class="mt-12 max-w-xl text-[11px] uppercase tracking-[0.3em] text-white/40" data-gsap="reveal">
-            Trusted by the world’s leading brands &amp; retailers
-        </p>
+        <div class="mt-14 flex items-center gap-4" data-gsap="reveal">
+            <span class="h-px w-10 bg-white/20"></span>
+            <p class="text-[11px] uppercase tracking-[0.3em] text-white/45">
+                Trusted by the world’s leading brands &amp; retailers
+            </p>
+        </div>
     </div>
 
     <div class="absolute inset-x-0 bottom-8 flex justify-center">
-        <span class="animate-bounce text-[10px] uppercase tracking-[0.3em] text-white/40"><?= esc(lang('Site.experience.scroll')) ?></span>
+        <span class="flex flex-col items-center gap-2 text-[10px] uppercase tracking-[0.3em] text-white/40">
+            <?= esc(lang('Site.experience.scroll')) ?>
+            <svg class="h-4 w-4 animate-bounce text-brand-red" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M6 13l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
     </div>
 </section>
 
@@ -124,7 +156,7 @@ $regions = ['Sri Lanka', 'South Asia', 'South-East Asia', 'Europe', 'North Ameri
 <section class="bg-brand-black py-24 sm:py-28">
     <div class="container-x grid gap-12 lg:grid-cols-12 lg:items-end">
         <div class="lg:col-span-7" data-gsap="reveal">
-            <p class="text-xs font-semibold uppercase tracking-[0.3em] text-brand-red">Who we are</p>
+            <p class="eyebrow">Who we are</p>
             <h2 class="mt-5 text-3xl font-bold leading-tight sm:text-5xl">
                 A partner the world’s brands trust to make apparel the right way.
             </h2>
@@ -151,7 +183,7 @@ $regions = ['Sri Lanka', 'South Asia', 'South-East Asia', 'Europe', 'North Ameri
 <section class="bg-brand-black py-24 sm:py-28">
     <div class="container-x">
         <div class="max-w-2xl" data-gsap="reveal">
-            <p class="text-xs font-semibold uppercase tracking-[0.3em] text-brand-red">What we do</p>
+            <p class="eyebrow">What we do</p>
             <h2 class="mt-5 text-3xl font-bold sm:text-5xl">End-to-end manufacturing, under one roof.</h2>
             <p class="mt-4 text-white/60">Vertically integrated capabilities that take a collection from first sketch to global shelf.</p>
         </div>
@@ -179,7 +211,7 @@ $regions = ['Sri Lanka', 'South Asia', 'South-East Asia', 'Europe', 'North Ameri
     <div class="absolute inset-0 -z-10 bg-black/55"></div>
     <div class="container-x grid gap-14 lg:grid-cols-2 lg:items-center">
         <div data-gsap="reveal">
-            <p class="text-xs font-semibold uppercase tracking-[0.3em] text-brand-red">Our impact</p>
+            <p class="eyebrow">Our impact</p>
             <h2 class="mt-5 text-3xl font-bold leading-tight sm:text-5xl">Sustainability, woven into every stitch.</h2>
             <p class="mt-5 max-w-xl text-lg leading-relaxed text-white/70">
                 Responsible manufacturing isn’t a programme — it’s how we operate. We measure our
@@ -208,7 +240,7 @@ $regions = ['Sri Lanka', 'South Asia', 'South-East Asia', 'Europe', 'North Ameri
     <div class="container-x">
         <div class="grid gap-12 lg:grid-cols-12 lg:items-center">
             <div class="lg:col-span-5" data-gsap="reveal">
-                <p class="text-xs font-semibold uppercase tracking-[0.3em] text-brand-red">Global footprint</p>
+                <p class="eyebrow">Global footprint</p>
                 <h2 class="mt-5 text-3xl font-bold sm:text-5xl">Made in Sri Lanka. Delivered to the world.</h2>
                 <p class="mt-5 text-lg leading-relaxed text-white/65">
                     From our manufacturing heartland we serve leading brands across every major market —

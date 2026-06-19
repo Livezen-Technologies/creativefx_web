@@ -82,6 +82,77 @@
   100% { background-position: 50% 100%; }
 }
 
+@layer components {
+  /* Header / navigation ---------------------------------------------------- */
+  .site-header {
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    border-bottom: 1px solid transparent;
+  }
+  .site-header.is-scrolled {
+    background-color: rgba(0, 0, 0, 0.9);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 14px 34px -16px rgba(0, 0, 0, 0.75);
+  }
+
+  .nav-link {
+    position: relative;
+    font-size: 0.95rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.82);
+    transition: color 0.2s ease;
+  }
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -7px;
+    height: 2px;
+    background: #cf2030;
+    border-radius: 2px;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.25s ease;
+  }
+  .nav-link:hover { color: #fff; }
+  .nav-link:hover::after,
+  .nav-link-active::after { transform: scaleX(1); }
+  .nav-link-active { color: #fff; }
+
+  /* Red-dash eyebrow used to lift section labels out of the monochrome. */
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: #ff5663;
+  }
+  .eyebrow::before {
+    content: '';
+    width: 1.75rem;
+    height: 2px;
+    background: #cf2030;
+    border-radius: 2px;
+  }
+
+  /* Larger primary CTA for clear hero hierarchy. */
+  .btn-lg { @apply px-8 py-4 text-sm; }
+
+  /* Hero red brand glow + soft accents. */
+  .hero-red-glow {
+    background:
+      radial-gradient(40% 55% at 12% 78%, rgba(207, 32, 48, 0.34), transparent 70%),
+      radial-gradient(30% 40% at 85% 20%, rgba(207, 32, 48, 0.16), transparent 70%);
+  }
+}
+
 /* Respect reduced-motion: GSAP also guards, this is a CSS backstop. */
 @media (prefers-reduced-motion: reduce) {
   html {
@@ -89,5 +160,9 @@
   }
   .hero-aurora {
     animation: none;
+  }
+  .site-header,
+  .nav-link::after {
+    transition: none;
   }
 }

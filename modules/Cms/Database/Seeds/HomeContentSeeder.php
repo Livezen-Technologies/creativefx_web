@@ -177,17 +177,18 @@ class HomeContentSeeder extends Seeder
                 'title'         => $j(['en' => 'Norlanka Launch Film']),
                 // Background launch film (swap for a CDN/S3 URL in production).
                 'src_path'      => '/media/video/home-hero.mp4',
-                'poster_path'   => null,
+                'poster_path'   => '/media/video/home-hero-poster.jpg',
                 'is_muted_loop' => 1,
                 'status'        => 'published',
                 'created_at'    => $now,
                 'updated_at'    => $now,
             ]);
         } else {
-            // Keep the background film path in sync on re-seed.
+            // Keep the background film + poster in sync on re-seed.
             $videos->where('key', 'home_launch')->update([
-                'src_path'   => '/media/video/home-hero.mp4',
-                'updated_at' => $now,
+                'src_path'    => '/media/video/home-hero.mp4',
+                'poster_path' => '/media/video/home-hero-poster.jpg',
+                'updated_at'  => $now,
             ]);
         }
         $videoId = (int) $videos->where('key', 'home_launch')->get()->getRowArray()['id'];
