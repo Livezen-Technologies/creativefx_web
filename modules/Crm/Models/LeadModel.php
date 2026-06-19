@@ -10,5 +10,5 @@ class LeadModel extends Model
     protected $primaryKey    = 'id';
     protected $returnType    = 'array';
     protected $useTimestamps = true;
-    protected $allowedFields = ['name', 'email', 'company', 'country', 'interest', 'message', 'status', 'source'];
+    protected $allowedFields = ['name', 'email', 'company', 'country', 'phone', 'interest', 'quantity', 'message', 'status', 'source'];
 }

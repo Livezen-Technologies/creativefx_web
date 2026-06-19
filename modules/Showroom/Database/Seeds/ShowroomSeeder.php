@@ -5,37 +5,209 @@ namespace Modules\Showroom\Database\Seeds;
 use CodeIgniter\Database\Seeder;
 
 /**
- * Seeds the 13 themed showroom categories (from the blueprint) and a few
- * products each, with 3D hotspot coordinates, colour-swatch galleries and
- * material lists. Idempotent: clears products + categories then reseeds.
+ * Seeds the 12 themed virtual-showroom categories from the blueprint, each with
+ * a theme name, environment tagline, colour palette, environment features and
+ * its real product line — enriched with fabric composition, MOQ, size run and
+ * collection. Idempotent: clears products + categories then reseeds.
+ *
+ * Names/themes/taglines carry en + es locale-maps (t_field falls back to en for
+ * ja/zh); the environment feature list + product specs are stored as data.
  */
 class ShowroomSeeder extends Seeder
 {
     public function run(): void
     {
         $now = date('Y-m-d H:i:s');
-        $j   = static fn (array $m): string => json_encode($m, JSON_UNESCAPED_UNICODE);
+        $j   = static fn ($v): string => json_encode($v, JSON_UNESCAPED_UNICODE);
 
-        // [slug, en, es, theme, accent hex]
-        $categories = [
-            ['babywear', 'Babywear', 'Ropa de bebé', 'clouds', '#9fc6ff'],
-            ['childrenswear', 'Childrenswear', 'Ropa infantil', 'playground', '#ffd166'],
-            ['kids-nightwear', 'Kids Nightwear', 'Pijamas infantiles', 'night', '#6c7bff'],
-            ['school-wear', 'School Wear', 'Uniformes escolares', 'classroom', '#4cc9a0'],
-            ['accessories', 'Accessories', 'Accesorios', 'luxury', '#d4af37'],
-            ['true-knits', 'True Knits', 'Tejidos de punto', 'textile', '#e07a5f'],
-            ['hosiery-toys', 'Hosiery & Toys', 'Calcetería y juguetes', 'toys', '#ff6b6b'],
-            ['adults-woven', 'Adults Woven', 'Tejido plano', 'boutique', '#c9a227'],
-            ['adults-jersey', 'Adults Jersey', 'Punto para adultos', 'urban', '#8d99ae'],
-            ['activewear', 'Activewear', 'Ropa deportiva', 'arena', '#2ec4b6'],
-            ['maternity', 'Maternity', 'Maternidad', 'wellness', '#f4a6c0'],
-            ['adults-essentials', 'Adults Essentials', 'Básicos', 'minimal', '#cfcfcf'],
-            ['nightwear', 'Nightwear', 'Ropa de dormir', 'bedroom', '#b388eb'],
+        $sizeSets = [
+            'baby'      => ['NB', '0-3M', '3-6M', '6-12M', '12-18M', '18-24M'],
+            'kids'      => ['2-3Y', '4-5Y', '6-7Y', '8-9Y', '10-12Y', '13-14Y'],
+            'school'    => ['4Y', '6Y', '8Y', '10Y', '12Y', '14Y', '16Y'],
+            'adult'     => ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+            'accessory' => ['One Size'],
         ];
+        $moqs        = ['300 pcs / colour', '500 pcs / colour', '750 pcs / colour', '1,000 pcs / style'];
+        $collections = ['Core', 'SS25', 'AW25', 'Eco Line'];
 
-        $materialPool = ['Organic Cotton', 'Recycled Polyester', 'Bamboo', 'Performance Knit', 'Cotton Jersey', 'French Terry'];
-        $seasons      = ['SS25', 'AW25', 'Core'];
-        $collections  = ['Essentials', 'Premium', 'Eco'];
+        // Each: slug, en, es, theme(3D keyword), theme_name(en/es), tagline(en/es),
+        // palette[3], features[], sizeset, products[[en, es, fabric]].
+        $cats = [
+            [
+                'slug' => 'babywear', 'en' => 'Babywear', 'es' => 'Ropa de bebé', 'theme' => 'clouds',
+                'tname_en' => 'Soft Nursery World', 'tname_es' => 'Mundo de Guardería',
+                'tag_en' => 'Floating clouds, moon & stars and soft wooden toy shelves under a gentle glow.',
+                'tag_es' => 'Nubes flotantes, luna y estrellas y suaves estantes de madera bajo una luz tenue.',
+                'palette' => ['#a9d4ff', '#ffc9de', '#fff6e9'],
+                'features' => ['Floating clouds', 'Moon & stars', 'Wooden toy shelves', 'Soft ambient lighting'],
+                'sizeset' => 'baby',
+                'products' => [
+                    ['Rompers', 'Ranitas', '100% organic cotton interlock'],
+                    ['Bodysuits', 'Bodies', 'GOTS organic cotton rib'],
+                    ['Baby Sets', 'Conjuntos de bebé', 'Combed cotton jersey'],
+                    ['Sleepwear', 'Pijamas de bebé', 'Bamboo-cotton blend'],
+                ],
+            ],
+            [
+                'slug' => 'childrenswear', 'en' => 'Childrenswear', 'es' => 'Ropa infantil', 'theme' => 'playground',
+                'tname_en' => 'Adventure Playground', 'tname_es' => 'Parque de Aventuras',
+                'tag_en' => 'Playgrounds, treehouses and adventure paths in bright, cartoon-inspired scenery.',
+                'tag_es' => 'Parques, casas del árbol y caminos de aventura en un escenario tipo dibujos animados.',
+                'palette' => ['#ffd23f', '#ff8c42', '#5bbf6a'],
+                'features' => ['Playgrounds', 'Treehouses', 'Adventure paths', 'Cartoon-inspired scenery'],
+                'sizeset' => 'kids',
+                'products' => [
+                    ['Casual Wear', 'Ropa casual', 'Cotton single jersey'],
+                    ['Fashion Collections', 'Colecciones de moda', 'Cotton-elastane piqué'],
+                    ['Seasonal Collections', 'Colecciones de temporada', 'Brushed fleece'],
+                ],
+            ],
+            [
+                'slug' => 'kids-nightwear', 'en' => "Kids' Nightwear", 'es' => 'Pijamas infantiles', 'theme' => 'night',
+                'tname_en' => 'Dreamland', 'tname_es' => 'País de los Sueños',
+                'tag_en' => 'A moonlit bedroom with floating stars, dream clouds and magical lighting.',
+                'tag_es' => 'Un dormitorio iluminado por la luna con estrellas flotantes y luz mágica.',
+                'palette' => ['#1b2a6b', '#7b5cd6', '#c9d1e0'],
+                'features' => ['Moonlit bedroom', 'Floating stars', 'Dream clouds', 'Magical lighting'],
+                'sizeset' => 'kids',
+                'products' => [
+                    ['Pajama Sets', 'Conjuntos de pijama', 'Organic cotton interlock'],
+                    ['Sleepwear Collections', 'Colecciones de dormir', 'Cotton-modal blend'],
+                    ['Loungewear', 'Ropa de estar', 'Brushed cotton fleece'],
+                ],
+            ],
+            [
+                'slug' => 'school-wear', 'en' => 'School Wear', 'es' => 'Uniformes escolares', 'theme' => 'classroom',
+                'tname_en' => 'Modern Learning Campus', 'tname_es' => 'Campus de Aprendizaje',
+                'tag_en' => 'School corridors, classroom displays, library zones and a sports arena.',
+                'tag_es' => 'Pasillos escolares, aulas, zonas de biblioteca y un pabellón deportivo.',
+                'palette' => ['#1f2a52', '#9aa3b2', '#f4f6fb'],
+                'features' => ['School corridor', 'Classroom displays', 'Library zones', 'Sports arena'],
+                'sizeset' => 'school',
+                'products' => [
+                    ['School Uniforms', 'Uniformes escolares', 'Poly-cotton poplin'],
+                    ['Sports Uniforms', 'Uniformes deportivos', 'Recycled performance polyester'],
+                    ['Blazers', 'Blazers', 'Wool-blend suiting'],
+                    ['Accessories', 'Accesorios', 'Woven poly-cotton'],
+                ],
+            ],
+            [
+                'slug' => 'accessories', 'en' => 'Accessories', 'es' => 'Accesorios', 'theme' => 'luxury',
+                'tname_en' => 'Luxury Fashion Gallery', 'tname_es' => 'Galería de Moda de Lujo',
+                'tag_en' => 'Glass showcases and premium display cabinets under focused spotlights.',
+                'tag_es' => 'Vitrinas de cristal y vitrinas premium bajo focos dirigidos.',
+                'palette' => ['#d4af37', '#111114', '#f5f5f5'],
+                'features' => ['Glass showcases', 'Premium display cabinets', 'Spotlight lighting'],
+                'sizeset' => 'accessory',
+                'products' => [
+                    ['Bags', 'Bolsos', 'Recycled canvas & PU'],
+                    ['Caps', 'Gorras', 'Cotton twill'],
+                    ['Belts', 'Cinturones', 'Vegan leather'],
+                    ['Gloves', 'Guantes', 'Knitted acrylic-wool'],
+                    ['Fashion Accessories', 'Accesorios de moda', 'Mixed materials'],
+                ],
+            ],
+            [
+                'slug' => 'true-knits', 'en' => 'True Knits', 'es' => 'Tejidos de punto', 'theme' => 'textile',
+                'tname_en' => 'Artisan Knit Studio', 'tname_es' => 'Estudio de Punto Artesanal',
+                'tag_en' => 'Yarn walls, textile displays and live knitting-machine exhibits.',
+                'tag_es' => 'Paredes de hilo, muestras textiles y exhibiciones de máquinas de tejer.',
+                'palette' => ['#f3ead6', '#d9c4a3', '#8a5a3b'],
+                'features' => ['Yarn walls', 'Textile displays', 'Knitting machine exhibits', 'Fabric technology demos'],
+                'sizeset' => 'adult',
+                'products' => [
+                    ['Knitwear Collections', 'Colecciones de punto', 'Merino wool-cotton'],
+                    ['Premium Knit Fabrics', 'Tejidos de punto premium', 'Organic cotton interlock'],
+                ],
+            ],
+            [
+                'slug' => 'hosiery-toys', 'en' => 'Hosiery & Toys', 'es' => 'Calcetería y juguetes', 'theme' => 'toys',
+                'tname_en' => 'Fun Factory', 'tname_es' => 'Fábrica de Diversión',
+                'tag_en' => 'A toy-manufacturing world of colourful production lines and play stations.',
+                'tag_es' => 'Un mundo de fabricación de juguetes con líneas coloridas y estaciones de juego.',
+                'palette' => ['#ef3e36', '#ffce3a', '#2f9bd6'],
+                'features' => ['Toy manufacturing world', 'Colourful production lines', 'Interactive play stations'],
+                'sizeset' => 'accessory',
+                'products' => [
+                    ['Hosiery', 'Calcetería', 'Combed cotton-elastane'],
+                    ['Socks', 'Calcetines', 'Cotton-nylon terry'],
+                    ['Plush Toys', 'Peluches', 'Recycled-PET plush'],
+                    ['Educational Toys', 'Juguetes educativos', 'Organic cotton & wood'],
+                ],
+            ],
+            [
+                'slug' => 'adults-woven', 'en' => 'Adults – Woven', 'es' => 'Adultos – Tejido plano', 'theme' => 'boutique',
+                'tname_en' => 'Executive Fashion Avenue', 'tname_es' => 'Avenida de Moda Ejecutiva',
+                'tag_en' => 'A luxury shopping boulevard of boutique storefronts and premium retail.',
+                'tag_es' => 'Un bulevar de compras de lujo con escaparates boutique y retail premium.',
+                'palette' => ['#2b2d33', '#1f2a52', '#c9a227'],
+                'features' => ['Luxury shopping boulevard', 'Boutique storefronts', 'Premium retail experience'],
+                'sizeset' => 'adult',
+                'products' => [
+                    ['Shirts', 'Camisas', 'Organic cotton poplin'],
+                    ['Dresses', 'Vestidos', 'Tencel-cotton twill'],
+                    ['Trousers', 'Pantalones', 'Cotton-stretch chino'],
+                    ['Formal Collections', 'Colecciones formales', 'Wool-blend suiting'],
+                ],
+            ],
+            [
+                'slug' => 'adults-jersey', 'en' => 'Adults – Jersey', 'es' => 'Adultos – Punto', 'theme' => 'urban',
+                'tname_en' => 'Urban Lifestyle Loft', 'tname_es' => 'Loft de Estilo Urbano',
+                'tag_en' => 'A modern apartment with city-skyline views and contemporary interiors.',
+                'tag_es' => 'Un apartamento moderno con vistas al skyline e interiores contemporáneos.',
+                'palette' => ['#f4f6fb', '#8d99ae', '#15161a'],
+                'features' => ['Modern apartment setting', 'City skyline views', 'Contemporary interiors'],
+                'sizeset' => 'adult',
+                'products' => [
+                    ['T-Shirts', 'Camisetas', 'Combed cotton single jersey'],
+                    ['Casual Wear', 'Ropa casual', 'Cotton-elastane jersey'],
+                    ['Lounge Collections', 'Colecciones de estar', 'Organic French terry'],
+                ],
+            ],
+            [
+                'slug' => 'activewear', 'en' => 'Activewear', 'es' => 'Ropa deportiva', 'theme' => 'arena',
+                'tname_en' => 'Performance Arena', 'tname_es' => 'Arena de Rendimiento',
+                'tag_en' => 'A running track, gym environment and outdoor adventure zones.',
+                'tag_es' => 'Una pista de atletismo, gimnasio y zonas de aventura al aire libre.',
+                'palette' => ['#2d6cff', '#57e389', '#111114'],
+                'features' => ['Running track', 'Gym environment', 'Outdoor adventure zones', 'Performance tech displays'],
+                'sizeset' => 'adult',
+                'products' => [
+                    ['Sportswear', 'Ropa deportiva', 'Recycled polyester-elastane'],
+                    ['Fitness Apparel', 'Ropa de fitness', 'Seamless performance knit'],
+                    ['Outdoor Wear', 'Ropa de exterior', 'Recycled ripstop'],
+                ],
+            ],
+            [
+                'slug' => 'maternity', 'en' => 'Maternity', 'es' => 'Maternidad', 'theme' => 'wellness',
+                'tname_en' => 'Comfort & Care Lounge', 'tname_es' => 'Salón de Confort y Cuidado',
+                'tag_en' => 'Wellness-inspired interiors and an elegant home setting in soft natural light.',
+                'tag_es' => 'Interiores inspirados en el bienestar y un hogar elegante con luz natural suave.',
+                'palette' => ['#c7b8ea', '#f7efe1', '#e6b9a6'],
+                'features' => ['Wellness-inspired interiors', 'Elegant home setting', 'Soft natural lighting'],
+                'sizeset' => 'adult',
+                'products' => [
+                    ['Maternity Wear', 'Ropa de maternidad', 'Cotton-modal stretch'],
+                    ['Nursing Wear', 'Ropa de lactancia', 'Organic cotton jersey'],
+                    ['Comfort Essentials', 'Básicos de confort', 'Bamboo-cotton blend'],
+                ],
+            ],
+            [
+                'slug' => 'adults-essentials', 'en' => "Adults' Essentials & Nightwear", 'es' => 'Básicos y ropa de dormir', 'theme' => 'bedroom',
+                'tname_en' => 'Luxury Bedroom Suite', 'tname_es' => 'Suite de Dormitorio de Lujo',
+                'tag_en' => 'A premium hotel suite with a relaxing bedroom ambiance.',
+                'tag_es' => 'Una suite de hotel premium con un ambiente de dormitorio relajante.',
+                'palette' => ['#1f2a52', '#e3d5bd', '#d8b367'],
+                'features' => ['Premium hotel suite', 'Relaxing bedroom ambiance'],
+                'sizeset' => 'adult',
+                'products' => [
+                    ['Nightwear', 'Ropa de dormir', 'Cotton-modal sateen'],
+                    ['Loungewear', 'Ropa de estar', 'Organic French terry'],
+                    ['Innerwear', 'Ropa interior', 'Micro-modal rib'],
+                    ['Everyday Essentials', 'Básicos diarios', 'Combed cotton jersey'],
+                ],
+            ],
+        ];
 
         $catTable  = $this->db->table('showroom_categories');
         $prodTable = $this->db->table('showroom_products');
@@ -45,12 +217,16 @@ class ShowroomSeeder extends Seeder
         $catTable->where('id >', 0)->delete();
 
         $order = 0;
-        foreach ($categories as [$slug, $en, $es, $theme, $accent]) {
+        foreach ($cats as $c) {
             $catTable->insert([
-                'slug'       => $slug,
-                'name'       => $j(['en' => $en, 'es' => $es]),
-                'theme'      => $theme,
-                'background' => $accent,
+                'slug'       => $c['slug'],
+                'name'       => $j(['en' => $c['en'], 'es' => $c['es']]),
+                'theme'      => $c['theme'],
+                'theme_name' => $j(['en' => $c['tname_en'], 'es' => $c['tname_es']]),
+                'tagline'    => $j(['en' => $c['tag_en'], 'es' => $c['tag_es']]),
+                'background' => $c['palette'][0],
+                'palette'    => $j($c['palette']),
+                'features'   => $j($c['features']),
                 'sort_order' => $order++,
                 'status'     => 'published',
                 'created_at' => $now,
@@ -58,39 +234,46 @@ class ShowroomSeeder extends Seeder
             ]);
             $categoryId = (int) $this->db->insertID();
 
-            $positions = [[-3.2, 1.1, 0.2], [0, 1.3, -0.4], [3.2, 1.1, 0.2], [-1.6, 1.0, 1.4]];
-            for ($p = 1; $p <= 3; $p++) {
-                $hex   = $this->shade($accent, $p);
+            $sizes = $sizeSets[$c['sizeset']];
+            $n     = count($c['products']);
+            foreach ($c['products'] as $i => [$pen, $pes, $fabric]) {
                 $prodTable->insert([
                     'showroom_category_id' => $categoryId,
-                    'slug'        => $slug . '-style-' . $p,
-                    'name'        => $j(['en' => $en . ' — Style 0' . $p, 'es' => $es . ' — Estilo 0' . $p]),
-                    'description' => $j(['en' => 'A signature ' . strtolower($en) . ' piece, responsibly made and finished to a premium standard.']),
-                    'hotspot'     => $j(['x' => $positions[$p - 1][0], 'y' => $positions[$p - 1][1], 'z' => $positions[$p - 1][2]]),
-                    'gallery'     => $j([$accent, $hex, $this->shade($accent, $p + 2)]),
-                    'materials'   => $j([
-                        $materialPool[($order + $p) % count($materialPool)],
-                        $materialPool[($order + $p + 1) % count($materialPool)],
-                    ]),
-                    'sort_order'  => $p,
+                    'slug'        => $c['slug'] . '-' . ($i + 1),
+                    'name'        => $j(['en' => $pen, 'es' => $pes]),
+                    'description' => $j(['en' => 'Responsibly manufactured ' . strtolower($pen)
+                        . ' for the ' . $c['en'] . ' segment — engineered for quality, comfort and scale, '
+                        . 'with full-package development from fabric to finished garment.']),
+                    'hotspot'     => $j($this->position($i, $n)),
+                    'gallery'     => $j($c['palette']),
+                    'materials'   => $j($this->materials($order + $i)),
+                    'fabric'      => $fabric,
+                    'moq'         => $moqs[($order + $i) % count($moqs)],
+                    'sizes'       => $j($sizes),
+                    'collection'  => $collections[$i % count($collections)],
+                    'sort_order'  => $i + 1,
                     'status'      => 'published',
                     'created_at'  => $now,
                     'updated_at'  => $now,
                 ]);
             }
         }
-        // Stash season/collection metadata in the brochure_path-free way is overkill;
-        // filters use category + material which are already present.
-        unset($seasons, $collections);
     }
 
-    /** Lighten/darken a hex colour deterministically for swatch variety. */
-    private function shade(string $hex, int $step): string
+    /** Spread N product pedestals along a gentle front arc for the 3D stage. */
+    private function position(int $i, int $n): array
     {
-        $hex = ltrim($hex, '#');
-        $r   = max(0, min(255, hexdec(substr($hex, 0, 2)) + ($step * 18) - 30));
-        $g   = max(0, min(255, hexdec(substr($hex, 2, 2)) + ($step * 12) - 20));
-        $b   = max(0, min(255, hexdec(substr($hex, 4, 2)) + ($step * 8) - 10));
-        return sprintf('#%02x%02x%02x', $r, $g, $b);
+        $x = $n > 1 ? -3.6 + (7.2 * $i / ($n - 1)) : 0.0;
+        $z = 0.2 + 0.55 * sin($i * 1.1);
+
+        return ['x' => round($x, 2), 'y' => 1.1, 'z' => round($z, 2)];
+    }
+
+    /** Two material filter tags per product from a shared pool. */
+    private function materials(int $seed): array
+    {
+        $pool = ['Organic Cotton', 'Recycled Polyester', 'Bamboo', 'Performance Knit', 'Cotton Jersey', 'French Terry', 'Merino Wool', 'Linen Blend'];
+
+        return [$pool[$seed % count($pool)], $pool[($seed + 3) % count($pool)]];
     }
 }

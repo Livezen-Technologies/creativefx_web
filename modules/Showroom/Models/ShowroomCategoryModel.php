@@ -10,7 +10,7 @@ class ShowroomCategoryModel extends Model
     protected $primaryKey    = 'id';
     protected $returnType    = 'array';
     protected $useTimestamps = true;
-    protected $allowedFields = ['slug', 'name', 'theme', 'background', 'sort_order', 'status'];
+    protected $allowedFields = ['slug', 'name', 'theme', 'theme_name', 'tagline', 'background', 'palette', 'features', 'sort_order', 'status'];
 
     public function published(): array
     {

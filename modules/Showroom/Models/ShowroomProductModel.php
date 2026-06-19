@@ -12,6 +12,7 @@ class ShowroomProductModel extends Model
     protected $useTimestamps = true;
     protected $allowedFields = [
         'showroom_category_id', 'slug', 'name', 'description', 'hotspot',
-        'gallery', 'materials', 'brochure_path', 'sort_order', 'status',
+        'gallery', 'materials', 'fabric', 'moq', 'sizes', 'collection',
+        'brochure_path', 'sort_order', 'status',
     ];
 }

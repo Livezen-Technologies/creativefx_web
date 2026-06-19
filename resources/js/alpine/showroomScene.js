@@ -1,22 +1,25 @@
 /**
  * showroomScene — drives the product panel, material filter, wishlist and
- * inquiry form for a virtual-showroom category page. Product data is read from
- * the #showroom-data JSON the Three.js scene also uses.
+ * inquiry form for a virtual-showroom category page. Product data + contact
+ * details are read from the #showroom-data JSON the Three.js scene also uses.
  */
 export default function showroomScene() {
   return {
     products: [],
+    contact: { whatsapp: '', email: '' },
     selected: null,
     filter: 'all',
     panelOpen: false,
-    form: { name: '', email: '', company: '', message: '', website: '' },
+    form: { name: '', email: '', company: '', country: '', phone: '', quantity: '', message: '', website: '' },
     sending: false,
     sent: false,
     error: '',
 
     init() {
       try {
-        this.products = JSON.parse(document.getElementById('showroom-data').textContent).products || [];
+        const data = JSON.parse(document.getElementById('showroom-data').textContent);
+        this.products = data.products || [];
+        this.contact = data.contact || this.contact;
       } catch (e) { this.products = []; }
       window.addEventListener('showroom-select', (e) => this.select(e.detail.id));
     },
@@ -44,6 +47,32 @@ export default function showroomScene() {
 
     close() {
       this.panelOpen = false;
+    },
+
+    // Quick-action chips pre-fill the inquiry so the lead is captured with intent.
+    intent(type) {
+      const name = this.current ? this.current.name : '';
+      const lines = {
+        sample: `I would like to request a sample of: ${name}.`,
+        catalogue: `Please send me the catalogue including: ${name}.`,
+      };
+      this.form.message = lines[type] || this.form.message;
+      const field = document.querySelector('textarea[x-model="form.message"]');
+      if (field) field.focus();
+    },
+
+    mailLink() {
+      const subject = encodeURIComponent(`Inquiry: ${this.current ? this.current.name : 'Norlanka Showroom'}`);
+      const body = encodeURIComponent(this.form.message || '');
+      return `mailto:${this.contact.email || ''}?subject=${subject}&body=${body}`;
+    },
+
+    waLink() {
+      if (!this.contact.whatsapp) return '';
+      const text = encodeURIComponent(
+        `Hi Norlanka, I'm interested in ${this.current ? this.current.name : 'your collections'}.`,
+      );
+      return `https://wa.me/${this.contact.whatsapp}?text=${text}`;
     },
 
     async submitInquiry() {
