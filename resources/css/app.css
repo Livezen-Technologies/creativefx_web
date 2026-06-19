@@ -51,6 +51,19 @@
 }
 
 @layer components {
+  /* Kinetic typography hero ------------------------------------------------ */
+  .kinetic-hero .kline { display: block; }
+  .kw { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: 0.04em; }
+  .kw-i { display: inline-block; will-change: transform; }
+  /* Hide the whole headline until JS sets up the reveal (GSAP owns the word
+     transforms — a CSS transform here would corrupt GSAP's yPercent cache).
+     Without JS the `.js` class is absent, so the headline stays visible. */
+  .js .kinetic-hero { opacity: 0; }
+
+  .rotator-wrap { display: block; overflow: hidden; height: 1.1em; }
+  .rotator-list { display: flex; flex-direction: column; will-change: transform; }
+  .rotator-word { display: block; height: 1.1em; line-height: 1.1; white-space: nowrap; }
+
   /* Animated cinematic brand backdrop for the hero when no film is set. */
   .hero-aurora {
     background:

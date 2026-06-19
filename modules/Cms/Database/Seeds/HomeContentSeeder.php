@@ -86,6 +86,26 @@ class HomeContentSeeder extends Seeder
                 'ja' => 'デザイン。革新。責任ある調達 — グローバルな規模で。',
                 'zh' => '设计、创新、负责任的采购——全球规模。',
             ],
+            // Kinetic-typography hero: pre + cycling word + post.
+            'pre' => [
+                'en' => "We craft the world's",
+                'es' => 'Creamos',
+                'ja' => '私たちは世界の',
+                'zh' => '我们打造世界的',
+            ],
+            'post' => [
+                'en' => 'responsibly.',
+                'es' => 'del mundo, de forma responsable.',
+                'ja' => 'を、責任を持って創る。',
+                'zh' => '，以负责任的方式。',
+            ],
+            'rotators' => [
+                ['en' => 'apparel', 'es' => 'moda', 'ja' => 'アパレル', 'zh' => '服饰'],
+                ['en' => 'activewear', 'es' => 'ropa deportiva', 'ja' => 'アクティブウェア', 'zh' => '运动装'],
+                ['en' => 'knitwear', 'es' => 'punto', 'ja' => 'ニットウェア', 'zh' => '针织'],
+                ['en' => 'essentials', 'es' => 'básicos', 'ja' => '定番', 'zh' => '基础款'],
+                ['en' => 'nightwear', 'es' => 'ropa de dormir', 'ja' => 'ナイトウェア', 'zh' => '睡衣'],
+            ],
         ], 0);
 
         // ---- Pillars ----------------------------------------------------
@@ -155,14 +175,19 @@ class HomeContentSeeder extends Seeder
             $videos->insert([
                 'key'           => 'home_launch',
                 'title'         => $j(['en' => 'Norlanka Launch Film']),
-                // No background film bundled yet — the hero falls back to the
-                // animated brand visual. Drop a CDN/S3 URL here to enable <video>.
-                'src_path'      => null,
+                // Background launch film (swap for a CDN/S3 URL in production).
+                'src_path'      => '/media/video/home-hero.mp4',
                 'poster_path'   => null,
                 'is_muted_loop' => 1,
                 'status'        => 'published',
                 'created_at'    => $now,
                 'updated_at'    => $now,
+            ]);
+        } else {
+            // Keep the background film path in sync on re-seed.
+            $videos->where('key', 'home_launch')->update([
+                'src_path'   => '/media/video/home-hero.mp4',
+                'updated_at' => $now,
             ]);
         }
         $videoId = (int) $videos->where('key', 'home_launch')->get()->getRowArray()['id'];

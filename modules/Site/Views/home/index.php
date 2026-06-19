@@ -8,6 +8,25 @@ $hero         = $heroRaw ? json_decode($heroRaw, true) : [];
 $heroHeadline = $hero['headline'] ?? ['en' => "We craft the world's apparel, responsibly."];
 $heroSubhead  = $hero['subhead']  ?? ['en' => 'Design. Innovation. Responsible sourcing — at global scale.'];
 
+// Kinetic-typography headline parts (fall back to the plain headline split into words).
+$kPre      = t_field($hero['pre'] ?? []);
+$kPost     = t_field($hero['post'] ?? []);
+$kRotators = array_values(array_filter(array_map(static fn ($r) => t_field($r), $hero['rotators'] ?? [])));
+if ($kPre === '' && $kPost === '' && $kRotators === []) {
+    $kPre = t_field($heroHeadline); // no kinetic data seeded → animate the whole headline
+}
+$splitWords = static function (string $text): string {
+    $text = trim($text);
+    if ($text === '') {
+        return '';
+    }
+    $html = '';
+    foreach (preg_split('/\s+/u', $text) as $w) {
+        $html .= '<span class="kw"><span class="kw-i">' . esc($w) . '</span></span> ';
+    }
+    return $html;
+};
+
 // Capabilities ("What we do") — Hirdaramani-style services grid.
 $capabilities = [
     [
@@ -51,20 +70,40 @@ $regions = ['Sri Lanka', 'South Asia', 'South-East Asia', 'Europe', 'North Ameri
     data-gsap="hero-out"
     class="relative flex min-h-screen items-center overflow-hidden"
 >
-    <div class="hero-aurora absolute inset-0 -z-20"></div>
-    <div data-three-hero class="absolute inset-0 -z-10 opacity-70"></div>
-    <div class="absolute inset-0 -z-10 bg-gradient-to-b from-black/40 via-black/30 to-brand-black"></div>
+    <!-- Background: real launch film if set in the CMS, else the animated brand visual -->
+    <?php if (! empty($video['src_path'])): ?>
+        <video class="absolute inset-0 -z-30 h-full w-full object-cover"
+               autoplay muted loop playsinline preload="auto"
+               poster="<?= esc($video['poster_path'] ?? '') ?>">
+            <source src="<?= esc($video['src_path']) ?>" type="video/mp4">
+            <?php if (! empty($video['src_path_webm'])): ?>
+                <source src="<?= esc($video['src_path_webm']) ?>" type="video/webm">
+            <?php endif; ?>
+        </video>
+    <?php else: ?>
+        <div class="hero-aurora absolute inset-0 -z-30"></div>
+        <div data-three-hero class="absolute inset-0 -z-20 opacity-70"></div>
+    <?php endif; ?>
+    <!-- Legibility scrim over whichever background -->
+    <div class="absolute inset-0 -z-10 bg-gradient-to-b from-black/60 via-black/35 to-brand-black"></div>
 
     <div class="container-x relative w-full pt-28">
         <p class="mb-5 text-xs font-semibold uppercase tracking-[0.35em] text-brand-red" data-gsap="reveal">
             Responsible Apparel Manufacturing
         </p>
-        <h1 class="max-w-4xl text-4xl font-bold leading-[1.05] sm:text-6xl lg:text-7xl" data-gsap="reveal">
-            <?= esc(t_field($heroHeadline)) ?>
+        <h1 class="kinetic-hero max-w-5xl text-4xl font-bold leading-[1.04] sm:text-6xl lg:text-7xl" aria-label="<?= esc(t_field($heroHeadline), 'attr') ?>">
+            <?php if ($kPre !== ''): ?><span class="kline" data-kinetic><?= $splitWords($kPre) ?></span><?php endif; ?>
+            <?php if ($kRotators !== []): ?>
+                <span class="rotator-wrap text-brand-red" data-rotator aria-hidden="true">
+                    <span class="rotator-list">
+                        <?php foreach ($kRotators as $rw): ?><span class="rotator-word"><?= esc($rw) ?></span><?php endforeach; ?>
+                        <span class="rotator-word"><?= esc($kRotators[0]) ?></span>
+                    </span>
+                </span>
+            <?php endif; ?>
+            <?php if ($kPost !== ''): ?><span class="kline" data-kinetic><?= $splitWords($kPost) ?></span><?php endif; ?>
         </h1>
-        <p class="mt-6 max-w-2xl text-lg text-white/70" data-gsap="reveal">
-            <?= esc(t_field($heroSubhead)) ?>
-        </p>
+        <p class="mt-6 max-w-2xl text-lg text-white/70" data-gsap="reveal"><?= esc(t_field($heroSubhead)) ?></p>
 
         <div class="mt-10 flex flex-wrap items-center gap-4" data-gsap="reveal">
             <a href="<?= esc(locale_url('our-expertise')) ?>" class="btn-brand">Explore our expertise</a>

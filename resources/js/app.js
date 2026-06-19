@@ -5,6 +5,7 @@ import videoExperience from './alpine/videoExperience.js';
 import langSwitcher from './alpine/langSwitcher.js';
 import showroomScene from './alpine/showroomScene.js';
 import { initScrollStory } from './gsap/scroll.js';
+import { initKineticHero } from './gsap/kinetic.js';
 import { initCarousels } from './carousels.js';
 
 // --- Alpine components ---
@@ -28,6 +29,7 @@ Alpine.start();
 
 // --- GSAP scroll storytelling (guards prefers-reduced-motion internally) ---
 document.addEventListener('DOMContentLoaded', () => {
+  initKineticHero();
   initScrollStory();
   initCarousels();
 });
