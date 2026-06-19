@@ -101,9 +101,14 @@ git config --global --get-all safe.directory 2>/dev/null | grep -qxF "$APP_DIR" 
 
 if [ -d "$APP_DIR/.git" ]; then
   note "Updating existing checkout"
-  git -C "$APP_DIR" fetch --depth 1 origin "$BRANCH"
-  git -C "$APP_DIR" checkout "$BRANCH"
-  git -C "$APP_DIR" reset --hard "origin/$BRANCH"
+  # Fetch via the tokenized REPO_URL directly — the checkout's existing 'origin'
+  # may have no credentials. Reset hard to the fetched tip, then re-point the
+  # branch label. Normalize origin to a token-less URL so no token lands on disk.
+  git -C "$APP_DIR" fetch --depth 1 "$REPO_URL" "$BRANCH"
+  git -C "$APP_DIR" reset --hard FETCH_HEAD
+  git -C "$APP_DIR" checkout -B "$BRANCH"
+  CLEAN_URL="$(printf '%s' "$REPO_URL" | sed -E 's#://[^@/]*@#://#')"
+  git -C "$APP_DIR" remote set-url origin "$CLEAN_URL" 2>/dev/null || true
 elif [ -e "$APP_DIR" ] && [ -n "$(ls -A "$APP_DIR" 2>/dev/null)" ]; then
   die "$APP_DIR exists and is not a git checkout — refusing to overwrite."
 else
