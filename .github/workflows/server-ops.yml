@@ -1,0 +1,131 @@
+name: Server ops (norlankamfg.livezencloud.com)
+
+# Manual, scoped server operations run over SSH from the GitHub runner.
+# `diagnose-tls`     — READ-ONLY: inspect who serves :80/:443, web stack, our
+#                      vhost, certbot, and panel hints. Changes nothing.
+# `setup-tls-certbot`— Obtain a Let's Encrypt cert for ONLY this domain and add
+#                      a 443 server block to our vhost. Run only after diagnosis
+#                      confirms plain nginx owns 443 (won't disturb other sites).
+#
+# Credentials: repo secret -> dispatch input (same as deploy.yml).
+
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: Operation to run
+        type: choice
+        options:
+          - diagnose-tls
+          - setup-tls-certbot
+        default: diagnose-tls
+        required: true
+      le_email:
+        description: Email for Let's Encrypt (setup-tls-certbot only)
+        required: false
+        default: ''
+      deploy_host:
+        description: Server host/IP (overrides DEPLOY_HOST secret)
+        required: false
+        default: ''
+      deploy_user:
+        description: SSH user (overrides DEPLOY_USER secret)
+        required: false
+        default: ''
+      deploy_password:
+        description: SSH password (overrides DEPLOY_PASSWORD secret; recorded in run — rotate after)
+        required: false
+        default: ''
+
+concurrency:
+  group: server-ops-norlankamfg
+  cancel-in-progress: false
+
+jobs:
+  ops:
+    runs-on: ubuntu-latest
+    env:
+      DEPLOY_HOST: ${{ secrets.DEPLOY_HOST || github.event.inputs.deploy_host }}
+      DEPLOY_USER: ${{ secrets.DEPLOY_USER || github.event.inputs.deploy_user }}
+      DEPLOY_PASSWORD: ${{ secrets.DEPLOY_PASSWORD || github.event.inputs.deploy_password }}
+      DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+    steps:
+      - name: Mask deploy password in logs
+        run: |
+          if [ -n "${DEPLOY_PASSWORD:-}" ]; then echo "::add-mask::${DEPLOY_PASSWORD}"; fi
+          if [ -z "${DEPLOY_HOST:-}" ]; then
+            echo "::error::No DEPLOY_HOST — set the DEPLOY_HOST secret or pass deploy_host input."; exit 1
+          fi
+
+      - name: Diagnose TLS (read-only)
+        if: ${{ github.event.inputs.action == 'diagnose-tls' }}
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ env.DEPLOY_HOST }}
+          username: ${{ env.DEPLOY_USER }}
+          password: ${{ env.DEPLOY_PASSWORD }}
+          key: ${{ env.DEPLOY_SSH_KEY }}
+          command_timeout: 5m
+          script: |
+            set +e
+            DOMAIN=norlankamfg.livezencloud.com
+            echo "===== sockets listening on :80 / :443 ====="
+            (ss -ltnp 2>/dev/null || netstat -ltnp 2>/dev/null) | grep -E ':80 |:443 '
+            echo
+            echo "===== web-server processes ====="
+            ps -eo pid,comm,args 2>/dev/null | grep -Ei 'nginx|apache|httpd|litespeed|lshttpd|caddy|haproxy' | grep -v grep | sort -u
+            echo
+            echo "===== versions ====="
+            command -v nginx >/dev/null && nginx -v 2>&1
+            command -v apache2 >/dev/null && apache2 -v 2>&1 | head -1
+            command -v httpd >/dev/null && httpd -v 2>&1 | head -1
+            ls -d /usr/local/lsws /usr/local/CyberCP /usr/local/cloudbox /opt/cloudbox /usr/local/cyberpanel 2>/dev/null
+            echo
+            echo "===== nginx vhosts ====="
+            ls -la /etc/nginx/sites-enabled/ 2>/dev/null
+            ls -la /etc/nginx/conf.d/ 2>/dev/null
+            echo "--- grep listen/server_name/ssl across nginx ---"
+            grep -RsnE 'listen|server_name|ssl_certificate' /etc/nginx/sites-enabled/ /etc/nginx/conf.d/ 2>/dev/null | grep -vE '#'
+            echo
+            echo "===== OUR vhost (listen/root/ssl only) ====="
+            grep -nE 'listen|server_name|root|ssl' /etc/nginx/sites-available/${DOMAIN}.conf 2>/dev/null
+            echo
+            echo "===== what answers :80 for our host ====="
+            curl -s -i -m 8 http://127.0.0.1/ -H "Host: ${DOMAIN}" 2>&1 | head -15
+            echo
+            echo "===== what answers :443 for our host (cert subject) ====="
+            curl -s -i -k -m 8 https://127.0.0.1/ -H "Host: ${DOMAIN}" 2>&1 | head -15
+            echo "--- TLS cert presented on :443 ---"
+            echo | openssl s_client -connect 127.0.0.1:443 -servername ${DOMAIN} 2>/dev/null | openssl x509 -noout -subject -issuer 2>/dev/null
+            echo
+            echo "===== certbot ====="
+            command -v certbot >/dev/null && { certbot --version 2>&1; certbot certificates 2>/dev/null | grep -E 'Certificate Name|Domains|Expiry'; } || echo "certbot: not installed"
+            echo
+            echo "===== running panel/web services ====="
+            systemctl list-units --type=service --state=running 2>/dev/null | grep -Ei 'nginx|apache|httpd|lsws|litespeed|cyber|cloudbox|panel|caddy'
+            echo
+            echo "===== DONE (read-only) ====="
+
+      - name: Setup TLS via certbot (scoped to our domain)
+        if: ${{ github.event.inputs.action == 'setup-tls-certbot' }}
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ env.DEPLOY_HOST }}
+          username: ${{ env.DEPLOY_USER }}
+          password: ${{ env.DEPLOY_PASSWORD }}
+          key: ${{ env.DEPLOY_SSH_KEY }}
+          command_timeout: 10m
+          envs: LE_EMAIL
+          script: |
+            set -e
+            DOMAIN=norlankamfg.livezencloud.com
+            LE_EMAIL="${{ github.event.inputs.le_email }}"
+            [ -n "$LE_EMAIL" ] || { echo "le_email input is required"; exit 1; }
+            if ! command -v certbot >/dev/null; then
+              echo "==> installing certbot (additive; does not alter other sites)"
+              apt-get update -qq && apt-get install -y certbot python3-certbot-nginx
+            fi
+            echo "==> issuing/installing cert for ONLY $DOMAIN"
+            certbot --nginx -d "$DOMAIN" --non-interactive --agree-tos -m "$LE_EMAIL" --redirect --keep-until-expiring
+            nginx -t && systemctl reload nginx
+            echo "==> done; certbot will auto-renew via its systemd timer"
