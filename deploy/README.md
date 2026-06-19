@@ -1,0 +1,65 @@
+# Deploying Norlanka — plain Nginx + PHP-FPM
+
+A git-pull deployment that adds **only** the `norlankamfg.livezencloud.com`
+site. It does **not** touch other vhosts, databases, or global PHP config.
+
+## What it creates (and nothing else)
+- App code: `/var/www/norlankamfg` (this branch)
+- Database: `norlanka_prod` + user `norlanka_prod@localhost` (created if missing)
+- Nginx vhost: `/etc/nginx/sites-available/norlankamfg.livezencloud.com.conf` (refuses to overwrite a foreign file)
+- App secrets (`.env`, DB password, JWT secret, encryption key): generated on the server, **never** in git
+
+## Prerequisites on the server
+- Ubuntu/Debian with **Nginx**, **PHP-FPM 8.3+** (`intl mbstring mysqli gd curl json` extensions), **MySQL 8** running, `git`, `curl`, `openssl`.
+- Composer and Node are installed automatically if missing (Node is only used to build assets; pass `SKIP_NODE=1` to skip and build elsewhere).
+- DNS / Cloudflare already points the domain at this server (it does).
+- Git access to this repo from the server: a **deploy key** or a **personal access token** in `REPO_URL` (the repo is private).
+
+## First deploy
+```bash
+# as root on the server
+REPO_URL='https://<GITHUB_TOKEN>@github.com/livezen-technologies/norlanka_web.git' \
+bash <(curl -fsSL https://raw.githubusercontent.com/livezen-technologies/norlanka_web/claude/awesome-planck-01cc95/deploy/setup.sh)
+
+# …or clone first and run locally:
+git clone --branch claude/awesome-planck-01cc95 \
+  'https://<GITHUB_TOKEN>@github.com/livezen-technologies/norlanka_web.git' /tmp/norlanka
+REPO_URL='https://<GITHUB_TOKEN>@github.com/livezen-technologies/norlanka_web.git' \
+  bash /tmp/norlanka/deploy/setup.sh
+```
+The script prints a summary and asks for confirmation before changing anything
+(set `ASSUME_YES=1` to skip the prompt). Override any default inline, e.g.
+`APP_DIR=/srv/norlanka DB_NAME=norlanka_live bash deploy/setup.sh`.
+
+After it finishes:
+- Site: `http://norlankamfg.livezencloud.com/` → redirects to `/en`
+- Admin: `/admin/login` — **admin@norlanka.local / norlanka123** (change immediately)
+
+## TLS
+The vhost listens on :80. Choose one:
+- **Cloudflare**: install a Cloudflare *Origin Certificate* on the box and set the
+  domain's SSL mode to **Full (strict)**; or
+- **certbot**: `certbot --nginx -d norlankamfg.livezencloud.com`
+
+Then set `app.forceGlobalSecureRequests = true` in `/var/www/norlankamfg/.env`.
+The vhost already forwards Cloudflare's `X-Forwarded-Proto` so the app builds
+`https://` URLs.
+
+## Updating later
+```bash
+bash /var/www/norlankamfg/deploy/update.sh
+```
+Pulls the branch, reinstalls deps, rebuilds assets, runs migrations, reloads php-fpm.
+
+## Rollback
+```bash
+cd /var/www/norlankamfg && git reset --hard <previous_commit> \
+  && composer install --no-dev -o && npm run build \
+  && sudo -u www-data php spark migrate --all
+```
+
+## Safety notes
+- Review `setup.sh` before running — it is intentionally conservative and aborts
+  rather than overwrite anything it didn't create.
+- Secrets are generated server-side; rotate the shared root password.
+- The DB user is granted privileges on `norlanka_prod` **only**.
