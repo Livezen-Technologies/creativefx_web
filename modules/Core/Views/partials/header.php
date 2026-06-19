@@ -5,7 +5,7 @@
     :class="scrolled ? 'bg-brand-black/90 backdrop-blur shadow-lg shadow-black/30' : 'bg-transparent'"
     class="fixed inset-x-0 top-0 z-50 transition-colors duration-300"
 >
-    <div class="container-x flex h-20 items-center justify-between">
+    <div class="flex h-20 w-full items-center justify-between px-6 lg:px-10">
         <a href="<?= esc(locale_url('')) ?>" class="flex items-center gap-2">
             <span class="text-2xl font-bold tracking-widest text-white">NOR<span class="text-brand-red">LANKA</span></span>
         </a>

@@ -1,97 +1,79 @@
 <?php
-helper('norlanka');
+helper(['norlanka', 'url']);
 $this->extend('Modules\Core\Views\layouts\main');
 
-// --- Hero content (from the seeded CMS 'hero' block) ---
+// --- Hero content (from the seeded CMS 'hero' block, with sensible fallbacks) ---
 $heroRaw      = $sections['hero']['blocks'][0]['content'] ?? null;
 $hero         = $heroRaw ? json_decode($heroRaw, true) : [];
-$heroHeadline = $hero['headline'] ?? ['en' => 'Norlanka'];
-$heroSubhead  = $hero['subhead'] ?? [];
+$heroHeadline = $hero['headline'] ?? ['en' => "We craft the world's apparel, responsibly."];
+$heroSubhead  = $hero['subhead']  ?? ['en' => 'Design. Innovation. Responsible sourcing — at global scale.'];
 
-// --- Launch video: audio tracks + subtitle files ---
-$tracks       = $video['tracks'] ?? [];
-$subsByLocale = [];
-foreach ($video['subtitles'] ?? [] as $s) {
-    $subsByLocale[$s['locale']] = $s;
-}
-$trackCodes  = array_column($tracks, 'locale');
-$defaultExp  = in_array(current_locale(), $trackCodes, true) ? current_locale() : ($trackCodes[0] ?? 'en');
-$expConfig   = [
-    'defaultLocale' => $defaultExp,
-    'locales'       => array_map(static fn ($t) => ['code' => $t['locale'], 'label' => $t['label']], $tracks),
+// Capabilities ("What we do") — Hirdaramani-style services grid.
+$capabilities = [
+    [
+        'title' => 'Apparel Manufacturing',
+        'text'  => 'High-volume, full-package production of knit and woven garments for the world’s leading brands.',
+        'icon'  => 'M6 3l-2 4 3 2v12h10V9l3-2-2-4-3 2a4 4 0 01-6 0L6 3z',
+    ],
+    [
+        'title' => 'Washing & Finishing',
+        'text'  => 'Vertically integrated, water-conscious washing, dyeing and finishing under one roof.',
+        'icon'  => 'M12 3s6 6.5 6 11a6 6 0 11-12 0c0-4.5 6-11 6-11z',
+    ],
+    [
+        'title' => 'Printing & Embroidery',
+        'text'  => 'In-house printing, embroidery and embellishment that bring every design to life.',
+        'icon'  => 'M4 20h16M5 16l9-9 3 3-9 9H5v-3zM14 7l3-3 3 3-3 3',
+    ],
+    [
+        'title' => 'Design & Development',
+        'text'  => 'A dedicated R&D and design studio turning concepts into shelf-ready collections, fast.',
+        'icon'  => 'M12 20h9M3 20l2-6 11-11 4 4L9 18l-6 2zM14 6l4 4',
+    ],
 ];
+
+// Sustainability pillars — the heart of a responsible-manufacturing story.
+$impact = [
+    ['title' => 'Net-zero ambition', 'text' => 'Driving renewable energy and efficiency toward carbon-neutral operations.'],
+    ['title' => 'Ethical workplaces', 'text' => 'Safe, fair and empowering livelihoods for every person on our floor.'],
+    ['title' => 'Circular materials',  'text' => 'Lower-impact fibres, less water and waste designed out at the source.'],
+];
+
+// Global footprint regions.
+$regions = ['Sri Lanka', 'South Asia', 'South-East Asia', 'Europe', 'North America', 'Global brands'];
 ?>
 
 <?= $this->section('content') ?>
+
+<!-- ===================== HERO ===================== -->
 <section
     id="hero"
     data-gsap="hero-out"
-    x-data="videoExperience(<?= esc(json_encode($expConfig, JSON_UNESCAPED_UNICODE), 'attr') ?>)"
     class="relative flex min-h-screen items-center overflow-hidden"
 >
-    <!-- Animated brand visual (placeholder until a launch film is set in the CMS) -->
     <div class="hero-aurora absolute inset-0 -z-20"></div>
     <div data-three-hero class="absolute inset-0 -z-10 opacity-70"></div>
-    <div class="absolute inset-0 -z-10 bg-gradient-to-b from-black/30 via-black/20 to-brand-black"></div>
+    <div class="absolute inset-0 -z-10 bg-gradient-to-b from-black/40 via-black/30 to-brand-black"></div>
 
-    <?php if (! empty($video['src_path'])): ?>
-        <video x-ref="video" class="absolute inset-0 -z-10 h-full w-full object-cover"
-               muted loop playsinline preload="auto"
-               poster="<?= esc($video['poster_path'] ?? '') ?>">
-            <source src="<?= esc($video['src_path']) ?>" type="video/mp4">
-            <?php if (! empty($video['src_path_webm'])): ?>
-                <source src="<?= esc($video['src_path_webm']) ?>" type="video/webm">
-            <?php endif; ?>
-        </video>
-    <?php else: ?>
-        <video x-ref="video" class="hidden"></video>
-    <?php endif; ?>
-
-    <!-- One <audio> per language, each carrying its WebVTT subtitle track -->
-    <?php foreach ($tracks as $t): $sub = $subsByLocale[$t['locale']] ?? null; ?>
-        <audio x-ref="audio_<?= esc($t['locale'], 'attr') ?>" preload="auto">
-            <source src="<?= esc($t['audio_path']) ?>" type="audio/wav">
-            <?php if ($sub): ?>
-                <track kind="subtitles" src="<?= esc($sub['vtt_path']) ?>"
-                       srclang="<?= esc($t['locale'], 'attr') ?>" label="<?= esc($t['label']) ?>">
-            <?php endif; ?>
-        </audio>
-    <?php endforeach; ?>
-
-    <!-- Overlay content -->
     <div class="container-x relative w-full pt-28">
-        <p class="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-brand-red" data-gsap="reveal">Norlanka</p>
-        <h1 class="max-w-4xl text-4xl font-bold leading-[1.05] sm:text-6xl" data-gsap="reveal"><?= esc(t_field($heroHeadline)) ?></h1>
-        <p class="mt-6 max-w-2xl text-lg text-white/70" data-gsap="reveal"><?= esc(t_field($heroSubhead)) ?></p>
+        <p class="mb-5 text-xs font-semibold uppercase tracking-[0.35em] text-brand-red" data-gsap="reveal">
+            Responsible Apparel Manufacturing
+        </p>
+        <h1 class="max-w-4xl text-4xl font-bold leading-[1.05] sm:text-6xl lg:text-7xl" data-gsap="reveal">
+            <?= esc(t_field($heroHeadline)) ?>
+        </h1>
+        <p class="mt-6 max-w-2xl text-lg text-white/70" data-gsap="reveal">
+            <?= esc(t_field($heroSubhead)) ?>
+        </p>
 
         <div class="mt-10 flex flex-wrap items-center gap-4" data-gsap="reveal">
-            <button type="button" class="btn-brand" @click="togglePlay()">
-                <span x-show="!started"><?= esc(lang('Site.experience.play')) ?></span>
-                <span x-show="started &amp;&amp; playing" x-cloak><?= esc(lang('Site.experience.pause')) ?></span>
-                <span x-show="started &amp;&amp; !playing" x-cloak><?= esc(lang('Site.experience.resume')) ?></span>
-            </button>
-            <button type="button" class="btn-ghost" @click="toggleSubtitles()" :class="subtitlesOn ? '' : 'opacity-50'">
-                <?= esc(lang('Site.experience.subtitles')) ?>
-            </button>
+            <a href="<?= esc(locale_url('our-expertise')) ?>" class="btn-brand">Explore our expertise</a>
+            <a href="<?= esc(locale_url('showroom')) ?>" class="btn-ghost">Enter the showroom</a>
         </div>
 
-        <!-- Netflix-style audio language switch -->
-        <div class="mt-10" data-gsap="reveal">
-            <p class="mb-3 text-[11px] font-semibold uppercase tracking-[0.3em] text-white/40"><?= esc(lang('Site.experience.language')) ?></p>
-            <div class="flex flex-wrap gap-2">
-                <?php foreach ($tracks as $t): ?>
-                    <button type="button"
-                            class="lang-pill border border-white/15"
-                            @click="switchLanguage('<?= esc($t['locale'], 'attr') ?>')"
-                            :class="current === '<?= esc($t['locale'], 'attr') ?>' ? 'lang-pill-active' : ''"><?= esc($t['label']) ?></button>
-                <?php endforeach; ?>
-            </div>
-        </div>
-    </div>
-
-    <!-- Manually-rendered subtitle caption (works without a <video> surface) -->
-    <div class="pointer-events-none absolute inset-x-0 bottom-28 flex justify-center px-6" x-show="caption" x-cloak x-transition.opacity>
-        <p class="rounded-lg bg-black/70 px-5 py-2 text-center text-lg font-medium backdrop-blur" x-text="caption"></p>
+        <p class="mt-12 max-w-xl text-[11px] uppercase tracking-[0.3em] text-white/40" data-gsap="reveal">
+            Trusted by the world’s leading brands &amp; retailers
+        </p>
     </div>
 
     <div class="absolute inset-x-0 bottom-8 flex justify-center">
@@ -99,7 +81,131 @@ $expConfig   = [
     </div>
 </section>
 
-<?= $this->include('Modules\Site\Views\home\sections\pillars', ['section' => $sections['pillars'] ?? null]) ?>
+<!-- ===================== LEGACY / INTRO ===================== -->
+<section class="bg-brand-black py-24 sm:py-28">
+    <div class="container-x grid gap-12 lg:grid-cols-12 lg:items-end">
+        <div class="lg:col-span-7" data-gsap="reveal">
+            <p class="text-xs font-semibold uppercase tracking-[0.3em] text-brand-red">Who we are</p>
+            <h2 class="mt-5 text-3xl font-bold leading-tight sm:text-5xl">
+                A partner the world’s brands trust to make apparel the right way.
+            </h2>
+        </div>
+        <div class="lg:col-span-5" data-gsap="reveal">
+            <p class="text-lg leading-relaxed text-white/65">
+                From responsible sourcing to design and innovation, Norlanka delivers full-package
+                manufacturing at global scale — pairing craftsmanship with measurable accountability
+                at every stage of the journey from fibre to finished garment.
+            </p>
+            <a href="<?= esc(locale_url('our-story')) ?>"
+               class="mt-6 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-widest text-white transition hover:text-brand-red">
+                Our story
+                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ===================== STATS (CMS-driven) ===================== -->
 <?= $this->include('Modules\Site\Views\home\sections\stats', ['section' => $sections['stats'] ?? null]) ?>
+
+<!-- ===================== CAPABILITIES / WHAT WE DO ===================== -->
+<section class="bg-brand-black py-24 sm:py-28">
+    <div class="container-x">
+        <div class="max-w-2xl" data-gsap="reveal">
+            <p class="text-xs font-semibold uppercase tracking-[0.3em] text-brand-red">What we do</p>
+            <h2 class="mt-5 text-3xl font-bold sm:text-5xl">End-to-end manufacturing, under one roof.</h2>
+            <p class="mt-4 text-white/60">Vertically integrated capabilities that take a collection from first sketch to global shelf.</p>
+        </div>
+
+        <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            <?php foreach ($capabilities as $cap): ?>
+                <article class="group flex h-full flex-col rounded-2xl border border-white/10 bg-white/[0.02] p-8 transition hover:border-brand-red/60 hover:bg-white/[0.04]" data-gsap="reveal">
+                    <span class="inline-flex h-12 w-12 items-center justify-center rounded-xl border border-white/10 text-brand-red transition group-hover:border-brand-red/60">
+                        <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="<?= esc($cap['icon'], 'attr') ?>"/></svg>
+                    </span>
+                    <h3 class="mt-6 text-xl font-semibold"><?= esc($cap['title']) ?></h3>
+                    <p class="mt-3 text-sm leading-relaxed text-white/60"><?= esc($cap['text']) ?></p>
+                </article>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</section>
+
+<!-- ===================== VALUES / PILLARS (CMS-driven) ===================== -->
+<?= $this->include('Modules\Site\Views\home\sections\pillars', ['section' => $sections['pillars'] ?? null]) ?>
+
+<!-- ===================== SUSTAINABILITY / OUR IMPACT ===================== -->
+<section class="relative overflow-hidden border-y border-white/10 py-24 sm:py-28">
+    <div class="hero-aurora absolute inset-0 -z-10 opacity-50"></div>
+    <div class="absolute inset-0 -z-10 bg-black/55"></div>
+    <div class="container-x grid gap-14 lg:grid-cols-2 lg:items-center">
+        <div data-gsap="reveal">
+            <p class="text-xs font-semibold uppercase tracking-[0.3em] text-brand-red">Our impact</p>
+            <h2 class="mt-5 text-3xl font-bold leading-tight sm:text-5xl">Sustainability, woven into every stitch.</h2>
+            <p class="mt-5 max-w-xl text-lg leading-relaxed text-white/70">
+                Responsible manufacturing isn’t a programme — it’s how we operate. We measure our
+                footprint, invest in our people and design waste out of the process, so the apparel
+                we make is something everyone can stand behind.
+            </p>
+            <a href="<?= esc(locale_url('impact')) ?>" class="btn-brand mt-8">Explore our impact</a>
+        </div>
+
+        <div class="grid gap-4" data-gsap="reveal">
+            <?php foreach ($impact as $i => $point): ?>
+                <div class="flex items-start gap-5 rounded-2xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur">
+                    <span class="text-2xl font-bold text-brand-red">0<?= $i + 1 ?></span>
+                    <div>
+                        <h3 class="text-lg font-semibold"><?= esc($point['title']) ?></h3>
+                        <p class="mt-1 text-sm leading-relaxed text-white/60"><?= esc($point['text']) ?></p>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</section>
+
+<!-- ===================== GLOBAL FOOTPRINT ===================== -->
+<section class="bg-brand-black py-24 sm:py-28">
+    <div class="container-x">
+        <div class="grid gap-12 lg:grid-cols-12 lg:items-center">
+            <div class="lg:col-span-5" data-gsap="reveal">
+                <p class="text-xs font-semibold uppercase tracking-[0.3em] text-brand-red">Global footprint</p>
+                <h2 class="mt-5 text-3xl font-bold sm:text-5xl">Made in Sri Lanka. Delivered to the world.</h2>
+                <p class="mt-5 text-lg leading-relaxed text-white/65">
+                    From our manufacturing heartland we serve leading brands across every major market —
+                    combining local craftsmanship with the reliability of a global supply partner.
+                </p>
+            </div>
+            <div class="lg:col-span-7" data-gsap="reveal">
+                <div class="flex flex-wrap gap-3">
+                    <?php foreach ($regions as $r): ?>
+                        <span class="rounded-full border border-white/15 px-5 py-2.5 text-sm font-medium uppercase tracking-widest text-white/70 transition hover:border-brand-red/60 hover:text-white"><?= esc($r) ?></span>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===================== VIRTUAL SHOWROOM (CMS-driven CTA) ===================== -->
 <?= $this->include('Modules\Site\Views\home\sections\cta', ['section' => $sections['cta'] ?? null]) ?>
+
+<!-- ===================== PARTNER / CLOSING CTA ===================== -->
+<section class="bg-brand-black pb-28">
+    <div class="container-x">
+        <div class="overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-[#1a0205] via-brand-black to-brand-black p-10 sm:p-16" data-gsap="reveal">
+            <div class="grid gap-8 lg:grid-cols-2 lg:items-center">
+                <div>
+                    <h2 class="text-3xl font-bold leading-tight sm:text-4xl">Let’s build your next collection together.</h2>
+                    <p class="mt-4 max-w-lg text-white/65">Partner with a manufacturer that delivers quality, scale and responsibility — or join a team shaping the future of apparel.</p>
+                </div>
+                <div class="flex flex-wrap gap-4 lg:justify-end">
+                    <a href="<?= esc(locale_url('contact')) ?>" class="btn-brand">Contact us</a>
+                    <a href="<?= esc(locale_url('careers')) ?>" class="btn-ghost">View careers</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <?= $this->endSection() ?>
