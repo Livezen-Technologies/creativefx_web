@@ -1,69 +1,128 @@
-# CodeIgniter 4 Application Starter
+# Norlanka Corporate Website & Virtual Showroom
 
-## What is CodeIgniter?
+A multilingual corporate website and virtual showroom for Norlanka (apparel
+manufacturer), built on a **modular CodeIgniter 4 CMS** with a **Vite + Tailwind
++ Alpine.js + GSAP + Three.js** front-end.
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
+This repository contains **Milestone 1 — the project foundation**: the runnable
+modular architecture, the core database schema, and the flagship **Home launch
+experience** (Netflix-style multi-language audio switching with subtitles and
+GSAP scroll storytelling). The remaining modules (virtual showroom, full admin,
+careers, CRM, ESG dashboards) are scaffolded as skeletons to build on.
 
-This repository holds a composer-installable app starter.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+---
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
+## Tech stack
 
-You can read the [user guide](https://codeigniter.com/user_guide/)
-corresponding to the latest version of the framework.
+| Layer    | Tech |
+|----------|------|
+| Backend  | CodeIgniter 4.7, PHP 8.3+, MySQL 8 (SQLite for local dev), Redis, JWT auth |
+| Frontend | TailwindCSS, Alpine.js, GSAP + ScrollTrigger, Swiper.js, Three.js, Vite |
+| Infra    | Docker, Nginx (+ AWS S3 / Cloudflare / Meilisearch / GA4 integration points) |
 
-## Installation & updates
+Brand: primary `#CF2030`, secondary `#000000`; fonts **K2D** (primary) +
+**Avenir** (secondary, falls back to Montserrat — Avenir is licensed and not
+bundled). Locales: English, Japanese, Spanish, Chinese.
 
-`composer create-project codeigniter4/appstarter` then `composer update` whenever
-there is a new release of the framework.
+---
 
-When updating, check the release notes to see if there are any changes you might need to apply
-to your `app` folder. The affected files can be copied or merged from
-`vendor/codeigniter4/framework/app`.
+## Modular architecture
 
-## Setup
+All domain code lives in independent, namespaced **code modules** under
+`modules/`. Each owns its routes, controllers, models, migrations, views and
+language files, auto-discovered by CI4 — `app/` holds only the global shell.
 
-Copy `env` to `.env` and tailor for your app, specifically the baseURL
-and any database settings.
+```
+modules/
+  Core/        shared layout, partials, LocaleFilter, i18n helper, settings
+  Site/        public front-end: Home launch experience + generic CMS renderer
+  Auth/        users/roles/permissions, JWT library + filter, /api/auth
+  Cms/         pages / page_sections / page_blocks + Home content seeder
+  Translation/ translations table + manager (skeleton)
+  Media/       media_library (local/S3 abstraction)
+  Catalog/     product_categories / products (13 categories seeded)
+  Showroom/    showroom_categories / showroom_products (skeleton)
+  Video/       videos / video_tracks / video_subtitles (powers the Home film)
+  Esg/ Careers/ Crm/ Analytics/   domain tables + models (skeleton)
+  Admin/       JWT-gated dashboard stub + login
+```
 
-## Important Change with index.php
+Module namespaces are registered in `app/Config/Autoload.php`; migration files
+use globally-ordered timestamp prefixes so cross-module foreign keys resolve.
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+---
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
+## Quick start (no Docker — uses SQLite)
 
-**Please** read the user guide for a better explanation of how CI4 works!
+```bash
+composer install
+cp .env.example .env          # already configured for SQLite by default
+php spark key:generate
+php spark migrate --all        # NOTE: --all runs every module's migrations
+php spark db:seed "Modules\Core\Database\Seeds\DatabaseSeeder"
 
-## Repository Management
+npm install
+npm run build                  # builds assets into public/build
+php spark serve --port 8080
+# open http://localhost:8080/  → redirects to /en
+```
 
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
+Front-end dev with hot reload: `npm run dev` (Vite on :5173) alongside
+`php spark serve`.
 
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
+## Quick start (Docker — uses MySQL 8 + Redis)
 
-## Server Requirements
+```bash
+cp .env.example .env           # switch DB to the MySQL (Option B) block
+docker compose up -d --build
+docker compose exec app php spark migrate --all
+docker compose exec app php spark db:seed "Modules\Core\Database\Seeds\DatabaseSeeder"
+npm install && npm run build
+# open http://localhost:8080/
+```
 
-PHP version 8.2 or higher is required, with the following extensions installed:
+---
 
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
+## The Home launch experience
 
-> [!WARNING]
-> - The end of life date for PHP 7.4 was November 28, 2022.
-> - The end of life date for PHP 8.0 was November 26, 2023.
-> - The end of life date for PHP 8.1 was December 31, 2025.
-> - If you are still using below PHP 8.2, you should upgrade immediately.
-> - The end of life date for PHP 8.2 will be December 31, 2026.
+The hero is **CMS-driven** from the seeded `videos` / `video_tracks` /
+`video_subtitles` rows. Technically:
 
-Additionally, make sure that the following extensions are enabled in your PHP:
+- A single animated brand backdrop is the visual (an actual background film can
+  be dropped in later by setting `videos.src_path` — no code change).
+- Each language has its own `<audio>` track; the **active audio element is the
+  master clock**, and only one plays at a time (Netflix-style switching).
+- **Subtitles** are WebVTT files rendered manually from the active track's
+  `cuechange` events, so they work with or without a `<video>` surface.
+- **GSAP ScrollTrigger** drives the storytelling sections (reveals, animated
+  stat counters), guarded by `prefers-reduced-motion`.
 
-- json (enabled by default - don't turn it off)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+Placeholder media (self-contained, generated — no licensing) lives in
+`public/media/audio/*.wav` and `public/media/subtitles/*.vtt`. Swap in real
+S3/CDN assets by updating the `videos`/`video_tracks` rows (or via the future
+media manager).
+
+---
+
+## Admin & API
+
+- `POST /api/auth/login` → returns a JWT. Dev credentials:
+  **`admin@norlanka.local` / `norlanka123`** (change in production).
+- `GET /api/auth/me` and `GET /admin` require `Authorization: Bearer <token>`.
+- `GET /admin/login` is a public page that performs the login flow.
+
+User roles seeded: Super Admin, Content Manager, ESG Manager, HR Manager,
+Marketing Manager, Viewer.
+
+---
+
+## Notes / conventions
+
+- **`php spark migrate --all`** — module migrations only run with `--all`.
+- Translatable content is stored as JSON locale-maps and resolved by the
+  `t_field()` helper (falls back to `en`).
+- Large video binaries are **not** committed — only small generated placeholders.
+- The locale filter alias is `applocale` (not `locale`, which collides with
+  PHP's case-insensitive built-in `\Locale` class).
+- Localized routes use a constrained `(:locale)` placeholder so `/admin` and
+  `/api` are never shadowed.
