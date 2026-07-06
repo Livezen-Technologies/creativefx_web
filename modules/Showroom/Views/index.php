@@ -27,6 +27,33 @@ $firstSlug = $categories[0]['slug'] ?? '';
     </div>
 </section>
 
+<!-- ===================== KIDS-LINEUP HERO (real-kids showcase) ===================== -->
+<section class="kids-hero" x-data="kidsHero()" x-init="init()">
+    <div class="kids-hero__glow" aria-hidden="true"></div>
+    <div class="container-x relative">
+        <div class="mx-auto max-w-2xl text-center" data-gsap="reveal">
+            <p class="eyebrow justify-center"><?= esc(lang('Site.showroom.kids_eyebrow')) ?></p>
+            <h2 class="mt-4 text-3xl font-bold sm:text-5xl"><?= esc(lang('Site.showroom.kids_title')) ?></h2>
+            <p class="mt-4 text-white/60"><?= esc(lang('Site.showroom.kids_intro')) ?></p>
+        </div>
+        <div class="kids-lineup" role="img" aria-label="<?= esc(lang('Site.showroom.kids_title'), 'attr') ?>">
+            <?php for ($k = 0; $k < 6; $k++):
+                $off   = abs($k - 2.5);            // 2.5,1.5,0.5,0.5,1.5,2.5
+                $curve = round($off * 16);         // outer children sit lower (curved formation)
+                $depth = round(20 - $off * 3);     // central children get more parallax
+            ?>
+                <figure class="kid" style="--i: <?= $k ?>; --curve: <?= $curve ?>px; --depth: <?= $depth ?>;">
+                    <span class="kid__inner">
+                        <img src="/media/showroom/hero-kids/kid-<?= $k + 1 ?>.png" alt="" loading="lazy" class="kid__img" width="188" height="458">
+                    </span>
+                    <span class="kid__shadow" aria-hidden="true"></span>
+                </figure>
+            <?php endfor; ?>
+        </div>
+        <p class="mt-4 text-center text-xs italic text-white/35"><?= esc(lang('Site.showroom.kids_note')) ?></p>
+    </div>
+</section>
+
 <!-- ===================== CATEGORY PORTALS ===================== -->
 <section class="bg-brand-black py-12" x-data="{ q: '' }">
     <div class="container-x">
