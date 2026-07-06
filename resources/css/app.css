@@ -154,10 +154,10 @@ html.dark .theme-esg-green {  /* Impact page green scope, dark variant */
   .nav-link {
     position: relative;
     font-size: 0.95rem;
-    font-weight: 400;
+    font-weight: 500;
     letter-spacing: 0.05em;
     text-transform: uppercase;
-    color: rgb(var(--fg) / 0.82);
+    color: rgb(var(--fg) / 0.9);
     transition: color 0.2s ease;
   }
   .nav-link::after {
