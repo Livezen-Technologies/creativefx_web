@@ -93,6 +93,22 @@ return [
             'title'   => 'Made in Sri Lanka. Delivered to the world.',
             'body'    => 'From our manufacturing heartland we serve leading brands across every major market — combining local craftsmanship with the reliability of a global supply partner.',
             'regions' => ['Sri Lanka', 'South Asia', 'South-East Asia', 'Europe', 'North America', 'Global brands'],
+            'points'  => [
+                'hq'      => 'Sri Lanka',
+                'india'   => 'South Asia',
+                'sea'     => 'South-East Asia',
+                'mideast' => 'Middle East',
+                'europe'  => 'Europe',
+                'america' => 'North America',
+            ],
+            'roles' => [
+                'hq'     => 'Headquarters & manufacturing',
+                'hub'    => 'Sourcing & partnerships',
+                'market' => 'Markets & delivery',
+            ],
+            'legend_hq'     => 'Headquarters',
+            'legend_market' => 'Markets & partners',
+            'note'          => 'Representative of the regions we design, source and deliver across.',
         ],
         'closing' => [
             'title' => 'Let’s build your next collection together.',

@@ -45,6 +45,31 @@ $impact = [
 // Global footprint regions (localized list).
 $regions = lang('Site.home.footprint.regions');
 if (! is_array($regions)) { $regions = ['Sri Lanka', 'South Asia', 'South-East Asia', 'Europe', 'North America', 'Global brands']; }
+
+// Interactive presence map — normalized coordinates (0..1) computed with the same
+// plate-carrée projection as the land-dot field (scripts/gen-dotmap.mjs), so the
+// markers sit exactly on the map. Labels/roles are localized; `hq` anchors arcs.
+$pointNames = lang('Site.home.footprint.points');
+$pointRoles = lang('Site.home.footprint.roles');
+$mapPoints = [];
+foreach ([
+    ['key' => 'hq',      'x' => 0.7218, 'y' => 0.5473, 'role' => 'hq',     'hq' => true],
+    ['key' => 'india',   'x' => 0.7167, 'y' => 0.4353, 'role' => 'hub'],
+    ['key' => 'sea',     'x' => 0.7964, 'y' => 0.5194, 'role' => 'hub'],
+    ['key' => 'mideast', 'x' => 0.6536, 'y' => 0.4158, 'role' => 'hub'],
+    ['key' => 'europe',  'x' => 0.5241, 'y' => 0.2366, 'role' => 'market'],
+    ['key' => 'america', 'x' => 0.2944, 'y' => 0.3043, 'role' => 'market'],
+] as $p) {
+    $mapPoints[] = [
+        'key'  => $p['key'],
+        'x'    => $p['x'],
+        'y'    => $p['y'],
+        'hq'   => ! empty($p['hq']),
+        'name' => is_array($pointNames) ? ($pointNames[$p['key']] ?? $p['key']) : $p['key'],
+        'role' => is_array($pointRoles) ? ($pointRoles[$p['role']] ?? '') : '',
+    ];
+}
+$hqPoint = $mapPoints[0];
 ?>
 
 <?= $this->section('content') ?>
@@ -215,21 +240,89 @@ if (! is_array($regions)) { $regions = ['Sri Lanka', 'South Asia', 'South-East A
     </div>
 </section>
 
-<!-- ===================== GLOBAL FOOTPRINT ===================== -->
-<section class="bg-brand-black py-24 sm:py-28">
+<!-- ===================== GLOBAL FOOTPRINT (interactive map) ===================== -->
+<?php
+// Pre-compute the HQ→market connection arcs in the SVG viewBox space (0 0 1000 386).
+$vbW = 1000; $vbH = 386;
+$hx  = $hqPoint['x'] * $vbW; $hy = $hqPoint['y'] * $vbH;
+$arcs = [];
+foreach ($mapPoints as $mp) {
+    if ($mp['hq']) { continue; }
+    $mx = $mp['x'] * $vbW; $my = $mp['y'] * $vbH;
+    $cx = ($hx + $mx) / 2;
+    $dist = sqrt(($mx - $hx) ** 2 + ($my - $hy) ** 2);
+    $cy = min($hy, $my) - $dist * 0.22;      // lift the control point above the pair
+    $arcs[] = sprintf('M%.1f %.1f Q%.1f %.1f %.1f %.1f', $hx, $hy, $cx, $cy, $mx, $my);
+}
+?>
+<section class="on-dark relative overflow-hidden bg-brand-black py-24 sm:py-28"
+         x-data="worldMap(<?= esc(json_encode($mapPoints), 'attr') ?>)" x-init="init()">
     <div class="container-x">
         <div class="grid gap-12 lg:grid-cols-12 lg:items-center">
-            <div class="lg:col-span-5" data-gsap="reveal">
+            <!-- Left: copy + legend + region list -->
+            <div class="lg:col-span-4" data-gsap="reveal">
                 <p class="eyebrow"><?= esc(lang('Site.home.footprint.eyebrow')) ?></p>
                 <h2 class="mt-5 text-3xl font-bold sm:text-5xl"><?= esc(lang('Site.home.footprint.title')) ?></h2>
                 <p class="mt-5 text-lg leading-relaxed text-white/65">
                     <?= esc(lang('Site.home.footprint.body')) ?>
                 </p>
+
+                <div class="mt-7 flex flex-wrap items-center gap-x-6 gap-y-2 text-xs uppercase tracking-widest text-white/55">
+                    <span class="inline-flex items-center gap-2">
+                        <span class="nl-legend-dot nl-legend-dot--hq"></span><?= esc(lang('Site.home.footprint.legend_hq')) ?>
+                    </span>
+                    <span class="inline-flex items-center gap-2">
+                        <span class="nl-legend-dot"></span><?= esc(lang('Site.home.footprint.legend_market')) ?>
+                    </span>
+                </div>
+
+                <ul class="mt-6 flex flex-col gap-1">
+                    <?php foreach ($mapPoints as $i => $mp): ?>
+                        <li>
+                            <button type="button"
+                                    class="nl-region group flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left transition"
+                                    :class="isActive(<?= $i ?>) ? 'bg-white/[0.06]' : 'hover:bg-white/[0.03]'"
+                                    @mouseenter="setActive(<?= $i ?>)" @mouseleave="clearActive()"
+                                    @focus="setActive(<?= $i ?>)" @blur="clearActive()">
+                                <span class="nl-region__dot <?= $mp['hq'] ? 'nl-region__dot--hq' : '' ?>"
+                                      :class="isActive(<?= $i ?>) ? 'scale-125' : ''"></span>
+                                <span class="flex-1">
+                                    <span class="block text-sm font-semibold text-white"><?= esc($mp['name']) ?></span>
+                                    <span class="block text-xs text-white/45"><?= esc($mp['role']) ?></span>
+                                </span>
+                            </button>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+                <p class="mt-4 text-xs italic text-white/35"><?= esc(lang('Site.home.footprint.note')) ?></p>
             </div>
-            <div class="lg:col-span-7" data-gsap="reveal">
-                <div class="flex flex-wrap gap-3">
-                    <?php foreach ($regions as $r): ?>
-                        <span class="rounded-full border border-white/15 px-5 py-2.5 text-sm font-medium uppercase tracking-widest text-white/70 transition hover:border-brand-red/60 hover:text-white"><?= esc($r) ?></span>
+
+            <!-- Right: the map stage -->
+            <div class="lg:col-span-8" data-gsap="reveal">
+                <div class="nl-map" x-ref="stage" style="aspect-ratio: <?= esc($vbW / $vbH) ?>;">
+                    <canvas class="nl-map__dots" x-ref="canvas" aria-hidden="true"></canvas>
+
+                    <svg class="nl-map__arcs" viewBox="0 0 <?= $vbW ?> <?= $vbH ?>" preserveAspectRatio="none" aria-hidden="true">
+                        <?php foreach ($arcs as $d): ?>
+                            <path class="nl-arc" d="<?= esc($d, 'attr') ?>" fill="none"></path>
+                        <?php endforeach; ?>
+                    </svg>
+
+                    <?php foreach ($mapPoints as $i => $mp): ?>
+                        <button type="button"
+                                class="nl-marker <?= $mp['hq'] ? 'nl-marker--hq' : '' ?>"
+                                style="left: <?= esc($mp['x'] * 100) ?>%; top: <?= esc($mp['y'] * 100) ?>%;"
+                                :class="isActive(<?= $i ?>) ? 'is-active' : ''"
+                                @mouseenter="setActive(<?= $i ?>)" @mouseleave="clearActive()"
+                                @focus="setActive(<?= $i ?>)" @blur="clearActive()"
+                                aria-label="<?= esc($mp['name'] . ' — ' . $mp['role'], 'attr') ?>">
+                            <span class="nl-marker__pulse" aria-hidden="true"></span>
+                            <span class="nl-marker__dot" aria-hidden="true"></span>
+                            <span class="nl-marker__label">
+                                <span class="nl-marker__name"><?= esc($mp['name']) ?></span>
+                                <span class="nl-marker__role"><?= esc($mp['role']) ?></span>
+                            </span>
+                        </button>
                     <?php endforeach; ?>
                 </div>
             </div>

@@ -90,6 +90,22 @@ return [
             'title'   => 'Hecho en Sri Lanka. Entregado al mundo.',
             'body'    => 'Desde nuestro corazón manufacturero servimos a marcas líderes en todos los mercados principales, combinando la artesanía local con la fiabilidad de un socio de suministro global.',
             'regions' => ['Sri Lanka', 'Asia del Sur', 'Sudeste Asiático', 'Europa', 'Norteamérica', 'Marcas globales'],
+            'points'  => [
+                'hq'      => 'Sri Lanka',
+                'india'   => 'Asia del Sur',
+                'sea'     => 'Sudeste Asiático',
+                'mideast' => 'Oriente Medio',
+                'europe'  => 'Europa',
+                'america' => 'Norteamérica',
+            ],
+            'roles' => [
+                'hq'     => 'Sede y manufactura',
+                'hub'    => 'Abastecimiento y alianzas',
+                'market' => 'Mercados y entrega',
+            ],
+            'legend_hq'     => 'Sede central',
+            'legend_market' => 'Mercados y socios',
+            'note'          => 'Representa las regiones donde diseñamos, abastecemos y entregamos.',
         ],
         'closing' => [
             'title' => 'Construyamos juntos tu próxima colección.',

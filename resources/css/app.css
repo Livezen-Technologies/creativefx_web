@@ -214,6 +214,150 @@ html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-stopped { overflow: hidden; }
 .lenis.lenis-smooth iframe { pointer-events: none; }
 
+/* Interactive global-presence map ---------------------------------------- */
+.nl-map {
+  position: relative;
+  width: 100%;
+  border-radius: 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background:
+    radial-gradient(120% 130% at 50% -10%, rgba(207, 32, 48, 0.10), transparent 62%),
+    rgba(255, 255, 255, 0.015);
+}
+.nl-map__dots {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+}
+.nl-map__arcs {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+.nl-arc {
+  stroke: rgba(207, 32, 48, 0.55);
+  stroke-width: 1.1;
+  stroke-linecap: round;
+  stroke-dasharray: 4 7;
+  vector-effect: non-scaling-stroke;
+  opacity: 0.7;
+  animation: nl-arc-flow 2.4s linear infinite;
+}
+@keyframes nl-arc-flow { to { stroke-dashoffset: -22; } }
+
+.nl-marker {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 16px;
+  height: 16px;
+  transform: translate(-50%, -50%);
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  z-index: 2;
+}
+.nl-marker--hq { z-index: 3; }
+.nl-marker__dot {
+  position: relative;
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: #cf2030;
+  box-shadow: 0 0 0 2px rgba(207, 32, 48, 0.25), 0 0 10px 1px rgba(207, 32, 48, 0.5);
+  transition: transform 0.2s ease;
+}
+.nl-marker--hq .nl-marker__dot {
+  width: 13px;
+  height: 13px;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(207, 32, 48, 0.9), 0 0 16px 2px rgba(207, 32, 48, 0.65);
+}
+.nl-marker__pulse {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  border: 1.5px solid rgba(207, 32, 48, 0.6);
+  animation: nl-pulse 2.4s ease-out infinite;
+}
+.nl-marker--hq .nl-marker__pulse {
+  width: 13px;
+  height: 13px;
+  border-color: rgba(255, 255, 255, 0.55);
+  animation-duration: 2s;
+}
+@keyframes nl-pulse {
+  0% { transform: scale(1); opacity: 0.85; }
+  100% { transform: scale(3.4); opacity: 0; }
+}
+.nl-marker.is-active .nl-marker__dot { transform: scale(1.35); }
+
+.nl-marker__label {
+  position: absolute;
+  bottom: calc(100% + 9px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  white-space: nowrap;
+  padding: 0.4rem 0.7rem;
+  border-radius: 0.6rem;
+  background: rgba(10, 10, 12, 0.94);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 14px 32px -14px rgba(0, 0, 0, 0.85);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  z-index: 4;
+}
+.nl-marker.is-active .nl-marker__label,
+.nl-marker:hover .nl-marker__label,
+.nl-marker:focus-visible .nl-marker__label {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+.nl-marker__name {
+  display: block;
+  font-family: 'K2D', ui-sans-serif, sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+.nl-marker__role {
+  display: block;
+  font-size: 0.66rem;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.nl-region__dot {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: #cf2030;
+  box-shadow: 0 0 8px rgba(207, 32, 48, 0.55);
+  transition: transform 0.2s ease;
+}
+.nl-region__dot--hq {
+  background: #ffffff;
+  box-shadow: 0 0 0 2px rgba(207, 32, 48, 0.85);
+}
+.nl-legend-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: #cf2030;
+}
+.nl-legend-dot--hq {
+  background: #ffffff;
+  box-shadow: 0 0 0 2px rgba(207, 32, 48, 0.9);
+}
+
 /* Respect reduced-motion: GSAP also guards, this is a CSS backstop. */
 @media (prefers-reduced-motion: reduce) {
   html {
@@ -228,4 +372,6 @@ html.lenis, html.lenis body { height: auto; }
   }
   .pre-logo { animation: none; }
   #preloader { transition: none; }
+  .nl-arc { animation: none; opacity: 0.5; }
+  .nl-marker__pulse { animation: none; opacity: 0; }
 }
