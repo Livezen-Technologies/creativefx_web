@@ -25,9 +25,10 @@ export default {
         white: 'rgb(var(--fg) / <alpha-value>)',
       },
       fontFamily: {
-        // Archivo = display/headings, Inter = body/UI.
-        sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-        display: ['Archivo', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        // Brand Guide: K2D = primary/display, Avenir = secondary/body
+        // (Montserrat fallback — Avenir is licensed, local() first when present).
+        sans: ['Avenir', 'Avenir Next', 'Montserrat', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        display: ['K2D', 'ui-sans-serif', 'system-ui', 'sans-serif'],
       },
       letterSpacing: {
         widest: '0.2em',

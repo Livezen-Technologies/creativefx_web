@@ -1,11 +1,14 @@
-// Self-hosted brand fonts — Archivo (display) + Inter (body). Bundled by Vite,
-// so no external font CDN request (faster, privacy-friendly, no FOUT).
-import '@fontsource/inter/latin-400.css';
-import '@fontsource/inter/latin-500.css';
-import '@fontsource/inter/latin-600.css';
-import '@fontsource/inter/latin-700.css';
-import '@fontsource/archivo/latin-600.css';
-import '@fontsource/archivo/latin-700.css';
+// Self-hosted brand fonts (Brand Guide) — K2D (primary/display) + Montserrat
+// (Avenir fallback; Avenir is licensed and can't be bundled). Bundled by Vite,
+// so no external font CDN request.
+import '@fontsource/k2d/latin-400.css';
+import '@fontsource/k2d/latin-500.css';
+import '@fontsource/k2d/latin-600.css';
+import '@fontsource/k2d/latin-700.css';
+import '@fontsource/montserrat/latin-400.css';
+import '@fontsource/montserrat/latin-500.css';
+import '@fontsource/montserrat/latin-600.css';
+import '@fontsource/montserrat/latin-700.css';
 
 import '../css/app.css';
 
