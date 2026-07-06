@@ -182,6 +182,38 @@
   }
 }
 
+/* Brand loading screen (fixed white overlay, not themed) ------------------ */
+#preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: #f7f7f7;
+  transition: opacity 0.55s ease;
+}
+.js #preloader { display: flex; }
+.preloaded #preloader { display: none !important; }
+#preloader.is-hidden { opacity: 0; pointer-events: none; }
+.pre-inner { display: flex; flex-direction: column; align-items: center; gap: 1.1rem; }
+.pre-logo { height: 60px; width: auto; animation: pre-pulse 1.5s ease-in-out infinite; }
+.pre-word {
+  font-family: 'K2D', ui-sans-serif, sans-serif;
+  font-weight: 600; font-size: 0.82rem; letter-spacing: 0.32em;
+  text-transform: uppercase; color: #111111;
+}
+.pre-bar { width: 150px; height: 2px; border-radius: 2px; background: rgba(0, 0, 0, 0.12); overflow: hidden; }
+.pre-bar-fill { display: block; height: 100%; width: 0; background: #cf2030; border-radius: 2px; transition: width 1.1s ease; }
+@keyframes pre-pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(0.9); opacity: 0.65; } }
+
+/* Lenis smooth scroll ----------------------------------------------------- */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }
+.lenis.lenis-smooth iframe { pointer-events: none; }
+
 /* Respect reduced-motion: GSAP also guards, this is a CSS backstop. */
 @media (prefers-reduced-motion: reduce) {
   html {
@@ -194,4 +226,6 @@
   .nav-link::after {
     transition: none;
   }
+  .pre-logo { animation: none; }
+  #preloader { transition: none; }
 }
