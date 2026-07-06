@@ -1,16 +1,21 @@
-/* Brand fonts: K2D (primary) + Montserrat (Avenir fallback — Avenir is licensed
-   and cannot be bundled; the cascade uses local('Avenir') first, then Montserrat). */
-@import url('https://fonts.googleapis.com/css2?family=K2D:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap');
-
+/* Fonts are self-hosted (Archivo + Inter) and imported in resources/js/app.js
+   via @fontsource, so no external font-CDN request here. */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Prefer a locally-installed licensed Avenir when present. */
-@font-face {
-  font-family: 'Avenir';
-  src: local('Avenir'), local('Avenir Next'), local('AvenirNext');
-  font-display: swap;
+/* Brand accent tokens (RGB channels). Default = Norlanka red. A page-level
+   scope (below) can override these to recolour every brand-red utility. */
+:root {
+  --accent: 207 32 48;        /* #CF2030 brand red */
+  --accent-dark: 165 18 31;   /* #A5121F */
+  --accent-soft: 255 86 99;   /* #FF5663 eyebrow tint */
+}
+/* Our Impact page — ESG "Regenerate" green scope. */
+.theme-esg-green {
+  --accent: 46 158 104;       /* #2E9E68 */
+  --accent-dark: 23 122 79;   /* #177A4F */
+  --accent-soft: 143 214 148; /* #8FD694 */
 }
 
 @layer base {
@@ -22,6 +27,9 @@
   }
   body {
     @apply bg-brand-black font-sans text-white antialiased;
+  }
+  h1, h2, h3, h4 {
+    @apply font-display;
   }
   ::selection {
     @apply bg-brand-red text-white;
@@ -67,8 +75,8 @@
   /* Animated cinematic brand backdrop for the hero when no film is set. */
   .hero-aurora {
     background:
-      radial-gradient(60% 80% at 20% 20%, rgba(207, 32, 48, 0.45), transparent 60%),
-      radial-gradient(50% 70% at 80% 30%, rgba(207, 32, 48, 0.25), transparent 60%),
+      radial-gradient(60% 80% at 20% 20%, rgb(var(--accent) / 0.45), transparent 60%),
+      radial-gradient(50% 70% at 80% 30%, rgb(var(--accent) / 0.25), transparent 60%),
       radial-gradient(80% 80% at 50% 90%, rgba(40, 0, 4, 0.9), transparent 70%),
       #000000;
     background-size: 200% 200%;
@@ -112,7 +120,7 @@
     right: 0;
     bottom: -7px;
     height: 2px;
-    background: #cf2030;
+    background: rgb(var(--accent));
     border-radius: 2px;
     transform: scaleX(0);
     transform-origin: left center;
@@ -132,13 +140,13 @@
     font-weight: 600;
     letter-spacing: 0.3em;
     text-transform: uppercase;
-    color: #ff5663;
+    color: rgb(var(--accent-soft));
   }
   .eyebrow::before {
     content: '';
     width: 1.75rem;
     height: 2px;
-    background: #cf2030;
+    background: rgb(var(--accent));
     border-radius: 2px;
   }
 
@@ -148,8 +156,8 @@
   /* Hero red brand glow + soft accents. */
   .hero-red-glow {
     background:
-      radial-gradient(40% 55% at 12% 78%, rgba(207, 32, 48, 0.34), transparent 70%),
-      radial-gradient(30% 40% at 85% 20%, rgba(207, 32, 48, 0.16), transparent 70%);
+      radial-gradient(40% 55% at 12% 78%, rgb(var(--accent) / 0.34), transparent 70%),
+      radial-gradient(30% 40% at 85% 20%, rgb(var(--accent) / 0.16), transparent 70%);
   }
 }
 

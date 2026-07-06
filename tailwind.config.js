@@ -10,19 +10,20 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Norlanka brand palette
+        // Norlanka brand palette. The accent is driven by CSS variables so a
+        // page scope (e.g. .theme-esg-green on Our Impact) can recolour every
+        // brand-red utility without touching templates.
         brand: {
-          DEFAULT: '#CF2030',
-          red: '#CF2030',
-          'red-dark': '#A5121F',
+          DEFAULT: 'rgb(var(--accent) / <alpha-value>)',
+          red: 'rgb(var(--accent) / <alpha-value>)',
+          'red-dark': 'rgb(var(--accent-dark) / <alpha-value>)',
           black: '#000000',
         },
       },
       fontFamily: {
-        // K2D = primary, Avenir = secondary (Montserrat fallback — Avenir is licensed)
-        sans: ['K2D', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-        k2d: ['K2D', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-        avenir: ['Avenir', 'Avenir Next', 'Montserrat', 'ui-sans-serif', 'sans-serif'],
+        // Archivo = display/headings, Inter = body/UI.
+        sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        display: ['Archivo', 'ui-sans-serif', 'system-ui', 'sans-serif'],
       },
       letterSpacing: {
         widest: '0.2em',

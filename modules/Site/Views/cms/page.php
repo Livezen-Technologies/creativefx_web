@@ -3,6 +3,8 @@ helper('norlanka');
 $this->extend('Modules\Core\Views\layouts\main');
 ?>
 <?= $this->section('content') ?>
+<?php $pageTheme = $pageTheme ?? ''; ?>
+<div<?= $pageTheme !== '' ? ' class="' . esc($pageTheme, 'attr') . '"' : '' ?>>
 <?php
 // Full-bleed CMS renderer: every block partial is a self-contained <section>
 // and owns its own layout. The first block of each page is normally a
@@ -20,4 +22,5 @@ foreach ($page['sections'] ?? [] as $section):
     endforeach;
 endforeach;
 ?>
+</div>
 <?= $this->endSection() ?>
