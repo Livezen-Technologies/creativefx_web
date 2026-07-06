@@ -74,6 +74,11 @@ $hqPoint = $mapPoints[0];
 
 <?= $this->section('content') ?>
 
+<!-- Full-screen "fullpage" experience wrapper. Each direct-child <section> below
+     becomes a snap panel (the footer is pulled in as the last one by fullpage.js).
+     Without JS this is an ordinary block and the page scrolls normally. -->
+<div id="fp" class="fp">
+
 <!-- ===================== HERO ===================== -->
 <?php $heroPoster = $video['poster_path'] ?? '/media/video/home-hero-poster.jpg'; ?>
 <section
@@ -153,12 +158,14 @@ $hqPoint = $mapPoints[0];
         </div>
     </div>
 
-    <div class="absolute inset-x-0 bottom-8 flex justify-center">
-        <span class="flex flex-col items-center gap-2 text-[10px] uppercase tracking-[0.3em] text-white/40">
+    <button type="button" data-fp-next
+            class="absolute inset-x-0 bottom-8 flex cursor-pointer justify-center bg-transparent"
+            aria-label="<?= esc(lang('Site.experience.scroll'), 'attr') ?>">
+        <span class="flex flex-col items-center gap-2 text-[10px] uppercase tracking-[0.3em] text-white/40 transition hover:text-white/70">
             <?= esc(lang('Site.experience.scroll')) ?>
             <svg class="h-4 w-4 animate-bounce text-brand-red" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M6 13l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </span>
-    </div>
+    </button>
 </section>
 
 <!-- ===================== LEGACY / INTRO ===================== -->
@@ -350,5 +357,7 @@ foreach ($mapPoints as $mp) {
         </div>
     </div>
 </section>
+
+</div><!-- /#fp -->
 
 <?= $this->endSection() ?>

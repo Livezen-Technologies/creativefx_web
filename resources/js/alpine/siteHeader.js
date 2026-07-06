@@ -14,6 +14,13 @@ export default () => ({
     this.$watch('mobile', (open) => {
       document.documentElement.style.overflow = open ? 'hidden' : '';
     });
+    // On the full-screen home experience the window never scrolls, so drive the
+    // header's condensed/solid state and progress bar from the active panel.
+    window.addEventListener('fp:change', (e) => {
+      const { index = 0, count = 1 } = e.detail || {};
+      this.scrolled = index > 0;
+      this.progress = count > 1 ? (index / (count - 1)) * 100 : 0;
+    });
   },
 
   onScroll() {

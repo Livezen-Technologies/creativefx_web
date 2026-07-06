@@ -358,6 +358,99 @@ html.lenis, html.lenis body { height: auto; }
   box-shadow: 0 0 0 2px rgba(207, 32, 48, 0.9);
 }
 
+/* Full-screen section engine (fullpage) ----------------------------------
+   Only active once JS adds `.fp-active`; without JS the page scrolls normally. */
+html.fp-active,
+html.fp-active body {
+  height: 100%;
+  overflow: hidden;
+}
+.fp-active #fp {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1;
+  will-change: transform;
+}
+.fp-active .fp-panel {
+  position: relative;
+  width: 100%;
+  height: var(--fp-h, 100vh);
+  min-height: 0;                 /* neutralize utilities like min-h-screen */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;       /* fallback for browsers without `safe` */
+  justify-content: safe center;  /* keeps tall content reachable + scrollable */
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+}
+.fp-active .fp-panel::-webkit-scrollbar { width: 0; height: 0; display: none; }
+
+/* Dot navigation rail */
+.fp-nav {
+  position: fixed;
+  right: clamp(0.6rem, 2vw, 1.75rem);
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.85rem;
+}
+.fp-dot {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.6rem;
+  padding: 0.15rem;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+.fp-dot__hit {
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.15);
+  transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+.fp-dot:hover .fp-dot__hit { background: rgba(255, 255, 255, 0.7); }
+.fp-dot.is-active .fp-dot__hit {
+  background: #cf2030;
+  transform: scale(1.4);
+  box-shadow: 0 0 0 4px rgba(207, 32, 48, 0.22);
+}
+.fp-dot__label {
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.85);
+  background: rgba(10, 10, 12, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 0.25rem 0.55rem;
+  border-radius: 0.4rem;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(6px);
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.fp-dot:hover .fp-dot__label,
+.fp-dot:focus-visible .fp-dot__label {
+  opacity: 1;
+  transform: translateX(0);
+}
+@media (max-width: 640px) {
+  .fp-nav { gap: 0.6rem; right: 0.5rem; }
+  .fp-dot__label { display: none; }
+}
+
 /* Respect reduced-motion: GSAP also guards, this is a CSS backstop. */
 @media (prefers-reduced-motion: reduce) {
   html {
@@ -374,4 +467,5 @@ html.lenis, html.lenis body { height: auto; }
   #preloader { transition: none; }
   .nl-arc { animation: none; opacity: 0.5; }
   .nl-marker__pulse { animation: none; opacity: 0; }
+  .fp-dot__hit, .fp-dot__label { transition: none; }
 }
