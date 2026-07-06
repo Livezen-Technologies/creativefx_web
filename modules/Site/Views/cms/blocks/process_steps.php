@@ -1,5 +1,5 @@
 <?php helper('norlanka'); if (empty($content['items']) || ! is_array($content['items'])) { return; } ?>
-<section class="bg-gradient-to-b from-brand-black to-[#140003] py-20">
+<section class="bg-brand-black py-20">
     <div class="container-x">
         <?php if (! empty($content['title'])): ?>
             <h2 class="mb-10 text-3xl font-bold sm:text-4xl" data-gsap="reveal"><?= esc(t_field($content['title'])) ?></h2>

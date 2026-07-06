@@ -17,8 +17,12 @@ export default {
           DEFAULT: 'rgb(var(--accent) / <alpha-value>)',
           red: 'rgb(var(--accent) / <alpha-value>)',
           'red-dark': 'rgb(var(--accent-dark) / <alpha-value>)',
-          black: '#000000',
+          // Themeable ground: light-grey by default, near-black inside .on-dark.
+          black: 'rgb(var(--bg) / <alpha-value>)',
         },
+        // Themeable foreground: ink on light ground, near-white inside .on-dark.
+        // (No solid `bg-white` exists in the app, so this override is safe.)
+        white: 'rgb(var(--fg) / <alpha-value>)',
       },
       fontFamily: {
         // Archivo = display/headings, Inter = body/UI.

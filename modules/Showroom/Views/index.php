@@ -5,6 +5,7 @@ $hex = static fn ($v, $fallback = '#CF2030') => preg_match('/^#[0-9a-fA-F]{3,8}$
 $firstSlug = $categories[0]['slug'] ?? '';
 ?>
 <?= $this->section('content') ?>
+<div class="on-dark">
 
 <!-- ===================== LOBBY HERO ===================== -->
 <section class="relative overflow-hidden">
@@ -69,7 +70,7 @@ $firstSlug = $categories[0]['slug'] ?? '';
 </section>
 
 <!-- ===================== SUSTAINABILITY EXPERIENCE CENTER ===================== -->
-<section class="relative overflow-hidden border-t border-white/10 py-20">
+<section class="relative overflow-hidden border-t border-white/10 bg-brand-black py-20">
     <div class="hero-red-glow absolute inset-0 -z-10 opacity-60"></div>
     <div class="container-x grid gap-8 lg:grid-cols-2 lg:items-center">
         <div data-gsap="reveal">
@@ -82,4 +83,5 @@ $firstSlug = $categories[0]['slug'] ?? '';
         </div>
     </div>
 </section>
+</div>
 <?= $this->endSection() ?>

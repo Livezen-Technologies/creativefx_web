@@ -1,5 +1,5 @@
 <?php helper('norlanka'); ?>
-<section class="relative overflow-hidden bg-gradient-to-b from-[#140003] to-brand-black py-20">
+<section class="relative overflow-hidden bg-brand-black py-20">
     <div class="container-x">
         <?php if (! empty($content['title'])): ?>
             <h2 class="text-3xl font-bold sm:text-4xl" data-gsap="reveal"><?= esc(t_field($content['title'])) ?></h2>

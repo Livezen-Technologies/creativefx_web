@@ -1,5 +1,5 @@
 <?php helper(['norlanka', 'url']); ?>
-<section class="relative overflow-hidden py-24">
+<section class="on-dark relative overflow-hidden py-24">
     <div class="hero-aurora absolute inset-0 -z-10 opacity-50"></div>
     <div class="absolute inset-0 -z-10 bg-black/40"></div>
     <div class="container-x text-center" data-gsap="reveal">

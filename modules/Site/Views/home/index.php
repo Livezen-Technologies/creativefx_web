@@ -55,7 +55,7 @@ if (! is_array($regions)) { $regions = ['Sri Lanka', 'South Asia', 'South-East A
     id="hero"
     data-gsap="hero-out"
     x-data="{ playing: true, toggleVid() { const v = $refs.bgv; if (!v) return; if (v.paused) { delete v.dataset.userPaused; v.play(); this.playing = true; } else { v.dataset.userPaused = '1'; v.pause(); this.playing = false; } } }"
-    class="relative flex min-h-screen items-center overflow-hidden"
+    class="on-dark relative flex min-h-screen items-center overflow-hidden"
 >
     <!-- Background: real launch film if set in the CMS, else the animated brand visual -->
     <?php if (! empty($video['src_path'])): ?>
@@ -188,7 +188,7 @@ if (! is_array($regions)) { $regions = ['Sri Lanka', 'South Asia', 'South-East A
 <?= $this->include('Modules\Site\Views\home\sections\pillars', ['section' => $sections['pillars'] ?? null]) ?>
 
 <!-- ===================== SUSTAINABILITY / OUR IMPACT ===================== -->
-<section class="relative overflow-hidden border-y border-white/10 py-24 sm:py-28">
+<section class="on-dark relative overflow-hidden border-y border-white/10 py-24 sm:py-28">
     <div class="hero-aurora absolute inset-0 -z-10 opacity-50"></div>
     <div class="absolute inset-0 -z-10 bg-black/55"></div>
     <div class="container-x grid gap-14 lg:grid-cols-2 lg:items-center">
@@ -241,7 +241,7 @@ if (! is_array($regions)) { $regions = ['Sri Lanka', 'South Asia', 'South-East A
 <?= $this->include('Modules\Site\Views\home\sections\cta', ['section' => $sections['cta'] ?? null]) ?>
 
 <!-- ===================== PARTNER / CLOSING CTA ===================== -->
-<section class="bg-brand-black pb-28">
+<section class="on-dark bg-brand-black pb-28">
     <div class="container-x">
         <div class="overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-[#1a0205] via-brand-black to-brand-black p-10 sm:p-16" data-gsap="reveal">
             <div class="grid gap-8 lg:grid-cols-2 lg:items-center">

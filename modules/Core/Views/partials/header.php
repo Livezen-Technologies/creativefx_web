@@ -25,7 +25,7 @@ $expertiseMega = [
     @scroll.window="onScroll()"
     @keydown.escape.window="mega=false; mobile=false"
     :class="scrolled ? 'is-scrolled' : ''"
-    class="site-header fixed inset-x-0 top-0 z-50"
+    class="site-header on-dark fixed inset-x-0 top-0 z-50"
 >
     <!-- Top shade: keeps the logo/nav/buttons legible over light hero media at
          the top of the page; fades out once the solid header background kicks in. -->

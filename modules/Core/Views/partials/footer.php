@@ -1,5 +1,5 @@
 <?php helper(['url', 'norlanka']); $locale = current_locale(); ?>
-<footer class="border-t border-white/10 bg-brand-black">
+<footer class="on-dark border-t border-white/10 bg-brand-black">
     <div class="container-x grid gap-10 py-16 md:grid-cols-4">
         <div class="md:col-span-2">
             <span class="text-2xl font-bold tracking-widest">NOR<span class="text-brand-red">LANKA</span></span>

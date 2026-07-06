@@ -1,5 +1,5 @@
 <?php helper(['norlanka', 'url']); if (empty($section['blocks'])) { return; } $c = json_decode($section['blocks'][0]['content'] ?? '[]', true) ?: []; ?>
-<section class="relative overflow-hidden py-28">
+<section class="on-dark relative overflow-hidden py-28">
     <div class="hero-aurora absolute inset-0 -z-10 opacity-60"></div>
     <div class="absolute inset-0 -z-10 bg-black/40"></div>
     <div class="container-x text-center" data-gsap="reveal">

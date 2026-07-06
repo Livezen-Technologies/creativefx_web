@@ -1,5 +1,5 @@
 <?php helper('norlanka'); ?>
-<section class="relative overflow-hidden">
+<section class="on-dark relative overflow-hidden">
     <div class="hero-aurora absolute inset-0 -z-20"></div>
     <div class="absolute inset-0 -z-10 bg-gradient-to-b from-black/40 via-black/20 to-brand-black"></div>
     <div class="container-x flex min-h-[60vh] flex-col justify-end pb-16 pt-40">

@@ -58,14 +58,14 @@ $wa       = $whatsapp !== '' ? 'https://wa.me/' . preg_replace('/[^0-9]/', '', $
                     <input type="text" x-model="form.website" class="hidden" tabindex="-1" autocomplete="off" aria-hidden="true">
                     <div class="grid gap-4 sm:grid-cols-2">
                         <input type="text" x-model="form.name" required placeholder="<?= esc(lang('Site.contact.name')) ?>"
-                               class="w-full rounded-lg border border-white/15 bg-black/40 px-3 py-2.5 text-sm focus:border-brand-red focus:outline-none">
+                               class="w-full rounded-lg border border-white/15 bg-white/5 px-3 py-2.5 text-sm focus:border-brand-red focus:outline-none">
                         <input type="email" x-model="form.email" required placeholder="<?= esc(lang('Site.contact.email')) ?>"
-                               class="w-full rounded-lg border border-white/15 bg-black/40 px-3 py-2.5 text-sm focus:border-brand-red focus:outline-none">
+                               class="w-full rounded-lg border border-white/15 bg-white/5 px-3 py-2.5 text-sm focus:border-brand-red focus:outline-none">
                     </div>
                     <input type="text" x-model="form.subject" placeholder="<?= esc(lang('Site.contact.subject')) ?>"
-                           class="w-full rounded-lg border border-white/15 bg-black/40 px-3 py-2.5 text-sm focus:border-brand-red focus:outline-none">
+                           class="w-full rounded-lg border border-white/15 bg-white/5 px-3 py-2.5 text-sm focus:border-brand-red focus:outline-none">
                     <textarea x-model="form.message" required rows="4" placeholder="<?= esc(lang('Site.contact.message')) ?>"
-                              class="w-full rounded-lg border border-white/15 bg-black/40 px-3 py-2.5 text-sm focus:border-brand-red focus:outline-none"></textarea>
+                              class="w-full rounded-lg border border-white/15 bg-white/5 px-3 py-2.5 text-sm focus:border-brand-red focus:outline-none"></textarea>
                     <p x-show="error" x-text="error" class="text-sm text-brand-red" x-cloak></p>
                     <button type="submit" class="btn-brand w-full" :disabled="loading">
                         <span x-text="loading ? '…' : '<?= esc(lang('Site.contact.send')) ?>'"></span>

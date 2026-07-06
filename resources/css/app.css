@@ -4,18 +4,29 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Brand accent tokens (RGB channels). Default = Norlanka red. A page-level
-   scope (below) can override these to recolour every brand-red utility. */
+/* Theme tokens (RGB channels).
+   Ground/foreground: light-grey site by default; `.on-dark` flips a section to
+   the dark treatment (hero over video, CTA bands, showroom, header/footer).
+   Accent: Norlanka red by default; a page scope can override it (e.g. green). */
 :root {
+  --bg: 243 244 245;          /* #F3F4F5 light grey ground */
+  --fg: 24 26 29;             /* #181A1D ink */
   --accent: 207 32 48;        /* #CF2030 brand red */
   --accent-dark: 165 18 31;   /* #A5121F */
-  --accent-soft: 255 86 99;   /* #FF5663 eyebrow tint */
 }
-/* Our Impact page — ESG "Regenerate" green scope. */
+.on-dark {
+  --bg: 11 11 13;             /* #0B0B0D near-black */
+  --fg: 244 244 245;          /* #F4F4F5 near-white */
+  /* Re-declare color: redefining --fg alone doesn't change *inherited* color,
+     so headings/text without an explicit colour class would keep the light
+     theme's ink. This makes the whole dark subtree inherit near-white. */
+  color: rgb(var(--fg));
+}
+/* Our Impact page — ESG "Regenerate" green scope (soft green ground + accents). */
 .theme-esg-green {
-  --accent: 46 158 104;       /* #2E9E68 */
-  --accent-dark: 23 122 79;   /* #177A4F */
-  --accent-soft: 143 214 148; /* #8FD694 */
+  --bg: 233 243 236;          /* #E9F3EC soft green ground */
+  --accent: 42 138 92;        /* #2A8A5C — AA-legible green on light */
+  --accent-dark: 23 105 70;   /* #176946 */
 }
 
 @layer base {
@@ -32,7 +43,8 @@
     @apply font-display;
   }
   ::selection {
-    @apply bg-brand-red text-white;
+    @apply bg-brand-red;
+    color: #fff;
   }
 }
 
@@ -42,8 +54,9 @@
   }
   .btn-brand {
     @apply inline-flex items-center justify-center rounded-full bg-brand-red px-7 py-3
-           text-sm font-semibold uppercase tracking-widest text-white transition
+           text-sm font-semibold uppercase tracking-widest transition
            hover:bg-brand-red-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-red;
+    color: #fff; /* always white on the accent, in both themes */
   }
   .btn-ghost {
     @apply inline-flex items-center justify-center rounded-full border border-white/30 px-7 py-3
@@ -54,7 +67,8 @@
            text-white/70 transition hover:text-white;
   }
   .lang-pill-active {
-    @apply bg-brand-red text-white;
+    @apply bg-brand-red;
+    color: #fff;
   }
 }
 
@@ -140,7 +154,7 @@
     font-weight: 600;
     letter-spacing: 0.3em;
     text-transform: uppercase;
-    color: rgb(var(--accent-soft));
+    color: rgb(var(--accent));
   }
   .eyebrow::before {
     content: '';

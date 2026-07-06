@@ -42,7 +42,7 @@ $c0 = $accentHex;
 $c1 = $hex($palette[1] ?? $c0);
 ?>
 <?= $this->section('content') ?>
-<div x-data="showroomScene()">
+<div x-data="showroomScene()" class="on-dark">
     <!-- Themed header -->
     <section class="relative overflow-hidden border-b border-white/10 pt-28"
              style="background: radial-gradient(120% 80% at 15% 0%, <?= esc($c0, 'attr') ?>22, transparent 60%), radial-gradient(120% 80% at 90% 10%, <?= esc($c1, 'attr') ?>1f, transparent 55%), #050506;">

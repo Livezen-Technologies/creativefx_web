@@ -26,7 +26,7 @@ $nav = [
     <title><?= esc($title ?? 'Admin') ?> — Norlanka Admin</title>
     <?= vite_tags('resources/js/app.js') ?>
 </head>
-<body class="min-h-screen bg-[#0b0b0c] font-sans text-white antialiased">
+<body class="on-dark min-h-screen bg-[#0b0b0c] font-sans text-white antialiased">
 <div class="flex min-h-screen" x-data="{ open: false }">
     <!-- Sidebar -->
     <aside class="hidden w-60 flex-none border-r border-white/10 bg-brand-black lg:block">
