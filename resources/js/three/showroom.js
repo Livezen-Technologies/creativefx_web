@@ -81,6 +81,31 @@ export function initShowroom(container) {
   }));
   scene.add(particles);
 
+  // Shared low-poly "garment" — a soft kids top/dress silhouette (extruded 2D
+  // shape) reused for every product, tinted per product. Reads clearly as
+  // clothing rather than an abstract solid. A dummy stand-in for real garments.
+  const garmentGeo = (() => {
+    const s = new THREE.Shape();
+    s.moveTo(-0.24, 0.60);              // neck (left)
+    s.lineTo(-0.46, 0.66);              // left shoulder
+    s.lineTo(-0.74, 0.34);              // left sleeve top
+    s.lineTo(-0.58, 0.12);              // left sleeve bottom
+    s.lineTo(-0.36, 0.30);              // left underarm
+    s.lineTo(-0.46, -0.86);            // left hem (slight flare)
+    s.lineTo(0.46, -0.86);             // right hem
+    s.lineTo(0.36, 0.30);              // right underarm
+    s.lineTo(0.58, 0.12);              // right sleeve bottom
+    s.lineTo(0.74, 0.34);              // right sleeve top
+    s.lineTo(0.46, 0.66);              // right shoulder
+    s.lineTo(0.24, 0.60);              // neck (right)
+    s.quadraticCurveTo(0, 0.44, -0.24, 0.60); // neckline
+    const geo = new THREE.ExtrudeGeometry(s, {
+      depth: 0.14, bevelEnabled: true, bevelThickness: 0.05, bevelSize: 0.05, bevelSegments: 2, steps: 1,
+    });
+    geo.center();
+    return geo;
+  })();
+
   const raycaster = new THREE.Raycaster();
   const pointer = new THREE.Vector2();
   const groups = {};
@@ -100,14 +125,16 @@ export function initShowroom(container) {
 
     const swatch = (prod.gallery && prod.gallery[0]) || config.accent;
     const garment = new THREE.Mesh(
-      new THREE.IcosahedronGeometry(0.72, 1),
+      garmentGeo,
       new THREE.MeshStandardMaterial({
-        color: new THREE.Color(swatch).getHex(), roughness: 0.35, metalness: 0.3, flatShading: true,
+        color: new THREE.Color(swatch).getHex(), roughness: 0.78, metalness: 0.04,
       }),
     );
+    garment.scale.setScalar(1.05);
     garment.userData.baseY = Number(h.y) || 1.2;
     garment.userData.bob = Math.random() * Math.PI * 2;
     garment.position.y = garment.userData.baseY;
+    garment.rotation.y = (Math.random() - 0.5) * 0.5;
     g.add(garment);
 
     const ring = new THREE.Mesh(
@@ -159,9 +186,12 @@ export function initShowroom(container) {
     const t = clock.getElapsedTime();
     Object.values(groups).forEach((g) => {
       const garment = g.children[1];
-      if (garment) {
-        garment.rotation.y += 0.01;
-        if (! reduce) garment.position.y = garment.userData.baseY + Math.sin(t + garment.userData.bob) * 0.08;
+      if (garment && garment.userData && ! reduce) {
+        const bob = garment.userData.bob || 0;
+        // Gentle float + sway, like a garment on display (no full spin so the
+        // flat silhouette never turns edge-on).
+        garment.position.y = (garment.userData.baseY || 1.2) + Math.sin(t + bob) * 0.06;
+        garment.rotation.y = Math.sin(t * 0.5 + bob) * 0.35;
       }
     });
     if (! reduce) particles.rotation.y += 0.0004;
