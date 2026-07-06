@@ -6,7 +6,6 @@ $currentSlug = $parts[1] ?? '';
 $nav = [
     'our-story'     => lang('Site.nav.story'),
     'our-expertise' => lang('Site.nav.expertise'),
-    'manufacturing' => lang('Site.nav.manufacturing'),
     'showroom'      => lang('Site.nav.showroom'),
     'impact'        => lang('Site.nav.impact'),
     'careers'       => lang('Site.nav.careers'),
@@ -90,7 +89,6 @@ $expertiseMega = [
 
         <!-- Right side -->
         <div class="flex items-center gap-3">
-            <a href="<?= esc(locale_url('contact')) ?>" class="hidden btn-brand !px-5 !py-2.5 !text-xs xl:inline-flex"><?= esc(lang('Site.cta.get_in_touch')) ?></a>
             <?= $this->include('Modules\Core\Views\partials\lang_switcher') ?>
             <!-- Mobile toggle -->
             <button type="button" @click="mobile=!mobile" :aria-expanded="mobile"
@@ -115,7 +113,6 @@ $expertiseMega = [
                     <svg class="h-4 w-4 text-white/30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </a>
             <?php endforeach; ?>
-            <a href="<?= esc(locale_url('contact')) ?>" @click="mobile=false" class="btn-brand mt-6 w-full"><?= esc(lang('Site.cta.get_in_touch')) ?></a>
         </nav>
     </div>
 </header>
