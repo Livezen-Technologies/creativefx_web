@@ -21,6 +21,7 @@ foreach ($category['products'] as $p) {
         'name'        => t_field($p['name']),
         'description' => t_field($p['description']),
         'gallery'     => json_decode($p['gallery'] ?? '[]', true) ?: [],
+        'image'       => $p['image'] ?? '',
         'materials'   => json_decode($p['materials'] ?? '[]', true) ?: [],
         'sizes'       => json_decode($p['sizes'] ?? '[]', true) ?: [],
         'fabric'      => $p['fabric'] ?? '',
@@ -95,7 +96,14 @@ $c1 = $hex($palette[1] ?? $c0);
             <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
                 <template x-for="p in products.filter((p) => inList(p))" :key="p.id">
                     <button @click="select(p.id)" class="group rounded-2xl border border-white/10 bg-white/[0.02] p-4 text-left transition hover:border-brand-red/60">
-                        <div class="flex gap-1.5">
+                        <!-- Product photo when available; colour swatches otherwise -->
+                        <template x-if="p.image">
+                            <div class="mb-3 aspect-[4/5] overflow-hidden rounded-xl bg-white/5">
+                                <img :src="p.image" :alt="p.name" loading="lazy"
+                                     class="h-full w-full object-cover transition duration-500 group-hover:scale-105">
+                            </div>
+                        </template>
+                        <div class="flex gap-1.5" x-show="!p.image">
                             <template x-for="c in p.gallery" :key="c">
                                 <span class="h-6 w-6 rounded-full ring-1 ring-white/15" :style="'background:' + c"></span>
                             </template>
@@ -123,6 +131,11 @@ $c1 = $hex($palette[1] ?? $c0);
                         </div>
                         <button @click="close()" class="text-white/50 hover:text-white">✕</button>
                     </div>
+                    <template x-if="current.image">
+                        <div class="mt-5 aspect-[4/5] overflow-hidden rounded-2xl bg-white/5">
+                            <img :src="current.image" :alt="current.name" class="h-full w-full object-cover">
+                        </div>
+                    </template>
                     <p class="mt-3 text-sm leading-relaxed text-white/70" x-text="current.description"></p>
 
                     <!-- Colours -->

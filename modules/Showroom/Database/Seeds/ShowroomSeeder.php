@@ -60,25 +60,25 @@ class ShowroomSeeder extends Seeder
                 'products' => [
                     ['Denim Pinafore Set', 'Conjunto de pichi vaquero', 'Cotton chambray denim + cotton jersey',
                         'A soft-wash denim pinafore dress layered over a mustard leopard-print long-sleeve tee — a ready-to-wear two-piece finished with a "good vibes grow here" patch.',
-                        ['#5b86b5', '#d1a03f', '#3a3f4a']],
+                        ['#5b86b5', '#d1a03f', '#3a3f4a'], '/media/showroom/kids/denim-pinafore-set.jpg'],
                     ['Denim Dungarees', 'Peto vaquero', 'Cotton denim, light wash',
                         'Classic light-wash denim dungarees with adjustable buckle straps, a bib pocket and roomy front pockets — an everyday play staple.',
-                        ['#7fa8d0', '#4f7bb0', '#efe9dd']],
+                        ['#7fa8d0', '#4f7bb0', '#efe9dd'], '/media/showroom/kids/denim-dungarees.jpg'],
                     ['Appliqué Denim Jacket', 'Chaqueta vaquera con parches', 'Cotton denim',
                         'A light-wash denim jacket finished with unicorn, rainbow "Bright Days" and strawberry appliqués, puff shoulders and a rounded collar.',
-                        ['#8fb4dd', '#f4a9c0', '#5bbf6a']],
+                        ['#8fb4dd', '#f4a9c0', '#5bbf6a'], '/media/showroom/kids/denim-jacket.jpg'],
                     ['Striped Shirt & Leggings Set', 'Conjunto de camisa a rayas y leggings', 'Yarn-dyed cotton + cotton-elastane jersey',
                         'A frill-collar blue-stripe shirt paired with a white tee and soft navy leggings — an easy coordinated three-piece.',
-                        ['#9ec3e0', '#f5f5f5', '#1e2749']],
+                        ['#9ec3e0', '#f5f5f5', '#1e2749'], '/media/showroom/kids/striped-shirt-set.jpg'],
                     ['Lace-Collar Denim Set', 'Conjunto vaquero con cuello de encaje', 'Cotton denim + cotton jersey',
                         'A denim shirt with a statement lace frill collar, matched with animal-spot print leggings.',
-                        ['#4f7bb0', '#f5f5f5', '#2b2f36']],
+                        ['#4f7bb0', '#f5f5f5', '#2b2f36'], '/media/showroom/kids/lace-collar-denim-set.jpg'],
                     ['Ruffle Denim Set', 'Conjunto vaquero con volantes', 'Cotton denim + cotton jersey',
                         'A tiered-ruffle denim shirt with mono grid-check leggings — texture-led and playful.',
-                        ['#4a72a8', '#2b2f36', '#f5f5f5']],
+                        ['#4a72a8', '#2b2f36', '#f5f5f5'], '/media/showroom/kids/ruffle-denim-set.jpg'],
                     ['Ruffle Denim & Gingham Set', 'Conjunto vaquero y vichy', 'Cotton chambray + cotton jersey',
                         'A soft-wash ruffle-tier chambray shirt teamed with blue gingham leggings.',
-                        ['#8fb4dd', '#6f97c4', '#f5f5f5']],
+                        ['#8fb4dd', '#6f97c4', '#f5f5f5'], '/media/showroom/kids/ruffle-gingham-set.jpg'],
                 ],
             ],
             [
@@ -257,12 +257,14 @@ class ShowroomSeeder extends Seeder
             $n     = count($c['products']);
             foreach ($c['products'] as $i => $p) {
                 [$pen, $pes, $fabric] = $p;
-                // Optional per-product description (index 3) and colour swatches
-                // (index 4); otherwise fall back to a generic line + the category palette.
+                // Optional per-product description (index 3), colour swatches
+                // (index 4) and photo path (index 5); otherwise fall back to a
+                // generic line + the category palette and no photo (swatch display).
                 $desc     = $p[3] ?? ('Responsibly manufactured ' . strtolower($pen)
                     . ' for the ' . $c['en'] . ' segment — engineered for quality, comfort and scale, '
                     . 'with full-package development from fabric to finished garment.');
                 $swatches = $p[4] ?? $c['palette'];
+                $image    = $p[5] ?? null;
                 $prodTable->insert([
                     'showroom_category_id' => $categoryId,
                     'slug'        => $c['slug'] . '-' . ($i + 1),
@@ -270,6 +272,7 @@ class ShowroomSeeder extends Seeder
                     'description' => $j(['en' => $desc]),
                     'hotspot'     => $j($this->position($i, $n)),
                     'gallery'     => $j($swatches),
+                    'image'       => $image,
                     'materials'   => $j($this->materials($order + $i)),
                     'fabric'      => $fabric,
                     'moq'         => $moqs[($order + $i) % count($moqs)],
