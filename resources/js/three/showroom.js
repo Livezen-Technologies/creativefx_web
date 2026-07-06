@@ -106,6 +106,7 @@ export function initShowroom(container) {
     return geo;
   })();
 
+  const texLoader = new THREE.TextureLoader();
   const raycaster = new THREE.Raycaster();
   const pointer = new THREE.Vector2();
   const groups = {};
@@ -123,18 +124,34 @@ export function initShowroom(container) {
     pedestal.position.y = 0.2;
     g.add(pedestal);
 
-    const swatch = (prod.gallery && prod.gallery[0]) || config.accent;
-    const garment = new THREE.Mesh(
-      garmentGeo,
-      new THREE.MeshStandardMaterial({
-        color: new THREE.Color(swatch).getHex(), roughness: 0.78, metalness: 0.04,
-      }),
-    );
-    garment.scale.setScalar(1.05);
-    garment.userData.baseY = Number(h.y) || 1.2;
+    // Product display: when the product has a photo, show it as a billboard that
+    // always faces the viewer (never turns edge-on); otherwise a tinted garment
+    // silhouette. Real photos swap in at the same path — no code change.
+    let garment;
+    if (prod.image) {
+      const tex = texLoader.load(prod.image);
+      tex.colorSpace = THREE.SRGBColorSpace;
+      tex.anisotropy = 4;
+      garment = new THREE.Mesh(
+        new THREE.PlaneGeometry(1.5, 1.9),
+        new THREE.MeshBasicMaterial({ map: tex, transparent: true, side: THREE.DoubleSide }),
+      );
+      garment.userData.billboard = true;
+      garment.userData.baseY = 1.5;
+    } else {
+      const swatch = (prod.gallery && prod.gallery[0]) || config.accent;
+      garment = new THREE.Mesh(
+        garmentGeo,
+        new THREE.MeshStandardMaterial({
+          color: new THREE.Color(swatch).getHex(), roughness: 0.78, metalness: 0.04,
+        }),
+      );
+      garment.scale.setScalar(1.05);
+      garment.userData.baseY = Number(h.y) || 1.2;
+      garment.rotation.y = (Math.random() - 0.5) * 0.5;
+    }
     garment.userData.bob = Math.random() * Math.PI * 2;
     garment.position.y = garment.userData.baseY;
-    garment.rotation.y = (Math.random() - 0.5) * 0.5;
     g.add(garment);
 
     const ring = new THREE.Mesh(
@@ -186,11 +203,17 @@ export function initShowroom(container) {
     const t = clock.getElapsedTime();
     Object.values(groups).forEach((g) => {
       const garment = g.children[1];
-      if (garment && garment.userData && ! reduce) {
-        const bob = garment.userData.bob || 0;
-        // Gentle float + sway, like a garment on display (no full spin so the
-        // flat silhouette never turns edge-on).
-        garment.position.y = (garment.userData.baseY || 1.2) + Math.sin(t + bob) * 0.06;
+      if (! garment || ! garment.userData) return;
+      const ud = garment.userData;
+      const bob = ud.bob || 0;
+      if (ud.billboard) {
+        // Photo card: rotate on Y only to always face the camera (stays upright,
+        // never edge-on) + a gentle float.
+        garment.rotation.y = Math.atan2(camera.position.x - g.position.x, camera.position.z - g.position.z);
+        if (! reduce) garment.position.y = (ud.baseY || 1.5) + Math.sin(t + bob) * 0.05;
+      } else if (! reduce) {
+        // Silhouette: gentle float + sway (no full spin so it never turns edge-on).
+        garment.position.y = (ud.baseY || 1.2) + Math.sin(t + bob) * 0.06;
         garment.rotation.y = Math.sin(t * 0.5 + bob) * 0.35;
       }
     });
