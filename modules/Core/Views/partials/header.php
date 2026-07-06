@@ -89,7 +89,8 @@ $expertiseMega = [
         </nav>
 
         <!-- Right side -->
-        <div class="flex items-center gap-3">
+        <div class="flex items-center gap-2.5 sm:gap-3">
+            <?= $this->include('Modules\Core\Views\partials\theme_toggle') ?>
             <?= $this->include('Modules\Core\Views\partials\lang_switcher') ?>
             <!-- Mobile toggle -->
             <button type="button" @click="mobile=!mobile" :aria-expanded="mobile"

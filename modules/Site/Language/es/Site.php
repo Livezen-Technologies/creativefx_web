@@ -23,6 +23,7 @@ return [
         'subtitles' => 'Subtítulos',
         'language'  => 'Idioma de audio',
         'scroll'    => 'Desplázate para explorar',
+        'theme'     => 'Alternar modo oscuro',
     ],
     'contact' => [
         'name'    => 'Tu nombre',

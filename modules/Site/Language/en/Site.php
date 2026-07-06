@@ -23,6 +23,7 @@ return [
         'subtitles' => 'Subtitles',
         'language'  => 'Audio language',
         'scroll'    => 'Scroll to explore',
+        'theme'     => 'Toggle dark mode',
     ],
     'contact' => [
         'name'    => 'Your name',

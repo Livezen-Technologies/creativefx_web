@@ -2,12 +2,13 @@
 <!DOCTYPE html>
 <html lang="<?= esc($locale) ?>">
 <head>
-    <script>document.documentElement.classList.add('js');try{if(sessionStorage.getItem('nl_preloaded'))document.documentElement.classList.add('preloaded');}catch(e){}</script>
+    <script>document.documentElement.classList.add('js');try{if(localStorage.getItem('nl_theme')==='dark')document.documentElement.classList.add('dark');}catch(e){}try{if(sessionStorage.getItem('nl_preloaded'))document.documentElement.classList.add('preloaded');}catch(e){}</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= esc($title ?? setting('site_name', 'Norlanka')) ?></title>
     <meta name="description" content="<?= esc($metaDescription ?? setting('tagline', '')) ?>">
     <meta name="theme-color" content="#CF2030">
+    <meta name="color-scheme" content="light dark">
     <link rel="icon" type="image/png" sizes="32x32" href="/media/brand/favicon-32.png">
     <link rel="apple-touch-icon" href="/media/brand/favicon-180.png">
     <?= vite_tags('resources/js/app.js') ?>

@@ -23,6 +23,7 @@ return [
         'subtitles' => '字幕',
         'language'  => '音频语言',
         'scroll'    => '滚动以探索',
+        'theme'     => '切换深色模式',
     ],
     'contact' => [
         'name'    => '您的姓名',

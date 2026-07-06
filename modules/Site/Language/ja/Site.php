@@ -23,6 +23,7 @@ return [
         'subtitles' => '字幕',
         'language'  => '音声言語',
         'scroll'    => 'スクロールして探索',
+        'theme'     => 'ダークモード切替',
     ],
     'contact' => [
         'name'    => 'お名前',
