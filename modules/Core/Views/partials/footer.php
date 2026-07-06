@@ -2,7 +2,10 @@
 <footer class="on-dark border-t border-white/10 bg-brand-black">
     <div class="container-x grid gap-10 py-16 md:grid-cols-4">
         <div class="md:col-span-2">
-            <span class="text-2xl font-bold tracking-widest">NOR<span class="text-brand-red">LANKA</span></span>
+            <a href="<?= esc(locale_url('')) ?>" class="inline-flex items-center gap-2.5" aria-label="Norlanka — home">
+                <img src="/media/brand/nl-symbol.png" alt="Norlanka" width="40" height="40" class="h-9 w-auto">
+                <span class="font-display text-xl font-semibold uppercase tracking-[0.22em] text-white">Norlanka</span>
+            </a>
             <p class="mt-4 max-w-sm text-sm leading-relaxed text-white/60">
                 <?= esc(setting('tagline', 'Responsible Sourcing · Design · Innovation')) ?>
             </p>

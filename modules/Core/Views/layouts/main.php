@@ -7,7 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= esc($title ?? setting('site_name', 'Norlanka')) ?></title>
     <meta name="description" content="<?= esc($metaDescription ?? setting('tagline', '')) ?>">
-    <meta name="theme-color" content="#000000">
+    <meta name="theme-color" content="#CF2030">
+    <link rel="icon" type="image/png" sizes="32x32" href="/media/brand/favicon-32.png">
+    <link rel="apple-touch-icon" href="/media/brand/favicon-180.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <?= vite_tags('resources/js/app.js') ?>

@@ -38,10 +38,11 @@ $expertiseMega = [
 
     <div class="header-bar flex w-full items-center justify-between px-6 transition-all duration-300 lg:px-10"
          :class="scrolled ? 'h-16' : 'h-20'">
-        <!-- Logo -->
-        <a href="<?= esc(locale_url('')) ?>" class="flex items-center gap-2 shrink-0" aria-label="Norlanka home">
-            <span class="font-bold tracking-widest text-white transition-all duration-300"
-                  :class="scrolled ? 'text-xl' : 'text-2xl'">NOR<span class="text-brand-red">LANKA</span></span>
+        <!-- Logo: official NL monogram + wordmark (static sizes so it renders
+             correctly even before/without JS). -->
+        <a href="<?= esc(locale_url('')) ?>" class="flex items-center gap-2.5 shrink-0" aria-label="Norlanka — home">
+            <img src="/media/brand/nl-symbol.png" alt="Norlanka" width="36" height="36" class="h-9 w-auto">
+            <span class="font-display text-lg font-semibold uppercase tracking-[0.22em] text-white">Norlanka</span>
         </a>
 
         <!-- Desktop nav -->
