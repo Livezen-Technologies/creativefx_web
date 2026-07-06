@@ -25,12 +25,12 @@ $expertiseMega = [
     @scroll.window="onScroll()"
     @keydown.escape.window="mega=false; mobile=false"
     :class="scrolled ? 'is-scrolled' : ''"
-    class="site-header on-dark fixed inset-x-0 top-0 z-50"
+    class="site-header <?= ($pageDark ?? false) ? 'on-dark' : '' ?> fixed inset-x-0 top-0 z-50"
 >
-    <!-- Top shade: keeps the logo/nav/buttons legible over light hero media at
-         the top of the page; fades out once the solid header background kicks in. -->
+    <!-- Top shade: a soft light wash that keeps the dark logo/nav legible over
+         hero media at the top of the page; fades out once the solid header kicks in. -->
     <div aria-hidden="true"
-         class="pointer-events-none absolute inset-x-0 top-0 -z-10 h-32 bg-gradient-to-b from-black/85 via-black/50 to-transparent transition-opacity duration-300"
+         class="pointer-events-none absolute inset-x-0 top-0 -z-10 h-32 bg-gradient-to-b from-brand-black/90 via-brand-black/45 to-transparent transition-opacity duration-300"
          :class="scrolled ? 'opacity-0' : 'opacity-100'"></div>
 
     <!-- Scroll progress bar -->

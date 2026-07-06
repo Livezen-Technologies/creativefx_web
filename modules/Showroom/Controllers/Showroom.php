@@ -13,6 +13,7 @@ class Showroom extends BaseController
         return view('Modules\Showroom\Views\index', [
             'title'      => 'Virtual Showroom',
             'categories' => (new ShowroomCategoryModel())->published(),
+            'pageDark'   => true, // immersive dark showroom → dark header/footer chrome
         ]);
     }
 
@@ -35,6 +36,7 @@ class Showroom extends BaseController
             'title'     => 'Showroom',
             'category'  => $category,
             'materials' => array_keys($materials),
+            'pageDark'  => true, // immersive dark showroom → dark header/footer chrome
         ]);
     }
 }

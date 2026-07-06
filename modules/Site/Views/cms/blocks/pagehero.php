@@ -1,7 +1,7 @@
 <?php helper('norlanka'); ?>
-<section class="on-dark relative overflow-hidden">
+<section class="relative overflow-hidden">
     <div class="hero-aurora absolute inset-0 -z-20"></div>
-    <div class="absolute inset-0 -z-10 bg-gradient-to-b from-black/40 via-black/20 to-brand-black"></div>
+    <div class="absolute inset-0 -z-10 bg-gradient-to-b from-brand-black/40 via-brand-black/10 to-brand-black"></div>
     <div class="container-x flex min-h-[60vh] flex-col justify-end pb-16 pt-40">
         <?php if (! empty($content['eyebrow'])): ?>
             <p class="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-brand-red" data-gsap="reveal"><?= esc(t_field($content['eyebrow'])) ?></p>

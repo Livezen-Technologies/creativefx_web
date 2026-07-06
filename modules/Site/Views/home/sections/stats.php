@@ -1,5 +1,5 @@
 <?php helper('norlanka'); if (empty($section['blocks'])) { return; } ?>
-<section class="border-y border-white/10 bg-gradient-to-b from-brand-black to-[#140003] py-20">
+<section class="border-y border-white/10 bg-brand-black py-20">
     <div class="container-x grid grid-cols-2 gap-8 md:grid-cols-4">
         <?php foreach ($section['blocks'] as $block): $c = json_decode($block['content'] ?? '[]', true) ?: []; ?>
             <div class="text-center" data-gsap="reveal">

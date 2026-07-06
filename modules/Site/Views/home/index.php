@@ -85,7 +85,7 @@ $hqPoint = $mapPoints[0];
     id="hero"
     data-gsap="hero-out"
     x-data="{ playing: true, toggleVid() { const v = $refs.bgv; if (!v) return; if (v.paused) { delete v.dataset.userPaused; v.play(); this.playing = true; } else { v.dataset.userPaused = '1'; v.pause(); this.playing = false; } } }"
-    class="on-dark relative flex min-h-screen items-center overflow-hidden"
+    class="relative flex min-h-screen items-center overflow-hidden"
 >
     <!-- Background: real launch film if set in the CMS, else the animated brand visual -->
     <?php if (! empty($video['src_path'])): ?>
@@ -102,7 +102,7 @@ $hqPoint = $mapPoints[0];
         </video>
         <!-- Subtle corner control (kept far from the CTAs so it never competes). -->
         <button type="button" @click="toggleVid()"
-                class="absolute bottom-8 right-6 z-20 inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/25 bg-black/30 text-white/80 backdrop-blur transition hover:border-white hover:text-white lg:right-10"
+                class="absolute bottom-8 right-6 z-20 inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/25 bg-brand-black/50 text-white/80 backdrop-blur transition hover:border-white hover:text-white lg:right-10"
                 :aria-label="playing ? 'Pause background video' : 'Play background video'">
             <svg x-show="playing" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
             <svg x-show="!playing" x-cloak class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5l12 7-12 7z"/></svg>
@@ -113,7 +113,7 @@ $hqPoint = $mapPoints[0];
     <?php endif; ?>
 
     <!-- Lighter, directional scrim (legible text on the left, the film stays visible on the right) -->
-    <div class="absolute inset-0 -z-20 bg-gradient-to-r from-black/85 via-black/45 to-transparent"></div>
+    <div class="absolute inset-0 -z-20 bg-gradient-to-r from-brand-black/95 via-brand-black/60 to-transparent"></div>
     <div class="absolute inset-0 -z-20 bg-gradient-to-t from-brand-black via-brand-black/10 to-transparent"></div>
     <!-- Brand-red glow to break the monochrome -->
     <div class="hero-red-glow absolute inset-0 -z-10"></div>
@@ -220,9 +220,8 @@ $hqPoint = $mapPoints[0];
 <?= $this->include('Modules\Site\Views\home\sections\pillars', ['section' => $sections['pillars'] ?? null]) ?>
 
 <!-- ===================== SUSTAINABILITY / OUR IMPACT ===================== -->
-<section class="on-dark relative overflow-hidden border-y border-white/10 py-24 sm:py-28">
-    <div class="hero-aurora absolute inset-0 -z-10 opacity-50"></div>
-    <div class="absolute inset-0 -z-10 bg-black/55"></div>
+<section class="relative overflow-hidden border-y border-white/10 py-24 sm:py-28">
+    <div class="hero-aurora absolute inset-0 -z-10 opacity-60"></div>
     <div class="container-x grid gap-14 lg:grid-cols-2 lg:items-center">
         <div data-gsap="reveal">
             <p class="eyebrow"><?= esc(lang('Site.home.impact.eyebrow')) ?></p>
@@ -262,7 +261,7 @@ foreach ($mapPoints as $mp) {
     $arcs[] = sprintf('M%.1f %.1f Q%.1f %.1f %.1f %.1f', $hx, $hy, $cx, $cy, $mx, $my);
 }
 ?>
-<section class="on-dark relative overflow-hidden bg-brand-black py-24 sm:py-28"
+<section class="relative overflow-hidden bg-brand-black py-24 sm:py-28"
          x-data="worldMap(<?= esc(json_encode($mapPoints), 'attr') ?>)" x-init="init()">
     <div class="container-x">
         <div class="grid gap-12 lg:grid-cols-12 lg:items-center">
@@ -341,9 +340,9 @@ foreach ($mapPoints as $mp) {
 <?= $this->include('Modules\Site\Views\home\sections\cta', ['section' => $sections['cta'] ?? null]) ?>
 
 <!-- ===================== PARTNER / CLOSING CTA ===================== -->
-<section class="on-dark bg-brand-black pb-28">
+<section class="bg-brand-black pb-28">
     <div class="container-x">
-        <div class="overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-[#1a0205] via-brand-black to-brand-black p-10 sm:p-16" data-gsap="reveal">
+        <div class="overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-brand-red/10 via-brand-black to-brand-black p-10 sm:p-16" data-gsap="reveal">
             <div class="grid gap-8 lg:grid-cols-2 lg:items-center">
                 <div>
                     <h2 class="text-3xl font-bold leading-tight sm:text-4xl"><?= esc(lang('Site.home.closing.title')) ?></h2>

@@ -27,13 +27,13 @@
         </div>
     </div>
 
-    <?= $this->include('Modules\Core\Views\partials\header') ?>
+    <?= $this->include('Modules\Core\Views\partials\header', ['pageDark' => $pageDark ?? false]) ?>
 
     <main id="main">
         <?= $this->renderSection('content') ?>
     </main>
 
-    <?= $this->include('Modules\Core\Views\partials\footer') ?>
+    <?= $this->include('Modules\Core\Views\partials\footer', ['pageDark' => $pageDark ?? false]) ?>
     <?= $this->renderSection('scripts') ?>
 </body>
 </html>

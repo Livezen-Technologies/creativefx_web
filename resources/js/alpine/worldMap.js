@@ -49,7 +49,11 @@ export default function worldMap(points = []) {
 
       // Dot radius scales gently with width; clamp so it never disappears/bloats.
       const r = Math.max(0.85, Math.min(1.9, (w / 1000) * 1.55));
-      ctx.fillStyle = 'rgba(255,255,255,0.16)';
+      // Theme-aware: derive the land-dot colour from the foreground token so the
+      // map reads correctly on the light-grey ground (dark dots) or a dark scope.
+      const fg = (getComputedStyle(stage).getPropertyValue('--fg').trim() || '244 244 245')
+        .split(/\s+/).join(',');
+      ctx.fillStyle = `rgba(${fg},0.18)`;
       const dots = dotData.dots;
       for (let i = 0; i < dots.length; i++) {
         ctx.beginPath();

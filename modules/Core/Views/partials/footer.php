@@ -1,5 +1,5 @@
 <?php helper(['url', 'norlanka']); $locale = current_locale(); ?>
-<footer class="on-dark border-t border-white/10 bg-brand-black">
+<footer class="<?= ($pageDark ?? false) ? 'on-dark' : '' ?> border-t border-white/10 bg-brand-black">
     <div class="container-x grid gap-10 py-16 md:grid-cols-4">
         <div class="md:col-span-2">
             <a href="<?= esc(locale_url('')) ?>" class="inline-flex items-center gap-2.5" aria-label="Norlanka — home">
