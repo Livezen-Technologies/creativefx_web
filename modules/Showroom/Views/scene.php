@@ -22,6 +22,7 @@ foreach ($category['products'] as $p) {
         'description' => t_field($p['description']),
         'gallery'     => json_decode($p['gallery'] ?? '[]', true) ?: [],
         'image'       => $p['image'] ?? '',
+        'model'       => $p['model_path'] ?? '',
         'materials'   => json_decode($p['materials'] ?? '[]', true) ?: [],
         'sizes'       => json_decode($p['sizes'] ?? '[]', true) ?: [],
         'fabric'      => $p['fabric'] ?? '',

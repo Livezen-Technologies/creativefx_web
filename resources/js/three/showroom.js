@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 /**
  * Procedural virtual-showroom scene. No external 3D assets — each product is a
@@ -124,11 +125,25 @@ export function initShowroom(container) {
     pedestal.position.y = 0.2;
     g.add(pedestal);
 
-    // Product display: when the product has a photo, show it as a billboard that
-    // always faces the viewer (never turns edge-on); otherwise a tinted garment
-    // silhouette. Real photos swap in at the same path — no code change.
+    // Product display, best media first: a real 3D model (GLB/GLTF) when one is
+    // attached; else a photo billboard that always faces the viewer (never turns
+    // edge-on); else a tinted garment silhouette.
     let garment;
-    if (prod.image) {
+    if (prod.model) {
+      garment = new THREE.Group();
+      garment.userData.model3d = true;
+      garment.userData.baseY = Number(h.y) || 1.2;
+      new GLTFLoader().load(prod.model, (gltf) => {
+        const obj = gltf.scene;
+        const box = new THREE.Box3().setFromObject(obj);
+        const size = box.getSize(new THREE.Vector3());
+        obj.scale.setScalar(1.7 / Math.max(size.x, size.y, size.z, 0.001));
+        box.setFromObject(obj);
+        obj.position.sub(box.getCenter(new THREE.Vector3()));
+        obj.traverse((child) => { child.userData.productId = prod.id; });
+        garment.add(obj);
+      }, undefined, () => {/* model missing/corrupt: pedestal + ring still render */});
+    } else if (prod.image) {
       const tex = texLoader.load(prod.image);
       tex.colorSpace = THREE.SRGBColorSpace;
       tex.anisotropy = 4;
@@ -174,9 +189,14 @@ export function initShowroom(container) {
     pointer.x = ((ev.clientX - rect.left) / rect.width) * 2 - 1;
     pointer.y = -((ev.clientY - rect.top) / rect.height) * 2 + 1;
     raycaster.setFromCamera(pointer, camera);
-    const hit = raycaster.intersectObjects(interactive, false)[0];
+    const hit = raycaster.intersectObjects(interactive, true)[0];
     if (hit) {
-      window.dispatchEvent(new CustomEvent('showroom-select', { detail: { id: hit.object.userData.productId } }));
+      // GLB models are nested groups — walk up to the object carrying the id.
+      let obj = hit.object;
+      while (obj && obj.userData.productId === undefined) obj = obj.parent;
+      if (obj) {
+        window.dispatchEvent(new CustomEvent('showroom-select', { detail: { id: obj.userData.productId } }));
+      }
     }
   };
   renderer.domElement.addEventListener('click', onClick);
@@ -211,6 +231,14 @@ export function initShowroom(container) {
         // never edge-on) + a gentle float.
         garment.rotation.y = Math.atan2(camera.position.x - g.position.x, camera.position.z - g.position.z);
         if (! reduce) garment.position.y = (ud.baseY || 1.5) + Math.sin(t + bob) * 0.05;
+      } else if (ud.model3d) {
+        // Real 3D model: slow turntable + gentle float.
+        if (! reduce) {
+          garment.rotation.y = t * 0.35 + bob;
+          garment.position.y = (ud.baseY || 1.2) + Math.sin(t + bob) * 0.05;
+        } else {
+          garment.position.y = ud.baseY || 1.2;
+        }
       } else if (! reduce) {
         // Silhouette: gentle float + sway (no full spin so it never turns edge-on).
         garment.position.y = (ud.baseY || 1.2) + Math.sin(t + bob) * 0.06;

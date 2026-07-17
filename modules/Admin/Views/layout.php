@@ -8,6 +8,7 @@ $nav = [
     ['news-posts', 'News Posts', 'admin/news-posts'],
     ['news-categories', 'News Categories', 'admin/news-categories'],
     ['categories', 'Product Categories', 'admin/categories'],
+    ['products', 'Products', 'admin/products'],
     ['videos', 'Launch Video', 'admin/videos'],
     ['showroom-cats', 'Showroom Categories', 'admin/showroom-categories'],
     ['showroom-products', 'Showroom Products', 'admin/showroom-products'],

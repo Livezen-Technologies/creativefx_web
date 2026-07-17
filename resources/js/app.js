@@ -79,6 +79,14 @@ if (heroAccent && window.matchMedia('(min-width: 1024px)').matches) {
     .catch(() => {/* non-critical: silently skip */});
 }
 
+// GLB/GLTF product viewer (lazy — only on product pages with a 3D model).
+const viewerEl = document.querySelector('[data-product-viewer]');
+if (viewerEl) {
+  import('./three/productViewer.js')
+    .then(({ initProductViewer }) => initProductViewer(viewerEl))
+    .catch(() => {/* WebGL unavailable: the poster image still shows */});
+}
+
 // Virtual showroom 3D scene (lazy — only on the scene page).
 const showroomEl = document.querySelector('[data-showroom]');
 if (showroomEl) {

@@ -22,6 +22,9 @@ class DatabaseSeeder extends Seeder
 
         $this->call('Modules\Catalog\Database\Seeds\ProductCategorySeeder');
 
+        // Catalog products (upsert-by-slug; merchandising edits preserved).
+        $this->call('Modules\Catalog\Database\Seeds\ProductSeeder');
+
         // Seeds the CMS Home page + sections/blocks + the launch video,
         // its per-language audio tracks and subtitle files.
         $this->call('Modules\Cms\Database\Seeds\HomeContentSeeder');

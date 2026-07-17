@@ -30,5 +30,9 @@ $routes->post('(:locale)/careers/(:segment)/apply', '\Modules\Careers\Controller
 $routes->get('(:locale)/news', '\Modules\News\Controllers\News::index/$1', ['filter' => 'applocale']);
 $routes->get('(:locale)/news/(:segment)', '\Modules\News\Controllers\News::show/$1/$2', ['filter' => 'applocale']);
 
+// Product catalog (listing + product detail with GLB 3D viewer).
+$routes->get('(:locale)/products', '\Modules\Catalog\Controllers\Products::index/$1', ['filter' => 'applocale']);
+$routes->get('(:locale)/products/(:segment)', '\Modules\Catalog\Controllers\Products::show/$1/$2', ['filter' => 'applocale']);
+
 // CMS catch-all: /{locale}/{slug} -> PageController::show($slug)  ($2 = slug)
 $routes->get('(:locale)/(:segment)', 'PageController::show/$2', $siteOptions);

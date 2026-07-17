@@ -14,10 +14,12 @@ $categories = model('Modules\Catalog\Models\ProductCategoryModel')->published();
 
         <div class="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
             <?php foreach ($categories as $cat): ?>
-                <div class="group relative overflow-hidden rounded-xl border border-white/10 bg-white/[0.02] p-6 transition hover:border-brand-red/60 hover:bg-white/[0.04]" data-gsap="reveal">
+                <a href="<?= esc(locale_url('products') . '?category=' . $cat['slug']) ?>"
+                   class="group relative overflow-hidden rounded-xl border border-white/10 bg-white/[0.02] p-6 transition hover:border-brand-red/60 hover:bg-white/[0.04]" data-gsap="reveal">
                     <div class="absolute inset-x-0 bottom-0 h-0.5 origin-left scale-x-0 bg-brand-red transition-transform duration-300 group-hover:scale-x-100"></div>
                     <h3 class="text-base font-semibold leading-snug"><?= esc(t_field($cat['name'] ?? [])) ?></h3>
-                </div>
+                    <span class="mt-2 block text-xs uppercase tracking-widest text-white/40 transition group-hover:text-brand-red"><?= esc(lang('Site.products.view_range')) ?> →</span>
+                </a>
             <?php endforeach; ?>
         </div>
     </div>

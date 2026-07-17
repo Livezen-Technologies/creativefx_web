@@ -18,6 +18,7 @@ $routes->group('admin', ['namespace' => 'Modules\Admin\Controllers'], static fun
         $resources = [
             'pages'       => 'Pages',
             'categories'  => 'Categories',
+            'products'    => 'Products',
             'esg-metrics' => 'EsgMetrics',
             'settings'    => 'Settings',
             'jobs'        => 'Jobs',

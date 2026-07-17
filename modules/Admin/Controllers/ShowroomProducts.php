@@ -25,6 +25,8 @@ class ShowroomProducts extends BaseCrudController
         ['name' => 'hotspot', 'label' => 'Hotspot', 'type' => 'textarea', 'help' => 'JSON {"x":0,"y":1.2,"z":0}'],
         ['name' => 'gallery', 'label' => 'Gallery', 'type' => 'textarea', 'help' => 'JSON array of hex colours / image URLs'],
         ['name' => 'materials', 'label' => 'Materials', 'type' => 'textarea', 'help' => 'JSON array of materials'],
+        ['name' => 'image', 'label' => 'Product photo', 'help' => 'Path to the product photo shown in the 3D room, e.g. /media/showroom/kids/…'],
+        ['name' => 'model_path', 'label' => '3D model (GLB/GLTF)', 'help' => 'Path to a .glb/.gltf file (upload via Media) — replaces the photo billboard in the 3D room'],
         ['name' => 'brochure_path', 'label' => 'Brochure path'],
         ['name' => 'sort_order', 'label' => 'Sort order', 'type' => 'number'],
         ['name' => 'status', 'label' => 'Status', 'type' => 'select', 'options' => ['draft' => 'Draft', 'published' => 'Published', 'archived' => 'Archived']],
