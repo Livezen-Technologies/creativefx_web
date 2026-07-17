@@ -618,3 +618,85 @@ html.fp-active body {
   .nl-marker__pulse { animation: none; opacity: 0; }
   .fp-dot__hit, .fp-dot__label { transition: none; }
 }
+
+/* ---------------------------------------------------------------------------
+   Flip tiles (values / ESG pillars): front shows the name, hover/focus flips
+   to the description. Falls back to a stacked reveal for reduced motion.
+--------------------------------------------------------------------------- */
+.flip-card {
+  perspective: 1200px;
+  outline: none;
+  min-height: 14rem;
+}
+.flip-card--tall { min-height: 16rem; }
+.flip-card__inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: inherit;
+  transform-style: preserve-3d;
+  transition: transform 0.65s cubic-bezier(0.4, 0.2, 0.2, 1);
+}
+.flip-card:hover .flip-card__inner,
+.flip-card:focus-visible .flip-card__inner,
+.flip-card:focus .flip-card__inner {
+  transform: rotateY(180deg);
+}
+.flip-card--static:hover .flip-card__inner,
+.flip-card--static:focus .flip-card__inner {
+  transform: none;
+}
+.flip-card__face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.flip-card__back { transform: rotateY(180deg); }
+@media (prefers-reduced-motion: reduce) {
+  .flip-card__inner { transition: none; }
+}
+
+/* ---------------------------------------------------------------------------
+   Brand logo marquee ("Trusted by Global Brands") — an infinite scroll of
+   customer logos; pauses on hover, static wrap under reduced motion.
+--------------------------------------------------------------------------- */
+.brand-marquee {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+.brand-marquee__track {
+  display: flex;
+  width: max-content;
+  gap: 1rem;
+  animation: brand-scroll 48s linear infinite;
+}
+.brand-marquee:hover .brand-marquee__track { animation-play-state: paused; }
+.brand-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 10.5rem;
+  height: 5.5rem;
+  flex: none;
+  border-radius: 1rem;
+  background: #ffffff;
+  border: 1px solid rgb(var(--fg) / 0.10);
+  padding: 1rem 1.25rem;
+}
+.brand-card img {
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+}
+@keyframes brand-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .brand-marquee { mask-image: none; -webkit-mask-image: none; }
+  .brand-marquee__track { animation: none; flex-wrap: wrap; justify-content: center; width: auto; }
+}

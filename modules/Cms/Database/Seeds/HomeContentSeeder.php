@@ -149,7 +149,7 @@ class HomeContentSeeder extends Seeder
         // Real figures from the Norlanka company profile (Feb 2026).
         $statData = [
             ['value' => '60', 'suffix' => 'M+', 'label' => ['en' => 'Garments shipped per year', 'es' => 'Prendas enviadas al año', 'ja' => '年間出荷着数', 'zh' => '每年出货服装（件）']],
-            ['value' => '40', 'suffix' => '+', 'label' => ['en' => 'Factories in Sri Lanka & India', 'es' => 'Fábricas en Sri Lanka e India', 'ja' => 'スリランカ・インドの工場', 'zh' => '斯里兰卡与印度的工厂']],
+            ['value' => '25', 'suffix' => '+', 'label' => ['en' => 'Manufacturing partners — Sri Lanka & India', 'es' => 'Socios de fabricación', 'ja' => '製造パートナー（スリランカ・インド）', 'zh' => '制造合作伙伴（斯里兰卡与印度）']],
             ['value' => '12000', 'suffix' => '+', 'label' => ['en' => 'Associates & workforce', 'es' => 'Colaboradores y personal', 'ja' => '従業員・ワークフォース', 'zh' => '员工与劳动力']],
             ['value' => '20', 'suffix' => '+', 'label' => ['en' => 'Global brands & retailers', 'es' => 'Marcas y minoristas globales', 'ja' => 'グローバルブランド・小売', 'zh' => '全球品牌与零售商']],
         ];

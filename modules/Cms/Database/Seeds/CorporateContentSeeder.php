@@ -127,22 +127,33 @@ class CorporateContentSeeder extends Seeder
             'sections' => [
                 $this->hero(
                     $this->loc('Our Story', 'Nuestra Historia', '私たちの物語', '我们的故事'),
-                    $this->loc('Crafting apparel the world trusts', 'Creando ropa en la que el mundo confía', '世界が信頼するアパレルづくり', '打造世界信赖的服饰'),
-                    $this->loc('Three decades of responsible sourcing, design and innovation.')
+                    $this->loc('The platform where global fashion brands and manufacturing excellence come together',
+                        'La plataforma donde las marcas de moda globales y la excelencia manufacturera se encuentran',
+                        '世界のファッションブランドと製造の卓越性が出会うプラットフォーム',
+                        '全球时尚品牌与卓越制造交汇的平台'),
+                    $this->loc('Responsible Sourcing · Design · Innovation')
                 ),
                 ['key' => 'profile', 'type' => 'content', 'blocks' => [
                     ['two_column', [
-                        'eyebrow' => $this->loc('Company profile', 'Perfil', '会社概要', '公司简介'),
+                        'eyebrow' => $this->loc('Who we are', 'Quiénes somos', '私たちについて', '关于我们'),
                         'title'   => $this->loc('Who we are', 'Quiénes somos', '私たちについて', '关于我们'),
                         'body'    => $this->loc(
-                            'Norlanka is a full-service apparel manufacturer, providing solutions from design to delivery for over 20 international fashion brands and retailers. We work with 40+ partner factories across Sri Lanka and India, ship over 60 million garments a year, and are part of PDS Limited — a global, design-led manufacturing platform.',
-                            'Norlanka es un fabricante de servicio completo, con soluciones del diseño a la entrega para más de 20 marcas internacionales. Trabajamos con 40+ fábricas asociadas en Sri Lanka e India, enviamos más de 60 millones de prendas al año y formamos parte de PDS Limited.'
+                            "Norlanka is a leading end-to-end apparel solutions provider, partnering with over 20 global fashion brands to deliver innovative products from design to delivery. With a network of 25+ manufacturing partners across Sri Lanka and India, we produce over 60 million garments annually across babywear, childrenswear, activewear, casualwear, essentials, and accessories.\n\nSupported by advanced manufacturing capabilities, including a centralized cutting facility, in-house printing and embroidery, and operations in India, we deliver agility, quality, and scale. As part of PDS Limited, a global design-led sourcing and manufacturing platform operating in 25+ countries, we combine local expertise with global reach.",
+                            "Norlanka es un proveedor líder de soluciones integrales de confección, que colabora con más de 20 marcas de moda globales para entregar productos innovadores del diseño a la entrega. Con una red de más de 25 socios de fabricación en Sri Lanka e India, producimos más de 60 millones de prendas al año.\n\nComo parte de PDS Limited, una plataforma global de diseño y fabricación presente en más de 25 países, combinamos experiencia local con alcance global."
                         ),
                         'items'   => [
-                            $this->loc('USD 100+ Mn revenue · 12,000+ associates'),
-                            $this->loc('6,000+ machines · 5 Mn sewing units per month'),
-                            $this->loc('SEDEX, GOTS, GRS, HIGG & ISO 14064-1 compliant'),
+                            $this->loc('25+ manufacturing partners — Sri Lanka & India'),
+                            $this->loc('60M+ garments annually · 6 product segments'),
+                            $this->loc('Part of PDS Limited — operating in 25+ countries'),
                         ],
+                    ]],
+                ]],
+                ['key' => 'corporate-video', 'type' => 'video', 'blocks' => [
+                    ['video', [
+                        'title'   => $this->loc('Norlanka in motion', 'Norlanka en movimiento', '映像で見るノルランカ', '影像中的诺兰卡'),
+                        'src'     => '/media/video/home-hero.mp4',
+                        'poster'  => '/media/video/home-hero-poster.jpg',
+                        'caption' => $this->loc('Our corporate film — design, development, sampling and quality assurance in action.'),
                     ]],
                 ]],
                 ['key' => 'hq-photo', 'type' => 'image', 'blocks' => [
@@ -152,12 +163,13 @@ class CorporateContentSeeder extends Seeder
                         'caption' => $this->loc('The Norlanka head office in Colombo, Sri Lanka — home to 250+ head-office employees.'),
                     ]],
                 ]],
-                ['key' => 'vision', 'type' => 'values', 'blocks' => [
-                    ['values_grid', [
-                        'title' => $this->loc('Vision & Mission', 'Visión y Misión', 'ビジョンとミッション', '愿景与使命'),
+                ['key' => 'vision', 'type' => 'statement', 'blocks' => [
+                    ['statement', [
                         'items' => [
-                            ['title' => $this->loc('Vision', 'Visión', 'ビジョン', '愿景'), 'text' => $this->loc('To be the most globally sought after, trusted fashion solutions provider.')],
-                            ['title' => $this->loc('Mission', 'Misión', 'ミッション', '使命'), 'text' => $this->loc('Providing stakeholders with growth opportunities through innovative design, and the highest value through excellent customer service.')],
+                            ['title' => $this->loc('Our Vision', 'Nuestra Visión', '私たちのビジョン', '我们的愿景'),
+                             'text' => $this->loc('To be the most globally sought after, trusted fashion solutions provider.')],
+                            ['title' => $this->loc('We believe in', 'Creemos en', '私たちの信条', '我们的信念'),
+                             'text' => $this->loc('Providing stakeholders with growth opportunities through innovative design, and the highest value through excellent customer service.')],
                         ],
                     ]],
                 ]],
@@ -165,23 +177,32 @@ class CorporateContentSeeder extends Seeder
                     ['timeline', [
                         'title' => $this->loc('Our journey', 'Nuestra trayectoria', '私たちの歩み', '我们的历程'),
                         'items' => [
-                            ['year' => $this->loc('2018'), 'title' => $this->loc('Pioneering 3D apparel', '3D pionero', '3Dアパレルの先駆け', '开创 3D 服装设计'), 'text' => $this->loc('Norlanka moves to the forefront of 3D apparel design in the industry.')],
-                            ['year' => $this->loc('2022'), 'title' => $this->loc('Solar-powered manufacturing', 'Fabricación solar', '太陽光発電の導入', '太阳能制造'), 'text' => $this->loc('A 630 kWp solar roof is commissioned at Trincomalee; Great Place to Work certified.')],
-                            ['year' => $this->loc('2024'), 'title' => $this->loc('Verified climate accounting', 'Contabilidad climática verificada', '検証済み気候会計', '经验证的气候核算'), 'text' => $this->loc('ISO 14064-1 greenhouse-gas certification and a Higg FEM score of 93.')],
-                            ['year' => $this->loc('2026'), 'title' => $this->loc('Global scale', 'Escala global', 'グローバル規模へ', '全球规模'), 'text' => $this->loc('USD 100+ Mn revenue and 60+ million garments shipped a year across Sri Lanka and India.')],
+                            ['year' => $this->loc('2010'), 'title' => $this->loc('Founded', 'Fundación', '創業', '创立'), 'text' => $this->loc('Founded as G C Lanka Trading (Pvt) Ltd.')],
+                            ['year' => $this->loc('2012'), 'title' => $this->loc('Rebranded as Norlanka', 'Renombrada Norlanka', 'ノルランカに社名変更', '更名为诺兰卡'), 'text' => $this->loc('Rebranded as Norlanka Manufacturing Colombo Ltd.')],
+                            ['year' => $this->loc('2014'), 'title' => $this->loc('Trincomalee facility', 'Planta de Trincomalee', 'トリンコマリー工場', '亭可马里工厂'), 'text' => $this->loc('Expanded with the acquisition of the Trincomalee manufacturing facility.')],
+                            ['year' => $this->loc('2015'), 'title' => $this->loc('Product Development Centre', 'Centro de Desarrollo', '製品開発センター', '产品开发中心'), 'text' => $this->loc('Established a dedicated Product Development Centre (PDC).')],
+                            ['year' => $this->loc('2021'), 'title' => $this->loc('Norlanka India', 'Norlanka India', 'ノルランカ・インド', '诺兰卡印度'), 'text' => $this->loc('Expanded operations with Norlanka India.')],
+                            ['year' => $this->loc('2022'), 'title' => $this->loc('Centralized cutting facility', 'Planta de corte centralizado', '集中裁断施設', '中央裁剪工厂'), 'text' => $this->loc('Commissioned a state-of-the-art centralized cutting facility.')],
+                            ['year' => $this->loc('2023'), 'title' => $this->loc('UK showroom & design studio', 'Showroom y estudio en Reino Unido', '英国ショールーム＆デザインスタジオ', '英国展厅与设计工作室'), 'text' => $this->loc('Opened our UK showroom & design studio.')],
                         ],
                     ]],
                 ]],
                 ['key' => 'values', 'type' => 'values', 'blocks' => [
                     ['values_grid', [
-                        'title' => $this->loc('We believe in', 'Creemos en', '私たちの信条', '我们的信念'),
+                        'title' => $this->loc('Our Values', 'Nuestros valores', '私たちの価値観', '我们的价值观'),
                         'items' => [
-                            ['title' => $this->loc('Trust, Integrity & Ethics', 'Confianza, integridad y ética', '信頼・誠実・倫理', '信任、诚信与道德'), 'text' => $this->loc('Doing what is right, always — in every relationship and decision.')],
-                            ['title' => $this->loc('People First', 'Las personas primero', '人を第一に', '员工优先'), 'text' => $this->loc('Our people are the heart of everything we do.')],
-                            ['title' => $this->loc('Social Responsibility', 'Responsabilidad social', '社会的責任', '社会责任'), 'text' => $this->loc('Building stronger, more sustainable communities.')],
-                            ['title' => $this->loc('Customer Centricity', 'Centrados en el cliente', '顧客中心', '以客户为中心'), 'text' => $this->loc('We build around our customers’ success.')],
-                            ['title' => $this->loc('Entrepreneurial Spirit', 'Espíritu emprendedor', '起業家精神', '企业家精神'), 'text' => $this->loc('Agility and initiative in everything we take on.')],
-                            ['title' => $this->loc('Transparency & Teamwork', 'Transparencia y trabajo en equipo', '透明性とチームワーク', '透明与团队协作'), 'text' => $this->loc('Collaboration and openness with partners and people.')],
+                            ['title' => $this->loc('Trust, Integrity & Ethics', 'Confianza, integridad y ética', '信頼・誠実・倫理', '信任、诚信与道德'),
+                             'text' => $this->loc('We will always conduct ourselves, internally and externally with the highest degree of trust, integrity, and ethics.')],
+                            ['title' => $this->loc('People First', 'Las personas primero', '人を第一に', '员工优先'),
+                             'text' => $this->loc('We will foster an engaging environment where our people are valued, treated with respect, empathy and compassion, and where diversity is a priority.')],
+                            ['title' => $this->loc('Entrepreneurial Spirit', 'Espíritu emprendedor', '起業家精神', '企业家精神'),
+                             'text' => $this->loc('We will promote an environment where our people are always encouraged to be: innovative, creative, self-driven, and agents of change.')],
+                            ['title' => $this->loc('Transparency, Collaboration & Teamwork', 'Transparencia, colaboración y trabajo en equipo', '透明性・協働・チームワーク', '透明、协作与团队精神'),
+                             'text' => $this->loc('We will always work in a collaborative manner fostering a ‘win/win’ environment, internally and externally.')],
+                            ['title' => $this->loc('Social Responsibility', 'Responsabilidad social', '社会的責任', '社会责任'),
+                             'text' => $this->loc('We will always conduct our business in a socially responsible manner working to protect the environment that we live in.')],
+                            ['title' => $this->loc('Customer Centricity', 'Centrados en el cliente', '顧客中心', '以客户为中心'),
+                             'text' => $this->loc('We will continuously engage with our customers to ensure highest quality service is delivered. To deliver right value to our customer we understand our customer needs.')],
                         ],
                     ]],
                 ]],
@@ -189,22 +210,22 @@ class CorporateContentSeeder extends Seeder
                     ['leadership', [
                         'title' => $this->loc('Leadership', 'Liderazgo', 'リーダーシップ', '领导团队'),
                         'items' => [
-                            ['name' => $this->loc('Chief Executive Officer'), 'role' => $this->loc('CEO message', 'Mensaje del CEO', 'CEOメッセージ', 'CEO 致辞'), 'message' => $this->loc('Our people and our responsibility to the planet drive every decision we make.')],
-                            ['name' => $this->loc('Pallak'), 'role' => $this->loc('Leadership message', 'Mensaje', 'メッセージ', '寄语'), 'message' => $this->loc('Design and innovation are how we create lasting value for our partners.')],
-                            ['name' => $this->loc('Leadership Team'), 'role' => $this->loc('Across functions', 'Equipo', 'リーダーシップチーム', '管理团队'), 'message' => $this->loc('A global team uniting craftsmanship, technology and sustainability.')],
+                            ['name' => $this->loc('Dr. Deepak Kumar Seth'), 'role' => $this->loc('Group Chairman', 'Presidente del Grupo', 'グループ会長', '集团主席'), 'photo' => '/media/leadership/deepak-kumar-seth.jpg'],
+                            ['name' => $this->loc('Pallak Seth'), 'role' => $this->loc('Group Executive Vice Chairman', 'Vicepresidente Ejecutivo del Grupo', 'グループ副会長', '集团执行副主席'), 'photo' => '/media/leadership/pallak-seth.jpg'],
+                            ['name' => $this->loc('Sanjay Jain'), 'role' => $this->loc('Group CEO', 'CEO del Grupo', 'グループCEO', '集团首席执行官'), 'photo' => '/media/leadership/sanjay-jain.jpg'],
+                            ['name' => $this->loc('Chandana Ranatunga'), 'role' => $this->loc('CEO', 'CEO', 'CEO', '首席执行官'), 'photo' => '/media/leadership/chandana-ranatunga.jpg'],
                         ],
                     ]],
                 ]],
                 ['key' => 'presence', 'type' => 'map', 'blocks' => [
                     ['map', [
                         'title' => $this->loc('Global presence', 'Presencia global', 'グローバルな拠点', '全球布局'),
-                        'intro' => $this->loc('Manufacturing, design and customer teams across five countries.'),
+                        'intro' => $this->loc('Head office, factories, manufacturing and design across Sri Lanka, India and the UK.'),
                         'items' => [
-                            ['region' => $this->loc('Sri Lanka'), 'detail' => $this->loc('Headquarters, factories & sample room')],
-                            ['region' => $this->loc('India'), 'detail' => $this->loc('Manufacturing — Tirupur & Delhi')],
-                            ['region' => $this->loc('United Kingdom'), 'detail' => $this->loc('Design studio — Leicester')],
-                            ['region' => $this->loc('USA'), 'detail' => $this->loc('Sales & marketing')],
-                            ['region' => $this->loc('Hong Kong'), 'detail' => $this->loc('Product development')],
+                            ['region' => $this->loc('Sri Lanka — Colombo'), 'detail' => $this->loc('Norlanka Head Office')],
+                            ['region' => $this->loc('Sri Lanka — Trincomalee'), 'detail' => $this->loc('Norlanka Factory')],
+                            ['region' => $this->loc('India — Bangalore'), 'detail' => $this->loc('Norlanka Manufacturing India')],
+                            ['region' => $this->loc('UK — Leicester'), 'detail' => $this->loc('Norlanka Design Studio UK')],
                         ],
                     ]],
                 ]],
@@ -232,56 +253,47 @@ class CorporateContentSeeder extends Seeder
                     $this->loc('Full-service design, development and manufacturing across 13 product categories.')
                 ),
                 ['key' => 'categories', 'type' => 'categories', 'blocks' => [
-                    ['category_grid', [
-                        'title' => $this->loc('Product categories', 'Categorías de producto', '製品カテゴリ', '产品类别'),
-                        'intro' => $this->loc('Specialist capability across babywear, knits, woven, activewear and more.'),
+                    ['richtext', [
+                        'eyebrow' => $this->loc('Product categories', 'Categorías de producto', '製品カテゴリ', '产品类别'),
+                        'title'   => $this->loc('A portfolio built for global brands', 'Un portafolio para marcas globales', 'グローバルブランドのためのポートフォリオ', '面向全球品牌的产品组合'),
+                        'text'    => $this->loc('Our diverse product portfolio spans across multiple apparel and lifestyle segments, crafted to meet the evolving needs of global brands and retailers. Our expertise includes Babywear, Childrenswear, Kids’ Nightwear, Schoolwear, Accessories, True Knits, Hosiery & Toys, Adult Wovens, Adult Jerseywear, Activewear, Maternity Wear, and Adults’ Essentials & Nightwear. With deep category knowledge and a strong manufacturing network, we deliver products that combine quality, innovation, comfort, and value.'),
                     ]],
+                    ['category_grid', []],
                 ]],
-                ['key' => 'design', 'type' => 'features', 'blocks' => [
-                    ['feature_cards', [
-                        'title' => $this->loc('Design & development', 'Diseño y desarrollo', 'デザインと開発', '设计与开发'),
-                        'items' => [
-                            ['title' => $this->loc('Trend Research'), 'text' => $this->loc('Insight-led seasonal direction.')],
-                            ['title' => $this->loc('CAD Design'), 'text' => $this->loc('Digital design and tech packs.')],
-                            ['title' => $this->loc('Sampling'), 'text' => $this->loc('Fast, accurate prototype sampling.')],
-                            ['title' => $this->loc('Product Development'), 'text' => $this->loc('From concept to production-ready.')],
-                            ['title' => $this->loc('Fit Testing'), 'text' => $this->loc('Rigorous fit and wear validation.')],
-                            ['title' => $this->loc('Innovation Lab'), 'text' => $this->loc('New materials and techniques.')],
-                        ],
+                ['key' => 'design', 'type' => 'content', 'blocks' => [
+                    ['richtext', [
+                        'eyebrow' => $this->loc('Design & development', 'Diseño y desarrollo', 'デザインと開発', '设计与开发'),
+                        'title'   => $this->loc('From ideas to market-ready products', 'De la idea al producto', 'アイデアを市場性ある製品へ', '从创意到量产'),
+                        'text'    => $this->loc('We transform ideas into market-ready products through a collaborative design and development process. Our experienced teams work closely with customers on trend forecasting, fabric innovation, product engineering, sampling, and fit development. By combining creativity with technical expertise, we help brands bring compelling collections to life while ensuring speed, quality, and commercial viability.'),
                     ]],
                 ]],
                 ['key' => 'workflow', 'type' => 'process', 'blocks' => [
+                    ['richtext', [
+                        'eyebrow' => $this->loc('End-to-end solutions', 'Soluciones integrales', 'エンドツーエンドのソリューション', '端到端解决方案'),
+                        'title'   => $this->loc('From concept to consumer', 'Del concepto al consumidor', 'コンセプトから消費者まで', '从概念到消费者'),
+                        'text'    => $this->loc('From concept to consumer, we provide seamless end-to-end solutions across the apparel value chain. Our services encompass design, sourcing, product development, manufacturing, quality assurance, supply chain management, and logistics. Leveraging our global network and industry expertise, we ensure efficiency, transparency, and timely delivery at every stage of the process.'),
+                    ]],
                     ['process_steps', [
-                        'title' => $this->loc('End-to-end solutions', 'Soluciones integrales', 'エンドツーエンドのソリューション', '端到端解决方案'),
                         'items' => [
-                            ['title' => $this->loc('Research')], ['title' => $this->loc('Design')],
-                            ['title' => $this->loc('Development')], ['title' => $this->loc('Sampling')],
-                            ['title' => $this->loc('Manufacturing')], ['title' => $this->loc('Quality Assurance')],
+                            ['title' => $this->loc('Design')], ['title' => $this->loc('Sourcing')],
+                            ['title' => $this->loc('Development')], ['title' => $this->loc('Manufacturing')],
+                            ['title' => $this->loc('Quality Assurance')], ['title' => $this->loc('Supply Chain')],
                             ['title' => $this->loc('Logistics')], ['title' => $this->loc('Delivery')],
                         ],
                     ]],
                 ]],
-                ['key' => 'materials', 'type' => 'features', 'blocks' => [
-                    ['feature_cards', [
-                        'title' => $this->loc('Materials expertise', 'Materiales', '素材の専門知識', '材料专长'),
-                        'items' => [
-                            ['title' => $this->loc('Cotton'), 'text' => $this->loc('Soft, breathable, versatile staples.')],
-                            ['title' => $this->loc('Organic Cotton'), 'text' => $this->loc('Certified organic fibres.')],
-                            ['title' => $this->loc('Recycled Fibers'), 'text' => $this->loc('Lower-impact recycled inputs.')],
-                            ['title' => $this->loc('Bamboo'), 'text' => $this->loc('Naturally soft, sustainable.')],
-                            ['title' => $this->loc('Performance Fabrics'), 'text' => $this->loc('Engineered for movement.')],
-                            ['title' => $this->loc('Sustainable Materials'), 'text' => $this->loc('Responsible material library.')],
-                        ],
+                ['key' => 'sourcing', 'type' => 'content', 'blocks' => [
+                    ['richtext', [
+                        'eyebrow' => $this->loc('Ethical sourcing', 'Abastecimiento ético', '倫理的な調達', '道德采购'),
+                        'title'   => $this->loc('Responsibility, embedded in everything', 'Responsabilidad en todo', 'すべてに責任を', '责任贯穿一切'),
+                        'text'    => $this->loc('Sustainability and responsible business practices are embedded in everything we do. We partner with suppliers and manufacturing facilities that uphold high standards of social compliance, worker welfare, environmental stewardship, and ethical business conduct. Through responsible sourcing practices and continuous monitoring, we help our customers build resilient and sustainable supply chains.'),
                     ]],
                 ]],
-                ['key' => 'qa', 'type' => 'process', 'blocks' => [
-                    ['process_steps', [
-                        'title' => $this->loc('Quality assurance', 'Control de calidad', '品質保証', '质量保证'),
-                        'items' => [
-                            ['title' => $this->loc('Incoming Inspection')], ['title' => $this->loc('Inline Inspection')],
-                            ['title' => $this->loc('Production QC')], ['title' => $this->loc('Final Audit')],
-                            ['title' => $this->loc('Shipment Release')],
-                        ],
+                ['key' => 'presence', 'type' => 'content', 'blocks' => [
+                    ['richtext', [
+                        'eyebrow' => $this->loc('Global presence', 'Presencia global', 'グローバルな拠点', '全球布局'),
+                        'title'   => $this->loc('Local expertise, global reach', 'Experiencia local, alcance global', 'ローカルの専門性、グローバルな展開', '本地专长，全球触达'),
+                        'text'    => $this->loc('With our own offices in the UK & India and as part of the PDS Group, we benefit from a strong global footprint spanning 25+ countries across key sourcing, manufacturing, and consumer markets. Our international network enables us to connect global brands with trusted manufacturing partners and fabric mills, providing local expertise, market intelligence, and agile solutions to meet the demands of a dynamic global marketplace.'),
                     ]],
                 ]],
                 $this->ctaContact(),
@@ -324,7 +336,7 @@ class CorporateContentSeeder extends Seeder
                     ['metrics', [
                         'title' => $this->loc('Production capacity', 'Capacidad de producción', '生産能力', '产能'),
                         'items' => [
-                            ['value' => '40', 'suffix' => '+', 'label' => $this->loc('Factories — Sri Lanka & India', 'Fábricas', '工場（スリランカ・インド）', '工厂（斯里兰卡与印度）')],
+                            ['value' => '25', 'suffix' => '+', 'label' => $this->loc('Manufacturing partners — Sri Lanka & India', 'Socios de fabricación', '製造パートナー（スリランカ・インド）', '制造合作伙伴（斯里兰卡与印度）')],
                             ['value' => '12000', 'suffix' => '+', 'label' => $this->loc('Associates & workforce', 'Colaboradores', '従業員・ワークフォース', '员工与劳动力')],
                             ['value' => '6000', 'suffix' => '+', 'label' => $this->loc('Machines', 'Máquinas', 'ミシン・機械', '设备')],
                             ['value' => '5', 'suffix' => 'M', 'label' => $this->loc('Sewing units per month', 'Unidades al mes', '月間縫製数', '每月缝制件数')],
@@ -375,23 +387,36 @@ class CorporateContentSeeder extends Seeder
                             '2024年を基準とし、2028年に向けた測定可能な目標を掲げる3つのコミットメント。',
                             '三大承诺，以 2024 年为基线、以 2028 年为目标，皆可衡量。'),
                         'pillars' => [
-                            ['title' => $this->loc('Protect Our Environment', 'Proteger el medio ambiente', '環境を守る', '保护环境'), 'items' => [
-                                $this->loc('Emissions −10% (Scope 1 & 2, kgCO2e/SM)', 'Emisiones −10% (Alcance 1 y 2)', '排出量−10%（スコープ1・2）', '排放 −10%（范围1和2）'),
-                                $this->loc('Domestic water use −10% per employee-day', 'Agua −10% por empleado/día', '水使用量−10%（従業員1人/日）', '人均日用水 −10%'),
-                                $this->loc('Zero waste to landfill — 95% diverted', 'Cero residuos a vertedero: 95% desviado', '埋立ゼロ — 95%転換', '零填埋——95% 转化利用'),
-                                $this->loc('Double our biodiversity footprint via reforestation', 'Duplicar la huella de biodiversidad', '再植林で生物多様性面積を倍増', '通过再造林使生物多样性面积翻倍'),
-                            ]],
-                            ['title' => $this->loc('Together With People', 'Junto a las personas', '人とともに', '与员工同行'), 'items' => [
-                                $this->loc('30% of leadership positions held by women', '30% de liderazgo femenino', '管理職の30%を女性に', '30% 领导岗位由女性担任'),
-                                $this->loc('20 training hours per employee', '20 horas de formación por empleado', '従業員1人あたり研修20時間', '人均 20 小时培训'),
-                                $this->loc('5,000 community beneficiaries', '5.000 beneficiarios comunitarios', '地域の受益者5,000人', '5,000 名社区受益者'),
-                            ]],
-                            ['title' => $this->loc('Trust In Everything', 'Confianza en todo', 'すべてに信頼を', '处处可信'), 'items' => [
-                                $this->loc('100% Tier-1 Higg/Worldly verification', 'Verificación Higg del 100% en Tier-1', 'Tier-1のHigg検証100%', 'Tier-1 Higg 验证 100%'),
-                                $this->loc('75% Tier-2 facilities verified', '75% de instalaciones Tier-2 verificadas', 'Tier-2施設の75%を検証', 'Tier-2 工厂验证 75%'),
-                                $this->loc('Science-based targets — net-zero by 2050 (PDS)', 'Objetivos científicos: cero neto 2050', '科学的根拠に基づく目標 — 2050年ネットゼロ', '科学碳目标——2050 年净零（PDS）'),
-                            ]],
+                            ['title' => $this->loc('Protect Our Environment', 'Proteger el medio ambiente', '環境を守る', '保护环境'),
+                             'text'  => $this->loc('Our commitment to environmental stewardship is deeply ingrained in everything we do — from the way we operate our business to how we design our products. Our goal is to reduce our environmental impact, conserve natural resources, and protect the ecosystems that sustain life on Earth for a better tomorrow.'),
+                             'targets' => [
+                                ['label' => $this->loc('Emissions — Scope 1 & 2 (kgCO2e/SM)', 'Emisiones (kgCO2e/SM)', '排出量（kgCO2e/SM）', '排放（kgCO2e/SM）'), 'baseline' => '43.95', 'current' => '42.74', 'target' => '40.57'],
+                                ['label' => $this->loc('Domestic water (normalized)', 'Agua doméstica (normalizada)', '生活用水（正規化）', '生活用水（归一化）'), 'baseline' => '0.0141', 'current' => '0.0130', 'target' => '0.0127'],
+                                ['label' => $this->loc('Waste to landfill', 'Residuos a vertedero', '埋立廃棄物', '填埋废弃物'), 'baseline' => '5.29', 'current' => '6.60', 'target' => '5.00', 'unit' => '%'],
+                                ['label' => $this->loc('Biodiversity footprint (ha)', 'Huella de biodiversidad (ha)', '生物多様性面積（ha）', '生物多样性面积（公顷）'), 'baseline' => '0.39', 'current' => '0.39', 'target' => '4.0'],
+                             ]],
+                            ['title' => $this->loc('Together With People', 'Junto a las personas', '人とともに', '与员工同行'),
+                             'text'  => $this->loc('We believe that people are the heart of everything we do. Our success is built on strong relationships with our employees, customers, partners, and communities. When we are innovating with our teams, partnering with local communities, or supporting global initiatives, our focus remains the same: to make a better tomorrow for everyone.'),
+                             'targets' => [
+                                ['label' => $this->loc('Women in leadership', 'Mujeres en liderazgo', '女性管理職比率', '女性领导比例'), 'baseline' => '24.68', 'current' => '28.1', 'target' => '30.00', 'unit' => '%'],
+                                ['label' => $this->loc('Training hours per employee', 'Horas de formación por empleado', '従業員1人あたり研修時間', '人均培训小时'), 'baseline' => '10.94', 'current' => '11.71', 'target' => '20.00'],
+                                ['label' => $this->loc('Community beneficiaries', 'Beneficiarios comunitarios', '地域の受益者数', '社区受益者'), 'baseline' => '582', 'current' => '2882', 'target' => '5,000'],
+                             ]],
+                            ['title' => $this->loc('Trust In Everything', 'Confianza en todo', 'すべてに信頼を', '处处可信'),
+                             'text'  => $this->loc('Trust reflects our deep commitment to doing what is right, always. In an increasingly complex world, we understand that trust is a company’s most valuable asset. It shapes reputations, builds lasting relationships, and fuels sustainable growth. Good governance is the foundation for a better tomorrow.'),
+                             'targets' => [
+                                ['label' => $this->loc('Tier-1 Higg/Worldly verification', 'Verificación Higg Tier-1', 'Tier-1 Higg検証', 'Tier-1 Higg 验证'), 'baseline' => '75.8', 'current' => '96.8', 'target' => '100.0', 'unit' => '%'],
+                                ['label' => $this->loc('Tier-2 facilities verified', 'Instalaciones Tier-2 verificadas', 'Tier-2施設の検証', 'Tier-2 工厂验证'), 'baseline' => '45.8', 'current' => '45.8', 'target' => '75.0', 'unit' => '%'],
+                             ]],
                         ],
+                    ]],
+                ]],
+                ['key' => 'esg-report', 'type' => 'cta', 'blocks' => [
+                    ['cta', [
+                        'title'  => $this->loc('Our ESG report', 'Nuestro informe ESG', 'ESGレポート', 'ESG 报告'),
+                        'text'   => $this->loc('Read the full Better Tomorrow strategy — pillars, targets and the projects behind them.'),
+                        'button' => $this->loc('Download the ESG report', 'Descargar el informe ESG', 'ESGレポートをダウンロード', '下载 ESG 报告'),
+                        'url'    => '/media/downloads/norlanka-esg-strategy.pdf',
                     ]],
                 ]],
                 ['key' => 'metrics', 'type' => 'metrics', 'blocks' => [
@@ -496,27 +521,24 @@ class CorporateContentSeeder extends Seeder
             'sections' => [
                 $this->hero(
                     $this->loc('Careers', 'Empleo', '採用情報', '招贤纳士'),
-                    $this->loc('Life at Norlanka', 'La vida en Norlanka', 'ノーランカでの働き方', '诺兰卡的工作生活'),
-                    $this->loc('Build a career with a responsible, global apparel leader.')
+                    $this->loc('Where Entrepreneurial Minds Thrive', 'Donde prosperan las mentes emprendedoras', '起業家精神が育つ場所', '创业精神在此绽放'),
+                    $this->loc('Join a team that empowers you to innovate, grow, and make a meaningful impact in the global apparel industry.',
+                        'Únete a un equipo que te impulsa a innovar, crecer y generar un impacto real en la industria global de la confección.',
+                        'イノベーションと成長、そしてグローバルなアパレル産業への貢献を後押しするチームに参加しませんか。',
+                        '加入一个赋能你创新、成长并在全球服装行业创造深远影响的团队。')
                 ),
-                ['key' => 'culture', 'type' => 'content', 'blocks' => [
-                    ['two_column', [
-                        'eyebrow' => $this->loc('Culture', 'Cultura', '文化', '文化'),
-                        'title'   => $this->loc('Culture & values', 'Cultura y valores', '文化と価値観', '文化与价值观'),
-                        'body'    => $this->loc('We grow our people through learning, wellbeing and a culture of collaboration and responsibility.'),
-                        'items'   => [$this->loc('Collaborative teams'), $this->loc('Global opportunities'), $this->loc('Recognised great place to work (GPTW)')],
-                    ]],
-                ]],
-                ['key' => 'benefits', 'type' => 'values', 'blocks' => [
-                    ['values_grid', [
-                        'title' => $this->loc('Why join us', '¿Por qué unirte?', '私たちで働く理由', '为何加入我们'),
+                ['key' => 'why', 'type' => 'features', 'blocks' => [
+                    ['feature_cards', [
+                        'title' => $this->loc('Why Choose Norlanka?', '¿Por qué elegir Norlanka?', 'ノルランカを選ぶ理由', '为何选择诺兰卡？'),
                         'items' => [
-                            ['title' => $this->loc('Benefits & Wellbeing'), 'text' => $this->loc('Health, wellbeing and support.')],
-                            ['title' => $this->loc('Learning & Development'), 'text' => $this->loc('Grow your skills and career.')],
-                            ['title' => $this->loc('Internship Programs'), 'text' => $this->loc('Kickstart your career with us.')],
-                            ['title' => $this->loc('Graduate Programs'), 'text' => $this->loc('Structured early-career paths.')],
-                            ['title' => $this->loc('Workplace Events'), 'text' => $this->loc('A vibrant, connected community.')],
-                            ['title' => $this->loc('Awards & Achievements'), 'text' => $this->loc('GPTW and industry recognition.')],
+                            ['title' => $this->loc('Global Backing', 'Respaldo global', 'グローバルな後ろ盾', '全球支持'),
+                             'text' => $this->loc('Backed by PDS Limited, a global fashion infrastructure platform, we offer the stability, resources, and international reach that empower our people to build long-term careers.')],
+                            ['title' => $this->loc('Entrepreneurial Culture', 'Cultura emprendedora', '起業家文化', '创业文化'),
+                             'text' => $this->loc('We encourage ownership, initiative, and innovation, giving every employee the opportunity to make a meaningful impact.')],
+                            ['title' => $this->loc('Continuous Growth', 'Crecimiento continuo', '継続的な成長', '持续成长'),
+                             'text' => $this->loc('Through learning, development, and global exposure, we help our people reach their full potential.')],
+                            ['title' => $this->loc('Purpose-Driven Business', 'Negocio con propósito', 'パーパス主導の事業', '使命驱动的企业'),
+                             'text' => $this->loc("As a responsible manufacturer, we're committed to creating positive impact for our people, our partners, and the communities we serve.")],
                         ],
                     ]],
                 ]],
@@ -527,6 +549,18 @@ class CorporateContentSeeder extends Seeder
                             'Postula en línea: sube tu CV y nuestro equipo de RR. HH. te contactará.',
                             'オンラインで応募できます。履歴書をアップロードいただければ、人事チームからご連絡します。',
                             '在线申请——上传简历，我们的人力资源团队将与您联系。'),
+                    ]],
+                ]],
+                ['key' => 'life', 'type' => 'gallery', 'blocks' => [
+                    ['gallery', [
+                        'eyebrow' => $this->loc('Life @ Norlanka', 'Vida en Norlanka', 'ノルランカでの日々', '诺兰卡生活'),
+                        'title'   => $this->loc('Life @ Norlanka', 'Vida en Norlanka', 'ノルランカでの日々', '诺兰卡生活'),
+                        'intro'   => $this->loc('Employee engagement and wellbeing — volunteering, community programmes and moments from across our teams.'),
+                        'items'   => [
+                            ['src' => '/media/impact/blood-donation.jpg', 'caption' => $this->loc('Annual blood donation camps, run by our own volunteers')],
+                            ['src' => '/media/impact/tree-planting.jpg', 'caption' => $this->loc('Roots for Tomorrow — team tree-planting across the island')],
+                            ['src' => '/media/impact/education.jpg', 'caption' => $this->loc('Scholarship seminars and school-supply drives with our teams')],
+                        ],
                     ]],
                 ]],
                 ['key' => 'cta', 'type' => 'cta', 'blocks' => [

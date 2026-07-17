@@ -84,7 +84,7 @@ return [
         'intro' => [
             'eyebrow' => 'Quiénes somos',
             'title'   => 'Un socio en el que las marcas del mundo confían para fabricar prendas de la manera correcta.',
-            'body'    => 'Norlanka es un fabricante de prendas de servicio completo, con soluciones del diseño a la entrega para más de 20 marcas y minoristas internacionales. Parte de PDS Limited, enviamos más de 60 millones de prendas al año a través de 40+ fábricas asociadas en Sri Lanka e India — uno de los mayores exportadores sostenibles de Sri Lanka.',
+            'body'    => 'Norlanka es un fabricante de prendas de servicio completo, con soluciones del diseño a la entrega para más de 20 marcas y minoristas internacionales. Parte de PDS Limited, enviamos más de 60 millones de prendas al año a través de una red de más de 25 socios de fabricación en Sri Lanka e India — uno de los mayores exportadores sostenibles de Sri Lanka.',
         ],
         'cap' => [
             'eyebrow'    => 'Qué hacemos',
@@ -111,6 +111,11 @@ return [
             'p3_t'    => 'Confianza en todo',
             'p3_d'    => 'Instalaciones verificadas por Higg, objetivos basados en la ciencia y una gobernanza ambiental premiada.',
         ],
+        'brands' => [
+            'eyebrow' => 'Nuestros clientes',
+            'title'   => 'La confianza de marcas globales',
+            'body'    => 'Colaboramos con los principales minoristas y marcas de moda de todo el mundo.',
+        ],
         'footprint' => [
             'eyebrow' => 'Presencia global',
             'title'   => 'Hecho en Sri Lanka e India. Entregado al mundo.',
@@ -125,7 +130,7 @@ return [
             ],
             'roles' => [
                 'hq'       => 'Sede y manufactura',
-                'india'    => 'Manufactura — Tirupur y Delhi',
+                'india'    => 'Norlanka Manufacturing India — Bangalore',
                 'uk'       => 'Estudio de diseño — Leicester',
                 'america'  => 'Ventas y marketing',
                 'hongkong' => 'Desarrollo de producto',
@@ -224,5 +229,11 @@ return [
         'label_new'      => 'Novedad',
         'label_bestseller' => 'Más vendido',
         'label_popular'  => 'Popular',
+    ],
+
+    // Etiquetas de la página de impacto.
+    'impact' => [
+        'baseline' => 'Base',
+        'target'   => 'Objetivo',
     ],
 ];

@@ -340,6 +340,35 @@ foreach ($mapPoints as $mp) {
 <!-- ===================== VIRTUAL SHOWROOM (CMS-driven CTA) ===================== -->
 <?= view('Modules\Site\Views\home\sections\cta', ['section' => $sections['cta'] ?? null]) ?>
 
+<!-- ===================== TRUSTED BY GLOBAL BRANDS ===================== -->
+<section class="bg-brand-black py-24 sm:py-28" data-fp-title="<?= esc(lang('Site.home.brands.title'), 'attr') ?>">
+    <div class="container-x text-center">
+        <p class="text-xs font-semibold uppercase tracking-widest text-brand-red" data-gsap="reveal"><?= esc(lang('Site.home.brands.eyebrow')) ?></p>
+        <h2 class="mt-3 text-3xl font-bold sm:text-4xl" data-gsap="reveal"><?= esc(lang('Site.home.brands.title')) ?></h2>
+        <p class="mx-auto mt-4 max-w-xl text-white/60" data-gsap="reveal"><?= esc(lang('Site.home.brands.body')) ?></p>
+    </div>
+    <?php
+    // Customer logos extracted from the official marketing deck (Feb 2026).
+    $brandLogos = array_values(array_filter(
+        glob(FCPATH . 'media/brands/customer-*.png') ?: [],
+        'is_file'
+    ));
+    ?>
+    <?php if ($brandLogos !== []): ?>
+        <div class="brand-marquee mt-12" data-gsap="reveal" aria-label="<?= esc(lang('Site.home.brands.title'), 'attr') ?>">
+            <div class="brand-marquee__track">
+                <?php foreach ([0, 1] as $copy): // duplicated track = seamless loop ?>
+                    <?php foreach ($brandLogos as $logo): $rel = '/media/brands/' . basename($logo); ?>
+                        <span class="brand-card" <?= $copy === 1 ? 'aria-hidden="true"' : '' ?>>
+                            <img src="<?= esc($rel, 'attr') ?>" alt="" loading="lazy" width="160" height="72">
+                        </span>
+                    <?php endforeach; ?>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    <?php endif; ?>
+</section>
+
 <!-- ===================== PARTNER / CLOSING CTA ===================== -->
 <section class="bg-brand-black pb-28">
     <div class="container-x">

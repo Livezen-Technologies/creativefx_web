@@ -87,7 +87,7 @@ return [
         'intro' => [
             'eyebrow' => 'Who we are',
             'title'   => 'A partner the world’s brands trust to make apparel the right way.',
-            'body'    => 'Norlanka is a full-service apparel manufacturer, providing solutions from design to delivery for over 20 international fashion brands and retailers. Part of PDS Limited, we ship over 60 million garments a year through 40+ partner factories across Sri Lanka and India — one of Sri Lanka’s largest sustainable exporters.',
+            'body'    => 'Norlanka is a full-service apparel manufacturer, providing solutions from design to delivery for over 20 international fashion brands and retailers. Part of PDS Limited, we ship over 60 million garments a year through a network of 25+ manufacturing partners across Sri Lanka and India — one of Sri Lanka’s largest sustainable exporters.',
         ],
         'cap' => [
             'eyebrow'    => 'What we do',
@@ -114,6 +114,11 @@ return [
             'p3_t'    => 'Trust in everything',
             'p3_d'    => 'Higg-verified facilities, science-based targets and award-winning environmental governance.',
         ],
+        'brands' => [
+            'eyebrow' => 'Our customers',
+            'title'   => 'Trusted by Global Brands',
+            'body'    => 'Partnering with leading retailers and fashion brands across the world.',
+        ],
         'footprint' => [
             'eyebrow' => 'Global footprint',
             'title'   => 'Made in Sri Lanka & India. Delivered to the world.',
@@ -128,7 +133,7 @@ return [
             ],
             'roles' => [
                 'hq'       => 'Headquarters & manufacturing',
-                'india'    => 'Manufacturing — Tirupur & Delhi',
+                'india'    => 'Norlanka Manufacturing India — Bangalore',
                 'uk'       => 'Design studio — Leicester',
                 'america'  => 'Sales & marketing',
                 'hongkong' => 'Product development',
@@ -228,5 +233,11 @@ return [
         'label_new'      => 'New arrival',
         'label_bestseller' => 'Bestseller',
         'label_popular'  => 'Popular',
+    ],
+
+    // Impact page UI labels (targets vs actual).
+    'impact' => [
+        'baseline' => 'Baseline',
+        'target'   => 'Target',
     ],
 ];
