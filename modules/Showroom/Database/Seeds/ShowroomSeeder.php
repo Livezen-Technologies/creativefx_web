@@ -246,6 +246,9 @@ class ShowroomSeeder extends Seeder
                 'background' => $c['palette'][0],
                 'palette'    => $j($c['palette']),
                 'features'   => $j($c['features']),
+                // Category photo from the company profile portfolio (optional).
+                'image'      => file_exists(FCPATH . 'media/showroom/categories/' . $c['slug'] . '.jpg')
+                    ? '/media/showroom/categories/' . $c['slug'] . '.jpg' : null,
                 'sort_order' => $order++,
                 'status'     => 'published',
                 'created_at' => $now,

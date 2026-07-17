@@ -48,17 +48,18 @@ if (! is_array($regions)) { $regions = ['Sri Lanka', 'South Asia', 'South-East A
 
 // Interactive presence map — normalized coordinates (0..1) computed with the same
 // plate-carrée projection as the land-dot field (scripts/gen-dotmap.mjs), so the
-// markers sit exactly on the map. Labels/roles are localized; `hq` anchors arcs.
+// markers sit exactly on the map. The five points are Norlanka's real footprint
+// (company profile): Sri Lanka HQ + manufacturing, India manufacturing, UK design
+// studio, USA sales, Hong Kong product development. Labels/roles are localized.
 $pointNames = lang('Site.home.footprint.points');
 $pointRoles = lang('Site.home.footprint.roles');
 $mapPoints = [];
 foreach ([
-    ['key' => 'hq',      'x' => 0.7218, 'y' => 0.5473, 'role' => 'hq',     'hq' => true],
-    ['key' => 'india',   'x' => 0.7167, 'y' => 0.4353, 'role' => 'hub'],
-    ['key' => 'sea',     'x' => 0.7964, 'y' => 0.5194, 'role' => 'hub'],
-    ['key' => 'mideast', 'x' => 0.6536, 'y' => 0.4158, 'role' => 'hub'],
-    ['key' => 'europe',  'x' => 0.5241, 'y' => 0.2366, 'role' => 'market'],
-    ['key' => 'america', 'x' => 0.2944, 'y' => 0.3043, 'role' => 'market'],
+    ['key' => 'hq',       'x' => 0.7218, 'y' => 0.5473, 'hq' => true], // Colombo, Sri Lanka
+    ['key' => 'india',    'x' => 0.7167, 'y' => 0.4353],               // Tirupur & Delhi, India
+    ['key' => 'uk',       'x' => 0.4969, 'y' => 0.2185],               // Leicester, UK
+    ['key' => 'america',  'x' => 0.2944, 'y' => 0.3043],               // USA
+    ['key' => 'hongkong', 'x' => 0.8171, 'y' => 0.4366],               // Hong Kong
 ] as $p) {
     $mapPoints[] = [
         'key'  => $p['key'],
@@ -66,7 +67,7 @@ foreach ([
         'y'    => $p['y'],
         'hq'   => ! empty($p['hq']),
         'name' => is_array($pointNames) ? ($pointNames[$p['key']] ?? $p['key']) : $p['key'],
-        'role' => is_array($pointRoles) ? ($pointRoles[$p['role']] ?? '') : '',
+        'role' => is_array($pointRoles) ? ($pointRoles[$p['key']] ?? '') : '',
     ];
 }
 $hqPoint = $mapPoints[0];
@@ -191,7 +192,7 @@ $hqPoint = $mapPoints[0];
 </section>
 
 <!-- ===================== STATS (CMS-driven) ===================== -->
-<?= $this->include('Modules\Site\Views\home\sections\stats', ['section' => $sections['stats'] ?? null]) ?>
+<?= view('Modules\Site\Views\home\sections\stats', ['section' => $sections['stats'] ?? null]) ?>
 
 <!-- ===================== CAPABILITIES / WHAT WE DO ===================== -->
 <section class="bg-brand-black py-24 sm:py-28">
@@ -217,7 +218,7 @@ $hqPoint = $mapPoints[0];
 </section>
 
 <!-- ===================== VALUES / PILLARS (CMS-driven) ===================== -->
-<?= $this->include('Modules\Site\Views\home\sections\pillars', ['section' => $sections['pillars'] ?? null]) ?>
+<?= view('Modules\Site\Views\home\sections\pillars', ['section' => $sections['pillars'] ?? null]) ?>
 
 <!-- ===================== SUSTAINABILITY / OUR IMPACT ===================== -->
 <section class="relative overflow-hidden border-y border-white/10 py-24 sm:py-28">
@@ -337,7 +338,7 @@ foreach ($mapPoints as $mp) {
 </section>
 
 <!-- ===================== VIRTUAL SHOWROOM (CMS-driven CTA) ===================== -->
-<?= $this->include('Modules\Site\Views\home\sections\cta', ['section' => $sections['cta'] ?? null]) ?>
+<?= view('Modules\Site\Views\home\sections\cta', ['section' => $sections['cta'] ?? null]) ?>
 
 <!-- ===================== PARTNER / CLOSING CTA ===================== -->
 <section class="bg-brand-black pb-28">

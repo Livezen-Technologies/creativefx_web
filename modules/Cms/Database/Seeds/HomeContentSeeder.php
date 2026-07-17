@@ -99,12 +99,13 @@ class HomeContentSeeder extends Seeder
                 'ja' => 'を、責任を持って創る。',
                 'zh' => '，以负责任的方式。',
             ],
+            // Cycling words follow the real product portfolio (company profile).
             'rotators' => [
                 ['en' => 'apparel', 'es' => 'moda', 'ja' => 'アパレル', 'zh' => '服饰'],
+                ['en' => 'babywear', 'es' => 'ropa de bebé', 'ja' => 'ベビーウェア', 'zh' => '婴儿装'],
+                ['en' => 'childrenswear', 'es' => 'ropa infantil', 'ja' => '子ども服', 'zh' => '童装'],
                 ['en' => 'activewear', 'es' => 'ropa deportiva', 'ja' => 'アクティブウェア', 'zh' => '运动装'],
-                ['en' => 'knitwear', 'es' => 'punto', 'ja' => 'ニットウェア', 'zh' => '针织'],
                 ['en' => 'essentials', 'es' => 'básicos', 'ja' => '定番', 'zh' => '基础款'],
-                ['en' => 'nightwear', 'es' => 'ropa de dormir', 'ja' => 'ナイトウェア', 'zh' => '睡衣'],
             ],
         ], 0);
 
@@ -145,11 +146,12 @@ class HomeContentSeeder extends Seeder
 
         // ---- Stats ------------------------------------------------------
         $stats = $addSection('stats', 'stats', 2);
+        // Real figures from the Norlanka company profile (Feb 2026).
         $statData = [
-            ['value' => '30', 'suffix' => '+', 'label' => ['en' => 'Factories', 'es' => 'Fábricas', 'ja' => '工場', 'zh' => '工厂']],
-            ['value' => '25000', 'suffix' => '+', 'label' => ['en' => 'Employees', 'es' => 'Empleados', 'ja' => '従業員', 'zh' => '员工']],
-            ['value' => '13', 'suffix' => '', 'label' => ['en' => 'Product categories', 'es' => 'Categorías', 'ja' => '製品カテゴリ', 'zh' => '产品类别']],
-            ['value' => '40', 'suffix' => '+', 'label' => ['en' => 'Countries served', 'es' => 'Países atendidos', 'ja' => '対応国数', 'zh' => '服务国家']],
+            ['value' => '60', 'suffix' => 'M+', 'label' => ['en' => 'Garments shipped per year', 'es' => 'Prendas enviadas al año', 'ja' => '年間出荷着数', 'zh' => '每年出货服装（件）']],
+            ['value' => '40', 'suffix' => '+', 'label' => ['en' => 'Factories in Sri Lanka & India', 'es' => 'Fábricas en Sri Lanka e India', 'ja' => 'スリランカ・インドの工場', 'zh' => '斯里兰卡与印度的工厂']],
+            ['value' => '12000', 'suffix' => '+', 'label' => ['en' => 'Associates & workforce', 'es' => 'Colaboradores y personal', 'ja' => '従業員・ワークフォース', 'zh' => '员工与劳动力']],
+            ['value' => '20', 'suffix' => '+', 'label' => ['en' => 'Global brands & retailers', 'es' => 'Marcas y minoristas globales', 'ja' => 'グローバルブランド・小売', 'zh' => '全球品牌与零售商']],
         ];
         foreach ($statData as $i => $s) {
             $addBlock($stats, 'stat', $s, $i);
