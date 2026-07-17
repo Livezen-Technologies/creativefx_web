@@ -364,7 +364,7 @@ class CorporateContentSeeder extends Seeder
                 ['key' => 'statement', 'type' => 'richtext', 'blocks' => [
                     ['richtext', [
                         'title' => $this->loc('A better tomorrow begins today', 'Un mañana mejor empieza hoy', 'より良い明日は今日から', '更美好的明天，始于今天'),
-                        'body'  => $this->loc('We believe that creating a better tomorrow begins with the actions we take today. Through this strategy we aim to drive sustainable growth, build trust with our stakeholders and create meaningful impact — ensuring our success contributes to a more equitable, resilient and environmentally conscious world. Together, we\'re not just building a better business; we\'re helping create a better tomorrow.'),
+                        'text'  => $this->loc('We believe that creating a better tomorrow begins with the actions we take today. Through this strategy we aim to drive sustainable growth, build trust with our stakeholders and create meaningful impact — ensuring our success contributes to a more equitable, resilient and environmentally conscious world. Together, we\'re not just building a better business; we\'re helping create a better tomorrow.'),
                     ]],
                 ]],
                 ['key' => 'pillars', 'type' => 'esg', 'blocks' => [

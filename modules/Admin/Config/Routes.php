@@ -42,9 +42,17 @@ $routes->group('admin', ['namespace' => 'Modules\Admin\Controllers'], static fun
         $routes->post('applications/(:num)', 'Applications::update/$1');
         $routes->get('applications/(:num)/cv', 'Applications::download/$1');
 
-        // Page block-content editor.
+        // Page builder (block-content editor + structure operations).
         $routes->get('pages/(:num)/content', 'Content::edit/$1');
         $routes->post('pages/(:num)/content', 'Content::update/$1');
+        $routes->post('pages/(:num)/sections', 'Content::addSection/$1');
+        $routes->post('sections/(:num)/move', 'Content::moveSection/$1');
+        $routes->post('sections/(:num)/toggle', 'Content::toggleSection/$1');
+        $routes->post('sections/(:num)/delete', 'Content::deleteSection/$1');
+        $routes->post('sections/(:num)/blocks', 'Content::addBlock/$1');
+        $routes->post('blocks/(:num)/move', 'Content::moveBlock/$1');
+        $routes->post('blocks/(:num)/toggle', 'Content::toggleBlock/$1');
+        $routes->post('blocks/(:num)/delete', 'Content::deleteBlock/$1');
 
         // Translation Manager.
         $routes->get('translations', 'Translations::index');

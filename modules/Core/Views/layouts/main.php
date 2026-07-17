@@ -7,6 +7,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= esc($title ?? setting('site_name', 'Norlanka')) ?></title>
     <meta name="description" content="<?= esc($metaDescription ?? setting('tagline', '')) ?>">
+    <?php // Social sharing (per-page OG image is editable in Admin → Pages).
+    $ogTitle = $title ?? setting('site_name', 'Norlanka');
+    $ogDesc  = $metaDescription ?? setting('tagline', '');
+    $ogImg   = ! empty($ogImage) ? $ogImage : '/media/brand/favicon-180.png'; ?>
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="<?= esc($ogTitle, 'attr') ?>">
+    <meta property="og:description" content="<?= esc($ogDesc, 'attr') ?>">
+    <meta property="og:image" content="<?= esc(base_url(ltrim($ogImg, '/')), 'attr') ?>">
+    <meta name="twitter:card" content="summary_large_image">
     <meta name="theme-color" content="#CF2030">
     <meta name="color-scheme" content="light dark">
     <link rel="icon" type="image/png" sizes="32x32" href="/media/brand/favicon-32.png">

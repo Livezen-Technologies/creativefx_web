@@ -12,13 +12,20 @@ class PageModel extends Model
     protected $useTimestamps  = true;
     protected $useSoftDeletes = true;
     protected $allowedFields  = [
-        'slug', 'title', 'meta_title', 'meta_description',
-        'template', 'is_home', 'parent_id', 'sort_order', 'status',
+        'slug', 'title', 'meta_title', 'meta_description', 'og_image',
+        'template', 'is_home', 'parent_id', 'sort_order', 'status', 'publish_at',
     ];
 
     public function findPublishedBySlug(string $slug): ?array
     {
-        return $this->where('slug', $slug)->where('status', 'published')->first();
+        // Scheduled publishing: a published page stays hidden until publish_at.
+        return $this->where('slug', $slug)
+            ->where('status', 'published')
+            ->groupStart()
+                ->where('publish_at IS NULL')
+                ->orWhere('publish_at <=', date('Y-m-d H:i:s'))
+            ->groupEnd()
+            ->first();
     }
 
     public function findHome(): ?array

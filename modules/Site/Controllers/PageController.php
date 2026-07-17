@@ -31,9 +31,11 @@ class PageController extends BaseController
         $pageTheme = $slug === 'impact' ? 'theme-esg-green' : '';
 
         return view('Modules\Site\Views\cms\page', [
-            'page'      => $page,
-            'title'     => t_field($page['meta_title'] ?? $page['title'] ?? ''),
-            'pageTheme' => $pageTheme,
+            'page'            => $page,
+            'title'           => t_field($page['meta_title'] ?? $page['title'] ?? ''),
+            'metaDescription' => t_field($page['meta_description'] ?? ''),
+            'ogImage'         => $page['og_image'] ?? null,
+            'pageTheme'       => $pageTheme,
         ]);
     }
 }
