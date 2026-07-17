@@ -7,6 +7,7 @@ return [
         'manufacturing' => 'Manufacturing',
         'showroom'  => 'Showroom',
         'impact'    => 'Our Impact',
+        'news'      => 'News',
         'careers'   => 'Careers',
         'contact'   => 'Contact',
     ],
@@ -182,5 +183,23 @@ return [
         'email_inq'     => 'Email us',
         'sustain_title' => 'Sustainability Experience Center',
         'sustain_text'  => 'ESG initiatives, ethical manufacturing, certifications and circular-fashion programmes.',
+    ],
+
+    // Newsroom (listing + article pages).
+    'news' => [
+        'meta'     => 'News & insights from Norlanka — company milestones, sustainability updates, CSR programmes and events.',
+        'eyebrow'  => 'Newsroom',
+        'title'    => 'News & Insights',
+        'intro'    => 'Milestones, sustainability updates and stories from across Norlanka.',
+        'all'      => 'All',
+        'read'     => 'Read article',
+        'back'     => 'All news',
+        'related'  => 'Related news',
+        'none'     => 'No articles published in this category yet — check back soon.',
+        'newer'    => '← Newer',
+        'older'    => 'Older →',
+        'tags'     => 'Tags',
+        'latest'   => 'Latest news',
+        'view_all' => 'View all news',
     ],
 ];

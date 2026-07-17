@@ -7,6 +7,7 @@ return [
         'manufacturing' => '制造',
         'showroom'  => '展厅',
         'impact'    => '我们的影响',
+        'news'      => '新闻',
         'careers'   => '招贤纳士',
         'contact'   => '联系我们',
     ],
@@ -178,5 +179,23 @@ return [
         'email_inq'     => '邮件联系',
         'sustain_title' => '可持续体验中心',
         'sustain_text'  => 'ESG 举措、道德制造、认证与循环时尚项目。',
+    ],
+
+    // 新闻中心（列表 + 文章页）。
+    'news' => [
+        'meta'     => 'Norlanka 新闻与洞察 — 公司里程碑、可持续发展动态、企业社会责任项目与活动。',
+        'eyebrow'  => '新闻中心',
+        'title'    => '新闻与洞察',
+        'intro'    => '来自 Norlanka 各地的里程碑、可持续发展动态与故事。',
+        'all'      => '全部',
+        'read'     => '阅读文章',
+        'back'     => '所有新闻',
+        'related'  => '相关新闻',
+        'none'     => '该分类暂无文章，敬请期待。',
+        'newer'    => '← 较新',
+        'older'    => '较早 →',
+        'tags'     => '标签',
+        'latest'   => '最新新闻',
+        'view_all' => '查看所有新闻',
     ],
 ];

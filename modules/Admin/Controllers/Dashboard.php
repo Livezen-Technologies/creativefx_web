@@ -28,6 +28,8 @@ class Dashboard extends BaseController
 
         $widgets = [
             ['Pages', $count('pages'), 'admin/pages'],
+            ['News Posts', $count('news_posts'), 'admin/news-posts'],
+            ['Published News', $count('news_posts', ['status' => 'published']), 'admin/news-posts'],
             ['Showroom Products', $count('showroom_products'), 'admin/showroom-products'],
             ['Showroom Categories', $count('showroom_categories'), 'admin/showroom-categories'],
             ['Open Jobs', $count('jobs', ['status' => 'open']), 'admin/jobs'],

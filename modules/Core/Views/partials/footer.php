@@ -17,6 +17,7 @@
                 <li><a href="<?= esc(locale_url('our-story')) ?>" class="hover:text-white"><?= esc(lang('Site.nav.story')) ?></a></li>
                 <li><a href="<?= esc(locale_url('our-expertise')) ?>" class="hover:text-white"><?= esc(lang('Site.nav.expertise')) ?></a></li>
                 <li><a href="<?= esc(locale_url('showroom')) ?>" class="hover:text-white"><?= esc(lang('Site.nav.showroom')) ?></a></li>
+                <li><a href="<?= esc(locale_url('news')) ?>" class="hover:text-white"><?= esc(lang('Site.nav.news')) ?></a></li>
                 <li><a href="<?= esc(locale_url('careers')) ?>" class="hover:text-white"><?= esc(lang('Site.nav.careers')) ?></a></li>
             </ul>
         </div>

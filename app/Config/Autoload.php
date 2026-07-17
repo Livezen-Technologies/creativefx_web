@@ -56,6 +56,7 @@ class Autoload extends AutoloadConfig
         'Modules\Video'       => ROOTPATH . 'modules/Video',
         'Modules\Esg'         => ROOTPATH . 'modules/Esg',
         'Modules\Careers'     => ROOTPATH . 'modules/Careers',
+        'Modules\News'        => ROOTPATH . 'modules/News',
         'Modules\Crm'         => ROOTPATH . 'modules/Crm',
         'Modules\Analytics'   => ROOTPATH . 'modules/Analytics',
         'Modules\Admin'       => ROOTPATH . 'modules/Admin',

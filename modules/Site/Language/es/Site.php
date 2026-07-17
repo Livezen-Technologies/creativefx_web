@@ -7,6 +7,7 @@ return [
         'manufacturing' => 'Fabricación',
         'showroom'  => 'Showroom',
         'impact'    => 'Impacto',
+        'news'      => 'Noticias',
         'careers'   => 'Empleo',
         'contact'   => 'Contacto',
     ],
@@ -178,5 +179,23 @@ return [
         'email_inq'     => 'Escríbenos',
         'sustain_title' => 'Centro de Experiencia en Sostenibilidad',
         'sustain_text'  => 'Iniciativas ESG, fabricación ética, certificaciones y programas de moda circular.',
+    ],
+
+    // Sala de prensa (listado + páginas de artículos).
+    'news' => [
+        'meta'     => 'Noticias y perspectivas de Norlanka: hitos corporativos, sostenibilidad, programas de RSC y eventos.',
+        'eyebrow'  => 'Sala de prensa',
+        'title'    => 'Noticias y perspectivas',
+        'intro'    => 'Hitos, novedades de sostenibilidad e historias de toda Norlanka.',
+        'all'      => 'Todas',
+        'read'     => 'Leer artículo',
+        'back'     => 'Todas las noticias',
+        'related'  => 'Noticias relacionadas',
+        'none'     => 'Aún no hay artículos en esta categoría; vuelve pronto.',
+        'newer'    => '← Más recientes',
+        'older'    => 'Anteriores →',
+        'tags'     => 'Etiquetas',
+        'latest'   => 'Últimas noticias',
+        'view_all' => 'Ver todas las noticias',
     ],
 ];

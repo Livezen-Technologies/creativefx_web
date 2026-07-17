@@ -5,6 +5,8 @@ $active = $active ?? '';
 $nav = [
     ['dashboard', 'Dashboard', 'admin'],
     ['pages', 'Pages', 'admin/pages'],
+    ['news-posts', 'News Posts', 'admin/news-posts'],
+    ['news-categories', 'News Categories', 'admin/news-categories'],
     ['categories', 'Product Categories', 'admin/categories'],
     ['videos', 'Launch Video', 'admin/videos'],
     ['showroom-cats', 'Showroom Categories', 'admin/showroom-categories'],

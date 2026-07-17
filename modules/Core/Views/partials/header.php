@@ -8,6 +8,7 @@ $nav = [
     'our-expertise' => lang('Site.nav.expertise'),
     'showroom'      => lang('Site.nav.showroom'),
     'impact'        => lang('Site.nav.impact'),
+    'news'          => lang('Site.nav.news'),
     'careers'       => lang('Site.nav.careers'),
     'contact'       => lang('Site.nav.contact'),
 ];

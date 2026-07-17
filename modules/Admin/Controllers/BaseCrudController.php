@@ -139,7 +139,7 @@ abstract class BaseCrudController extends BaseController
             $name = $f['name'];
             $type = $f['type'] ?? 'text';
 
-            if ($type === 'locale') {
+            if ($type === 'locale' || $type === 'locale_textarea') {
                 $map = [];
                 foreach (self::LOCALES as $l) {
                     $v = $this->request->getPost($name . '_' . $l);

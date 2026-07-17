@@ -39,5 +39,8 @@ class DatabaseSeeder extends Seeder
 
         // Careers portal: sample vacancies (upsert-by-slug; HR edits preserved).
         $this->call('Modules\Careers\Database\Seeds\CareersSeeder');
+
+        // Newsroom: editorial categories + starter articles (upsert-by-slug).
+        $this->call('Modules\News\Database\Seeds\NewsSeeder');
     }
 }

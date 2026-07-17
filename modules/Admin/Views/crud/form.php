@@ -30,6 +30,18 @@ $action   = $row ? site_url('admin/' . $route . '/' . $row['id']) : site_url('ad
                     </div>
                 <?php endforeach; ?>
 
+            <?php elseif ($type === 'locale_textarea'):
+                $map = [];
+                $raw = $row[$name] ?? null;
+                if (is_string($raw)) { $d = json_decode($raw, true); if (is_array($d)) { $map = $d; } }
+                foreach ($locales as $l):
+                    $val = old($name . '_' . $l) ?? ($map[$l] ?? ''); ?>
+                    <div class="mb-2 flex items-start gap-2">
+                        <span class="w-8 pt-2 text-xs uppercase text-white/40"><?= esc($l) ?></span>
+                        <textarea name="<?= esc($name . '_' . $l, 'attr') ?>" rows="<?= $l === 'en' ? 10 : 4 ?>" class="<?= $inputCls ?>"><?= esc($val) ?></textarea>
+                    </div>
+                <?php endforeach; ?>
+
             <?php elseif ($type === 'textarea'): $val = old($name) ?? ($row[$name] ?? ''); ?>
                 <textarea name="<?= esc($name, 'attr') ?>" rows="4" <?= $ro ? 'readonly' : '' ?> class="<?= $inputCls ?>"><?= esc($val) ?></textarea>
 
