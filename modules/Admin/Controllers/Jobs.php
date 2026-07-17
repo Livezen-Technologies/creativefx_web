@@ -27,6 +27,11 @@ class Jobs extends BaseCrudController
         ['name' => 'country', 'label' => 'Country'],
         ['name' => 'location', 'label' => 'Location'],
         ['name' => 'employment_type', 'label' => 'Employment type', 'type' => 'select', 'options' => ['full-time' => 'Full-time', 'part-time' => 'Part-time', 'contract' => 'Contract', 'internship' => 'Internship']],
+        ['name' => 'experience', 'label' => 'Experience', 'help' => 'e.g. "2–4 years in apparel merchandising"'],
+        ['name' => 'qualifications', 'label' => 'Qualifications', 'type' => 'textarea', 'help' => 'JSON array (["…","…"]) or one per line'],
+        ['name' => 'skills', 'label' => 'Skills', 'type' => 'textarea', 'help' => 'JSON array (["…","…"]) or one per line'],
+        ['name' => 'salary_range', 'label' => 'Salary range', 'help' => 'Optional, shown publicly if set'],
+        ['name' => 'closes_at', 'label' => 'Application deadline', 'help' => 'Optional, YYYY-MM-DD HH:MM:SS — hidden from the site after this date'],
         ['name' => 'status', 'label' => 'Status', 'type' => 'select', 'options' => ['open' => 'Open', 'closed' => 'Closed', 'draft' => 'Draft']],
     ];
 }

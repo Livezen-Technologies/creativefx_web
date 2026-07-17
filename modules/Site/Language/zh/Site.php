@@ -34,6 +34,29 @@ return [
         'success' => '感谢您 — 我们会尽快与您联系。',
     ],
 
+    // 招聘门户（职位详情 + 在线申请表）。
+    'careers' => [
+        'meta'           => '诺兰卡招聘——在招职位与在线申请。',
+        'all'            => '全部职位',
+        'none'           => '目前暂无在招职位，请稍后再来，或将您的简历发送给我们。',
+        'view_apply'     => '查看并申请',
+        'deadline'       => '截止日期',
+        'about_role'     => '职位介绍',
+        'qualifications' => '任职资格',
+        'skills'         => '技能要求',
+        'apply_title'    => '申请该职位',
+        'phone'          => '电话',
+        'country'        => '国家',
+        'education'      => '教育背景',
+        'experience'     => '工作经验',
+        'your_skills'    => '核心技能',
+        'cover_letter'   => '求职信（可选）',
+        'cv'             => '简历（PDF、DOC，最大 5 MB）',
+        'submit'         => '提交申请',
+        'applied_title'  => '已收到您的申请——谢谢！',
+        'applied_body'   => '我们的人力资源团队将审核您的申请并与您联系。',
+    ],
+
     'cta' => [
         'get_in_touch' => '联系我们',
         'contact_us'   => '联系我们',

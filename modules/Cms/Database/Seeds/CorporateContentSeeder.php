@@ -520,10 +520,19 @@ class CorporateContentSeeder extends Seeder
                         ],
                     ]],
                 ]],
+                ['key' => 'openings', 'type' => 'jobs', 'blocks' => [
+                    ['jobs_list', [
+                        'title' => $this->loc('Open positions', 'Vacantes abiertas', '募集中のポジション', '在招职位'),
+                        'intro' => $this->loc('Apply online — upload your CV and our HR team will be in touch.',
+                            'Postula en línea: sube tu CV y nuestro equipo de RR. HH. te contactará.',
+                            'オンラインで応募できます。履歴書をアップロードいただければ、人事チームからご連絡します。',
+                            '在线申请——上传简历，我们的人力资源团队将与您联系。'),
+                    ]],
+                ]],
                 ['key' => 'cta', 'type' => 'cta', 'blocks' => [
                     ['cta', [
-                        'title'  => $this->loc('Join our team', 'Únete a nuestro equipo', 'チームに参加', '加入我们'),
-                        'text'   => $this->loc('Our full job portal is launching soon. Reach out and we’ll be in touch.'),
+                        'title'  => $this->loc('Don’t see the right role?', '¿No encuentras el puesto adecuado?', '希望のポジションが見つかりませんか？', '没有合适的职位？'),
+                        'text'   => $this->loc('Send us your profile and we’ll keep you in mind for future openings.'),
                         'button' => $this->loc('Contact us', 'Contáctanos', 'お問い合わせ', '联系我们'),
                         'url'    => 'contact',
                     ]],

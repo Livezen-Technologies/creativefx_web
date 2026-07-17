@@ -1,4 +1,4 @@
-<?php helper('url'); $this->extend('Modules\Admin\Views\layout'); ?>
+<?php helper(['url', 'norlanka']); $this->extend('Modules\Admin\Views\layout'); ?>
 <?= $this->section('content') ?>
 <div class="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4">
     <?php foreach ($widgets as [$label, $count, $path]): ?>
@@ -8,6 +8,29 @@
         </a>
     <?php endforeach; ?>
 </div>
+
+<?php if (! empty($applications)): ?>
+<div class="mt-10">
+    <h2 class="mb-4 text-lg font-semibold">Recent applications</h2>
+    <div class="overflow-hidden rounded-xl border border-white/10">
+        <table class="w-full text-sm">
+            <thead class="bg-white/5 text-left text-xs uppercase tracking-widest text-white/50">
+                <tr><th class="px-4 py-3">Applicant</th><th class="px-4 py-3">Position</th><th class="px-4 py-3">Applied</th><th class="px-4 py-3">Status</th></tr>
+            </thead>
+            <tbody class="divide-y divide-white/5">
+                <?php foreach ($applications as $a): ?>
+                    <tr class="hover:bg-white/[0.02]">
+                        <td class="px-4 py-3"><a href="<?= site_url('admin/applications/' . $a['id']) ?>" class="hover:text-brand-red"><?= esc($a['name']) ?></a></td>
+                        <td class="px-4 py-3 text-white/70"><?= esc(t_field(json_decode($a['job_title'] ?? '[]', true) ?: [])) ?></td>
+                        <td class="px-4 py-3 text-white/50"><?= esc(date('j M Y', strtotime($a['created_at']))) ?></td>
+                        <td class="px-4 py-3"><span class="rounded-full bg-white/10 px-2 py-0.5 text-xs capitalize"><?= esc($a['status']) ?></span></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+<?php endif; ?>
 
 <div class="mt-10">
     <h2 class="mb-4 text-lg font-semibold">Recent contact messages</h2>

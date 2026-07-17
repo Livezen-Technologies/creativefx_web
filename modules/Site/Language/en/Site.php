@@ -34,6 +34,29 @@ return [
         'success' => 'Thank you — we will be in touch shortly.',
     ],
 
+    // Careers portal (job detail + application form).
+    'careers' => [
+        'meta'           => 'Careers at Norlanka — open positions and online applications.',
+        'all'            => 'All openings',
+        'none'           => 'There are no open positions right now — check back soon, or contact us with your profile.',
+        'view_apply'     => 'View & apply',
+        'deadline'       => 'Apply by',
+        'about_role'     => 'About the role',
+        'qualifications' => 'Qualifications',
+        'skills'         => 'Skills',
+        'apply_title'    => 'Apply for this position',
+        'phone'          => 'Phone',
+        'country'        => 'Country',
+        'education'      => 'Education',
+        'experience'     => 'Experience',
+        'your_skills'    => 'Key skills',
+        'cover_letter'   => 'Cover letter (optional)',
+        'cv'             => 'CV / Résumé (PDF, DOC — max 5 MB)',
+        'submit'         => 'Submit application',
+        'applied_title'  => 'Application received — thank you!',
+        'applied_body'   => 'Our HR team will review your application and be in touch.',
+    ],
+
     // Global CTAs / buttons.
     'cta' => [
         'get_in_touch' => 'Get in touch',

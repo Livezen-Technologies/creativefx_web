@@ -34,6 +34,29 @@ return [
         'success' => 'ありがとうございます。追ってご連絡いたします。',
     ],
 
+    // 採用ポータル（求人詳細＋応募フォーム）。
+    'careers' => [
+        'meta'           => 'ノーランカの採用情報 — 募集中のポジションとオンライン応募。',
+        'all'            => 'すべての求人',
+        'none'           => '現在募集中のポジションはありません。後日ご確認いただくか、プロフィールをお送りください。',
+        'view_apply'     => '詳細・応募',
+        'deadline'       => '応募締切',
+        'about_role'     => 'ポジション概要',
+        'qualifications' => '応募資格',
+        'skills'         => 'スキル',
+        'apply_title'    => 'このポジションに応募',
+        'phone'          => '電話番号',
+        'country'        => '国',
+        'education'      => '学歴',
+        'experience'     => '職務経験',
+        'your_skills'    => '主なスキル',
+        'cover_letter'   => 'カバーレター（任意）',
+        'cv'             => '履歴書（PDF・DOC、5MBまで）',
+        'submit'         => '応募を送信',
+        'applied_title'  => 'ご応募ありがとうございます！',
+        'applied_body'   => '人事チームが内容を確認のうえ、ご連絡いたします。',
+    ],
+
     'cta' => [
         'get_in_touch' => 'お問い合わせ',
         'contact_us'   => 'お問い合わせ',

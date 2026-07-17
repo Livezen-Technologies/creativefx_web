@@ -36,5 +36,8 @@ class DatabaseSeeder extends Seeder
 
         // Virtual showroom: themed categories + products.
         $this->call('Modules\Showroom\Database\Seeds\ShowroomSeeder');
+
+        // Careers portal: sample vacancies (upsert-by-slug; HR edits preserved).
+        $this->call('Modules\Careers\Database\Seeds\CareersSeeder');
     }
 }

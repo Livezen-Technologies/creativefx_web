@@ -34,6 +34,29 @@ return [
         'success' => 'Gracias — nos pondremos en contacto pronto.',
     ],
 
+    // Portal de empleo (detalle de vacante + formulario de postulación).
+    'careers' => [
+        'meta'           => 'Empleo en Norlanka: vacantes abiertas y postulación en línea.',
+        'all'            => 'Todas las vacantes',
+        'none'           => 'No hay vacantes abiertas por el momento. Vuelve pronto o envíanos tu perfil.',
+        'view_apply'     => 'Ver y postular',
+        'deadline'       => 'Postula antes del',
+        'about_role'     => 'Sobre el puesto',
+        'qualifications' => 'Requisitos',
+        'skills'         => 'Habilidades',
+        'apply_title'    => 'Postula a este puesto',
+        'phone'          => 'Teléfono',
+        'country'        => 'País',
+        'education'      => 'Educación',
+        'experience'     => 'Experiencia',
+        'your_skills'    => 'Habilidades clave',
+        'cover_letter'   => 'Carta de presentación (opcional)',
+        'cv'             => 'CV (PDF, DOC — máx. 5 MB)',
+        'submit'         => 'Enviar postulación',
+        'applied_title'  => '¡Postulación recibida — gracias!',
+        'applied_body'   => 'Nuestro equipo de RR. HH. revisará tu postulación y te contactará.',
+    ],
+
     'cta' => [
         'get_in_touch' => 'Contáctanos',
         'contact_us'   => 'Contáctanos',

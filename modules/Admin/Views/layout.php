@@ -11,6 +11,7 @@ $nav = [
     ['showroom-products', 'Showroom Products', 'admin/showroom-products'],
     ['esg', 'ESG Metrics', 'admin/esg-metrics'],
     ['jobs', 'Jobs', 'admin/jobs'],
+    ['applications', 'Applications', 'admin/applications'],
     ['translations', 'Translations', 'admin/translations'],
     ['media', 'Media', 'admin/media'],
     ['contacts', 'Contact Inbox', 'admin/contacts'],

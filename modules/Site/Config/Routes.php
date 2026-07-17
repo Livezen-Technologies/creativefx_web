@@ -19,5 +19,11 @@ $routes->get('(:locale)', 'Home::index', $siteOptions);
 $routes->get('(:locale)/showroom', '\Modules\Showroom\Controllers\Showroom::index/$1', ['filter' => 'applocale']);
 $routes->get('(:locale)/showroom/(:segment)', '\Modules\Showroom\Controllers\Showroom::scene/$1/$2', ['filter' => 'applocale']);
 
+// Careers portal (job detail + application). Co-located here (not in the
+// Careers module's own routes file) so the (:locale) placeholder above is
+// guaranteed to exist regardless of module discovery order.
+$routes->get('(:locale)/careers/(:segment)', '\Modules\Careers\Controllers\Careers::show/$1/$2', ['filter' => 'applocale']);
+$routes->post('(:locale)/careers/(:segment)/apply', '\Modules\Careers\Controllers\Careers::apply/$1/$2', ['filter' => 'applocale']);
+
 // CMS catch-all: /{locale}/{slug} -> PageController::show($slug)  ($2 = slug)
 $routes->get('(:locale)/(:segment)', 'PageController::show/$2', $siteOptions);

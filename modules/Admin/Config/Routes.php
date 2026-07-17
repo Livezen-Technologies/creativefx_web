@@ -35,6 +35,13 @@ $routes->group('admin', ['namespace' => 'Modules\Admin\Controllers'], static fun
             $routes->post($seg . '/(:num)/delete', $ctrl . '::delete/$1');
         }
 
+        // HR recruitment dashboard (custom pipeline UI, not generic CRUD).
+        $routes->get('applications', 'Applications::index');
+        $routes->get('applications/export', 'Applications::export');
+        $routes->get('applications/(:num)', 'Applications::show/$1');
+        $routes->post('applications/(:num)', 'Applications::update/$1');
+        $routes->get('applications/(:num)/cv', 'Applications::download/$1');
+
         // Page block-content editor.
         $routes->get('pages/(:num)/content', 'Content::edit/$1');
         $routes->post('pages/(:num)/content', 'Content::update/$1');
