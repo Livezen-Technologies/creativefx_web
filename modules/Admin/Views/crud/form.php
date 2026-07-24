@@ -66,20 +66,39 @@ $action   = $row ? site_url('admin/' . $route . '/' . $row['id']) : site_url('ad
                     <?php endforeach; ?>
                 </div>
 
-            <?php elseif ($type === 'image'):
+            <?php elseif ($type === 'image' || $type === 'file'):
                 // Drag & drop upload zone backed by the media library; stores the
                 // uploaded file URL in a plain input (still hand-editable).
-                $val = old($name) ?? ($row[$name] ?? '');
-                $fid = 'f_' . $name; ?>
+                // 'file' takes a custom `accept` (e.g. '.glb,.gltf' or '.pdf').
+                $val    = old($name) ?? ($row[$name] ?? '');
+                $accept = $f['accept'] ?? ($type === 'image' ? 'image/*' : '');
+                $fid    = 'f_' . $name; ?>
                 <input type="text" id="<?= esc($fid, 'attr') ?>" name="<?= esc($name, 'attr') ?>" value="<?= esc($val) ?>"
                        placeholder="/media/…" class="<?= $inputCls ?> mb-2">
                 <label data-dropzone="<?= esc($fid, 'attr') ?>" data-folder="<?= esc($f['folder'] ?? 'uploads', 'attr') ?>"
                        class="block p-5 text-center">
-                    <input type="file" accept="image/*,.pdf" class="hidden">
+                    <input type="file" <?= $accept !== '' ? 'accept="' . esc($accept, 'attr') . '"' : '' ?> class="hidden">
                     <div class="dz-preview mb-2 flex justify-center"></div>
                     <p class="text-sm text-white/60">Drag &amp; drop a file here, or <span class="font-semibold text-brand-red">browse</span></p>
-                    <p class="dz-status mt-1 text-xs text-white/40">Images are optimized to WebP automatically.</p>
+                    <p class="dz-status mt-1 text-xs text-white/40"><?= $type === 'image' ? 'Images are optimized to WebP automatically.' : 'Stored in the media library.' ?></p>
                 </label>
+
+            <?php elseif ($type === 'gallery'):
+                // Multi-image gallery: hidden textarea carries a JSON array of
+                // paths; admin.js renders sortable thumbs with add/remove.
+                $val = old($name) ?? ($row[$name] ?? '[]'); ?>
+                <div data-gallery data-folder="<?= esc($f['folder'] ?? 'uploads', 'attr') ?>">
+                    <textarea name="<?= esc($name, 'attr') ?>" class="hidden"><?= esc(is_string($val) ? $val : json_encode($val)) ?></textarea>
+                    <div class="gal-grid"></div>
+                    <div class="mt-2 flex gap-2">
+                        <button type="button" class="gal-add-lib rounded-lg border border-white/15 px-3 py-1.5 text-xs font-semibold text-white/70 hover:border-white/40">Add from library</button>
+                        <label class="gal-add-up cursor-pointer rounded-lg border border-white/15 px-3 py-1.5 text-xs font-semibold text-white/70 hover:border-white/40">
+                            Upload images…
+                            <input type="file" accept="image/*" multiple class="hidden">
+                        </label>
+                        <span class="gal-status self-center text-xs text-white/40"></span>
+                    </div>
+                </div>
 
             <?php elseif ($type === 'textarea'): $val = old($name) ?? ($row[$name] ?? ''); ?>
                 <textarea name="<?= esc($name, 'attr') ?>" rows="4" <?= $ro ? 'readonly' : '' ?> class="<?= $inputCls ?>"><?= esc($val) ?></textarea>

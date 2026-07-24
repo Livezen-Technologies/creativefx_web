@@ -177,6 +177,78 @@ function initDropzones(root) {
 }
 
 /* ------------------------------------------------------------------------ */
+/* Gallery fields: JSON array of image paths with add / remove / reorder     */
+/* ------------------------------------------------------------------------ */
+function initGalleries(root) {
+  root.querySelectorAll('[data-gallery]').forEach((wrap) => {
+    if (wrap.dataset.ready) return;
+    wrap.dataset.ready = '1';
+
+    const textarea = wrap.querySelector('textarea');
+    const grid = wrap.querySelector('.gal-grid');
+    const status = wrap.querySelector('.gal-status');
+    const folder = wrap.dataset.folder || 'uploads';
+
+    let items = [];
+    try { items = JSON.parse(textarea.value || '[]'); } catch { items = []; }
+    if (!Array.isArray(items)) items = [];
+
+    const sync = () => { textarea.value = JSON.stringify(items); };
+
+    const render = () => {
+      sync();
+      grid.innerHTML = items.map((url, i) => `
+        <div class="gal-item" data-i="${i}">
+          <img src="${url.replace(/"/g, '&quot;')}" alt="" loading="lazy">
+          <div class="gal-item__bar">
+            <button type="button" data-act="left" title="Move left" ${i === 0 ? 'disabled' : ''}>‹</button>
+            <button type="button" data-act="right" title="Move right" ${i === items.length - 1 ? 'disabled' : ''}>›</button>
+            <button type="button" data-act="remove" title="Remove">✕</button>
+          </div>
+        </div>`).join('');
+      grid.querySelectorAll('.gal-item button').forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const i = +btn.closest('.gal-item').dataset.i;
+          const act = btn.dataset.act;
+          if (act === 'remove') items.splice(i, 1);
+          else if (act === 'left' && i > 0) [items[i - 1], items[i]] = [items[i], items[i - 1]];
+          else if (act === 'right' && i < items.length - 1) [items[i + 1], items[i]] = [items[i], items[i + 1]];
+          render();
+        });
+      });
+    };
+
+    wrap.querySelector('.gal-add-lib').addEventListener('click', async () => {
+      const picked = await openMediaPicker({ accept: 'image', multiple: true });
+      if (picked) {
+        picked.forEach((p) => items.push(p.webp || p.url));
+        render();
+      }
+    });
+
+    const upInput = wrap.querySelector('.gal-add-up input');
+    upInput.addEventListener('change', async () => {
+      const files = [...(upInput.files || [])];
+      for (let i = 0; i < files.length; i++) {
+        status.textContent = `Uploading ${i + 1}/${files.length}…`;
+        try {
+          const row = await uploadFile(files[i], folder);
+          items.push(row.url);
+        } catch (err) {
+          console.error(err);
+        }
+      }
+      status.textContent = '';
+      upInput.value = '';
+      render();
+    });
+
+    render();
+  });
+}
+
+/* ------------------------------------------------------------------------ */
 /* Media Library page mount                                                  */
 /* ------------------------------------------------------------------------ */
 function initMediaPage() {
@@ -318,6 +390,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initTheme();
   initRichtext(document);
   initDropzones(document);
+  initGalleries(document);
   initSelects(document);
   initMediaPage();
 });
