@@ -21,7 +21,7 @@ class NewsCategories extends BaseCrudController
     protected array $fields = [
         ['name' => 'slug', 'label' => 'Slug', 'rules' => 'required|alpha_dash|max_length[191]', 'help' => 'URL segment, e.g. press-releases'],
         ['name' => 'name', 'label' => 'Name', 'type' => 'locale'],
-        ['name' => 'description', 'label' => 'Description', 'type' => 'locale'],
+        ['name' => 'description', 'label' => 'Description', 'type' => 'locale_richtext', 'compact' => true],
         ['name' => 'sort_order', 'label' => 'Order', 'type' => 'number'],
         ['name' => 'status', 'label' => 'Status', 'type' => 'select', 'options' => ['published' => 'Published', 'draft' => 'Draft']],
     ];

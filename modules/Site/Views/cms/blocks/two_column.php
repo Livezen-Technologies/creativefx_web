@@ -9,7 +9,7 @@
         </div>
         <div data-gsap="reveal">
             <?php if (! empty($content['body'])): ?>
-                <p class="leading-relaxed text-white/70"><?= nl2br(esc(t_field($content['body']))) ?></p>
+                <div class="leading-relaxed text-white/70"><?= rich_text($content['body']) ?></div>
             <?php endif; ?>
             <?php if (! empty($content['items']) && is_array($content['items'])): ?>
                 <ul class="mt-6 space-y-3">

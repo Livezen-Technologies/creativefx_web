@@ -116,3 +116,30 @@ if (! function_exists('setting')) {
         return $cache[$group . '.' . $key] ?? $default;
     }
 }
+
+if (! function_exists('rich_text')) {
+    /**
+     * Render a detail field that may contain editor-authored HTML.
+     * Locale maps resolve through t_field(). HTML content is sanitized
+     * (scripts, event handlers, javascript: URIs stripped) and wrapped in an
+     * .article-body block for typography; plain text keeps the classic
+     * escaped nl2br rendering, so legacy content is untouched.
+     */
+    function rich_text($value, ?string $locale = null): string
+    {
+        $text = is_array($value) ? t_field($value, $locale) : (string) $value;
+        if (trim($text) === '') {
+            return '';
+        }
+
+        if (preg_match('/^\s*<(?:p|h[1-6]|ul|ol|blockquote|div|figure|strong|em|br)[\s>\/]/i', $text)) {
+            $html = preg_replace('#<script\b[^>]*>.*?</script>#is', '', $text);
+            $html = preg_replace('/\son\w+\s*=\s*("[^"]*"|\'[^\']*\'|[^\s>]+)/i', '', (string) $html);
+            $html = preg_replace('/(href|src)\s*=\s*(["\']?)\s*javascript:[^"\'>\s]*\2/i', '$1="#"', (string) $html);
+
+            return '<div class="article-body">' . $html . '</div>';
+        }
+
+        return nl2br(esc($text));
+    }
+}

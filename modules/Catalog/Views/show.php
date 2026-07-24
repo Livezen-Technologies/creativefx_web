@@ -76,7 +76,7 @@ $chips   = array_filter([$catName, $product['collection'] ?? null, $product['sku
         <!-- Details -->
         <div class="lg:col-span-5">
             <?php if ($pShort !== ''): ?><p class="text-lg leading-relaxed text-white/75"><?= esc($pShort) ?></p><?php endif; ?>
-            <?php if ($pDesc !== '' && $pDesc !== $pShort): ?><p class="mt-4 leading-relaxed text-white/60"><?= esc($pDesc) ?></p><?php endif; ?>
+            <?php if ($pDesc !== '' && $pDesc !== $pShort): ?><div class="mt-4 leading-relaxed text-white/60"><?= rich_text(json_decode($product['description'] ?? '[]', true) ?: []) ?></div><?php endif; ?>
 
             <?php if ($features !== []): ?>
                 <h2 class="mt-8 text-lg font-semibold"><?= esc(lang('Site.products.features')) ?></h2>

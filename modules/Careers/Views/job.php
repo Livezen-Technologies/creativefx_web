@@ -45,7 +45,7 @@ $deadline = ! empty($job['closes_at']) ? date('j M Y', strtotime($job['closes_at
         <div class="lg:col-span-7">
             <?php if ($jDesc !== ''): ?>
                 <h2 class="text-2xl font-bold"><?= esc(lang('Site.careers.about_role')) ?></h2>
-                <div class="mt-4 max-w-2xl whitespace-pre-line leading-relaxed text-white/70"><?= esc($jDesc) ?></div>
+                <div class="mt-4 max-w-2xl leading-relaxed text-white/70"><?= rich_text(json_decode($job['description'] ?? '[]', true) ?: []) ?></div>
             <?php endif; ?>
 
             <?php if ($quals !== []): ?>

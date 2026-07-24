@@ -9,7 +9,7 @@
                 <h2 class="text-2xl font-semibold sm:text-3xl"><?= esc(t_field($content['title'])) ?></h2>
             <?php endif; ?>
             <?php if (! empty($content['text'])): ?>
-                <p class="mt-4 leading-relaxed text-white/70"><?= nl2br(esc(t_field($content['text']))) ?></p>
+                <div class="mt-4 leading-relaxed text-white/70"><?= rich_text($content['text']) ?></div>
             <?php endif; ?>
         </div>
     </div>

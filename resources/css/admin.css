@@ -392,3 +392,38 @@ body:not(.on-dark) .theme-icon-sun { display: none; }
 }
 .gal-item__bar button:hover { background: #cf2030; }
 .gal-item__bar button:disabled { opacity: 0.35; cursor: default; }
+
+/* Form fields use the `bg-black/40` utility, and plain Tailwind `black` is
+   real black (only brand-black is theme-mapped) — in light mode that made
+   every input a dark grey slab. Give them a proper light-theme surface. */
+body:not(.on-dark) .bg-black\/40 {
+  background-color: #ffffff;
+  border-color: rgb(var(--fg) / 0.18);
+}
+
+/* ---- Item-list editors --------------------------------------------------- */
+.il-row { display: flex; gap: 0.4rem; margin-bottom: 0.45rem; align-items: center; }
+.il-in {
+  flex: 1; min-width: 0;
+  border: 1px solid rgb(var(--fg) / 0.15);
+  border-radius: 0.5rem;
+  background: rgb(var(--fg) / 0.03);
+  padding: 0.45rem 0.7rem;
+  font-size: 0.85rem;
+  color: rgb(var(--fg) / 0.9);
+}
+.il-in:focus { outline: none; border-color: #cf2030; }
+.il-row button {
+  width: 1.9rem; height: 1.9rem; flex: none;
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid rgb(var(--fg) / 0.14);
+  border-radius: 0.45rem;
+  color: rgb(var(--fg) / 0.55);
+  font-size: 0.8rem; cursor: pointer;
+}
+.il-row button:hover { border-color: rgb(var(--fg) / 0.4); color: rgb(var(--fg)); }
+.il-row button:disabled { opacity: 0.3; cursor: default; }
+.il-row button[data-act="remove"]:hover { border-color: #cf2030; color: #cf2030; }
+
+/* Compact rich-text editors for shorter description fields. */
+[data-richtext][data-compact] .ql-editor { min-height: 7rem; }

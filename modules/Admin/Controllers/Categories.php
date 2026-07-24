@@ -21,7 +21,7 @@ class Categories extends BaseCrudController
     protected array $fields = [
         ['name' => 'slug', 'label' => 'Slug', 'rules' => 'required|alpha_dash|max_length[191]'],
         ['name' => 'name', 'label' => 'Name', 'type' => 'locale'],
-        ['name' => 'description', 'label' => 'Description', 'type' => 'locale'],
+        ['name' => 'description', 'label' => 'Description', 'type' => 'locale_richtext', 'compact' => true],
         ['name' => 'image_path', 'label' => 'Category image', 'type' => 'image', 'folder' => 'categories'],
         ['name' => 'sort_order', 'label' => 'Sort order', 'type' => 'number'],
         ['name' => 'status', 'label' => 'Status', 'type' => 'select', 'options' => ['draft' => 'Draft', 'published' => 'Published', 'archived' => 'Archived']],

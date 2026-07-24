@@ -59,7 +59,7 @@ $action   = $row ? site_url('admin/' . $route . '/' . $row['id']) : site_url('ad
                     </div>
                     <?php foreach ($locales as $l):
                         $val = old($name . '_' . $l) ?? ($map[$l] ?? ''); ?>
-                        <div x-show="tab === '<?= esc($l) ?>'" data-richtext data-placeholder="Write the <?= esc(strtoupper($l)) ?> version…">
+                        <div x-show="tab === '<?= esc($l) ?>'" data-richtext <?= ! empty($f['compact']) ? 'data-compact' : '' ?> data-placeholder="Write the <?= esc(strtoupper($l)) ?> version…">
                             <textarea name="<?= esc($name . '_' . $l, 'attr') ?>" class="hidden"><?= esc($val) ?></textarea>
                             <div class="rt-editor"></div>
                         </div>
@@ -98,6 +98,17 @@ $action   = $row ? site_url('admin/' . $route . '/' . $row['id']) : site_url('ad
                         </label>
                         <span class="gal-status self-center text-xs text-white/40"></span>
                     </div>
+                </div>
+
+            <?php elseif ($type === 'list' || $type === 'pairs'):
+                // Item-list editors: the hidden textarea carries the JSON the
+                // model already stores; admin.js renders add/remove/reorder rows.
+                // 'list' = array of strings; 'pairs' = array of {label, value}.
+                $val = old($name) ?? ($row[$name] ?? '[]'); ?>
+                <div data-<?= $type ?> <?= ! empty($f['pair_labels']) ? 'data-pair-labels="' . esc(implode('|', $f['pair_labels']), 'attr') . '"' : '' ?>>
+                    <textarea name="<?= esc($name, 'attr') ?>" class="hidden"><?= esc(is_string($val) ? $val : json_encode($val, JSON_UNESCAPED_UNICODE)) ?></textarea>
+                    <div class="il-rows"></div>
+                    <button type="button" class="il-add mt-2 rounded-lg border border-white/15 px-3 py-1.5 text-xs font-semibold text-white/70 hover:border-white/40">+ Add <?= esc(strtolower($f['item_label'] ?? 'item')) ?></button>
                 </div>
 
             <?php elseif ($type === 'textarea'): $val = old($name) ?? ($row[$name] ?? ''); ?>

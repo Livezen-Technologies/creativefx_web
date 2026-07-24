@@ -19,7 +19,7 @@ foreach ($category['products'] as $p) {
     $products[] = [
         'id'          => (int) $p['id'],
         'name'        => t_field($p['name']),
-        'description' => t_field($p['description']),
+        'description' => rich_text(json_decode($p['description'] ?? '[]', true) ?: []),
         'gallery'     => json_decode($p['gallery'] ?? '[]', true) ?: [],
         'image'       => $p['image'] ?? '',
         'model'       => $p['model_path'] ?? '',
@@ -137,7 +137,7 @@ $c1 = $hex($palette[1] ?? $c0);
                             <img :src="current.image" :alt="current.name" class="h-full w-full object-cover">
                         </div>
                     </template>
-                    <p class="mt-3 text-sm leading-relaxed text-white/70" x-text="current.description"></p>
+                    <div class="mt-3 text-sm leading-relaxed text-white/70" x-html="current.description"></div>
 
                     <!-- Colours -->
                     <div class="mt-6">

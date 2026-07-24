@@ -21,7 +21,7 @@ class ShowroomProducts extends BaseCrudController
         ['name' => 'showroom_category_id', 'label' => 'Category ID', 'type' => 'number', 'rules' => 'required|is_natural_no_zero', 'help' => 'Showroom category id'],
         ['name' => 'slug', 'label' => 'Slug', 'rules' => 'required|alpha_dash|max_length[191]'],
         ['name' => 'name', 'label' => 'Name', 'type' => 'locale'],
-        ['name' => 'description', 'label' => 'Description', 'type' => 'locale'],
+        ['name' => 'description', 'label' => 'Description', 'type' => 'locale_richtext', 'compact' => true],
         ['name' => 'hotspot', 'label' => 'Hotspot', 'type' => 'textarea', 'help' => 'JSON {"x":0,"y":1.2,"z":0}'],
         ['name' => 'gallery', 'label' => 'Gallery', 'type' => 'textarea', 'help' => 'JSON array of hex colours / image URLs'],
         ['name' => 'materials', 'label' => 'Materials', 'type' => 'textarea', 'help' => 'JSON array of materials'],

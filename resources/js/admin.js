@@ -249,6 +249,77 @@ function initGalleries(root) {
 }
 
 /* ------------------------------------------------------------------------ */
+/* Item-list editors: JSON arrays edited as add/remove/reorder rows          */
+/*   [data-list]  — array of strings (one input per row)                     */
+/*   [data-pairs] — array of {label, value} objects (two inputs per row)     */
+/* ------------------------------------------------------------------------ */
+function initItemLists(root) {
+  root.querySelectorAll('[data-list], [data-pairs]').forEach((wrap) => {
+    if (wrap.dataset.ready) return;
+    wrap.dataset.ready = '1';
+
+    const isPairs = wrap.hasAttribute('data-pairs');
+    const textarea = wrap.querySelector('textarea');
+    const rowsEl = wrap.querySelector('.il-rows');
+    const [phA, phB] = (wrap.dataset.pairLabels || 'Label|Value').split('|');
+
+    let items = [];
+    try {
+      const parsed = JSON.parse(textarea.value || '[]');
+      if (Array.isArray(parsed)) items = parsed;
+    } catch {
+      // Legacy "one per line" content.
+      items = textarea.value.split('\n').map((s) => s.trim()).filter(Boolean);
+    }
+    if (isPairs) items = items.map((it) => (typeof it === 'object' && it !== null ? it : { label: String(it), value: '' }));
+
+    const sync = () => { textarea.value = JSON.stringify(items, null, 0); };
+
+    const render = () => {
+      sync();
+      rowsEl.innerHTML = '';
+      items.forEach((item, i) => {
+        const row = document.createElement('div');
+        row.className = 'il-row';
+        row.innerHTML = `
+          ${isPairs
+            ? `<input type="text" class="il-in il-a" placeholder="${phA}"><input type="text" class="il-in il-b" placeholder="${phB}">`
+            : '<input type="text" class="il-in il-a">'}
+          <button type="button" data-act="up" title="Move up" ${i === 0 ? 'disabled' : ''}>↑</button>
+          <button type="button" data-act="down" title="Move down" ${i === items.length - 1 ? 'disabled' : ''}>↓</button>
+          <button type="button" data-act="remove" title="Remove">✕</button>`;
+        const a = row.querySelector('.il-a');
+        a.value = isPairs ? (item.label ?? '') : item;
+        a.addEventListener('input', () => { isPairs ? (items[i].label = a.value) : (items[i] = a.value); sync(); });
+        if (isPairs) {
+          const b = row.querySelector('.il-b');
+          b.value = item.value ?? '';
+          b.addEventListener('input', () => { items[i].value = b.value; sync(); });
+        }
+        row.querySelectorAll('button').forEach((btn) => btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const act = btn.dataset.act;
+          if (act === 'remove') items.splice(i, 1);
+          else if (act === 'up' && i > 0) [items[i - 1], items[i]] = [items[i], items[i - 1]];
+          else if (act === 'down' && i < items.length - 1) [items[i + 1], items[i]] = [items[i], items[i + 1]];
+          render();
+        }));
+        rowsEl.appendChild(row);
+      });
+    };
+
+    wrap.querySelector('.il-add').addEventListener('click', (e) => {
+      e.preventDefault();
+      items.push(isPairs ? { label: '', value: '' } : '');
+      render();
+      rowsEl.querySelector('.il-row:last-child .il-a')?.focus();
+    });
+
+    render();
+  });
+}
+
+/* ------------------------------------------------------------------------ */
 /* Media Library page mount                                                  */
 /* ------------------------------------------------------------------------ */
 function initMediaPage() {
@@ -391,6 +462,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initRichtext(document);
   initDropzones(document);
   initGalleries(document);
+  initItemLists(document);
   initSelects(document);
   initMediaPage();
 });
