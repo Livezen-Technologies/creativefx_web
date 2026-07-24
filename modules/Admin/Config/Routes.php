@@ -70,6 +70,7 @@ $routes->group('admin', ['namespace' => 'Modules\Admin\Controllers'], static fun
         // Media library.
         $routes->get('media', 'Media::index');
         $routes->post('media/upload', 'Media::upload');
+        $routes->post('media/upload-ajax', 'Media::uploadAjax');
         $routes->post('media/(:num)/delete', 'Media::delete/$1');
     });
 });

@@ -9,10 +9,19 @@ $catName  = $category ? t_field(json_decode($category['name'] ?? '[]', true) ?: 
 $tags     = array_values(array_filter(array_map('trim', explode(',', (string) ($post['tags'] ?? '')))));
 
 /**
- * Minimal article formatter for plain-text bodies stored in the CMS:
+ * Article body renderer. Rich-text bodies (authored in the admin editor) are
+ * stored as HTML and rendered directly — with scripts/handlers stripped as a
+ * safety net. Legacy plain-text bodies keep the original minimal formatter:
  * blank lines split paragraphs, "## " starts a heading, "- " lines make lists.
  */
 $renderBody = static function (string $text): string {
+    if (preg_match('/^\s*<(?:p|h[1-6]|ul|ol|blockquote|div|figure)[\s>]/i', $text)) {
+        $html = preg_replace('#<script\b[^>]*>.*?</script>#is', '', $text);
+        $html = preg_replace('/\son\w+\s*=\s*("[^"]*"|\'[^\']*\'|[^\s>]+)/i', '', $html);
+        $html = preg_replace('/(href|src)\s*=\s*(["\']?)\s*javascript:[^"\'>\s]*\2/i', '$1="#"', $html);
+        return '<div class="article-body">' . $html . '</div>';
+    }
+
     $html = '';
     foreach (preg_split('/\n{2,}/', str_replace("\r\n", "\n", trim($text))) ?: [] as $chunk) {
         $chunk = trim($chunk);

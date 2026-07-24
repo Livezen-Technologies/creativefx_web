@@ -1,0 +1,302 @@
+/**
+ * Admin bundle: rich-text editing (Quill) and drag-and-drop uploads.
+ *
+ * Behaviours (all opt-in via data attributes):
+ *   [data-richtext]   — a hidden <textarea> + editor mount; Quill edits HTML,
+ *                       syncs back on every change. Images can be dropped or
+ *                       pasted straight into the editor: they upload to the
+ *                       media library and embed by URL.
+ *   [data-dropzone]   — a file field: click to browse or drop a file; uploads
+ *                       via /admin/media/upload-ajax and writes the returned
+ *                       URL into the associated <input>, with live preview.
+ */
+import Quill from 'quill';
+import '../css/admin.css';
+
+const CSRF = () => {
+  const meta = document.querySelector('meta[name="csrf"]');
+  return meta ? { name: meta.dataset.name, value: meta.content } : null;
+};
+
+async function uploadFile(file, folder = 'uploads') {
+  const fd = new FormData();
+  fd.append('file', file);
+  fd.append('folder', folder);
+  const csrf = CSRF();
+  if (csrf) fd.append(csrf.name, csrf.value);
+
+  const res = await fetch(window.ADMIN_BASE + '/media/upload-ajax', {
+    method: 'POST',
+    body: fd,
+    headers: { 'X-Requested-With': 'XMLHttpRequest' },
+  });
+  if (!res.ok) throw new Error('Upload failed (' + res.status + ')');
+  const data = await res.json();
+  // Tokens rotate per request — adopt the fresh one everywhere (the meta for
+  // the next upload AND every form's hidden field, or the eventual page
+  // submit would fail CSRF validation).
+  const meta = document.querySelector('meta[name="csrf"]');
+  if (data.csrf && meta) {
+    meta.content = data.csrf;
+    document.querySelectorAll(`input[name="${meta.dataset.name}"]`).forEach((el) => { el.value = data.csrf; });
+  }
+  return data;
+}
+
+/* ------------------------------------------------------------------------ */
+/* Rich text editors                                                         */
+/* ------------------------------------------------------------------------ */
+function initRichtext(root) {
+  root.querySelectorAll('[data-richtext]').forEach((wrap) => {
+    const textarea = wrap.querySelector('textarea');
+    const mount = wrap.querySelector('.rt-editor');
+    if (!textarea || !mount || wrap.dataset.ready) return;
+    wrap.dataset.ready = '1';
+
+    mount.innerHTML = textarea.value;
+
+    const quill = new Quill(mount, {
+      theme: 'snow',
+      placeholder: wrap.dataset.placeholder || 'Write here…',
+      modules: {
+        toolbar: {
+          container: [
+            [{ header: [2, 3, false] }],
+            ['bold', 'italic', 'underline', 'strike'],
+            [{ list: 'ordered' }, { list: 'bullet' }],
+            ['blockquote', 'link', 'image'],
+            [{ align: [] }],
+            ['clean'],
+          ],
+          handlers: {
+            image() {
+              const input = document.createElement('input');
+              input.type = 'file';
+              input.accept = 'image/*';
+              input.onchange = () => insertImages(quill, input.files);
+              input.click();
+            },
+          },
+        },
+      },
+    });
+
+    // root.innerHTML (not getSemanticHTML) — the latter hardens every space
+    // into &nbsp;, which breaks word-wrapping on the public page.
+    const sync = () => { textarea.value = quill.root.innerHTML; };
+    quill.on('text-change', sync);
+    sync();
+
+    // Drag & drop / paste images straight into the editor.
+    quill.root.addEventListener('drop', (e) => {
+      const files = [...(e.dataTransfer?.files || [])].filter((f) => f.type.startsWith('image/'));
+      if (!files.length) return;
+      e.preventDefault();
+      insertImages(quill, files);
+    });
+    quill.root.addEventListener('paste', (e) => {
+      const files = [...(e.clipboardData?.files || [])].filter((f) => f.type.startsWith('image/'));
+      if (!files.length) return;
+      e.preventDefault();
+      insertImages(quill, files);
+    });
+  });
+}
+
+async function insertImages(quill, files) {
+  for (const file of files || []) {
+    try {
+      const { url } = await uploadFile(file, 'news');
+      const range = quill.getSelection(true) || { index: quill.getLength() };
+      quill.insertEmbed(range.index, 'image', url, 'user');
+      quill.setSelection(range.index + 1);
+    } catch (err) {
+      console.error(err);
+      alert('Image upload failed — please try again.');
+    }
+  }
+}
+
+/* ------------------------------------------------------------------------ */
+/* Drag & drop file fields                                                   */
+/* ------------------------------------------------------------------------ */
+function initDropzones(root) {
+  root.querySelectorAll('[data-dropzone]').forEach((zone) => {
+    if (zone.dataset.ready) return;
+    zone.dataset.ready = '1';
+
+    const input = document.getElementById(zone.dataset.dropzone);
+    const picker = zone.querySelector('input[type="file"]');
+    const status = zone.querySelector('.dz-status');
+    const preview = zone.querySelector('.dz-preview') || zone.parentElement?.querySelector('.dz-preview');
+    const folder = zone.dataset.folder || 'uploads';
+
+    const setPreview = (url) => {
+      if (!preview) return;
+      if (url && /\.(png|jpe?g|webp|gif|svg|avif)(\?.*)?$/i.test(url)) {
+        preview.innerHTML = `<img src="${url}" alt="" class="h-24 w-auto rounded-lg border border-white/10 object-cover">`;
+      } else if (url) {
+        preview.innerHTML = `<span class="text-xs text-white/60">${url}</span>`;
+      } else {
+        preview.innerHTML = '';
+      }
+    };
+    setPreview(input?.value);
+
+    const handle = async (file) => {
+      if (!file) return;
+      zone.classList.add('dz-busy');
+      if (status) status.textContent = 'Uploading ' + file.name + '…';
+      try {
+        const { url } = await uploadFile(file, folder);
+        if (input) {
+          input.value = url;
+          input.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+        setPreview(url);
+        if (status) status.textContent = 'Uploaded — saved to the media library.';
+      } catch (err) {
+        console.error(err);
+        if (status) status.textContent = 'Upload failed — try again.';
+      } finally {
+        zone.classList.remove('dz-busy');
+      }
+    };
+
+    zone.addEventListener('dragover', (e) => { e.preventDefault(); zone.classList.add('dz-over'); });
+    zone.addEventListener('dragleave', () => zone.classList.remove('dz-over'));
+    zone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      zone.classList.remove('dz-over');
+      handle(e.dataTransfer?.files?.[0]);
+    });
+    picker?.addEventListener('change', () => handle(picker.files?.[0]));
+    input?.addEventListener('input', () => setPreview(input.value));
+  });
+}
+
+/* ------------------------------------------------------------------------ */
+/* Searchable dropdowns                                                      */
+/*                                                                           */
+/* Progressive enhancement over native <select>: the original element stays  */
+/* in the DOM (hidden) and keeps carrying the form value; the component      */
+/* renders a trigger + searchable panel and syncs selection back, firing     */
+/* `change` so any existing listeners keep working. Opt out per-select with  */
+/* the `data-native` attribute.                                              */
+/* ------------------------------------------------------------------------ */
+function initSelects(root) {
+  root.querySelectorAll('select:not([data-native]):not([multiple])').forEach((select) => {
+    if (select.dataset.enhanced) return;
+    select.dataset.enhanced = '1';
+
+    const wrap = document.createElement('div');
+    wrap.className = 'sdrop';
+    select.parentNode.insertBefore(wrap, select);
+    wrap.appendChild(select);
+    select.classList.add('sdrop__native');
+    select.tabIndex = -1;
+
+    const trigger = document.createElement('button');
+    trigger.type = 'button';
+    trigger.className = 'sdrop__trigger';
+    trigger.setAttribute('aria-haspopup', 'listbox');
+    trigger.innerHTML = '<span class="sdrop__label"></span>'
+      + '<svg class="sdrop__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>';
+    wrap.appendChild(trigger);
+
+    const panel = document.createElement('div');
+    panel.className = 'sdrop__panel';
+    panel.hidden = true;
+    const searchable = select.options.length >= 6;
+    panel.innerHTML = (searchable ? '<input type="text" class="sdrop__search" placeholder="Search…" autocomplete="off">' : '')
+      + '<ul class="sdrop__list" role="listbox"></ul>';
+    wrap.appendChild(panel);
+
+    const label = trigger.querySelector('.sdrop__label');
+    const search = panel.querySelector('.sdrop__search');
+    const list = panel.querySelector('.sdrop__list');
+    let items = [];
+    let highlighted = -1;
+
+    const syncLabel = () => {
+      const opt = select.options[select.selectedIndex];
+      label.textContent = opt ? opt.textContent : '';
+      label.classList.toggle('sdrop__label--empty', !opt || opt.value === '');
+    };
+
+    const render = (filter = '') => {
+      const f = filter.trim().toLowerCase();
+      list.innerHTML = '';
+      items = [];
+      [...select.options].forEach((opt) => {
+        if (f && !opt.textContent.toLowerCase().includes(f)) return;
+        const li = document.createElement('li');
+        li.className = 'sdrop__item' + (opt.index === select.selectedIndex ? ' is-selected' : '');
+        li.setAttribute('role', 'option');
+        li.textContent = opt.textContent;
+        li.addEventListener('click', () => choose(opt.index));
+        list.appendChild(li);
+        items.push({ li, index: opt.index });
+      });
+      if (!items.length) {
+        list.innerHTML = '<li class="sdrop__empty">No matches</li>';
+      }
+      highlight(items.findIndex((i) => i.index === select.selectedIndex));
+    };
+
+    const highlight = (i) => {
+      items.forEach((it) => it.li.classList.remove('is-active'));
+      highlighted = i;
+      if (i >= 0 && items[i]) {
+        items[i].li.classList.add('is-active');
+        items[i].li.scrollIntoView({ block: 'nearest' });
+      }
+    };
+
+    const choose = (index) => {
+      select.selectedIndex = index;
+      select.dispatchEvent(new Event('change', { bubbles: true }));
+      syncLabel();
+      close();
+      trigger.focus();
+    };
+
+    const open = () => {
+      panel.hidden = false;
+      wrap.classList.add('is-open');
+      render('');
+      if (search) { search.value = ''; search.focus(); } else { trigger.focus(); }
+    };
+    const close = () => {
+      panel.hidden = true;
+      wrap.classList.remove('is-open');
+    };
+    const toggle = () => (panel.hidden ? open() : close());
+
+    trigger.addEventListener('click', toggle);
+    trigger.addEventListener('keydown', (e) => {
+      if (['ArrowDown', 'Enter', ' '].includes(e.key) && panel.hidden) { e.preventDefault(); open(); }
+    });
+    search?.addEventListener('input', () => render(search.value));
+    panel.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') { e.preventDefault(); close(); trigger.focus(); }
+      else if (e.key === 'ArrowDown') { e.preventDefault(); highlight(Math.min(highlighted + 1, items.length - 1)); }
+      else if (e.key === 'ArrowUp') { e.preventDefault(); highlight(Math.max(highlighted - 1, 0)); }
+      else if (e.key === 'Enter') {
+        e.preventDefault();
+        if (highlighted >= 0 && items[highlighted]) choose(items[highlighted].index);
+      }
+    });
+    document.addEventListener('click', (e) => { if (!wrap.contains(e.target)) close(); });
+
+    syncLabel();
+    // Keep the trigger in sync if code (or another listener) changes the value.
+    select.addEventListener('change', syncLabel);
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initRichtext(document);
+  initDropzones(document);
+  initSelects(document);
+});

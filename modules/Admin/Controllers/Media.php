@@ -57,39 +57,76 @@ class Media extends BaseController
 
         $folder = strtolower(preg_replace('/[^a-z0-9_-]/i', '', (string) $this->request->getPost('folder'))) ?: 'uploads';
         $tags   = trim((string) $this->request->getPost('tags'));
-        $dir    = FCPATH . 'media/' . $folder;
-        if (! is_dir($dir)) {
-            mkdir($dir, 0775, true);
-        }
 
-        $model = model('Modules\Media\Models\MediaModel');
         $count = 0;
         foreach ($files as $file) {
-            $name = $file->getRandomName();
-            $size = $file->getSize();
-            $mime = $file->getMimeType();
-            $file->move($dir, $name);
-            $abs = $dir . '/' . $name;
-
-            [$width, $height] = $this->imageMeta($abs, $mime);
-            $this->makeWebpCopy($abs, $mime);
-
-            $model->insert([
-                'disk'        => 'local',
-                'path'        => 'media/' . $folder . '/' . $name,
-                'url'         => '/media/' . $folder . '/' . $name,
-                'mime_type'   => $mime,
-                'size_bytes'  => $size,
-                'width'       => $width,
-                'height'      => $height,
-                'folder'      => $folder,
-                'tags'        => $tags !== '' ? $tags : null,
-                'uploaded_by' => session()->get('admin_user')['id'] ?? null,
-            ]);
+            $this->storeFile($file, $folder, $tags);
             $count++;
         }
 
         return redirect()->to(site_url('admin/media'))->with('message', $count . ' file(s) uploaded to media/' . $folder . '.');
+    }
+
+    /**
+     * JSON upload endpoint for the rich-text editor and drag-and-drop fields.
+     * Accepts a single "file"; returns {url, path, id} (WebP URL when one was
+     * generated for an image, so embeds stay light).
+     */
+    public function uploadAjax()
+    {
+        $file = $this->request->getFile('file');
+        if ($file === null || ! $file->isValid() || $file->hasMoved()) {
+            return $this->response->setStatusCode(422)->setJSON(['error' => 'No valid file received.']);
+        }
+
+        $folder = strtolower(preg_replace('/[^a-z0-9_-]/i', '', (string) $this->request->getPost('folder'))) ?: 'uploads';
+        $row    = $this->storeFile($file, $folder, trim((string) $this->request->getPost('tags')));
+
+        // Tokens rotate per POST (Security::$regenerate) — hand the client the
+        // fresh one so consecutive uploads keep working.
+        $row['csrf'] = csrf_hash();
+
+        return $this->response->setJSON($row);
+    }
+
+    /** Move an uploaded file into public/media/{folder}, register it, return its record. */
+    private function storeFile($file, string $folder, string $tags = ''): array
+    {
+        $dir = FCPATH . 'media/' . $folder;
+        if (! is_dir($dir)) {
+            mkdir($dir, 0775, true);
+        }
+
+        $name = $file->getRandomName();
+        $size = $file->getSize();
+        $mime = $file->getMimeType();
+        $file->move($dir, $name);
+        $abs = $dir . '/' . $name;
+
+        [$width, $height] = $this->imageMeta($abs, $mime);
+        $this->makeWebpCopy($abs, $mime);
+
+        $model = model('Modules\Media\Models\MediaModel');
+        $id    = $model->insert([
+            'disk'        => 'local',
+            'path'        => 'media/' . $folder . '/' . $name,
+            'url'         => '/media/' . $folder . '/' . $name,
+            'mime_type'   => $mime,
+            'size_bytes'  => $size,
+            'width'       => $width,
+            'height'      => $height,
+            'folder'      => $folder,
+            'tags'        => $tags !== '' ? $tags : null,
+            'uploaded_by' => session()->get('admin_user')['id'] ?? null,
+        ]);
+
+        // Prefer the optimized WebP for embedding when it exists.
+        $webp = preg_replace('/\.[a-z0-9]+$/i', '.webp', $abs);
+        $url  = ($webp !== $abs && is_file($webp))
+            ? '/media/' . $folder . '/' . preg_replace('/\.[a-z0-9]+$/i', '.webp', $name)
+            : '/media/' . $folder . '/' . $name;
+
+        return ['id' => $id, 'url' => $url, 'original' => '/media/' . $folder . '/' . $name, 'mime' => $mime];
     }
 
     public function delete($id)

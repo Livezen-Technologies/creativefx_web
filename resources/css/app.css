@@ -700,3 +700,32 @@ html.fp-active body {
   .brand-marquee { mask-image: none; -webkit-mask-image: none; }
   .brand-marquee__track { animation: none; flex-wrap: wrap; justify-content: center; width: auto; }
 }
+
+/* ---------------------------------------------------------------------------
+   Rich-text article bodies (authored in the admin editor). Tailwind preflight
+   strips element defaults, so restore editorial typography here.
+--------------------------------------------------------------------------- */
+.article-body p { margin-top: 1.25rem; line-height: 1.75; color: rgb(var(--fg) / 0.7); }
+.article-body h2 { margin-top: 2.5rem; font-size: 1.5rem; font-weight: 700; }
+.article-body h3 { margin-top: 2rem; font-size: 1.25rem; font-weight: 600; }
+.article-body ul, .article-body ol { margin-top: 1.25rem; padding-left: 1.5rem; }
+.article-body ul { list-style: disc; }
+.article-body ol { list-style: decimal; }
+.article-body li { margin-top: 0.5rem; line-height: 1.7; color: rgb(var(--fg) / 0.7); }
+.article-body li::marker { color: #cf2030; }
+.article-body a { color: #cf2030; text-decoration: underline; text-underline-offset: 3px; }
+.article-body a:hover { opacity: 0.85; }
+.article-body blockquote {
+  margin-top: 1.5rem;
+  border-left: 3px solid #cf2030;
+  padding-left: 1.25rem;
+  font-style: italic;
+  color: rgb(var(--fg) / 0.8);
+}
+.article-body img {
+  margin: 1.75rem auto;
+  max-width: 100%;
+  border-radius: 1rem;
+  border: 1px solid rgb(var(--fg) / 0.1);
+}
+.article-body strong { color: rgb(var(--fg) / 0.9); }

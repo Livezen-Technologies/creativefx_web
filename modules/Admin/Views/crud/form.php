@@ -5,7 +5,7 @@ $inputCls = 'w-full rounded-lg border border-white/15 bg-black/40 px-3 py-2 text
 $action   = $row ? site_url('admin/' . $route . '/' . $row['id']) : site_url('admin/' . $route);
 ?>
 <?= $this->section('content') ?>
-<form method="post" action="<?= $action ?>" enctype="multipart/form-data" class="max-w-2xl space-y-6">
+<form method="post" action="<?= $action ?>" enctype="multipart/form-data" class="max-w-3xl space-y-6">
     <?= csrf_field() ?>
     <?php foreach ($fields as $f):
         $name  = $f['name'];
@@ -41,6 +41,45 @@ $action   = $row ? site_url('admin/' . $route . '/' . $row['id']) : site_url('ad
                         <textarea name="<?= esc($name . '_' . $l, 'attr') ?>" rows="<?= $l === 'en' ? 10 : 4 ?>" class="<?= $inputCls ?>"><?= esc($val) ?></textarea>
                     </div>
                 <?php endforeach; ?>
+
+            <?php elseif ($type === 'locale_richtext'):
+                // Tabbed per-locale rich text editors (Quill). Each locale keeps
+                // a hidden textarea that carries the HTML; admin.js mounts the
+                // editor and syncs on change.
+                $map = [];
+                $raw = $row[$name] ?? null;
+                if (is_string($raw)) { $d = json_decode($raw, true); if (is_array($d)) { $map = $d; } } ?>
+                <div x-data="{ tab: '<?= esc($locales[0] ?? 'en') ?>' }">
+                    <div class="mb-2 flex gap-1">
+                        <?php foreach ($locales as $l): ?>
+                            <button type="button" @click="tab = '<?= esc($l) ?>'"
+                                    :class="tab === '<?= esc($l) ?>' ? 'bg-brand-red text-white' : 'bg-white/5 text-white/50 hover:text-white'"
+                                    class="rounded-md px-3 py-1 text-xs font-semibold uppercase tracking-widest transition"><?= esc($l) ?></button>
+                        <?php endforeach; ?>
+                    </div>
+                    <?php foreach ($locales as $l):
+                        $val = old($name . '_' . $l) ?? ($map[$l] ?? ''); ?>
+                        <div x-show="tab === '<?= esc($l) ?>'" data-richtext data-placeholder="Write the <?= esc(strtoupper($l)) ?> version…">
+                            <textarea name="<?= esc($name . '_' . $l, 'attr') ?>" class="hidden"><?= esc($val) ?></textarea>
+                            <div class="rt-editor"></div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+
+            <?php elseif ($type === 'image'):
+                // Drag & drop upload zone backed by the media library; stores the
+                // uploaded file URL in a plain input (still hand-editable).
+                $val = old($name) ?? ($row[$name] ?? '');
+                $fid = 'f_' . $name; ?>
+                <input type="text" id="<?= esc($fid, 'attr') ?>" name="<?= esc($name, 'attr') ?>" value="<?= esc($val) ?>"
+                       placeholder="/media/…" class="<?= $inputCls ?> mb-2">
+                <label data-dropzone="<?= esc($fid, 'attr') ?>" data-folder="<?= esc($f['folder'] ?? 'uploads', 'attr') ?>"
+                       class="block p-5 text-center">
+                    <input type="file" accept="image/*,.pdf" class="hidden">
+                    <div class="dz-preview mb-2 flex justify-center"></div>
+                    <p class="text-sm text-white/60">Drag &amp; drop a file here, or <span class="font-semibold text-brand-red">browse</span></p>
+                    <p class="dz-status mt-1 text-xs text-white/40">Images are optimized to WebP automatically.</p>
+                </label>
 
             <?php elseif ($type === 'textarea'): $val = old($name) ?? ($row[$name] ?? ''); ?>
                 <textarea name="<?= esc($name, 'attr') ?>" rows="4" <?= $ro ? 'readonly' : '' ?> class="<?= $inputCls ?>"><?= esc($val) ?></textarea>

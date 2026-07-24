@@ -13,7 +13,10 @@ export default defineConfig({
     emptyOutDir: true,
     manifest: true,
     rollupOptions: {
-      input: resolve(__dirname, 'resources/js/app.js'),
+      input: {
+        app: resolve(__dirname, 'resources/js/app.js'),
+        admin: resolve(__dirname, 'resources/js/admin.js'),
+      },
     },
   },
   server: {
