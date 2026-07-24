@@ -83,10 +83,12 @@ $renderNav = static function () use ($groups, $active, $navIcon): void {
     <?= vite_tags('resources/js/app.js') ?>
     <?= vite_tags('resources/js/admin.js') ?>
 </head>
-<body class="on-dark min-h-screen bg-[#0b0b0c] font-sans text-white antialiased">
+<body class="on-dark min-h-screen bg-brand-black font-sans text-white antialiased">
+<script>/* Apply the stored admin theme before first paint. */
+if (localStorage.getItem('admin-theme') === 'light') { document.body.classList.remove('on-dark'); }</script>
 <div class="flex min-h-screen" x-data="{ open: false }">
     <!-- Sidebar (desktop) -->
-    <aside class="hidden w-64 flex-none border-r border-white/10 bg-[#101013] lg:flex lg:flex-col">
+    <aside class="hidden w-64 flex-none border-r border-white/10 bg-brand-black lg:flex lg:flex-col">
         <div class="flex h-16 flex-none items-center border-b border-white/10 px-6">
             <a href="<?= site_url('admin') ?>" class="text-lg font-bold tracking-widest">NOR<span class="text-brand-red">LANKA</span></a>
             <span class="ml-2 rounded bg-white/10 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-widest text-white/50">Admin</span>
@@ -108,7 +110,7 @@ $renderNav = static function () use ($groups, $active, $navIcon): void {
     <!-- Sidebar (mobile drawer) -->
     <div class="fixed inset-0 z-40 lg:hidden" x-show="open" x-cloak style="display:none">
         <div class="absolute inset-0 bg-black/70" @click="open = false"></div>
-        <aside class="absolute inset-y-0 left-0 flex w-72 flex-col border-r border-white/10 bg-[#101013]">
+        <aside class="absolute inset-y-0 left-0 flex w-72 flex-col border-r border-white/10 bg-brand-black">
             <div class="flex h-16 flex-none items-center justify-between border-b border-white/10 px-5">
                 <a href="<?= site_url('admin') ?>" class="text-lg font-bold tracking-widest">NOR<span class="text-brand-red">LANKA</span></a>
                 <button @click="open = false" class="rounded-lg p-2 text-white/60 hover:bg-white/10" aria-label="Close menu">
@@ -121,7 +123,7 @@ $renderNav = static function () use ($groups, $active, $navIcon): void {
 
     <!-- Main -->
     <div class="flex min-w-0 flex-1 flex-col">
-        <header class="sticky top-0 z-30 flex h-16 flex-none items-center justify-between border-b border-white/10 bg-[#0b0b0c]/90 px-4 backdrop-blur sm:px-6">
+        <header class="sticky top-0 z-30 flex h-16 flex-none items-center justify-between border-b border-white/10 bg-brand-black/90 px-4 backdrop-blur sm:px-6">
             <div class="flex items-center gap-3">
                 <button @click="open = true" class="rounded-lg p-2 text-white/60 hover:bg-white/10 lg:hidden" aria-label="Open menu">
                     <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
@@ -129,6 +131,10 @@ $renderNav = static function () use ($groups, $active, $navIcon): void {
                 <h1 class="text-lg font-semibold"><?= esc($title ?? 'Admin') ?></h1>
             </div>
             <div class="flex items-center gap-3 text-sm">
+                <button type="button" id="theme-toggle" class="rounded-lg border border-white/15 p-2 text-white/70 transition hover:border-white/40 hover:text-white" aria-label="Toggle light/dark mode">
+                    <svg class="theme-icon-sun h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+                    <svg class="theme-icon-moon h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+                </button>
                 <a href="<?= site_url() ?>" target="_blank" class="hidden items-center gap-1.5 rounded-lg border border-white/15 px-3 py-1.5 text-xs text-white/70 transition hover:border-white/40 hover:text-white sm:flex">
                     <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6m4-3h6v6m-11 5L21 3"/></svg>
                     View site

@@ -13,7 +13,7 @@ class PermissionSeeder extends Seeder
         // group => [actions]
         $matrix = [
             'pages'        => ['view', 'create', 'edit', 'delete', 'publish'],
-            'media'        => ['view', 'upload', 'delete'],
+            'media'        => ['view', 'upload', 'edit', 'delete'],
             'translations' => ['view', 'edit'],
             'videos'       => ['view', 'manage'],
             'showroom'     => ['view', 'manage'],

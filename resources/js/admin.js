@@ -11,37 +11,14 @@
  *                       URL into the associated <input>, with live preview.
  */
 import Quill from 'quill';
+import { MediaBrowser, openMediaPicker, uploadToLibrary } from './media-manager.js';
 import '../css/admin.css';
 
-const CSRF = () => {
-  const meta = document.querySelector('meta[name="csrf"]');
-  return meta ? { name: meta.dataset.name, value: meta.content } : null;
-};
+// Media library uploads (CSRF rotation handled inside media-manager.js).
+const uploadFile = uploadToLibrary;
 
-async function uploadFile(file, folder = 'uploads') {
-  const fd = new FormData();
-  fd.append('file', file);
-  fd.append('folder', folder);
-  const csrf = CSRF();
-  if (csrf) fd.append(csrf.name, csrf.value);
-
-  const res = await fetch(window.ADMIN_BASE + '/media/upload-ajax', {
-    method: 'POST',
-    body: fd,
-    headers: { 'X-Requested-With': 'XMLHttpRequest' },
-  });
-  if (!res.ok) throw new Error('Upload failed (' + res.status + ')');
-  const data = await res.json();
-  // Tokens rotate per request — adopt the fresh one everywhere (the meta for
-  // the next upload AND every form's hidden field, or the eventual page
-  // submit would fail CSRF validation).
-  const meta = document.querySelector('meta[name="csrf"]');
-  if (data.csrf && meta) {
-    meta.content = data.csrf;
-    document.querySelectorAll(`input[name="${meta.dataset.name}"]`).forEach((el) => { el.value = data.csrf; });
-  }
-  return data;
-}
+// Expose for inline scripts / future integrations.
+window.openMediaPicker = openMediaPicker;
 
 /* ------------------------------------------------------------------------ */
 /* Rich text editors                                                         */
@@ -69,12 +46,16 @@ function initRichtext(root) {
             ['clean'],
           ],
           handlers: {
-            image() {
-              const input = document.createElement('input');
-              input.type = 'file';
-              input.accept = 'image/*';
-              input.onchange = () => insertImages(quill, input.files);
-              input.click();
+            // Toolbar image button opens the centralized media picker —
+            // choose existing images (multi-select) or upload right there.
+            async image() {
+              const items = await openMediaPicker({ accept: 'image', multiple: true });
+              if (!items) return;
+              for (const item of items) {
+                const range = quill.getSelection(true) || { index: quill.getLength() };
+                quill.insertEmbed(range.index, 'image', item.webp || item.url, 'user');
+                quill.setSelection(range.index + 1);
+              }
             },
           },
         },
@@ -172,7 +153,35 @@ function initDropzones(root) {
     });
     picker?.addEventListener('change', () => handle(picker.files?.[0]));
     input?.addEventListener('input', () => setPreview(input.value));
+
+    // "Choose from library" — pick an existing file instead of re-uploading.
+    const accept = (picker?.getAttribute('accept') || '').includes('video') ? 'video'
+      : (picker?.getAttribute('accept') || '').includes('image') ? 'image' : 'all';
+    const lib = document.createElement('button');
+    lib.type = 'button';
+    lib.className = 'dz-library';
+    lib.textContent = 'Choose from library';
+    lib.addEventListener('click', async (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const items = await openMediaPicker({ accept, multiple: false });
+      if (items?.[0] && input) {
+        input.value = items[0].url;
+        input.dispatchEvent(new Event('change', { bubbles: true }));
+        setPreview(items[0].url);
+        if (status) status.textContent = 'Selected from the media library.';
+      }
+    });
+    zone.appendChild(lib);
   });
+}
+
+/* ------------------------------------------------------------------------ */
+/* Media Library page mount                                                  */
+/* ------------------------------------------------------------------------ */
+function initMediaPage() {
+  const mount = document.getElementById('media-browser');
+  if (mount) new MediaBrowser(mount, { mode: 'page' });
 }
 
 /* ------------------------------------------------------------------------ */
@@ -295,8 +304,20 @@ function initSelects(root) {
   });
 }
 
+/* ------------------------------------------------------------------------ */
+/* Light / dark theme toggle (persisted; dark is the default)                */
+/* ------------------------------------------------------------------------ */
+function initTheme() {
+  document.getElementById('theme-toggle')?.addEventListener('click', () => {
+    const dark = document.body.classList.toggle('on-dark');
+    localStorage.setItem('admin-theme', dark ? 'dark' : 'light');
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
   initRichtext(document);
   initDropzones(document);
   initSelects(document);
+  initMediaPage();
 });

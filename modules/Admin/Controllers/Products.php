@@ -31,7 +31,7 @@ class Products extends BaseCrudController
         ['name' => 'features', 'label' => 'Features', 'type' => 'textarea', 'help' => 'JSON array, e.g. ["In-house printing","3D sampling"]'],
         ['name' => 'applications', 'label' => 'Applications', 'type' => 'textarea', 'help' => 'JSON array, e.g. ["Private label","Retail programmes"]'],
         ['name' => 'specs', 'label' => 'Specifications', 'type' => 'textarea', 'help' => 'JSON list of {"label","value"} rows — unlimited custom specs (Fabric, GSM, MOQ, …)'],
-        ['name' => 'hero_image', 'label' => 'Featured image', 'help' => 'Path to the main photo, e.g. /media/uploads/… (upload via Media)'],
+        ['name' => 'hero_image', 'label' => 'Featured image', 'type' => 'image', 'folder' => 'products', 'help' => 'Drop a file, or choose one from the media library'],
         ['name' => 'gallery', 'label' => 'Gallery', 'type' => 'textarea', 'help' => 'JSON array of image paths'],
         ['name' => 'model_path', 'label' => '3D model (GLB/GLTF)', 'help' => 'Path to a .glb/.gltf file (upload via Media) — enables the interactive 3D viewer'],
         ['name' => 'brochure_path', 'label' => 'Datasheet / brochure', 'help' => 'Path to a PDF (upload via Media)'],

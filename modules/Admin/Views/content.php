@@ -71,7 +71,7 @@ $sel  = 'rounded-md border border-white/15 bg-black/40 px-2 py-1 text-xs focus:b
 <!-- Content save (single form covering every block textarea via form=) -->
 <form id="content-form" method="post" action="<?= site_url('admin/pages/' . $page['id'] . '/content') ?>" class="sticky bottom-4">
     <?= csrf_field() ?>
-    <div class="flex items-center gap-3 rounded-xl border border-white/10 bg-[#0b0b0c]/95 p-4 backdrop-blur">
+    <div class="flex items-center gap-3 rounded-xl border border-white/10 bg-brand-black/95 p-4 backdrop-blur">
         <button class="btn-brand">Save content</button>
         <span class="text-xs text-white/40">Each block is locale-aware JSON (e.g. <code>{"title":{"en":"…","ja":"…"}}</code>). Structure changes (order, add, hide, delete) apply immediately.</span>
     </div>

@@ -69,8 +69,13 @@ $routes->group('admin', ['namespace' => 'Modules\Admin\Controllers'], static fun
 
         // Media library.
         $routes->get('media', 'Media::index');
+        $routes->get('media/list', 'Media::list');
         $routes->post('media/upload', 'Media::upload');
         $routes->post('media/upload-ajax', 'Media::uploadAjax');
+        $routes->post('media/(:num)/rename', 'Media::rename/$1');
+        $routes->post('media/(:num)/move', 'Media::move/$1');
+        $routes->post('media/(:num)/replace', 'Media::replace/$1');
+        $routes->post('media/(:num)/meta', 'Media::updateMeta/$1');
         $routes->post('media/(:num)/delete', 'Media::delete/$1');
     });
 });

@@ -8,6 +8,7 @@
     <?= vite_tags('resources/js/app.js') ?>
 </head>
 <body class="on-dark flex min-h-screen items-center justify-center bg-brand-black font-sans text-white antialiased">
+<script>if (localStorage.getItem('admin-theme') === 'light') { document.body.classList.remove('on-dark'); }</script>
     <div class="hero-aurora pointer-events-none fixed inset-0 -z-10 opacity-40"></div>
 
     <div class="w-full max-w-sm rounded-2xl border border-white/10 bg-white/[0.03] p-8 backdrop-blur">
