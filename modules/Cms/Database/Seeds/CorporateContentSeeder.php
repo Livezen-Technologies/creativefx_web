@@ -100,11 +100,19 @@ class CorporateContentSeeder extends Seeder
         ];
     }
 
-    private function hero(array $eyebrow, array $title, array $subtitle): array
+    /**
+     * Page hero. Pass $video/$poster to run a background film behind the copy
+     * (the block falls back to the animated aurora when they're absent).
+     */
+    private function hero(array $eyebrow, array $title, array $subtitle, ?string $video = null, ?string $poster = null): array
     {
-        return ['key' => 'hero', 'type' => 'hero', 'blocks' => [
-            ['pagehero', ['eyebrow' => $eyebrow, 'title' => $title, 'subtitle' => $subtitle]],
-        ]];
+        $content = ['eyebrow' => $eyebrow, 'title' => $title, 'subtitle' => $subtitle];
+        if ($video !== null) {
+            $content['video']  = $video;
+            $content['poster'] = $poster;
+        }
+
+        return ['key' => 'hero', 'type' => 'hero', 'blocks' => [['pagehero', $content]]];
     }
 
     private function ctaContact(): array
@@ -525,7 +533,10 @@ class CorporateContentSeeder extends Seeder
                     $this->loc('Join a team that empowers you to innovate, grow, and make a meaningful impact in the global apparel industry.',
                         'Únete a un equipo que te impulsa a innovar, crecer y generar un impacto real en la industria global de la confección.',
                         'イノベーションと成長、そしてグローバルなアパレル産業への貢献を後押しするチームに参加しませんか。',
-                        '加入一个赋能你创新、成长并在全球服装行业创造深远影响的团队。')
+                        '加入一个赋能你创新、成长并在全球服装行业创造深远影响的团队。'),
+                    // People-engagement background clip (content sheet, Careers C2).
+                    '/media/video/careers-hero.mp4',
+                    '/media/video/careers-hero-poster.jpg'
                 ),
                 ['key' => 'why', 'type' => 'features', 'blocks' => [
                     ['feature_cards', [

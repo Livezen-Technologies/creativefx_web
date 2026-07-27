@@ -9,8 +9,13 @@
  * so it loops continuously even if the native loop hiccups.
  */
 export function initHeroVideo() {
-  const v = document.querySelector('#hero video');
-  if (!v) return;
+  // The home hero plus any CMS page hero that has a background film.
+  document.querySelectorAll('#hero video, [data-hero-video]').forEach(setupHeroVideo);
+}
+
+function setupHeroVideo(v) {
+  if (!v || v.dataset.heroReady) return;
+  v.dataset.heroReady = '1';
 
   // Autoplay requires muted + inline.
   v.muted = true;
