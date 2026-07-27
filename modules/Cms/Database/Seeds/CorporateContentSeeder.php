@@ -385,7 +385,10 @@ class CorporateContentSeeder extends Seeder
                     $this->loc('Our ESG strategy is aligned to the United Nations Sustainable Development Goals — turning purpose into action and responsibility into measurable results.',
                         'Nuestra estrategia ESG está alineada con los ODS de la ONU: convertimos el propósito en acción y la responsabilidad en resultados medibles.',
                         '私たちのESG戦略は国連SDGsに整合し、目的を行動に、責任を測定可能な成果に変えていきます。',
-                        '我们的 ESG 战略与联合国可持续发展目标保持一致——把使命化为行动，把责任化为可衡量的成果。')
+                        '我们的 ESG 战略与联合国可持续发展目标保持一致——把使命化为行动，把责任化为可衡量的成果。'),
+                    // ESG background clip (content sheet, Our Impact C2).
+                    '/media/video/impact-hero.mp4',
+                    '/media/video/impact-hero-poster.jpg'
                 ),
                 ['key' => 'statement', 'type' => 'richtext', 'blocks' => [
                     ['richtext', [
