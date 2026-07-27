@@ -8,7 +8,8 @@ $nav = [
     'our-expertise' => lang('Site.nav.expertise'),
     'showroom'      => lang('Site.nav.showroom'),
     'impact'        => lang('Site.nav.impact'),
-    'news'          => lang('Site.nav.news'),
+    // 'news' is intentionally not in the main menu — the section stays live
+    // and reachable from the footer, the home page and direct links.
     'careers'       => lang('Site.nav.careers'),
     'contact'       => lang('Site.nav.contact'),
 ];
