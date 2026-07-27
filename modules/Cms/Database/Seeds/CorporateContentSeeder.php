@@ -23,10 +23,18 @@ class CorporateContentSeeder extends Seeder
         }
     }
 
-    /** Build a locale-map, dropping null locales. */
+    /**
+     * Build a locale-map, dropping null locales. Any locale not supplied here
+     * is completed from the content translation dictionary, so seeded copy
+     * lands fully translated in en/ja/es/zh.
+     */
     private function loc(string $en, ?string $es = null, ?string $ja = null, ?string $zh = null): array
     {
-        return array_filter(['en' => $en, 'es' => $es, 'ja' => $ja, 'zh' => $zh], static fn ($v) => $v !== null);
+        helper('norlanka');
+
+        return content_locales(
+            array_filter(['en' => $en, 'es' => $es, 'ja' => $ja, 'zh' => $zh], static fn ($v) => $v !== null)
+        );
     }
 
     private function seedPage(string $slug, array $def, string $now): void

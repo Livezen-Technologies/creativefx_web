@@ -45,5 +45,9 @@ class DatabaseSeeder extends Seeder
 
         // Newsroom: editorial categories + starter articles (upsert-by-slug).
         $this->call('Modules\News\Database\Seeds\NewsSeeder');
+
+        // Last: complete ja/es/zh across everything the seeders just wrote.
+        // Only empty locales are filled, so translated content is preserved.
+        (new \Modules\Core\Libraries\ContentTranslator())->backfill();
     }
 }

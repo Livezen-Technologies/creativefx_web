@@ -143,3 +143,35 @@ if (! function_exists('rich_text')) {
         return nl2br(esc($text));
     }
 }
+
+if (! function_exists('content_locales')) {
+    /**
+     * Complete a locale map from the content translation dictionary.
+     *
+     * Seeders author content in English (plus whatever locales they specify);
+     * this fills any locale still missing from ContentTranslations.php, so
+     * seeded content lands complete in en/ja/es/zh. Strings absent from the
+     * dictionary are returned untouched and fall back via t_field().
+     */
+    function content_locales(array $map): array
+    {
+        static $dict = null;
+        if ($dict === null) {
+            $file = ROOTPATH . 'modules/Core/Config/ContentTranslations.php';
+            $dict = is_file($file) ? (require $file) : [];
+        }
+
+        $en = trim((string) ($map['en'] ?? ''));
+        if ($en === '' || ! isset($dict[$en])) {
+            return $map;
+        }
+
+        foreach (['ja', 'es', 'zh'] as $locale) {
+            if (trim((string) ($map[$locale] ?? '')) === '') {
+                $map[$locale] = $dict[$en][$locale];
+            }
+        }
+
+        return $map;
+    }
+}

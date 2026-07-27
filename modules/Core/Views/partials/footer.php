@@ -7,7 +7,15 @@
                 <span class="font-display text-xl font-semibold uppercase tracking-[0.22em] text-white">Norlanka</span>
             </a>
             <p class="mt-4 max-w-sm text-sm leading-relaxed text-white/60">
-                <?= esc(setting('tagline', 'Responsible Sourcing · Design · Innovation')) ?>
+                <?php
+                // The tagline setting is a single plain string, so it can't carry
+                // translations. Show the localized strapline unless an admin has
+                // overridden the setting with their own wording.
+                $tagline = (string) setting('tagline', '');
+                echo esc($tagline === '' || $tagline === 'Responsible Sourcing · Design · Innovation'
+                    ? lang('Site.footer.built')
+                    : $tagline);
+                ?>
             </p>
         </div>
 
