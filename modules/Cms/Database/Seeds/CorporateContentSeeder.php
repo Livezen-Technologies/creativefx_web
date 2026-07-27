@@ -261,7 +261,10 @@ class CorporateContentSeeder extends Seeder
                 $this->hero(
                     $this->loc('Our Expertise', 'Experiencia', '専門分野', '专业能力'),
                     $this->loc('From first sketch to final stitch', 'Del primer boceto a la última puntada', '最初のスケッチから最後の一針まで', '从初稿到成衣'),
-                    $this->loc('Full-service design, development and manufacturing across 13 product categories.')
+                    $this->loc('Full-service design, development and manufacturing across 13 product categories.'),
+                    // Showroom background clip (content sheet, Our Expertise C2).
+                    '/media/video/our-expertise-hero.mp4',
+                    '/media/video/our-expertise-hero-poster.jpg'
                 ),
                 ['key' => 'categories', 'type' => 'categories', 'blocks' => [
                     ['richtext', [
