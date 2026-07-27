@@ -139,7 +139,10 @@ class CorporateContentSeeder extends Seeder
                         'La plataforma donde las marcas de moda globales y la excelencia manufacturera se encuentran',
                         '世界のファッションブランドと製造の卓越性が出会うプラットフォーム',
                         '全球时尚品牌与卓越制造交汇的平台'),
-                    $this->loc('Responsible Sourcing · Design · Innovation')
+                    $this->loc('Responsible Sourcing · Design · Innovation'),
+                    // Manufacturing-floor background clip (content sheet, Our Story C2).
+                    '/media/video/our-story-hero.mp4',
+                    '/media/video/our-story-hero-poster.jpg'
                 ),
                 ['key' => 'profile', 'type' => 'content', 'blocks' => [
                     ['two_column', [
