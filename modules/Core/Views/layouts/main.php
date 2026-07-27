@@ -1,8 +1,10 @@
 <?php helper(['url', 'norlanka']); $locale = current_locale(); ?>
 <!DOCTYPE html>
-<html lang="<?= esc($locale) ?>">
+<html lang="<?= esc($locale) ?>" class="dark">
 <head>
-    <script>document.documentElement.classList.add('js');try{if(localStorage.getItem('nl_theme')==='dark')document.documentElement.classList.add('dark');}catch(e){}try{if(sessionStorage.getItem('nl_preloaded'))document.documentElement.classList.add('preloaded');}catch(e){}</script>
+    <!-- Dark ships as the default (class above, so it holds without JS too);
+         the script only strips it when the visitor explicitly chose light. -->
+    <script>document.documentElement.classList.add('js');try{if(localStorage.getItem('nl_theme')==='light')document.documentElement.classList.remove('dark');}catch(e){}try{if(sessionStorage.getItem('nl_preloaded'))document.documentElement.classList.add('preloaded');}catch(e){}</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= esc($title ?? setting('site_name', 'Norlanka')) ?></title>
