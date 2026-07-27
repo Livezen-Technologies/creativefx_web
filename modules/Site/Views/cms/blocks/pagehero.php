@@ -5,7 +5,7 @@ $heroVideo  = $content['video'] ?? null;
 $heroPoster = $content['poster'] ?? null;
 $hasVideo   = ! empty($heroVideo) && is_file(FCPATH . ltrim((string) $heroVideo, '/'));
 ?>
-<section class="relative overflow-hidden <?= $hasVideo ? 'flex min-h-[72vh] items-end' : '' ?>"
+<section class="relative overflow-hidden <?= $hasVideo ? 'hero-full flex items-end' : '' ?>"
          <?= $hasVideo ? 'x-data="{ playing: true, toggleVid() { const v = $refs.bgv; if (!v) return; if (v.paused) { delete v.dataset.userPaused; v.play(); this.playing = true; } else { v.dataset.userPaused = \'1\'; v.pause(); this.playing = false; } } }"' : '' ?>>
     <?php if ($hasVideo): ?>
         <!-- Background film. The poster paints immediately (LCP) while the
@@ -32,7 +32,7 @@ $hasVideo   = ! empty($heroVideo) && is_file(FCPATH . ltrim((string) $heroVideo,
         <div class="absolute inset-0 -z-10 bg-gradient-to-b from-brand-black/40 via-brand-black/10 to-brand-black"></div>
     <?php endif; ?>
 
-    <div class="container-x flex <?= $hasVideo ? 'w-full' : 'min-h-[60vh]' ?> flex-col justify-end pb-16 pt-40">
+    <div class="container-x flex <?= $hasVideo ? 'w-full pb-28' : 'min-h-[60vh] pb-16' ?> flex-col justify-end pt-40">
         <?php if (! empty($content['eyebrow'])): ?>
             <p class="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-brand-red" data-gsap="reveal"><?= esc(t_field($content['eyebrow'])) ?></p>
         <?php endif; ?>
@@ -41,4 +41,17 @@ $hasVideo   = ! empty($heroVideo) && is_file(FCPATH . ltrim((string) $heroVideo,
             <p class="mt-6 max-w-2xl text-lg text-white/70" data-gsap="reveal"><?= esc(t_field($content['subtitle'])) ?></p>
         <?php endif; ?>
     </div>
+
+    <?php if ($hasVideo): ?>
+        <!-- A full-viewport hero hides everything below it — give the reader a cue. -->
+        <button type="button"
+                onclick="this.closest('section').nextElementSibling?.scrollIntoView({behavior:'smooth',block:'start'})"
+                class="absolute inset-x-0 bottom-8 flex cursor-pointer justify-center bg-transparent"
+                aria-label="<?= esc(lang('Site.experience.scroll'), 'attr') ?>">
+            <span class="flex flex-col items-center gap-2 text-[10px] uppercase tracking-[0.3em] text-white/40 transition hover:text-white/70">
+                <?= esc(lang('Site.experience.scroll')) ?>
+                <svg class="h-4 w-4 animate-bounce text-brand-red" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M6 13l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+        </button>
+    <?php endif; ?>
 </section>

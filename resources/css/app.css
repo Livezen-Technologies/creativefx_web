@@ -208,6 +208,14 @@ html.dark .theme-esg-green {  /* Impact page green scope, dark variant */
   }
 }
 
+/* Full-viewport page hero (used when a hero has a background film).
+   `svh` keeps mobile browser chrome from pushing the hero taller than the
+   visible area; `vh` stays as the fallback for browsers without svh. */
+.hero-full { min-height: 100vh; }
+@supports (min-height: 100svh) {
+  .hero-full { min-height: 100svh; }
+}
+
 /* Kids-lineup hero (dark studio showcase) -------------------------------- */
 .kids-hero {
   position: relative;

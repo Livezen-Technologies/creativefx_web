@@ -23,11 +23,24 @@ export function initScrollStory() {
   }
 
   gsap.utils.toArray('[data-gsap="reveal"]').forEach((el) => {
-    gsap.from(el, {
+    const tween = {
       opacity: 0,
       y: 48,
       duration: 1,
       ease: 'power3.out',
+    };
+
+    // Anything already on screen at load (hero copy, short pages, tall
+    // viewports) must animate straight away — a ScrollTrigger whose start
+    // line sits above it would never fire, leaving the content invisible
+    // until the reader scrolls.
+    if (el.getBoundingClientRect().top < window.innerHeight) {
+      gsap.from(el, { ...tween, delay: 0.1 });
+      return;
+    }
+
+    gsap.from(el, {
+      ...tween,
       scrollTrigger: { trigger: el, start: 'top 82%', once: true },
     });
   });
