@@ -204,7 +204,7 @@ class CorporateContentSeeder extends Seeder
                         'title' => $this->loc('Our Values', 'Nuestros valores', '私たちの価値観', '我们的价值观'),
                         'items' => [
                             ['title' => $this->loc('Trust, Integrity & Ethics', 'Confianza, integridad y ética', '信頼・誠実・倫理', '信任、诚信与道德'),
-                             'image' => '/media/impact/leed-plant.jpg', 'icon' => 'shield',
+                             'image' => '/media/values/trust-integrity-ethics.jpg', 'icon' => 'shield',
                              'text' => $this->loc('We will always conduct ourselves, internally and externally with the highest degree of trust, integrity, and ethics.')],
                             ['title' => $this->loc('People First', 'Las personas primero', '人を第一に', '员工优先'),
                              'image' => '/media/company/sewing-floor.jpg', 'icon' => 'users',
