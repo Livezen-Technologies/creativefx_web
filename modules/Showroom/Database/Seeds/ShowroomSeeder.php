@@ -42,7 +42,8 @@ class ShowroomSeeder extends Seeder
                 'features' => ['Floating clouds', 'Moon & stars', 'Wooden toy shelves', 'Soft ambient lighting'],
                 'sizeset' => 'baby',
                 'products' => [
-                    ['Rompers', 'Ranitas', '100% organic cotton interlock'],
+                    ['Rompers', 'Ranitas', '100% organic cotton interlock', null, null, null,
+                        '/media/models/meadow-p2-ss27-colorway-1.glb'],
                     ['Bodysuits', 'Bodies', 'GOTS organic cotton rib'],
                     ['Baby Sets', 'Conjuntos de bebé', 'Combed cotton jersey'],
                     ['Sleepwear', 'Pijamas de bebé', 'Bamboo-cotton blend'],
@@ -261,13 +262,16 @@ class ShowroomSeeder extends Seeder
             foreach ($c['products'] as $i => $p) {
                 [$pen, $pes, $fabric] = $p;
                 // Optional per-product description (index 3), colour swatches
-                // (index 4) and photo path (index 5); otherwise fall back to a
-                // generic line + the category palette and no photo (swatch display).
+                // (index 4), photo path (index 5) and 3D model (index 6); otherwise
+                // fall back to a generic line + the category palette and no photo
+                // (swatch display). A model, where present, supersedes the photo
+                // on the 3D stage.
                 $desc     = $p[3] ?? ('Responsibly manufactured ' . strtolower($pen)
                     . ' for the ' . $c['en'] . ' segment — engineered for quality, comfort and scale, '
                     . 'with full-package development from fabric to finished garment.');
                 $swatches = $p[4] ?? $c['palette'];
                 $image    = $p[5] ?? null;
+                $model    = $p[6] ?? null;
                 $prodTable->insert([
                     'showroom_category_id' => $categoryId,
                     'slug'        => $c['slug'] . '-' . ($i + 1),
@@ -276,6 +280,7 @@ class ShowroomSeeder extends Seeder
                     'hotspot'     => $j($this->position($i, $n)),
                     'gallery'     => $j($swatches),
                     'image'       => $image,
+                    'model_path'  => $model,
                     'materials'   => $j($this->materials($order + $i)),
                     'fabric'      => $fabric,
                     'moq'         => $moqs[($order + $i) % count($moqs)],

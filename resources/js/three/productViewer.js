@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { createGLTFLoader } from './gltf.js';
 
 /**
  * Interactive GLB/GLTF product viewer (blueprint §8): studio lighting,
@@ -62,7 +62,7 @@ export function initProductViewer(container) {
   controls.autoRotateSpeed = 1.2;
   controls.addEventListener('start', () => { controls.autoRotate = false; });
 
-  new GLTFLoader().load(cfg.model, (gltf) => {
+  createGLTFLoader(renderer).load(cfg.model, (gltf) => {
     const obj = gltf.scene;
     const box = new THREE.Box3().setFromObject(obj);
     const size = box.getSize(new THREE.Vector3());

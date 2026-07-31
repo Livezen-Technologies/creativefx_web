@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { createGLTFLoader } from './gltf.js';
 
 /**
  * Procedural virtual-showroom scene. No external 3D assets — each product is a
@@ -133,7 +133,7 @@ export function initShowroom(container) {
       garment = new THREE.Group();
       garment.userData.model3d = true;
       garment.userData.baseY = Number(h.y) || 1.2;
-      new GLTFLoader().load(prod.model, (gltf) => {
+      createGLTFLoader(renderer).load(prod.model, (gltf) => {
         const obj = gltf.scene;
         const box = new THREE.Box3().setFromObject(obj);
         const size = box.getSize(new THREE.Vector3());
