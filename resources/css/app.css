@@ -760,3 +760,8 @@ html.fp-active body {
   text-align: center;
 }
 .cert-marquee .brand-marquee__track { animation-duration: 36s; }
+
+/* Certification logo plates: the artwork is already tightly cropped, so use a
+   slimmer inset than the brand cards and let each mark fill the plate. */
+.cert-marquee .brand-card { padding: 0.75rem 1rem; height: 5.5rem; }
+.cert-marquee .brand-card img { max-height: 100%; width: auto; object-fit: contain; }
