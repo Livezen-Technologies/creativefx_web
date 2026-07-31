@@ -1,11 +1,10 @@
 /**
- * Site header behaviour: sticky shrink, scroll-progress bar, mega-menu and
- * mobile-menu state. Kept tiny and dependency-free.
+ * Site header behaviour: sticky shrink, scroll-progress bar and mobile-menu
+ * state. Kept tiny and dependency-free.
  */
 export default () => ({
   scrolled: false,
   progress: 0,
-  mega: false,
   mobile: false,
 
   init() {

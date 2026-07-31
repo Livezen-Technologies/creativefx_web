@@ -68,13 +68,6 @@ return [
     ],
 
     // Header mega-menu (titles reuse home.cap.*_t).
-    'mega' => [
-        'see_all'    => 'See all capabilities',
-        'apparel_d'  => 'Full-package knit & woven production at scale.',
-        'washing_d'  => 'Water-conscious washing, dyeing & finishing.',
-        'printing_d' => 'In-house print, embroidery & embellishment.',
-        'design_d'   => 'R&D studio: concept to shelf-ready, fast.',
-    ],
 
     // Bespoke home page.
     'home' => [

@@ -66,13 +66,6 @@ return [
         'our_story'    => 'Nuestra historia',
     ],
 
-    'mega' => [
-        'see_all'    => 'Ver todas las capacidades',
-        'apparel_d'  => 'Producción full-package de punto y plano a escala.',
-        'washing_d'  => 'Lavado, teñido y acabado con uso responsable del agua.',
-        'printing_d' => 'Estampado, bordado y aplicaciones internas.',
-        'design_d'   => 'Estudio de I+D: del concepto a la tienda, rápido.',
-    ],
 
     'home' => [
         'hero' => [
