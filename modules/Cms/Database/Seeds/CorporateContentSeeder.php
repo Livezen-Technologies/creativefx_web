@@ -175,13 +175,6 @@ class CorporateContentSeeder extends Seeder
                         'caption' => $this->loc('Our corporate film — design, development, sampling and quality assurance in action.'),
                     ]],
                 ]],
-                ['key' => 'hq-photo', 'type' => 'image', 'blocks' => [
-                    ['image', [
-                        'src' => '/media/company/hq-tower.jpg',
-                        'alt' => $this->loc('Norlanka head office tower, Colombo'),
-                        'caption' => $this->loc('The Norlanka head office in Colombo, Sri Lanka — home to 250+ head-office employees.'),
-                    ]],
-                ]],
                 ['key' => 'vision', 'type' => 'statement', 'blocks' => [
                     ['statement', [
                         'items' => [
