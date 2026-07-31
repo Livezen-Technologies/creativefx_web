@@ -19,7 +19,6 @@ import siteHeader from './alpine/siteHeader.js';
 import showroomScene from './alpine/showroomScene.js';
 import worldMap from './alpine/worldMap.js';
 import themeToggle from './alpine/themeToggle.js';
-import kidsHero from './alpine/kidsHero.js';
 import { initScrollStory } from './gsap/scroll.js';
 import { initKineticHero } from './gsap/kinetic.js';
 import { initCarousels } from './carousels.js';
@@ -35,7 +34,6 @@ Alpine.data('siteHeader', siteHeader);
 Alpine.data('showroomScene', showroomScene);
 Alpine.data('worldMap', worldMap);
 Alpine.data('themeToggle', themeToggle);
-Alpine.data('kidsHero', kidsHero);
 
 // Shared wishlist (persisted to localStorage) — used across the showroom.
 Alpine.store('wishlist', {
