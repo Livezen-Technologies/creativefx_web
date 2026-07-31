@@ -422,6 +422,7 @@ class CorporateContentSeeder extends Seeder
                             '三大承诺，以 2024 年为基线、以 2028 年为目标，皆可衡量。'),
                         'pillars' => [
                             ['title' => $this->loc('Protect Our Environment', 'Proteger el medio ambiente', '環境を守る', '保护环境'),
+                             'image' => '/media/impact/solar-roof.jpg',
                              'text'  => $this->loc('Our commitment to environmental stewardship is deeply ingrained in everything we do — from the way we operate our business to how we design our products. Our goal is to reduce our environmental impact, conserve natural resources, and protect the ecosystems that sustain life on Earth for a better tomorrow.'),
                              'targets' => [
                                 ['label' => $this->loc('Emissions — Scope 1 & 2 (kgCO2e/SM)', 'Emisiones (kgCO2e/SM)', '排出量（kgCO2e/SM）', '排放（kgCO2e/SM）'), 'baseline' => '43.95', 'current' => '42.74', 'target' => '40.57'],
@@ -430,6 +431,7 @@ class CorporateContentSeeder extends Seeder
                                 ['label' => $this->loc('Biodiversity footprint (ha)', 'Huella de biodiversidad (ha)', '生物多様性面積（ha）', '生物多样性面积（公顷）'), 'baseline' => '0.39', 'current' => '0.39', 'target' => '4.0'],
                              ]],
                             ['title' => $this->loc('Together With People', 'Junto a las personas', '人とともに', '与员工同行'),
+                             'image' => '/media/company/sewing-floor.jpg',
                              'text'  => $this->loc('We believe that people are the heart of everything we do. Our success is built on strong relationships with our employees, customers, partners, and communities. When we are innovating with our teams, partnering with local communities, or supporting global initiatives, our focus remains the same: to make a better tomorrow for everyone.'),
                              'targets' => [
                                 ['label' => $this->loc('Women in leadership', 'Mujeres en liderazgo', '女性管理職比率', '女性领导比例'), 'baseline' => '24.68', 'current' => '28.1', 'target' => '30.00', 'unit' => '%'],
@@ -437,6 +439,7 @@ class CorporateContentSeeder extends Seeder
                                 ['label' => $this->loc('Community beneficiaries', 'Beneficiarios comunitarios', '地域の受益者数', '社区受益者'), 'baseline' => '582', 'current' => '2882', 'target' => '5,000'],
                              ]],
                             ['title' => $this->loc('Trust In Everything', 'Confianza en todo', 'すべてに信頼を', '处处可信'),
+                             'image' => '/media/impact/leed-plant.jpg',
                              'text'  => $this->loc('Trust reflects our deep commitment to doing what is right, always. In an increasingly complex world, we understand that trust is a company’s most valuable asset. It shapes reputations, builds lasting relationships, and fuels sustainable growth. Good governance is the foundation for a better tomorrow.'),
                              'targets' => [
                                 ['label' => $this->loc('Tier-1 Higg/Worldly verification', 'Verificación Higg Tier-1', 'Tier-1 Higg検証', 'Tier-1 Higg 验证'), 'baseline' => '75.8', 'current' => '96.8', 'target' => '100.0', 'unit' => '%'],

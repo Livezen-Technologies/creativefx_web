@@ -890,3 +890,10 @@ html.fp-active body {
   .nl-timeline__card { transition: none; }
   .nl-timeline__item:hover .nl-timeline__card { transform: none; }
 }
+
+/* Pillar tiles reuse the value-tile photo treatment, but their names carry a
+   section's worth of meaning — give them more presence than a value name. */
+.value-tile__title--lg {
+  font-size: 1.4rem;
+  line-height: 1.2;
+}
