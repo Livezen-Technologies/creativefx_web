@@ -765,3 +765,11 @@ html.fp-active body {
    slimmer inset than the brand cards and let each mark fill the plate. */
 .cert-marquee .brand-card { padding: 0.75rem 1rem; height: 5.5rem; }
 .cert-marquee .brand-card img { max-height: 100%; width: auto; object-fit: contain; }
+
+/* Marquee shift: tracks that repeat their set more than twice set
+   --marquee-shift so the animation travels exactly one set width. */
+.brand-marquee__track { animation-name: brand-scroll-var; }
+@keyframes brand-scroll-var {
+  from { transform: translateX(0); }
+  to   { transform: translateX(var(--marquee-shift, -50%)); }
+}

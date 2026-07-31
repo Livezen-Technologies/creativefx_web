@@ -34,6 +34,17 @@ foreach ($content['items'] as $item) {
     $marks[] = ['label' => $label, 'logo' => $resolve($label)];
 }
 if ($marks === []) { return; }
+
+/**
+ * A marquee only loops seamlessly while the track stays wider than the
+ * viewport. Six marks duplicated once is under 2,300px, so on a wide screen
+ * the track ran out and left a gap. Repeat the set enough times to cover an
+ * ultrawide display, then shift by exactly one set (100 / copies) so the
+ * hand-off is invisible.
+ */
+$cardWidth = 184;                                    // card + gap, px
+$setWidth  = max(1, count($marks) * $cardWidth);
+$copies    = max(2, (int) ceil(3840 / $setWidth) + 1);
 ?>
 <section class="bg-brand-black py-16">
     <div class="container-x">
@@ -47,10 +58,10 @@ if ($marks === []) { return; }
 
     <div class="brand-marquee cert-marquee" data-gsap="reveal"
          aria-label="<?= esc(t_field($content['title'] ?? []), 'attr') ?>">
-        <div class="brand-marquee__track">
-            <?php foreach ([0, 1] as $copy): // duplicated track = seamless loop ?>
+        <div class="brand-marquee__track" style="--marquee-shift: -<?= round(100 / $copies, 4) ?>%">
+            <?php for ($copy = 0; $copy < $copies; $copy++): // repeated set = seamless loop ?>
                 <?php foreach ($marks as $mark): ?>
-                    <span class="<?= $mark['logo'] ? 'brand-card' : 'cert-card' ?>" <?= $copy === 1 ? 'aria-hidden="true"' : '' ?>>
+                    <span class="<?= $mark['logo'] ? 'brand-card' : 'cert-card' ?>" <?= $copy > 0 ? 'aria-hidden="true"' : '' ?>>
                         <?php if ($mark['logo']): ?>
                             <img src="<?= esc($mark['logo'], 'attr') ?>" alt="<?= esc($mark['label'], 'attr') ?>" loading="lazy" width="160" height="72">
                         <?php else: ?>
@@ -58,7 +69,7 @@ if ($marks === []) { return; }
                         <?php endif; ?>
                     </span>
                 <?php endforeach; ?>
-            <?php endforeach; ?>
+            <?php endfor; ?>
         </div>
     </div>
 </section>
