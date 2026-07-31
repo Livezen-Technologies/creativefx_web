@@ -580,6 +580,12 @@ class CorporateContentSeeder extends Seeder
                         ],
                     ]],
                 ]],
+                ['key' => 'film', 'type' => 'video', 'blocks' => [
+                    ['video', [
+                        'title' => $this->loc('Inside Norlanka', 'Dentro de Norlanka', 'ノルランカの内側', '走进诺兰卡'),
+                        'embed' => 'https://vimeo.com/1214485625',
+                    ]],
+                ]],
                 ['key' => 'openings', 'type' => 'jobs', 'blocks' => [
                     ['jobs_list', [
                         'title' => $this->loc('Open positions', 'Vacantes abiertas', '募集中のポジション', '在招职位'),
