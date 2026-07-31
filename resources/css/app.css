@@ -773,3 +773,6 @@ html.fp-active body {
   from { transform: translateX(0); }
   to   { transform: translateX(var(--marquee-shift, -50%)); }
 }
+
+/* Raise whichever marker is hovered/active so clustered pins stay clickable. */
+.nl-marker:hover, .nl-marker:focus-visible, .nl-marker.is-active { z-index: 5; }
