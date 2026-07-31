@@ -112,25 +112,21 @@ return [
         'footprint' => [
             'eyebrow' => 'Presencia global',
             'title'   => 'Hecho en Sri Lanka e India. Entregado al mundo.',
-            'body'    => 'Fabricación en Sri Lanka e India, un estudio de diseño en el Reino Unido y equipos en EE. UU. y Hong Kong: soluciones del diseño a la entrega para marcas en todos los mercados principales.',
-            'regions' => ['Sri Lanka', 'India', 'Reino Unido', 'EE. UU.', 'Hong Kong', 'Marcas globales'],
+            'body'    => 'Fabricación en Sri Lanka e India y un estudio de diseño en el Reino Unido: soluciones del diseño a la entrega para marcas en todos los mercados principales.',
+            'regions' => ['Sri Lanka', 'India', 'Reino Unido', 'Marcas globales'],
             'points'  => [
                 'hq'       => 'Sri Lanka',
                 'india'    => 'India',
                 'uk'       => 'Reino Unido',
-                'america'  => 'EE. UU.',
-                'hongkong' => 'Hong Kong',
             ],
             'roles' => [
                 'hq'       => 'Sede y manufactura',
                 'india'    => 'Norlanka Manufacturing India — Bangalore',
                 'uk'       => 'Estudio de diseño — Leicester',
-                'america'  => 'Ventas y marketing',
-                'hongkong' => 'Desarrollo de producto',
             ],
             'legend_hq'     => 'Sede central',
             'legend_market' => 'Oficinas globales',
-            'note'          => 'Equipos de fabricación, diseño y atención al cliente en cinco países.',
+            'note'          => 'Equipos de fabricación, diseño y atención al cliente en tres países.',
         ],
         'closing' => [
             'title' => 'Construyamos juntos tu próxima colección.',

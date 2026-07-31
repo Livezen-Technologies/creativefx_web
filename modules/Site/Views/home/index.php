@@ -48,9 +48,9 @@ if (! is_array($regions)) { $regions = ['Sri Lanka', 'South Asia', 'South-East A
 
 // Interactive presence map — normalized coordinates (0..1) computed with the same
 // plate-carrée projection as the land-dot field (scripts/gen-dotmap.mjs), so the
-// markers sit exactly on the map. The five points are Norlanka's real footprint
-// (company profile): Sri Lanka HQ + manufacturing, India manufacturing, UK design
-// studio, USA sales, Hong Kong product development. Labels/roles are localized.
+// markers sit exactly on the map. The three points are Norlanka's real footprint
+// (company profile): Sri Lanka HQ + manufacturing, India manufacturing and the UK
+// design studio. Labels/roles are localized.
 $pointNames = lang('Site.home.footprint.points');
 $pointRoles = lang('Site.home.footprint.roles');
 $mapPoints = [];
@@ -58,8 +58,6 @@ foreach ([
     ['key' => 'hq',       'x' => 0.7218, 'y' => 0.5473, 'hq' => true], // Colombo, Sri Lanka
     ['key' => 'india',    'x' => 0.7167, 'y' => 0.4353],               // Tirupur & Delhi, India
     ['key' => 'uk',       'x' => 0.4969, 'y' => 0.2185],               // Leicester, UK
-    ['key' => 'america',  'x' => 0.2944, 'y' => 0.3043],               // USA
-    ['key' => 'hongkong', 'x' => 0.8171, 'y' => 0.4366],               // Hong Kong
 ] as $p) {
     $mapPoints[] = [
         'key'  => $p['key'],

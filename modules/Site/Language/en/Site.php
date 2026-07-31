@@ -115,25 +115,21 @@ return [
         'footprint' => [
             'eyebrow' => 'Global footprint',
             'title'   => 'Made in Sri Lanka & India. Delivered to the world.',
-            'body'    => 'Manufacturing across Sri Lanka and India, a design studio in the UK and teams in the USA and Hong Kong — design-to-delivery solutions for brands in every major market.',
-            'regions' => ['Sri Lanka', 'India', 'United Kingdom', 'USA', 'Hong Kong', 'Global brands'],
+            'body'    => 'Manufacturing across Sri Lanka and India and a design studio in the UK — design-to-delivery solutions for brands in every major market.',
+            'regions' => ['Sri Lanka', 'India', 'United Kingdom', 'Global brands'],
             'points'  => [
                 'hq'       => 'Sri Lanka',
                 'india'    => 'India',
                 'uk'       => 'United Kingdom',
-                'america'  => 'USA',
-                'hongkong' => 'Hong Kong',
             ],
             'roles' => [
                 'hq'       => 'Headquarters & manufacturing',
                 'india'    => 'Norlanka Manufacturing India — Bangalore',
                 'uk'       => 'Design studio — Leicester',
-                'america'  => 'Sales & marketing',
-                'hongkong' => 'Product development',
             ],
             'legend_hq'     => 'Headquarters',
             'legend_market' => 'Global offices',
-            'note'          => 'Manufacturing, design and customer teams across five countries.',
+            'note'          => 'Manufacturing, design and customer teams across three countries.',
         ],
         'closing' => [
             'title' => 'Let’s build your next collection together.',
