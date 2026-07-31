@@ -841,3 +841,134 @@ html.fp-active body {
   .value-tile__img { transition: none; }
   .flip-card:hover .value-tile__img { transform: none; }
 }
+
+/* -------------------------------------------------------------------------
+   Milestone timeline ("Our journey")
+   Single left rail by default; alternating either side of a centre spine from
+   lg up, which is where there is room for two columns of cards.
+   ------------------------------------------------------------------------- */
+.nl-journey {
+  position: relative;
+  overflow: hidden;
+  background: rgb(var(--bg));
+  padding-block: 5rem;
+}
+/* Soft accent wash so the section reads as its own chapter. */
+.nl-journey::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(60% 40% at 8% 0%, rgb(var(--accent) / 0.10), transparent 62%),
+    radial-gradient(50% 40% at 95% 100%, rgb(var(--accent) / 0.07), transparent 60%);
+  pointer-events: none;
+}
+.nl-journey > * { position: relative; }
+
+.nl-timeline {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Spine: a dim track with an accent fill scaled by scroll progress. */
+.nl-timeline__spine {
+  position: absolute;
+  top: 0.5rem;
+  bottom: 0.5rem;
+  left: 0.5rem;
+  width: 2px;
+  border-radius: 2px;
+  background: rgb(var(--fg) / 0.12);
+}
+.nl-timeline__fill {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  transform-origin: top;
+  background: linear-gradient(to bottom, rgb(var(--accent)), rgb(var(--accent) / 0.35));
+  box-shadow: 0 0 12px rgb(var(--accent) / 0.5);
+}
+
+.nl-timeline__item {
+  position: relative;
+  padding-left: 3rem;
+}
+.nl-timeline__item + .nl-timeline__item { margin-top: 1.5rem; }
+
+.nl-timeline__node {
+  position: absolute;
+  top: 1.75rem;
+  left: 0;
+  width: 1.125rem;
+  height: 1.125rem;
+  border-radius: 999px;
+  background: rgb(var(--accent));
+  border: 3px solid rgb(var(--bg));
+  box-shadow: 0 0 0 1px rgb(var(--accent) / 0.55), 0 0 14px rgb(var(--accent) / 0.55);
+  transition: transform 0.3s ease;
+}
+.nl-timeline__item:hover .nl-timeline__node { transform: scale(1.25); }
+
+.nl-timeline__card {
+  border: 1px solid rgb(var(--fg) / 0.10);
+  border-radius: 1rem;
+  background: rgb(var(--fg) / 0.03);
+  padding: 1.5rem 1.6rem;
+  transition: transform 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
+}
+.nl-timeline__item:hover .nl-timeline__card {
+  transform: translateY(-3px);
+  border-color: rgb(var(--accent) / 0.45);
+  background: rgb(var(--fg) / 0.05);
+}
+
+.nl-timeline__year {
+  display: block;
+  font-family: 'K2D', ui-sans-serif, system-ui, sans-serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: rgb(var(--accent));
+}
+.nl-timeline__title {
+  margin-top: 0.55rem;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: rgb(var(--fg));
+}
+.nl-timeline__text {
+  margin-top: 0.5rem;
+  font-size: 0.925rem;
+  line-height: 1.65;
+  color: rgb(var(--fg) / 0.62);
+}
+
+@media (min-width: 1024px) {
+  .nl-timeline__spine { left: 50%; transform: translateX(-50%); }
+
+  /* Three tracks: card | spine gutter | card. Each row fills one side only. */
+  .nl-timeline__item {
+    display: grid;
+    grid-template-columns: 1fr 4rem 1fr;
+    padding-left: 0;
+  }
+  .nl-timeline__item + .nl-timeline__item { margin-top: 0.5rem; }
+
+  .nl-timeline__node { top: 2rem; left: 50%; transform: translateX(-50%); }
+  .nl-timeline__item:hover .nl-timeline__node { transform: translateX(-50%) scale(1.25); }
+
+  /* Cards alternate sides, but copy stays left-aligned — a right ragged edge
+     on the body text is noticeably harder to read than the symmetry is worth. */
+  .nl-timeline__item:nth-of-type(odd) .nl-timeline__card { grid-column: 1; }
+  .nl-timeline__item:nth-of-type(even) .nl-timeline__card { grid-column: 3; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nl-timeline__node,
+  .nl-timeline__card { transition: none; }
+  .nl-timeline__item:hover .nl-timeline__card { transform: none; }
+}

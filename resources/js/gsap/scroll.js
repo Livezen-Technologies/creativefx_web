@@ -67,6 +67,24 @@ export function initScrollStory() {
     });
   });
 
+  // Milestone timeline: the accent spine fills as the reader moves through it.
+  // CSS leaves the fill at full height, so with reduced motion (which returns
+  // above) the spine simply reads as a solid accent rail.
+  gsap.utils.toArray('[data-timeline]').forEach((list) => {
+    const fill = list.querySelector('[data-timeline-fill]');
+    if (! fill) return;
+
+    gsap.fromTo(
+      fill,
+      { scaleY: 0 },
+      {
+        scaleY: 1,
+        ease: 'none',
+        scrollTrigger: { trigger: list, start: 'top 70%', end: 'bottom 75%', scrub: 0.4 },
+      },
+    );
+  });
+
   const hero = document.querySelector('[data-gsap="hero-out"]');
   if (hero) {
     gsap.to(hero, {
