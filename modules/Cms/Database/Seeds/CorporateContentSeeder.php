@@ -226,7 +226,7 @@ class CorporateContentSeeder extends Seeder
                 ]],
                 ['key' => 'leadership', 'type' => 'leadership', 'blocks' => [
                     ['leadership', [
-                        'title' => $this->loc('Leadership', 'Liderazgo', 'リーダーシップ', '领导团队'),
+                        'title' => $this->loc('Our Leadership', 'Nuestro liderazgo', '経営陣', '我们的领导团队'),
                         'items' => [
                             ['name' => $this->loc('Dr. Deepak Kumar Seth'), 'role' => $this->loc('Group Chairman', 'Presidente del Grupo', 'グループ会長', '集团主席'), 'photo' => '/media/leadership/deepak-kumar-seth.jpg'],
                             ['name' => $this->loc('Pallak Seth'), 'role' => $this->loc('Group Executive Vice Chairman', 'Vicepresidente Ejecutivo del Grupo', 'グループ副会長', '集团执行副主席'), 'photo' => '/media/leadership/pallak-seth.jpg'],
