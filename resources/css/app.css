@@ -737,3 +737,26 @@ html.fp-active body {
   border: 1px solid rgb(var(--fg) / 0.1);
 }
 .article-body strong { color: rgb(var(--fg) / 0.9); }
+
+/* Certification marquee: reuses the brand marquee motion. Items with official
+   artwork use .brand-card (white logo plate); those still awaiting artwork
+   fall back to a wordmark badge that matches the dark surface. */
+.cert-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 11rem;
+  height: 5rem;
+  flex: none;
+  padding: 0 1.25rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgb(var(--fg) / 0.12);
+  background: rgb(var(--fg) / 0.03);
+  color: rgb(var(--fg) / 0.72);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-align: center;
+}
+.cert-marquee .brand-marquee__track { animation-duration: 36s; }
