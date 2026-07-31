@@ -290,7 +290,6 @@ class CorporateContentSeeder extends Seeder
                         'title'   => $this->loc('A portfolio built for global brands', 'Un portafolio para marcas globales', 'グローバルブランドのためのポートフォリオ', '面向全球品牌的产品组合'),
                         'text'    => $this->loc('Our diverse product portfolio spans across multiple apparel and lifestyle segments, crafted to meet the evolving needs of global brands and retailers. Our expertise includes Babywear, Childrenswear, Kids’ Nightwear, Schoolwear, Accessories, True Knits, Hosiery & Toys, Adult Wovens, Adult Jerseywear, Activewear, Maternity Wear, and Adults’ Essentials & Nightwear. With deep category knowledge and a strong manufacturing network, we deliver products that combine quality, innovation, comfort, and value.'),
                     ]],
-                    ['category_grid', []],
                 ]],
                 ['key' => 'design', 'type' => 'content', 'blocks' => [
                     ['richtext', [
