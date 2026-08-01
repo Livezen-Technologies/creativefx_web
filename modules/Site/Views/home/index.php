@@ -215,9 +215,6 @@ $hqPoint = $mapPoints[0];
     </div>
 </section>
 
-<!-- ===================== VALUES / PILLARS (CMS-driven) ===================== -->
-<?= view('Modules\Site\Views\home\sections\pillars', ['section' => $sections['pillars'] ?? null]) ?>
-
 <!-- ===================== SUSTAINABILITY / OUR IMPACT ===================== -->
 <section class="relative overflow-hidden border-y border-white/10 py-24 sm:py-28">
     <div class="hero-aurora absolute inset-0 -z-10 opacity-60"></div>
