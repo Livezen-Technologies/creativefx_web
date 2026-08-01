@@ -191,6 +191,10 @@ return [
     ],
 
     // Catálogo de productos (listado + páginas de detalle).
+    'portfolio' => [
+        'view'    => 'Ver portafolio',
+        'new_tab' => '(se abre en una pestaña nueva)',
+    ],
     'products' => [
         'meta'           => 'Catálogo de productos Norlanka: ropa de bebé, infantil, de dormir, deportiva y básicos, desarrollados del diseño a la entrega.',
         'eyebrow'        => 'Catálogo de productos',

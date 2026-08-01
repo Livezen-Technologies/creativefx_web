@@ -962,3 +962,94 @@ html.fp-active body {
 @media (prefers-reduced-motion: reduce) {
   .nl-profile__media { transition: none; }
 }
+
+/* -------------------------------------------------------------------------
+   Product portfolio grid — circular category discs linking to the off-site
+   look-books.
+   ------------------------------------------------------------------------- */
+.nl-portfolio {
+  background: rgb(var(--bg));
+  padding-block: 5rem;
+}
+.nl-portfolio__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2.25rem 1.5rem;
+  margin: 3.25rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+@media (min-width: 640px)  { .nl-portfolio__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (min-width: 1024px) { .nl-portfolio__grid { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+
+.nl-portfolio__item {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.9rem;
+}
+/* A name that wraps to two lines must not drag its cue out of line with the
+   rest of the row, so the cue is pinned to the bottom of the stretched cell. */
+.nl-portfolio__item .nl-portfolio__cue { margin-top: auto; }
+
+.nl-portfolio__disc {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgb(var(--fg) / 0.04);
+  /* Ring sits outside the circle so it never crops the photo. */
+  box-shadow: 0 0 0 1px rgb(var(--fg) / 0.12);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+.nl-portfolio__disc img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+.nl-portfolio__item:hover .nl-portfolio__disc,
+.nl-portfolio__item:focus-visible .nl-portfolio__disc {
+  box-shadow: 0 0 0 2px rgb(var(--accent)), 0 16px 30px -18px rgb(var(--accent) / 0.8);
+  transform: translateY(-3px);
+}
+.nl-portfolio__item:hover .nl-portfolio__disc img { transform: scale(1.06); }
+
+.nl-portfolio__name {
+  font-family: 'K2D', ui-sans-serif, system-ui, sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: rgb(var(--fg));
+}
+.nl-portfolio__cue {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgb(var(--fg) / 0.4);
+  transition: color 0.3s ease;
+}
+.nl-portfolio__cue svg { width: 0.8rem; height: 0.8rem; }
+.nl-portfolio__item:hover .nl-portfolio__cue,
+.nl-portfolio__item:focus-visible .nl-portfolio__cue { color: rgb(var(--accent)); }
+
+.nl-portfolio__item:focus-visible {
+  outline: 2px solid rgb(var(--accent));
+  outline-offset: 6px;
+  border-radius: 0.75rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nl-portfolio__disc,
+  .nl-portfolio__disc img { transition: none; }
+  .nl-portfolio__item:hover .nl-portfolio__disc { transform: none; }
+  .nl-portfolio__item:hover .nl-portfolio__disc img { transform: none; }
+}

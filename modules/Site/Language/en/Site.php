@@ -195,6 +195,10 @@ return [
     ],
 
     // Product catalog (listing + detail pages).
+    'portfolio' => [
+        'view'    => 'View portfolio',
+        'new_tab' => '(opens in a new tab)',
+    ],
     'products' => [
         'meta'           => 'Norlanka product catalog — babywear, childrenswear, nightwear, activewear and essentials, developed from design to delivery.',
         'eyebrow'        => 'Product Catalog',
