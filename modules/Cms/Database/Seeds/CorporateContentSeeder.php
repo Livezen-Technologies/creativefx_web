@@ -147,15 +147,15 @@ class CorporateContentSeeder extends Seeder
                         'La plataforma donde las marcas de moda globales y la excelencia manufacturera se encuentran',
                         '世界のファッションブランドと製造の卓越性が出会うプラットフォーム',
                         '全球时尚品牌与卓越制造交汇的平台'),
-                    $this->loc('Responsible Sourcing · Design · Innovation'),
-                    // Manufacturing-floor background clip (content sheet, Our Story C2).
-                    '/media/video/our-story-hero.mp4',
-                    '/media/video/our-story-hero-poster.jpg'
+                    $this->loc('Responsible Sourcing · Design · Innovation')
                 ),
                 ['key' => 'profile', 'type' => 'content', 'blocks' => [
                     ['two_column', [
                         'eyebrow' => $this->loc('Who we are', 'Quiénes somos', '私たちについて', '关于我们'),
                         'title'   => $this->loc('Who we are', 'Quiénes somos', '私たちについて', '关于我们'),
+                        // Manufacturing-floor clip (content sheet, Our Story C2).
+                        'video'   => '/media/video/our-story-hero.mp4',
+                        'poster'  => '/media/video/our-story-hero-poster.jpg',
                         'body'    => $this->loc(
                             "Norlanka is a leading end-to-end apparel solutions provider, partnering with over 20 global fashion brands to deliver innovative products from design to delivery. With a network of 25+ manufacturing partners across Sri Lanka and India, we produce over 60 million garments annually across babywear, childrenswear, activewear, casualwear, essentials, and accessories.\n\nSupported by advanced manufacturing capabilities, including a centralized cutting facility, in-house printing and embroidery, and operations in India, we deliver agility, quality, and scale. As part of PDS Limited, a global design-led sourcing and manufacturing platform operating in 25+ countries, we combine local expertise with global reach.",
                             "Norlanka es un proveedor líder de soluciones integrales de confección, que colabora con más de 20 marcas de moda globales para entregar productos innovadores del diseño a la entrega. Con una red de más de 25 socios de fabricación en Sri Lanka e India, producimos más de 60 millones de prendas al año.\n\nComo parte de PDS Limited, una plataforma global de diseño y fabricación presente en más de 25 países, combinamos experiencia local con alcance global."
