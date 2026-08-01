@@ -1,4 +1,8 @@
-<?php helper('norlanka'); ?>
+<?php helper('norlanka');
+// Optional film beneath the heading, filling the column the copy leaves empty.
+$video  = ! empty($content['video']) && is_file(FCPATH . ltrim((string) $content['video'], '/')) ? $content['video'] : null;
+$poster = ! empty($content['poster']) && is_file(FCPATH . ltrim((string) $content['poster'], '/')) ? $content['poster'] : null;
+?>
 <section class="bg-brand-black py-16">
     <div class="container-x grid gap-12 md:grid-cols-2 md:items-start">
         <div data-gsap="reveal">
@@ -6,6 +10,20 @@
                 <p class="mb-3 text-xs font-semibold uppercase tracking-[0.3em] text-brand-red"><?= esc(t_field($content['eyebrow'])) ?></p>
             <?php endif; ?>
             <h2 class="text-2xl font-semibold sm:text-3xl"><?= esc(t_field($content['title'] ?? [])) ?></h2>
+
+            <?php if ($video !== null): ?>
+                <!-- A film the reader chooses to watch, so it keeps its controls
+                     and poster rather than autoplaying beside the body copy. -->
+                <figure class="isolate mt-8 overflow-hidden rounded-2xl border border-white/10">
+                    <video controls preload="metadata" playsinline class="aspect-video w-full bg-black object-cover"
+                           <?= $poster !== null ? 'poster="' . esc($poster, 'attr') . '"' : '' ?>>
+                        <source src="<?= esc($video, 'attr') ?>" type="video/mp4">
+                    </video>
+                    <?php if (! empty($content['video_caption'])): ?>
+                        <figcaption class="px-5 py-4 text-sm text-white/55"><?= esc(t_field($content['video_caption'])) ?></figcaption>
+                    <?php endif; ?>
+                </figure>
+            <?php endif; ?>
         </div>
         <div data-gsap="reveal">
             <?php if (! empty($content['body'])): ?>

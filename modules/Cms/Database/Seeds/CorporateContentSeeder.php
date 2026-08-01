@@ -156,6 +156,11 @@ class CorporateContentSeeder extends Seeder
                     ['two_column', [
                         'eyebrow' => $this->loc('Who we are', 'Quiénes somos', '私たちについて', '关于我们'),
                         'title'   => $this->loc('Who we are', 'Quiénes somos', '私たちについて', '关于我们'),
+                        // Corporate film, moved out of its own section so it sits
+                        // opposite the copy it illustrates.
+                        'video'         => '/media/video/home-hero.mp4',
+                        'poster'        => '/media/video/home-hero-poster.jpg',
+                        'video_caption' => $this->loc('Our corporate film — design, development, sampling and quality assurance in action.'),
                         'body'    => $this->loc(
                             "Norlanka is a leading end-to-end apparel solutions provider, partnering with over 20 global fashion brands to deliver innovative products from design to delivery. With a network of 25+ manufacturing partners across Sri Lanka and India, we produce over 60 million garments annually across babywear, childrenswear, activewear, casualwear, essentials, and accessories.\n\nSupported by advanced manufacturing capabilities, including a centralized cutting facility, in-house printing and embroidery, and operations in India, we deliver agility, quality, and scale. As part of PDS Limited, a global design-led sourcing and manufacturing platform operating in 25+ countries, we combine local expertise with global reach.",
                             "Norlanka es un proveedor líder de soluciones integrales de confección, que colabora con más de 20 marcas de moda globales para entregar productos innovadores del diseño a la entrega. Con una red de más de 25 socios de fabricación en Sri Lanka e India, producimos más de 60 millones de prendas al año.\n\nComo parte de PDS Limited, una plataforma global de diseño y fabricación presente en más de 25 países, combinamos experiencia local con alcance global."
@@ -165,14 +170,6 @@ class CorporateContentSeeder extends Seeder
                             $this->loc('60M+ garments annually · 6 product segments'),
                             $this->loc('Part of PDS Limited — operating in 25+ countries'),
                         ],
-                    ]],
-                ]],
-                ['key' => 'corporate-video', 'type' => 'video', 'blocks' => [
-                    ['video', [
-                        'title'   => $this->loc('Norlanka in motion', 'Norlanka en movimiento', '映像で見るノルランカ', '影像中的诺兰卡'),
-                        'src'     => '/media/video/home-hero.mp4',
-                        'poster'  => '/media/video/home-hero-poster.jpg',
-                        'caption' => $this->loc('Our corporate film — design, development, sampling and quality assurance in action.'),
                     ]],
                 ]],
                 ['key' => 'vision', 'type' => 'statement', 'blocks' => [
