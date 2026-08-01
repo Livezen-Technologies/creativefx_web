@@ -897,3 +897,68 @@ html.fp-active body {
   font-size: 1.4rem;
   line-height: 1.2;
 }
+
+/* -------------------------------------------------------------------------
+   Profile block ("Who we are") — heading + film opposite the copy and the
+   headline facts.
+   ------------------------------------------------------------------------- */
+.nl-profile {
+  background: rgb(var(--bg));
+  padding-block: 5rem;
+}
+
+.nl-profile__media {
+  overflow: hidden;
+  border-radius: 1rem;
+  border: 1px solid rgb(var(--fg) / 0.10);
+  background: rgb(var(--fg) / 0.02);
+  transition: border-color 0.3s ease;
+}
+.nl-profile__media:hover { border-color: rgb(var(--fg) / 0.20); }
+.nl-profile__media figcaption {
+  padding: 0.95rem 1.25rem 1.05rem;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: rgb(var(--fg) / 0.5);
+}
+
+/* Opening paragraph carries the summary, so let it lead. */
+.nl-profile__body > .article-body > p:first-child,
+.nl-profile__body > p:first-child {
+  font-size: 1.075rem;
+  line-height: 1.7;
+  color: rgb(var(--fg) / 0.8);
+}
+.nl-profile__body { color: rgb(var(--fg) / 0.62); }
+
+.nl-profile__facts {
+  margin: 2.25rem 0 0;
+  padding: 0;
+  list-style: none;
+  border: 1px solid rgb(var(--fg) / 0.10);
+  border-radius: 1rem;
+  background: rgb(var(--fg) / 0.02);
+}
+.nl-profile__facts li {
+  position: relative;
+  padding: 1.05rem 1.35rem 1.05rem 2.6rem;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: rgb(var(--fg) / 0.85);
+}
+.nl-profile__facts li + li { border-top: 1px solid rgb(var(--fg) / 0.08); }
+.nl-profile__facts li::before {
+  content: '';
+  position: absolute;
+  top: 1.5rem;
+  left: 1.35rem;
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 999px;
+  background: rgb(var(--accent));
+  box-shadow: 0 0 0 3px rgb(var(--accent) / 0.16);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nl-profile__media { transition: none; }
+}
