@@ -29,10 +29,10 @@ $splitWords = static function (string $text): string {
 
 // Capabilities ("What we do") — Hirdaramani-style services grid (localized).
 $capabilities = [
-    ['title' => lang('Site.home.cap.apparel_t'),  'text' => lang('Site.home.cap.apparel_d'),  'icon' => 'M6 3l-2 4 3 2v12h10V9l3-2-2-4-3 2a4 4 0 01-6 0L6 3z'],
-    ['title' => lang('Site.home.cap.washing_t'),  'text' => lang('Site.home.cap.washing_d'),  'icon' => 'M12 3s6 6.5 6 11a6 6 0 11-12 0c0-4.5 6-11 6-11z'],
-    ['title' => lang('Site.home.cap.printing_t'), 'text' => lang('Site.home.cap.printing_d'), 'icon' => 'M4 20h16M5 16l9-9 3 3-9 9H5v-3zM14 7l3-3 3 3-3 3'],
     ['title' => lang('Site.home.cap.design_t'),   'text' => lang('Site.home.cap.design_d'),   'icon' => 'M12 20h9M3 20l2-6 11-11 4 4L9 18l-6 2zM14 6l4 4'],
+    ['title' => lang('Site.home.cap.mfg_t'),      'text' => lang('Site.home.cap.mfg_d'),      'icon' => 'M2 20a2 2 0 002 2h16a2 2 0 002-2V8l-7 5V8l-7 5V4a2 2 0 00-2-2H4a2 2 0 00-2 2z'],
+    ['title' => lang('Site.home.cap.sourcing_t'), 'text' => lang('Site.home.cap.sourcing_d'), 'icon' => 'M11 20A7 7 0 014 13c0-4 3-8 8-10 0 0 8 3 8 10a7 7 0 01-7 7h-2zM6 21c1-3 3-6 6-8'],
+    ['title' => lang('Site.home.cap.partner_t'),  'text' => lang('Site.home.cap.partner_d'),  'icon' => 'M12 22c5.5 0 10-4.5 10-10S17.5 2 12 2 2 6.5 2 12s4.5 10 10 10zM2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z'],
 ];
 
 // Sustainability pillars — the heart of a responsible-manufacturing story.
