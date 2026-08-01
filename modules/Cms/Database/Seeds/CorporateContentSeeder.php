@@ -236,20 +236,18 @@ class CorporateContentSeeder extends Seeder
                     ['map', [
                         'title' => $this->loc('Global presence', 'Presencia global', 'グローバルな拠点', '全球布局'),
                         'intro' => $this->loc('Head office, factories, manufacturing and design across Sri Lanka, India and the UK.'),
-                        // lat/lon plot each site on the interactive world map.
-                        // Colombo, Trincomalee and Bangalore all fall within ~14px
-                        // of each other at world scale, which merges the dots and
-                        // makes them impossible to hover individually. The two
-                        // non-HQ pins are fanned out along their true compass
-                        // bearing from Colombo (Trincomalee NE, Bangalore NW) so
-                        // every marker clears ~26px — illustrative, not surveyed.
+                        // lat/lon plot each site at its surveyed position. Colombo
+                        // and Trincomalee sit ~6px apart at world scale and so read
+                        // as one dot on Sri Lanka; the region list beside the map is
+                        // what distinguishes them. Moving a pin off its real
+                        // coordinates to separate them is not a trade worth making.
                         'items' => [
                             ['region' => $this->loc('Sri Lanka — Colombo'), 'detail' => $this->loc('Norlanka Head Office'),
                              'lat' => 6.9271, 'lon' => 79.8612, 'hq' => true],
                             ['region' => $this->loc('Sri Lanka — Trincomalee'), 'detail' => $this->loc('Norlanka Factory'),
-                             'lat' => 8.5874, 'lon' => 81.2152, 'nudge_x' => 0.026, 'nudge_y' => -0.040],
+                             'lat' => 8.5874, 'lon' => 81.2152],
                             ['region' => $this->loc('India — Bangalore'), 'detail' => $this->loc('Norlanka Manufacturing India'),
-                             'lat' => 12.9716, 'lon' => 77.5946, 'nudge_x' => -0.026, 'nudge_y' => -0.040],
+                             'lat' => 12.9716, 'lon' => 77.5946],
                             ['region' => $this->loc('UK — Leicester'), 'detail' => $this->loc('Norlanka Design Studio UK'),
                              'lat' => 52.6369, 'lon' => -1.1398],
                         ],

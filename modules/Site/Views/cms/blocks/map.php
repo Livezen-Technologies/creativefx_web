@@ -18,10 +18,8 @@ foreach ($items as $item) {
     $lat = (float) $item['lat'];
     $lon = (float) $item['lon'];
     $points[] = [
-        // nudge_* separates markers that sit within a few pixels of each other
-        // at world scale (e.g. two cities on the same small island).
-        'x'           => ((($lon + 180) / 360) + (float) ($item['nudge_x'] ?? 0)),
-        'y'           => (((83 - $lat) / 139) + (float) ($item['nudge_y'] ?? 0)),
+        'x'           => (($lon + 180) / 360),
+        'y'           => ((83 - $lat) / 139),
         'hq'          => ! empty($item['hq']),
         'name'        => t_field($item['region'] ?? []),
         'role'        => t_field($item['detail'] ?? []),
