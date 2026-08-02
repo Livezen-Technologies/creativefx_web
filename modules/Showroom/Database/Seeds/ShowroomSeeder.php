@@ -48,9 +48,15 @@ class ShowroomSeeder extends Seeder
                         ['/media/showroom/babywear/meadow-romper-front.webp',
                          '/media/showroom/babywear/meadow-romper-side.webp',
                          '/media/showroom/babywear/meadow-romper-back.webp']],
-                    ['Bodysuits', 'Bodies', 'GOTS organic cotton rib'],
-                    ['Baby Sets', 'Conjuntos de bebé', 'Combed cotton jersey'],
-                    ['Sleepwear', 'Pijamas de bebé', 'Bamboo-cotton blend'],
+                    // Models matched to what each one actually depicts: UK138 is a
+                    // teal two-piece, PH2065 a knit-and-shorts outfit, UK136 a
+                    // full-length sleepsuit.
+                    ['Bodysuits', 'Bodies', 'GOTS organic cotton rib', null, null, null,
+                        '/media/models/meadow-uk138-colorway-1.glb'],
+                    ['Baby Sets', 'Conjuntos de bebé', 'Combed cotton jersey', null, null, null,
+                        '/media/models/prless-ph2065-colorway-1.glb'],
+                    ['Sleepwear', 'Pijamas de bebé', 'Bamboo-cotton blend', null, null, null,
+                        '/media/models/meadow-uk136-colorway-1.glb'],
                 ],
             ],
             [
