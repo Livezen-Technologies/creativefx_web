@@ -155,27 +155,6 @@ $c1 = $hex($palette[1] ?? $c0);
                     </template>
                     <div class="mt-3 text-sm leading-relaxed text-white/70" x-html="current.description"></div>
 
-                    <!-- Colours -->
-                    <div class="mt-6">
-                        <h3 class="text-xs font-semibold uppercase tracking-widest text-white/40"><?= esc(lang('Site.showroom.colours')) ?></h3>
-                        <div class="mt-2 flex gap-2">
-                            <template x-for="c in current.gallery" :key="c">
-                                <span class="h-12 w-12 rounded-xl border border-white/10" :style="'background:' + c"></span>
-                            </template>
-                        </div>
-                    </div>
-
-                    <!-- Spec rows -->
-                    <dl class="mt-6 space-y-3 text-sm">
-                        <div class="flex justify-between gap-4 border-b border-white/5 pb-3" x-show="current.fabric">
-                            <dt class="text-white/40"><?= esc(lang('Site.showroom.fabric')) ?></dt>
-                            <dd class="text-right text-white/80" x-text="current.fabric"></dd>
-                        </div>
-                        <div class="flex justify-between gap-4 border-b border-white/5 pb-3" x-show="current.moq">
-                            <dt class="text-white/40"><?= esc(lang('Site.showroom.moq')) ?></dt>
-                            <dd class="text-right text-white/80" x-text="current.moq"></dd>
-                        </div>
-                    </dl>
 
                     <!-- Sizes -->
                     <div class="mt-4" x-show="current.sizes && current.sizes.length">

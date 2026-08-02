@@ -209,14 +209,52 @@ export function initShowroom(container) {
     });
   });
 
+  /**
+   * Pull the camera back far enough that every pedestal is in frame.
+   *
+   * A fixed distance only suits one aspect ratio: a wide container crops the
+   * outer products, a narrow one leaves them adrift. Solve for the distance
+   * each axis needs and take whichever is greater, so the row fits whatever
+   * shape the container happens to be.
+   */
+  const fitCamera = () => {
+    const spots = config.products.map((prod, i) => prod.hotspot || { x: (i - 1) * 3, y: 1.2, z: 0 });
+    if (! spots.length) return;
+
+    const xs = spots.map((h) => Number(h.x) || 0);
+    const zs = spots.map((h) => Number(h.z) || 0);
+    const pad = 1.35;                                     // pedestal radius + garment half-width
+    const halfW = Math.max((Math.max(...xs) - Math.min(...xs)) / 2 + pad, 1);
+    const halfH = 1.7;                                    // floor to garment top, about the orbit target
+
+    const vFov = (camera.fov * Math.PI) / 180;
+    const hFov = 2 * Math.atan(Math.tan(vFov / 2) * camera.aspect);
+    const dist = Math.max(halfH / Math.tan(vFov / 2), halfW / Math.tan(hFov / 2)) * 1.12
+      + Math.max(...zs, 0);
+
+    controls.minDistance = Math.min(4.5, dist * 0.7);
+    controls.maxDistance = Math.max(14, dist * 1.7);
+
+    // Move along the current orbit direction so a resize keeps the angle the
+    // reader chose and only changes how far back the camera sits.
+    const dir = camera.position.clone().sub(controls.target).normalize();
+    camera.position.copy(dir.multiplyScalar(dist).add(controls.target));
+    camera.updateProjectionMatrix();
+    controls.update();
+  };
+
   const onResize = () => {
     const w = container.clientWidth;
     const hgt = container.clientHeight || height;
     camera.aspect = w / hgt;
     camera.updateProjectionMatrix();
     renderer.setSize(w, hgt);
+    fitCamera();
   };
   window.addEventListener('resize', onResize);
+  // Container can settle after layout (fullpage panels, fonts), so re-fit then.
+  new ResizeObserver(onResize).observe(container);
+  fitCamera();
 
   const clock = new THREE.Clock();
   const animate = () => {
