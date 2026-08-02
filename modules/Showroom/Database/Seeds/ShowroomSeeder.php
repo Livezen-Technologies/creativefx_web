@@ -43,7 +43,11 @@ class ShowroomSeeder extends Seeder
                 'sizeset' => 'baby',
                 'products' => [
                     ['Rompers', 'Ranitas', '100% organic cotton interlock', null, null, null,
-                        '/media/models/meadow-p2-ss27-colorway-1.glb'],
+                        '/media/models/meadow-p2-ss27-colorway-1.glb',
+                        // Meadow romper renders, front first as the opening frame.
+                        ['/media/showroom/babywear/meadow-romper-front.webp',
+                         '/media/showroom/babywear/meadow-romper-side.webp',
+                         '/media/showroom/babywear/meadow-romper-back.webp']],
                     ['Bodysuits', 'Bodies', 'GOTS organic cotton rib'],
                     ['Baby Sets', 'Conjuntos de bebé', 'Combed cotton jersey'],
                     ['Sleepwear', 'Pijamas de bebé', 'Bamboo-cotton blend'],
