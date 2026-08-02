@@ -42,7 +42,10 @@ class ShowroomSeeder extends Seeder
                 'features' => ['Floating clouds', 'Moon & stars', 'Wooden toy shelves', 'Soft ambient lighting'],
                 'sizeset' => 'baby',
                 'products' => [
-                    ['Rompers', 'Ranitas', '100% organic cotton interlock', null, null, null,
+                    ['Rompers', 'Ranitas', '100% organic cotton interlock',
+                        'A timeless baby romper in soft cheesecloth gingham, finished with an embroidered '
+                        . 'frill collar for a charming heritage-inspired look.',
+                        null, null,
                         '/media/models/meadow-p2-ss27-colorway-1.glb',
                         // Meadow romper renders, front first as the opening frame.
                         ['/media/showroom/babywear/meadow-romper-front.webp',
@@ -52,17 +55,29 @@ class ShowroomSeeder extends Seeder
                     // Models matched to what each one actually depicts: UK138 is a
                     // teal two-piece, PH2065 a knit-and-shorts outfit, UK136 a
                     // full-length sleepsuit.
-                    ['Bodysuits', 'Bodies', 'GOTS organic cotton rib', null, null, null,
+                    ['Bodysuits', 'Bodies', 'GOTS organic cotton rib',
+                        'Soft TENCEL™ top and pants set featuring a scalloped embroidered collar, an '
+                        . 'authentic soft wash, and elasticated hem bottoms for a comfortable, timeless finish',
+                        null, null,
                         '/media/models/meadow-uk138-colorway-1.glb',
                         ['/media/showroom/babywear/denim-set-uk138-front.webp',
                          '/media/showroom/babywear/denim-set-uk138-side.webp',
                          '/media/showroom/babywear/denim-set-uk138-back.webp']],
-                    ['Baby Sets', 'Conjuntos de bebé', 'Combed cotton jersey', null, null, null,
+                    ['Baby Sets', 'Conjuntos de bebé', 'Combed cotton jersey',
+                        'Two-piece set featuring a soft peached finish brush back sweat top paired with '
+                        . 'textured seersucker crinkle jersey bottoms. The sweatshirt is elevated with a '
+                        . 'branded woven label and a striking combination of flat and puff print on the '
+                        . 'back, adding depth and a modern look. Designed for all-day comfort with a '
+                        . 'contemporary finish, this versatile set is perfect for everyday wear.',
+                        null, null,
                         '/media/models/prless-ph2065-colorway-1.glb',
                         ['/media/showroom/babywear/knit-set-ph2065-front.webp',
                          '/media/showroom/babywear/knit-set-ph2065-side.webp',
                          '/media/showroom/babywear/knit-set-ph2065-back.webp']],
-                    ['Sleepwear', 'Pijamas de bebé', 'Bamboo-cotton blend', null, null, null,
+                    ['Sleepwear', 'Pijamas de bebé', 'Bamboo-cotton blend',
+                        'Soft interlock sleepsuit featuring a contrast neck trim and delicate floral '
+                        . 'embroidery on the front, adding a beautifully elevated touch to this everyday essential',
+                        null, null,
                         '/media/models/meadow-uk136-colorway-1.glb',
                         ['/media/showroom/babywear/sleepsuit-uk136-front.webp',
                          '/media/showroom/babywear/sleepsuit-uk136-side.webp',
