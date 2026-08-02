@@ -137,7 +137,11 @@ export function initShowroom(container) {
         const obj = gltf.scene;
         const box = new THREE.Box3().setFromObject(obj);
         const size = box.getSize(new THREE.Vector3());
-        obj.scale.setScalar(1.7 / Math.max(size.x, size.y, size.z, 0.001));
+        // Every model is normalised to the same longest axis, which can still
+        // leave a bulky garment reading large next to a slim one. `s` trims an
+        // individual piece without disturbing the rest of the row.
+        const fit = 1.7 * (Number(h.s) > 0 ? Number(h.s) : 1);
+        obj.scale.setScalar(fit / Math.max(size.x, size.y, size.z, 0.001));
         box.setFromObject(obj);
         obj.position.sub(box.getCenter(new THREE.Vector3()));
         obj.traverse((child) => { child.userData.productId = prod.id; });

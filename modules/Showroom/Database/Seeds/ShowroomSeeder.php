@@ -47,7 +47,8 @@ class ShowroomSeeder extends Seeder
                         // Meadow romper renders, front first as the opening frame.
                         ['/media/showroom/babywear/meadow-romper-front.webp',
                          '/media/showroom/babywear/meadow-romper-side.webp',
-                         '/media/showroom/babywear/meadow-romper-back.webp']],
+                         '/media/showroom/babywear/meadow-romper-back.webp'],
+                        0.9],
                     // Models matched to what each one actually depicts: UK138 is a
                     // teal two-piece, PH2065 a knit-and-shorts outfit, UK136 a
                     // full-length sleepsuit.
@@ -284,12 +285,13 @@ class ShowroomSeeder extends Seeder
                 $image    = $p[5] ?? null;
                 $model    = $p[6] ?? null;
                 $shots    = $p[7] ?? null;   // drawer photo set
+                $scale    = $p[8] ?? null;   // optional 3D size multiplier
                 $prodTable->insert([
                     'showroom_category_id' => $categoryId,
                     'slug'        => $c['slug'] . '-' . ($i + 1),
                     'name'        => $j(['en' => $pen, 'es' => $pes]),
                     'description' => $j(['en' => $desc]),
-                    'hotspot'     => $j($this->position($i, $n)),
+                    'hotspot'     => $j($this->position($i, $n, $scale)),
                     'gallery'     => $j($swatches),
                     'image'       => $image,
                     'model_path'  => $model,
@@ -309,12 +311,18 @@ class ShowroomSeeder extends Seeder
     }
 
     /** Spread N product pedestals along a gentle front arc for the 3D stage. */
-    private function position(int $i, int $n): array
+    private function position(int $i, int $n, ?float $scale = null): array
     {
         $x = $n > 1 ? -3.6 + (7.2 * $i / ($n - 1)) : 0.0;
         $z = 0.2 + 0.55 * sin($i * 1.1);
 
-        return ['x' => round($x, 2), 'y' => 1.1, 'z' => round($z, 2)];
+        $spot = ['x' => round($x, 2), 'y' => 1.1, 'z' => round($z, 2)];
+        // `s` scales just this product's model on the 3D stage.
+        if ($scale !== null && $scale > 0 && $scale !== 1.0) {
+            $spot['s'] = $scale;
+        }
+
+        return $spot;
     }
 
     /** Two material filter tags per product from a shared pool. */
