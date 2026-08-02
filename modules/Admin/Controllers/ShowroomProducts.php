@@ -26,6 +26,8 @@ class ShowroomProducts extends BaseCrudController
         ['name' => 'gallery', 'label' => 'Gallery', 'type' => 'textarea', 'help' => 'JSON array of hex colours / image URLs'],
         ['name' => 'materials', 'label' => 'Materials', 'type' => 'textarea', 'help' => 'JSON array of materials'],
         ['name' => 'image', 'label' => 'Product photo', 'type' => 'image', 'folder' => 'showroom', 'help' => 'Shown in the 3D room — drop a file or choose from the library'],
+        ['name' => 'images', 'label' => 'Drawer photos', 'type' => 'gallery', 'folder' => 'showroom',
+         'help' => 'Shown in the product drawer — 3-4 works well. Drag to reorder; the first is the opening frame.'],
         ['name' => 'model_path', 'label' => '3D model (GLB/GLTF)', 'help' => 'Path to a .glb/.gltf file (upload via Media) — replaces the photo billboard in the 3D room'],
         ['name' => 'brochure_path', 'label' => 'Brochure path'],
         ['name' => 'sort_order', 'label' => 'Sort order', 'type' => 'number'],

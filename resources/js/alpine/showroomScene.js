@@ -10,6 +10,7 @@ export default function showroomScene() {
     selected: null,
     filter: 'all',
     panelOpen: false,
+    activeImage: 0,
     form: { name: '', email: '', company: '', country: '', phone: '', quantity: '', message: '', website: '' },
     sending: false,
     sent: false,
@@ -28,6 +29,24 @@ export default function showroomScene() {
       return this.products.find((p) => p.id === this.selected) || null;
     },
 
+    /**
+     * Drawer photo set. Falls back to the single billboard shot so a product
+     * with no gallery yet still shows its photo rather than an empty frame.
+     */
+    get images() {
+      const p = this.current;
+      if (! p) return [];
+      const set = (p.images || []).filter(Boolean);
+      if (set.length) return set;
+      return p.image ? [p.image] : [];
+    },
+
+    get shownImage() {
+      const set = this.images;
+      if (! set.length) return '';
+      return set[Math.min(this.activeImage, set.length - 1)];
+    },
+
     inList(p) {
       return this.filter === 'all' || (p.materials || []).includes(this.filter);
     },
@@ -41,6 +60,7 @@ export default function showroomScene() {
     select(id) {
       this.selected = id;
       this.panelOpen = true;
+      this.activeImage = 0;
       this.sent = false;
       this.error = '';
     },

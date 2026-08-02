@@ -262,7 +262,8 @@ class ShowroomSeeder extends Seeder
             foreach ($c['products'] as $i => $p) {
                 [$pen, $pes, $fabric] = $p;
                 // Optional per-product description (index 3), colour swatches
-                // (index 4), photo path (index 5) and 3D model (index 6); otherwise
+                // (index 4), photo path (index 5), 3D model (index 6) and drawer
+                // photo set (index 7); otherwise
                 // fall back to a generic line + the category palette and no photo
                 // (swatch display). A model, where present, supersedes the photo
                 // on the 3D stage.
@@ -272,6 +273,7 @@ class ShowroomSeeder extends Seeder
                 $swatches = $p[4] ?? $c['palette'];
                 $image    = $p[5] ?? null;
                 $model    = $p[6] ?? null;
+                $shots    = $p[7] ?? null;   // drawer photo set
                 $prodTable->insert([
                     'showroom_category_id' => $categoryId,
                     'slug'        => $c['slug'] . '-' . ($i + 1),
@@ -281,6 +283,7 @@ class ShowroomSeeder extends Seeder
                     'gallery'     => $j($swatches),
                     'image'       => $image,
                     'model_path'  => $model,
+                    'images'      => $shots ? $j($shots) : null,
                     'materials'   => $j($this->materials($order + $i)),
                     'fabric'      => $fabric,
                     'moq'         => $moqs[($order + $i) % count($moqs)],

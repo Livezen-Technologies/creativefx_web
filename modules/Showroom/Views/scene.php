@@ -22,6 +22,7 @@ foreach ($category['products'] as $p) {
         'description' => rich_text(json_decode($p['description'] ?? '[]', true) ?: []),
         'gallery'     => json_decode($p['gallery'] ?? '[]', true) ?: [],
         'image'       => $p['image'] ?? '',
+        'images'      => json_decode($p['images'] ?? '[]', true) ?: [],
         'model'       => $p['model_path'] ?? '',
         'materials'   => json_decode($p['materials'] ?? '[]', true) ?: [],
         'sizes'       => json_decode($p['sizes'] ?? '[]', true) ?: [],
@@ -132,9 +133,24 @@ $c1 = $hex($palette[1] ?? $c0);
                         </div>
                         <button @click="close()" class="text-white/50 hover:text-white">✕</button>
                     </div>
-                    <template x-if="current.image">
-                        <div class="mt-5 aspect-[4/5] overflow-hidden rounded-2xl bg-white/5">
-                            <img :src="current.image" :alt="current.name" class="h-full w-full object-cover">
+                    <template x-if="images.length">
+                        <div class="mt-5">
+                            <div class="aspect-[4/5] overflow-hidden rounded-2xl bg-white/5">
+                                <img :src="shownImage" :alt="current.name" class="h-full w-full object-cover">
+                            </div>
+                            <!-- Strip only earns its space once there is a choice to make. -->
+                            <div x-show="images.length > 1" class="nl-shots" role="tablist" :aria-label="current.name">
+                                <template x-for="(shot, i) in images" :key="shot">
+                                    <button type="button" role="tab"
+                                            :aria-selected="activeImage === i ? 'true' : 'false'"
+                                            :class="activeImage === i ? 'is-active' : ''"
+                                            @click="activeImage = i"
+                                            @keydown.arrow-right.prevent="activeImage = (i + 1) % images.length; $el.parentElement.querySelectorAll('button')[activeImage]?.focus()"
+                                            @keydown.arrow-left.prevent="activeImage = (i - 1 + images.length) % images.length; $el.parentElement.querySelectorAll('button')[activeImage]?.focus()">
+                                        <img :src="shot" alt="" loading="lazy">
+                                    </button>
+                                </template>
+                            </div>
                         </div>
                     </template>
                     <div class="mt-3 text-sm leading-relaxed text-white/70" x-html="current.description"></div>

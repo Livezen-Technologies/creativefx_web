@@ -13,6 +13,6 @@ class ShowroomProductModel extends Model
     protected $allowedFields = [
         'showroom_category_id', 'slug', 'name', 'description', 'hotspot',
         'gallery', 'materials', 'fabric', 'moq', 'sizes', 'collection',
-        'image', 'model_path', 'brochure_path', 'sort_order', 'status',
+        'image', 'images', 'model_path', 'brochure_path', 'sort_order', 'status',
     ];
 }
