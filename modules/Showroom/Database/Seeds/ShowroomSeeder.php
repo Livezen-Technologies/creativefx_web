@@ -53,11 +53,16 @@ class ShowroomSeeder extends Seeder
                     // teal two-piece, PH2065 a knit-and-shorts outfit, UK136 a
                     // full-length sleepsuit.
                     ['Bodysuits', 'Bodies', 'GOTS organic cotton rib', null, null, null,
-                        '/media/models/meadow-uk138-colorway-1.glb'],
+                        '/media/models/meadow-uk138-colorway-1.glb',
+                        ['/media/showroom/babywear/denim-set-uk138-front.webp']],
                     ['Baby Sets', 'Conjuntos de bebé', 'Combed cotton jersey', null, null, null,
-                        '/media/models/prless-ph2065-colorway-1.glb'],
+                        '/media/models/prless-ph2065-colorway-1.glb',
+                        ['/media/showroom/babywear/knit-set-ph2065-side.webp']],
                     ['Sleepwear', 'Pijamas de bebé', 'Bamboo-cotton blend', null, null, null,
-                        '/media/models/meadow-uk136-colorway-1.glb'],
+                        '/media/models/meadow-uk136-colorway-1.glb',
+                        ['/media/showroom/babywear/sleepsuit-uk136-front.webp',
+                         '/media/showroom/babywear/sleepsuit-uk136-side.webp',
+                         '/media/showroom/babywear/sleepsuit-uk136-back.webp']],
                 ],
             ],
             [
