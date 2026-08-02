@@ -57,8 +57,43 @@ export default function showroomScene() {
       window.dispatchEvent(new CustomEvent('showroom-filter', { detail: { ids } }));
     },
 
+    /**
+     * Hold the page still while the drawer is open.
+     *
+     * `overflow: hidden` on the body is not enough — iOS Safari scrolls it
+     * anyway. Pinning the body with position:fixed at a negative offset does
+     * hold, at the cost of having to restore the scroll position on release,
+     * since fixing the body otherwise throws the reader back to the top.
+     */
+    lockScroll() {
+      if (this._locked) return;
+      this._scrollY = window.scrollY;
+      const b = document.body;
+      b.style.position = 'fixed';
+      b.style.top = `-${this._scrollY}px`;
+      b.style.left = '0';
+      b.style.right = '0';
+      b.style.width = '100%';
+      this._locked = true;
+    },
+
+    unlockScroll() {
+      if (! this._locked) return;
+      const b = document.body;
+      b.style.position = '';
+      b.style.top = '';
+      b.style.left = '';
+      b.style.right = '';
+      b.style.width = '';
+      this._locked = false;
+      // html has scroll-behavior:smooth, which would glide the page back into
+      // place; jump instead so the release is invisible.
+      window.scrollTo({ top: this._scrollY || 0, behavior: 'instant' });
+    },
+
     select(id) {
       this.selected = id;
+      this.lockScroll();
       this.panelOpen = true;
       this.activeImage = 0;
       this.sent = false;
@@ -67,6 +102,12 @@ export default function showroomScene() {
 
     close() {
       this.panelOpen = false;
+      this.unlockScroll();
+    },
+
+    // Leaving the page with the drawer open must not strand a pinned body.
+    destroy() {
+      this.unlockScroll();
     },
 
     // Quick-action chips pre-fill the inquiry so the lead is captured with intent.

@@ -1092,3 +1092,10 @@ html.fp-active body {
 @media (prefers-reduced-motion: reduce) {
   .nl-shots button { transition: none; }
 }
+
+/* Showroom drawer: keep its scrolling to itself, so reaching either end does
+   not hand the gesture to the page behind it. */
+.nl-drawer {
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}

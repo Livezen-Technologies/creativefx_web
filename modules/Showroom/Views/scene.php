@@ -122,7 +122,7 @@ $c1 = $hex($palette[1] ?? $c0);
     <!-- Product panel -->
     <div x-show="panelOpen" x-cloak class="fixed inset-0 z-[60]" @keydown.window.escape="close()">
         <div class="absolute inset-0 bg-black/70 backdrop-blur-sm" @click="close()"></div>
-        <div class="absolute right-0 top-0 flex h-full w-full max-w-md flex-col overflow-y-auto border-l border-white/10 bg-brand-black p-8"
+        <div class="nl-drawer absolute right-0 top-0 flex h-full w-full max-w-md flex-col overflow-y-auto border-l border-white/10 bg-brand-black p-8"
              x-show="panelOpen" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="translate-x-full" x-transition:enter-end="translate-x-0">
             <template x-if="current">
                 <div>
