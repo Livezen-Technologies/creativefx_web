@@ -1065,6 +1065,7 @@ html.fp-active body {
 }
 .nl-shots::-webkit-scrollbar { display: none; }
 .nl-shots button {
+  position: relative;          /* positioning context for the selection ring */
   flex: 0 0 auto;
   width: 4.4rem;
   aspect-ratio: 4 / 5;
@@ -1077,14 +1078,24 @@ html.fp-active body {
 }
 .nl-shots button img { width: 100%; height: 100%; object-fit: cover; }
 .nl-shots button:hover { opacity: 0.9; }
-.nl-shots button.is-active {
-  opacity: 1;
-  /* A flat 2px of saturated accent read as an error state next to these muted
-     thumbnails. A thinner ring plus a soft halo says "selected" instead. */
-  box-shadow:
-    0 0 0 1.5px rgb(var(--accent) / 0.85),
-    0 4px 14px -6px rgb(var(--accent) / 0.55);
+
+/* Selection ring.
+   An outward box-shadow spread draws its corners at the element's radius PLUS
+   the spread, so the ring bows away from the image and reads as a detached
+   rectangle. Painting it inset on an overlay instead makes it inherit the exact
+   same radius and sit flush against the photo edge. */
+.nl-shots button::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 2px rgb(var(--accent));
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
 }
+.nl-shots button.is-active { opacity: 1; }
+.nl-shots button.is-active::after { opacity: 1; }
 .nl-shots button:focus-visible {
   outline: 2px solid rgb(var(--accent));
   outline-offset: 2px;

@@ -11,10 +11,6 @@ export default function showroomScene() {
     filter: 'all',
     panelOpen: false,
     activeImage: 0,
-    form: { name: '', email: '', company: '', country: '', phone: '', quantity: '', message: '', website: '' },
-    sending: false,
-    sent: false,
-    error: '',
 
     init() {
       try {
@@ -96,8 +92,6 @@ export default function showroomScene() {
       this.lockScroll();
       this.panelOpen = true;
       this.activeImage = 0;
-      this.sent = false;
-      this.error = '';
     },
 
     close() {
@@ -110,56 +104,5 @@ export default function showroomScene() {
       this.unlockScroll();
     },
 
-    // Quick-action chips pre-fill the inquiry so the lead is captured with intent.
-    intent(type) {
-      const name = this.current ? this.current.name : '';
-      const lines = {
-        sample: `I would like to request a sample of: ${name}.`,
-        catalogue: `Please send me the catalogue including: ${name}.`,
-      };
-      this.form.message = lines[type] || this.form.message;
-      const field = document.querySelector('textarea[x-model="form.message"]');
-      if (field) field.focus();
-    },
-
-    mailLink() {
-      const subject = encodeURIComponent(`Inquiry: ${this.current ? this.current.name : 'Norlanka Showroom'}`);
-      const body = encodeURIComponent(this.form.message || '');
-      return `mailto:${this.contact.email || ''}?subject=${subject}&body=${body}`;
-    },
-
-    waLink() {
-      if (!this.contact.whatsapp) return '';
-      const text = encodeURIComponent(
-        `Hi Norlanka, I'm interested in ${this.current ? this.current.name : 'your collections'}.`,
-      );
-      return `https://wa.me/${this.contact.whatsapp}?text=${text}`;
-    },
-
-    async submitInquiry() {
-      this.sending = true;
-      this.error = '';
-      try {
-        const res = await fetch('/api/inquiry', {
-          method: 'POST',
-          headers: { Accept: 'application/json' },
-          body: new URLSearchParams({
-            ...this.form,
-            interest: this.current ? this.current.name : '',
-            locale: document.documentElement.lang,
-          }),
-        });
-        const data = await res.json();
-        this.sending = false;
-        if (res.ok && data.status === 'success') {
-          this.sent = true;
-        } else {
-          this.error = (data.messages && Object.values(data.messages)[0]) || 'Something went wrong.';
-        }
-      } catch (e) {
-        this.sending = false;
-        this.error = 'Network error.';
-      }
-    },
   };
 }
