@@ -257,7 +257,10 @@ class CorporateContentSeeder extends Seeder
                     ['partners', [
                         'title' => $this->loc('Compliance & certifications', 'Cumplimiento y certificaciones', 'コンプライアンスと認証', '合规与认证'),
                         'intro' => $this->loc('Held to the industry\'s highest standards across manufacturing, sampling and supply chain.'),
-                        'items' => ['SEDEX', 'GOTS', 'GRS', 'HIGG', 'ISO 14064-1', 'LEED Gold'],
+                        // Marks resolve to /media/certifications/<slug>.<ext> — see the
+                        // README there. Social/ethical audits first, then product and
+                        // environmental standards.
+                        'items' => ['SMETA', 'BSCI', 'SEDEX', 'OEKO-TEX', 'HIGG', 'GRS', 'GOTS', 'OCS 100', 'ISO 14064-1', 'LEED Gold'],
                     ]],
                 ]],
                 $this->ctaContact(),
