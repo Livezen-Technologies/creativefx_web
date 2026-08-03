@@ -137,7 +137,7 @@ return [
     'showroom' => [
         'lobby_eyebrow' => '虚拟展厅',
         'lobby_title'   => '走进我们的系列',
-        'lobby_intro'   => '在各自的主题空间中探索每个品类——打开任意单品查看面料、起订量、尺码与询盘。',
+        'lobby_intro'   => '探索我们精心策划的系列，为您的下一段产品旅程带来灵感。',
         'enter'         => '进入展厅',
         'search'        => '搜索品类…',
         'saved'         => '已收藏',

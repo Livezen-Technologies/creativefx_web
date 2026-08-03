@@ -141,7 +141,7 @@ return [
     'showroom' => [
         'lobby_eyebrow' => 'Virtual Showroom',
         'lobby_title'   => 'Step inside our collections',
-        'lobby_intro'   => 'Explore each segment in its own themed space — open any piece for fabric, MOQ, sizes and inquiries.',
+        'lobby_intro'   => 'Explore our curated collections, crafted to inspire your next product journey',
         'enter'         => 'Enter showroom',
         'search'        => 'Search categories…',
         'saved'         => 'saved',

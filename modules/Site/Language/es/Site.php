@@ -137,7 +137,7 @@ return [
     'showroom' => [
         'lobby_eyebrow' => 'Showroom Virtual',
         'lobby_title'   => 'Entra en nuestras colecciones',
-        'lobby_intro'   => 'Explora cada segmento en su propio espacio temático: abre cualquier pieza para ver tejido, MOQ, tallas y consultas.',
+        'lobby_intro'   => 'Explora nuestras colecciones seleccionadas, creadas para inspirar tu próximo proyecto de producto',
         'enter'         => 'Entrar al showroom',
         'search'        => 'Buscar categorías…',
         'saved'         => 'guardados',
