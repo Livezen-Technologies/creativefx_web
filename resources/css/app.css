@@ -418,17 +418,6 @@ html.lenis, html.lenis body { height: auto; }
   background: rgb(var(--accent));
   box-shadow: 0 0 0 2px rgb(var(--bg)), 0 0 0 3px rgb(var(--accent) / 0.7);
 }
-.nl-legend-dot {
-  display: inline-block;
-  width: 8px;
-  height: 8px;
-  border-radius: 999px;
-  background: #cf2030;
-}
-.nl-legend-dot--hq {
-  background: rgb(var(--accent));
-  box-shadow: 0 0 0 2px rgb(var(--bg)), 0 0 0 3px rgb(var(--accent) / 0.7);
-}
 
 /* Full-screen section engine (fullpage) ----------------------------------
    Only active once JS adds `.fp-active`; without JS the page scrolls normally. */

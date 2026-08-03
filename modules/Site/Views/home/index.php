@@ -261,7 +261,7 @@ foreach ($mapPoints as $mp) {
          x-data="worldMap(<?= esc(json_encode($mapPoints), 'attr') ?>)" x-init="init()">
     <div class="container-x">
         <div class="grid gap-12 lg:grid-cols-12 lg:items-center">
-            <!-- Left: copy + legend + region list -->
+            <!-- Left: copy + region list -->
             <div class="lg:col-span-4" data-gsap="reveal">
                 <p class="eyebrow"><?= esc(lang('Site.home.footprint.eyebrow')) ?></p>
                 <h2 class="mt-5 text-3xl font-bold sm:text-5xl"><?= esc(lang('Site.home.footprint.title')) ?></h2>
@@ -269,16 +269,7 @@ foreach ($mapPoints as $mp) {
                     <?= esc(lang('Site.home.footprint.body')) ?>
                 </p>
 
-                <div class="mt-7 flex flex-wrap items-center gap-x-6 gap-y-2 text-xs uppercase tracking-widest text-white/55">
-                    <span class="inline-flex items-center gap-2">
-                        <span class="nl-legend-dot nl-legend-dot--hq"></span><?= esc(lang('Site.home.footprint.legend_hq')) ?>
-                    </span>
-                    <span class="inline-flex items-center gap-2">
-                        <span class="nl-legend-dot"></span><?= esc(lang('Site.home.footprint.legend_market')) ?>
-                    </span>
-                </div>
-
-                <ul class="mt-6 flex flex-col gap-1">
+                <ul class="mt-7 flex flex-col gap-1">
                     <?php foreach ($mapPoints as $i => $mp): ?>
                         <li>
                             <button type="button"

@@ -127,8 +127,6 @@ return [
                 'india'    => 'Norlanka Manufacturing India — Bangalore',
                 'uk'       => 'Design studio — Leicester',
             ],
-            'legend_hq'     => 'Headquarters',
-            'legend_market' => 'Global offices',
             'note'          => 'Manufacturing, design and customer teams across three countries.',
         ],
         'closing' => [
