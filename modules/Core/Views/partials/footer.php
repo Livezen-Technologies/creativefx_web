@@ -34,7 +34,7 @@
         <div>
             <h4 class="text-xs font-semibold uppercase tracking-widest text-white/50"><?= esc(lang('Site.footer.connect')) ?></h4>
             <ul class="mt-4 space-y-2 text-sm text-white/70">
-                <li><a href="mailto:<?= esc(setting('email', '', 'contact')) ?>" class="hover:text-white"><?= esc(setting('email', 'hello@norlanka.com', 'contact')) ?></a></li>
+                <li><a href="mailto:<?= esc(setting('email', '', 'contact')) ?>" class="hover:text-white"><?= esc(setting('email', 'info@norlankamfg.com', 'contact')) ?></a></li>
                 <li><a href="<?= esc(setting('linkedin', '#', 'social')) ?>" class="hover:text-white" target="_blank" rel="noopener">LinkedIn</a></li>
                 <li><a href="<?= esc(setting('instagram', '#', 'social')) ?>" class="hover:text-white" target="_blank" rel="noopener">Instagram</a></li>
             </ul>

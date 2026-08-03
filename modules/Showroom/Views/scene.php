@@ -11,7 +11,7 @@ $catName    = t_field($category['name']);
 $themeName  = t_field($category['theme_name'] ?? []) ?: $category['theme'];
 $tagline    = t_field($category['tagline'] ?? []);
 
-$email    = setting('email', 'hello@norlanka.com', 'contact');
+$email    = setting('email', 'info@norlankamfg.com', 'contact');
 $whatsapp = preg_replace('/\D+/', '', (string) setting('whatsapp', '', 'contact'));
 
 $products = [];
