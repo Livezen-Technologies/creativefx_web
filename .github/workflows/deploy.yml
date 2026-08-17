@@ -90,15 +90,27 @@ jobs:
           password: ${{ env.DEPLOY_PASSWORD }}
           key: ${{ env.DEPLOY_SSH_KEY }}
           command_timeout: 30m
+          envs: DEPLOY_PASSWORD
           # github.token clones the (private) repo from the server during the run.
           script: |
             set -e
-            export REPO_URL="https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git"
-            export BRANCH="${{ github.event.inputs.branch }}"
-            export DOMAIN="${{ github.event.inputs.domain }}"
-            export APP_DIR="${{ github.event.inputs.app_dir }}"
-            export DB_NAME="${{ github.event.inputs.db_name }}"
-            export DB_USER="${{ github.event.inputs.db_name }}"
-            export ASSUME_YES=1
-            bash /tmp/norlanka-bootstrap/deploy/setup.sh
-            rm -f /tmp/norlanka-bootstrap/deploy/setup.sh
+            BOOT=/tmp/norlanka-bootstrap/deploy/setup.sh
+            REPO_URL="https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git"
+            BRANCH="${{ github.event.inputs.branch }}"
+            DOMAIN="${{ github.event.inputs.domain }}"
+            APP_DIR="${{ github.event.inputs.app_dir }}"
+            DB_NAME="${{ github.event.inputs.db_name }}"
+            # setup.sh must run as root. Log in as a normal user (ubuntu, debian,
+            # admin…) and it dies on its own id check, so escalate here. Values go
+            # on sudo's command line rather than via -E: preserving the whole
+            # environment needs SETENV, which a default sudoers does not grant.
+            VARS="REPO_URL=$REPO_URL BRANCH=$BRANCH DOMAIN=$DOMAIN APP_DIR=$APP_DIR DB_NAME=$DB_NAME DB_USER=$DB_NAME ASSUME_YES=1"
+            if [ "$(id -u)" -eq 0 ]; then
+              env $VARS bash "$BOOT"
+            elif sudo -n true 2>/dev/null; then
+              sudo $VARS bash "$BOOT"
+            else
+              # sudo wants a password and there is no TTY — feed it on stdin.
+              printf '%s\n' "$DEPLOY_PASSWORD" | sudo -S -p '' $VARS bash "$BOOT"
+            fi
+            rm -f "$BOOT"
