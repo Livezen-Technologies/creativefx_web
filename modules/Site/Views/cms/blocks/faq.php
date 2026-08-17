@@ -64,7 +64,8 @@ $schema = json_encode([
                          away (Safari needs the -webkit- pseudo-element too). -->
                     <summary class="cursor-pointer list-none select-none rounded-2xl px-6 py-5 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-red sm:px-7 [&::-webkit-details-marker]:hidden">
                         <h3 class="flex items-start justify-between gap-4 text-base font-semibold sm:text-lg">
-                            <span><?= esc($faq['question']) ?></span>
+                            <?php // min-w-0 + break-words: a long unbroken question must wrap inside the row, never widen the page. ?>
+                            <span class="min-w-0 break-words"><?= esc($faq['question']) ?></span>
                             <!-- One plus, rotated 45° when open: it reads as a
                                  close cross without a second icon to keep in sync. -->
                             <span class="mt-0.5 inline-flex h-8 w-8 flex-none items-center justify-center rounded-full border border-white/15 text-brand-red transition duration-300 group-hover:border-brand-red/60 group-open:rotate-45 motion-reduce:transition-none" aria-hidden="true">

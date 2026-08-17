@@ -112,7 +112,8 @@ $gridCols = match (count($packages)) {
                             <?php foreach ($package['features'] as $feature): ?>
                                 <li class="flex gap-3">
                                     <svg class="mt-1 h-4 w-4 flex-none text-brand-red" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m20 6-11 11-5-5"/></svg>
-                                    <span><?= esc($feature) ?></span>
+                                    <?php // min-w-0 + break-words: a long unbroken term wraps inside the column, never widens the page. ?>
+                                    <span class="min-w-0 break-words"><?= esc($feature) ?></span>
                                 </li>
                             <?php endforeach; ?>
                         </ul>

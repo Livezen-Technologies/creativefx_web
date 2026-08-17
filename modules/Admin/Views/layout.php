@@ -96,7 +96,7 @@ $renderNav = static function () use ($groups, $active, $navIcon): void {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf" data-name="<?= csrf_token() ?>" content="<?= csrf_hash() ?>">
-    <title><?= esc($title ?? 'Admin') ?> — Norlanka Admin</title>
+    <title><?= esc($title ?? 'Admin') ?> — CreativeFX Admin</title>
     <script>window.ADMIN_BASE = <?= json_encode(site_url('admin')) ?>;</script>
     <?= vite_tags('resources/js/app.js') ?>
     <?= vite_tags('resources/js/admin.js') ?>
@@ -108,7 +108,7 @@ if (localStorage.getItem('admin-theme') === 'light') { document.body.classList.r
     <!-- Sidebar (desktop) -->
     <aside class="hidden w-64 flex-none border-r border-white/10 bg-brand-black lg:flex lg:flex-col">
         <div class="flex h-16 flex-none items-center border-b border-white/10 px-6">
-            <a href="<?= site_url('admin') ?>" class="text-lg font-bold tracking-widest">NOR<span class="text-brand-red">LANKA</span></a>
+            <a href="<?= site_url('admin') ?>" class="text-lg font-bold tracking-widest">CREATIVE<span class="text-brand-red">FX</span></a>
             <span class="ml-2 rounded bg-white/10 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-widest text-white/50">Admin</span>
         </div>
         <nav class="flex-1 overflow-y-auto px-3 py-4"><?php $renderNav(); ?></nav>
@@ -130,7 +130,7 @@ if (localStorage.getItem('admin-theme') === 'light') { document.body.classList.r
         <div class="absolute inset-0 bg-black/70" @click="open = false"></div>
         <aside class="absolute inset-y-0 left-0 flex w-72 flex-col border-r border-white/10 bg-brand-black">
             <div class="flex h-16 flex-none items-center justify-between border-b border-white/10 px-5">
-                <a href="<?= site_url('admin') ?>" class="text-lg font-bold tracking-widest">NOR<span class="text-brand-red">LANKA</span></a>
+                <a href="<?= site_url('admin') ?>" class="text-lg font-bold tracking-widest">CREATIVE<span class="text-brand-red">FX</span></a>
                 <button @click="open = false" class="rounded-lg p-2 text-white/60 hover:bg-white/10" aria-label="Close menu">
                     <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
                 </button>

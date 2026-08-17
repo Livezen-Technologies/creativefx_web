@@ -44,12 +44,14 @@ if ($marks === []) { return; }
 
 /**
  * Both plate classes are sized for the marquee they were written for — fixed
- * rem widths, and two different heights. In a grid cell that fixed width
- * overflows the column on a narrow screen, so force the width fluid and level
- * the two variants to one height. `group` is the hover target that brings the
- * logo back to full colour, so it is only needed while desaturation is on.
+ * rem widths, two different heights and two different corner radii. In a grid
+ * cell that fixed width overflows the column on a narrow screen, so force the
+ * width fluid and level the two variants to one height and to the 1rem radius
+ * every other card in the block set uses. `group` is the hover target that
+ * brings the logo back to full colour, so it is only needed while
+ * desaturation is on.
  */
-$plateBase = '!h-24 !w-full' . ($grayscale ? ' group' : '');
+$plateBase = '!h-24 !w-full !rounded-2xl' . ($grayscale ? ' group' : '');
 
 // Only a plate that actually goes somewhere reacts to pointer and keyboard.
 $plateLink = 'transition hover:border-brand-red/60 focus:outline-none focus-visible:ring-2'
@@ -73,7 +75,7 @@ $logoAttr = $grayscale
         <?php endif; ?>
 
         <!-- One reveal on the grid, not one per plate: a wall is read as a block. -->
-        <ul class="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6" data-gsap="reveal">
+        <ul class="mt-10 grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6" data-gsap="reveal">
             <?php foreach ($marks as $mark):
                 // A mark still awaiting artwork falls back to the certification
                 // wordmark badge — never a broken <img>.

@@ -40,7 +40,7 @@ if ($label === '') { $label = 'Client testimonials'; }
      scanned, and a single wide card gives the quote the room it needs at every
      breakpoint. Auto-advance is a courtesy — it never runs under reduced
      motion, and hover or focus stops it for as long as the visitor is there. -->
-<section class="relative overflow-hidden bg-brand-black py-20"
+<section class="relative overflow-hidden bg-brand-black py-16"
          x-data="{
             i: 0,
             n: <?= $count ?>,
@@ -71,7 +71,7 @@ if ($label === '') { $label = 'Client testimonials'; }
             <p class="mt-3 max-w-2xl text-white/60" data-gsap="reveal"><?= esc(t_field($content['intro'])) ?></p>
         <?php endif; ?>
 
-        <div class="relative mt-10 rounded-3xl focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-red"
+        <div class="relative mt-10 rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-red"
              role="group" aria-label="<?= esc($label, 'attr') ?>"
              <?php if ($multi): ?>
                  aria-roledescription="carousel" tabindex="0"
@@ -155,7 +155,8 @@ if ($label === '') { $label = 'Client testimonials'; }
                 <!-- Controls live outside the live region: their labels change with
                      the slide and would otherwise be announced twice. -->
                 <div class="mt-8 flex flex-wrap items-center justify-between gap-4">
-                    <div class="flex items-center gap-1">
+                    <?php // flex-wrap: a long list of dots must wrap on a narrow screen, never widen the page. ?>
+                    <div class="flex flex-wrap items-center gap-1">
                         <?php for ($k = 0; $k < $count; $k++): ?>
                             <button type="button" class="group rounded-full p-1.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-red"
                                     @click="go(<?= $k ?>)"

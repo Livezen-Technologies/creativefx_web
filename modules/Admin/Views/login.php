@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Norlanka Admin — Sign in</title>
+    <title>CreativeFX Admin — Sign in</title>
     <?= vite_tags('resources/js/app.js') ?>
 </head>
 <body class="on-dark flex min-h-screen items-center justify-center bg-brand-black font-sans text-white antialiased">
@@ -13,7 +13,7 @@
 
     <div class="w-full max-w-sm rounded-2xl border border-white/10 bg-white/[0.03] p-8 backdrop-blur">
         <div class="mb-6 text-center">
-            <span class="text-2xl font-bold tracking-widest">NOR<span class="text-brand-red">LANKA</span></span>
+            <span class="text-2xl font-bold tracking-widest">CREATIVE<span class="text-brand-red">FX</span></span>
             <p class="mt-1 text-xs uppercase tracking-widest text-white/40">Admin sign in</p>
         </div>
 
