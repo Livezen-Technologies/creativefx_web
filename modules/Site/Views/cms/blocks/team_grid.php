@@ -93,8 +93,12 @@ $socialHref = static function ($raw): ?string {
                             </div>
                         <?php endif; ?>
 
+                        <?php // The scrim is anchored to the bottom of the card, so a person with
+                              // no social links would pull their name lower than everyone else's.
+                              // Reserving the row's height keeps the names on one line across the
+                              // grid whether or not someone has links. ?>
                         <?php if ($links !== []): ?>
-                            <ul class="mt-4 flex flex-wrap gap-2">
+                            <ul class="mt-4 flex min-h-9 flex-wrap gap-2">
                                 <?php foreach ($links as $link): ?>
                                     <li>
                                         <a href="<?= esc($link['url'], 'attr') ?>"<?= $link['external'] ? ' target="_blank" rel="noopener noreferrer"' : '' ?>
@@ -106,6 +110,8 @@ $socialHref = static function ($raw): ?string {
                                     </li>
                                 <?php endforeach; ?>
                             </ul>
+                        <?php else: ?>
+                            <div class="mt-4 min-h-9" aria-hidden="true"></div>
                         <?php endif; ?>
                     </div>
                 </article>

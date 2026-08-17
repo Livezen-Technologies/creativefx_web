@@ -64,10 +64,10 @@ $results     = $prose($project['results'] ?? null);
     <section class="relative overflow-hidden">
         <div class="hero-aurora absolute inset-0 -z-20"></div>
         <div class="container-x flex min-h-[32vh] flex-col justify-end pb-10 pt-36">
-            <a href="<?= esc(locale_url('portfolio'), 'attr') ?>" class="mb-5 text-xs font-semibold uppercase tracking-widest text-brand-red hover:underline">← Back to portfolio</a>
+            <a href="<?= esc(locale_url('portfolio')) ?>" class="mb-5 text-xs font-semibold uppercase tracking-widest text-brand-red hover:underline">← Back to portfolio</a>
             <div class="flex flex-wrap items-center gap-2 text-[11px] font-semibold uppercase tracking-widest text-white/50" data-gsap="reveal">
                 <?php if ($catName !== ''): ?>
-                    <a href="<?= esc(locale_url('portfolio') . '?category=' . ($category['slug'] ?? ''), 'attr') ?>" class="text-brand-red hover:underline"><?= esc($catName) ?></a>
+                    <a href="<?= esc(locale_url('portfolio') . '?category=' . ($category['slug'] ?? '')) ?>" class="text-brand-red hover:underline"><?= esc($catName) ?></a>
                 <?php endif; ?>
                 <?php if (! empty($project['year'])): ?>
                     <?php if ($catName !== ''): ?><span aria-hidden="true">·</span><?php endif; ?>
@@ -177,7 +177,7 @@ $results     = $prose($project['results'] ?? null);
                             $rTitle = t_field($r['title'] ?? '');
                             $rCover = ! empty($r['cover_image']) && is_file(FCPATH . ltrim((string) $r['cover_image'], '/'))
                                 ? (string) $r['cover_image'] : null; ?>
-                            <a href="<?= esc(locale_url('portfolio/' . $r['slug']), 'attr') ?>"
+                            <a href="<?= esc(locale_url('portfolio/' . $r['slug'])) ?>"
                                class="group isolate flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] transition hover:border-brand-red/60">
                                 <?php if ($rCover !== null): ?>
                                     <span class="block overflow-hidden">
@@ -206,7 +206,7 @@ $results     = $prose($project['results'] ?? null);
                     <h2 class="text-xl font-bold">Planning something similar?</h2>
                     <p class="mt-1 text-white/60">Send us the brief and the dates. We will scope the crew, the kit and the budget in LKR.</p>
                 </div>
-                <a href="<?= esc(locale_url('quote'), 'attr') ?>" class="btn-brand flex-none">Request a quote</a>
+                <a href="<?= esc(locale_url('quote')) ?>" class="btn-brand flex-none">Request a quote</a>
             </div>
         </div>
     </section>

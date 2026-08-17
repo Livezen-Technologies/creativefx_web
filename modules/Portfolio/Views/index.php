@@ -23,8 +23,23 @@ foreach ($projects as $p) {
 $activeSlug = (string) ($activeCategory['slug'] ?? 'all');
 $hasHero    = ! empty($heroImage) && is_file(FCPATH . ltrim((string) $heroImage, '/'));
 
-// Filter pill URL. 'all' clears the query string entirely.
+// Filter pills. 'all' clears the query string entirely.
 $pillUrl = static fn (string $slug): string => locale_url('portfolio') . ($slug === 'all' ? '' : '?category=' . $slug);
+$pills   = [['all', 'All work']];
+foreach ($categories as $c) {
+    $pills[] = [(string) $c['slug'], $catNames[(int) $c['id']]];
+}
+// The active pill is styled off aria-current, so the no-JS state (rendered by
+// the server) and the Alpine state (bound below) share one source of truth.
+$pillClass = 'rounded-full border border-white/15 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest '
+    . 'text-white/60 transition hover:border-brand-red/50 hover:text-white '
+    . 'aria-[current=page]:border-brand-red aria-[current=page]:bg-brand-red aria-[current=page]:text-white';
+
+// Client, year and the "View project" cue ride in on hover at desktop widths;
+// on touch, where there is no hover, they simply stay put.
+$onHover = 'transition duration-300 md:translate-y-2 md:opacity-0 md:group-hover:translate-y-0 '
+    . 'md:group-hover:opacity-100 md:group-focus-visible:translate-y-0 md:group-focus-visible:opacity-100 '
+    . 'motion-reduce:transition-none motion-reduce:md:translate-y-0';
 ?>
 <?= $this->section('content') ?>
 
@@ -55,7 +70,9 @@ $pillUrl = static fn (string $slug): string => locale_url('portfolio') . ($slug 
 
 <!-- Filter + grid. The pills are ordinary links, so ?category= filtering works
      with JavaScript off (cards outside the filter ship hidden). Alpine then
-     takes over the same state and switches the grid without a reload. -->
+     takes over the same state and switches the grid without a reload, reading
+     each filter URL back off the pill's own href ($el.href) rather than
+     restating it. -->
 <section class="bg-brand-black pb-20"
          x-data="{
              active: '<?= esc($activeSlug, 'attr') ?>',
@@ -66,18 +83,9 @@ $pillUrl = static fn (string $slug): string => locale_url('portfolio') . ($slug 
          }">
     <div class="container-x">
         <nav class="flex flex-wrap gap-2 border-b border-white/10 py-6" aria-label="Filter portfolio by discipline">
-            <?php
-            $pillClass = 'rounded-full border border-white/15 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest '
-                . 'text-white/60 transition hover:border-brand-red/50 hover:text-white '
-                . 'aria-[current=page]:border-brand-red aria-[current=page]:bg-brand-red aria-[current=page]:text-white';
-            $pills = [['all', 'All work']];
-            foreach ($categories as $c) {
-                $pills[] = [(string) $c['slug'], $catNames[(int) $c['id']]];
-            }
-            ?>
-            <?php foreach ($pills as [$slug, $label]): $url = $pillUrl($slug); ?>
-                <a href="<?= esc($url, 'attr') ?>" class="<?= $pillClass ?>"
-                   @click.prevent="select('<?= esc($slug, 'attr') ?>', '<?= esc($url, 'attr') ?>')"
+            <?php foreach ($pills as [$slug, $label]): ?>
+                <a href="<?= esc($pillUrl($slug)) ?>" class="<?= $pillClass ?>"
+                   @click.prevent="select('<?= esc($slug, 'attr') ?>', $el.href)"
                    :aria-current="active === '<?= esc($slug, 'attr') ?>' ? 'page' : false"
                    <?= $slug === $activeSlug ? 'aria-current="page"' : '' ?>><?= esc($label) ?></a>
             <?php endforeach; ?>
@@ -99,13 +107,8 @@ $pillUrl = static fn (string $slug): string => locale_url('portfolio') . ($slug 
                     $cover   = ! empty($p['cover_image']) && is_file(FCPATH . ltrim((string) $p['cover_image'], '/'))
                         ? $p['cover_image'] : null;
                     $visible = $activeSlug === 'all' || $activeSlug === $pSlug;
-                    $meta    = array_filter([$p['client'] ?? null, $p['year'] ?? null]);
-                    // Client/year and the cue ride in on hover at desktop widths;
-                    // on touch, where there is no hover, they simply stay put.
-                    $onHover = 'transition duration-300 md:translate-y-2 md:opacity-0 md:group-hover:translate-y-0 '
-                        . 'md:group-hover:opacity-100 md:group-focus-visible:translate-y-0 md:group-focus-visible:opacity-100 '
-                        . 'motion-reduce:transition-none motion-reduce:md:translate-y-0'; ?>
-                    <a href="<?= esc(locale_url('portfolio/' . $p['slug']), 'attr') ?>"
+                    $meta    = array_filter([$p['client'] ?? null, $p['year'] ?? null]); ?>
+                    <a href="<?= esc(locale_url('portfolio/' . $p['slug'])) ?>"
                        class="group isolate relative mb-6 block break-inside-avoid overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] transition hover:border-brand-red/60 focus-visible:border-brand-red/60"
                        x-show="active === 'all' || active === '<?= esc((string) $pSlug, 'attr') ?>'"
                        <?= $visible ? '' : 'style="display: none"' ?>>
@@ -153,7 +156,7 @@ $pillUrl = static fn (string $slug): string => locale_url('portfolio') . ($slug 
                 <h2 class="text-xl font-bold">Have a project in mind?</h2>
                 <p class="mt-1 text-white/60">Tell us the brief, the deadline and the budget range — we will come back with a plan and a price.</p>
             </div>
-            <a href="<?= esc(locale_url('quote'), 'attr') ?>" class="btn-brand flex-none">Request a quote</a>
+            <a href="<?= esc(locale_url('quote')) ?>" class="btn-brand flex-none">Request a quote</a>
         </div>
     </div>
 </section>

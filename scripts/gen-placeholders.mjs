@@ -153,14 +153,38 @@ PORTFOLIO_GLYPHS.forEach((glyph, i) => {
 for (let i = 1; i <= 6; i++) {
   FILES[`team-${String(i).padStart(2, '0')}.svg`] = { ratio: 'portrait', glyph: 'person', seed: 90 + i * 7, warmth: 0.25 };
 }
-for (let i = 1; i <= 8; i++) {
-  FILES[`client-${String(i).padStart(2, '0')}.svg`] = { ratio: 'square', glyph: 'grid', seed: 110 + i * 4, warmth: 0.2 };
+// Client marks are the one placeholder that is NOT a dark panel: the logo wall
+// sits them on light plates (so real client logos, which are usually dark
+// artwork, stay legible), and a dark panel there just reads as a black box.
+// These are abstract dark marks on transparent, shaped like a logo rather than
+// like a photograph.
+const CLIENT_MARKS = [
+  '<circle cx="60" cy="60" r="26" fill="none" stroke="#2A2A2E" stroke-width="9"/><rect x="56" y="16" width="8" height="88" rx="4" fill="#2A2A2E"/>',
+  '<path d="M22 92 60 24l38 68Z" fill="none" stroke="#2A2A2E" stroke-width="9" stroke-linejoin="round"/>',
+  '<rect x="20" y="20" width="36" height="36" rx="6" fill="#2A2A2E"/><rect x="64" y="20" width="36" height="36" rx="6" fill="#9A9AA2"/><rect x="20" y="64" width="36" height="36" rx="6" fill="#9A9AA2"/><rect x="64" y="64" width="36" height="36" rx="6" fill="#2A2A2E"/>',
+  '<path d="M24 88V32h22a20 20 0 0 1 0 40H32" fill="none" stroke="#2A2A2E" stroke-width="9" stroke-linecap="round"/><circle cx="86" cy="80" r="12" fill="#2A2A2E"/>',
+  '<path d="M20 60h80M60 20v80" stroke="#2A2A2E" stroke-width="9" stroke-linecap="round"/><circle cx="60" cy="60" r="30" fill="none" stroke="#9A9AA2" stroke-width="7"/>',
+  '<path d="M24 84 48 36l24 30 24-18" fill="none" stroke="#2A2A2E" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>',
+  '<rect x="22" y="34" width="76" height="52" rx="10" fill="none" stroke="#2A2A2E" stroke-width="9"/><path d="M40 60h40" stroke="#2A2A2E" stroke-width="9" stroke-linecap="round"/>',
+  '<path d="M60 18 98 40v40L60 102 22 80V40Z" fill="none" stroke="#2A2A2E" stroke-width="9" stroke-linejoin="round"/>',
+];
+
+CLIENT_MARKS.forEach((mark, i) => {
+  FILES[`client-${String(i + 1).padStart(2, '0')}.svg`] = { clientMark: mark };
+});
+
+/** A client logo stand-in: an abstract dark mark on transparent, for light plates. */
+function clientMark(mark) {
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120" role="img" aria-hidden="true">
+  ${mark}
+</svg>
+`;
 }
 
 mkdirSync(OUT, { recursive: true });
 let bytes = 0;
 for (const [name, opts] of Object.entries(FILES)) {
-  const svg = panel(opts);
+  const svg = opts.clientMark ? clientMark(opts.clientMark) : panel(opts);
   writeFileSync(join(OUT, name), svg);
   bytes += svg.length;
 }

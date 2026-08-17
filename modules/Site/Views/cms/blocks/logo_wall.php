@@ -3,10 +3,10 @@
 /**
  * Client / brand logo wall.
  *
- * Supplied logo files are every colour and half of them are drawn in black, so
- * each mark sits on the light plate the certifications strip already uses
- * (.brand-card) instead of straight on the dark ground. Desaturating by default
- * makes a mixed set read as one wall; the colour comes back on hover/focus.
+ * Supplied logo files come in every palette and half of them are drawn in
+ * black, so each mark sits on the same light plate the certifications strip
+ * uses (.brand-card) rather than straight on the dark ground. Desaturating by
+ * default makes a mixed set read as one wall; colour returns on hover/focus.
  */
 $grayscale = ! array_key_exists('grayscale', $content) || ! empty($content['grayscale']);
 
@@ -18,8 +18,8 @@ foreach ($content['items'] as $item) {
         continue;
     }
 
-    // The name is the plate's only label — it is the alt text, the fallback
-    // wordmark and the link's accessible name — so a nameless item is skipped
+    // The name is the plate's only label — alt text, fallback wordmark and the
+    // link's accessible name all come from it — so a nameless item is skipped
     // rather than rendered as an unlabelled logo.
     $name = trim(t_field($item['name'] ?? []));
     if ($name === '') {
@@ -41,6 +41,24 @@ foreach ($content['items'] as $item) {
     ];
 }
 if ($marks === []) { return; }
+
+/**
+ * Both plate classes are sized for the marquee they were written for — fixed
+ * rem widths, and two different heights. In a grid cell that fixed width
+ * overflows the column on a narrow screen, so force the width fluid and level
+ * the two variants to one height. `group` is the hover target that brings the
+ * logo back to full colour, so it is only needed while desaturation is on.
+ */
+$plateBase = '!h-24 !w-full' . ($grayscale ? ' group' : '');
+
+// Only a plate that actually goes somewhere reacts to pointer and keyboard.
+$plateLink = 'transition hover:border-brand-red/60 focus:outline-none focus-visible:ring-2'
+    . ' focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-brand-black';
+
+// Desaturation is a block-wide switch, not a per-item one — resolve it once.
+$logoAttr = $grayscale
+    ? ' class="grayscale transition duration-300 group-hover:grayscale-0 group-focus-visible:grayscale-0"'
+    : '';
 ?>
 <section class="bg-brand-black py-16">
     <div class="container-x">
@@ -57,29 +75,19 @@ if ($marks === []) { return; }
         <!-- One reveal on the grid, not one per plate: a wall is read as a block. -->
         <ul class="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6" data-gsap="reveal">
             <?php foreach ($marks as $mark):
-                // Marks still awaiting artwork reuse the certification wordmark
-                // badge — never a broken <img>.
-                $plate = $mark['logo'] !== null ? 'brand-card' : 'cert-card';
+                // A mark still awaiting artwork falls back to the certification
+                // wordmark badge — never a broken <img>.
+                $plate = ($mark['logo'] !== null ? 'brand-card' : 'cert-card')
+                    . ' ' . $plateBase
+                    . ($mark['href'] !== null ? ' ' . $plateLink : '');
 
-                // Both plate classes are sized for the marquee (fixed rem widths,
-                // and two different heights). In a grid cell that fixed width
-                // overflows the column on a narrow screen, so force the width
-                // fluid and level the two variants to a single height.
-                $plate .= ' group !h-24 !w-full';
-
-                // Only a plate that actually goes somewhere reacts to the pointer.
-                if ($mark['href'] !== null) {
-                    $plate .= ' transition hover:border-brand-red/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2 focus-visible:ring-offset-brand-black';
-                }
-
-                // The plate is one element whether or not it links out, so the
-                // logo treatment never has to be repeated across two branches.
+                // One element carries the plate whether or not the mark links
+                // out, so the logo treatment is not repeated across two branches.
                 $tag = $mark['href'] !== null ? 'a' : 'span'; ?>
                 <li>
                     <<?= $tag ?> class="<?= $plate ?>"<?php if ($mark['href'] !== null): ?> href="<?= esc($mark['href'], 'attr') ?>"<?= $mark['external'] ? ' target="_blank" rel="noopener noreferrer"' : '' ?><?php endif; ?>>
                         <?php if ($mark['logo'] !== null): ?>
-                            <img src="<?= esc($mark['logo'], 'attr') ?>" alt="<?= esc($mark['name'], 'attr') ?>" loading="lazy" width="160" height="64"
-                                 class="<?= $grayscale ? 'grayscale transition duration-300 group-hover:grayscale-0 group-focus-visible:grayscale-0' : '' ?>">
+                            <img src="<?= esc($mark['logo'], 'attr') ?>" alt="<?= esc($mark['name'], 'attr') ?>" loading="lazy" width="160" height="64"<?= $logoAttr ?>>
                         <?php else: ?>
                             <?= esc($mark['name']) ?>
                         <?php endif; ?>
