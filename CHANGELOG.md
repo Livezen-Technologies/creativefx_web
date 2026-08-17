@@ -84,6 +84,48 @@ lives only in the git history.
   `services_grid`, `testimonials` (carousel), `faq` (native `<details>`
   accordion that also emits FAQPage structured data), `packages` (pricing
   cards), `service_features`, `team_grid` and `logo_wall`.
+- **The CreativeFX site content** — every public page is now written and
+  seeded: the home page, Our Story, the Services overview and a full page for
+  each of the six services (`/{locale}/services/<slug>`), plus Contact. Each
+  service page carries an overview, a What We Offer grid, the six production
+  steps, four pricing tiers in LKR, an FAQ and a CTA into the quote flow; Gear
+  Renting also shows the live rental catalogue. Run it with `php spark db:seed
+  "Modules\Core\Database\Seeds\DatabaseSeeder"`, and edit any of it afterwards
+  in Admin → Pages.
+  - The home page is the row with the **empty slug** and it is the only page
+    flagged `is_home`; seeding it clears the flag from Norlanka's old `home`
+    page, which would otherwise still decide what `/en` shows.
+  - Re-seeding **replaces** the sections and blocks of those ten pages, so
+    copy changed in Admin is overwritten. Everything else the seeder touches
+    (services, portfolio, gear) still inserts by slug and is left alone.
+- **Admin screens for the new CreativeFX content** — Services, Portfolio
+  Projects, Portfolio Categories, Gear Items and Gear Categories are now
+  editable in the admin console at `/admin/services`,
+  `/admin/portfolio-projects`, `/admin/portfolio-categories`,
+  `/admin/gear-items` and `/admin/gear-categories`. Projects and gear pick
+  their category from a dropdown of the real categories, rates are left empty
+  for kit that is quoted on request, and a gear item's day-to-day
+  availability (available / booked / in maintenance) is a separate switch from
+  whether it is published at all.
+- **Quote request flow** at `/{locale}/quote` — the site's primary conversion
+  path, and where every "Get a Quote" and "Rent Now" button now lands.
+  - Six steps: service, project details, date and location, budget, contact
+    details, then submit. It is presented as a wizard with a progress bar, but
+    it is one ordinary form: with JavaScript off the whole thing renders as a
+    single page that still submits, and the server validates either way.
+  - A link can pre-fill it — `?service=<slug>` pre-selects the service and
+    `?item=<gear-slug>` opens the brief with the kit named, so a click from a
+    service page or a gear card arrives already answered.
+  - Requests land in **Admin → Quote Requests** as leads with the source
+    `quote-form`, alongside the service, project type, budget band, preferred
+    date, location and the language the request came in on. The visitor gets a
+    reference number (`CFX-00123`) on the confirmation page.
+  - Briefs and reference files (PDF, JPG, PNG or ZIP, up to 8MB) are optional
+    and are stored under `writable/uploads/quotes/` with a random filename —
+    never in a web-served directory, so they are only reachable through the
+    admin panel.
+  - Budget bands are quoted in LKR: under 100,000 / 100,000–300,000 /
+    300,000–750,000 / 750,000–1.5M / over 1.5M / not sure yet.
 - **Search-engine essentials the site never had**: a canonical URL and
   `hreflang` alternates on every page, Organization structured data, a
   generated `/sitemap.xml` that pairs each page's translations, and a
@@ -125,6 +167,11 @@ lives only in the git history.
   (they were still reachable by slug through the CMS catch-all). No module,
   table or row was deleted — restoring a section is uncommenting its route and
   republishing its page.
+- **A lead now moves through a real sales pipeline**: new → contacted →
+  qualified → proposal sent → negotiation → won or lost, replacing
+  new/qualified/converted/lost. Existing leads are not rewritten, so anything
+  still filed as "converted" keeps that wording until someone re-files it by
+  hand on the lead's own screen.
 - **Locales are `en`/`si`/`ta`**, replacing `en`/`ja`/`es`/`zh`. The Japanese,
   Spanish and Chinese language files are still on disk but no longer routable.
   The Translation Manager seeds a locale with no file of its own from English,
@@ -153,6 +200,29 @@ lives only in the git history.
   with many quotes could each widen the page past the screen on a 360px handset
   and leave the whole site scrolling horizontally. Questions and feature lines
   now wrap, and the testimonial dots wrap to a second row.
+- **The statistics on the home page read zero for anyone using reduced
+  motion.** Counters start at 0 in the markup and are counted up by script,
+  and the reduced-motion path skipped the count entirely — so a visitor who
+  asks their system for less animation saw "0+ projects completed". Reduced
+  motion now means the number is not animated, not that it is never shown.
+- **Page heroes with a still image showed a plain gradient.** `pagehero` read
+  its image only as the poster attribute of a background video, so every page
+  without a film — which is all of them today — dropped its hero art. A still
+  now paints behind the title with the same scrims the video branch uses.
+- **The footer newsletter posted into the quote form.** A signup supplies
+  nothing but an email, so it failed the quote validator and bounced the
+  subscriber to the quote page with a list of errors about fields the footer
+  never asked for. Signups now have their own endpoint, land in the lead inbox
+  tagged `newsletter`, and say thank you in place.
+- **The Services menu closed itself when clicked.** Hover opened the panel and
+  the click that followed toggled it shut. Services is now a link to the
+  overview page; hover and keyboard focus open the panel, Escape closes it.
+- **Portrait project covers filled the screen**, pushing the case study below
+  the fold. Cover height is capped.
+- **Client logo placeholders rendered as black squares** on the logo wall's
+  light plates, and **team cards without social links** sat their names lower
+  than the rest of the grid.
+- The offline page still carried the old Norlanka mark and favicon.
 
 ### Security
 

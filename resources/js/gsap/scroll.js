@@ -19,6 +19,17 @@ export function initScrollStory() {
     document.querySelectorAll('[data-gsap="reveal"]').forEach((el) => {
       el.style.opacity = 1;
     });
+
+    // Counters render "0" in the markup and are counted up by the tween below,
+    // so skipping the tween used to leave every statistic reading zero for
+    // anyone who asks for reduced motion. Reduced motion means don't animate
+    // the number, not don't show it.
+    document.querySelectorAll('[data-counter]').forEach((el) => {
+      const target = parseFloat(el.dataset.counter || '0');
+      const decimals = parseInt(el.dataset.decimals || '0', 10);
+      el.textContent = target.toFixed(decimals);
+    });
+
     return;
   }
 

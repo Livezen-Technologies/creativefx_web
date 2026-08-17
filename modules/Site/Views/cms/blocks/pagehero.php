@@ -4,6 +4,10 @@
 $heroVideo  = $content['video'] ?? null;
 $heroPoster = $content['poster'] ?? null;
 $hasVideo   = ! empty($heroVideo) && is_file(FCPATH . ltrim((string) $heroVideo, '/'));
+// A page with no film but a poster still gets a picture behind its title —
+// the poster used to be read only as the video's own poster attribute, so a
+// still-image hero fell all the way through to the plain aurora.
+$hasStill = ! $hasVideo && ! empty($heroPoster) && is_file(FCPATH . ltrim((string) $heroPoster, '/'));
 ?>
 <section class="relative overflow-hidden <?= $hasVideo ? 'hero-full flex items-end' : '' ?>"
          <?= $hasVideo ? 'x-data="{ playing: true, toggleVid() { const v = $refs.bgv; if (!v) return; if (v.paused) { delete v.dataset.userPaused; v.play(); this.playing = true; } else { v.dataset.userPaused = \'1\'; v.pause(); this.playing = false; } } }"' : '' ?>>
@@ -27,6 +31,13 @@ $hasVideo   = ! empty($heroVideo) && is_file(FCPATH . ltrim((string) $heroVideo,
             <svg x-show="playing" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
             <svg x-show="!playing" x-cloak class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5l12 7-12 7z"/></svg>
         </button>
+    <?php elseif ($hasStill): ?>
+        <!-- Still hero: same scrims as the film branch so the copy contrast is
+             identical whichever a page uses. -->
+        <img src="<?= esc($heroPoster, 'attr') ?>" alt="" class="absolute inset-0 -z-30 h-full w-full object-cover">
+        <div class="absolute inset-0 -z-20 bg-gradient-to-r from-brand-black/95 via-brand-black/55 to-brand-black/20"></div>
+        <div class="absolute inset-0 -z-20 bg-gradient-to-t from-brand-black via-brand-black/25 to-transparent"></div>
+        <div class="hero-red-glow absolute inset-0 -z-10"></div>
     <?php else: ?>
         <div class="hero-aurora absolute inset-0 -z-20"></div>
         <div class="absolute inset-0 -z-10 bg-gradient-to-b from-brand-black/40 via-brand-black/10 to-brand-black"></div>

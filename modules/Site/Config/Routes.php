@@ -29,6 +29,9 @@ $routes->get('(:locale)/portfolio/(:segment)', '\Modules\Portfolio\Controllers\P
 $routes->get('(:locale)/quote', '\Modules\Crm\Controllers\Quote::index/$1', ['filter' => 'applocale']);
 $routes->post('(:locale)/quote', '\Modules\Crm\Controllers\Quote::submit/$1', ['filter' => 'applocale']);
 $routes->get('(:locale)/quote/thanks', '\Modules\Crm\Controllers\Quote::thanks/$1', ['filter' => 'applocale']);
+// Footer newsletter signup — its own endpoint so an email-only signup is never
+// put through the quote form's validation.
+$routes->post('(:locale)/subscribe', '\Modules\Crm\Controllers\Quote::subscribe/$1', ['filter' => 'applocale']);
 
 // CMS catch-all: /{locale}/{slug} -> PageController::show($slug)  ($2 = slug)
 // Declared LAST so every reserved prefix above wins.

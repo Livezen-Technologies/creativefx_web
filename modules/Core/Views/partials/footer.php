@@ -42,12 +42,16 @@ $whatsapp = preg_replace('/[^0-9+]/', '', (string) setting('whatsapp', '', 'cont
 
             <!-- Newsletter. Posts to the same lead inbox as everything else, so
                  signups are not stranded in a third-party list. -->
-            <form method="post" action="<?= esc(locale_url('quote')) ?>" class="mt-6 max-w-sm">
+            <form method="post" action="<?= esc(locale_url('subscribe')) ?>" class="mt-6 max-w-sm">
                 <?= csrf_field() ?>
-                <input type="hidden" name="source" value="newsletter">
                 <label for="footer-newsletter" class="block text-xs leading-relaxed text-white/50">
                     <?= esc(lang('Site.footer.newsletter.title')) ?>
                 </label>
+                <?php if ($msg = session('message')): ?>
+                    <p class="mt-2 text-xs text-brand-red" role="status"><?= esc($msg) ?></p>
+                <?php elseif ($err = session('error')): ?>
+                    <p class="mt-2 text-xs text-brand-red" role="alert"><?= esc($err) ?></p>
+                <?php endif; ?>
                 <div class="mt-3 flex gap-2">
                     <input type="email" id="footer-newsletter" name="email" required
                            placeholder="<?= esc(lang('Site.footer.newsletter.email'), 'attr') ?>"
