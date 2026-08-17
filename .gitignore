@@ -106,6 +106,12 @@ yarn-error.log*
 /writable/*.sqlite
 
 #-------------------------
+# Maintenance mode flag — per-server state. Never commit it: a tracked flag
+# would put every checkout offline and fight the admin switch on each pull.
+#-------------------------
+/writable/maintenance.flag
+
+#-------------------------
 # Large binary media (keep small placeholders only; real assets live on S3/CDN)
 #-------------------------
 # Committed placeholders live under public/media and are force-added; anything

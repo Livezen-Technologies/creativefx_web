@@ -67,6 +67,14 @@ $routes->group('admin', ['namespace' => 'Modules\Admin\Controllers'], static fun
         $routes->get('videos', 'Videos::edit');
         $routes->post('videos', 'Videos::update');
 
+        // Maintenance mode (the offline switch). Reachable while the site is
+        // down — the maintenance filter always lets /admin through.
+        $routes->get('maintenance', 'Maintenance::index');
+        $routes->post('maintenance', 'Maintenance::save');
+        $routes->post('maintenance/toggle', 'Maintenance::toggle');
+        $routes->post('maintenance/key', 'Maintenance::rotateKey');
+        $routes->get('maintenance/preview', 'Maintenance::preview');
+
         // Media library.
         $routes->get('media', 'Media::index');
         $routes->get('media/list', 'Media::list');

@@ -15,6 +15,7 @@ use CodeIgniter\Filters\SecureHeaders;
 use Modules\Admin\Filters\AdminAuthFilter;
 use Modules\Auth\Filters\JwtAuthFilter;
 use Modules\Core\Filters\LocaleFilter;
+use Modules\Core\Filters\MaintenanceFilter;
 
 class Filters extends BaseFilters
 {
@@ -45,6 +46,7 @@ class Filters extends BaseFilters
         'jwt'           => JwtAuthFilter::class,
         'applocale'     => LocaleFilter::class,
         'adminauth'     => AdminAuthFilter::class,
+        'maintenance'   => MaintenanceFilter::class,
     ];
 
     /**
@@ -62,8 +64,12 @@ class Filters extends BaseFilters
      */
     public array $required = [
         'before' => [
-            'forcehttps', // Force Global Secure Requests
-            'pagecache',  // Web Page Caching
+            'forcehttps',  // Force Global Secure Requests
+            'maintenance', // Site offline switch — ahead of pagecache so a
+                           // cached page can never be served while the site is
+                           // down, and required (not global) so URLs that match
+                           // no route return the offline page, not a 404.
+            'pagecache',   // Web Page Caching
         ],
         'after' => [
             'pagecache',   // Web Page Caching

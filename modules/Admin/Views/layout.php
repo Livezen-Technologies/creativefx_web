@@ -21,7 +21,11 @@ $icons = [
     'inbox'     => 'M22 12h-6l-2 3h-4l-2-3H2m3.5-7 -3.5 7v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.5-7a2 2 0 0 0-1.8-1H7.3a2 2 0 0 0-1.8 1Z',
     'target'    => 'M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20Zm0-6a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm0-3a1 1 0 1 0 0-2',
     'settings'  => 'M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm7.4-3a7.4 7.4 0 0 0-.1-1l2-1.6-2-3.4-2.4 1a7.5 7.5 0 0 0-1.7-1L14.8 3h-4l-.4 2.6a7.5 7.5 0 0 0-1.7 1l-2.4-1-2 3.4 2 1.6a7.4 7.4 0 0 0 0 2l-2 1.6 2 3.4 2.4-1a7.5 7.5 0 0 0 1.7 1l.4 2.4h4l.4-2.6a7.5 7.5 0 0 0 1.7-1l2.4 1 2-3.4-2-1.6c.07-.3.1-.7.1-1Z',
+    'power'     => 'M12 2v10m6.4-6.4a9 9 0 1 1-12.8 0',
 ];
+
+// The site being dark is worth knowing on every screen, not just its own.
+$siteOffline = \Modules\Core\Libraries\Maintenance::isActive();
 
 $groups = [
     ['Overview', [
@@ -51,6 +55,7 @@ $groups = [
         ['media', 'Media Library', 'admin/media', 'image'],
         ['translations', 'Translations', 'admin/translations', 'globe'],
         ['esg', 'ESG Metrics', 'admin/esg-metrics', 'leaf'],
+        ['maintenance', 'Maintenance Mode', 'admin/maintenance', 'power'],
         ['settings', 'Settings', 'admin/settings', 'settings'],
     ]],
 ];
@@ -142,6 +147,14 @@ if (localStorage.getItem('admin-theme') === 'light') { document.body.classList.r
                 <a href="<?= site_url('admin/logout') ?>" class="rounded-lg border border-white/15 px-3 py-1.5 text-xs text-white/70 transition hover:border-brand-red hover:text-white">Sign out</a>
             </div>
         </header>
+
+        <?php if ($siteOffline): ?>
+            <div class="flex flex-wrap items-center gap-x-3 gap-y-1 border-b border-brand-red/40 bg-brand-red/15 px-4 py-2.5 text-sm text-white sm:px-6">
+                <svg class="h-4 w-4 flex-none text-brand-red" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2v10m6.4-6.4a9 9 0 1 1-12.8 0"/></svg>
+                <span><strong>The public site is offline.</strong> Visitors see the maintenance page.</span>
+                <a href="<?= site_url('admin/maintenance') ?>" class="font-semibold text-brand-red underline underline-offset-2 hover:text-white">Manage</a>
+            </div>
+        <?php endif; ?>
 
         <main class="flex-1 p-4 sm:p-6 lg:p-8">
             <?php if (session('message')): ?>

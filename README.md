@@ -116,6 +116,46 @@ Marketing Manager, Viewer.
 
 ---
 
+## Maintenance mode
+
+Takes the public site off the air — every visitor gets a branded offline page
+and an HTTP 503 (`Retry-After`), which tells search engines to come back later
+instead of dropping the pages. Nginx and the deployment are untouched.
+
+Three ways to flip it, in order of precedence:
+
+| Lever | Where | Works when |
+|-------|-------|-----------|
+| `maintenance.enabled` in `.env` | the server | you want to override everything else |
+| `writable/maintenance.flag` | `touch` / `rm` on the server | the database is down |
+| `maintenance.enabled` setting | **Admin → Maintenance**, `php spark maintenance on\|off\|status` | normally |
+
+The admin switch and the CLI write the flag file *and* the settings row
+together, so the two never disagree.
+
+```bash
+php spark maintenance on --until "18 August, 09:00"   # go dark
+php spark maintenance status                          # who is holding it, preview link
+php spark maintenance off                             # back online
+```
+
+While the site is dark:
+
+- **`/admin` always stays reachable** — it holds the switch, so you can never
+  lock yourself out. A signed-in admin browses the public site as normal.
+- **Preview links** — `?preview=<key>` (generated in Admin → Maintenance)
+  trades the key for a cookie and redirects to a clean URL, so a client or
+  colleague can review the live site for a day without the key trailing
+  through their history.
+- **IP allowlist** — an office or VPN address browses as normal.
+- `/api/*` and AJAX requests get a JSON 503 rather than the page.
+- Copy is editable in the admin; left empty it uses built-in wording that is
+  already written in all four site languages.
+
+The offline page is deliberately standalone — no layout, no Vite bundle, no
+webfonts, nothing to fetch — so it renders even when the asset build or the
+database is what broke.
+
 ## Notes / conventions
 
 - **`php spark migrate --all`** — module migrations only run with `--all`.

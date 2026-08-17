@@ -66,6 +66,27 @@ bash /var/www/norlankamfg/deploy/update.sh
 ```
 Pulls the branch, reinstalls deps, rebuilds assets, runs migrations, reloads php-fpm.
 
+## Taking the site offline
+
+```bash
+cd /var/www/norlankamfg
+sudo -u www-data php spark maintenance on --until "18 August, 09:00"
+sudo -u www-data php spark maintenance status   # confirms, and prints the preview link
+sudo -u www-data php spark maintenance off      # back online
+```
+
+Visitors then get the offline page with a 503; `/admin` stays reachable, so the
+same switch is in **Admin → Maintenance**. If the database is down, the flag
+file still works on its own:
+
+```bash
+sudo -u www-data touch /var/www/norlankamfg/writable/maintenance.flag   # offline
+sudo rm /var/www/norlankamfg/writable/maintenance.flag                  # online
+```
+
+The flag is untracked, so `update.sh` (`git reset --hard`) leaves it alone —
+a deploy run during an outage keeps the site dark until you switch it back.
+
 ## Rollback
 ```bash
 cd /var/www/norlankamfg && git reset --hard <previous_commit> \
