@@ -1,0 +1,73 @@
+# Generic Nginx server block — HTTPS, used when a Let's Encrypt certificate for
+# the domain already exists. deploy/setup.sh fills in {{DOMAIN}}, {{APP_DIR}},
+# {{PHP_FPM_SOCK}} and {{SLUG}}.
+#
+# managed-by: norlanka-deploy
+# Scoped to this domain only — name-based, never a default_server, so other
+# sites on the box keep serving their own certs untouched.
+
+# :80 — redirect to HTTPS. certbot's nginx authenticator injects its own
+# temporary location during renewal, so a plain redirect is safe here.
+server {
+    listen 80;
+    listen [::]:80;
+    server_name {{DOMAIN}};
+
+    location / {
+        return 301 https://$host$request_uri;
+    }
+}
+
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name {{DOMAIN}};
+
+    ssl_certificate     /etc/letsencrypt/live/{{DOMAIN}}/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/{{DOMAIN}}/privkey.pem;
+    # Inlined modern TLS settings (no external include — keeps `nginx -t` from
+    # depending on certbot's options file existing).
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_prefer_server_ciphers off;
+    # Zone name carries the slug: two sites sharing one name would clash.
+    ssl_session_cache shared:ssl_{{SLUG}}:10m;
+    ssl_session_timeout 1d;
+
+    root {{APP_DIR}}/public;
+    index index.php;
+
+    client_max_body_size 64M;
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    location ~ \.php$ {
+        try_files $uri =404;
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+        fastcgi_pass unix:{{PHP_FPM_SOCK}};
+        fastcgi_index index.php;
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param PATH_INFO $fastcgi_path_info;
+        # TLS terminates here, so tell the app the request is secure.
+        fastcgi_param HTTPS on;
+    }
+
+    location /build/ {
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+        try_files $uri =404;
+    }
+
+    location /media/ {
+        expires 30d;
+        try_files $uri =404;
+    }
+
+    location ~ /\.(?!well-known) { deny all; }
+    location ~* /(app|system|writable|vendor|tests|deploy)/ { deny all; }
+
+    access_log /var/log/nginx/{{SLUG}}.access.log;
+    error_log  /var/log/nginx/{{SLUG}}.error.log;
+}

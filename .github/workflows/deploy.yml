@@ -1,4 +1,4 @@
-name: Deploy (norlankamfg.livezencloud.com)
+name: Deploy
 
 # Manual trigger only — never auto-deploys on push.
 # Runs deploy/setup.sh on the server FROM GitHub's runner (which can reach it).
@@ -12,6 +12,10 @@ name: Deploy (norlankamfg.livezencloud.com)
 # Fallback: pass host/user/password as workflow inputs when dispatching (handy
 # for a one-off deploy before secrets are configured). Inputs are recorded in
 # the run, so rotate any password passed this way afterwards.
+#
+# Deploying a SECOND site: set domain, app_dir and db_name together. They
+# default to the norlankamfg production values, and leaving one at its default
+# would point the new site at the existing install's directory or database.
 
 on:
   workflow_dispatch:
@@ -32,9 +36,22 @@ on:
         description: SSH password (overrides DEPLOY_PASSWORD secret; recorded in run — rotate after)
         required: false
         default: ''
+      domain:
+        description: Site domain (vhost server_name and app.baseURL)
+        required: true
+        default: norlankamfg.livezencloud.com
+      app_dir:
+        description: Install directory on the server
+        required: true
+        default: /var/www/norlankamfg
+      db_name:
+        description: MySQL database and user name
+        required: true
+        default: norlanka_prod
 
+# Per-domain, so deploying one site never queues behind another.
 concurrency:
-  group: deploy-norlankamfg
+  group: deploy-${{ github.event.inputs.domain }}
   cancel-in-progress: false
 
 jobs:
@@ -78,6 +95,10 @@ jobs:
             set -e
             export REPO_URL="https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git"
             export BRANCH="${{ github.event.inputs.branch }}"
+            export DOMAIN="${{ github.event.inputs.domain }}"
+            export APP_DIR="${{ github.event.inputs.app_dir }}"
+            export DB_NAME="${{ github.event.inputs.db_name }}"
+            export DB_USER="${{ github.event.inputs.db_name }}"
             export ASSUME_YES=1
             bash /tmp/norlanka-bootstrap/deploy/setup.sh
             rm -f /tmp/norlanka-bootstrap/deploy/setup.sh

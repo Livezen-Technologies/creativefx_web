@@ -20,6 +20,9 @@ DOMAIN="${DOMAIN:-norlankamfg.livezencloud.com}"
 APP_DIR="${APP_DIR:-/var/www/norlankamfg}"
 DB_NAME="${DB_NAME:-norlanka_prod}"
 DB_USER="${DB_USER:-norlanka_prod}"
+# Short name for log files and the TLS session-cache zone. Derived from the
+# domain's first label so two sites on one box never collide.
+SLUG="${SLUG:-$(printf '%s' "${DOMAIN%%.*}" | tr -c 'a-zA-Z0-9' '_')}"
 REPO_URL="${REPO_URL:-}"
 BRANCH="${BRANCH:-claude/awesome-planck-01cc95}"
 WEB_USER="${WEB_USER:-www-data}"
@@ -52,7 +55,11 @@ done
 
 NGINX_AVAIL="/etc/nginx/sites-available/${DOMAIN}.conf"
 NGINX_ENABLED="/etc/nginx/sites-enabled/${DOMAIN}.conf"
-if [ -e "$NGINX_AVAIL" ] && ! grep -q "Norlanka" "$NGINX_AVAIL" 2>/dev/null; then
+# Ours carry either the old "Norlanka" header or the managed-by marker the
+# generic templates stamp in. Anything else on this path belongs to someone
+# else and must not be clobbered.
+if [ -e "$NGINX_AVAIL" ] \
+   && ! grep -qE "Norlanka|managed-by: norlanka-deploy" "$NGINX_AVAIL" 2>/dev/null; then
   die "$NGINX_AVAIL already exists and is not ours — refusing to overwrite."
 fi
 # Warn if another enabled vhost already claims this server_name.
@@ -179,8 +186,24 @@ fi
 
 # ---- Nginx ---------------------------------------------------------------
 note "Installing nginx vhost"
+# A domain may ship its own hand-tuned vhost; otherwise use the generic
+# template. Pick the TLS variant only when a certificate is actually present —
+# naming a missing cert makes `nginx -t` fail, which would abort the deploy
+# after the database has already been created and seeded.
+TLS_NOTE=""
+if [ -f "deploy/nginx/${DOMAIN}.conf" ]; then
+  VHOST_SRC="deploy/nginx/${DOMAIN}.conf"
+elif [ -f "/etc/letsencrypt/live/${DOMAIN}/fullchain.pem" ]; then
+  VHOST_SRC="deploy/nginx/site-tls.conf.template"
+else
+  VHOST_SRC="deploy/nginx/site-http.conf.template"
+  TLS_NOTE="No certificate for ${DOMAIN} yet — serving plain HTTP."
+  warn "$TLS_NOTE Run: certbot --nginx -d ${DOMAIN}   (then re-run this deploy for the TLS vhost)"
+fi
+note "vhost template: $VHOST_SRC"
 sed -e "s|{{APP_DIR}}|$APP_DIR|g" -e "s|{{PHP_FPM_SOCK}}|$PHP_FPM_SOCK|g" \
-    deploy/nginx/${DOMAIN}.conf > "$NGINX_AVAIL"
+    -e "s|{{DOMAIN}}|$DOMAIN|g"   -e "s|{{SLUG}}|$SLUG|g" \
+    "$VHOST_SRC" > "$NGINX_AVAIL"
 ln -sfn "$NGINX_AVAIL" "$NGINX_ENABLED"
 nginx -t
 systemctl reload nginx
