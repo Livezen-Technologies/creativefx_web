@@ -75,7 +75,7 @@
     <div id="preloader" aria-hidden="true">
         <div class="pre-inner">
             <img src="/media/brand/cfx-symbol.svg" alt="" width="60" height="60" class="pre-logo">
-            <span class="pre-word">CreativeFX</span>
+            <span class="pre-word">Creative<span class="text-brand-red">FX</span></span>
             <span class="pre-bar"><span class="pre-bar-fill"></span></span>
         </div>
     </div>

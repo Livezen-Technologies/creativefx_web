@@ -153,6 +153,9 @@ lives only in the git history.
     had to be: white on the old red passed contrast, but white on amber is
     about 1.8:1 and fails outright. Filled buttons now use near-black — 11.6:1
     — and the Impact page's green scope keeps its white.
+  - The wordmark now matches the supplied logo: bold and tightly tracked
+    rather than semibold and widely spaced, white `CREATIVE` against amber
+    `FX`, in the header, footer, preloader, admin console and sign-in screen.
   - The brand mark, favicons, the offline page and the 53 placeholder panels
     were all regenerated in amber. `scripts/gen-brand.mjs` rebuilds every
     favicon size from one source file, so replacing the logo is one command.

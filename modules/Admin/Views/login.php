@@ -13,7 +13,7 @@
 
     <div class="w-full max-w-sm rounded-2xl border border-white/10 bg-white/[0.03] p-8 backdrop-blur">
         <div class="mb-6 text-center">
-            <span class="text-2xl font-bold tracking-widest">CREATIVE<span class="text-brand-red">FX</span></span>
+            <span class="font-display text-2xl font-bold uppercase tracking-[-0.01em]">Creative<span class="text-brand-red">FX</span></span>
             <p class="mt-1 text-xs uppercase tracking-widest text-white/40">Admin sign in</p>
         </div>
 
