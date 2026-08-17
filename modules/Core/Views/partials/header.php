@@ -52,8 +52,8 @@ $whatsapp = preg_replace('/[^0-9+]/', '', (string) setting('whatsapp', '', 'cont
         <!-- Logo: lens/play mark + wordmark (static sizes so it renders correctly
              even before/without JS). -->
         <a href="<?= esc(locale_url('')) ?>" class="flex shrink-0 items-center gap-2.5" aria-label="CreativeFX — home">
-            <img src="/media/brand/cfx-symbol.svg" alt="" width="36" height="36" class="h-9 w-auto">
-            <span class="font-display text-xl font-bold uppercase tracking-[-0.01em] text-white">Creative<span class="text-brand-red">FX</span></span>
+            
+            <img src="/media/brand/cfx-wordmark.svg" alt="CreativeFX" width="177" height="20" class="h-5 w-auto sm:h-6">
         </a>
 
         <!-- Desktop nav -->

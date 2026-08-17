@@ -8,13 +8,16 @@ $hasVideo   = ! empty($heroVideo) && is_file(FCPATH . ltrim((string) $heroVideo,
 // the poster used to be read only as the video's own poster attribute, so a
 // still-image hero fell all the way through to the plain aurora.
 $hasStill = ! $hasVideo && ! empty($heroPoster) && is_file(FCPATH . ltrim((string) $heroPoster, '/'));
+// Full-viewport hero (opt-in per page from the CMS). A film hero is always
+// full-bleed; stills and the aurora become full-bleed when the flag is set.
+$isFull = $hasVideo || ! empty($content['fullscreen']);
 ?>
-<section class="relative overflow-hidden <?= $hasVideo ? 'hero-full flex items-end' : '' ?>"
+<section class="relative overflow-hidden <?= $isFull ? 'hero-full flex items-end' : '' ?>"
          <?= $hasVideo ? 'x-data="{ playing: true, toggleVid() { const v = $refs.bgv; if (!v) return; if (v.paused) { delete v.dataset.userPaused; v.play(); this.playing = true; } else { v.dataset.userPaused = \'1\'; v.pause(); this.playing = false; } } }"' : '' ?>>
     <?php if ($hasVideo): ?>
         <!-- Background film. The poster paints immediately (LCP) while the
              video buffers; heroVideo.js force-plays and loops it. -->
-        <video x-ref="bgv" data-hero-video
+        <video x-ref="bgv" data-hero-video data-gsap="hero-parallax" data-speed="0.18"
                class="absolute inset-0 -z-30 h-full w-full object-cover"
                autoplay muted loop playsinline preload="auto"
                <?= $heroPoster ? 'poster="' . esc($heroPoster, 'attr') . '"' : '' ?>>
@@ -34,16 +37,17 @@ $hasStill = ! $hasVideo && ! empty($heroPoster) && is_file(FCPATH . ltrim((strin
     <?php elseif ($hasStill): ?>
         <!-- Still hero: same scrims as the film branch so the copy contrast is
              identical whichever a page uses. -->
-        <img src="<?= esc($heroPoster, 'attr') ?>" alt="" class="absolute inset-0 -z-30 h-full w-full object-cover">
+        <img src="<?= esc($heroPoster, 'attr') ?>" alt="" data-gsap="hero-parallax" data-speed="0.18"
+             class="absolute inset-0 -z-30 h-full w-full object-cover">
         <div class="absolute inset-0 -z-20 bg-gradient-to-r from-brand-black/95 via-brand-black/55 to-brand-black/20"></div>
         <div class="absolute inset-0 -z-20 bg-gradient-to-t from-brand-black via-brand-black/25 to-transparent"></div>
         <div class="hero-red-glow absolute inset-0 -z-10"></div>
     <?php else: ?>
-        <div class="hero-aurora absolute inset-0 -z-20"></div>
+        <div class="hero-aurora absolute inset-0 -z-20" data-gsap="hero-parallax" data-speed="0.14"></div>
         <div class="absolute inset-0 -z-10 bg-gradient-to-b from-brand-black/40 via-brand-black/10 to-brand-black"></div>
     <?php endif; ?>
 
-    <div class="container-x flex <?= $hasVideo ? 'w-full pb-28' : 'min-h-[60vh] pb-16' ?> flex-col justify-end pt-40">
+    <div class="container-x flex <?= $isFull ? 'w-full pb-28' : 'min-h-[60vh] pb-16' ?> flex-col justify-end pt-40" <?= $isFull ? 'data-gsap="hero-out"' : '' ?>>
         <?php if (! empty($content['eyebrow'])): ?>
             <p class="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-brand-red" data-gsap="reveal"><?= esc(t_field($content['eyebrow'])) ?></p>
         <?php endif; ?>
@@ -53,7 +57,7 @@ $hasStill = ! $hasVideo && ! empty($heroPoster) && is_file(FCPATH . ltrim((strin
         <?php endif; ?>
     </div>
 
-    <?php if ($hasVideo): ?>
+    <?php if ($isFull): ?>
         <!-- A full-viewport hero hides everything below it — give the reader a cue. -->
         <button type="button"
                 onclick="this.closest('section').nextElementSibling?.scrollIntoView({behavior:'smooth',block:'start'})"

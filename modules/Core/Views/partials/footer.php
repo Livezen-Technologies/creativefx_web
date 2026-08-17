@@ -27,8 +27,8 @@ $whatsapp = preg_replace('/[^0-9+]/', '', (string) setting('whatsapp', '', 'cont
     <div class="container-x grid gap-10 py-16 md:grid-cols-2 lg:grid-cols-4">
         <div>
             <a href="<?= esc(locale_url('')) ?>" class="inline-flex items-center gap-2.5" aria-label="CreativeFX — home">
-                <img src="/media/brand/cfx-symbol.svg" alt="" width="40" height="40" class="h-9 w-auto">
-                <span class="font-display text-2xl font-bold uppercase tracking-[-0.01em] text-white">Creative<span class="text-brand-red">FX</span></span>
+                
+                <img src="/media/brand/cfx-wordmark.svg" alt="CreativeFX" width="212" height="24" class="h-6 w-auto">
             </a>
             <p class="mt-4 max-w-sm text-sm leading-relaxed text-white/60">
                 <?php

@@ -1,13 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="CreativeFX">
-  <!-- Lens ring + play triangle: reads as camera and playback at once, and
-       still holds together at 16px in a browser tab. -->
-  <defs>
-    <linearGradient id="cfx-ring" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#FFD24A"/>
-      <stop offset="1" stop-color="#FFC107"/>
-    </linearGradient>
-  </defs>
-  <circle cx="32" cy="32" r="30" fill="url(#cfx-ring)"/>
-  <circle cx="32" cy="32" r="23.5" fill="none" stroke="#171719" stroke-opacity="0.28" stroke-width="2"/>
-  <path d="M26.5 21.5 44 32 26.5 42.5Z" fill="#171719" stroke="#171719" stroke-width="3" stroke-linejoin="round"/>
+  <title>CreativeFX</title>
+  <rect width="64" height="64" rx="14" fill="#111111"/>
+    <path d="M59 639Q59 664 78.5 682.0Q98 700 126 700H579Q579 640 558.5 612.5Q538 585 492 585H193V416H459Q459 356 438.5 328.5Q418 301 372 301H193V86Q193 36 161.0 13.5Q129 -9 59 -9Z" transform="translate(7.00 45.29) scale(0.0380 -0.0380)" fill="#FFC107"/>
+    <path d="M38 25 277 360 49 684Q60 695 79.5 702.0Q99 709 120 709Q149 709 174.0 699.5Q199 690 209 674L343 470L316 431L326 424L494 674Q504 690 529.0 699.5Q554 709 583 709Q604 709 623.5 702.0Q643 695 654 684L426 360L665 25Q634 -9 588 -9Q537 -9 511 28L351 263L192 28Q180 11 159.5 1.0Q139 -9 115 -9Q68 -9 38 25Z" transform="translate(30.31 45.29) scale(0.0380 -0.0380)" fill="#FFC107"/>
 </svg>

@@ -88,5 +88,8 @@
 
     <?= $this->include('Modules\Core\Views\partials\footer', ['pageDark' => $pageDark ?? false]) ?>
     <?= $this->renderSection('scripts') ?>
+
+    <!-- Worksuite chat widget -->
+    <script src="https://app.worksuite.lk/widget.js" data-widget-id="vO0ZItt3PpWMe_q3ASn9Gpxr" defer></script>
 </body>
 </html>

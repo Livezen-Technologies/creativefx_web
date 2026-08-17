@@ -10,6 +10,7 @@ const prefersReducedMotion = () =>
  * Wire scroll-driven storytelling. Markup hooks:
  *   [data-gsap="reveal"]   — fade/slide up on enter
  *   [data-gsap="parallax"] — gentle parallax on the element's [data-speed]
+ *   [data-gsap="hero-parallax"] — backdrop parallax anchored to the hero section
  *   [data-counter]         — count up to data-counter when scrolled into view
  *   [data-gsap="hero-out"] — dim/scale the hero as it scrolls away
  */
@@ -62,6 +63,22 @@ export function initScrollStory() {
       yPercent: -speed * 100,
       ease: 'none',
       scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true },
+    });
+  });
+
+  // Hero backdrop parallax. Anchored to the hero SECTION, not the element:
+  // the hero sits at the top of the document, so the generic handler's
+  // 'top bottom' start line is already behind us on load and the backdrop
+  // would begin pre-offset. Scaling up first keeps the drift from exposing
+  // an edge as the layer travels.
+  gsap.utils.toArray('[data-gsap="hero-parallax"]').forEach((el) => {
+    const speed = parseFloat(el.dataset.speed || '0.18');
+    const section = el.closest('section') || el.parentElement;
+    gsap.set(el, { scale: 1 + speed, transformOrigin: '50% 50%' });
+    gsap.to(el, {
+      yPercent: speed * 100,
+      ease: 'none',
+      scrollTrigger: { trigger: section, start: 'top top', end: 'bottom top', scrub: true },
     });
   });
 
