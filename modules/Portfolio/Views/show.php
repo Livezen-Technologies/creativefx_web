@@ -97,8 +97,12 @@ $results     = $prose($project['results'] ?? null);
                             loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; picture-in-picture" allowfullscreen></iframe>
                 </figure>
             <?php elseif ($cover !== null): ?>
-                <figure class="isolate overflow-hidden rounded-3xl border border-white/10" data-gsap="reveal">
-                    <img src="<?= esc($cover, 'attr') ?>" alt="<?= esc($pTitle, 'attr') ?>" class="w-full object-cover">
+                <?php // Height is capped rather than left to the file's own ratio: a
+                      // portrait cover at full width fills more than a screen and
+                      // pushes the whole case study below the fold. ?>
+                <figure class="isolate max-h-[70vh] overflow-hidden rounded-3xl border border-white/10" data-gsap="reveal">
+                    <img src="<?= esc($cover, 'attr') ?>" alt="<?= esc($pTitle, 'attr') ?>"
+                         class="max-h-[70vh] w-full object-cover">
                 </figure>
             <?php endif; ?>
 
