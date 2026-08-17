@@ -122,7 +122,10 @@ $gridCols = match (count($packages)) {
                     <?php if ($package['href'] !== null): ?>
                         <div class="mt-auto pt-7">
                             <?php if ($package['cta'] !== ''): ?>
-                                <a href="<?= esc($package['href'], 'attr') ?>" class="<?= $package['featured'] ? 'btn-brand' : 'btn-ghost' ?> w-full">
+                                <?php // px-4 overrides the button component's px-7: four tiers across
+                                      // a row leave each card narrow, and the default padding wraps
+                                      // a label like "Request a Quote" onto two ragged lines. ?>
+                                <a href="<?= esc($package['href'], 'attr') ?>" class="<?= $package['featured'] ? 'btn-brand' : 'btn-ghost' ?> w-full px-4 text-center">
                                     <?= esc($package['cta']) ?>
                                     <!-- "Get started" four times over is ambiguous out of
                                          context — name the tier for screen readers. -->
