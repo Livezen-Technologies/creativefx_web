@@ -9,6 +9,15 @@ import '@fontsource/montserrat/latin-400.css';
 import '@fontsource/montserrat/latin-500.css';
 import '@fontsource/montserrat/latin-600.css';
 import '@fontsource/montserrat/latin-700.css';
+// K2D and Montserrat carry no Sinhala or Tamil glyphs, so the si/ta locales
+// would fall back to whatever the OS happens to have. Noto covers both and
+// only downloads when the browser actually needs those scripts.
+import '@fontsource/noto-sans-sinhala/sinhala-400.css';
+import '@fontsource/noto-sans-sinhala/sinhala-600.css';
+import '@fontsource/noto-sans-sinhala/sinhala-700.css';
+import '@fontsource/noto-sans-tamil/tamil-400.css';
+import '@fontsource/noto-sans-tamil/tamil-600.css';
+import '@fontsource/noto-sans-tamil/tamil-700.css';
 
 import '../css/app.css';
 

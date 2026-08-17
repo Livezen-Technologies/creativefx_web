@@ -58,6 +58,9 @@ class Autoload extends AutoloadConfig
         'Modules\Careers'     => ROOTPATH . 'modules/Careers',
         'Modules\News'        => ROOTPATH . 'modules/News',
         'Modules\Crm'         => ROOTPATH . 'modules/Crm',
+        'Modules\Services'    => ROOTPATH . 'modules/Services',
+        'Modules\Portfolio'   => ROOTPATH . 'modules/Portfolio',
+        'Modules\Gear'        => ROOTPATH . 'modules/Gear',
         'Modules\Analytics'   => ROOTPATH . 'modules/Analytics',
         'Modules\Admin'       => ROOTPATH . 'modules/Admin',
     ];

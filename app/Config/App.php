@@ -120,7 +120,13 @@ class App extends BaseConfig
      *
      * @var list<string>
      */
-    public array $supportedLocales = ['en', 'ja', 'es', 'zh'];
+    /*
+     * English, Sinhala and Tamil — the languages CreativeFX's Sri Lankan market
+     * actually reads. (The site shipped ja/es/zh when it served an apparel
+     * exporter; those language files are still on disk but are no longer
+     * routable, since (:locale) compiles from this list.)
+     */
+    public array $supportedLocales = ['en', 'si', 'ta'];
 
     /**
      * --------------------------------------------------------------------------

@@ -53,17 +53,13 @@ class Maintenance
             'We will be back shortly',
             'Our site is briefly offline while we make some improvements. Thank you for your patience — please check back in a little while.',
         ],
-        'ja' => [
-            'まもなく再開いたします',
-            'ただいまサイトのメンテナンスを行っております。ご不便をおかけしますが、しばらく経ってから再度アクセスしてください。',
+        'si' => [
+            'අපි ඉක්මනින්ම නැවත එමු',
+            'අපගේ වෙබ් අඩවිය වැඩිදියුණු කිරීම් සිදු කරන අතරතුර තාවකාලිකව අක්‍රිය කර ඇත. ඔබගේ ඉවසීමට ස්තූතියි — කරුණාකර මොහොතකින් නැවත පිවිසෙන්න.',
         ],
-        'es' => [
-            'Volvemos enseguida',
-            'Nuestro sitio está fuera de línea temporalmente mientras hacemos algunas mejoras. Gracias por su paciencia: vuelva a intentarlo dentro de un rato.',
-        ],
-        'zh' => [
-            '我们很快回来',
-            '网站正在进行维护升级，暂时无法访问。感谢您的耐心等待，请稍后再试。',
+        'ta' => [
+            'விரைவில் திரும்பி வருகிறோம்',
+            'மேம்பாடுகளைச் செய்யும் வரை எங்கள் இணையதளம் தற்காலிகமாக இயங்கவில்லை. உங்கள் பொறுமைக்கு நன்றி — சிறிது நேரம் கழித்து மீண்டும் முயற்சிக்கவும்.',
         ],
     ];
 

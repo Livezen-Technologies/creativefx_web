@@ -18,13 +18,12 @@
 // Labels for the two optional lines, so the page stays in one language.
 $labels = [
     'en' => ['Expected back', 'Need us sooner?', 'Language'],
-    'ja' => ['再開予定', 'お急ぎの方は', '言語'],
-    'es' => ['Volvemos', '¿Necesita contactarnos?', 'Idioma'],
-    'zh' => ['预计恢复时间', '需要尽快联系？', '语言'],
+    'si' => ['නැවත එන වේලාව', 'ඉක්මනින් අවශ්‍යද?', 'භාෂාව'],
+    'ta' => ['திரும்பும் நேரம்', 'உடனடியாகத் தேவையா?', 'மொழி'],
 ];
 [$untilLabel, $contactLabel, $langLabel] = $labels[$locale] ?? $labels['en'];
 
-$names = ['en' => 'English', 'ja' => '日本語', 'es' => 'Español', 'zh' => '中文'];
+$names = ['en' => 'English', 'si' => 'සිංහල', 'ta' => 'தமிழ்'];
 
 // Shown only if the deployment actually ships it.
 $symbol = is_file(FCPATH . 'media/brand/nl-symbol.png') ? '/media/brand/nl-symbol.png' : null;
@@ -66,7 +65,10 @@ $symbol = is_file(FCPATH . 'media/brand/nl-symbol.png') ? '/media/brand/nl-symbo
         background-repeat: no-repeat;
         background-attachment: fixed;
         color: var(--ink);
-        font-family: "K2D", "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans JP", "Noto Sans SC", sans-serif;
+        /* System stack only — this page never fetches a webfont. The Noto
+           entries let a Sinhala or Tamil outage message render with real
+           glyphs wherever the OS ships them, instead of tofu boxes. */
+        font-family: "K2D", "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans Sinhala", "Noto Sans Tamil", sans-serif;
         -webkit-font-smoothing: antialiased;
         text-rendering: optimizeLegibility;
     }

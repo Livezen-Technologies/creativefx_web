@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="1000" height="1000" role="img" aria-hidden="true">
+  <defs>
+    <linearGradient id="base-square-video-90" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#171516"/>
+      <stop offset="0.55" stop-color="#0C0B0C"/>
+      <stop offset="1" stop-color="#050505"/>
+    </linearGradient>
+    <radialGradient id="glow-square-video-90" cx="0.660" cy="0.320" r="0.78">
+      <stop offset="0" stop-color="#CF2030" stop-opacity="0.304"/>
+      <stop offset="0.55" stop-color="#CF2030" stop-opacity="0.085"/>
+      <stop offset="1" stop-color="#CF2030" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="rule-square-video-90" width="34" height="34" patternUnits="userSpaceOnUse" patternTransform="rotate(4)">
+      <line x1="0" y1="0" x2="0" y2="34" stroke="#ffffff" stroke-opacity="0.05" stroke-width="1"/>
+    </pattern>
+    <linearGradient id="fade-square-video-90" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0.45"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1000" height="1000" fill="url(#base-square-video-90)"/>
+  <rect width="1000" height="1000" fill="url(#glow-square-video-90)"/>
+  <rect width="1000" height="1000" fill="url(#rule-square-video-90)"/>
+  <g transform="translate(290.0 290.0) scale(17.5000)"
+     fill="none" stroke="#ffffff" stroke-opacity="0.16" stroke-width="1.1"
+     stroke-linecap="round" stroke-linejoin="round">
+    <path d="M23 7l-7 5 7 5V7Z M14 5H3a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2Z"/>
+  </g>
+  <rect width="1000" height="1000" fill="url(#fade-square-video-90)"/>
+</svg>

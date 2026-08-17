@@ -11,15 +11,22 @@ class SettingSeeder extends Seeder
         $now = date('Y-m-d H:i:s');
 
         $settings = [
-            ['general', 'site_name', 'Norlanka', 'string', 1],
-            ['general', 'tagline', 'Responsible Sourcing · Design · Innovation', 'string', 1],
+            ['general', 'site_name', 'CreativeFX', 'string', 1],
+            ['general', 'tagline', 'Production · Advertising · Digital Growth', 'string', 1],
             ['brand', 'color_primary', '#CF2030', 'string', 1],
             ['brand', 'color_secondary', '#000000', 'string', 1],
-            ['contact', 'email', 'info@norlankamfg.com', 'string', 1],
-            ['contact', 'phone', '+94 11 300 3010', 'string', 1],
-            ['contact', 'whatsapp', '+94770000000', 'string', 1],
-            ['social', 'linkedin', 'https://www.linkedin.com/company/norlanka', 'string', 1],
-            ['social', 'instagram', 'https://instagram.com/norlanka', 'string', 1],
+            // Contact and social values ship empty: the header and footer hide
+            // each link until it is filled in, so a blank is a working default
+            // rather than a wrong number on a live site.
+            ['contact', 'email', 'hello@creativefx.lk', 'string', 1],
+            ['contact', 'phone', '', 'string', 1],
+            ['contact', 'whatsapp', '', 'string', 1],
+            ['contact', 'address', '', 'string', 1],
+            ['social', 'facebook', '', 'string', 1],
+            ['social', 'instagram', '', 'string', 1],
+            ['social', 'youtube', '', 'string', 1],
+            ['social', 'tiktok', '', 'string', 1],
+            ['social', 'linkedin', '', 'string', 1],
             ['analytics', 'ga4_measurement_id', '', 'string', 0],
 
             // Maintenance mode. A fresh install comes up live; everything else

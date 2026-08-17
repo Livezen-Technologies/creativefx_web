@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900" role="img" aria-hidden="true">
+  <defs>
+    <linearGradient id="base-card-megaphone-15" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#171516"/>
+      <stop offset="0.55" stop-color="#0C0B0C"/>
+      <stop offset="1" stop-color="#050505"/>
+    </linearGradient>
+    <radialGradient id="glow-card-megaphone-15" cx="0.810" cy="0.570" r="0.78">
+      <stop offset="0" stop-color="#CF2030" stop-opacity="0.458"/>
+      <stop offset="0.55" stop-color="#CF2030" stop-opacity="0.128"/>
+      <stop offset="1" stop-color="#CF2030" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="rule-card-megaphone-15" width="34" height="34" patternUnits="userSpaceOnUse" patternTransform="rotate(-3)">
+      <line x1="0" y1="0" x2="0" y2="34" stroke="#ffffff" stroke-opacity="0.05" stroke-width="1"/>
+    </pattern>
+    <linearGradient id="fade-card-megaphone-15" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0.45"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="900" fill="url(#base-card-megaphone-15)"/>
+  <rect width="1200" height="900" fill="url(#glow-card-megaphone-15)"/>
+  <rect width="1200" height="900" fill="url(#rule-card-megaphone-15)"/>
+  <g transform="translate(411.0 261.0) scale(15.7500)"
+     fill="none" stroke="#ffffff" stroke-opacity="0.16" stroke-width="1.1"
+     stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 11v2a1 1 0 0 0 1 1h3l7 5V5L7 10H4a1 1 0 0 0-1 1Z M18 8a5 5 0 0 1 0 8"/>
+  </g>
+  <rect width="1200" height="900" fill="url(#fade-card-megaphone-15)"/>
+</svg>

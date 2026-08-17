@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900" role="img" aria-hidden="true">
+  <defs>
+    <linearGradient id="base-card-chart-61" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#171516"/>
+      <stop offset="0.55" stop-color="#0C0B0C"/>
+      <stop offset="1" stop-color="#050505"/>
+    </linearGradient>
+    <radialGradient id="glow-card-chart-61" cx="0.470" cy="0.150" r="0.78">
+      <stop offset="0" stop-color="#CF2030" stop-opacity="0.399"/>
+      <stop offset="0.55" stop-color="#CF2030" stop-opacity="0.112"/>
+      <stop offset="1" stop-color="#CF2030" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="rule-card-chart-61" width="34" height="34" patternUnits="userSpaceOnUse" patternTransform="rotate(-21)">
+      <line x1="0" y1="0" x2="0" y2="34" stroke="#ffffff" stroke-opacity="0.05" stroke-width="1"/>
+    </pattern>
+    <linearGradient id="fade-card-chart-61" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0.45"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="900" fill="url(#base-card-chart-61)"/>
+  <rect width="1200" height="900" fill="url(#glow-card-chart-61)"/>
+  <rect width="1200" height="900" fill="url(#rule-card-chart-61)"/>
+  <g transform="translate(411.0 261.0) scale(15.7500)"
+     fill="none" stroke="#ffffff" stroke-opacity="0.16" stroke-width="1.1"
+     stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 3v18h18 M7 15l4-5 3 3 5-7"/>
+  </g>
+  <rect width="1200" height="900" fill="url(#fade-card-chart-61)"/>
+</svg>

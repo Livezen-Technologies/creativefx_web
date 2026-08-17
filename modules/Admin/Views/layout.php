@@ -33,28 +33,41 @@ $groups = [
     ]],
     ['Content', [
         ['pages', 'Pages', 'admin/pages', 'file'],
-        ['news-posts', 'News Posts', 'admin/news-posts', 'news'],
-        ['news-categories', 'News Categories', 'admin/news-categories', 'tag'],
         ['videos', 'Launch Video', 'admin/videos', 'video'],
     ]],
-    ['Catalog', [
-        ['categories', 'Product Categories', 'admin/categories', 'tag'],
-        ['products', 'Products', 'admin/products', 'box'],
-        ['showroom-cats', 'Showroom Categories', 'admin/showroom-categories', 'cube'],
-        ['showroom-products', 'Showroom Products', 'admin/showroom-products', 'cube'],
+    ['Work', [
+        ['services', 'Services', 'admin/services', 'box'],
+        ['portfolio-projects', 'Portfolio Projects', 'admin/portfolio-projects', 'image'],
+        ['portfolio-categories', 'Portfolio Categories', 'admin/portfolio-categories', 'tag'],
     ]],
-    ['People', [
-        ['jobs', 'Jobs', 'admin/jobs', 'briefcase'],
-        ['applications', 'Applications', 'admin/applications', 'users'],
+    ['Gear rental', [
+        ['gear-items', 'Gear Items', 'admin/gear-items', 'cube'],
+        ['gear-categories', 'Gear Categories', 'admin/gear-categories', 'tag'],
     ]],
     ['Engagement', [
+        ['leads', 'Quote Requests', 'admin/leads', 'target'],
         ['contacts', 'Contact Inbox', 'admin/contacts', 'inbox'],
-        ['leads', 'Leads', 'admin/leads', 'target'],
     ]],
+    /*
+     * Retired with the CreativeFX rebuild — the Norlanka apparel sections. The
+     * controllers, routes and data are all still in place, so restoring one is
+     * a matter of putting its line back here.
+     *
+     * ['Archive (Norlanka)', [
+     *     ['news-posts', 'News Posts', 'admin/news-posts', 'news'],
+     *     ['news-categories', 'News Categories', 'admin/news-categories', 'tag'],
+     *     ['categories', 'Product Categories', 'admin/categories', 'tag'],
+     *     ['products', 'Products', 'admin/products', 'box'],
+     *     ['showroom-cats', 'Showroom Categories', 'admin/showroom-categories', 'cube'],
+     *     ['showroom-products', 'Showroom Products', 'admin/showroom-products', 'cube'],
+     *     ['jobs', 'Jobs', 'admin/jobs', 'briefcase'],
+     *     ['applications', 'Applications', 'admin/applications', 'users'],
+     *     ['esg', 'ESG Metrics', 'admin/esg-metrics', 'leaf'],
+     * ]],
+     */
     ['System', [
         ['media', 'Media Library', 'admin/media', 'image'],
         ['translations', 'Translations', 'admin/translations', 'globe'],
-        ['esg', 'ESG Metrics', 'admin/esg-metrics', 'leaf'],
         ['maintenance', 'Maintenance Mode', 'admin/maintenance', 'power'],
         ['settings', 'Settings', 'admin/settings', 'settings'],
     ]],

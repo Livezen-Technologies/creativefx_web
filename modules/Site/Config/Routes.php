@@ -11,28 +11,42 @@ $routes->addPlaceholder('locale', implode('|', config('App')->supportedLocales))
 
 $siteOptions = ['filter' => 'applocale', 'namespace' => 'Modules\Site\Controllers'];
 
-// Localized home, e.g. /en, /ja. The leading capture is the locale (the
+// Localized home, e.g. /en, /si. The leading capture is the locale (the
 // applocale filter reads + validates it from the URI).
 $routes->get('(:locale)', 'Home::index', $siteOptions);
 
-// Virtual Showroom (3D) — defined before the CMS catch-all so it wins.
-$routes->get('(:locale)/showroom', '\Modules\Showroom\Controllers\Showroom::index/$1', ['filter' => 'applocale']);
-$routes->get('(:locale)/showroom/(:segment)', '\Modules\Showroom\Controllers\Showroom::scene/$1/$2', ['filter' => 'applocale']);
+// --- Services -------------------------------------------------------------
+// The overview is an ordinary single-segment CMS page; each service page is
+// stored under the slug "services/{slug}", which the CMS catch-all below can
+// never match because it only takes one segment.
+$routes->get('(:locale)/services/(:segment)', 'PageController::service/$2', $siteOptions);
 
-// Careers portal (job detail + application). Co-located here (not in the
-// Careers module's own routes file) so the (:locale) placeholder above is
-// guaranteed to exist regardless of module discovery order.
-$routes->get('(:locale)/careers/(:segment)', '\Modules\Careers\Controllers\Careers::show/$1/$2', ['filter' => 'applocale']);
-$routes->post('(:locale)/careers/(:segment)/apply', '\Modules\Careers\Controllers\Careers::apply/$1/$2', ['filter' => 'applocale']);
+// --- Portfolio ------------------------------------------------------------
+$routes->get('(:locale)/portfolio', '\Modules\Portfolio\Controllers\Portfolio::index/$1', ['filter' => 'applocale']);
+$routes->get('(:locale)/portfolio/(:segment)', '\Modules\Portfolio\Controllers\Portfolio::show/$1/$2', ['filter' => 'applocale']);
 
-// Newsroom (listing + article detail). Co-located here for the same
-// (:locale) placeholder-ordering reason as the careers routes above.
-$routes->get('(:locale)/news', '\Modules\News\Controllers\News::index/$1', ['filter' => 'applocale']);
-$routes->get('(:locale)/news/(:segment)', '\Modules\News\Controllers\News::show/$1/$2', ['filter' => 'applocale']);
-
-// Product catalog (listing + product detail with GLB 3D viewer).
-$routes->get('(:locale)/products', '\Modules\Catalog\Controllers\Products::index/$1', ['filter' => 'applocale']);
-$routes->get('(:locale)/products/(:segment)', '\Modules\Catalog\Controllers\Products::show/$1/$2', ['filter' => 'applocale']);
+// --- Quote request (the primary conversion path) --------------------------
+$routes->get('(:locale)/quote', '\Modules\Crm\Controllers\Quote::index/$1', ['filter' => 'applocale']);
+$routes->post('(:locale)/quote', '\Modules\Crm\Controllers\Quote::submit/$1', ['filter' => 'applocale']);
+$routes->get('(:locale)/quote/thanks', '\Modules\Crm\Controllers\Quote::thanks/$1', ['filter' => 'applocale']);
 
 // CMS catch-all: /{locale}/{slug} -> PageController::show($slug)  ($2 = slug)
+// Declared LAST so every reserved prefix above wins.
 $routes->get('(:locale)/(:segment)', 'PageController::show/$2', $siteOptions);
+
+/*
+ * Retired with the CreativeFX rebuild (2026-08-17): the Norlanka apparel
+ * sections — the 3D showroom, careers portal, newsroom and product catalog.
+ * The modules are still on disk and their data is untouched; only the public
+ * routes are gone, so nothing from the old site is reachable. Restore a
+ * section by putting its route back above the catch-all.
+ *
+ *   $routes->get('(:locale)/showroom', '\Modules\Showroom\Controllers\Showroom::index/$1', ['filter' => 'applocale']);
+ *   $routes->get('(:locale)/showroom/(:segment)', '\Modules\Showroom\Controllers\Showroom::scene/$1/$2', ['filter' => 'applocale']);
+ *   $routes->get('(:locale)/careers/(:segment)', '\Modules\Careers\Controllers\Careers::show/$1/$2', ['filter' => 'applocale']);
+ *   $routes->post('(:locale)/careers/(:segment)/apply', '\Modules\Careers\Controllers\Careers::apply/$1/$2', ['filter' => 'applocale']);
+ *   $routes->get('(:locale)/news', '\Modules\News\Controllers\News::index/$1', ['filter' => 'applocale']);
+ *   $routes->get('(:locale)/news/(:segment)', '\Modules\News\Controllers\News::show/$1/$2', ['filter' => 'applocale']);
+ *   $routes->get('(:locale)/products', '\Modules\Catalog\Controllers\Products::index/$1', ['filter' => 'applocale']);
+ *   $routes->get('(:locale)/products/(:segment)', '\Modules\Catalog\Controllers\Products::show/$1/$2', ['filter' => 'applocale']);
+ */

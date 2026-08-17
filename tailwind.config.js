@@ -27,8 +27,11 @@ export default {
       fontFamily: {
         // Brand Guide: K2D = primary/display, Avenir = secondary/body
         // (Montserrat fallback — Avenir is licensed, local() first when present).
-        sans: ['Avenir', 'Avenir Next', 'Montserrat', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-        display: ['K2D', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        // Noto sits after the brand faces, not instead of them: Latin still
+        // renders in Avenir/K2D, and only Sinhala and Tamil glyphs — which the
+        // brand faces do not carry — fall through to Noto.
+        sans: ['Avenir', 'Avenir Next', 'Montserrat', 'Noto Sans Sinhala', 'Noto Sans Tamil', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        display: ['K2D', 'Noto Sans Sinhala', 'Noto Sans Tamil', 'ui-sans-serif', 'system-ui', 'sans-serif'],
       },
       letterSpacing: {
         widest: '0.2em',

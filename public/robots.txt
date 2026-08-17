@@ -1,2 +1,9 @@
 User-agent: *
-Disallow: 
+Allow: /
+
+# The admin panel and the JSON API are not content; keeping them out of the
+# index avoids a login screen turning up in search results.
+Disallow: /admin
+Disallow: /api
+
+Sitemap: /sitemap.xml

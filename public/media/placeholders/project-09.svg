@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1200" width="900" height="1200" role="img" aria-hidden="true">
+  <defs>
+    <linearGradient id="base-portrait-aperture-64" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#171516"/>
+      <stop offset="0.55" stop-color="#0C0B0C"/>
+      <stop offset="1" stop-color="#050505"/>
+    </linearGradient>
+    <radialGradient id="glow-portrait-aperture-64" cx="0.340" cy="0.340" r="0.78">
+      <stop offset="0" stop-color="#CF2030" stop-opacity="0.433"/>
+      <stop offset="0.55" stop-color="#CF2030" stop-opacity="0.121"/>
+      <stop offset="1" stop-color="#CF2030" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="rule-portrait-aperture-64" width="34" height="34" patternUnits="userSpaceOnUse" patternTransform="rotate(18)">
+      <line x1="0" y1="0" x2="0" y2="34" stroke="#ffffff" stroke-opacity="0.05" stroke-width="1"/>
+    </pattern>
+    <linearGradient id="fade-portrait-aperture-64" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0.45"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="900" height="1200" fill="url(#base-portrait-aperture-64)"/>
+  <rect width="900" height="1200" fill="url(#glow-portrait-aperture-64)"/>
+  <rect width="900" height="1200" fill="url(#rule-portrait-aperture-64)"/>
+  <g transform="translate(261.0 411.0) scale(15.7500)"
+     fill="none" stroke="#ffffff" stroke-opacity="0.16" stroke-width="1.1"
+     stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20Z M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12Z M12 14.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z M8.6 6.2a7 7 0 0 0-2.4 2.4"/>
+  </g>
+  <rect width="900" height="1200" fill="url(#fade-portrait-aperture-64)"/>
+</svg>

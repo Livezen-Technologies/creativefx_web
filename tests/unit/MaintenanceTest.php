@@ -99,8 +99,8 @@ final class MaintenanceTest extends CIUnitTestCase
 
     public function testLocaleComesFromTheQueryThenThePath(): void
     {
-        $this->assertSame('ja', Maintenance::locale($this->request('en', ['lang' => 'ja'])));
-        $this->assertSame('es', Maintenance::locale($this->request('es/productos')));
+        $this->assertSame('si', Maintenance::locale($this->request('en', ['lang' => 'si'])));
+        $this->assertSame('ta', Maintenance::locale($this->request('ta/portfolio')));
         $this->assertSame('en', Maintenance::locale($this->request('nothing-familiar')));
 
         // Unsupported values fall back rather than reaching the view.
@@ -120,9 +120,9 @@ final class MaintenanceTest extends CIUnitTestCase
 
     public function testOfflinePageRendersInTheRequestedLanguage(): void
     {
-        $html = Maintenance::render($this->request('en', ['lang' => 'ja']));
+        $html = Maintenance::render($this->request('en', ['lang' => 'si']));
 
-        $this->assertStringContainsString('<html lang="ja"', $html);
+        $this->assertStringContainsString('<html lang="si"', $html);
         $this->assertStringContainsString('<h1>', $html);
         // Self-contained by design: nothing to fetch, so it draws even when the
         // asset build or the database is broken.

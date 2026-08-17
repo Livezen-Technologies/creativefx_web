@@ -8,7 +8,8 @@ use CodeIgniter\Database\Seeder;
  * Top-level orchestrator. Run with:
  *   php spark db:seed "Modules\Core\Database\Seeds\DatabaseSeeder"
  *
- * Order matters: auth/roles first, then content that references them.
+ * Order matters: auth/roles first, then the registries other content links to
+ * (services, portfolio categories), then the CMS pages that reference them.
  */
 class DatabaseSeeder extends Seeder
 {
@@ -20,33 +21,37 @@ class DatabaseSeeder extends Seeder
 
         $this->call('Modules\Core\Database\Seeds\SettingSeeder');
 
-        $this->call('Modules\Catalog\Database\Seeds\ProductCategorySeeder');
+        // CreativeFX registries: the six services (which drive the header
+        // dropdown, footer and services grid), the portfolio, and the rental
+        // gear catalogue. All upsert-by-slug, so editors' changes survive.
+        $this->call('Modules\Services\Database\Seeds\ServiceSeeder');
+        $this->call('Modules\Portfolio\Database\Seeds\PortfolioSeeder');
+        $this->call('Modules\Gear\Database\Seeds\GearSeeder');
 
-        // Catalog products (upsert-by-slug; merchandising edits preserved).
-        $this->call('Modules\Catalog\Database\Seeds\ProductSeeder');
-
-        // Seeds the CMS Home page + sections/blocks + the launch video,
-        // its per-language audio tracks and subtitle files.
-        $this->call('Modules\Cms\Database\Seeds\HomeContentSeeder');
-
-        // Corporate content pages (Our Story, Expertise, Manufacturing,
-        // Impact, Careers, Contact, Showroom).
-        $this->call('Modules\Cms\Database\Seeds\CorporateContentSeeder');
+        // Every CMS page: home, our story, services overview, the six service
+        // pages and contact.
+        $this->call('Modules\Cms\Database\Seeds\CreativeFxContentSeeder');
 
         // Import UI chrome strings into the translations table (editable in the
-        // Translation Manager).
+        // Translation Manager). Locales with no language file of their own are
+        // seeded from English, ready to translate.
         $this->call('Modules\Translation\Database\Seeds\TranslationSeeder');
 
-        // Virtual showroom: themed categories + products.
-        $this->call('Modules\Showroom\Database\Seeds\ShowroomSeeder');
+        /*
+         * Retired with the CreativeFX rebuild — the Norlanka apparel content.
+         * The seeders are still on disk; re-enable a line to bring a section's
+         * content back (its routes live in modules/Site/Config/Routes.php).
+         *
+         *   $this->call('Modules\Catalog\Database\Seeds\ProductCategorySeeder');
+         *   $this->call('Modules\Catalog\Database\Seeds\ProductSeeder');
+         *   $this->call('Modules\Cms\Database\Seeds\HomeContentSeeder');
+         *   $this->call('Modules\Cms\Database\Seeds\CorporateContentSeeder');
+         *   $this->call('Modules\Showroom\Database\Seeds\ShowroomSeeder');
+         *   $this->call('Modules\Careers\Database\Seeds\CareersSeeder');
+         *   $this->call('Modules\News\Database\Seeds\NewsSeeder');
+         */
 
-        // Careers portal: sample vacancies (upsert-by-slug; HR edits preserved).
-        $this->call('Modules\Careers\Database\Seeds\CareersSeeder');
-
-        // Newsroom: editorial categories + starter articles (upsert-by-slug).
-        $this->call('Modules\News\Database\Seeds\NewsSeeder');
-
-        // Last: complete ja/es/zh across everything the seeders just wrote.
+        // Last: complete any locale left empty across everything just seeded.
         // Only empty locales are filled, so translated content is preserved.
         (new \Modules\Core\Libraries\ContentTranslator())->backfill();
     }

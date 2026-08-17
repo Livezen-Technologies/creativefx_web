@@ -20,9 +20,8 @@ if (! function_exists('supported_locales')) {
     {
         $labels = [
             'en' => ['English', 'English'],
-            'ja' => ['Japanese', '日本語'],
-            'es' => ['Spanish', 'Español'],
-            'zh' => ['Chinese', '中文'],
+            'si' => ['Sinhala', 'සිංහල'],
+            'ta' => ['Tamil', 'தமிழ்'],
         ];
 
         $out = [];
@@ -149,9 +148,12 @@ if (! function_exists('content_locales')) {
      * Complete a locale map from the content translation dictionary.
      *
      * Seeders author content in English (plus whatever locales they specify);
-     * this fills any locale still missing from ContentTranslations.php, so
-     * seeded content lands complete in en/ja/es/zh. Strings absent from the
-     * dictionary are returned untouched and fall back via t_field().
+     * this fills any locale still missing from ContentTranslations.php.
+     *
+     * The dictionary only carries the locales it was written for — a string it
+     * has no entry for is returned untouched and falls back through t_field()
+     * to English, which is the intended behaviour for copy that has not been
+     * translated yet (si/ta today).
      */
     function content_locales(array $map): array
     {
@@ -166,7 +168,10 @@ if (! function_exists('content_locales')) {
             return $map;
         }
 
-        foreach (['ja', 'es', 'zh'] as $locale) {
+        foreach (config('App')->supportedLocales as $locale) {
+            if ($locale === 'en' || ! isset($dict[$en][$locale])) {
+                continue;
+            }
             if (trim((string) ($map[$locale] ?? '')) === '') {
                 $map[$locale] = $dict[$en][$locale];
             }

@@ -28,6 +28,13 @@ $routes->group('admin', ['namespace' => 'Modules\Admin\Controllers'], static fun
             'showroom-products'   => 'ShowroomProducts',
             'news-categories'     => 'NewsCategories',
             'news-posts'          => 'NewsPosts',
+
+            // CreativeFX
+            'services'             => 'Services',
+            'portfolio-projects'   => 'PortfolioProjects',
+            'portfolio-categories' => 'PortfolioCategories',
+            'gear-items'           => 'GearItems',
+            'gear-categories'      => 'GearCategories',
         ];
         foreach ($resources as $seg => $ctrl) {
             $routes->get($seg, $ctrl . '::index');

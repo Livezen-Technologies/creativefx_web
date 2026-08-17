@@ -12,6 +12,16 @@ use Modules\Cms\Models\PageModel;
  */
 class PageController extends BaseController
 {
+    /**
+     * A service page: /{locale}/services/{slug} is the CMS page stored under
+     * the slug "services/{slug}". Routed separately because the CMS catch-all
+     * only matches a single segment.
+     */
+    public function service(string $slug)
+    {
+        return $this->show('services/' . $slug);
+    }
+
     public function show(string $slug)
     {
         $pageModel = new PageModel();
