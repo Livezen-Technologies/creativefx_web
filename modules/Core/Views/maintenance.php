@@ -26,7 +26,7 @@ $labels = [
 $names = ['en' => 'English', 'si' => 'සිංහල', 'ta' => 'தமிழ்'];
 
 // Shown only if the deployment actually ships it.
-$symbol = is_file(FCPATH . 'media/brand/nl-symbol.png') ? '/media/brand/nl-symbol.png' : null;
+$symbol = is_file(FCPATH . 'media/brand/cfx-symbol.svg') ? '/media/brand/cfx-symbol.svg' : null;
 ?>
 <!DOCTYPE html>
 <html lang="<?= esc($locale, 'attr') ?>">
@@ -35,7 +35,7 @@ $symbol = is_file(FCPATH . 'media/brand/nl-symbol.png') ? '/media/brand/nl-symbo
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title><?= esc($headline) ?> — <?= esc($brand) ?></title>
 <meta name="theme-color" content="#CF2030">
-<link rel="icon" type="image/png" sizes="32x32" href="/media/brand/favicon-32.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/media/brand/cfx-32.png">
 <style>
     :root {
         --red: #CF2030;
