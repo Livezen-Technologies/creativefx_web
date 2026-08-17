@@ -61,17 +61,22 @@ $whatsapp = preg_replace('/[^0-9+]/', '', (string) setting('whatsapp', '', 'cont
             <a href="<?= esc(locale_url('our-story')) ?>" class="nav-link <?= $currentSlug === 'our-story' ? 'nav-link-active' : '' ?>"><?= esc(lang('Site.nav.story')) ?></a>
 
             <?php if ($services !== []): ?>
-                <!-- Services: opens on hover for pointers, and on click/Enter for
-                     keyboards; Escape and click-outside both close it. -->
+                <!-- Services is a link, not a disclosure button: pointing at it
+                     opens the panel, and clicking or pressing Enter goes to the
+                     overview page. A toggle-on-click button fights the hover —
+                     hover opens the panel and the click immediately closes it
+                     again. Keyboard users get the panel on focus and can Tab
+                     straight into it; Escape and leaving both close it. -->
                 <div class="relative" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false"
+                     @focusin="open = true" @focusout="if (! $el.contains($event.relatedTarget)) open = false"
                      @keydown.escape.stop="open = false" @click.outside="open = false">
-                    <button type="button" @click="open = !open" :aria-expanded="open ? 'true' : 'false'"
-                            aria-haspopup="true" aria-controls="services-menu"
-                            class="nav-link inline-flex items-center gap-1.5 <?= $currentSlug === 'services' ? 'nav-link-active' : '' ?>">
+                    <a href="<?= esc(locale_url('services')) ?>" :aria-expanded="open ? 'true' : 'false'"
+                       aria-haspopup="true" aria-controls="services-menu"
+                       class="nav-link inline-flex items-center gap-1.5 <?= $currentSlug === 'services' ? 'nav-link-active' : '' ?>">
                         <?= esc(lang('Site.nav.services')) ?>
                         <svg class="h-3.5 w-3.5 transition-transform duration-200" :class="open ? 'rotate-180' : ''"
                              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    </button>
+                    </a>
 
                     <div id="services-menu" x-show="open" x-cloak x-transition.opacity.duration.150ms
                          class="absolute left-1/2 top-full z-50 w-[36rem] -translate-x-1/2 pt-4">

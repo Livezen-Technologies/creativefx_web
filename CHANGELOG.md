@@ -27,8 +27,7 @@ lives only in the git history.
   - Offline page (`modules/Core/Views/maintenance.php`) — standalone by
     design: no layout, no Vite bundle, no webfonts, nothing to fetch, so it
     draws even when the asset build or the database is broken. Ships copy in
-    all four site languages, picked from `?lang=`, the URL, or the locale
-    cookie.
+    every site language, picked from `?lang=`, the URL, or the locale cookie.
   - **Admin → Maintenance** — on/off switch, the copy shown to visitors, an
     IP allowlist, the `Retry-After` value, and a shareable preview link. A
     banner on every admin screen shows when the site is dark.
@@ -63,6 +62,18 @@ lives only in the git history.
 - **Gear rental** — a rentable equipment catalogue with categories, daily and
   weekly LKR rates, specs and an availability state, surfaced through a
   `gear_grid` block on the Gear Renting service page.
+  - Seeded with nine kit families — Cameras, Lenses, Lighting, Audio,
+    Tripods, Gimbals, Drones, Streaming, Studio — and the fourteen items that
+    go out most often, each with a starting Colombo day and week rate. It
+    inserts by slug and never updates, so rates and wording changed in Admin
+    survive the next deploy.
+  - Every card shows an availability state — Available, Booked or
+    Maintenance — that a coordinator flips per item, separately from whether
+    the item is published at all. Booked kit stays on the page: the card says
+    it is out, and the enquiry is still worth making for another date.
+  - **Rent Now** carries the item into the quote form
+    (`/{locale}/quote?service=gear-renting&item=<slug>`), so a rental
+    enquiry arrives already naming the kit it is about.
 - **Quote requests** — a six-step request flow at `/{locale}/quote`, the site's
   primary conversion path. It writes into the existing lead inbox with the new
   service, project type, budget, preferred date, location and attachment
@@ -126,6 +137,22 @@ lives only in the git history.
   the migration back.
 - `SettingSeeder` seeds the `maintenance` settings group; fresh installs come
   up live.
+
+### Fixed
+
+- **The new content blocks now sit flush with the rest of the page.** The
+  Testimonials block was taller than every other section (it padded itself
+  py-20 against the house py-16) and drew its focus outline at a wider corner
+  radius than the card inside it; the Logo Wall's plates were packed tighter
+  than every other grid on the site and its placeholder wordmark plates had
+  squarer corners than the plates carrying real artwork. Editors dropping
+  Services, Testimonials, FAQ, Packages, What We Offer, Team and Logo Wall onto
+  one page now get one consistent rhythm down the page.
+- **Nothing in the new blocks can push the page sideways on a phone.** A long
+  FAQ question, a long feature line in a Packages tier, or a Testimonials block
+  with many quotes could each widen the page past the screen on a 360px handset
+  and leave the whole site scrolling horizontally. Questions and feature lines
+  now wrap, and the testimonial dots wrap to a second row.
 
 ### Security
 
