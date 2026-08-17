@@ -106,7 +106,7 @@ if ($currentPage === 1 && $activeCategory === null && $posts !== []) {
                     <?php endif; ?>
                     <?php for ($i = 1; $i <= $pageCount; $i++): ?>
                         <a href="<?= esc($newsUrl($i)) ?>"
-                           class="inline-flex h-9 w-9 items-center justify-center rounded-full text-sm <?= $i === $currentPage ? 'bg-brand-red font-semibold text-white' : 'border border-white/15 text-white/60 hover:border-brand-red/50 hover:text-white' ?>"
+                           class="inline-flex h-9 w-9 items-center justify-center rounded-full text-sm <?= $i === $currentPage ? 'bg-brand-red font-semibold text-brand-ink' : 'border border-white/15 text-white/60 hover:border-brand-red/50 hover:text-white' ?>"
                            <?= $i === $currentPage ? 'aria-current="page"' : '' ?>><?= $i ?></a>
                     <?php endfor; ?>
                     <?php if ($currentPage < $pageCount): ?>

@@ -18,7 +18,7 @@ import { join } from 'node:path';
 
 const OUT = new URL('../public/media/placeholders/', import.meta.url).pathname;
 
-const RED = '#CF2030';
+const RED = '#FFC107'; // CreativeFX amber — the accent the whole site is built on
 
 /** Stroke glyphs, 24x24 viewBox, echoing the admin's Lucide-style set. */
 const GLYPHS = {

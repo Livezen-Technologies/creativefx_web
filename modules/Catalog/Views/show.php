@@ -35,7 +35,7 @@ $chips   = array_filter([$catName, $product['collection'] ?? null, $product['sku
                 <span class="rounded-full border border-white/15 bg-white/[0.04] px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-white/70"><?= esc($chip) ?></span>
             <?php endforeach; ?>
             <?php if (! empty($product['label'])): ?>
-                <span class="rounded-full bg-brand-red px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-white"><?= esc(lang('Site.products.label_' . $product['label'])) ?></span>
+                <span class="rounded-full bg-brand-red px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-brand-ink"><?= esc(lang('Site.products.label_' . $product['label'])) ?></span>
             <?php endif; ?>
         </div>
     </div>

@@ -9,7 +9,7 @@ $inputCls = 'w-full rounded-lg border border-white/15 bg-black/40 px-2.5 py-1.5 
         <span class="text-xs uppercase tracking-widest text-white/40">Group</span>
         <?php foreach ($groups as $g): ?>
             <a href="<?= site_url('admin/translations?group=' . urlencode($g)) ?>"
-               class="rounded-full px-3 py-1 text-xs <?= $g === $group ? 'bg-brand-red text-white' : 'bg-white/5 text-white/70 hover:text-white' ?>"><?= esc($g) ?></a>
+               class="rounded-full px-3 py-1 text-xs <?= $g === $group ? 'bg-brand-red text-brand-ink' : 'bg-white/5 text-white/70 hover:text-white' ?>"><?= esc($g) ?></a>
         <?php endforeach; ?>
     </div>
     <form method="post" action="<?= site_url('admin/translations/import') ?>" onsubmit="return confirm('Import UI strings from language files? Existing edits are preserved.')">

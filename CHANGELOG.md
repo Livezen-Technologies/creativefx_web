@@ -145,6 +145,17 @@ lives only in the git history.
 
 ### Changed
 
+- **The brand accent is now the logo's amber (`#FFC107`), not red.** Every
+  button, link, eyebrow, statistic, hover state, focus ring and chart accent
+  moved with it, on the public site and in the admin console, because the
+  accent is a single design token.
+  - Text on a filled accent surface is now a token too (`--accent-ink`). It
+    had to be: white on the old red passed contrast, but white on amber is
+    about 1.8:1 and fails outright. Filled buttons now use near-black — 11.6:1
+    — and the Impact page's green scope keeps its white.
+  - The brand mark, favicons, the offline page and the 53 placeholder panels
+    were all regenerated in amber. `scripts/gen-brand.mjs` rebuilds every
+    favicon size from one source file, so replacing the logo is one command.
 - **The site is now CreativeFX, not Norlanka.** The name, wordmark, mark,
   favicons, preloader and social image all change on deploy, and a data
   migration rewrites the `settings` rows that carry the brand — but only where

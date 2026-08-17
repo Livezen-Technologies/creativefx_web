@@ -14,12 +14,17 @@
 /* Theme tokens (RGB channels).
    Ground/foreground: light-grey site by default; `.on-dark` flips a section to
    the dark treatment (hero over video, CTA bands, showroom, header/footer).
-   Accent: Norlanka red by default; a page scope can override it (e.g. green). */
+   Accent: CreativeFX amber by default; a page scope can override it (e.g. green). */
 :root {
   --bg: 243 244 245;          /* #F3F4F5 light grey ground */
   --fg: 24 26 29;             /* #181A1D ink */
-  --accent: 207 32 48;        /* #CF2030 brand red */
-  --accent-dark: 165 18 31;   /* #A5121F */
+  --accent: 255 193 7;        /* #FFC107 CreativeFX amber (the FX in the logo) */
+  --accent-dark: 214 158 0;   /* #D69E00 — hover/pressed */
+  /* The colour that goes ON a filled accent surface. It is a token rather than
+     a hardcoded white because it has to change with the accent: white on the
+     old red passed contrast, white on amber is about 1.8:1 and fails badly.
+     Near-black on amber is ~11:1. */
+  --accent-ink: 24 26 29;     /* #181A1D */
 }
 .on-dark {
   --bg: 11 11 13;             /* #0B0B0D near-black */
@@ -34,6 +39,7 @@
   --bg: 233 243 236;          /* #E9F3EC soft green ground */
   --accent: 42 138 92;        /* #2A8A5C — AA-legible green on light */
   --accent-dark: 23 105 70;   /* #176946 */
+  --accent-ink: 255 255 255;  /* white reads on this green, unlike on amber */
 }
 
 /* Site-wide dark mode. Toggled by the header switch and applied pre-paint by the
@@ -42,14 +48,16 @@
 html.dark {
   --bg: 11 11 13;             /* #0B0B0D clean near-black */
   --fg: 244 244 245;          /* #F4F4F5 soft white */
-  --accent: 207 32 48;        /* brand red — pops on dark */
-  --accent-dark: 165 18 31;
+  --accent: 255 193 7;        /* amber — the logo colour, and it pops on black */
+  --accent-dark: 214 158 0;
+  --accent-ink: 17 17 19;     /* near-black on amber, ~11:1 */
 }
 html.dark .theme-esg-green {  /* Impact page green scope, dark variant */
   --bg: 12 20 15;             /* deep green-tinted ground */
   --fg: 236 244 238;
   --accent: 55 178 118;
   --accent-dark: 30 120 82;
+  --accent-ink: 8 20 14;
 }
 
 @layer base {
@@ -67,7 +75,7 @@ html.dark .theme-esg-green {  /* Impact page green scope, dark variant */
   }
   ::selection {
     @apply bg-brand-red;
-    color: #fff;
+    color: rgb(var(--accent-ink));
   }
 }
 
@@ -79,7 +87,7 @@ html.dark .theme-esg-green {  /* Impact page green scope, dark variant */
     @apply inline-flex items-center justify-center rounded-full bg-brand-red px-7 py-3
            text-sm font-semibold uppercase tracking-widest transition
            hover:bg-brand-red-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-red;
-    color: #fff; /* always white on the accent, in both themes */
+    color: rgb(var(--accent-ink)); /* legible on the accent, whatever the accent is */
   }
   .btn-ghost {
     @apply inline-flex items-center justify-center rounded-full border border-white/30 px-7 py-3
@@ -91,7 +99,7 @@ html.dark .theme-esg-green {  /* Impact page green scope, dark variant */
   }
   .lang-pill-active {
     @apply bg-brand-red;
-    color: #fff;
+    color: rgb(var(--accent-ink));
   }
 }
 
@@ -109,7 +117,7 @@ html.dark .theme-esg-green {  /* Impact page green scope, dark variant */
   .rotator-list { display: flex; flex-direction: column; will-change: transform; }
   .rotator-word { display: block; height: 1.1em; line-height: 1.1; white-space: nowrap; }
 
-  /* Animated cinematic brand backdrop. Theme-aware: a soft red glow over the
+  /* Animated cinematic brand backdrop. Theme-aware: a soft accent glow over the
      light-grey ground by default; the dramatic dark version is kept only where a
      section is still explicitly dark (`.on-dark`, e.g. the admin console). */
   .hero-aurora {
@@ -125,7 +133,7 @@ html.dark .theme-esg-green {  /* Impact page green scope, dark variant */
     background:
       radial-gradient(60% 80% at 20% 20%, rgb(var(--accent) / 0.45), transparent 60%),
       radial-gradient(50% 70% at 80% 30%, rgb(var(--accent) / 0.25), transparent 60%),
-      radial-gradient(80% 80% at 50% 90%, rgba(40, 0, 4, 0.9), transparent 70%),
+      radial-gradient(80% 80% at 50% 90%, rgba(38, 28, 0, 0.9), transparent 70%),
       #000000;
     background-size: 200% 200%;
   }
@@ -178,7 +186,7 @@ html.dark .theme-esg-green {  /* Impact page green scope, dark variant */
   .nav-link-active::after { transform: scaleX(1); }
   .nav-link-active { color: rgb(var(--fg)); }
 
-  /* Red-dash eyebrow used to lift section labels out of the monochrome. */
+  /* Accent-dash eyebrow used to lift section labels out of the monochrome. */
   .eyebrow {
     display: inline-flex;
     align-items: center;
@@ -340,7 +348,7 @@ html.lenis, html.lenis body { height: auto; }
   width: 9px;
   height: 9px;
   border-radius: 999px;
-  background: #cf2030;
+  background: rgb(var(--accent));
   box-shadow: 0 0 0 2px rgba(207, 32, 48, 0.25), 0 0 10px 1px rgba(207, 32, 48, 0.5);
   transition: transform 0.2s ease;
 }
@@ -410,7 +418,7 @@ html.lenis, html.lenis body { height: auto; }
   width: 8px;
   height: 8px;
   border-radius: 999px;
-  background: #cf2030;
+  background: rgb(var(--accent));
   box-shadow: 0 0 8px rgba(207, 32, 48, 0.55);
   transition: transform 0.2s ease;
 }
@@ -482,7 +490,7 @@ html.fp-active body {
 }
 .fp-dot:hover .fp-dot__hit { background: rgba(255, 255, 255, 0.7); }
 .fp-dot.is-active .fp-dot__hit {
-  background: #cf2030;
+  background: rgb(var(--accent));
   transform: scale(1.4);
   box-shadow: 0 0 0 4px rgba(207, 32, 48, 0.22);
 }
@@ -627,12 +635,12 @@ html.fp-active body {
 .article-body ul { list-style: disc; }
 .article-body ol { list-style: decimal; }
 .article-body li { margin-top: 0.5rem; line-height: 1.7; color: rgb(var(--fg) / 0.7); }
-.article-body li::marker { color: #cf2030; }
-.article-body a { color: #cf2030; text-decoration: underline; text-underline-offset: 3px; }
+.article-body li::marker { color: rgb(var(--accent)); }
+.article-body a { color: rgb(var(--accent)); text-decoration: underline; text-underline-offset: 3px; }
 .article-body a:hover { opacity: 0.85; }
 .article-body blockquote {
   margin-top: 1.5rem;
-  border-left: 3px solid #cf2030;
+  border-left: 3px solid rgb(var(--accent));
   padding-left: 1.25rem;
   font-style: italic;
   color: rgb(var(--fg) / 0.8);

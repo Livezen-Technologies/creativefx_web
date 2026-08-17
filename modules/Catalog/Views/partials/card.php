@@ -15,7 +15,7 @@ $badge  = $product['label'] ?? '';
                  class="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]">
         <?php endif; ?>
         <?php if ($badge !== '' && $badge !== null): ?>
-            <span class="absolute left-3 top-3 rounded-full bg-brand-red px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-white"><?= esc(lang('Site.products.label_' . $badge)) ?></span>
+            <span class="absolute left-3 top-3 rounded-full bg-brand-red px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-brand-ink"><?= esc(lang('Site.products.label_' . $badge)) ?></span>
         <?php endif; ?>
         <?php if (! empty($product['model_path'])): ?>
             <span class="absolute right-3 top-3 inline-flex items-center gap-1 rounded-full bg-black/60 px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-white backdrop-blur">

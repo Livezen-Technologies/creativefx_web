@@ -4,12 +4,12 @@
 <!-- Pipeline tabs -->
 <div class="mb-6 flex flex-wrap items-center gap-2">
     <a href="<?= site_url('admin/applications') ?>"
-       class="rounded-full px-4 py-1.5 text-xs font-semibold uppercase tracking-widest transition <?= $current === '' ? 'bg-brand-red text-white' : 'bg-white/5 text-white/60 hover:text-white' ?>">
+       class="rounded-full px-4 py-1.5 text-xs font-semibold uppercase tracking-widest transition <?= $current === '' ? 'bg-brand-red text-brand-ink' : 'bg-white/5 text-white/60 hover:text-white' ?>">
         All (<?= array_sum($counts) ?>)
     </a>
     <?php foreach ($statuses as $s): ?>
         <a href="<?= site_url('admin/applications') . '?status=' . $s ?>"
-           class="rounded-full px-4 py-1.5 text-xs font-semibold uppercase tracking-widest transition <?= $current === $s ? 'bg-brand-red text-white' : 'bg-white/5 text-white/60 hover:text-white' ?>">
+           class="rounded-full px-4 py-1.5 text-xs font-semibold uppercase tracking-widest transition <?= $current === $s ? 'bg-brand-red text-brand-ink' : 'bg-white/5 text-white/60 hover:text-white' ?>">
             <?= esc(ucfirst($s)) ?> (<?= $counts[$s] ?>)
         </a>
     <?php endforeach; ?>

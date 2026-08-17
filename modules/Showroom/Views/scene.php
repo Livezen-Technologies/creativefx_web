@@ -2,7 +2,7 @@
 helper(['norlanka', 'url']);
 $this->extend('Modules\Core\Views\layouts\main');
 
-$hex = static fn ($v, $fallback = '#CF2030') => preg_match('/^#[0-9a-fA-F]{3,8}$/', (string) $v) ? $v : $fallback;
+$hex = static fn ($v, $fallback = '#FFC107') => preg_match('/^#[0-9a-fA-F]{3,8}$/', (string) $v) ? $v : $fallback;
 
 $palette = json_decode($category['palette'] ?? '[]', true) ?: [$hex($category['background'])];
 $features = json_decode($category['features'] ?? '[]', true) ?: [];
@@ -73,10 +73,10 @@ $c1 = $hex($palette[1] ?? $c0);
 
             <?php if ($materials !== []): ?>
                 <div class="mt-5 flex flex-wrap gap-2">
-                    <button @click="setFilter('all')" :class="filter === 'all' ? 'bg-brand-red text-white' : 'bg-white/5 text-white/70'" class="rounded-full px-4 py-1.5 text-xs"><?= esc(lang('Site.showroom.all')) ?></button>
+                    <button @click="setFilter('all')" :class="filter === 'all' ? 'bg-brand-red text-brand-ink' : 'bg-white/5 text-white/70'" class="rounded-full px-4 py-1.5 text-xs"><?= esc(lang('Site.showroom.all')) ?></button>
                     <?php foreach ($materials as $m): ?>
                         <button @click="setFilter(<?= esc(json_encode($m), 'attr') ?>)"
-                                :class="filter === <?= esc(json_encode($m), 'attr') ?> ? 'bg-brand-red text-white' : 'bg-white/5 text-white/70 hover:text-white'"
+                                :class="filter === <?= esc(json_encode($m), 'attr') ?> ? 'bg-brand-red text-brand-ink' : 'bg-white/5 text-white/70 hover:text-white'"
                                 class="rounded-full px-4 py-1.5 text-xs"><?= esc($m) ?></button>
                     <?php endforeach; ?>
                 </div>

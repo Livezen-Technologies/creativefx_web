@@ -53,7 +53,7 @@ $action   = $row ? site_url('admin/' . $route . '/' . $row['id']) : site_url('ad
                     <div class="mb-2 flex gap-1">
                         <?php foreach ($locales as $l): ?>
                             <button type="button" @click="tab = '<?= esc($l) ?>'"
-                                    :class="tab === '<?= esc($l) ?>' ? 'bg-brand-red text-white' : 'bg-white/5 text-white/50 hover:text-white'"
+                                    :class="tab === '<?= esc($l) ?>' ? 'bg-brand-red text-brand-ink' : 'bg-white/5 text-white/50 hover:text-white'"
                                     class="rounded-md px-3 py-1 text-xs font-semibold uppercase tracking-widest transition"><?= esc($l) ?></button>
                         <?php endforeach; ?>
                     </div>

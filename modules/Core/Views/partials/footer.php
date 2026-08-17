@@ -56,7 +56,7 @@ $whatsapp = preg_replace('/[^0-9+]/', '', (string) setting('whatsapp', '', 'cont
                     <input type="email" id="footer-newsletter" name="email" required
                            placeholder="<?= esc(lang('Site.footer.newsletter.email'), 'attr') ?>"
                            class="min-w-0 flex-1 rounded-lg border border-white/15 bg-white/[0.03] px-3 py-2.5 text-sm text-white placeholder:text-white/30 focus:border-brand-red focus:outline-none">
-                    <button type="submit" class="flex-none rounded-lg bg-brand-red px-4 py-2.5 text-xs font-semibold uppercase tracking-widest text-white transition hover:bg-brand-red/85">
+                    <button type="submit" class="flex-none rounded-lg bg-brand-red px-4 py-2.5 text-xs font-semibold uppercase tracking-widest text-brand-ink transition hover:bg-brand-red/85">
                         <?= esc(lang('Site.footer.newsletter.submit')) ?>
                     </button>
                 </div>

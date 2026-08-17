@@ -3,11 +3,11 @@
        still holds together at 16px in a browser tab. -->
   <defs>
     <linearGradient id="cfx-ring" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#E8394A"/>
-      <stop offset="1" stop-color="#CF2030"/>
+      <stop offset="0" stop-color="#FFD24A"/>
+      <stop offset="1" stop-color="#FFC107"/>
     </linearGradient>
   </defs>
   <circle cx="32" cy="32" r="30" fill="url(#cfx-ring)"/>
-  <circle cx="32" cy="32" r="23.5" fill="none" stroke="#ffffff" stroke-opacity="0.32" stroke-width="2"/>
-  <path d="M26.5 21.5 44 32 26.5 42.5Z" fill="#ffffff" stroke="#ffffff" stroke-width="3" stroke-linejoin="round"/>
+  <circle cx="32" cy="32" r="23.5" fill="none" stroke="#171719" stroke-opacity="0.28" stroke-width="2"/>
+  <path d="M26.5 21.5 44 32 26.5 42.5Z" fill="#171719" stroke="#171719" stroke-width="3" stroke-linejoin="round"/>
 </svg>

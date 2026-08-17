@@ -18,7 +18,7 @@
     <meta property="og:description" content="<?= esc($ogDesc, 'attr') ?>">
     <meta property="og:image" content="<?= esc(base_url(ltrim($ogImg, '/')), 'attr') ?>">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="theme-color" content="#CF2030">
+    <meta name="theme-color" content="#FFC107">
     <meta name="color-scheme" content="light dark">
     <link rel="icon" type="image/png" sizes="32x32" href="/media/brand/cfx-32.png">
     <link rel="apple-touch-icon" href="/media/brand/cfx-180.png">

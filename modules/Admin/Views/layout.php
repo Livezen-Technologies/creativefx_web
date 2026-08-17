@@ -81,7 +81,7 @@ $renderNav = static function () use ($groups, $active, $navIcon): void {
         <?php foreach ($items as [$key, $label, $path, $icon]) { ?>
             <a href="<?= site_url($path) ?>"
                class="mb-0.5 flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition <?= $active === $key
-                   ? 'bg-brand-red text-white shadow-lg shadow-brand-red/25'
+                   ? 'bg-brand-red text-brand-ink shadow-lg shadow-brand-red/25'
                    : 'text-white/60 hover:bg-white/5 hover:text-white' ?>">
                 <?= $navIcon($icon) ?>
                 <span class="truncate"><?= esc($label) ?></span>
@@ -162,7 +162,7 @@ if (localStorage.getItem('admin-theme') === 'light') { document.body.classList.r
         </header>
 
         <?php if ($siteOffline): ?>
-            <div class="flex flex-wrap items-center gap-x-3 gap-y-1 border-b border-brand-red/40 bg-brand-red/15 px-4 py-2.5 text-sm text-white sm:px-6">
+            <div class="flex flex-wrap items-center gap-x-3 gap-y-1 border-b border-brand-red/40 bg-brand-red/15 px-4 py-2.5 text-sm text-brand-ink sm:px-6">
                 <svg class="h-4 w-4 flex-none text-brand-red" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2v10m6.4-6.4a9 9 0 1 1-12.8 0"/></svg>
                 <span><strong>The public site is offline.</strong> Visitors see the maintenance page.</span>
                 <a href="<?= site_url('admin/maintenance') ?>" class="font-semibold text-brand-red underline underline-offset-2 hover:text-white">Manage</a>

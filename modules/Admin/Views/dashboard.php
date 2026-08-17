@@ -51,7 +51,7 @@ $userName = trim((string) (session()->get('admin_user')['first_name'] ?? '')) ?:
         <p class="mt-1 text-sm text-white/50"><?= esc(date('l, j F Y')) ?> — here's what's happening across the site.</p>
     </div>
     <div class="flex flex-wrap gap-2">
-        <a href="<?= site_url('admin/news-posts/new') ?>" class="flex items-center gap-1.5 rounded-lg bg-brand-red px-3.5 py-2 text-xs font-semibold text-white transition hover:bg-brand-red/85"><?= $icon('plus', 'h-3.5 w-3.5') ?> News post</a>
+        <a href="<?= site_url('admin/news-posts/new') ?>" class="flex items-center gap-1.5 rounded-lg bg-brand-red px-3.5 py-2 text-xs font-semibold text-brand-ink transition hover:bg-brand-red/85"><?= $icon('plus', 'h-3.5 w-3.5') ?> News post</a>
         <a href="<?= site_url('admin/jobs/new') ?>" class="flex items-center gap-1.5 rounded-lg border border-white/15 px-3.5 py-2 text-xs font-semibold text-white/80 transition hover:border-white/40"><?= $icon('briefcase', 'h-3.5 w-3.5') ?> Post a job</a>
         <a href="<?= site_url('admin/media') ?>" class="flex items-center gap-1.5 rounded-lg border border-white/15 px-3.5 py-2 text-xs font-semibold text-white/80 transition hover:border-white/40"><?= $icon('upload', 'h-3.5 w-3.5') ?> Upload media</a>
         <a href="<?= site_url('admin/pages') ?>" class="flex items-center gap-1.5 rounded-lg border border-white/15 px-3.5 py-2 text-xs font-semibold text-white/80 transition hover:border-white/40"><?= $icon('edit', 'h-3.5 w-3.5') ?> Edit pages</a>

@@ -13,7 +13,7 @@ class SettingSeeder extends Seeder
         $settings = [
             ['general', 'site_name', 'CreativeFX', 'string', 1],
             ['general', 'tagline', 'Production · Advertising · Digital Growth', 'string', 1],
-            ['brand', 'color_primary', '#CF2030', 'string', 1],
+            ['brand', 'color_primary', '#FFC107', 'string', 1],
             ['brand', 'color_secondary', '#000000', 'string', 1],
             // Contact and social values ship empty: the header and footer hide
             // each link until it is filled in, so a blank is a working default

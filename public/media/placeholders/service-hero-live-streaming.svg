@@ -6,9 +6,9 @@
       <stop offset="1" stop-color="#050505"/>
     </linearGradient>
     <radialGradient id="glow-hero-broadcast-23" cx="0.670" cy="0.410" r="0.78">
-      <stop offset="0" stop-color="#CF2030" stop-opacity="0.430"/>
-      <stop offset="0.55" stop-color="#CF2030" stop-opacity="0.120"/>
-      <stop offset="1" stop-color="#CF2030" stop-opacity="0"/>
+      <stop offset="0" stop-color="#FFC107" stop-opacity="0.430"/>
+      <stop offset="0.55" stop-color="#FFC107" stop-opacity="0.120"/>
+      <stop offset="1" stop-color="#FFC107" stop-opacity="0"/>
     </radialGradient>
     <pattern id="rule-hero-broadcast-23" width="34" height="34" patternUnits="userSpaceOnUse" patternTransform="rotate(13)">
       <line x1="0" y1="0" x2="0" y2="34" stroke="#ffffff" stroke-opacity="0.05" stroke-width="1"/>

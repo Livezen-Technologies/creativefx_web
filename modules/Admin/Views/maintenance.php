@@ -54,7 +54,7 @@ $previewUrl = rtrim(site_url(), '/') . '/?preview=' . $bypassKey;
                 <input type="hidden" name="state" value="<?= $state['active'] ? 'off' : 'on' ?>">
                 <button type="submit" class="rounded-lg px-5 py-2.5 text-sm font-semibold transition <?= $state['active']
                     ? 'bg-emerald-500 text-black hover:bg-emerald-400'
-                    : 'bg-brand-red text-white hover:bg-brand-red/85' ?>">
+                    : 'bg-brand-red text-brand-ink hover:bg-brand-red/85' ?>">
                     <?= $state['active'] ? 'Bring the site back online' : 'Take the site offline' ?>
                 </button>
             </form>
@@ -102,7 +102,7 @@ $previewUrl = rtrim(site_url(), '/') . '/?preview=' . $bypassKey;
             <legend class="px-2 text-xs font-semibold uppercase tracking-widest text-brand-red">What visitors see</legend>
             <p class="mb-5 text-xs text-white/40">
                 Leave the headline and message empty to use the built-in wording, which is
-                already written in all four site languages. Anything you type here replaces
+                already written in every site language. Anything you type here replaces
                 it for every visitor, in that one language.
             </p>
 
@@ -110,7 +110,7 @@ $previewUrl = rtrim(site_url(), '/') . '/?preview=' . $bypassKey;
                 <div>
                     <label class="<?= $labelCls ?>" for="brand">Name on the page</label>
                     <input type="text" id="brand" name="brand" value="<?= esc($state['brand']) ?>"
-                           placeholder="<?= esc(setting('site_name', 'Norlanka'), 'attr') ?>" class="<?= $inputCls ?>">
+                           placeholder="<?= esc(setting('site_name', 'CreativeFX'), 'attr') ?>" class="<?= $inputCls ?>">
                     <p class="mt-1 text-xs text-white/35">Defaults to the site name from Settings.</p>
                 </div>
 
@@ -160,7 +160,7 @@ $previewUrl = rtrim(site_url(), '/') . '/?preview=' . $bypassKey;
         </fieldset>
 
         <div class="flex flex-wrap items-center gap-3">
-            <button type="submit" class="rounded-lg bg-brand-red px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-red/85">
+            <button type="submit" class="rounded-lg bg-brand-red px-5 py-2.5 text-sm font-semibold text-brand-ink transition hover:bg-brand-red/85">
                 Save
             </button>
             <a href="<?= site_url('admin/maintenance/preview') ?>" target="_blank" rel="noopener"

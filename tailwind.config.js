@@ -17,6 +17,9 @@ export default {
           DEFAULT: 'rgb(var(--accent) / <alpha-value>)',
           red: 'rgb(var(--accent) / <alpha-value>)',
           'red-dark': 'rgb(var(--accent-dark) / <alpha-value>)',
+          // Foreground for text/icons sitting ON a filled accent surface.
+          // White is only legible on a dark accent; the amber needs near-black.
+          ink: 'rgb(var(--accent-ink) / <alpha-value>)',
           // Themeable ground: light-grey by default, near-black inside .on-dark.
           black: 'rgb(var(--bg) / <alpha-value>)',
         },

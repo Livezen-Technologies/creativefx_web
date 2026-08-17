@@ -34,11 +34,11 @@ $symbol = is_file(FCPATH . 'media/brand/cfx-symbol.svg') ? '/media/brand/cfx-sym
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title><?= esc($headline) ?> — <?= esc($brand) ?></title>
-<meta name="theme-color" content="#CF2030">
+<meta name="theme-color" content="#FFC107">
 <link rel="icon" type="image/png" sizes="32x32" href="/media/brand/cfx-32.png">
 <style>
     :root {
-        --red: #CF2030;
+        --red: #FFC107;   /* CreativeFX amber */
         --ink: #ffffff;
         --muted: rgba(255, 255, 255, .55);
         --line: rgba(255, 255, 255, .12);

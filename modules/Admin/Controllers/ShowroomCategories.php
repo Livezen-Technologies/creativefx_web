@@ -22,7 +22,7 @@ class ShowroomCategories extends BaseCrudController
         ['name' => 'slug', 'label' => 'Slug', 'rules' => 'required|alpha_dash|max_length[191]'],
         ['name' => 'name', 'label' => 'Name', 'type' => 'locale'],
         ['name' => 'theme', 'label' => 'Theme', 'help' => 'e.g. clouds, night, arena — drives the 3D accent'],
-        ['name' => 'background', 'label' => 'Accent colour', 'help' => 'Hex, e.g. #CF2030'],
+        ['name' => 'background', 'label' => 'Accent colour', 'help' => 'Hex, e.g. #FFC107'],
         ['name' => 'sort_order', 'label' => 'Sort order', 'type' => 'number'],
         ['name' => 'status', 'label' => 'Status', 'type' => 'select', 'options' => ['draft' => 'Draft', 'published' => 'Published', 'archived' => 'Archived']],
     ];

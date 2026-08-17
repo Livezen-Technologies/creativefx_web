@@ -15,7 +15,7 @@ $jobTitle = t_field(json_decode($row['job_title'] ?? '[]', true) ?: []);
                     <p class="mt-1 text-sm text-white/60">Applied for <span class="text-brand-red"><?= esc($jobTitle) ?></span> · <?= esc(date('j M Y, H:i', strtotime($row['created_at']))) ?></p>
                 </div>
                 <?php if ($row['resume_path']): ?>
-                    <a href="<?= site_url('admin/applications/' . $row['id'] . '/cv') ?>" class="rounded-lg bg-brand-red px-5 py-2.5 text-xs font-semibold uppercase tracking-widest text-white hover:bg-brand-red-dark">Download CV</a>
+                    <a href="<?= site_url('admin/applications/' . $row['id'] . '/cv') ?>" class="rounded-lg bg-brand-red px-5 py-2.5 text-xs font-semibold uppercase tracking-widest text-brand-ink hover:bg-brand-red-dark">Download CV</a>
                 <?php endif; ?>
             </div>
 
@@ -70,7 +70,7 @@ $jobTitle = t_field(json_decode($row['job_title'] ?? '[]', true) ?: []);
             <label class="mt-5 block text-xs uppercase tracking-widest text-white/40">Notes (HR-internal)</label>
             <textarea name="notes" rows="6" class="mt-2 w-full rounded-lg border border-white/15 bg-black/40 px-3 py-2 text-sm focus:border-brand-red focus:outline-none" placeholder="Interview notes, next steps…"><?= esc($row['notes'] ?? '') ?></textarea>
 
-            <button type="submit" class="mt-5 w-full rounded-lg bg-brand-red px-5 py-2.5 text-xs font-semibold uppercase tracking-widest text-white hover:bg-brand-red-dark">Save</button>
+            <button type="submit" class="mt-5 w-full rounded-lg bg-brand-red px-5 py-2.5 text-xs font-semibold uppercase tracking-widest text-brand-ink hover:bg-brand-red-dark">Save</button>
             <a href="mailto:<?= esc($row['email'], 'attr') ?>?subject=<?= rawurlencode('Your application — ' . $jobTitle . ' at Norlanka') ?>"
                class="mt-3 block rounded-lg border border-white/15 px-5 py-2.5 text-center text-xs font-semibold uppercase tracking-widest hover:border-white">Email candidate</a>
         </form>

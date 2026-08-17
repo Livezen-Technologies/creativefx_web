@@ -1,7 +1,7 @@
 <?php
 helper(['norlanka', 'url']);
 $this->extend('Modules\Core\Views\layouts\main');
-$hex = static fn ($v, $fallback = '#CF2030') => preg_match('/^#[0-9a-fA-F]{3,8}$/', (string) $v) ? $v : $fallback;
+$hex = static fn ($v, $fallback = '#FFC107') => preg_match('/^#[0-9a-fA-F]{3,8}$/', (string) $v) ? $v : $fallback;
 $firstSlug = $categories[0]['slug'] ?? '';
 ?>
 <?= $this->section('content') ?>

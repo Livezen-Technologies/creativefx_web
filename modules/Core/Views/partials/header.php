@@ -130,7 +130,7 @@ $whatsapp = preg_replace('/[^0-9+]/', '', (string) setting('whatsapp', '', 'cont
             <?= $this->include('Modules\Core\Views\partials\lang_switcher') ?>
 
             <a href="<?= esc(locale_url('quote')) ?>"
-               class="hidden items-center rounded-lg bg-brand-red px-4 py-2.5 text-xs font-semibold uppercase tracking-widest text-white transition hover:bg-brand-red/85 sm:inline-flex">
+               class="hidden items-center rounded-lg bg-brand-red px-4 py-2.5 text-xs font-semibold uppercase tracking-widest text-brand-ink transition hover:bg-brand-red/85 sm:inline-flex">
                 <?= esc(lang('Site.nav.quote')) ?>
             </a>
 
@@ -183,7 +183,7 @@ $whatsapp = preg_replace('/[^0-9+]/', '', (string) setting('whatsapp', '', 'cont
 
             <div class="mt-6 flex flex-col gap-3">
                 <a href="<?= esc(locale_url('quote')) ?>" @click="mobile=false"
-                   class="rounded-lg bg-brand-red px-5 py-3.5 text-center text-sm font-semibold uppercase tracking-widest text-white">
+                   class="rounded-lg bg-brand-red px-5 py-3.5 text-center text-sm font-semibold uppercase tracking-widest text-brand-ink">
                     <?= esc(lang('Site.nav.quote')) ?>
                 </a>
                 <?php if ($whatsapp !== ''): ?>
