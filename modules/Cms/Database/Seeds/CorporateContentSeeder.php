@@ -96,9 +96,10 @@ class CorporateContentSeeder extends Seeder
     private function pages(): array
     {
         return [
-            'about-us'      => $this->aboutUs(),
-            'our-business'  => $this->ourBusiness(),
-            'our-locations' => $this->ourLocations(),
+            'accommodation' => $this->accommodation(),
+            'dining'        => $this->dining(),
+            'things-to-do'  => $this->thingsToDo(),
+            'gallery'       => $this->gallery(),
             'contact'       => $this->contact(),
         ];
     }
@@ -117,192 +118,202 @@ class CorporateContentSeeder extends Seeder
         return ['key' => 'hero', 'type' => 'hero', 'blocks' => [['pagehero', $content]]];
     }
 
-    private function ctaContact(): array
+    /** Every page ends by pointing at the booking request form. */
+    private function ctaBook(): array
     {
         return ['key' => 'cta', 'type' => 'cta', 'blocks' => [
             ['cta', [
-                'title'  => $this->loc('Bring Magic Corn to your event'),
-                'text'   => $this->loc('Outlet enquiries, bulk orders and event catering — talk to our team.'),
-                'button' => $this->loc('Contact us'),
+                'title'  => $this->loc('Reserve your room at Giants Forest'),
+                'text'   => $this->loc('Tell us your dates and we will confirm availability by phone or email.'),
+                'button' => $this->loc('Book Now'),
                 'url'    => 'contact',
             ]],
         ]];
     }
 
-    private function aboutUs(): array
+    private function accommodation(): array
     {
         return [
-            'title' => $this->loc('About Us'),
-            'meta'  => $this->loc('Magic Corn — the original corn in a cup, homegrown in Sri Lanka since 2007.'),
+            'title' => $this->loc('Accommodation'),
+            'meta'  => $this->loc('Deluxe and Standard rooms at Kukuleganga Giants Forest, Kalawana — balconies over the Sabaragamuwa hills.'),
             'sections' => [
                 $this->hero(
-                    $this->loc('About Us'),
-                    $this->loc('Sri Lanka’s original corn in a cup'),
-                    $this->loc('A 100% homegrown brand, cultivating sweet corn on a commercial scale since 2007.'),
-                    null, null, '/media/magiccorn/corn.jpg'
+                    $this->loc('Accommodation'),
+                    $this->loc('Rooms & Suites'),
+                    $this->loc('Engage with modern luxuries at your own place.'),
+                    null, null, '/media/giantforests/Accommodation-1-Giants-Forests-Hotel.jpg'
+                ),
+                ['key' => 'rooms', 'type' => 'values', 'blocks' => [
+                    ['values_grid', [
+                        'title' => $this->loc('Two ways to stay'),
+                        'items' => [
+                            ['title' => $this->loc('Deluxe Room'),
+                             'image' => '/media/giantforests/Deluxe-Room-Giants-forest.jpg',
+                             'text'  => $this->loc('Superior double rooms with an open living area, and a balcony that gives you the Sabaragamuwa hills at first light.')],
+                            ['title' => $this->loc('Standard Room'),
+                             'image' => '/media/giantforests/Single-Room-Giants-forest.jpg',
+                             'text'  => $this->loc('Wooden ceilings keep these rooms cool through the day. Every facility of the hotel comes with them.')],
+                        ],
+                    ]],
+                ]],
+                ['key' => 'facilities', 'type' => 'values', 'blocks' => [
+                    ['values_grid', [
+                        'eyebrow' => $this->loc('Our facilities'),
+                        'title'   => $this->loc('What comes with the room'),
+                        'items'   => [
+                            ['title' => $this->loc('24 hour room service'),  'text' => $this->loc('Someone is on call whatever time you need them.')],
+                            ['title' => $this->loc('Laundry service'),        'text' => $this->loc('Same-day laundry for guests staying with us.')],
+                            ['title' => $this->loc('Conference hall'),        'text' => $this->loc('A hall for meetings, training and small functions.')],
+                            ['title' => $this->loc('Parking'),                'text' => $this->loc('Off-road parking on site for every room.')],
+                            ['title' => $this->loc('35m swimming pool'),      'text' => $this->loc('A 35 metre pool with a separate baby pool beside it.')],
+                            ['title' => $this->loc('A/C and non-A/C rooms'),  'text' => $this->loc('Large rooms in both, so you can take the climate as you prefer it.')],
+                        ],
+                    ]],
+                ]],
+                ['key' => 'rooms-gallery', 'type' => 'gallery', 'blocks' => [
+                    ['gallery', [
+                        'eyebrow' => $this->loc('Inside the rooms'),
+                        'title'   => $this->loc('See before you feel'),
+                        'items'   => [
+                            ['src' => '/media/giantforests/Deluxe-Room-1-Giants-forest-Hotel.jpg', 'caption' => $this->loc('Deluxe Room')],
+                            ['src' => '/media/giantforests/Deluxe-Room-2-Giants-forest-Hotel.jpg', 'caption' => $this->loc('Deluxe Room — open living area')],
+                            ['src' => '/media/giantforests/Deluxe-Room-3-Giants-forest-Hotel.jpg', 'caption' => $this->loc('Deluxe Room — balcony')],
+                            ['src' => '/media/giantforests/Single-Room-1-Giants-forest-Hotel.jpg', 'caption' => $this->loc('Standard Room')],
+                            ['src' => '/media/giantforests/Single-Room-2-Giants-forest-Hotel.jpg', 'caption' => $this->loc('Standard Room — wooden ceiling')],
+                            ['src' => '/media/giantforests/Pool-Giants-Forests-Hotel.jpg',         'caption' => $this->loc('The 35 metre pool')],
+                        ],
+                    ]],
+                ]],
+                $this->ctaBook(),
+            ],
+        ];
+    }
+
+    private function dining(): array
+    {
+        return [
+            'title' => $this->loc('Dining'),
+            'meta'  => $this->loc('Sri Lankan and international cooking at Kukuleganga Giants Forest, served overlooking the reservoir.'),
+            'sections' => [
+                $this->hero(
+                    $this->loc('Dining'),
+                    $this->loc('Eat well, in the middle of the forest'),
+                    $this->loc('Sri Lankan cooking and familiar favourites, prepared fresh through the day.'),
+                    null, null, '/media/giantforests/Kukuleganga-Giants-Forest-Dining-Banner.jpg'
                 ),
                 ['key' => 'story', 'type' => 'richtext', 'blocks' => [
                     ['richtext', [
-                        'eyebrow' => $this->loc('Our story'),
-                        'title'   => $this->loc('From one outlet to a household name'),
+                        'eyebrow' => $this->loc('The restaurant'),
+                        'title'   => $this->loc('Tasty, affordable, and made to order'),
                         'text'    => $this->loc(
-                            'Magic Corn was founded in Sri Lanka in 2007 by Mr. Shanker Viswakula, who introduced '
-                            . 'the “Corn in a Cup” concept to the Sri Lankan snack industry. What began as a single '
-                            . 'outlet has grown to more than thirty across the island in the space of twelve years. '
-                            . 'We cultivate sweet corn on a commercial scale and remain a 100% homegrown brand — '
-                            . 'today an ISO 9001 certified company.'
+                            'Our kitchen cooks Sri Lankan food the way it should be, alongside dishes anyone will '
+                            . 'recognise, so a table of guests from anywhere can eat together happily. Meals are '
+                            . 'prepared to order rather than held on a buffet, and the dining room looks out over '
+                            . 'the valley. Room service runs around the clock if you would rather eat upstairs.'
                         ),
                     ]],
                 ]],
-                ['key' => 'numbers', 'type' => 'metrics', 'blocks' => [
-                    ['metrics', [
-                        'title' => $this->loc('Magic Corn today'),
-                        'items' => [
-                            ['value' => '2007', 'suffix' => '', 'label' => $this->loc('Founded in Sri Lanka')],
-                            ['value' => '30', 'suffix' => '+', 'label' => $this->loc('Outlets island-wide')],
-                            ['value' => '40', 'suffix' => '+', 'label' => $this->loc('Women employed at our factory')],
-                            ['value' => '100', 'suffix' => '%', 'label' => $this->loc('Homegrown Sri Lankan brand')],
-                        ],
-                    ]],
-                ]],
-                ['key' => 'values', 'type' => 'values', 'blocks' => [
-                    ['values_grid', [
-                        'title' => $this->loc('What goes in the cup'),
-                        'items' => [
-                            ['title' => $this->loc('100% natural spices'),
-                             'text'  => $this->loc('Precooked sweet corn, steamed and mixed with natural spices, then smothered in toppings to order.')],
-                            ['title' => $this->loc('No MSG, no preservatives'),
-                             'text'  => $this->loc('No MSG, added flavours or preservatives are used in preparing our corn.')],
-                            ['title' => $this->loc('ISO 9001 certified'),
-                             'text'  => $this->loc('Our sweet corn processing is run to a certified quality management standard.')],
-                            ['title' => $this->loc('Grown and made here'),
-                             'text'  => $this->loc('Sweet corn cultivated on a commercial scale in Sri Lanka — a fully homegrown supply chain.')],
-                        ],
-                    ]],
-                ]],
-                ['key' => 'gallery', 'type' => 'gallery', 'blocks' => [
+                ['key' => 'dining-gallery', 'type' => 'gallery', 'blocks' => [
                     ['gallery', [
-                        'eyebrow' => $this->loc('Magic Corn'),
-                        'title'   => $this->loc('From the field to the cup'),
+                        'title' => $this->loc('At the table'),
+                        'items' => [
+                            ['src' => '/media/giantforests/Restaurant-Giants-forest-Hotel.jpg', 'caption' => $this->loc('The restaurant')],
+                            ['src' => '/media/giantforests/Poolside-Giants-Forests-Hotel.jpg',  'caption' => $this->loc('Poolside')],
+                            ['src' => '/media/giantforests/Poolhut-Giants-Forests-Hotel.jpg',   'caption' => $this->loc('The pool hut')],
+                        ],
+                    ]],
+                ]],
+                $this->ctaBook(),
+            ],
+        ];
+    }
+
+    private function thingsToDo(): array
+    {
+        return [
+            'title' => $this->loc('Things To Do'),
+            'meta'  => $this->loc('Sinharaga tracking, boat tours, jungle hikes, cycling and the waterfalls of Ratnapura.'),
+            'sections' => [
+                $this->hero(
+                    $this->loc('Things To Do'),
+                    $this->loc('The forest starts at the door'),
+                    $this->loc('Sinharaja is 25km away. Most of what follows is a good deal closer.'),
+                    null, null, '/media/giantforests/Things-to-do-Giants-Forests-Hotel.jpg'
+                ),
+                ['key' => 'activities', 'type' => 'values', 'blocks' => [
+                    ['values_grid', [
+                        'title' => $this->loc('While you are here'),
+                        'items' => [
+                            ['title' => $this->loc('Sinharaja tracking'),
+                             'image' => '/media/giantforests/Sinharaja-Tracking.jpg',
+                             'text'  => $this->loc('Guided walks into Sinharaja, the last major stretch of primary rainforest in Sri Lanka, 25km from the hotel.')],
+                            ['title' => $this->loc('Boat tours'),
+                             'image' => '/media/giantforests/Boat-Tour-1-Giants-Forests-Hotel.jpg',
+                             'text'  => $this->loc('Out onto the Kukuleganga reservoir, which the hotel looks over, in the early morning or towards dusk.')],
+                            ['title' => $this->loc('Jungle hikes'),
+                             'image' => '/media/giantforests/Hiking-Jungle-Tour-1-Giants-Forests-Hotel.jpg',
+                             'text'  => $this->loc('Trails through the surrounding jungle, from a gentle hour to most of a day.')],
+                            ['title' => $this->loc('Cycling'),
+                             'image' => '/media/giantforests/Cycle-tour-1.jpg',
+                             'text'  => $this->loc('Quiet roads through tea land and village, with bicycles arranged from the hotel.')],
+                            ['title' => $this->loc('Natural bathing'),
+                             'image' => '/media/giantforests/Natural-Bathing.jpg',
+                             'text'  => $this->loc('Rock pools and river bathing spots within easy reach of the property.')],
+                            ['title' => $this->loc('Waterfalls of Ratnapura'),
+                             'image' => '/media/giantforests/Bopath-Falls-Ratnapura.jpg',
+                             'text'  => $this->loc('Bopath Ella, Katugas Ella and Makeli Ella are all a comfortable drive away.')],
+                        ],
+                    ]],
+                ]],
+                ['key' => 'around', 'type' => 'gallery', 'blocks' => [
+                    ['gallery', [
+                        'eyebrow' => $this->loc('Nearby'),
+                        'title'   => $this->loc('The waterfalls'),
                         'items'   => [
-                            ['src' => '/media/magiccorn/5.jpg', 'caption' => $this->loc('Sweet corn grown on a commercial scale in Sri Lanka')],
-                            ['src' => '/media/magiccorn/4.jpg', 'caption' => $this->loc('Harvested and brought in for processing')],
-                            ['src' => '/media/magiccorn/6.jpg', 'caption' => $this->loc('Husked and prepared at our factory')],
-                            ['src' => '/media/magiccorn/2.jpg', 'caption' => $this->loc('Served hot in a cup at our outlets')],
+                            ['src' => '/media/giantforests/Bopath-Falls-Ratnapura.jpg',        'caption' => $this->loc('Bopath Ella, Ratnapura')],
+                            ['src' => '/media/giantforests/Katugas-Falls-Ratnapura.jpg',       'caption' => $this->loc('Katugas Ella, Ratnapura')],
+                            ['src' => '/media/giantforests/Makeli-Ella-Waterfall-Ratnapura.jpg', 'caption' => $this->loc('Makeli Ella, Ratnapura')],
+                            ['src' => '/media/giantforests/Pandioya-Falls-Ratnapura.jpg',      'caption' => $this->loc('Pandi Oya Falls, Ratnapura')],
                         ],
                     ]],
                 ]],
-                ['key' => 'impact', 'type' => 'statement', 'blocks' => [
-                    ['statement', [
-                        'items' => [
-                            ['title' => $this->loc('Livelihoods in rural Sri Lanka'),
-                             'text'  => $this->loc(
-                                'Our sweet corn processing factory provides job opportunities to more than forty '
-                                . 'female staff in rural areas, giving their families an additional income.'
-                             )],
-                        ],
-                    ]],
-                ]],
-                $this->ctaContact(),
+                $this->ctaBook(),
             ],
         ];
     }
 
-    private function ourBusiness(): array
+    private function gallery(): array
     {
         return [
-            'title' => $this->loc('Our Business'),
-            'meta'  => $this->loc('Magic Corn — cultivation, processing and retail of sweet corn across Sri Lanka.'),
+            'title' => $this->loc('Gallery'),
+            'meta'  => $this->loc('The rooms, the pool and the grounds at Kukuleganga Giants Forest.'),
             'sections' => [
                 $this->hero(
-                    $this->loc('Our Business'),
-                    $this->loc('From our fields to your cup'),
-                    $this->loc('We grow, process and serve sweet corn — the whole chain, under one brand.'),
-                    null, null, '/media/magiccorn/5.jpg'
+                    $this->loc('Gallery'),
+                    $this->loc('See before you feel'),
+                    $this->loc('Step into our captions at your family’s home. Find surroundings that match your eagerness.'),
+                    null, null, '/media/giantforests/Gallery-Giants-Forests-Hotel.jpg'
                 ),
-                ['key' => 'process', 'type' => 'process', 'blocks' => [
-                    ['process_steps', [
-                        'title' => $this->loc('How Magic Corn is made'),
+                ['key' => 'grid', 'type' => 'gallery', 'blocks' => [
+                    ['gallery', [
+                        'title' => $this->loc('Our captions at the hotel premises'),
                         'items' => [
-                            ['title' => $this->loc('Cultivation'),
-                             'text'  => $this->loc('Sweet corn grown on a commercial scale in Sri Lanka.')],
-                            ['title' => $this->loc('Processing'),
-                             'text'  => $this->loc('Harvested corn is precooked and frozen at our ISO 9001 certified factory.')],
-                            ['title' => $this->loc('Steamed to order'),
-                             'text'  => $this->loc('At the outlet the corn is steamed and mixed with 100% natural spices.')],
-                            ['title' => $this->loc('Topped your way'),
-                             'text'  => $this->loc('Smothered in the toppings you choose, and served hot in a cup.')],
+                            ['src' => '/media/giantforests/Gallery-16-Giants-forest-hotel.jpg', 'caption' => $this->loc('The grounds')],
+                            ['src' => '/media/giantforests/Gallery-17-Giants-forest-hotel.jpg', 'caption' => $this->loc('The grounds')],
+                            ['src' => '/media/giantforests/Gallery-18-Giants-forest-hotel.jpg', 'caption' => $this->loc('The grounds')],
+                            ['src' => '/media/giantforests/Gallery-19-Giants-forest-hotel.jpg', 'caption' => $this->loc('The grounds')],
+                            ['src' => '/media/giantforests/Gallery-20-Giants-forest-hotel.jpg', 'caption' => $this->loc('The grounds')],
+                            ['src' => '/media/giantforests/Gallery-21-Giants-forest-hotel.jpg', 'caption' => $this->loc('The grounds')],
+                            ['src' => '/media/giantforests/Pool-Giants-Forests-Hotel.jpg',      'caption' => $this->loc('The 35 metre pool')],
+                            ['src' => '/media/giantforests/Poolside-Giants-Forests-Hotel.jpg',  'caption' => $this->loc('Poolside')],
+                            ['src' => '/media/giantforests/Poolhut-Giants-Forests-Hotel.jpg',   'caption' => $this->loc('The pool hut')],
+                            ['src' => '/media/giantforests/Deluxe-Room-Giants-forest.jpg',      'caption' => $this->loc('Deluxe Room')],
+                            ['src' => '/media/giantforests/Single-Room-Giants-forest.jpg',      'caption' => $this->loc('Standard Room')],
+                            ['src' => '/media/giantforests/Restaurant-Giants-forest-Hotel.jpg', 'caption' => $this->loc('The restaurant')],
                         ],
                     ]],
                 ]],
-                ['key' => 'flavours', 'type' => 'cards', 'blocks' => [
-                    ['feature_cards', [
-                        'title' => $this->loc('Flavours and toppings'),
-                        'intro' => $this->loc('Selected flavours are combined by our team to bring unique combinations to every cup.'),
-                        'items' => [
-                            ['title' => $this->loc('Butter'),  'text' => $this->loc('The classic — melted through hot, freshly steamed corn.')],
-                            ['title' => $this->loc('Garlic'),  'text' => $this->loc('Savoury and aromatic, a favourite with regulars.')],
-                            ['title' => $this->loc('Cheese'),  'text' => $this->loc('Rich and generous, stirred right through the cup.')],
-                            ['title' => $this->loc('Mayo'),    'text' => $this->loc('Creamy, and the base for many of our combinations.')],
-                            ['title' => $this->loc('Minced chicken'), 'text' => $this->loc('For a cup that eats like a meal.')],
-                            ['title' => $this->loc('Lime & oyster sauce'), 'text' => $this->loc('Bright and savoury — the combination that regulars come back for.')],
-                        ],
-                    ]],
-                ]],
-                ['key' => 'channels', 'type' => 'cards', 'blocks' => [
-                    ['feature_cards', [
-                        'title' => $this->loc('Where to find us'),
-                        'items' => [
-                            ['title' => $this->loc('Our outlets'),
-                             'text'  => $this->loc('More than thirty Magic Corn outlets serving corn in a cup across the island.')],
-                            ['title' => $this->loc('Frozen retail packs'),
-                             'text'  => $this->loc('Take home our 1kg frozen sweet corn pack and make it your own way.')],
-                            ['title' => $this->loc('Bulk and wholesale'),
-                             'text'  => $this->loc('Frozen sweet corn supplied to hotels, restaurants and caterers.')],
-                            ['title' => $this->loc('Events and catering'),
-                             'text'  => $this->loc('Magic Corn carts and catering for parties, offices and functions.')],
-                        ],
-                    ]],
-                ]],
-                $this->ctaContact(),
-            ],
-        ];
-    }
-
-    private function ourLocations(): array
-    {
-        return [
-            'title' => $this->loc('Our Locations'),
-            'meta'  => $this->loc('Magic Corn outlets across Sri Lanka, and our head office in Dehiwala.'),
-            'sections' => [
-                $this->hero(
-                    $this->loc('Our Locations'),
-                    $this->loc('Thirty-plus outlets across the island'),
-                    $this->loc('Find your nearest Magic Corn, or talk to us about opening one.'),
-                    null, null, '/media/magiccorn/2.jpg'
-                ),
-                ['key' => 'map', 'type' => 'map', 'blocks' => [
-                    ['map', [
-                        'title' => $this->loc('Head office and factory'),
-                        'intro' => $this->loc('Our head office is in Dehiwala, with sweet corn processing supplying every outlet.'),
-                        'items' => [
-                            ['region' => $this->loc('Dehiwala'), 'detail' => $this->loc('Head office — No 119, Allen Avenue'),
-                             'lat' => 6.8511, 'lon' => 79.8653, 'hq' => true],
-                        ],
-                    ]],
-                ]],
-                ['key' => 'outlets', 'type' => 'richtext', 'blocks' => [
-                    ['richtext', [
-                        'eyebrow' => $this->loc('Outlets'),
-                        'title'   => $this->loc('Find your nearest cup'),
-                        'text'    => $this->loc(
-                            'Magic Corn has grown from a single outlet in 2007 to more than thirty across Sri Lanka. '
-                            . 'For the outlet nearest you, or to ask about opening a Magic Corn of your own, get in touch '
-                            . 'and our team will help.'
-                        ),
-                    ]],
-                ]],
-                $this->ctaContact(),
+                $this->ctaBook(),
             ],
         ];
     }
@@ -311,27 +322,27 @@ class CorporateContentSeeder extends Seeder
     {
         return [
             'title' => $this->loc('Contact Us'),
-            'meta'  => $this->loc('Talk to Magic Corn — orders, outlets, bulk supply and events.'),
+            'meta'  => $this->loc('Book a room at Kukuleganga Giants Forest — Dam Site, Project Road, Kukuleganga, Kalawana.'),
             'sections' => [
                 $this->hero(
                     $this->loc('Contact Us'),
-                    $this->loc('Get in touch'),
-                    $this->loc('Open every day, 9:00 AM to 8:00 PM.'),
-                    null, null, '/media/magiccorn/best-corn.jpg'
+                    $this->loc('Reserve your room'),
+                    $this->loc('Tell us your dates and we will come back to you with availability.'),
+                    null, null, '/media/giantforests/Kukuleganga-Giants-Forest-Contact-Us-1.jpg'
                 ),
                 ['key' => 'form', 'type' => 'contact', 'blocks' => [
                     ['contact_block', [
-                        'title' => $this->loc('Send us a message'),
-                        'intro' => $this->loc('For orders, outlet enquiries, bulk supply or event catering — we would love to hear from you.'),
+                        'title' => $this->loc('Request a booking'),
+                        'intro' => $this->loc('Send us your dates, the room you would like and how many are coming. We confirm every request by phone or email — nothing is charged on this site.'),
                     ]],
                 ]],
                 ['key' => 'where', 'type' => 'map', 'blocks' => [
                     ['map', [
-                        'title' => $this->loc('Where we are'),
-                        'intro' => $this->loc('No 119, Allen Avenue, Dehiwala, Sri Lanka.'),
+                        'title' => $this->loc('Finding us'),
+                        'intro' => $this->loc('Dam Site, Project Road, Kukuleganga, Kalawana 70450. Two and a half hours from Bandaranaike International Airport, 46km from the Dodangoda highway exit.'),
                         'items' => [
-                            ['region' => $this->loc('Dehiwala'), 'detail' => $this->loc('Head office — No 119, Allen Avenue'),
-                             'lat' => 6.8511, 'lon' => 79.8653, 'hq' => true],
+                            ['region' => $this->loc('Kukuleganga'), 'detail' => $this->loc('Dam Site, Project Road, Kalawana 70450'),
+                             'lat' => 6.5586, 'lon' => 80.3242, 'hq' => true],
                         ],
                     ]],
                 ]],

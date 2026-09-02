@@ -12,7 +12,7 @@
     <?php // Social sharing (per-page OG image is editable in Admin → Pages).
     $ogTitle = $title ?? setting('site_name', 'Magic Corn');
     $ogDesc  = $metaDescription ?? setting('tagline', '');
-    $ogImg   = ! empty($ogImage) ? $ogImage : '/media/brand/favicon-180.png'; ?>
+    $ogImg   = ! empty($ogImage) ? $ogImage : '/media/giantforests/Welcome-to-Giants-Forest-1-1.jpg'; ?>
     <meta property="og:type" content="website">
     <meta property="og:title" content="<?= esc($ogTitle, 'attr') ?>">
     <meta property="og:description" content="<?= esc($ogDesc, 'attr') ?>">
@@ -20,8 +20,8 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="theme-color" content="#CF2030">
     <meta name="color-scheme" content="light dark">
-    <link rel="icon" type="image/png" sizes="32x32" href="<?= esc(media_src('/media/brand/favicon-32.png'), 'attr') ?>">
-    <link rel="apple-touch-icon" href="<?= esc(media_src('/media/brand/favicon-180.png'), 'attr') ?>">
+    <link rel="icon" type="image/png" sizes="32x32" href="<?= esc(media_src('/media/giantforests/Kukuleganga-Giants-Forest-Logo-1.png'), 'attr') ?>">
+    <link rel="apple-touch-icon" href="<?= esc(media_src('/media/giantforests/Kukuleganga-Giants-Forest-Logo-1.png'), 'attr') ?>">
     <?= vite_tags('resources/js/app.js') ?>
     <?php if ($ga = setting('ga4_measurement_id', '', 'analytics')): ?>
     <script async src="https://www.googletagmanager.com/gtag/js?id=<?= esc($ga) ?>"></script>
@@ -33,7 +33,7 @@
     <!-- Brand loading screen (shown once per session; dismissed by preloader.js). -->
     <div id="preloader" aria-hidden="true">
         <div class="pre-inner">
-            <img src="/media/brand/magiccorn-mark.jpg" alt="" width="60" height="60" class="pre-logo">
+            <img src="/media/giantforests/Kukuleganga-Giants-Forest-Logo-white.png" alt="" width="60" height="60" class="pre-logo">
             <span class="pre-word">Magic Corn</span>
             <span class="pre-bar"><span class="pre-bar-fill"></span></span>
         </div>

@@ -4,10 +4,10 @@ $parts = explode('/', trim(uri_string(), '/'));
 $currentSlug = $parts[1] ?? '';
 
 $nav = [
-    'about-us'      => lang('Site.nav.about'),
-    'our-business'  => lang('Site.nav.business'),
-    'our-locations' => lang('Site.nav.locations'),
-    'products'      => lang('Site.nav.products'),
+    'accommodation' => lang('Site.nav.accommodation'),
+    'dining'        => lang('Site.nav.dining'),
+    'things-to-do'  => lang('Site.nav.things_to_do'),
+    'gallery'       => lang('Site.nav.gallery'),
     'contact'       => lang('Site.nav.contact'),
 ];
 
@@ -32,8 +32,8 @@ $nav = [
          :class="scrolled ? 'h-16' : 'h-20'">
         <!-- Logo: official NL monogram + wordmark (static sizes so it renders
              correctly even before/without JS). -->
-        <a href="<?= esc(locale_url('')) ?>" class="flex items-center gap-2.5 shrink-0" aria-label="Magic Corn — home">
-            <img src="<?= esc(media_src('/media/brand/magiccorn-logo.png'), 'attr') ?>" alt="Magic Corn" width="643" height="307" class="h-9 w-auto">
+        <a href="<?= esc(locale_url('')) ?>" class="flex items-center gap-2.5 shrink-0" aria-label="Kukuleganga Giants Forest — home">
+            <img src="<?= esc(media_src('/media/giantforests/Kukuleganga-Giants-Forest-Logo-white.png'), 'attr') ?>" alt="Kukuleganga Giants Forest" width="300" height="200" class="h-9 w-auto">
         </a>
 
         <!-- Desktop nav -->

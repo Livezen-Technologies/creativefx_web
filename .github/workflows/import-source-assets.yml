@@ -232,7 +232,18 @@ jobs:
             fi
             curl -sSL -m 60 --create-dirs -o "$DEST/$FN" "$U" || continue
             SZ=$(wc -c < "$DEST/$FN")
-            # Drop anything that came back as an error page rather than an image.
+            # Judging "is this an image?" by size does not work. A WordPress 404
+            # page is about 70 KB, so it sailed past a 1 KB floor and got
+            # committed as a .png — nine of them in one run, including the logo
+            # and every favicon. They serve as 200s and fail only in the browser,
+            # which is the worst place to find out. Ask what the bytes actually
+            # are instead.
+            KIND=$(file -b --mime-type "$DEST/$FN" 2>/dev/null || echo unknown)
+            case "$KIND" in
+              image/*|video/*) : ;;
+              *) printf '  %-52s %s\n' "$FN" "not an image ($KIND) — discarded"
+                 rm -f "$DEST/$FN"; continue;;
+            esac
             if [ "$SZ" -lt 1000 ]; then rm -f "$DEST/$FN"; continue; fi
             n=$((n+1)); printf '  %-52s %8s bytes\n' "$FN" "$SZ"
           done < /tmp/urls.txt

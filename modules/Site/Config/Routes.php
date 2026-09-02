@@ -41,12 +41,17 @@ $routes->get('(:locale)', 'Home::index', $siteOptions);
 
 // Newsroom (listing + article detail). Co-located here for the same
 // (:locale) placeholder-ordering reason as the careers routes above.
-$routes->get('(:locale)/news', '\Modules\News\Controllers\News::index/$1', ['filter' => 'applocale']);
-$routes->get('(:locale)/news/(:segment)', '\Modules\News\Controllers\News::show/$1/$2', ['filter' => 'applocale']);
+// Retired for Giant Forests: the hotel has no news desk, and leaving the route
+// live served the previous brand's eight seeded posts on an indexable URL.
+// $routes->get('(:locale)/news', '\Modules\News\Controllers\News::index/$1', ['filter' => 'applocale']);
+// $routes->get('(:locale)/news/(:segment)', '\Modules\News\Controllers\News::show/$1/$2', ['filter' => 'applocale']);
 
 // Product catalog (listing + product detail with GLB 3D viewer).
-$routes->get('(:locale)/products', '\Modules\Catalog\Controllers\Products::index/$1', ['filter' => 'applocale']);
-$routes->get('(:locale)/products/(:segment)', '\Modules\Catalog\Controllers\Products::show/$1/$2', ['filter' => 'applocale']);
+// Retired for Giant Forests: a hotel has no shop, and this was still serving
+// the previous brand's catalogue — frozen sweet corn packs, priced in LKR — at
+// /en/products on a live, crawlable URL.
+// $routes->get('(:locale)/products', '\Modules\Catalog\Controllers\Products::index/$1', ['filter' => 'applocale']);
+// $routes->get('(:locale)/products/(:segment)', '\Modules\Catalog\Controllers\Products::show/$1/$2', ['filter' => 'applocale']);
 
 // CMS catch-all: /{locale}/{slug} -> PageController::show($slug)  ($2 = slug)
 $routes->get('(:locale)/(:segment)', 'PageController::show/$2', $siteOptions);

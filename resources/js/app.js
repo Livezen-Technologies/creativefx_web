@@ -1,14 +1,11 @@
-// Self-hosted brand fonts (Brand Guide) — K2D (primary/display) + Montserrat
-// (Avenir fallback; Avenir is licensed and can't be bundled). Bundled by Vite,
-// so no external font CDN request.
-import '@fontsource/k2d/latin-400.css';
-import '@fontsource/k2d/latin-500.css';
-import '@fontsource/k2d/latin-600.css';
-import '@fontsource/k2d/latin-700.css';
-import '@fontsource/montserrat/latin-400.css';
-import '@fontsource/montserrat/latin-500.css';
-import '@fontsource/montserrat/latin-600.css';
-import '@fontsource/montserrat/latin-700.css';
+// Self-hosted brand fonts — Playfair Display (display) + Poppins (body)
+// Bundled by Vite, so no external font CDN request.
+import '@fontsource/playfair-display/latin-400.css';
+import '@fontsource/playfair-display/latin-700.css';
+import '@fontsource/poppins/latin-400.css';
+import '@fontsource/poppins/latin-500.css';
+import '@fontsource/poppins/latin-600.css';
+import '@fontsource/poppins/latin-700.css';
 
 import '../css/app.css';
 

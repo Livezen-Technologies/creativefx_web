@@ -11,15 +11,21 @@ class SettingSeeder extends Seeder
         $now = date('Y-m-d H:i:s');
 
         $settings = [
-            ['general', 'site_name', 'Magic Corn', 'string', 1],
-            ['general', 'tagline', 'Corn in a Cup', 'string', 1],
-            ['brand', 'color_primary', '#CF2030', 'string', 1],
-            ['brand', 'color_secondary', '#000000', 'string', 1],
-            ['contact', 'email', 'shankerv@viswakula.com', 'string', 1],
-            ['contact', 'phone', '+94 11 366 4444', 'string', 1],
-            ['contact', 'whatsapp', '+94714545610', 'string', 1],
-            ['social', 'facebook', 'https://www.facebook.com/magiccornlk/', 'string', 1],
-            ['social', 'instagram', 'https://www.instagram.com/magiccorn.lk/', 'string', 1],
+            ['general', 'site_name', 'Kukuleganga Giants Forest', 'string', 1],
+            ['general', 'tagline', 'Stay in Sapphire Land', 'string', 1],
+            ['brand', 'color_primary', '#346142', 'string', 1],
+            ['brand', 'color_secondary', '#1B2E22', 'string', 1],
+            // The source site's theme obfuscates both addresses, so the real
+            // ones could not be read off it. Left blank rather than guessed:
+            // the footer and contact page render an address only when set, so
+            // a wrong one cannot be published by accident.
+            ['contact', 'email', '', 'string', 1],
+            ['contact', 'phone', '+94 76 573 5600', 'string', 1],
+            ['contact', 'phone_alt', '+94 76 758 4908', 'string', 1],
+            ['contact', 'whatsapp', '+94765735600', 'string', 1],
+            ['contact', 'address', 'Dam Site, Project Road, Kukuleganga, Kalawana 70450, Sri Lanka', 'string', 1],
+            ['social', 'facebook', 'https://www.facebook.com/giantsforest/', 'string', 1],
+            ['social', 'instagram', '', 'string', 1],
             ['analytics', 'ga4_measurement_id', '', 'string', 0],
         ];
 

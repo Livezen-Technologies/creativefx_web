@@ -25,10 +25,10 @@ export default {
         white: 'rgb(var(--fg) / <alpha-value>)',
       },
       fontFamily: {
-        // Brand Guide: K2D = primary/display, Avenir = secondary/body
-        // (Montserrat fallback — Avenir is licensed, local() first when present).
-        sans: ['Avenir', 'Avenir Next', 'Montserrat', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-        display: ['K2D', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        // Giant Forests uses the pairing the hotel's own site does: Playfair
+        // Display for headings, Poppins for everything else.
+        sans: ['Poppins', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        display: ['Playfair Display', 'Georgia', 'ui-serif', 'serif'],
       },
       letterSpacing: {
         widest: '0.2em',

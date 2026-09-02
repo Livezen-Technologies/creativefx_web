@@ -52,7 +52,7 @@ $impact = [
 <div id="fp" class="fp">
 
 <!-- ===================== HERO ===================== -->
-<?php $heroPoster = ! empty($video['poster_path']) ? $video['poster_path'] : '/media/magiccorn/best-corn.jpg'; ?>
+<?php $heroPoster = ! empty($video['poster_path']) ? $video['poster_path'] : '/media/giantforests/Welcome-to-Giants-Forest-1-1.jpg'; ?>
 <section
     id="hero"
     data-gsap="hero-out"
@@ -114,11 +114,11 @@ $impact = [
 
         <!-- CTA hierarchy: one dominant primary, one quiet secondary -->
         <div class="mt-10 flex flex-wrap items-center gap-6" data-gsap="reveal">
-            <a href="<?= esc(locale_url('our-business')) ?>" class="btn-brand btn-lg group">
+            <a href="<?= esc(locale_url('accommodation')) ?>" class="btn-brand btn-lg group">
                 <?= esc(lang('Site.home.hero.primary')) ?>
                 <svg class="ml-2 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </a>
-            <a href="<?= esc(locale_url('our-locations')) ?>" class="group inline-flex items-center gap-3 text-sm font-semibold uppercase tracking-widest text-white/85 transition hover:text-white">
+            <a href="<?= esc(locale_url('things-to-do')) ?>" class="group inline-flex items-center gap-3 text-sm font-semibold uppercase tracking-widest text-white/85 transition hover:text-white">
                 <span class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/30 transition group-hover:border-brand-red group-hover:bg-brand-red/10">
                     <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5l11 7-11 7z"/></svg>
                 </span>
@@ -157,7 +157,7 @@ $impact = [
             <p class="text-lg leading-relaxed text-white/65">
                 <?= esc(lang('Site.home.intro.body')) ?>
             </p>
-            <a href="<?= esc(locale_url('about-us')) ?>"
+            <a href="<?= esc(locale_url('accommodation')) ?>"
                class="mt-6 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-widest text-white transition hover:text-brand-red">
                 <?= esc(lang('Site.cta.our_story')) ?>
                 <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -202,7 +202,7 @@ $impact = [
             <p class="mt-5 max-w-xl text-lg leading-relaxed text-white/70">
                 <?= esc(lang('Site.home.impact.body')) ?>
             </p>
-            <a href="<?= esc(locale_url('about-us')) ?>" class="btn-brand mt-8"><?= esc(lang('Site.home.impact.cta')) ?></a>
+            <a href="<?= esc(locale_url('accommodation')) ?>" class="btn-brand mt-8"><?= esc(lang('Site.home.impact.cta')) ?></a>
         </div>
 
         <div class="grid gap-4" data-gsap="reveal">
@@ -236,7 +236,7 @@ $impact = [
                 </div>
                 <div class="flex flex-wrap gap-4 lg:justify-end">
                     <a href="<?= esc(locale_url('contact')) ?>" class="btn-brand"><?= esc(lang('Site.cta.contact_us')) ?></a>
-                    <a href="<?= esc(locale_url('our-locations')) ?>" class="btn-ghost"><?= esc(lang('Site.cta.find_outlet')) ?></a>
+                    <a href="<?= esc(locale_url('things-to-do')) ?>" class="btn-ghost"><?= esc(lang('Site.cta.find_outlet')) ?></a>
                 </div>
             </div>
         </div>

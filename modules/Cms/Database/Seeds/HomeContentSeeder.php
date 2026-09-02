@@ -75,63 +75,64 @@ class HomeContentSeeder extends Seeder
         $hero = $addSection('hero', 'hero', 0);
         $addBlock($hero, 'hero', [
             'headline' => [
-                'en' => 'Sweet corn, served hot in a cup.',
+                'en' => 'Stay in sapphire land with your closest.',
             ],
             'subhead' => [
-                'en' => 'Grown, steamed and topped your way — Sri Lanka’s original corn in a cup.',
+                'en' => 'A hotel above the Kukuleganga reservoir, at the edge of the Sinharaja rainforest.',
             ],
             // Kinetic-typography hero: pre + cycling word + post.
             'pre' => [
-                'en' => 'Sweet corn, served',
+                'en' => 'Wake up to',
             ],
             'post' => [
-                'en' => 'in a cup.',
+                'en' => 'in sapphire land.',
             ],
-            // Cycling words are the toppings the outlets actually serve.
+            // What a guest actually opens their eyes to, per the hotel's own copy.
             'rotators' => [
-                ['en' => 'buttered'],
-                ['en' => 'cheesy'],
-                ['en' => 'garlicky'],
-                ['en' => 'spiced'],
-                ['en' => 'hot'],
+                ['en' => 'birdsong'],
+                ['en' => 'sunrise'],
+                ['en' => 'cool air'],
+                ['en' => 'still water'],
+                ['en' => 'rainforest'],
             ],
         ], 0);
 
         // ---- Stats ------------------------------------------------------
         $stats = $addSection('stats', 'stats', 1);
         $statData = [
-            ['value' => '2007', 'suffix' => '', 'label' => ['en' => 'Serving corn in a cup since']],
-            ['value' => '30', 'suffix' => '+', 'label' => ['en' => 'Outlets island-wide']],
-            ['value' => '40', 'suffix' => '+', 'label' => ['en' => 'Women employed at our factory']],
-            ['value' => '100', 'suffix' => '%', 'label' => ['en' => 'Homegrown Sri Lankan brand']],
+            ['value' => '35', 'suffix' => 'm', 'label' => ['en' => 'Swimming pool, with a baby pool']],
+            ['value' => '25', 'suffix' => 'km', 'label' => ['en' => 'To the Sinharaja rainforest']],
+            ['value' => '46', 'suffix' => 'km', 'label' => ['en' => 'From the Dodangoda highway exit']],
+            ['value' => '24', 'suffix' => 'hr', 'label' => ['en' => 'Room service, every day']],
         ];
         foreach ($statData as $i => $s) {
             $addBlock($stats, 'stat', $s, $i);
         }
 
-        // ---- Certificates ------------------------------------------------
-        // The bodies Magic Corn is certified by. Artwork is matched from
-        // public/media/certifications/ by a slug of each name, so a mark shows
-        // as its logo once the file is supplied and as its name until then.
-        $certificates = $addSection('certificates', 'certificates', 2);
-        $addBlock($certificates, 'certificates', [
-            'eyebrow' => ['en' => 'Our certificates'],
-            'title'   => ['en' => 'What is our strength'],
-            'intro'   => ['en' => 'Our factory is audited against the standards these bodies set, and the corn we serve is held to them at every step.'],
+        // ---- Facilities --------------------------------------------------
+        // The six the hotel lists on its own site, in its own order.
+        $facilities = $addSection('certificates', 'certificates', 2);
+        $addBlock($facilities, 'certificates', [
+            'eyebrow' => ['en' => 'Our facilities'],
+            'title'   => ['en' => 'Comfort, at the highest level'],
+            'intro'   => ['en' => 'We always think about comforting you at the highest level. You may avail yourself of the following.'],
             'items'   => [
-                ['en' => 'Pro Food Pro Pack Ag Biz'],
-                ['en' => 'Hotel Asia Exhibition'],
-                ['en' => 'SLFPA'],
+                ['en' => '24hr Room Service'],
+                ['en' => 'Laundry Service'],
+                ['en' => 'Conference Hall'],
+                ['en' => 'Parking Facilities'],
+                ['en' => '35m Swimming Pool with Baby Pool'],
+                ['en' => 'A/C and Non A/C Rooms'],
             ],
         ], 0);
 
         // ---- CTA --------------------------------------------------------
         $cta = $addSection('cta', 'cta', 3);
         $addBlock($cta, 'cta', [
-            'title'  => ['en' => 'Take Magic Corn home'],
-            'text'   => ['en' => 'Our 1kg frozen sweet corn pack — the same corn we serve at the outlets.'],
-            'button' => ['en' => 'Visit the shop'],
-            'url'    => 'products',
+            'title'  => ['en' => 'Reserve your room today'],
+            'text'   => ['en' => 'Send us your dates and we will confirm availability. Nothing is charged on this site.'],
+            'button' => ['en' => 'Book Now'],
+            'url'    => 'contact',
         ], 0);
 
         $this->seedVideo($now, $j);
@@ -149,20 +150,25 @@ class HomeContentSeeder extends Seeder
                 // falls back to its gradient treatment rather than showing the
                 // previous brand's factory footage. Set these when footage arrives.
                 'src_path'      => '',
-                'poster_path'   => '/media/magiccorn/best-corn.jpg',
+                'poster_path'   => '/media/giantforests/Welcome-to-Giants-Forest-1-1.jpg',
                 'is_muted_loop' => 1,
                 'status'        => 'published',
                 'created_at'    => $now,
                 'updated_at'    => $now,
             ]);
         } else {
-            // Only clear a path still pointing at the previous brand's footage;
-            // a film added later in Admin -> Videos is left alone.
+            // The old rule named one specific stale path, so it recognised the
+            // brand it was written for and nothing else — standing this codebase
+            // up as a second site left the first site's photograph in the hero.
+            //
+            // The honest rule is about ownership, not paths: an empty src_path
+            // means nobody has uploaded a film here, so the poster is still
+            // seed-managed and should follow the seed. Upload one in
+            // Admin -> Videos and both are left alone from then on.
             $current = $videos->where('key', 'home_launch')->get()->getRowArray();
-            if (str_contains((string) ($current['src_path'] ?? ''), '/media/video/home-hero')
-                || ($current['poster_path'] ?? '') === '') {
+            if (($current['src_path'] ?? '') === '') {
                 $videos->where('key', 'home_launch')->update([
-                    'src_path' => '', 'poster_path' => '/media/magiccorn/best-corn.jpg', 'updated_at' => $now,
+                    'src_path' => '', 'poster_path' => '/media/giantforests/Welcome-to-Giants-Forest-1-1.jpg', 'updated_at' => $now,
                 ]);
             }
         }
