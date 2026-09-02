@@ -231,7 +231,7 @@ html.dark .theme-esg-green {  /* Impact page green scope, dark variant */
    glow — is scaled by one dimmer, so the heroes can be lightened or
    deepened site-wide from a single number. 1 is the original full-strength
    wash; the site runs lighter than that so the photography reads through. */
-:root { --hero-dim: 0.78; }
+:root { --hero-dim: 0.65; }
 
 /* The light theme is the exception: there `--bg` is the cream ground, so the
    scrim is not a shadow over the photo — it *is* the pale surface that keeps
@@ -266,6 +266,22 @@ html:not(.dark) { --hero-dim: 1; }
     rgb(var(--bg) / calc(1.00 * var(--hero-dim))),
     rgb(var(--bg) / calc(0.25 * var(--hero-dim))) 50%,
     transparent);
+}
+
+/* The side wash runs left-to-right, which works while the copy occupies the
+   left half of a wide hero. In a phone-width column the headline spans the
+   whole gradient — it starts on the opaque end and finishes on bare
+   photograph, and measured 2.53:1 there, under the 3:1 WCAG floor for large
+   text. Below the lg breakpoint the wash turns vertical instead, so every line
+   sits on the same base wherever it wraps. */
+@media (max-width: 1023px) {
+  .hero-wash-side,
+  .hero-wash-side--page {
+    background: linear-gradient(to top,
+      rgb(var(--bg) / calc(0.95 * var(--hero-dim))),
+      rgb(var(--bg) / calc(0.70 * var(--hero-dim))) 45%,
+      rgb(var(--bg) / calc(0.35 * var(--hero-dim))));
+  }
 }
 
 /* Full-viewport page hero (used when a hero has a background film).
