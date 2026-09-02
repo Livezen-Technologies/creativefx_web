@@ -208,9 +208,16 @@ jobs:
             # esc() writes attributes HTML-escaped, so a src can arrive as
             # &#x2F;media&#x2F;… — requesting that literally returns 400 and
             # reads like a broken image when nothing is wrong. Decode first.
-            grep -ohE '(src|href)="[^"]+\.(jpe?g|png|webp|svg|gif|mp4|webm)"' "$f" \
+            #
+            # Cache-busting then put a ?v=<size> on every media URL, which esc()
+            # writes as &#x3F;v&#x3D;… — so a pattern anchored on the extension
+            # touching the closing quote matched nothing that carried a version.
+            # That is every photograph on the site: this report went on printing
+            # one unversioned favicon per page and looking like it had checked.
+            grep -ohE '(src|href)="[^"]+\.(jpe?g|png|webp|svg|gif|mp4|webm)([?&#][^"]*)?"' "$f" \
               | sed -E 's/^(src|href)="//; s/"$//' \
-              | sed -e 's/&#x2F;/\//g' -e 's/&#47;/\//g' -e 's/&amp;/\&/g' \
+              | sed -e 's/&#x2F;/\//g' -e 's/&#47;/\//g' \
+                    -e 's/&#x3F;/?/g'  -e 's/&#x3D;/=/g' -e 's/&amp;/\&/g' \
               | sort -u | head -40 > /tmp/media.txt || true
             while read -r M; do
               case "$M" in
