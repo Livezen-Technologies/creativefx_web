@@ -159,8 +159,13 @@ jobs:
             done
 
             echo "-- media referenced by this page, with the status it returns:"
+            # esc() writes attributes HTML-escaped, so a src can arrive as
+            # &#x2F;media&#x2F;… — requesting that literally returns 400 and
+            # reads like a broken image when nothing is wrong. Decode first.
             grep -ohE '(src|href)="[^"]+\.(jpe?g|png|webp|svg|gif|mp4|webm)"' "$f" \
-              | sed -E 's/^(src|href)="//; s/"$//' | sort -u | head -40 > /tmp/media.txt
+              | sed -E 's/^(src|href)="//; s/"$//' \
+              | sed -e 's/&#x2F;/\//g' -e 's/&#47;/\//g' -e 's/&amp;/\&/g' \
+              | sort -u | head -40 > /tmp/media.txt
             while read -r M; do
               case "$M" in
                 http*) MU="$M" ;;
