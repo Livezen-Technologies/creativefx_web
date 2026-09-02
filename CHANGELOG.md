@@ -168,6 +168,11 @@ lives only in the git history.
   block and it opens full-height with a scroll cue, the treatment a film hero
   always had; leave it off and the hero stays its compact self. The backdrop —
   film, still or aurora — now drifts gently as the hero scrolls away.
+- `deploy/go.sh` — one command that deploys the site. It detects whether the
+  domain is already installed by reading its nginx vhost, dumps the database
+  before touching anything, and then runs the first-install or the update path
+  as appropriate. It refuses to reset a checkout that belongs to another
+  project, and prints what it will do before doing it.
 - **The deploy targets `magiccorn.livezencloud.com`.** Every default in
   `deploy/setup.sh`, `deploy/update.sh` and the Deploy workflow now points at
   the CreativeFX host, database (`magiccorn_prod`) and install directory

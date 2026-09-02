@@ -15,6 +15,20 @@ site. It does **not** touch other vhosts, databases, or global PHP config.
 - DNS / Cloudflare already points the domain at this server (it does).
 - Git access to this repo from the server: a **deploy key** or a **personal access token** in `REPO_URL` (the repo is public, so no token is needed).
 
+## One command (recommended)
+
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/Livezen-Technologies/creativefx_web/claude/maintenance-mode-build-7b22jh/deploy/go.sh)
+```
+
+`go.sh` works out whether the domain already has an install (reading the web
+root out of its nginx vhost), backs the database up before it changes
+anything, then runs `update.sh` or `setup.sh` accordingly. It prints the plan
+and waits for confirmation. It refuses to touch a checkout whose `origin` is
+not this project.
+
+Override anything inline: `DOMAIN=…`, `APP_DIR=…`, `BRANCH=…`, `ASSUME_YES=1`.
+
 ## First deploy
 ```bash
 # as root on the server
