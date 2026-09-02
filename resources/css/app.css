@@ -272,6 +272,29 @@ html:not(.dark) { --hero-dim: 1; }
     rgb(var(--hero-wash) / calc(0.55 * var(--hero-dim))) 50%,
     rgb(var(--hero-wash) / calc(0.20 * var(--hero-dim))));
 }
+/* A pool rather than a curtain. The side wash runs the full width, so making a
+   hero read as "transparent" by thinning it costs the headline its contrast
+   before the photograph gets appreciably clearer. This puts the darkening only
+   where the copy actually sits — an ellipse anchored to the lower left — and
+   leaves the rest of the frame at the photograph's own exposure. */
+.hero-wash-pool {
+  background:
+    radial-gradient(78% 92% at 18% 52%,
+      rgb(var(--hero-wash) / calc(0.95 * var(--hero-dim))) 0%,
+      rgb(var(--hero-wash) / calc(0.78 * var(--hero-dim))) 34%,
+      rgb(var(--hero-wash) / calc(0.40 * var(--hero-dim))) 60%,
+      transparent 80%);
+}
+/* At phone width the copy fills the column, so the pool becomes a floor. */
+@media (max-width: 1023px) {
+  .hero-wash-pool {
+    background: linear-gradient(to top,
+      rgb(var(--hero-wash) / calc(0.95 * var(--hero-dim))),
+      rgb(var(--hero-wash) / calc(0.80 * var(--hero-dim))) 45%,
+      rgb(var(--hero-wash) / calc(0.45 * var(--hero-dim))));
+  }
+}
+
 .hero-wash-foot {
   background: linear-gradient(to top,
     rgb(var(--hero-wash) / calc(1.00 * var(--hero-dim))),

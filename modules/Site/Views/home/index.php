@@ -89,7 +89,7 @@ $impact = [
     <?php endif; ?>
 
     <!-- Lighter, directional scrim (legible text on the left, the film stays visible on the right) -->
-    <div class="hero-wash-side absolute inset-0 -z-20"></div>
+    <div class="hero-wash-pool absolute inset-0 -z-20"></div>
     <div class="hero-wash-foot absolute inset-0 -z-20"></div>
     <!-- Brand-red glow to break the monochrome -->
     <div class="hero-red-glow absolute inset-0 -z-10"></div>
