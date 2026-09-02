@@ -75,7 +75,12 @@ jobs:
 
           for P in $PATHS; do
             NAME=$(echo "$P" | sed 's|^/||; s|/$||; s|/|_|g'); NAME=${NAME:-home}
-            code=$(curl -sSL -m 30 "${CURL_EXTRA[@]:-}" -o "/tmp/src/$NAME.html" -w '%{http_code}' "$BASE$P" || echo 000)
+            # "${arr[@]:-}" on an empty array expands to one empty argument,
+            # which curl reads as a second URL — the page then goes to stdout
+            # and the file lands empty, so every crawled path was silently
+            # dropped and only the probe was ever inventoried. bash 4.4+ is
+            # happy with the bare form under set -u.
+            code=$(curl -sSL -m 30 "${CURL_EXTRA[@]}" -o "/tmp/src/$NAME.html" -w '%{http_code}' "$BASE$P" || echo 000)
             echo "  $P -> $code  ($(wc -c < "/tmp/src/$NAME.html" 2>/dev/null || echo 0) bytes)"
           done
 
