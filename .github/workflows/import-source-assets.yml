@@ -84,24 +84,26 @@ jobs:
         env:
           HOSTN: ${{ github.event.inputs.origin_host }}
         run: |
+          # Read-only report: a grep that matches nothing is an answer, not a
+          # failure, and the step runs under `bash -e`, so guard every pipeline.
           set -uo pipefail
           echo "===== IMAGE / MEDIA URLS ====="
           grep -rhoE '(https?:)?//[^"'"'"' )]+\.(jpe?g|png|webp|svg|gif|mp4|webm)' /tmp/src/*.html 2>/dev/null \
-            | sed 's|^//|https://|' | sort -u | head -120
+            | sed 's|^//|https://|' | sort -u | head -120 || true
           echo
           echo "===== RELATIVE MEDIA PATHS ====="
           grep -rhoE '"/[^"]+\.(jpe?g|png|webp|svg|gif|mp4|webm)"' /tmp/src/*.html 2>/dev/null \
-            | tr -d '"' | sort -u | head -60
+            | tr -d '"' | sort -u | head -60 || true
           echo
           echo "===== BRAND COLOURS SEEN IN INLINE CSS ====="
-          grep -rhoE '#[0-9a-fA-F]{6}\b' /tmp/src/*.html 2>/dev/null | sort | uniq -c | sort -rn | head -20
+          grep -rhoE '#[0-9a-fA-F]{6}\b' /tmp/src/*.html 2>/dev/null | sort | uniq -c | sort -rn | head -20 || true
           echo
           echo "===== PAGE TEXT (first 120 lines each) ====="
           for f in /tmp/src/*.html; do
             [ "$f" = "/tmp/src/probe.html" ] && continue
             echo "----- $(basename "$f") -----"
             sed -e 's/<script[^>]*>.*<\/script>//g' -e 's/<style[^>]*>.*<\/style>//g' "$f" \
-              | sed -e 's/<[^>]*>/ /g' | tr -s ' \n' ' \n' | grep -v '^\s*$' | head -120
+              | sed -e 's/<[^>]*>/ /g' | tr -s ' \n' ' \n' | grep -v '^\s*$' | head -120 || true
           done
 
       - name: Import images and commit
