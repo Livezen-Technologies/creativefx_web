@@ -9,8 +9,9 @@ use CodeIgniter\Database\Seeder;
  * pack sold for home and wholesale. Upserts by slug — never deletes — so
  * merchandising keeps ownership after the first seed.
  *
- * Product photography is not in the repository yet, so hero_image is left
- * null and the grid falls back to its placeholder treatment.
+ * Photography comes from the live shop. The flavours share the one branded
+ * cup shot magiccorn.lk publishes — it is the same cup whatever goes in it —
+ * and the frozen pack has its own pack photograph.
  */
 class ProductSeeder extends Seeder
 {
@@ -97,8 +98,12 @@ class ProductSeeder extends Seeder
                 ['label' => 'Additives',  'value' => 'No preservatives'],
                 ['label' => 'Origin',     'value' => 'Grown and processed in Sri Lanka'],
             ]),
-            'hero_image'        => '/media/magiccorn/4.jpg',
-            'gallery'           => $j(['/media/magiccorn/4.jpg', '/media/magiccorn/6.jpg']),
+            'hero_image'        => '/media/magiccorn/frozan3.png',
+            'gallery'           => $j([
+                '/media/magiccorn/frozan3.png',
+                '/media/magiccorn/frozan.png',
+                '/media/magiccorn/4.jpg',
+            ]),
             'certifications'    => 'ISO 9001',
             'label'             => null,
             'is_featured'       => 1,

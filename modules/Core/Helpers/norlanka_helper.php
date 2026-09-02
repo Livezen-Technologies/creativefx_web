@@ -178,17 +178,42 @@ if (! function_exists('content_locales')) {
 
 if (! function_exists('is_cutout_image')) {
     /**
-     * Is this product image a cut-out rather than a photograph?
+     * Is this image a cut-out — a subject on transparency — or a photograph?
      *
-     * Cut-outs (the branded cup on transparency) have to be shown whole — a
-     * cover crop lops the product off — while photographs want the crop so
-     * they fill the card. Reading the alpha channel per request is not worth
-     * the file I/O, and in this library the two are cleanly split by format:
-     * cut-outs are PNG, photography is JPEG.
+     * Cut-outs have to be shown whole; a cover crop lops the product off.
+     * Photographs want the crop so they fill the frame. The file extension is
+     * no guide here: the shop's pack shots are PNGs too, they just have an
+     * opaque background.
+     *
+     * So read the PNG header, which is enough to answer it: colour type 4 and
+     * 6 carry an alpha channel, and type 3 (palette) is transparent only when
+     * a tRNS chunk follows. Both live in the first few dozen bytes, and the
+     * answer is memoised, so this costs one short read per distinct image.
      */
     function is_cutout_image(?string $path): bool
     {
-        return $path !== null
-            && preg_match('/\.png(\?.*)?$/i', $path) === 1;
+        static $seen = [];
+
+        if ($path === null || preg_match('/\.png(\?.*)?$/i', $path) !== 1) {
+            return false;
+        }
+
+        $file = FCPATH . ltrim(strtok($path, '?'), '/');
+        if (isset($seen[$file])) {
+            return $seen[$file];
+        }
+
+        $head = @file_get_contents($file, false, null, 0, 2048);
+        if ($head === false || strncmp($head, "\x89PNG\r\n\x1a\n", 8) !== 0) {
+            return $seen[$file] = false;
+        }
+
+        $colourType = ord($head[25]);
+
+        return $seen[$file] = match ($colourType) {
+            4, 6    => true,                            // grey/RGB with alpha
+            3       => str_contains($head, 'tRNS'),     // palette + transparency
+            default => false,
+        };
     }
 }
