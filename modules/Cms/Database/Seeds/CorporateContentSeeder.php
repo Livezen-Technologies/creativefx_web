@@ -238,14 +238,14 @@ class CorporateContentSeeder extends Seeder
                     $this->loc('Things To Do'),
                     $this->loc('The forest starts at the door'),
                     $this->loc('Sinharaja is 25km away. Most of what follows is a good deal closer.'),
-                    null, null, '/media/giantforests/Things-to-do-Giants-Forests-Hotel.jpg'
+                    null, null, '/media/giantforests/Things-to-do-Giants-Forests-Hotel-1.jpg'
                 ),
                 ['key' => 'activities', 'type' => 'values', 'blocks' => [
                     ['values_grid', [
                         'title' => $this->loc('While you are here'),
                         'items' => [
                             ['title' => $this->loc('Sinharaja tracking'),
-                             'image' => '/media/giantforests/Sinharaja-Tracking.jpg',
+                             'image' => '/media/giantforests/Sinharaja-Tracking-1.jpg',
                              'text'  => $this->loc('Guided walks into Sinharaja, the last major stretch of primary rainforest in Sri Lanka, 25km from the hotel.')],
                             ['title' => $this->loc('Boat tours'),
                              'image' => '/media/giantforests/Boat-Tour-1-Giants-Forests-Hotel.jpg',
@@ -257,7 +257,7 @@ class CorporateContentSeeder extends Seeder
                              'image' => '/media/giantforests/Cycle-tour-1.jpg',
                              'text'  => $this->loc('Quiet roads through tea land and village, with bicycles arranged from the hotel.')],
                             ['title' => $this->loc('Natural bathing'),
-                             'image' => '/media/giantforests/Natural-Bathing.jpg',
+                             'image' => '/media/giantforests/Natural-Bathing-1.jpg',
                              'text'  => $this->loc('Rock pools and river bathing spots within easy reach of the property.')],
                             ['title' => $this->loc('Waterfalls of Ratnapura'),
                              'image' => '/media/giantforests/Bopath-Falls-Ratnapura.jpg',
