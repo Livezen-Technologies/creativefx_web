@@ -5,20 +5,30 @@
 # managed-by: norlanka-deploy
 # Scoped to this domain only — name-based, never a default_server, so other
 # sites on the box keep serving their own certs untouched.
+#
+# Works both for visitors hitting this box directly and for a TLS-terminating
+# proxy in front of it (Cloudflare). With Cloudflare's SSL mode set to
+# "Flexible" the edge speaks HTTPS to the visitor but fetches the origin over
+# plain :80 — so an unconditional :80 -> :443 redirect bounces the visitor back
+# and forth until the browser gives up ("too many redirects"). The scheme the
+# VISITOR used arrives in X-Forwarded-Proto, so trust that when it is present
+# and fall back to the connection's own scheme when it is not.
 
-# :80 — redirect to HTTPS. certbot's nginx authenticator injects its own
-# temporary location during renewal, so a plain redirect is safe here.
-server {
-    listen 80;
-    listen [::]:80;
-    server_name {{DOMAIN}};
+map $http_x_forwarded_proto $scheme_{{SLUG}} {
+    default $scheme;      # direct hit — believe the connection
+    https   https;        # proxied, visitor was on HTTPS
+    http    http;         # proxied, visitor was on HTTP
+}
 
-    location / {
-        return 301 https://$host$request_uri;
-    }
+# CodeIgniter reads $_SERVER['HTTPS']; empty means "not secure".
+map $scheme_{{SLUG}} $fcgi_https_{{SLUG}} {
+    default '';
+    https   on;
 }
 
 server {
+    listen 80;
+    listen [::]:80;
     listen 443 ssl http2;
     listen [::]:443 ssl http2;
     server_name {{DOMAIN}};
@@ -38,6 +48,13 @@ server {
 
     client_max_body_size 64M;
 
+    # Send a genuinely plaintext visitor to HTTPS. A proxied request that was
+    # already HTTPS at the edge falls through and is served, which is what
+    # breaks the redirect loop.
+    if ($scheme_{{SLUG}} != https) {
+        return 301 https://$host$request_uri;
+    }
+
     location / {
         try_files $uri $uri/ /index.php?$query_string;
     }
@@ -50,8 +67,9 @@ server {
         include fastcgi_params;
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
         fastcgi_param PATH_INFO $fastcgi_path_info;
-        # TLS terminates here, so tell the app the request is secure.
-        fastcgi_param HTTPS on;
+        # Tell the app the VISITOR's scheme, so it builds https:// URLs even
+        # when the edge reached us over plain http.
+        fastcgi_param HTTPS $fcgi_https_{{SLUG}};
     }
 
     location /build/ {

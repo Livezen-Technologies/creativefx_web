@@ -105,6 +105,12 @@ jobs:
               echo "--- $U ---"
               curl -s -k -m 10 -o /dev/null -w '  %{http_code} -> %{redirect_url}\n' "$U" -H "Host: ${DOMAIN}"
             done
+            echo "--- as Cloudflare sees it: plain :80 with X-Forwarded-Proto ---"
+            for XF in https http; do
+              printf '  X-Forwarded-Proto: %-5s -> ' "$XF"
+              curl -s -m 10 -o /dev/null -w '%{http_code} %{redirect_url}\n' \
+                   "http://127.0.0.1/en" -H "Host: ${DOMAIN}" -H "X-Forwarded-Proto: $XF"
+            done
             echo "--- follow the /en chain (max 10) ---"
             curl -s -k -m 15 -L --max-redirs 10 -o /dev/null \
                  -w '  hops=%{num_redirects} final=%{http_code} url=%{url_effective}\n' \
