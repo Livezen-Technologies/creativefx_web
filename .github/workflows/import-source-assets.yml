@@ -245,13 +245,20 @@ jobs:
 
       - name: Commit
         if: ${{ github.event.inputs.action == 'import' }}
+        env:
+          HOSTN:    ${{ github.event.inputs.origin_host }}
+          DEST_DIR: ${{ github.event.inputs.dest_dir }}
         run: |
           set -e
+          # This path has to follow dest_dir. It did not, so an import that
+          # downloaded every file then staged a folder it had not written to
+          # and reported "nothing new to commit" — a clean, successful, empty run.
+          DEST="public/media/${DEST_DIR:-magiccorn}"
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add public/media/magiccorn
+          git add "$DEST"
           if git diff --cached --quiet; then echo "nothing new to commit"; exit 0; fi
           git commit \
-            -m "Import Magic Corn assets from the live site" \
-            -m "Fetched on a runner because this session's sandbox cannot reach magiccorn.lk — its egress policy blocks every outbound host, so the files could not be pulled locally. Full-size originals only; WordPress's resized derivatives are skipped."
+            -m "Import assets from ${HOSTN}" \
+            -m "Fetched on a runner because this session's sandbox cannot reach ${HOSTN} — its egress policy blocks every outbound host, so the files could not be pulled locally. Full-size originals only; WordPress's resized derivatives are skipped, and any name already in the repository is left alone."
           git push origin HEAD:${{ github.event.inputs.branch }}
