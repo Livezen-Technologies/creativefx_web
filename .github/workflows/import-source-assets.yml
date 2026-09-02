@@ -31,6 +31,12 @@ on:
         description: Space-separated paths to crawl
         required: true
         default: "/ /about-us/ /our-business/ /our-locations/ /contact-us/ /shop/"
+      force_origin_ip:
+        description: "Send every request to origin_ip with the hostname's SNI and Host header — for testing a new server before DNS moves to it"
+        required: false
+        default: "false"
+        type: choice
+        options: ["false", "true"]
       probe_pattern:
         description: "probe only: extended regex to look for in the pages and their stylesheets"
         required: false
@@ -58,16 +64,25 @@ jobs:
 
       - name: Fetch pages
         env:
-          HOSTN: ${{ github.event.inputs.origin_host }}
-          OIP:   ${{ github.event.inputs.origin_ip }}
-          PATHS: ${{ github.event.inputs.paths }}
+          HOSTN:    ${{ github.event.inputs.origin_host }}
+          OIP:      ${{ github.event.inputs.origin_ip }}
+          PATHS:    ${{ github.event.inputs.paths }}
+          FORCE_IP: ${{ github.event.inputs.force_origin_ip }}
         run: |
           set -uo pipefail
           mkdir -p /tmp/src
           # Prefer the hostname; fall back to the origin IP with a Host header
           # (works even when DNS points at a proxy that blocks us).
           BASE="https://${HOSTN}"
-          if ! curl -sS -m 25 -o /tmp/src/probe.html -w '%{http_code}\n' "$BASE/" | grep -qE '^(200|30[12])$'; then
+          if [ "${FORCE_IP:-false}" = "true" ]; then
+            # --resolve keeps the hostname everywhere it matters — SNI, the Host
+            # header, and certificate validation — while sending the packets to
+            # the address given. That is what lets a new origin be checked while
+            # DNS still points at the old one.
+            note_ip="pinned to ${OIP}"
+            CURL_EXTRA=(--resolve "${HOSTN}:443:${OIP}" --resolve "${HOSTN}:80:${OIP}" -k)
+            echo "origin $note_ip"
+          elif ! curl -sS -m 25 -o /tmp/src/probe.html -w '%{http_code}\n' "$BASE/" | grep -qE '^(200|30[12])$'; then
             echo "hostname fetch failed; trying origin IP ${OIP} with Host header"
             BASE="https://${OIP}"
             CURL_EXTRA=(-k -H "Host: ${HOSTN}")
