@@ -37,6 +37,10 @@ on:
         default: "false"
         type: choice
         options: ["false", "true"]
+      dest_dir:
+        description: "import only: folder under public/media/ to write into"
+        required: false
+        default: magiccorn
       probe_pattern:
         description: "probe only: extended regex to look for in the pages and their stylesheets"
         required: false
@@ -191,9 +195,12 @@ jobs:
         if: ${{ github.event.inputs.action == 'import' }}
         env:
           HOSTN: ${{ github.event.inputs.origin_host }}
+          DEST_DIR: ${{ github.event.inputs.dest_dir }}
         run: |
           set -uo pipefail
-          DEST=public/media/magiccorn
+          # One brand per folder. This was pinned to magiccorn, which would have
+          # dropped a second site's photography in among the first site's.
+          DEST="public/media/${DEST_DIR:-magiccorn}"
           mkdir -p "$DEST"
           # Absolute + relative media references, normalised to absolute URLs.
           { grep -rhoE '(https?:)?//[^"'"'"' )]+\.(jpe?g|png|webp|svg|gif|mp4|webm)' /tmp/src/*.html 2>/dev/null | sed 's|^//|https://|'
