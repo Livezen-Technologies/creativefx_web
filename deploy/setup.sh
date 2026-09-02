@@ -152,13 +152,41 @@ GRANT ALL PRIVILEGES ON \`${DB_NAME}\`.* TO '${DB_USER}'@'localhost';
 FLUSH PRIVILEGES;
 SQL
 
+# ---- Which scheme will this site actually be served over? ----------------
+# Decided once, here, because two places depend on the answer and they used to
+# disagree. baseURL was hard-coded to https while the vhost fell back to the
+# plain-HTTP template, so the app built https URLs for a site that had no TLS
+# listener at all. That is invisible until somebody adds a certificate by hand:
+# certbot bolts a :443 block onto the HTTP template, which sets no
+# `fastcgi_param HTTPS`, so PHP still reads the request as insecure, disagrees
+# with its own https baseURL, and redirects to the address it is already on —
+# forever. A browser gives up after twenty hops.
+TLS_NOTE=""
+if [ -f "deploy/nginx/${DOMAIN}.conf" ]; then
+  # A hand-tuned vhost is assumed to terminate TLS; it exists because the
+  # generic templates did not fit.
+  VHOST_SRC="deploy/nginx/${DOMAIN}.conf"
+  SITE_SCHEME="https"
+elif [ -f "/etc/letsencrypt/live/${DOMAIN}/fullchain.pem" ]; then
+  VHOST_SRC="deploy/nginx/site-tls.conf.template"
+  SITE_SCHEME="https"
+else
+  # Naming a missing certificate makes `nginx -t` fail, which would abort the
+  # deploy after the database has already been created and seeded.
+  VHOST_SRC="deploy/nginx/site-http.conf.template"
+  SITE_SCHEME="http"
+  TLS_NOTE="No certificate for ${DOMAIN} yet — serving plain HTTP."
+  warn "$TLS_NOTE Run: certbot --nginx -d ${DOMAIN}   (then re-run this deploy for the TLS vhost)"
+fi
+note "scheme: ${SITE_SCHEME}; vhost template: $VHOST_SRC"
+
 # ---- .env ----------------------------------------------------------------
 note "Writing .env"
 JWT_SECRET="$(openssl rand -hex 32)"
 cp -n deploy/.env.production.example "$APP_DIR/.env" 2>/dev/null || true
 # Write the dynamic values into .env (idempotent).
 set_env() { local k="$1" v="$2"; if grep -q "^$k" "$APP_DIR/.env"; then sed -i "s|^$k.*|$k = '$v'|" "$APP_DIR/.env"; else printf "\n%s = '%s'\n" "$k" "$v" >> "$APP_DIR/.env"; fi; }
-set_env "app.baseURL" "https://${DOMAIN}/"
+set_env "app.baseURL" "${SITE_SCHEME}://${DOMAIN}/"
 set_env "database.default.database" "$DB_NAME"
 set_env "database.default.username" "$DB_USER"
 set_env "database.default.password" "$DB_PASS"
@@ -186,21 +214,11 @@ fi
 
 # ---- Nginx ---------------------------------------------------------------
 note "Installing nginx vhost"
-# A domain may ship its own hand-tuned vhost; otherwise use the generic
-# template. Pick the TLS variant only when a certificate is actually present —
-# naming a missing cert makes `nginx -t` fail, which would abort the deploy
-# after the database has already been created and seeded.
-TLS_NOTE=""
-if [ -f "deploy/nginx/${DOMAIN}.conf" ]; then
-  VHOST_SRC="deploy/nginx/${DOMAIN}.conf"
-elif [ -f "/etc/letsencrypt/live/${DOMAIN}/fullchain.pem" ]; then
-  VHOST_SRC="deploy/nginx/site-tls.conf.template"
-else
-  VHOST_SRC="deploy/nginx/site-http.conf.template"
-  TLS_NOTE="No certificate for ${DOMAIN} yet — serving plain HTTP."
-  warn "$TLS_NOTE Run: certbot --nginx -d ${DOMAIN}   (then re-run this deploy for the TLS vhost)"
-fi
-note "vhost template: $VHOST_SRC"
+# The template was chosen alongside the scheme, before .env was written, so the
+# two cannot disagree. Installing it also overwrites anything certbot wrote
+# into this vhost, which is deliberate: certbot's --redirect is unconditional
+# and loops behind a TLS-terminating proxy, while the template's redirect is
+# conditional on X-Forwarded-Proto.
 sed -e "s|{{APP_DIR}}|$APP_DIR|g" -e "s|{{PHP_FPM_SOCK}}|$PHP_FPM_SOCK|g" \
     -e "s|{{DOMAIN}}|$DOMAIN|g"   -e "s|{{SLUG}}|$SLUG|g" \
     "$VHOST_SRC" > "$NGINX_AVAIL"
@@ -233,7 +251,7 @@ note "Deploy complete"
 cat <<DONE
 
 Site:   http://${DOMAIN}/   (redirects to /en)
-Admin:  http://${DOMAIN}/admin/login   (admin@norlanka.local / norlanka123)
+Admin:  ${SITE_SCHEME}://${DOMAIN}/admin/login   (admin@norlanka.local / norlanka123)
 
 NEXT STEPS:
   1. Change the admin password immediately (Admin > … or update the users row).
