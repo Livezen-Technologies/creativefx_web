@@ -29,6 +29,7 @@
   --accent: 52 97 66;         /* #346142 the brand green — 6.74:1 as text */
   --accent-dark: 38 72 49;    /* #264831 */
   --accent-fill: 52 97 66;    /* buttons carry the brand green itself */
+  --forest: 52 97 66;         /* the panel green, fixed — never flipped by scope */
   --accent-ink: 255 255 255;  /* white label on that fill — 7.16:1 */
 }
 .on-dark {
@@ -113,6 +114,68 @@ html.dark .theme-esg-green {  /* Impact page green scope, dark variant */
   .btn-brand:hover {
     background: rgb(var(--accent-fill) / 0.88);
   }
+
+  /* The hotel's own site sets two blocks of copy on a solid brand-green panel —
+     Our Facilities and People Say. It reads as a card laid over the photograph
+     beside it.
+
+     The green comes from --forest rather than --accent-fill because the panel
+     redefines the tokens for its own subtree, and a background reading a token
+     the same element overwrites would resolve to the new value and paint itself
+     white. --forest is declared once, at :root, and never flipped by a scope.
+
+     White on #346142 is 7.16:1, so the panel carries body copy safely; a button
+     inside it inverts to white-on-ink rather than staying green-on-green. */
+  /* Two colourways of one mark; only ever one on screen. Keyed on the same
+     scopes the colour tokens use, so the logo follows the ground automatically
+     — including inside the header, which is transparent over a dark photograph
+     at the top of a page and solid cream once scrolled. */
+  .brand-logo { display: inline-flex; }
+  .brand-logo__on-dark { display: none; }
+  html.dark .brand-logo__on-light,
+  .on-dark .brand-logo__on-light { display: none; }
+  html.dark .brand-logo__on-dark,
+  .on-dark .brand-logo__on-dark { display: inline-block; }
+
+  /* Booking form fields. They sit on the forest panel, so the input ground is
+     a lift of that green rather than white — a white field on the panel reads
+     as a hole punched through it. The border carries the affordance instead,
+     and brightens on focus. */
+  .bk-label {
+    @apply mb-1.5 block text-xs font-semibold uppercase tracking-widest;
+    color: rgb(255 255 255 / 0.8);
+  }
+  .bk-input {
+    @apply w-full rounded-sm px-3.5 py-2.5 text-sm transition;
+    background: rgb(255 255 255 / 0.10);
+    border: 1px solid rgb(255 255 255 / 0.28);
+    color: #fff;
+  }
+  .bk-input::placeholder { color: rgb(255 255 255 / 0.55); }
+  .bk-input:focus {
+    outline: none;
+    border-color: #fff;
+    background: rgb(255 255 255 / 0.16);
+  }
+  /* The native date and number spinners are drawn in the browser's own dark
+     ink, which is invisible on this ground. */
+  .bk-input::-webkit-calendar-picker-indicator,
+  .bk-input::-webkit-inner-spin-button { filter: invert(1); opacity: 0.7; }
+  .bk-input option { color: #1A2A20; }
+  .bk-err {
+    @apply mt-1 block text-xs font-medium;
+    color: #FFD9D4;
+  }
+  .bk-err:empty { display: none; }
+
+  .panel-forest {
+    background: rgb(var(--forest));
+    --fg: 255 255 255;
+    --accent: 255 255 255;
+    --accent-fill: 255 255 255;
+    --accent-ink: 26 42 32;
+    color: rgb(var(--fg));
+  }
   .btn-ghost {
     @apply inline-flex items-center justify-center rounded-full border border-white/30 px-7 py-3
            text-sm font-semibold uppercase tracking-widest text-white transition hover:border-white hover:bg-white/10;
@@ -175,6 +238,12 @@ html.dark .theme-esg-green {  /* Impact page green scope, dark variant */
     transition: background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
     border-bottom: 1px solid transparent;
   }
+  /* Un-scrolled, the header floats on hero media with only a soft wash behind
+     it, so the white knockout is the legible one whatever the page theme. Once
+     the solid header takes over, the mark follows the theme again. */
+  .site-header:not(.is-scrolled) .brand-logo__on-light { display: none; }
+  .site-header:not(.is-scrolled) .brand-logo__on-dark { display: inline-block; }
+
   .site-header.is-scrolled {
     background-color: rgb(var(--bg) / 0.92);
     -webkit-backdrop-filter: blur(14px);
@@ -261,6 +330,13 @@ html.dark, .on-dark { --hero-wash: 12 22 16; }   /* deep forest, not brown */
    the dark headline legible. Thinning it would put ink straight onto bare
    photography, so light keeps the full wash. */
 html:not(.dark) { --hero-dim: 1; }
+
+/* ...but a section that has declared itself dark opts out of that, whatever the
+   page around it is doing. The home hero is a photograph with white type on it,
+   and once light became the default theme it inherited the full cream wash and
+   came back as a pale rectangle with the hotel barely visible through it. An
+   .on-dark surface wants the wash it was tuned with. */
+.on-dark { --hero-dim: 0.65; }
 
 /* Dark source frames (the home hero is a near-black studio shot) stay dark no
    matter how far the scrim is pulled back, so the media itself is lifted. */

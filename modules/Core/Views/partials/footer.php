@@ -3,7 +3,7 @@
     <div class="container-x grid gap-10 py-16 md:grid-cols-4">
         <div class="md:col-span-2">
             <a href="<?= esc(locale_url('')) ?>" class="inline-flex items-center gap-2.5" aria-label="Kukuleganga Giants Forest — home">
-                <img src="<?= esc(media_src('/media/giantforests/Kukuleganga-Giants-Forest-Logo-white.png'), 'attr') ?>" alt="Kukuleganga Giants Forest" width="300" height="200" class="h-11 w-auto">
+                <?= view('Modules\\Core\\Views\\partials\\logo', ['class' => 'h-11 w-auto']) ?>
             </a>
             <p class="mt-4 max-w-sm text-sm leading-relaxed text-white/60">
                 <?php

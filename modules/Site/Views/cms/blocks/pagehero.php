@@ -17,7 +17,7 @@ $hasBg      = $hasVideo || $hasImage;
         <video x-ref="bgv" data-hero-video
                class="hero-media absolute inset-0 -z-30 h-full w-full object-cover"
                autoplay muted loop playsinline preload="auto"
-               <?= $heroPoster ? 'poster="' . esc($heroPoster, 'attr') . '"' : '' ?>>
+               <?= $heroPoster ? 'poster="' . esc(media_src($heroPoster), 'attr') . '"' : '' ?>>
             <source src="<?= esc(media_src($heroVideo), 'attr') ?>" type="video/mp4">
         </video>
         <!-- Scrims: keep the copy legible while the film stays visible. -->

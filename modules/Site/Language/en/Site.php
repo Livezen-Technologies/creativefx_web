@@ -67,11 +67,36 @@ return [
     // Header mega-menu (titles reuse home.cap.*_t).
 
     // Bespoke home page.
+    'booking' => [
+        'title'      => 'Request a room',
+        'intro'      => 'Tell us when you would like to come and we will confirm availability by phone or email. Nothing is charged here.',
+        'name'       => 'Your name',
+        'email'      => 'Email',
+        'phone'      => 'Phone',
+        'room'       => 'Room',
+        'room_any'   => 'Either room',
+        'room_dlx'   => 'Deluxe Room',
+        'room_std'   => 'Standard Room',
+        'check_in'   => 'Arriving',
+        'check_out'  => 'Leaving',
+        'adults'     => 'Adults',
+        'children'   => 'Children',
+        'message'    => 'Anything we should know?',
+        'send'       => 'Send request',
+        'sending'    => 'Sending…',
+        'close'      => 'Close',
+        'ok_title'   => 'Request received',
+        'ok_text'    => 'Thank you. We will be in touch to confirm your dates.',
+        'err'        => 'That did not send. Please check the form and try again.',
+        'err_order'  => 'The leaving date needs to be after the arriving date.',
+        'err_past'   => 'That arrival date has already passed.',
+    ],
+
     'home' => [
         'hero' => [
             'eyebrow'   => 'Kukuleganga Giants Forest',
-            'primary'   => 'See the rooms',
-            'secondary' => 'Things to do',
+            'primary'   => 'Book Now',
+            'secondary' => 'Watch the film',
             'trust'     => 'Kalawana · at the edge of the Sinharaja rainforest',
         ],
         'intro' => [

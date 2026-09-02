@@ -18,19 +18,27 @@ class HomeContentSeeder extends Seeder
         $j   = static fn (array $map): string => json_encode($map, JSON_UNESCAPED_UNICODE);
 
         // ---- Page -------------------------------------------------------
-        $pages = $this->db->table('pages');
+        // The page's own title and description are seed-managed, exactly like the
+        // sections below that this seeder clears and rewrites on every run. They
+        // were insert-only, so standing this codebase up as a second site left
+        // the home page introducing itself as the first one: the browser tab and
+        // every search result still read "Magic Corn — Corn in a Cup" while the
+        // page beneath them was a hotel. Nothing on the page showed it, which is
+        // why it survived a visual check.
+        $pages    = $this->db->table('pages');
+        $pageMeta = [
+            'title'            => $j(['en' => 'Kukuleganga Giants Forest']),
+            'meta_title'       => $j(['en' => 'Kukuleganga Giants Forest — Hotel in Kalawana, Sri Lanka']),
+            'meta_description' => $j(['en' => 'A hotel above the Kukuleganga reservoir at the edge of the Sinharaja rainforest — rooms, a 35m pool and Sri Lankan cooking, 25km from Sinharaja.']),
+            'template'         => 'home',
+            'is_home'          => 1,
+            'status'           => 'published',
+            'updated_at'       => $now,
+        ];
         if ($pages->where('slug', 'home')->get()->getRowArray() === null) {
-            $pages->insert([
-                'slug'             => 'home',
-                'title'            => $j(['en' => 'Magic Corn']),
-                'meta_title'       => $j(['en' => 'Magic Corn — Corn in a Cup']),
-                'meta_description' => $j(['en' => 'Sri Lanka’s original corn in a cup — sweet corn grown, steamed and topped your way since 2007.']),
-                'template'         => 'home',
-                'is_home'          => 1,
-                'status'           => 'published',
-                'created_at'       => $now,
-                'updated_at'       => $now,
-            ]);
+            $pages->insert($pageMeta + ['slug' => 'home', 'created_at' => $now]);
+        } else {
+            $pages->where('slug', 'home')->update($pageMeta);
         }
         $pageId = (int) $pages->where('slug', 'home')->get()->getRowArray()['id'];
 
@@ -97,37 +105,117 @@ class HomeContentSeeder extends Seeder
             ],
         ], 0);
 
-        // ---- Stats ------------------------------------------------------
-        $stats = $addSection('stats', 'stats', 1);
-        $statData = [
-            ['value' => '35', 'suffix' => 'm', 'label' => ['en' => 'Swimming pool, with a baby pool']],
-            ['value' => '25', 'suffix' => 'km', 'label' => ['en' => 'To the Sinharaja rainforest']],
-            ['value' => '46', 'suffix' => 'km', 'label' => ['en' => 'From the Dodangoda highway exit']],
-            ['value' => '24', 'suffix' => 'hr', 'label' => ['en' => 'Room service, every day']],
-        ];
-        foreach ($statData as $i => $s) {
-            $addBlock($stats, 'stat', $s, $i);
-        }
+        // ---- Welcome ----------------------------------------------------
+        // The hotel's own introduction, kept in its own words.
+        $welcome = $addSection('welcome', 'welcome', 1);
+        $addBlock($welcome, 'welcome', [
+            'eyebrow' => ['en' => 'Stay in sapphire land with your closest,'],
+            'title'   => ['en' => 'Welcome to Giants Forest'],
+            'lead'    => ['en' => 'It’s your time to get a Diamond Experience at Gem City, Sabaragamuwa Province in Sri Lanka.'],
+            'body'    => [
+                ['en' => 'Zephyr in the valley and singing birds will wake up you. Open your eyes at sunrise with lovely sceneries of Kukuleganga Reservoir next to you. Rising Sun, Sparkling Rain Drops and Drizzling makes your eyes Blue and Green. Take a breath while isolating from your busy life. Calm environment, Cool Climate over the year will take you for an unforgettable break.'],
+                ['en' => 'It’s your Second Home, 46 Km away from Dodangoda Highway Exit. Arrival within 2 and half hours from Bandaranayke International Airport. All Holidaymakers are welcome to Wet Zone, Sinharaja Rain Forest just before you. It’s only 25km. Our hospitality will comfort you to be in your dreamy holidays. Spend your leisure time with us.'],
+            ],
+            'image_a'     => '/media/giantforests/Welcome-1.jpg',
+            'image_a_alt' => ['en' => 'The pool at dusk, lit against the forest'],
+            'image_b'     => '/media/giantforests/Welcome-to-Giants-Forest-1-1.jpg',
+            'image_b_alt' => ['en' => 'The Kukuleganga reservoir from the air, forest on both banks'],
+        ], 0);
 
-        // ---- Facilities --------------------------------------------------
-        // The six the hotel lists on its own site, in its own order.
-        $facilities = $addSection('certificates', 'certificates', 2);
-        $addBlock($facilities, 'certificates', [
-            'eyebrow' => ['en' => 'Our facilities'],
-            'title'   => ['en' => 'Comfort, at the highest level'],
-            'intro'   => ['en' => 'We always think about comforting you at the highest level. You may avail yourself of the following.'],
-            'items'   => [
-                ['en' => '24hr Room Service'],
-                ['en' => 'Laundry Service'],
-                ['en' => 'Conference Hall'],
-                ['en' => 'Parking Facilities'],
-                ['en' => '35m Swimming Pool with Baby Pool'],
-                ['en' => 'A/C and Non A/C Rooms'],
+        // ---- Our Facilities ----------------------------------------------
+        // The six the hotel lists on its own site, in its own order. Each names
+        // its icon, so reordering them in the CMS cannot hand one the wrong mark.
+        $facilities = $addSection('facilities', 'facilities', 2);
+        $addBlock($facilities, 'facilities', [
+            'title'     => ['en' => 'Our Facilities'],
+            'intro'     => ['en' => 'We always think, comfort you at highest level. You may avail yourself of followings.'],
+            'image'     => '/media/giantforests/Our-Amenities-Giants-forest-Hotel1.jpg',
+            'image_alt' => ['en' => 'The hotel and its pool from directly above, ringed by forest'],
+            'watermark' => '/media/giantforests/Kukuleganga-Giants-Forest-Logo-white.png',
+            'items'     => [
+                ['icon' => 'clock',     'label' => ['en' => '24hr Room Service']],
+                ['icon' => 'droplet',   'label' => ['en' => 'Laundry Service']],
+                ['icon' => 'mic',       'label' => ['en' => 'Conference Hall']],
+                ['icon' => 'car',       'label' => ['en' => 'Parking Facilities']],
+                ['icon' => 'waves',     'label' => ['en' => '35m Swimming Pool with Baby Pool']],
+                ['icon' => 'snowflake', 'label' => ['en' => 'A/C Non A/C Room with Large Space']],
             ],
         ], 0);
 
+        // ---- Rooms & Suites ------------------------------------------------
+        // Block 0 is the heading; every block after it is a room.
+        $rooms = $addSection('rooms', 'rooms', 3);
+        $addBlock($rooms, 'rooms_head', [
+            'eyebrow' => ['en' => 'Engage with modern luxuries experience at your own place.'],
+            'title'   => ['en' => 'Rooms & Suites'],
+            'button'  => ['en' => 'View All'],
+            'url'     => 'accommodation',
+        ], 0);
+        $roomData = [
+            [
+                'title'  => ['en' => 'Deluxe Room'],
+                'text'   => ['en' => 'Superior double rooms are made with open living area comforts you and morning sight of Sabaragamuwa hills at balcony in the room feel you better.'],
+                'image'  => '/media/giantforests/Deluxe-Room-Giants-forest.jpg',
+                'button' => ['en' => 'Book Now'],
+                'url'    => 'contact',
+            ],
+            [
+                'title'  => ['en' => 'Standard Room'],
+                'text'   => ['en' => 'The rooms consist of wooden ceiling, make cool atmosphere. All the facilities are compiled with these rooms.'],
+                'image'  => '/media/giantforests/Single-Room-Giants-forest.jpg',
+                'button' => ['en' => 'Book Now'],
+                'url'    => 'contact',
+            ],
+        ];
+        foreach ($roomData as $i => $room) {
+            $addBlock($rooms, 'room', $room, $i + 1);
+        }
+
+        // ---- People Say ----------------------------------------------------
+        // Guest reviews, reproduced as they were written. They are attributed to
+        // named people, so the odd typo stays: correcting it would put words in
+        // their mouths they did not write.
+        $says = $addSection('testimonials', 'testimonials', 4);
+        $addBlock($says, 'testimonials_head', [
+            'title'     => ['en' => 'People Say'],
+            'image'     => '/media/giantforests/People-Say-Giants-forest.jpg',
+            'image_alt' => ['en' => 'Tea served in the hotel’s own branded cups'],
+            'watermark' => '/media/giantforests/Kukuleganga-Giants-Forest-Logo-white.png',
+        ], 0);
+        $quotes = [
+            ['Kate Palmer', 'Australia', 'We stayed here with our family and are fully satisfied with our vacation. The rooms are very modern, have all the needed amenities, the kitchen is very delicious and the service is just perfect. We will for sure come back.'],
+            ['Prasanna Ranasinghe', 'Sri Lanka', "My wife and I had the pleasure of spending an amazing night at this unique hotel.\nOur experience from the initial booking to the final checkout was amazing, with the staff and management\nThank you very much Giants Forest….Good Luck…"],
+            ['Sudath Savinda', 'Sri Lanka', 'Great location, really pleasant and clean rooms. All of the people are incredibly helpful and generous with their time and advice. This was one of the nicest places we stayed in Sri Lanka.'],
+            ['Charith Ramachandra', 'Sri Lanka', 'Nice place with tasty and affordable food and beverages.'],
+            ['Chandika Hemasinghe', 'Sri Lanka', "This is the ideal location near Sinharaja Forest as well as water front experience\nRecommended"],
+            ['Madusha Wickramasinghe', 'Sri Lanka', 'We had two days stay there and staff and the food was very attractive. Friendly staff and It has a very large nice pool'],
+            ['Sunsu Holdings', 'Sri Lanka', "Very Nice Place and surrounding beautiful tea lands and situated in front of Kuda Ganga\nWonderful experience, coll climate"],
+            ['Sampath Hewawitharana', 'Sri Lanka', 'Highly recommend location. In.side the forest real relaxation'],
+        ];
+        foreach ($quotes as $i => [$name, $place, $quote]) {
+            $addBlock($says, 'testimonial', [
+                'name'  => $name,
+                'place' => $place,
+                'quote' => ['en' => $quote],
+            ], $i + 1);
+        }
+
+        // ---- The film ------------------------------------------------------
+        // The hotel publishes its film on YouTube rather than as a file, so it is
+        // embedded, not copied. The id lives in content so it can be swapped
+        // without a deploy; the view builds the loop parameters around it.
+        $film = $addSection('film', 'film', 5);
+        $addBlock($film, 'film', [
+            'eyebrow'    => ['en' => 'See before you feel'],
+            'title'      => ['en' => 'Our Captions at the Hotel Premises'],
+            'youtube_id' => 'hOcQxQi61d0',
+            'poster'     => '/media/giantforests/Gallery-Giants-Forests-Hotel.jpg',
+            'button'     => ['en' => 'View Gallery'],
+            'url'        => 'gallery',
+        ], 0);
+
         // ---- CTA --------------------------------------------------------
-        $cta = $addSection('cta', 'cta', 3);
+        $cta = $addSection('cta', 'cta', 6);
         $addBlock($cta, 'cta', [
             'title'  => ['en' => 'Reserve your room today'],
             'text'   => ['en' => 'Send us your dates and we will confirm availability. Nothing is charged on this site.'],
@@ -145,12 +233,13 @@ class HomeContentSeeder extends Seeder
         if ($videos->where('key', 'home_launch')->get()->getRowArray() === null) {
             $videos->insert([
                 'key'           => 'home_launch',
-                'title'         => $j(['en' => 'Magic Corn Film']),
-                // No Magic Corn film supplied yet. Left empty on purpose: the hero
-                // falls back to its gradient treatment rather than showing the
-                // previous brand's factory footage. Set these when footage arrives.
+                'title'         => $j(['en' => 'Kukuleganga Giants Forest']),
+                // The hotel's film is on YouTube, not a file we hold, so it plays
+                // in its own section rather than behind the hero. Empty on
+                // purpose: the hero shows its photograph. Upload a file in
+                // Admin -> Videos and the hero becomes a background film.
                 'src_path'      => '',
-                'poster_path'   => '/media/giantforests/Welcome-to-Giants-Forest-1-1.jpg',
+                'poster_path'   => '/media/giantforests/Welcome-to-Giants-Forest-3.jpg',
                 'is_muted_loop' => 1,
                 'status'        => 'published',
                 'created_at'    => $now,
@@ -168,7 +257,7 @@ class HomeContentSeeder extends Seeder
             $current = $videos->where('key', 'home_launch')->get()->getRowArray();
             if (($current['src_path'] ?? '') === '') {
                 $videos->where('key', 'home_launch')->update([
-                    'src_path' => '', 'poster_path' => '/media/giantforests/Welcome-to-Giants-Forest-1-1.jpg', 'updated_at' => $now,
+                    'src_path' => '', 'poster_path' => '/media/giantforests/Welcome-to-Giants-Forest-3.jpg', 'updated_at' => $now,
                 ]);
             }
         }

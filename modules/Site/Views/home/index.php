@@ -27,40 +27,45 @@ $splitWords = static function (string $text): string {
     return $html;
 };
 
-// Capabilities ("What we do") — Hirdaramani-style services grid (localized).
-$capabilities = [
-    ['title' => lang('Site.home.cap.design_t'),   'text' => lang('Site.home.cap.design_d'),   'icon' => 'M12 20h9M3 20l2-6 11-11 4 4L9 18l-6 2zM14 6l4 4'],
-    ['title' => lang('Site.home.cap.mfg_t'),      'text' => lang('Site.home.cap.mfg_d'),      'icon' => 'M2 20a2 2 0 002 2h16a2 2 0 002-2V8l-7 5V8l-7 5V4a2 2 0 00-2-2H4a2 2 0 00-2 2z'],
-    ['title' => lang('Site.home.cap.sourcing_t'), 'text' => lang('Site.home.cap.sourcing_d'), 'icon' => 'M11 20A7 7 0 014 13c0-4 3-8 8-10 0 0 8 3 8 10a7 7 0 01-7 7h-2zM6 21c1-3 3-6 6-8'],
-    ['title' => lang('Site.home.cap.partner_t'),  'text' => lang('Site.home.cap.partner_d'),  'icon' => 'M12 22c5.5 0 10-4.5 10-10S17.5 2 12 2 2 6.5 2 12s4.5 10 10 10zM2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z'],
-];
-
-// Sustainability pillars — the heart of a responsible-manufacturing story.
-$impact = [
-    ['title' => lang('Site.home.impact.p1_t'), 'text' => lang('Site.home.impact.p1_d')],
-    ['title' => lang('Site.home.impact.p2_t'), 'text' => lang('Site.home.impact.p2_d')],
-    ['title' => lang('Site.home.impact.p3_t'), 'text' => lang('Site.home.impact.p3_d')],
-];
-
 ?>
 
 <?= $this->section('content') ?>
 
-<!-- Full-screen "fullpage" experience wrapper. Each direct-child <section> below
-     becomes a snap panel (the footer is pulled in as the last one by fullpage.js).
-     Without JS this is an ordinary block and the page scrolls normally. -->
-<div id="fp" class="fp">
+<!-- This page scrolls. The #fp snap engine that used to wrap it belongs to a
+     corporate one-pager, where each panel is a single held statement; a hotel
+     home page is a document — a welcome, the facilities, the rooms, the guests,
+     the film — and reading it should not require a panel change per paragraph.
+     app.js branches on #fp, so dropping the wrapper hands this page back to
+     Lenis smooth scrolling and the GSAP reveals every other page already uses. -->
 
 <!-- ===================== HERO ===================== -->
-<?php $heroPoster = ! empty($video['poster_path']) ? $video['poster_path'] : '/media/giantforests/Welcome-to-Giants-Forest-1-1.jpg'; ?>
+<!-- The hero scales to 1.08 as it scrolls away. That widens its own box past
+     the viewport — 1555px on a 1440px screen — and overflow-hidden on the
+     section clips its children, not the section itself, so the page grew a
+     horizontal scrollbar the moment the reader scrolled. The #fp wrapper used
+     to clip this for free; this is that clip, kept to the one element that
+     needs it rather than imposed on the whole document. -->
+<div class="overflow-hidden">
+<?php $heroPoster = ! empty($video['poster_path']) ? $video['poster_path'] : '/media/giantforests/Welcome-to-Giants-Forest-3.jpg'; ?>
 <section
     id="hero"
     data-gsap="hero-out"
     x-data="{ playing: true, toggleVid() { const v = $refs.bgv; if (!v) return; if (v.paused) { delete v.dataset.userPaused; v.play(); this.playing = true; } else { v.dataset.userPaused = '1'; v.pause(); this.playing = false; } } }"
-    class="relative flex min-h-screen items-center overflow-hidden"
+    <?php // The hero is a photograph with type laid over it, so it is a dark
+          // surface no matter which theme the rest of the page is in — the same
+          // way the hotel's own site puts white type on a dark hero above a
+          // light page. .on-dark gives it the deep-forest wash and near-white
+          // ink, instead of the cream veil the light theme lays over photos.
+    ?>
+    class="on-dark relative flex min-h-screen items-center overflow-hidden"
 >
     <!-- Background: real launch film if set in the CMS, else the animated brand visual -->
-    <?php if (! empty($video['src_path'])): ?>
+    <?php // A path in the database is not a film on disk. pagehero tests both;
+          // this tested only the path, so a record pointing at a file that had
+          // been removed rendered a <video> that plays nothing — and because the
+          // still is the *else* branch, the poster never got its turn either.
+    ?>
+    <?php if (! empty($video['src_path']) && is_file(FCPATH . ltrim((string) $video['src_path'], '/'))): ?>
         <!-- Background film. Poster paints instantly (LCP) while it buffers; JS
              force-plays it (see heroVideo.js) so it loops continuously. -->
         <video x-ref="bgv"
@@ -112,13 +117,20 @@ $impact = [
 
         <p class="mt-6 max-w-xl text-lg leading-relaxed text-white/75" data-gsap="reveal"><?= esc(t_field($heroSubhead)) ?></p>
 
-        <!-- CTA hierarchy: one dominant primary, one quiet secondary -->
+        <!-- CTA hierarchy: one dominant primary, one quiet secondary.
+             Both are real links first and behave without JavaScript: Book Now
+             goes to the contact page, the film link goes to its own section.
+             With JavaScript the first opens the booking dialog in place and the
+             second scrolls to the film and starts it. A button that only works
+             once a bundle has parsed is a button that sometimes does nothing. -->
         <div class="mt-10 flex flex-wrap items-center gap-6" data-gsap="reveal">
-            <a href="<?= esc(locale_url('accommodation')) ?>" class="btn-brand btn-lg group">
+            <a href="<?= esc(locale_url('contact')) ?>" class="btn-brand btn-lg group"
+               @click.prevent="$dispatch('booking-open')">
                 <?= esc(lang('Site.home.hero.primary')) ?>
                 <svg class="ml-2 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </a>
-            <a href="<?= esc(locale_url('things-to-do')) ?>" class="group inline-flex items-center gap-3 text-sm font-semibold uppercase tracking-widest text-white/85 transition hover:text-white">
+            <a href="#film" class="group inline-flex items-center gap-3 text-sm font-semibold uppercase tracking-widest text-white/85 transition hover:text-white"
+               @click="$dispatch('film-play')">
                 <span class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/30 transition group-hover:border-brand-red group-hover:bg-brand-red/10">
                     <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5l11 7-11 7z"/></svg>
                 </span>
@@ -134,115 +146,36 @@ $impact = [
         </div>
     </div>
 
-    <button type="button" data-fp-next
+    <a href="#welcome"
             class="absolute inset-x-0 bottom-8 flex cursor-pointer justify-center bg-transparent"
             aria-label="<?= esc(lang('Site.experience.scroll'), 'attr') ?>">
         <span class="flex flex-col items-center gap-2 text-[10px] uppercase tracking-[0.3em] text-white/40 transition hover:text-white/70">
             <?= esc(lang('Site.experience.scroll')) ?>
             <svg class="h-4 w-4 animate-bounce text-brand-red" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M6 13l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </span>
-    </button>
+    </a>
 </section>
+</div><!-- /hero clip -->
 
-<!-- ===================== LEGACY / INTRO ===================== -->
-<section class="bg-brand-black py-24 sm:py-28">
-    <div class="container-x grid gap-12 lg:grid-cols-12 lg:items-end">
-        <div class="lg:col-span-7" data-gsap="reveal">
-            <p class="eyebrow"><?= esc(lang('Site.home.intro.eyebrow')) ?></p>
-            <h2 class="mt-5 text-3xl font-bold leading-tight sm:text-5xl">
-                <?= esc(lang('Site.home.intro.title')) ?>
-            </h2>
-        </div>
-        <div class="lg:col-span-5" data-gsap="reveal">
-            <p class="text-lg leading-relaxed text-white/65">
-                <?= esc(lang('Site.home.intro.body')) ?>
-            </p>
-            <a href="<?= esc(locale_url('accommodation')) ?>"
-               class="mt-6 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-widest text-white transition hover:text-brand-red">
-                <?= esc(lang('Site.cta.our_story')) ?>
-                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
-        </div>
-    </div>
-</section>
+<!-- ===================== WELCOME ===================== -->
+<div id="welcome"></div>
+<?= view('Modules\\Site\\Views\\home\\sections\\welcome', ['section' => $sections['welcome'] ?? null]) ?>
 
-<!-- ===================== STATS (CMS-driven) ===================== -->
-<?= view('Modules\Site\Views\home\sections\stats', ['section' => $sections['stats'] ?? null]) ?>
+<!-- ===================== OUR FACILITIES ===================== -->
+<?= view('Modules\\Site\\Views\\home\\sections\\facilities', ['section' => $sections['facilities'] ?? null]) ?>
 
-<!-- ===================== CAPABILITIES / WHAT WE DO ===================== -->
-<section class="bg-brand-black py-24 sm:py-28">
-    <div class="container-x">
-        <div class="max-w-2xl" data-gsap="reveal">
-            <p class="eyebrow"><?= esc(lang('Site.home.cap.eyebrow')) ?></p>
-            <h2 class="mt-5 text-3xl font-bold sm:text-5xl"><?= esc(lang('Site.home.cap.title')) ?></h2>
-            <p class="mt-4 text-white/60"><?= esc(lang('Site.home.cap.intro')) ?></p>
-        </div>
+<!-- ===================== ROOMS & SUITES ===================== -->
+<?= view('Modules\\Site\\Views\\home\\sections\\rooms', ['section' => $sections['rooms'] ?? null]) ?>
 
-        <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            <?php foreach ($capabilities as $cap): ?>
-                <article class="group flex h-full flex-col rounded-2xl border border-white/10 bg-white/[0.02] p-8 transition hover:border-brand-red/60 hover:bg-white/[0.04]" data-gsap="reveal">
-                    <span class="inline-flex h-12 w-12 items-center justify-center rounded-xl border border-white/10 text-brand-red transition group-hover:border-brand-red/60">
-                        <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="<?= esc($cap['icon'], 'attr') ?>"/></svg>
-                    </span>
-                    <h3 class="mt-6 text-xl font-semibold"><?= esc($cap['title']) ?></h3>
-                    <p class="mt-3 text-sm leading-relaxed text-white/60"><?= esc($cap['text']) ?></p>
-                </article>
-            <?php endforeach; ?>
-        </div>
-    </div>
-</section>
+<!-- ===================== PEOPLE SAY ===================== -->
+<?= view('Modules\\Site\\Views\\home\\sections\\testimonials', ['section' => $sections['testimonials'] ?? null]) ?>
 
-<!-- ===================== SUSTAINABILITY / OUR IMPACT ===================== -->
-<section class="relative overflow-hidden border-y border-white/10 py-24 sm:py-28">
-    <div class="hero-aurora absolute inset-0 -z-10 opacity-60"></div>
-    <div class="container-x grid gap-14 lg:grid-cols-2 lg:items-center">
-        <div data-gsap="reveal">
-            <p class="eyebrow"><?= esc(lang('Site.home.impact.eyebrow')) ?></p>
-            <h2 class="mt-5 text-3xl font-bold leading-tight sm:text-5xl"><?= esc(lang('Site.home.impact.title')) ?></h2>
-            <p class="mt-5 max-w-xl text-lg leading-relaxed text-white/70">
-                <?= esc(lang('Site.home.impact.body')) ?>
-            </p>
-            <a href="<?= esc(locale_url('accommodation')) ?>" class="btn-brand mt-8"><?= esc(lang('Site.home.impact.cta')) ?></a>
-        </div>
+<!-- ===================== THE FILM ===================== -->
+<?= view('Modules\\Site\\Views\\home\\sections\\film', ['section' => $sections['film'] ?? null]) ?>
 
-        <div class="grid gap-4" data-gsap="reveal">
-            <?php foreach ($impact as $i => $point): ?>
-                <div class="flex items-start gap-5 rounded-2xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur">
-                    <span class="text-2xl font-bold text-brand-red">0<?= $i + 1 ?></span>
-                    <div>
-                        <h3 class="text-lg font-semibold"><?= esc($point['title']) ?></h3>
-                        <p class="mt-1 text-sm leading-relaxed text-white/60"><?= esc($point['text']) ?></p>
-                    </div>
-                </div>
-            <?php endforeach; ?>
-        </div>
-    </div>
-</section>
+<!-- ===================== BOOK ===================== -->
+<?= view('Modules\\Site\\Views\\home\\sections\\cta', ['section' => $sections['cta'] ?? null]) ?>
 
-<!-- ===================== CERTIFICATES ===================== -->
-<?= view('Modules\Site\Views\home\sections\certificates', ['section' => $sections['certificates'] ?? null]) ?>
-
-<!-- ===================== VIRTUAL SHOWROOM (CMS-driven CTA) ===================== -->
-<?= view('Modules\Site\Views\home\sections\cta', ['section' => $sections['cta'] ?? null]) ?>
-
-<!-- ===================== PARTNER / CLOSING CTA ===================== -->
-<section class="bg-brand-black pb-28">
-    <div class="container-x">
-        <div class="overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-brand-red/10 via-brand-black to-brand-black p-10 sm:p-16" data-gsap="reveal">
-            <div class="grid gap-8 lg:grid-cols-2 lg:items-center">
-                <div>
-                    <h2 class="text-3xl font-bold leading-tight sm:text-4xl"><?= esc(lang('Site.home.closing.title')) ?></h2>
-                    <p class="mt-4 max-w-lg text-white/65"><?= esc(lang('Site.home.closing.body')) ?></p>
-                </div>
-                <div class="flex flex-wrap gap-4 lg:justify-end">
-                    <a href="<?= esc(locale_url('contact')) ?>" class="btn-brand"><?= esc(lang('Site.cta.contact_us')) ?></a>
-                    <a href="<?= esc(locale_url('things-to-do')) ?>" class="btn-ghost"><?= esc(lang('Site.cta.find_outlet')) ?></a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-</div><!-- /#fp -->
+<?= view('Modules\\Core\\Views\\partials\\booking_modal') ?>
 
 <?= $this->endSection() ?>

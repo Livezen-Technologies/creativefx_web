@@ -17,6 +17,7 @@ import showroomScene from './alpine/showroomScene.js';
 import worldMap from './alpine/worldMap.js';
 import islandMap from './alpine/islandMap.js';
 import themeToggle from './alpine/themeToggle.js';
+import bookingModal from './alpine/bookingModal.js';
 import { initScrollStory } from './gsap/scroll.js';
 import { initKineticHero } from './gsap/kinetic.js';
 import { initCarousels } from './carousels.js';
@@ -33,6 +34,7 @@ Alpine.data('showroomScene', showroomScene);
 Alpine.data('worldMap', worldMap);
 Alpine.data('islandMap', islandMap);
 Alpine.data('themeToggle', themeToggle);
+Alpine.data('bookingModal', bookingModal);
 
 // Shared wishlist (persisted to localStorage) — used across the showroom.
 Alpine.store('wishlist', {

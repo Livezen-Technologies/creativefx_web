@@ -33,7 +33,7 @@ $nav = [
         <!-- Logo: official NL monogram + wordmark (static sizes so it renders
              correctly even before/without JS). -->
         <a href="<?= esc(locale_url('')) ?>" class="flex items-center gap-2.5 shrink-0" aria-label="Kukuleganga Giants Forest — home">
-            <img src="<?= esc(media_src('/media/giantforests/Kukuleganga-Giants-Forest-Logo-white.png'), 'attr') ?>" alt="Kukuleganga Giants Forest" width="300" height="200" class="h-9 w-auto">
+            <?= view('Modules\\Core\\Views\\partials\\logo', ['class' => 'h-9 w-auto']) ?>
         </a>
 
         <!-- Desktop nav -->
