@@ -109,8 +109,24 @@ class HomeContentSeeder extends Seeder
             $addBlock($stats, 'stat', $s, $i);
         }
 
+        // ---- Certificates ------------------------------------------------
+        // The bodies Magic Corn is certified by. Artwork is matched from
+        // public/media/certifications/ by a slug of each name, so a mark shows
+        // as its logo once the file is supplied and as its name until then.
+        $certificates = $addSection('certificates', 'certificates', 2);
+        $addBlock($certificates, 'certificates', [
+            'eyebrow' => ['en' => 'Our certificates'],
+            'title'   => ['en' => 'What is our strength'],
+            'intro'   => ['en' => 'Our factory is audited against the standards these bodies set, and the corn we serve is held to them at every step.'],
+            'items'   => [
+                ['en' => 'Pro Food Pro Pack Ag Biz'],
+                ['en' => 'Hotel Asia Exhibition'],
+                ['en' => 'SLFPA'],
+            ],
+        ], 0);
+
         // ---- CTA --------------------------------------------------------
-        $cta = $addSection('cta', 'cta', 2);
+        $cta = $addSection('cta', 'cta', 3);
         $addBlock($cta, 'cta', [
             'title'  => ['en' => 'Take Magic Corn home'],
             'text'   => ['en' => 'Our 1kg frozen sweet corn pack — the same corn we serve at the outlets.'],

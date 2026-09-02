@@ -219,6 +219,9 @@ $impact = [
     </div>
 </section>
 
+<!-- ===================== CERTIFICATES ===================== -->
+<?= view('Modules\Site\Views\home\sections\certificates', ['section' => $sections['certificates'] ?? null]) ?>
+
 <!-- ===================== VIRTUAL SHOWROOM (CMS-driven CTA) ===================== -->
 <?= view('Modules\Site\Views\home\sections\cta', ['section' => $sections['cta'] ?? null]) ?>
 
