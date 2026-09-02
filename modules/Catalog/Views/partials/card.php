@@ -12,7 +12,7 @@ $badge  = $product['label'] ?? '';
     <span class="relative block aspect-[4/5] overflow-hidden">
         <?php if (! empty($product['hero_image'])): ?>
             <img src="<?= esc($product['hero_image'], 'attr') ?>" alt="<?= esc($cName, 'attr') ?>" loading="lazy"
-                 class="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]">
+                 class="h-full w-full transition duration-500 group-hover:scale-[1.04] <?= is_cutout_image($product['hero_image']) ? 'object-contain p-3' : 'object-cover' ?>">
         <?php endif; ?>
         <?php if ($badge !== '' && $badge !== null): ?>
             <span class="absolute left-3 top-3 rounded-full bg-brand-red px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-white"><?= esc(lang('Site.products.label_' . $badge)) ?></span>

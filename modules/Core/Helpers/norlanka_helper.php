@@ -175,3 +175,20 @@ if (! function_exists('content_locales')) {
         return $map;
     }
 }
+
+if (! function_exists('is_cutout_image')) {
+    /**
+     * Is this product image a cut-out rather than a photograph?
+     *
+     * Cut-outs (the branded cup on transparency) have to be shown whole — a
+     * cover crop lops the product off — while photographs want the crop so
+     * they fill the card. Reading the alpha channel per request is not worth
+     * the file I/O, and in this library the two are cleanly split by format:
+     * cut-outs are PNG, photography is JPEG.
+     */
+    function is_cutout_image(?string $path): bool
+    {
+        return $path !== null
+            && preg_match('/\.png(\?.*)?$/i', $path) === 1;
+    }
+}
