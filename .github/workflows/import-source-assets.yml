@@ -37,6 +37,12 @@ on:
         default: "false"
         type: choice
         options: ["false", "true"]
+      scheme:
+        description: "auto tries https and falls back to http; force one when you want to test that scheme specifically"
+        required: false
+        default: auto
+        type: choice
+        options: [auto, https, http]
       dest_dir:
         description: "import only: folder under public/media/ to write into"
         required: false
@@ -72,6 +78,7 @@ jobs:
           OIP:      ${{ github.event.inputs.origin_ip }}
           PATHS:    ${{ github.event.inputs.paths }}
           FORCE_IP: ${{ github.event.inputs.force_origin_ip }}
+          SCHEME:   ${{ github.event.inputs.scheme }}
         run: |
           set -uo pipefail
           mkdir -p /tmp/src
@@ -93,6 +100,26 @@ jobs:
           else
             CURL_EXTRA=()
           fi
+          # A site whose certificate has not been issued yet still answers on
+          # port 80, but on 443 nginx hands the connection to whichever vhost is
+          # the default server — which does not know this hostname and returns a
+          # 404. Probing https only, that reads as "the site is not there" when
+          # in fact the site is fine and only the certificate is missing. So ask
+          # both, and say which one answered.
+          case "${SCHEME:-auto}" in
+            http|https) BASE="${SCHEME}://${BASE#*://}"
+                        echo "scheme forced to ${SCHEME}" ;;
+            *)          for S in https http; do
+                          CAND="${S}://${BASE#*://}"
+                          c=$(curl -sSL -m 20 "${CURL_EXTRA[@]}" -o /dev/null -w '%{http_code}' "$CAND/" || echo 000)
+                          echo "  ${CAND}/ -> $c"
+                          if [ "$c" = "200" ] || [ "$c" = "301" ] || [ "$c" = "302" ]; then
+                            BASE="$CAND"; break
+                          fi
+                        done
+                        echo "using $BASE" ;;
+          esac
+
           echo "BASE=$BASE" >> $GITHUB_ENV
           printf 'CURL_EXTRA=%s\n' "${CURL_EXTRA[*]:-}" >> $GITHUB_ENV
 
@@ -105,7 +132,13 @@ jobs:
             # happy with the bare form under set -u.
             code=$(curl -sSL -m 30 "${CURL_EXTRA[@]}" -o "/tmp/src/$NAME.html" -w '%{http_code}' "$BASE$P" || echo 000)
             echo "  $P -> $code  ($(wc -c < "/tmp/src/$NAME.html" 2>/dev/null || echo 0) bytes)"
+            case "$code" in 200|30[12]) ;; *) BAD="${BAD:-}$P ($code) " ;; esac
           done
+          # Crawling a source site tolerates a dead path — you take what is
+          # there. Probing your own site does not: a run that fetched six 404s
+          # and reported success is worse than no run at all, because it looks
+          # like verification. The probe step below fails on this.
+          echo "FETCH_BAD=${BAD:-}" >> $GITHUB_ENV
 
       - name: Inventory (read-only)
         if: ${{ github.event.inputs.action == 'inventory' }}
@@ -190,6 +223,13 @@ jobs:
               printf '   %-40s %s\n' "$M" "$INFO"
             done < /tmp/media.txt
           done
+
+          if [ -n "${FETCH_BAD:-}" ]; then
+            echo
+            echo "::error::the site did not serve these paths: ${FETCH_BAD}"
+            echo "Nothing above was read from a real page, so this run verifies nothing."
+            exit 1
+          fi
 
       - name: Import images and commit
         if: ${{ github.event.inputs.action == 'import' }}
