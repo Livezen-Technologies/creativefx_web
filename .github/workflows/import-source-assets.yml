@@ -156,6 +156,24 @@ jobs:
           grep -rhoE '"/[^"]+\.(jpe?g|png|webp|svg|gif|mp4|webm)"' /tmp/src/*.html 2>/dev/null \
             | tr -d '"' | sort -u | head -60 || true
           echo
+          echo "===== VIDEO SOURCES ====="
+          # The two greps above only see a URL that ends in a media extension,
+          # which is blind to the two commonest ways a site actually carries a
+          # film: an <iframe> to YouTube or Vimeo, and a theme that stashes the
+          # file in a data- attribute for a background player. Report the markup
+          # that decides playback too — autoplay, muted, loop and playsinline
+          # are the difference between a film that runs and a still poster.
+          for f in /tmp/src/*.html; do
+            [ "$f" = "/tmp/src/probe.html" ] && continue
+            echo "----- $(basename "$f") -----"
+            grep -ohE '<video[^>]*>' "$f" 2>/dev/null | head -10 || true
+            grep -ohE '<source[^>]*>' "$f" 2>/dev/null | head -20 || true
+            grep -ohE '(www\.)?(youtube(-nocookie)?\.com|youtu\.be|vimeo\.com|player\.vimeo\.com)/[^"'"'"' <>\\]*' "$f" 2>/dev/null \
+              | sort -u | head -20 || true
+            grep -ohE 'data-[a-z-]*(video|mp4)[a-z-]*="[^"]*"' "$f" 2>/dev/null | sort -u | head -20 || true
+          done
+          echo
+
           echo "===== BRAND COLOURS SEEN IN INLINE CSS ====="
           grep -rhoE '#[0-9a-fA-F]{6}\b' /tmp/src/*.html 2>/dev/null | sort | uniq -c | sort -rn | head -20 || true
           echo
