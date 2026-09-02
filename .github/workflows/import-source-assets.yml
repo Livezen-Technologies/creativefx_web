@@ -18,7 +18,7 @@ on:
         required: true
         default: inventory
         type: choice
-        options: [inventory, import]
+        options: [inventory, import, probe]
       origin_host:
         description: Site hostname
         required: true
@@ -31,6 +31,10 @@ on:
         description: Space-separated paths to crawl
         required: true
         default: "/ /about-us/ /our-business/ /our-locations/ /contact-us/ /shop/"
+      probe_pattern:
+        description: "probe only: extended regex to look for in the pages and their stylesheets"
+        required: false
+        default: "--hero-dim"
       branch:
         description: Branch to commit imported assets to
         required: true
@@ -109,6 +113,35 @@ jobs:
             echo "----- $(basename "$f") -----"
             sed -e 's/<script[^>]*>.*<\/script>//g' -e 's/<style[^>]*>.*<\/style>//g' "$f" \
               | sed -e 's/<[^>]*>/ /g' | tr -s ' \n' ' \n' | grep -v '^\s*$' | head -120 || true
+          done
+
+      - name: Probe (read-only)
+        if: ${{ github.event.inputs.action == 'probe' }}
+        env:
+          HOSTN: ${{ github.event.inputs.origin_host }}
+          PAT:   ${{ github.event.inputs.probe_pattern }}
+        run: |
+          # Says what a given site is actually serving right now. Follows each
+          # page's own stylesheets, because the interesting differences between
+          # two builds live in the CSS, not the markup.
+          set -uo pipefail
+          for f in /tmp/src/*.html; do
+            [ "$f" = "/tmp/src/probe.html" ] && continue
+            echo "===== $(basename "$f") — $(wc -c < "$f") bytes ====="
+            echo "-- pattern in page:"
+            grep -ohE ".{0,60}${PAT}.{0,60}" "$f" | head -5 || echo "  (not found)"
+            grep -ohE 'href="[^"]+\.css[^"]*"' "$f" | sed -E 's/^href="//; s/"$//' | sort -u | while read -r CSS; do
+              case "$CSS" in
+                //*) URL="https:$CSS" ;;
+                /*)  URL="$BASE$CSS" ;;
+                http*) URL="$CSS" ;;
+                *)   URL="$BASE/$CSS" ;;
+              esac
+              OUT=/tmp/probe.css
+              code=$(curl -sSL -m 30 -o "$OUT" -w '%{http_code}' "$URL" || echo 000)
+              echo "-- $URL -> $code ($(wc -c < "$OUT" 2>/dev/null || echo 0) bytes)"
+              grep -ohE ".{0,80}${PAT}.{0,80}" "$OUT" | head -5 || echo "   (pattern not in this stylesheet)"
+            done
           done
 
       - name: Import images and commit
