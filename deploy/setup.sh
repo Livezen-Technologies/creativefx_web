@@ -204,8 +204,28 @@ note "vhost template: $VHOST_SRC"
 sed -e "s|{{APP_DIR}}|$APP_DIR|g" -e "s|{{PHP_FPM_SOCK}}|$PHP_FPM_SOCK|g" \
     -e "s|{{DOMAIN}}|$DOMAIN|g"   -e "s|{{SLUG}}|$SLUG|g" \
     "$VHOST_SRC" > "$NGINX_AVAIL"
+
+# Enable it only once nginx accepts it. This box serves a dozen unrelated
+# sites from one nginx, so an invalid vhost left enabled is not this site
+# failing to deploy — it is every site on the machine going down at whatever
+# reload happens next, possibly hours later and for someone else's deploy.
+# Test with the symlink in place, and take it straight back out if the test
+# fails, so a bad config is never left armed.
+PREEXISTING_LINK=0
+[ -e "$NGINX_ENABLED" ] && PREEXISTING_LINK=1
 ln -sfn "$NGINX_AVAIL" "$NGINX_ENABLED"
-nginx -t
+if ! nginx -t; then
+  if [ "$PREEXISTING_LINK" -eq 0 ]; then
+    rm -f "$NGINX_ENABLED"
+    warn "nginx rejected the vhost for ${DOMAIN}; it has been disabled again."
+  else
+    warn "nginx rejected the updated vhost for ${DOMAIN}; the previous one is still enabled."
+  fi
+  if nginx -t >/dev/null 2>&1; then
+    die "nginx rejected this vhost. Other sites are unaffected and nginx was not reloaded."
+  fi
+  die "nginx config is invalid even without this site. Do NOT reload nginx until that is resolved."
+fi
 systemctl reload nginx
 
 # ---- Done ----------------------------------------------------------------
