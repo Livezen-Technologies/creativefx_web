@@ -15,14 +15,14 @@ $hasBg      = $hasVideo || $hasImage;
         <!-- Background film. The poster paints immediately (LCP) while the
              video buffers; heroVideo.js force-plays and loops it. -->
         <video x-ref="bgv" data-hero-video
-               class="absolute inset-0 -z-30 h-full w-full object-cover"
+               class="hero-media absolute inset-0 -z-30 h-full w-full object-cover"
                autoplay muted loop playsinline preload="auto"
                <?= $heroPoster ? 'poster="' . esc($heroPoster, 'attr') . '"' : '' ?>>
             <source src="<?= esc($heroVideo, 'attr') ?>" type="video/mp4">
         </video>
         <!-- Scrims: keep the copy legible while the film stays visible. -->
-        <div class="absolute inset-0 -z-20 bg-gradient-to-r from-brand-black/95 via-brand-black/55 to-brand-black/20"></div>
-        <div class="absolute inset-0 -z-20 bg-gradient-to-t from-brand-black via-brand-black/25 to-transparent"></div>
+        <div class="hero-wash-side--page absolute inset-0 -z-20"></div>
+        <div class="hero-wash-foot--page absolute inset-0 -z-20"></div>
         <div class="hero-red-glow absolute inset-0 -z-10"></div>
 
         <button type="button" @click="toggleVid()"
@@ -34,9 +34,9 @@ $hasBg      = $hasVideo || $hasImage;
     <?php elseif ($hasImage): ?>
         <!-- Still hero. Same scrims as the film branch so the copy stays legible. -->
         <img src="<?= esc($heroImage, 'attr') ?>" alt="" aria-hidden="true"
-             class="absolute inset-0 -z-30 h-full w-full object-cover">
-        <div class="absolute inset-0 -z-20 bg-gradient-to-r from-brand-black/95 via-brand-black/55 to-brand-black/20"></div>
-        <div class="absolute inset-0 -z-20 bg-gradient-to-t from-brand-black via-brand-black/25 to-transparent"></div>
+             class="hero-media absolute inset-0 -z-30 h-full w-full object-cover">
+        <div class="hero-wash-side--page absolute inset-0 -z-20"></div>
+        <div class="hero-wash-foot--page absolute inset-0 -z-20"></div>
         <div class="hero-red-glow absolute inset-0 -z-10"></div>
     <?php else: ?>
         <div class="hero-aurora absolute inset-0 -z-20"></div>

@@ -64,7 +64,7 @@ $impact = [
         <!-- Background film. Poster paints instantly (LCP) while it buffers; JS
              force-plays it (see heroVideo.js) so it loops continuously. -->
         <video x-ref="bgv"
-               class="absolute inset-0 -z-30 h-full w-full object-cover"
+               class="hero-media absolute inset-0 -z-30 h-full w-full object-cover"
                autoplay muted loop playsinline preload="auto"
                poster="<?= esc($heroPoster) ?>">
             <source src="<?= esc($video['src_path']) ?>" type="video/mp4">
@@ -82,15 +82,15 @@ $impact = [
     <?php elseif (! empty($heroPoster) && is_file(FCPATH . ltrim((string) $heroPoster, '/'))): ?>
         <!-- No film supplied; the poster carries the hero as a still. -->
         <img src="<?= esc($heroPoster, 'attr') ?>" alt="" aria-hidden="true"
-             class="absolute inset-0 -z-30 h-full w-full object-cover">
+             class="hero-media absolute inset-0 -z-30 h-full w-full object-cover">
     <?php else: ?>
         <div class="hero-aurora absolute inset-0 -z-30"></div>
         <div data-three-hero class="absolute inset-0 -z-20 opacity-70"></div>
     <?php endif; ?>
 
     <!-- Lighter, directional scrim (legible text on the left, the film stays visible on the right) -->
-    <div class="absolute inset-0 -z-20 bg-gradient-to-r from-brand-black/95 via-brand-black/60 to-transparent"></div>
-    <div class="absolute inset-0 -z-20 bg-gradient-to-t from-brand-black via-brand-black/10 to-transparent"></div>
+    <div class="hero-wash-side absolute inset-0 -z-20"></div>
+    <div class="hero-wash-foot absolute inset-0 -z-20"></div>
     <!-- Brand-red glow to break the monochrome -->
     <div class="hero-red-glow absolute inset-0 -z-10"></div>
 

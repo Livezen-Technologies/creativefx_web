@@ -30,7 +30,13 @@ $labels = ['featured', 'new', 'bestseller', 'popular'];
 
 <!-- Catalog hero -->
 <section class="relative overflow-hidden">
-    <div class="hero-aurora absolute inset-0 -z-20"></div>
+    <!-- Photographic hero, dressed with the same washes as the CMS page heroes
+         so this band reads like the rest of the site instead of a flat panel. -->
+    <img src="/media/magiccorn/6.jpg" alt="" aria-hidden="true"
+         class="hero-media absolute inset-0 -z-30 h-full w-full object-cover">
+    <div class="hero-wash-side--page absolute inset-0 -z-20"></div>
+    <div class="hero-wash-foot--page absolute inset-0 -z-20"></div>
+    <div class="hero-red-glow absolute inset-0 -z-10"></div>
     <div class="container-x flex min-h-[34vh] flex-col justify-end pb-10 pt-36">
         <p class="text-xs font-semibold uppercase tracking-widest text-brand-red" data-gsap="reveal"><?= esc(lang('Site.products.eyebrow')) ?></p>
         <h1 class="mt-3 max-w-3xl text-4xl font-bold leading-[1.05] sm:text-5xl" data-gsap="reveal"><?= esc(lang('Site.products.title')) ?></h1>

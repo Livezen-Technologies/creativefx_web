@@ -221,9 +221,51 @@ html.dark .theme-esg-green {  /* Impact page green scope, dark variant */
   /* Hero red brand glow + soft accents. */
   .hero-red-glow {
     background:
-      radial-gradient(40% 55% at 12% 78%, rgb(var(--accent) / 0.34), transparent 70%),
-      radial-gradient(30% 40% at 85% 20%, rgb(var(--accent) / 0.16), transparent 70%);
+      radial-gradient(40% 55% at 12% 78%, rgb(var(--accent) / calc(0.34 * var(--hero-dim))), transparent 70%),
+      radial-gradient(30% 40% at 85% 20%, rgb(var(--accent) / calc(0.16 * var(--hero-dim))), transparent 70%);
   }
+}
+
+/* Hero washes -----------------------------------------------------------
+   Every layer laid over hero photography — the two scrims and the brand
+   glow — is scaled by one dimmer, so the heroes can be lightened or
+   deepened site-wide from a single number. 1 is the original full-strength
+   wash; the site runs lighter than that so the photography reads through. */
+:root { --hero-dim: 0.78; }
+
+/* The light theme is the exception: there `--bg` is the cream ground, so the
+   scrim is not a shadow over the photo — it *is* the pale surface that keeps
+   the dark headline legible. Thinning it would put ink straight onto bare
+   photography, so light keeps the full wash. */
+html:not(.dark) { --hero-dim: 1; }
+
+/* Dark source frames (the home hero is a near-black studio shot) stay dark no
+   matter how far the scrim is pulled back, so the media itself is lifted. */
+.hero-media { filter: brightness(var(--hero-lift, 1)); }
+
+.hero-wash-side {
+  background: linear-gradient(to right,
+    rgb(var(--bg) / calc(0.95 * var(--hero-dim))),
+    rgb(var(--bg) / calc(0.60 * var(--hero-dim))) 50%,
+    transparent);
+}
+.hero-wash-side--page {
+  background: linear-gradient(to right,
+    rgb(var(--bg) / calc(0.95 * var(--hero-dim))),
+    rgb(var(--bg) / calc(0.55 * var(--hero-dim))) 50%,
+    rgb(var(--bg) / calc(0.20 * var(--hero-dim))));
+}
+.hero-wash-foot {
+  background: linear-gradient(to top,
+    rgb(var(--bg) / calc(1.00 * var(--hero-dim))),
+    rgb(var(--bg) / calc(0.10 * var(--hero-dim))) 50%,
+    transparent);
+}
+.hero-wash-foot--page {
+  background: linear-gradient(to top,
+    rgb(var(--bg) / calc(1.00 * var(--hero-dim))),
+    rgb(var(--bg) / calc(0.25 * var(--hero-dim))) 50%,
+    transparent);
 }
 
 /* Full-viewport page hero (used when a hero has a background film).

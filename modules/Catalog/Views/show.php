@@ -26,7 +26,13 @@ $chips   = array_filter([$catName, $product['collection'] ?? null, $product['sku
 
 <!-- Product hero -->
 <section class="relative overflow-hidden">
-    <div class="hero-aurora absolute inset-0 -z-20"></div>
+    <!-- Same photographic band as the range index, so a product page does not
+         open on a flat panel. The product's own shot sits below, not here. -->
+    <img src="/media/magiccorn/6.jpg" alt="" aria-hidden="true"
+         class="hero-media absolute inset-0 -z-30 h-full w-full object-cover">
+    <div class="hero-wash-side--page absolute inset-0 -z-20"></div>
+    <div class="hero-wash-foot--page absolute inset-0 -z-20"></div>
+    <div class="hero-red-glow absolute inset-0 -z-10"></div>
     <div class="container-x flex min-h-[30vh] flex-col justify-end pb-8 pt-36">
         <a href="<?= esc(locale_url('products')) ?>" class="mb-4 text-xs uppercase tracking-widest text-brand-red hover:underline">← <?= esc(lang('Site.products.back')) ?></a>
         <h1 class="max-w-3xl text-3xl font-bold leading-[1.1] sm:text-5xl" data-gsap="reveal"><?= esc($pName) ?></h1>
