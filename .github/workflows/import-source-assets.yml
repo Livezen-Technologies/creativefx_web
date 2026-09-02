@@ -122,12 +122,20 @@ jobs:
           echo "===== BRAND COLOURS SEEN IN INLINE CSS ====="
           grep -rhoE '#[0-9a-fA-F]{6}\b' /tmp/src/*.html 2>/dev/null | sort | uniq -c | sort -rn | head -20 || true
           echo
-          echo "===== PAGE TEXT (first 120 lines each) ====="
+          echo "===== PAGE TEXT ====="
+          # The old stripper matched <script>...</script> only within one line, so
+          # WordPress's multi-line inline CSS and JS came through as "page text" and
+          # buried the actual copy. Deleting the blocks by range handles them however
+          # they are wrapped, which is what makes this section readable at all.
           for f in /tmp/src/*.html; do
             [ "$f" = "/tmp/src/probe.html" ] && continue
             echo "----- $(basename "$f") -----"
-            sed -e 's/<script[^>]*>.*<\/script>//g' -e 's/<style[^>]*>.*<\/style>//g' "$f" \
-              | sed -e 's/<[^>]*>/ /g' | tr -s ' \n' ' \n' | grep -v '^\s*$' | head -120 || true
+            sed -e '/<script/,/<\/script>/d' -e '/<style/,/<\/style>/d' \
+                -e '/<noscript/,/<\/noscript>/d' "$f" \
+              | sed -e 's/<[^>]*>/ /g' \
+              | sed -e 's/&nbsp;/ /g' -e 's/&amp;/\&/g' -e 's/&#821[6789];/'"'"'/g' \
+              | tr -s ' \t' ' ' | sed -e 's/^ *//' -e 's/ *$//' \
+              | grep -vE '^$' | head -200 || true
           done
 
       - name: Probe (read-only)
