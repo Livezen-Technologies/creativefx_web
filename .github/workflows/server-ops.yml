@@ -3,6 +3,9 @@ name: Server ops
 # Manual, scoped server operations run over SSH from the GitHub runner.
 # `diagnose-tls`     — READ-ONLY: inspect who serves :80/:443, web stack, our
 #                      vhost, certbot, and panel hints. Changes nothing.
+# `inspect-media`    — READ-ONLY: find every copy of a media file on the box and
+#                      show which root(s) the domain's server blocks point at.
+#                      For when the origin serves two different bodies for one URL.
 # `setup-tls-certbot`— Obtain a Let's Encrypt cert for ONLY this domain and add
 #                      a 443 server block to our vhost. Run only after diagnosis
 #                      confirms plain nginx owns 443 (won't disturb other sites).
@@ -17,6 +20,7 @@ on:
         type: choice
         options:
           - diagnose-tls
+          - inspect-media
           - setup-tls-certbot
         default: diagnose-tls
         required: true
@@ -24,6 +28,10 @@ on:
         description: Email for Let's Encrypt (setup-tls-certbot only)
         required: false
         default: ''
+      media_path:
+        description: "inspect-media only: site-absolute path of the file to trace"
+        required: false
+        default: /media/magiccorn/best-corn.jpg
       domain:
         description: Domain to diagnose / issue a certificate for
         required: true
@@ -141,6 +149,56 @@ jobs:
             done
             echo "--- file on disk ---"
             ls -la "$APP_DIR"/public/media/video/ 2>/dev/null
+            echo
+            echo "===== DONE (read-only) ====="
+
+      - name: Inspect media (read-only)
+        if: ${{ github.event.inputs.action == 'inspect-media' }}
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ env.DEPLOY_HOST }}
+          username: ${{ env.DEPLOY_USER }}
+          password: ${{ env.DEPLOY_PASSWORD }}
+          key: ${{ env.DEPLOY_SSH_KEY }}
+          command_timeout: 5m
+          script: |
+            set +e
+            DOMAIN="${{ github.event.inputs.domain }}"
+            APP_DIR="${{ github.event.inputs.app_dir }}"
+            REL="${{ github.event.inputs.media_path }}"
+            BASENAME=$(basename "$REL")
+            echo "===== the copy the app dir holds ====="
+            ls -la "$APP_DIR/public$REL" 2>/dev/null || echo "  not present under $APP_DIR/public"
+            md5sum "$APP_DIR/public$REL" 2>/dev/null
+            echo
+            echo "===== every copy of $BASENAME on this box ====="
+            # Two servers answering one URL with two bodies means two files. Find them.
+            find / -xdev -name "$BASENAME" -type f 2>/dev/null | while read -r F; do
+              printf '  %10s  %s  %s\n' "$(stat -c %s "$F")" "$(md5sum "$F" | cut -c1-12)" "$F"
+            done
+            echo
+            echo "===== server blocks claiming $DOMAIN, and their roots ====="
+            grep -RsnE "server_name[^;]*${DOMAIN}" /etc/nginx/ 2>/dev/null
+            echo "--- root directives in every enabled vhost ---"
+            grep -RsnE '^[[:space:]]*root[[:space:]]' /etc/nginx/sites-enabled/ /etc/nginx/conf.d/ 2>/dev/null
+            echo
+            echo "===== what the box itself gets, ten times over ====="
+            # Alternating sizes from outside are the symptom; if they alternate here
+            # too the split is local, not in anything in front of the origin.
+            for i in 1 2 3 4 5 6 7 8 9 10; do
+              curl -s -k -m 10 -o /dev/null \
+                   -w "  try $i: %{http_code} %{size_download} %{content_type}\n" \
+                   "https://127.0.0.1$REL" -H "Host: ${DOMAIN}"
+            done
+            echo "--- and over HTTP/1.1 on :80 ---"
+            for i in 1 2 3; do
+              curl -s -m 10 --http1.1 -o /dev/null \
+                   -w "  try $i: %{http_code} %{size_download}\n" \
+                   "http://127.0.0.1$REL" -H "Host: ${DOMAIN}"
+            done
+            echo
+            echo "===== nginx caching that could hold a stale body ====="
+            grep -RsnE 'open_file_cache|proxy_cache|fastcgi_cache|sendfile|aio' /etc/nginx/nginx.conf /etc/nginx/conf.d/ /etc/nginx/sites-enabled/ 2>/dev/null
             echo
             echo "===== DONE (read-only) ====="
 
