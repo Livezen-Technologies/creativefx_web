@@ -46,6 +46,11 @@ $nav = [
 
         <!-- Right side -->
         <div class="flex items-center gap-2.5 sm:gap-3">
+            <!-- Social accounts. Hidden below sm, where the row would crowd the
+                 language switcher out; the mobile menu carries them instead. -->
+            <div class="hidden sm:block">
+                <?= $this->include('Modules\Core\Views\partials\social_links', ['compact' => true]) ?>
+            </div>
             <?= $this->include('Modules\Core\Views\partials\theme_toggle') ?>
             <?= $this->include('Modules\Core\Views\partials\lang_switcher') ?>
             <!-- Mobile toggle -->
@@ -71,6 +76,12 @@ $nav = [
                     <svg class="h-4 w-4 text-white/30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </a>
             <?php endforeach; ?>
+
+            <!-- The header's icon row is hidden at this width, so the accounts
+                 appear here instead rather than not at all. -->
+            <div class="mt-8 flex justify-center sm:hidden">
+                <?= $this->include('Modules\Core\Views\partials\social_links', ['compact' => false]) ?>
+            </div>
         </nav>
     </div>
 </header>
