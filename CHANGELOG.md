@@ -126,6 +126,9 @@ lives only in the git history.
     admin panel.
   - Budget bands are quoted in LKR: under 100,000 / 100,000–300,000 /
     300,000–750,000 / 750,000–1.5M / over 1.5M / not sure yet.
+- **Worksuite chat widget** on every public page, loaded deferred at the end
+  of the body so it never blocks rendering. It is a third-party script from
+  `app.worksuite.lk`; the admin console and the offline page do not load it.
 - **Search-engine essentials the site never had**: a canonical URL and
   `hreflang` alternates on every page, Organization structured data, a
   generated `/sitemap.xml` that pairs each page's translations, and a
@@ -153,12 +156,18 @@ lives only in the git history.
     had to be: white on the old red passed contrast, but white on amber is
     about 1.8:1 and fails outright. Filled buttons now use near-black — 11.6:1
     — and the Impact page's green scope keeps its white.
-  - The wordmark now matches the supplied logo: bold and tightly tracked
-    rather than semibold and widely spaced, white `CREATIVE` against amber
-    `FX`, in the header, footer, preloader, admin console and sign-in screen.
+  - **The real logo artwork is in.** The header and footer now show the
+    supplied `cfx-wordmark.svg` rather than the wordmark set as text, and the
+    symbol, the three favicon sizes and `favicon.ico` are the real mark. (The
+    earlier type treatment — bold, tightly tracked `CREATIVE` + `FX` — was an
+    approximation standing in until the artwork arrived; it is superseded.)
   - The brand mark, favicons, the offline page and the 53 placeholder panels
     were all regenerated in amber. `scripts/gen-brand.mjs` rebuilds every
     favicon size from one source file, so replacing the logo is one command.
+- **Page heroes can fill the viewport.** Set `fullscreen` on a `pagehero`
+  block and it opens full-height with a scroll cue, the treatment a film hero
+  always had; leave it off and the hero stays its compact self. The backdrop —
+  film, still or aurora — now drifts gently as the hero scrolls away.
 - **The deploy targets `magiccorn.livezencloud.com`.** Every default in
   `deploy/setup.sh`, `deploy/update.sh` and the Deploy workflow now points at
   the CreativeFX host, database (`magiccorn_prod`) and install directory

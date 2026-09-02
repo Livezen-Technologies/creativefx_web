@@ -54,8 +54,12 @@ for (const path of paths) {
   const page = await context.newPage();
   const url = base + path;
   const errors = [];
-  page.on('console', (m) => m.type() === 'error' && errors.push(m.text()));
-  page.on('pageerror', (e) => errors.push(String(e)));
+  // Third-party scripts (the chat widget) cannot be reached from a sandbox with
+  // no outbound network, and a blocked request is not a defect in this page.
+  // Filter those out or every run reports a false failure.
+  const offsite = (t) => /ERR_TUNNEL_CONNECTION_FAILED|ERR_NAME_NOT_RESOLVED|ERR_INTERNET_DISCONNECTED|ERR_PROXY/.test(t);
+  page.on('console', (m) => m.type() === 'error' && !offsite(m.text()) && errors.push(m.text()));
+  page.on('pageerror', (e) => !offsite(String(e)) && errors.push(String(e)));
 
   let status = 0;
   try {
