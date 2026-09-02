@@ -20,9 +20,8 @@ if (! function_exists('supported_locales')) {
     {
         $labels = [
             'en' => ['English', 'English'],
-            'ja' => ['Japanese', '日本語'],
-            'es' => ['Spanish', 'Español'],
-            'zh' => ['Chinese', '中文'],
+            'si' => ['Sinhala', 'සිංහල'],
+            'ta' => ['Tamil', 'தமிழ்'],
         ];
 
         $out = [];
@@ -166,13 +165,34 @@ if (! function_exists('content_locales')) {
             return $map;
         }
 
-        foreach (['ja', 'es', 'zh'] as $locale) {
-            if (trim((string) ($map[$locale] ?? '')) === '') {
+        foreach (translatable_locales() as $locale) {
+            if (isset($dict[$en][$locale]) && trim((string) ($map[$locale] ?? '')) === '') {
                 $map[$locale] = $dict[$en][$locale];
             }
         }
 
         return $map;
+    }
+}
+
+if (! function_exists('translatable_locales')) {
+    /**
+     * The locales content has to be translated INTO — every supported locale
+     * except the one it is authored in.
+     *
+     * The locale list used to be repeated as a literal in six files, which is
+     * how three of them were still listing Japanese, Spanish and Chinese after
+     * the site became Sri Lankan. Everything derives it from App::$supportedLocales
+     * now, so adding or dropping a language is one edit.
+     *
+     * @return list<string>
+     */
+    function translatable_locales(): array
+    {
+        $all     = config('App')->supportedLocales;
+        $default = config('App')->defaultLocale;
+
+        return array_values(array_filter($all, static fn ($l) => $l !== $default));
     }
 }
 

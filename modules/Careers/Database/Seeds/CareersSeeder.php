@@ -20,7 +20,7 @@ class CareersSeeder extends Seeder
         $jobs = [
             [
                 'slug' => 'merchandiser-colombo',
-                'title' => $j(['en' => 'Merchandiser', 'es' => 'Comercializador']),
+                'title' => $j(['en' => 'Merchandiser']),
                 'description' => $j(['en' => "Own the order book for a portfolio of international brands — from costing and sampling through production follow-up to delivery. You will coordinate daily with our design studio, partner factories and customers to keep every style on time and on quality."]),
                 'department' => 'Merchandising', 'country' => 'Sri Lanka', 'location' => 'Colombo (Head Office)',
                 'employment_type' => 'full-time', 'experience' => '2–4 years in apparel merchandising',
@@ -30,7 +30,7 @@ class CareersSeeder extends Seeder
             ],
             [
                 'slug' => 'production-executive-trincomalee',
-                'title' => $j(['en' => 'Production Executive', 'es' => 'Ejecutivo de Producción']),
+                'title' => $j(['en' => 'Production Executive']),
                 'description' => $j(['en' => 'Drive daily production performance at our LEED Gold-certified Trincomalee plant. Plan lines, track efficiency and quality KPIs, and work with QA and industrial engineering to hit delivery targets responsibly.']),
                 'department' => 'Production', 'country' => 'Sri Lanka', 'location' => 'Trincomalee',
                 'employment_type' => 'full-time', 'experience' => '3+ years in apparel production',
@@ -40,7 +40,7 @@ class CareersSeeder extends Seeder
             ],
             [
                 'slug' => 'sustainability-executive',
-                'title' => $j(['en' => 'Sustainability Executive', 'es' => 'Ejecutivo de Sostenibilidad']),
+                'title' => $j(['en' => 'Sustainability Executive']),
                 'description' => $j(['en' => "Help deliver our Better Tomorrow 2028 roadmap: emissions, water and waste programmes, Higg/Worldly verification, biodiversity projects and ESG reporting across our facilities and partner factories."]),
                 'department' => 'Sustainability', 'country' => 'Sri Lanka', 'location' => 'Colombo',
                 'employment_type' => 'full-time', 'experience' => '1–3 years in sustainability/ESG',
@@ -50,7 +50,7 @@ class CareersSeeder extends Seeder
             ],
             [
                 'slug' => 'hr-executive-colombo',
-                'title' => $j(['en' => 'Human Resources Executive', 'es' => 'Ejecutivo de RR. HH.']),
+                'title' => $j(['en' => 'Human Resources Executive']),
                 'description' => $j(['en' => 'Support the full employee lifecycle at our Colombo head office — recruitment, onboarding, engagement and learning & development for a 250+ team.']),
                 'department' => 'HR', 'country' => 'Sri Lanka', 'location' => 'Colombo (Head Office)',
                 'employment_type' => 'full-time', 'experience' => '1–3 years in HR',

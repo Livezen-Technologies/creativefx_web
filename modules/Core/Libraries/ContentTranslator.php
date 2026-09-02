@@ -128,11 +128,25 @@ class ContentTranslator
         }
     }
 
+    /**
+     * A locale map is any node keyed purely by language tags with an English
+     * side. Matching the shape rather than a fixed list means content written
+     * under a locale the site has since dropped is still recognised — which is
+     * what lets it be migrated instead of silently ignored.
+     */
     private function isLocaleMap(array $node): bool
     {
-        return isset($node['en'])
-            && is_string($node['en'])
-            && array_diff(array_keys($node), ['en', 'ja', 'es', 'zh']) === [];
+        if (! isset($node['en']) || ! is_string($node['en'])) {
+            return false;
+        }
+
+        foreach (array_keys($node) as $key) {
+            if (! is_string($key) || preg_match('/^[a-z]{2}(-[A-Za-z]{2,4})?$/', $key) !== 1) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     private function fill(array $map): array
@@ -142,8 +156,8 @@ class ContentTranslator
             return $map;
         }
 
-        foreach (['ja', 'es', 'zh'] as $locale) {
-            if (trim((string) ($map[$locale] ?? '')) === '') {
+        foreach (translatable_locales() as $locale) {
+            if (isset($this->dict[$en][$locale]) && trim((string) ($map[$locale] ?? '')) === '') {
                 $map[$locale] = $this->dict[$en][$locale];
             }
         }

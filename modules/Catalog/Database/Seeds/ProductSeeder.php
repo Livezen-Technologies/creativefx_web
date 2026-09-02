@@ -17,6 +17,8 @@ class ProductSeeder extends Seeder
 {
     public function run(): void
     {
+        helper('norlanka');
+
         $j   = static fn (array $v): string => json_encode($v, JSON_UNESCAPED_UNICODE);
         $now = date('Y-m-d H:i:s');
 
@@ -43,29 +45,31 @@ class ProductSeeder extends Seeder
         // stands in for every flavour until per-flavour shots are supplied.
         $cupShot = '/media/magiccorn/Magic-Corn-with-corn.png';
 
+        // English only; content_locales() completes each name and description
+        // from the translation dictionary.
         $cups = [
-            ['butter-corn-cup', 'Butter Corn Cup', 'Maíz con mantequilla',
+            ['butter-corn-cup', 'Butter Corn Cup',
                 'The classic. Sweet corn steamed to order and stirred through with butter until every kernel is glossy.', 'bestseller', 1],
-            ['garlic-corn-cup', 'Garlic Corn Cup', 'Maíz al ajo',
+            ['garlic-corn-cup', 'Garlic Corn Cup',
                 'Savoury and aromatic — garlic folded through hot sweet corn. A favourite with regulars.', null, 0],
-            ['cheese-corn-cup', 'Cheese Corn Cup', 'Maíz con queso',
+            ['cheese-corn-cup', 'Cheese Corn Cup',
                 'Rich and generous, with cheese stirred right through the cup while the corn is still steaming.', 'popular', 1],
-            ['mayo-corn-cup', 'Mayo Corn Cup', 'Maíz con mayonesa',
+            ['mayo-corn-cup', 'Mayo Corn Cup',
                 'Creamy and mild, and the base for many of our best combinations.', null, 0],
-            ['minced-chicken-corn-cup', 'Minced Chicken Corn Cup', 'Maíz con pollo picado',
+            ['minced-chicken-corn-cup', 'Minced Chicken Corn Cup',
                 'Seasoned minced chicken through buttered sweet corn — a cup that eats like a meal.', null, 0],
-            ['lime-oyster-corn-cup', 'Lime & Oyster Sauce Corn Cup', 'Maíz con lima y salsa de ostras',
+            ['lime-oyster-corn-cup', 'Lime & Oyster Sauce Corn Cup',
                 'Bright lime against savoury oyster sauce — the combination regulars come back for.', 'new', 1],
         ];
 
         $products = [];
-        foreach ($cups as $i => [$slug, $en, $es, $desc, $label, $featured]) {
+        foreach ($cups as $i => [$slug, $en, $desc, $label, $featured]) {
             $products[] = [
                 'category_id'       => $catId['corn-cups'] ?? null,
                 'slug'              => $slug,
                 'sku'               => 'MC-CUP-' . str_pad((string) ($i + 1), 3, '0', STR_PAD_LEFT),
                 'collection'        => 'Corn in a Cup',
-                'name'              => $j(['en' => $en, 'es' => $es]),
+                'name'              => $j(content_locales(['en' => $en])),
                 'short_description' => $j(['en' => $desc]),
                 'description'       => $j(['en' => $desc . ' Made with sweet corn we grow ourselves in Sri Lanka, precooked at our ISO 9001 certified factory and steamed fresh at the outlet.']),
                 'features'          => $cupFeatures,
@@ -86,9 +90,9 @@ class ProductSeeder extends Seeder
             'slug'              => '1kg-frozen-sweet-corn-pack',
             'sku'               => 'MC-FRZ-001',
             'collection'        => 'Frozen Packs',
-            'name'              => $j(['en' => '1kg Frozen Sweet Corn Pack', 'es' => 'Paquete de maíz dulce congelado 1 kg']),
-            'short_description' => $j(['en' => 'A kilogram of our precooked sweet corn, frozen — make it your own way at home.']),
-            'description'       => $j(['en' => 'The same sweet corn we serve at our outlets, precooked and frozen in a 1kg pack. Steam it, season it and top it however you like. Also supplied in bulk to hotels, restaurants and caterers.']),
+            'name'              => $j(content_locales(['en' => '1kg Frozen Sweet Corn Pack'])),
+            'short_description' => $j(content_locales(['en' => 'A kilogram of our precooked sweet corn, frozen — make it your own way at home.'])),
+            'description'       => $j(content_locales(['en' => 'The same sweet corn we serve at our outlets, precooked and frozen in a 1kg pack. Steam it, season it and top it however you like. Also supplied in bulk to hotels, restaurants and caterers.'])),
             'features'          => $j(['Precooked and frozen', 'Grown in Sri Lanka', 'No preservatives', 'Bulk supply available']),
             'applications'      => $j(['Home', 'Hotels and restaurants', 'Catering']),
             'specs'             => $j([
@@ -116,9 +120,9 @@ class ProductSeeder extends Seeder
             'slug'              => 'magic-corn-diy-home-pack',
             'sku'               => 'MC-DIY-001',
             'collection'        => 'DIY Packs',
-            'name'              => $j(['en' => 'Magic Corn DIY Home Pack', 'es' => 'Pack casero Magic Corn']),
-            'short_description' => $j(['en' => 'The outlet in a box — our frozen sweet corn, the toppings, and the Magic Corn cups to serve it in.']),
-            'description'       => $j(['en' => 'A boxed kit for making corn in a cup at home: a catering pack of our precooked frozen sweet corn, cheese and butter to stir through it, a lime, and a stack of the same cups we serve in at the outlets. Cook the corn from frozen — boil it or microwave it — then top it however your table likes it.']),
+            'name'              => $j(content_locales(['en' => 'Magic Corn DIY Home Pack'])),
+            'short_description' => $j(content_locales(['en' => 'The outlet in a box — our frozen sweet corn, the toppings, and the Magic Corn cups to serve it in.'])),
+            'description'       => $j(content_locales(['en' => 'A boxed kit for making corn in a cup at home: a catering pack of our precooked frozen sweet corn, cheese and butter to stir through it, a lime, and a stack of the same cups we serve in at the outlets. Cook the corn from frozen — boil it or microwave it — then top it however your table likes it.'])),
             'features'          => $j([
                 'Precooked frozen sweet corn from our own farms',
                 'Cheese and butter toppings included',

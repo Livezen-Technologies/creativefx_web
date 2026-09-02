@@ -9,6 +9,20 @@ use CodeIgniter\Router\RouteCollection;
 // order in which module route files are discovered.
 $routes->addPlaceholder('locale', implode('|', config('App')->supportedLocales));
 
+// Languages the site used to be published in. Dropping them from
+// supportedLocales makes every /ja, /es and /zh URL a 404 — including anything
+// already linked or indexed — so they are redirected to the same path under the
+// default locale instead of disappearing. Permanent, because the move is.
+$retiredLocales = ['ja', 'es', 'zh'];
+$routes->addPlaceholder('retiredlocale', implode('|', $retiredLocales));
+$routes->get('(:retiredlocale)', static fn () => redirect()->to('/' . config('App')->defaultLocale, 301));
+// Both captures are passed, in order — the locale first, then the rest of the
+// path. Naming only the second would silently redirect /ja/about-us to /en/ja.
+$routes->get('(:retiredlocale)/(:any)', static fn (string $locale, string $rest = '') => redirect()->to(
+    '/' . config('App')->defaultLocale . '/' . $rest,
+    301,
+));
+
 $siteOptions = ['filter' => 'applocale', 'namespace' => 'Modules\Site\Controllers'];
 
 // Localized home, e.g. /en, /ja. The leading capture is the locale (the

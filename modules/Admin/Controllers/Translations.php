@@ -12,7 +12,11 @@ use Modules\Translation\Models\TranslationModel;
  */
 class Translations extends BaseController
 {
-    private const LOCALES = ['en', 'ja', 'es', 'zh'];
+    /** @return list<string> */
+    private function locales(): array
+    {
+        return config('App')->supportedLocales;
+    }
 
     private function model(): TranslationModel
     {
@@ -43,7 +47,7 @@ class Translations extends BaseController
             'active'  => 'translations',
             'groups'  => $groups,
             'group'   => $group,
-            'locales' => self::LOCALES,
+            'locales' => $this->locales(),
             'matrix'  => $matrix,
         ]);
     }
@@ -60,7 +64,7 @@ class Translations extends BaseController
             if ($key === '') {
                 continue;
             }
-            foreach (self::LOCALES as $locale) {
+            foreach ($this->locales() as $locale) {
                 if (array_key_exists($locale, $item)) {
                     $model->put($locale, $group, $key, (string) $item[$locale]);
                     $count++;
@@ -82,7 +86,7 @@ class Translations extends BaseController
         }
 
         $model = $this->model();
-        foreach (self::LOCALES as $locale) {
+        foreach ($this->locales() as $locale) {
             $model->put($locale, $group, $key, (string) $this->request->getPost($locale));
         }
 
@@ -95,7 +99,7 @@ class Translations extends BaseController
         $model = $this->model();
         $count = 0;
 
-        foreach (self::LOCALES as $locale) {
+        foreach ($this->locales() as $locale) {
             $file = ROOTPATH . 'modules/Site/Language/' . $locale . '/Site.php';
             if (! is_file($file)) {
                 continue;

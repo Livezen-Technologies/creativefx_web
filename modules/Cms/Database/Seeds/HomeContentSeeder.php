@@ -22,7 +22,7 @@ class HomeContentSeeder extends Seeder
         if ($pages->where('slug', 'home')->get()->getRowArray() === null) {
             $pages->insert([
                 'slug'             => 'home',
-                'title'            => $j(['en' => 'Norlanka', 'es' => 'Norlanka', 'ja' => 'ノーランカ', 'zh' => '诺兰卡']),
+                'title'            => $j(['en' => 'Magic Corn']),
                 'meta_title'       => $j(['en' => 'Magic Corn — Corn in a Cup']),
                 'meta_description' => $j(['en' => 'Sri Lanka’s original corn in a cup — sweet corn grown, steamed and topped your way since 2007.']),
                 'template'         => 'home',
@@ -76,46 +76,34 @@ class HomeContentSeeder extends Seeder
         $addBlock($hero, 'hero', [
             'headline' => [
                 'en' => 'Sweet corn, served hot in a cup.',
-                'es' => 'Maíz dulce, servido caliente en vaso.',
-                'ja' => 'スイートコーンを、あつあつのカップで。',
-                'zh' => '甜玉米，热腾腾装进杯里。',
             ],
             'subhead' => [
                 'en' => 'Grown, steamed and topped your way — Sri Lanka’s original corn in a cup.',
-                'es' => 'Cultivado, cocido al vapor y con los toppings que elijas: el maíz en vaso original de Sri Lanka.',
-                'ja' => '自社栽培、蒸したて、トッピングはお好みで — スリランカ発、カップコーンの原点。',
-                'zh' => '自种、现蒸、配料自选——斯里兰卡最早的杯装甜玉米。',
             ],
             // Kinetic-typography hero: pre + cycling word + post.
             'pre' => [
                 'en' => 'Sweet corn, served',
-                'es' => 'Maíz dulce, servido',
-                'ja' => 'スイートコーンを、',
-                'zh' => '甜玉米，就要',
             ],
             'post' => [
                 'en' => 'in a cup.',
-                'es' => 'en vaso.',
-                'ja' => 'カップで。',
-                'zh' => '装进杯里。',
             ],
             // Cycling words are the toppings the outlets actually serve.
             'rotators' => [
-                ['en' => 'buttered', 'es' => 'con mantequilla', 'ja' => 'バターで', 'zh' => '黄油'],
-                ['en' => 'cheesy', 'es' => 'con queso', 'ja' => 'チーズで', 'zh' => '芝士'],
-                ['en' => 'garlicky', 'es' => 'con ajo', 'ja' => 'ガーリックで', 'zh' => '蒜香'],
-                ['en' => 'spiced', 'es' => 'con especias', 'ja' => 'スパイスで', 'zh' => '香料'],
-                ['en' => 'hot', 'es' => 'caliente', 'ja' => 'あつあつで', 'zh' => '热腾腾'],
+                ['en' => 'buttered'],
+                ['en' => 'cheesy'],
+                ['en' => 'garlicky'],
+                ['en' => 'spiced'],
+                ['en' => 'hot'],
             ],
         ], 0);
 
         // ---- Stats ------------------------------------------------------
         $stats = $addSection('stats', 'stats', 1);
         $statData = [
-            ['value' => '2007', 'suffix' => '', 'label' => ['en' => 'Serving corn in a cup since', 'es' => 'Sirviendo maíz en vaso desde', 'ja' => 'カップコーンの提供開始', 'zh' => '杯装玉米始于']],
-            ['value' => '30', 'suffix' => '+', 'label' => ['en' => 'Outlets island-wide', 'es' => 'Locales en toda la isla', 'ja' => '島内の店舗数', 'zh' => '全岛门店']],
-            ['value' => '40', 'suffix' => '+', 'label' => ['en' => 'Women employed at our factory', 'es' => 'Mujeres empleadas en nuestra fábrica', 'ja' => '工場で働く女性従業員', 'zh' => '工厂女性员工']],
-            ['value' => '100', 'suffix' => '%', 'label' => ['en' => 'Homegrown Sri Lankan brand', 'es' => 'Marca 100% de Sri Lanka', 'ja' => '100%スリランカ国産ブランド', 'zh' => '100% 斯里兰卡本土品牌']],
+            ['value' => '2007', 'suffix' => '', 'label' => ['en' => 'Serving corn in a cup since']],
+            ['value' => '30', 'suffix' => '+', 'label' => ['en' => 'Outlets island-wide']],
+            ['value' => '40', 'suffix' => '+', 'label' => ['en' => 'Women employed at our factory']],
+            ['value' => '100', 'suffix' => '%', 'label' => ['en' => 'Homegrown Sri Lankan brand']],
         ];
         foreach ($statData as $i => $s) {
             $addBlock($stats, 'stat', $s, $i);
@@ -124,9 +112,9 @@ class HomeContentSeeder extends Seeder
         // ---- CTA --------------------------------------------------------
         $cta = $addSection('cta', 'cta', 2);
         $addBlock($cta, 'cta', [
-            'title'  => ['en' => 'Take Magic Corn home', 'es' => 'Llévate Magic Corn a casa', 'ja' => 'Magic Cornをおうちで', 'zh' => '把 Magic Corn 带回家'],
-            'text'   => ['en' => 'Our 1kg frozen sweet corn pack — the same corn we serve at the outlets.', 'es' => 'Nuestro paquete de 1 kg de maíz dulce congelado, el mismo que servimos en los locales.', 'ja' => '店舗と同じスイートコーンを1kg冷凍パックで。', 'zh' => '1 公斤冷冻甜玉米装——与门店同款。'],
-            'button' => ['en' => 'Visit the shop', 'es' => 'Ir a la tienda', 'ja' => 'ショップを見る', 'zh' => '前往商店'],
+            'title'  => ['en' => 'Take Magic Corn home'],
+            'text'   => ['en' => 'Our 1kg frozen sweet corn pack — the same corn we serve at the outlets.'],
+            'button' => ['en' => 'Visit the shop'],
             'url'    => 'products',
         ], 0);
 

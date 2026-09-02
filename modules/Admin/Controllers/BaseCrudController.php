@@ -30,7 +30,11 @@ abstract class BaseCrudController extends BaseController
     /** @var list<array{label:string,path:string}> extra per-row links ({id} placeholder) */
     protected array $extraActions = [];
 
-    protected const LOCALES = ['en', 'ja', 'es', 'zh'];
+    /** @return list<string> */
+    protected function locales(): array
+    {
+        return config('App')->supportedLocales;
+    }
 
     protected function model()
     {
@@ -77,7 +81,7 @@ abstract class BaseCrudController extends BaseController
             'singular' => $this->singular,
             'fields'   => $this->fields,
             'row'      => $row,
-            'locales'  => self::LOCALES,
+            'locales'  => $this->locales(),
         ]);
     }
 
@@ -141,7 +145,7 @@ abstract class BaseCrudController extends BaseController
 
             if ($type === 'locale' || $type === 'locale_textarea' || $type === 'locale_richtext') {
                 $map = [];
-                foreach (self::LOCALES as $l) {
+                foreach ($this->locales() as $l) {
                     $v = $this->request->getPost($name . '_' . $l);
                     if ($v !== null && $v !== '') {
                         $map[$l] = $v;

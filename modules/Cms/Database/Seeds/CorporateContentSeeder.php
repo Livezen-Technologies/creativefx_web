@@ -26,15 +26,13 @@ class CorporateContentSeeder extends Seeder
     /**
      * Build a locale-map, dropping null locales. Any locale not supplied here
      * is completed from the content translation dictionary, so seeded copy
-     * lands fully translated in en/ja/es/zh.
+     * lands fully translated in every supported locale.
      */
-    private function loc(string $en, ?string $es = null, ?string $ja = null, ?string $zh = null): array
+    private function loc(string $en): array
     {
         helper('norlanka');
 
-        return content_locales(
-            array_filter(['en' => $en, 'es' => $es, 'ja' => $ja, 'zh' => $zh], static fn ($v) => $v !== null)
-        );
+        return content_locales(['en' => $en]);
     }
 
     private function seedPage(string $slug, array $def, string $now): void
@@ -125,7 +123,7 @@ class CorporateContentSeeder extends Seeder
             ['cta', [
                 'title'  => $this->loc('Bring Magic Corn to your event'),
                 'text'   => $this->loc('Outlet enquiries, bulk orders and event catering — talk to our team.'),
-                'button' => $this->loc('Contact us', 'Contáctanos', 'お問い合わせ', '联系我们'),
+                'button' => $this->loc('Contact us'),
                 'url'    => 'contact',
             ]],
         ]];
@@ -134,11 +132,11 @@ class CorporateContentSeeder extends Seeder
     private function aboutUs(): array
     {
         return [
-            'title' => $this->loc('About Us', 'Sobre Nosotros', '会社概要', '关于我们'),
+            'title' => $this->loc('About Us'),
             'meta'  => $this->loc('Magic Corn — the original corn in a cup, homegrown in Sri Lanka since 2007.'),
             'sections' => [
                 $this->hero(
-                    $this->loc('About Us', 'Sobre Nosotros', '会社概要', '关于我们'),
+                    $this->loc('About Us'),
                     $this->loc('Sri Lanka’s original corn in a cup'),
                     $this->loc('A 100% homegrown brand, cultivating sweet corn on a commercial scale since 2007.'),
                     null, null, '/media/magiccorn/corn.jpg'
@@ -213,11 +211,11 @@ class CorporateContentSeeder extends Seeder
     private function ourBusiness(): array
     {
         return [
-            'title' => $this->loc('Our Business', 'Nuestro Negocio', '事業内容', '我们的业务'),
+            'title' => $this->loc('Our Business'),
             'meta'  => $this->loc('Magic Corn — cultivation, processing and retail of sweet corn across Sri Lanka.'),
             'sections' => [
                 $this->hero(
-                    $this->loc('Our Business', 'Nuestro Negocio', '事業内容', '我们的业务'),
+                    $this->loc('Our Business'),
                     $this->loc('From our fields to your cup'),
                     $this->loc('We grow, process and serve sweet corn — the whole chain, under one brand.'),
                     null, null, '/media/magiccorn/5.jpg'
@@ -274,11 +272,11 @@ class CorporateContentSeeder extends Seeder
     private function ourLocations(): array
     {
         return [
-            'title' => $this->loc('Our Locations', 'Nuestras Ubicaciones', '店舗情報', '门店位置'),
+            'title' => $this->loc('Our Locations'),
             'meta'  => $this->loc('Magic Corn outlets across Sri Lanka, and our head office in Dehiwala.'),
             'sections' => [
                 $this->hero(
-                    $this->loc('Our Locations', 'Nuestras Ubicaciones', '店舗情報', '门店位置'),
+                    $this->loc('Our Locations'),
                     $this->loc('Thirty-plus outlets across the island'),
                     $this->loc('Find your nearest Magic Corn, or talk to us about opening one.'),
                     null, null, '/media/magiccorn/2.jpg'
@@ -312,11 +310,11 @@ class CorporateContentSeeder extends Seeder
     private function contact(): array
     {
         return [
-            'title' => $this->loc('Contact Us', 'Contacto', 'お問い合わせ', '联系我们'),
+            'title' => $this->loc('Contact Us'),
             'meta'  => $this->loc('Talk to Magic Corn — orders, outlets, bulk supply and events.'),
             'sections' => [
                 $this->hero(
-                    $this->loc('Contact Us', 'Contacto', 'お問い合わせ', '联系我们'),
+                    $this->loc('Contact Us'),
                     $this->loc('Get in touch'),
                     $this->loc('Open every day, 9:00 AM to 8:00 PM.'),
                     null, null, '/media/magiccorn/best-corn.jpg'

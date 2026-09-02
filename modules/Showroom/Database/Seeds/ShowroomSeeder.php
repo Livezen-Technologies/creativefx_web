@@ -17,6 +17,8 @@ class ShowroomSeeder extends Seeder
 {
     public function run(): void
     {
+        helper('norlanka');
+
         $now = date('Y-m-d H:i:s');
         $j   = static fn ($v): string => json_encode($v, JSON_UNESCAPED_UNICODE);
 
@@ -34,7 +36,7 @@ class ShowroomSeeder extends Seeder
         // palette[3], features[], sizeset, products[[en, es, fabric]].
         $cats = [
             [
-                'slug' => 'babywear', 'en' => 'Babywear', 'es' => 'Ropa de bebé', 'theme' => 'clouds',
+                'slug' => 'babywear', 'en' => 'Babywear', 'theme' => 'clouds',
                 'tname_en' => 'Soft Nursery World', 'tname_es' => 'Mundo de Guardería',
                 'tag_en' => 'Floating clouds, moon & stars and soft wooden toy shelves under a gentle glow.',
                 'tag_es' => 'Nubes flotantes, luna y estrellas y suaves estantes de madera bajo una luz tenue.',
@@ -85,7 +87,7 @@ class ShowroomSeeder extends Seeder
                 ],
             ],
             [
-                'slug' => 'childrenswear', 'en' => 'Kidswear', 'es' => 'Ropa infantil', 'theme' => 'playground',
+                'slug' => 'childrenswear', 'en' => 'Kidswear', 'theme' => 'playground',
                 'tname_en' => 'Denim Play Studio', 'tname_es' => 'Estudio Vaquero',
                 'tag_en' => 'A bright kids studio styled around Norlanka\'s denim-led collection — dungarees, pinafores, jackets and coordinated sets.',
                 'tag_es' => 'Un estudio infantil luminoso en torno a la colección vaquera de Norlanka: petos, pichis, chaquetas y conjuntos.',
@@ -118,7 +120,7 @@ class ShowroomSeeder extends Seeder
                 ],
             ],
             [
-                'slug' => 'kids-nightwear', 'en' => "Kids' Nightwear", 'es' => 'Pijamas infantiles', 'theme' => 'night',
+                'slug' => 'kids-nightwear', 'en' => "Kids' Nightwear", 'theme' => 'night',
                 'tname_en' => 'Dreamland', 'tname_es' => 'País de los Sueños',
                 'tag_en' => 'A moonlit bedroom with floating stars, dream clouds and magical lighting.',
                 'tag_es' => 'Un dormitorio iluminado por la luna con estrellas flotantes y luz mágica.',
@@ -132,7 +134,7 @@ class ShowroomSeeder extends Seeder
                 ],
             ],
             [
-                'slug' => 'school-wear', 'en' => 'School Wear', 'es' => 'Uniformes escolares', 'theme' => 'classroom',
+                'slug' => 'school-wear', 'en' => 'School Wear', 'theme' => 'classroom',
                 'tname_en' => 'Modern Learning Campus', 'tname_es' => 'Campus de Aprendizaje',
                 'tag_en' => 'School corridors, classroom displays, library zones and a sports arena.',
                 'tag_es' => 'Pasillos escolares, aulas, zonas de biblioteca y un pabellón deportivo.',
@@ -147,7 +149,7 @@ class ShowroomSeeder extends Seeder
                 ],
             ],
             [
-                'slug' => 'accessories', 'en' => 'Accessories', 'es' => 'Accesorios', 'theme' => 'luxury',
+                'slug' => 'accessories', 'en' => 'Accessories', 'theme' => 'luxury',
                 'tname_en' => 'Luxury Fashion Gallery', 'tname_es' => 'Galería de Moda de Lujo',
                 'tag_en' => 'Glass showcases and premium display cabinets under focused spotlights.',
                 'tag_es' => 'Vitrinas de cristal y vitrinas premium bajo focos dirigidos.',
@@ -163,7 +165,7 @@ class ShowroomSeeder extends Seeder
                 ],
             ],
             [
-                'slug' => 'true-knits', 'en' => 'True Knits', 'es' => 'Tejidos de punto', 'theme' => 'textile',
+                'slug' => 'true-knits', 'en' => 'True Knits', 'theme' => 'textile',
                 'tname_en' => 'Artisan Knit Studio', 'tname_es' => 'Estudio de Punto Artesanal',
                 'tag_en' => 'Yarn walls, textile displays and live knitting-machine exhibits.',
                 'tag_es' => 'Paredes de hilo, muestras textiles y exhibiciones de máquinas de tejer.',
@@ -176,7 +178,7 @@ class ShowroomSeeder extends Seeder
                 ],
             ],
             [
-                'slug' => 'hosiery-toys', 'en' => 'Hosiery & Toys', 'es' => 'Calcetería y juguetes', 'theme' => 'toys',
+                'slug' => 'hosiery-toys', 'en' => 'Hosiery & Toys', 'theme' => 'toys',
                 'tname_en' => 'Fun Factory', 'tname_es' => 'Fábrica de Diversión',
                 'tag_en' => 'A toy-manufacturing world of colourful production lines and play stations.',
                 'tag_es' => 'Un mundo de fabricación de juguetes con líneas coloridas y estaciones de juego.',
@@ -191,7 +193,7 @@ class ShowroomSeeder extends Seeder
                 ],
             ],
             [
-                'slug' => 'adults-woven', 'en' => 'Adults – Woven', 'es' => 'Adultos – Tejido plano', 'theme' => 'boutique',
+                'slug' => 'adults-woven', 'en' => 'Adults – Woven', 'theme' => 'boutique',
                 'tname_en' => 'Executive Fashion Avenue', 'tname_es' => 'Avenida de Moda Ejecutiva',
                 'tag_en' => 'A luxury shopping boulevard of boutique storefronts and premium retail.',
                 'tag_es' => 'Un bulevar de compras de lujo con escaparates boutique y retail premium.',
@@ -206,7 +208,7 @@ class ShowroomSeeder extends Seeder
                 ],
             ],
             [
-                'slug' => 'adults-jersey', 'en' => 'Adults – Jersey', 'es' => 'Adultos – Punto', 'theme' => 'urban',
+                'slug' => 'adults-jersey', 'en' => 'Adults – Jersey', 'theme' => 'urban',
                 'tname_en' => 'Urban Lifestyle Loft', 'tname_es' => 'Loft de Estilo Urbano',
                 'tag_en' => 'A modern apartment with city-skyline views and contemporary interiors.',
                 'tag_es' => 'Un apartamento moderno con vistas al skyline e interiores contemporáneos.',
@@ -220,7 +222,7 @@ class ShowroomSeeder extends Seeder
                 ],
             ],
             [
-                'slug' => 'activewear', 'en' => 'Activewear', 'es' => 'Ropa deportiva', 'theme' => 'arena',
+                'slug' => 'activewear', 'en' => 'Activewear', 'theme' => 'arena',
                 'tname_en' => 'Performance Arena', 'tname_es' => 'Arena de Rendimiento',
                 'tag_en' => 'A running track, gym environment and outdoor adventure zones.',
                 'tag_es' => 'Una pista de atletismo, gimnasio y zonas de aventura al aire libre.',
@@ -234,7 +236,7 @@ class ShowroomSeeder extends Seeder
                 ],
             ],
             [
-                'slug' => 'maternity', 'en' => 'Maternity', 'es' => 'Maternidad', 'theme' => 'wellness',
+                'slug' => 'maternity', 'en' => 'Maternity', 'theme' => 'wellness',
                 'tname_en' => 'Comfort & Care Lounge', 'tname_es' => 'Salón de Confort y Cuidado',
                 'tag_en' => 'Wellness-inspired interiors and an elegant home setting in soft natural light.',
                 'tag_es' => 'Interiores inspirados en el bienestar y un hogar elegante con luz natural suave.',
@@ -248,7 +250,7 @@ class ShowroomSeeder extends Seeder
                 ],
             ],
             [
-                'slug' => 'adults-essentials', 'en' => "Adults' Essentials & Nightwear", 'es' => 'Básicos y ropa de dormir', 'theme' => 'bedroom',
+                'slug' => 'adults-essentials', 'en' => "Adults' Essentials & Nightwear", 'theme' => 'bedroom',
                 'tname_en' => 'Luxury Bedroom Suite', 'tname_es' => 'Suite de Dormitorio de Lujo',
                 'tag_en' => 'A premium hotel suite with a relaxing bedroom ambiance.',
                 'tag_es' => 'Una suite de hotel premium con un ambiente de dormitorio relajante.',
@@ -275,10 +277,10 @@ class ShowroomSeeder extends Seeder
         foreach ($cats as $c) {
             $catTable->insert([
                 'slug'       => $c['slug'],
-                'name'       => $j(['en' => $c['en'], 'es' => $c['es']]),
+                'name'       => $j(content_locales(['en' => $c['en']])),
                 'theme'      => $c['theme'],
-                'theme_name' => $j(['en' => $c['tname_en'], 'es' => $c['tname_es']]),
-                'tagline'    => $j(['en' => $c['tag_en'], 'es' => $c['tag_es']]),
+                'theme_name' => $j(content_locales(['en' => $c['tname_en']])),
+                'tagline'    => $j(content_locales(['en' => $c['tag_en']])),
                 'background' => $c['palette'][0],
                 'palette'    => $j($c['palette']),
                 'features'   => $j($c['features']),
@@ -313,7 +315,7 @@ class ShowroomSeeder extends Seeder
                 $prodTable->insert([
                     'showroom_category_id' => $categoryId,
                     'slug'        => $c['slug'] . '-' . ($i + 1),
-                    'name'        => $j(['en' => $pen, 'es' => $pes]),
+                    'name'        => $j(content_locales(['en' => $pen])),
                     'description' => $j(['en' => $desc]),
                     'hotspot'     => $j($this->position($i, $n, $scale)),
                     'gallery'     => $j($swatches),

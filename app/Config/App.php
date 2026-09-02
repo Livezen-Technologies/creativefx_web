@@ -120,7 +120,9 @@ class App extends BaseConfig
      *
      * @var list<string>
      */
-    public array $supportedLocales = ['en', 'ja', 'es', 'zh'];
+    // Sri Lanka's three: English plus the two official languages. Everything
+    // else that needs a locale list derives it from here.
+    public array $supportedLocales = ['en', 'si', 'ta'];
 
     /**
      * --------------------------------------------------------------------------

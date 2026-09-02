@@ -15,14 +15,18 @@ class ProductCategorySeeder extends Seeder
     {
         $now = date('Y-m-d H:i:s');
 
+        helper('norlanka');
+
+        // Authored in English only; content_locales() completes the rest from
+        // the translation dictionary, so there is one place a wording lives.
         $categories = [
-            ['corn-cups',    'Corn in a Cup', 'Maíz en vaso'],
-            ['frozen-packs', 'Frozen Packs',  'Paquetes congelados'],
-            ['diy-packs',    'DIY Packs',     'Paquetes DIY'],
+            ['corn-cups',    'Corn in a Cup'],
+            ['frozen-packs', 'Frozen Packs'],
+            ['diy-packs',    'DIY Packs'],
         ];
 
         $table = $this->db->table('product_categories');
-        foreach ($categories as $i => [$slug, $en, $es]) {
+        foreach ($categories as $i => [$slug, $en]) {
             if ($table->where('slug', $slug)->get()->getRowArray() !== null) {
                 $table->resetQuery();
                 continue;
@@ -30,7 +34,7 @@ class ProductCategorySeeder extends Seeder
             $table->resetQuery();
             $this->db->table('product_categories')->insert([
                 'slug'       => $slug,
-                'name'       => json_encode(['en' => $en, 'es' => $es], JSON_UNESCAPED_UNICODE),
+                'name'       => json_encode(content_locales(['en' => $en]), JSON_UNESCAPED_UNICODE),
                 'sort_order' => $i + 1,
                 'status'     => 'published',
                 'created_at' => $now,

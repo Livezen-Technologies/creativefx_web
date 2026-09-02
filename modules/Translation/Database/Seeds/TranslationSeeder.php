@@ -16,7 +16,7 @@ class TranslationSeeder extends Seeder
     {
         $model = model(TranslationModel::class);
 
-        foreach (['en', 'ja', 'es', 'zh'] as $locale) {
+        foreach (config('App')->supportedLocales as $locale) {
             $file = ROOTPATH . 'modules/Site/Language/' . $locale . '/Site.php';
             if (! is_file($file)) {
                 continue;
