@@ -142,6 +142,20 @@ jobs:
               echo "-- $URL -> $code ($(wc -c < "$OUT" 2>/dev/null || echo 0) bytes)"
               grep -ohE ".{0,80}${PAT}.{0,80}" "$OUT" | head -5 || echo "   (pattern not in this stylesheet)"
             done
+
+            echo "-- media referenced by this page, with the status it returns:"
+            grep -ohE '(src|href)="[^"]+\.(jpe?g|png|webp|svg|gif|mp4|webm)"' "$f" \
+              | sed -E 's/^(src|href)="//; s/"$//' | sort -u | head -40 > /tmp/media.txt
+            while read -r M; do
+              case "$M" in
+                http*) MU="$M" ;;
+                //*)   MU="https:$M" ;;
+                /*)    MU="$BASE$M" ;;
+                *)     MU="$BASE/$M" ;;
+              esac
+              INFO=$(curl -sSL -m 20 -o /dev/null -w '%{http_code} %{content_type} %{size_download}' "$MU" || echo '000 - 0')
+              printf '   %-40s %s\n' "$M" "$INFO"
+            done < /tmp/media.txt
           done
 
       - name: Import images and commit
