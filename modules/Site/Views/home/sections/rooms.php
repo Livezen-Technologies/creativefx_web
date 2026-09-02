@@ -32,7 +32,7 @@ if ($rooms === []) { return; }
             <?php endif; ?>
         </div>
 
-        <div class="mt-12 grid gap-10 sm:grid-cols-2">
+        <div class="mt-12 grid gap-10 sm:grid-cols-2" data-parallax="5">
             <?php foreach ($rooms as $room): ?>
                 <article data-gsap="reveal">
                     <?php if (! empty($room['image'])): ?>

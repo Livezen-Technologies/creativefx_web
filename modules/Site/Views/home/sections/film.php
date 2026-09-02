@@ -50,7 +50,7 @@ $label = t_field($c['title'] ?? []) ?: 'Play the hotel film';
 
         <!-- The hero's film link scrolls here and starts it in one go, so the
              reader is not asked to press play a second time on arrival. -->
-        <div class="mx-auto mt-12 max-w-5xl" data-gsap="reveal"
+        <div class="mx-auto mt-12 max-w-5xl" data-gsap="reveal" data-parallax="8"
              x-data="{ playing: false }"
              x-on:film-play.window="playing = true">
             <div class="relative aspect-video w-full overflow-hidden rounded-sm bg-black/40">

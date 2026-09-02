@@ -24,7 +24,8 @@ if ($quotes === []) { return; }
                 <!-- Pinned to row 1 for the same reason as Our Facilities: the
                      panel and the photograph share a column, and auto-placement
                      would push whichever came second onto a row of its own. -->
-                <div class="lg:col-span-7 lg:col-start-6 lg:row-start-1" data-gsap="reveal">
+                <div class="lg:col-span-7 lg:col-start-6 lg:row-start-1" data-gsap="reveal"
+                     data-parallax="10">
                     <img src="<?= esc(media_src($head['image']), 'attr') ?>"
                          alt="<?= esc(t_field($head['image_alt'] ?? []), 'attr') ?>"
                          loading="lazy" width="1200" height="800"

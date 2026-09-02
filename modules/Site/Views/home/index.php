@@ -31,20 +31,21 @@ $splitWords = static function (string $text): string {
 
 <?= $this->section('content') ?>
 
-<!-- This page scrolls. The #fp snap engine that used to wrap it belongs to a
-     corporate one-pager, where each panel is a single held statement; a hotel
-     home page is a document — a welcome, the facilities, the rooms, the guests,
-     the film — and reading it should not require a panel change per paragraph.
-     app.js branches on #fp, so dropping the wrapper hands this page back to
-     Lenis smooth scrolling and the GSAP reveals every other page already uses. -->
+<!-- Screen-by-screen. Each direct-child <section> becomes a panel the height of
+     the viewport, and the footer is pulled in as the last one by fullpage.js.
+     A panel taller than the screen — the welcome, the facilities, the reviews —
+     scrolls inside itself first and only advances at its own end, so no copy is
+     lost to the panel height. Depth comes from [data-parallax] on the imagery,
+     which moves against the panel change instead of with it.
+     app.js branches on #fp; without JavaScript this is an ordinary block and
+     the page scrolls normally. -->
+<div id="fp" class="fp">
 
 <!-- ===================== HERO ===================== -->
-<!-- The hero scales to 1.08 as it scrolls away. That widens its own box past
-     the viewport — 1555px on a 1440px screen — and overflow-hidden on the
-     section clips its children, not the section itself, so the page grew a
-     horizontal scrollbar the moment the reader scrolled. The #fp wrapper used
-     to clip this for free; this is that clip, kept to the one element that
-     needs it rather than imposed on the whole document. -->
+<!-- The hero scales to 1.08 as it scrolls away, which widens its own box past
+     the viewport; overflow-hidden on the section clips its children, not the
+     section itself. Kept even under #fp, whose panels clip anyway, so the hero
+     stays safe if the wrapper is ever removed again. -->
 <div class="overflow-hidden">
 <?php $heroPoster = ! empty($video['poster_path']) ? $video['poster_path'] : '/media/giantforests/Welcome-to-Giants-Forest-3.jpg'; ?>
 <section
@@ -86,7 +87,7 @@ $splitWords = static function (string $text): string {
         </button>
     <?php elseif (! empty($heroPoster) && is_file(FCPATH . ltrim((string) $heroPoster, '/'))): ?>
         <!-- No film supplied; the poster carries the hero as a still. -->
-        <img src="<?= esc(media_src($heroPoster), 'attr') ?>" alt="" aria-hidden="true"
+        <img src="<?= esc(media_src($heroPoster), 'attr') ?>" alt="" aria-hidden="true" data-parallax="12"
              class="hero-media absolute inset-0 -z-30 h-full w-full object-cover">
     <?php else: ?>
         <div class="hero-aurora absolute inset-0 -z-30"></div>
@@ -146,7 +147,7 @@ $splitWords = static function (string $text): string {
         </div>
     </div>
 
-    <a href="#welcome"
+    <a href="#welcome" data-fp-next
             class="absolute inset-x-0 bottom-8 flex cursor-pointer justify-center bg-transparent"
             aria-label="<?= esc(lang('Site.experience.scroll'), 'attr') ?>">
         <span class="flex flex-col items-center gap-2 text-[10px] uppercase tracking-[0.3em] text-white/40 transition hover:text-white/70">
@@ -158,7 +159,9 @@ $splitWords = static function (string $text): string {
 </div><!-- /hero clip -->
 
 <!-- ===================== WELCOME ===================== -->
-<div id="welcome"></div>
+<?php // The anchor lives on the section itself. As its own element it was a
+      // direct child of #fp, which counts direct children as panels — so the
+      // scroll cue pointed at an empty screen rather than at the welcome. ?>
 <?= view('Modules\\Site\\Views\\home\\sections\\welcome', ['section' => $sections['welcome'] ?? null]) ?>
 
 <!-- ===================== OUR FACILITIES ===================== -->
@@ -176,6 +179,11 @@ $splitWords = static function (string $text): string {
 <!-- ===================== BOOK ===================== -->
 <?= view('Modules\\Site\\Views\\home\\sections\\cta', ['section' => $sections['cta'] ?? null]) ?>
 
+</div><!-- /#fp -->
+
+<?php // Outside the panels on purpose: #fp is transformed, and a fixed overlay
+      // inside a transformed ancestor is positioned against that ancestor
+      // instead of the viewport — the dialog would be trapped in one panel. ?>
 <?= view('Modules\\Core\\Views\\partials\\booking_modal') ?>
 
 <?= $this->endSection() ?>

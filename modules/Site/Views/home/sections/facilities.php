@@ -33,7 +33,8 @@ $icons = [
                      in the six columns left and grid invented seven more off the
                      right-hand side to hold it. Pinning the row without pinning
                      the column trades a stacked layout for a broken one. -->
-                <div class="lg:col-span-7 lg:col-start-1 lg:row-start-1" data-gsap="reveal">
+                <div class="lg:col-span-7 lg:col-start-1 lg:row-start-1" data-gsap="reveal"
+                     data-parallax="10">
                     <img src="<?= esc(media_src($c['image']), 'attr') ?>"
                          alt="<?= esc(t_field($c['image_alt'] ?? []), 'attr') ?>"
                          loading="lazy" width="1200" height="800"

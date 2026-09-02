@@ -72,6 +72,34 @@ export function initFullpage() {
     };
 
     // --- Content entrance (slide + fade), direction-aware -----------------------
+    /**
+     * Parallax between panels.
+     *
+     * The whole #fp column translates as one block, so every layer inside it
+     * moves at exactly the same rate and the change reads as a slide. Depth
+     * comes from moving the imagery against that: the incoming panel's media
+     * starts displaced in the direction of travel and settles to rest, while
+     * the outgoing panel's drifts the other way. The copy is left alone, so it
+     * stays readable while the picture behind it moves.
+     *
+     * Strength is per-element via data-parallax="<percent>", because a
+     * full-bleed photograph can take far more movement than a framed one
+     * before its edges show.
+     */
+    const parallax = (panel, dir, entering) => {
+      if (reduce || ! panel) return;
+      panel.querySelectorAll('[data-parallax]').forEach((el) => {
+        const depth = parseFloat(el.dataset.parallax) || 8;
+        gsap.killTweensOf(el);
+        if (entering) {
+          gsap.fromTo(el, { yPercent: depth * dir },
+            { yPercent: 0, duration: 1.1, ease: 'power3.out', overwrite: true });
+        } else {
+          gsap.to(el, { yPercent: -depth * dir * 0.6, duration: 0.9, ease: 'power3.inOut', overwrite: true });
+        }
+      });
+    };
+
     const animateIn = (panel, dir) => {
       fireCounters(panel);
       if (reduce) return;
@@ -139,6 +167,8 @@ export function initFullpage() {
         },
       });
       animateIn(panels[i], dir);
+      parallax(panels[prev], dir, false);
+      parallax(panels[i], dir, true);
     }
 
     // Advance, but let a tall panel finish its own inner scroll first.

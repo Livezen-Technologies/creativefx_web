@@ -13,13 +13,13 @@
 $c = json_decode($section['blocks'][0]['content'] ?? '[]', true) ?: [];
 if ($c === []) { return; }
 ?>
-<section class="bg-brand-black py-20 sm:py-28">
+<section id="welcome" class="bg-brand-black py-20 sm:py-28">
     <div class="container-x">
         <div class="grid items-center gap-14 lg:grid-cols-2 lg:gap-20">
 
             <!-- Collage -->
             <?php if (! empty($c['image_a'])): ?>
-                <div class="relative" data-gsap="reveal">
+                <div class="relative" data-gsap="reveal" data-parallax="7">
                     <img src="<?= esc(media_src($c['image_a']), 'attr') ?>"
                          alt="<?= esc(t_field($c['image_a_alt'] ?? []), 'attr') ?>"
                          loading="lazy" width="902" height="1024"
