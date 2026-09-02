@@ -279,11 +279,11 @@ html:not(.dark) { --hero-dim: 1; }
    leaves the rest of the frame at the photograph's own exposure. */
 .hero-wash-pool {
   background:
-    radial-gradient(78% 92% at 18% 52%,
+    radial-gradient(62% 72% at 30% 48%,
       rgb(var(--hero-wash) / calc(0.95 * var(--hero-dim))) 0%,
-      rgb(var(--hero-wash) / calc(0.78 * var(--hero-dim))) 34%,
-      rgb(var(--hero-wash) / calc(0.40 * var(--hero-dim))) 60%,
-      transparent 80%);
+      rgb(var(--hero-wash) / calc(0.80 * var(--hero-dim))) 30%,
+      rgb(var(--hero-wash) / calc(0.42 * var(--hero-dim))) 58%,
+      transparent 82%);
 }
 /* At phone width the copy fills the column, so the pool becomes a floor. */
 @media (max-width: 1023px) {
