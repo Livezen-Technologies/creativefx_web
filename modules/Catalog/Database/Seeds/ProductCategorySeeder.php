@@ -5,8 +5,9 @@ namespace Modules\Catalog\Database\Seeds;
 use CodeIgniter\Database\Seeder;
 
 /**
- * Magic Corn sells two things: hot corn in a cup at the outlets, and frozen
- * sweet corn to take home or supply in bulk. Upserts by slug — never deletes.
+ * Magic Corn sells hot corn in a cup at the outlets, frozen sweet corn to take
+ * home or supply in bulk, and the DIY box that puts the two together with the
+ * toppings and the cups. Upserts by slug — never deletes.
  */
 class ProductCategorySeeder extends Seeder
 {
@@ -17,6 +18,7 @@ class ProductCategorySeeder extends Seeder
         $categories = [
             ['corn-cups',    'Corn in a Cup', 'Maíz en vaso'],
             ['frozen-packs', 'Frozen Packs',  'Paquetes congelados'],
+            ['diy-packs',    'DIY Packs',     'Paquetes DIY'],
         ];
 
         $table = $this->db->table('product_categories');

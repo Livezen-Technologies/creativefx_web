@@ -93,7 +93,7 @@ class ProductSeeder extends Seeder
             'applications'      => $j(['Home', 'Hotels and restaurants', 'Catering']),
             'specs'             => $j([
                 ['label' => 'Pack size',  'value' => '1 kg'],
-                ['label' => 'Price',      'value' => 'LKR 2,250.00'],
+                ['label' => 'Price',      'value' => 'LKR 1,100.00'],
                 ['label' => 'Storage',    'value' => 'Keep frozen'],
                 ['label' => 'Additives',  'value' => 'No preservatives'],
                 ['label' => 'Origin',     'value' => 'Grown and processed in Sri Lanka'],
@@ -108,6 +108,40 @@ class ProductSeeder extends Seeder
             'label'             => null,
             'is_featured'       => 1,
             'sort_order'        => 100,
+            'status'            => 'published',
+        ];
+
+        $products[] = [
+            'category_id'       => $catId['diy-packs'] ?? null,
+            'slug'              => 'magic-corn-diy-home-pack',
+            'sku'               => 'MC-DIY-001',
+            'collection'        => 'DIY Packs',
+            'name'              => $j(['en' => 'Magic Corn DIY Home Pack', 'es' => 'Pack casero Magic Corn']),
+            'short_description' => $j(['en' => 'The outlet in a box — our frozen sweet corn, the toppings, and the Magic Corn cups to serve it in.']),
+            'description'       => $j(['en' => 'A boxed kit for making corn in a cup at home: a catering pack of our precooked frozen sweet corn, cheese and butter to stir through it, a lime, and a stack of the same cups we serve in at the outlets. Cook the corn from frozen — boil it or microwave it — then top it however your table likes it.']),
+            'features'          => $j([
+                'Precooked frozen sweet corn from our own farms',
+                'Cheese and butter toppings included',
+                'Magic Corn cups in the box',
+                'Cook from frozen — boil or microwave',
+            ]),
+            'applications'      => $j(['Home', 'Parties and gatherings', 'Gifting']),
+            'specs'             => $j([
+                ['label' => 'Contains',   'value' => 'Frozen sweet corn, toppings, cups'],
+                ['label' => 'Price',      'value' => 'LKR 1,200.00'],
+                ['label' => 'Storage',    'value' => 'Keep the corn frozen'],
+                ['label' => 'Cooking',    'value' => 'From frozen — boil or microwave'],
+                ['label' => 'Origin',     'value' => 'Grown and processed in Sri Lanka'],
+            ]),
+            'hero_image'        => '/media/magiccorn/DIY-pack.png',
+            'gallery'           => $j([
+                '/media/magiccorn/DIY-pack.png',
+                '/media/magiccorn/DIY4.png',
+            ]),
+            'certifications'    => 'ISO 9001',
+            'label'             => 'new',
+            'is_featured'       => 1,
+            'sort_order'        => 101,
             'status'            => 'published',
         ];
 
