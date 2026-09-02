@@ -59,7 +59,7 @@ $chips   = array_values(array_intersect_key($chips, array_unique(array_map(
         <div class="lg:col-span-7">
             <?php if ($has3d): ?>
                 <div data-product-viewer
-                     class="isolate relative aspect-[4/3] overflow-hidden rounded-3xl border border-white/10 bg-[#08080a]">
+                     class="isolate relative aspect-[4/3] overflow-hidden rounded-3xl border border-white/10 bg-brand-black">
                     <script type="application/json" data-viewer-config><?= json_encode([
                         'model'  => $product['model_path'],
                         'poster' => $product['hero_image'] ?? '',

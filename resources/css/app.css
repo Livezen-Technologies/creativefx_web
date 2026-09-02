@@ -32,9 +32,9 @@
   --accent-ink: 30 26 20;     /* label on the fill — 7.36:1 */
 }
 .on-dark {
-  --bg: 18 16 11;             /* #12100B warm near-black */
+  --bg: 48 43 33;             /* #302B21 warm dark brown — see html.dark */
   --fg: 246 243 234;          /* #F6F3EA warm near-white */
-  --accent: 242 146 46;       /* the brand orange reads directly on dark — 8.08:1 */
+  --accent: 242 146 46;       /* the brand orange reads directly on dark — 6.79:1 */
   --accent-dark: 214 122 30;
   /* Re-declare color: redefining --fg alone doesn't change *inherited* color,
      so headings/text without an explicit colour class would keep the light
@@ -51,10 +51,18 @@
 /* Site-wide dark mode. Toggled by the header switch and applied pre-paint by the
    head script (persisted in localStorage as `nl_theme`). Because the whole site
    reads from these tokens, flipping them here re-themes every surface at once. */
+/* The dark ground was #12100B — CIE L* 4.7, effectively black. Measured full
+   page, that put About Us at L* 18.1 and Our Business at 20.1, with the region
+   below each hero at L* 5.7: on pages where the hero is a fifth of the height,
+   four fifths of what you see was a void. It is why the site kept reading as
+   dark however far the hero scrims were pulled back — they only ever covered
+   the top of the page. #302B21 is L* 13.4 and takes About Us to 25.9 and Our
+   Business to 27.3. Still unmistakably a dark theme, and warm, which the
+   brand's own white-and-cream site is; body text sits at 12.7:1. */
 html.dark {
-  --bg: 18 16 11;             /* #12100B warm near-black */
+  --bg: 48 43 33;             /* #302B21 warm dark brown */
   --fg: 246 243 234;          /* #F6F3EA warm white */
-  --accent: 242 146 46;       /* brand orange, 8.08:1 on this ground */
+  --accent: 242 146 46;       /* brand orange, 6.79:1 on this ground */
   --accent-dark: 214 122 30;
 }
 html.dark .theme-esg-green {  /* Impact page green scope, dark variant */
@@ -143,8 +151,8 @@ html.dark .theme-esg-green {  /* Impact page green scope, dark variant */
     background:
       radial-gradient(60% 80% at 20% 20%, rgb(var(--accent) / 0.45), transparent 60%),
       radial-gradient(50% 70% at 80% 30%, rgb(var(--accent) / 0.25), transparent 60%),
-      radial-gradient(80% 80% at 50% 90%, rgba(40, 0, 4, 0.9), transparent 70%),
-      #000000;
+      radial-gradient(80% 80% at 50% 90%, rgb(var(--accent-dark) / 0.16), transparent 70%),
+      rgb(var(--bg));
     background-size: 200% 200%;
   }
 }
@@ -233,6 +241,15 @@ html.dark .theme-esg-green {  /* Impact page green scope, dark variant */
    wash; the site runs lighter than that so the photography reads through. */
 :root { --hero-dim: 0.65; }
 
+/* The wash colour is deliberately NOT the page ground. The ground is a surface
+   the reader looks at; the wash is a filter laid over photography so type
+   stays legible on it. Lifting the dark ground to #302B21 dragged the scrims
+   up with it and cost three page/viewport pairs their contrast — home fell to
+   3.17 — so the wash keeps the near-black it was tuned against. Light theme
+   has no such split: there the wash IS the cream ground. */
+:root { --hero-wash: var(--bg); }
+html.dark, .on-dark { --hero-wash: 18 16 11; }
+
 /* The light theme is the exception: there `--bg` is the cream ground, so the
    scrim is not a shadow over the photo — it *is* the pale surface that keeps
    the dark headline legible. Thinning it would put ink straight onto bare
@@ -245,26 +262,26 @@ html:not(.dark) { --hero-dim: 1; }
 
 .hero-wash-side {
   background: linear-gradient(to right,
-    rgb(var(--bg) / calc(0.95 * var(--hero-dim))),
-    rgb(var(--bg) / calc(0.60 * var(--hero-dim))) 50%,
+    rgb(var(--hero-wash) / calc(0.95 * var(--hero-dim))),
+    rgb(var(--hero-wash) / calc(0.60 * var(--hero-dim))) 50%,
     transparent);
 }
 .hero-wash-side--page {
   background: linear-gradient(to right,
-    rgb(var(--bg) / calc(0.95 * var(--hero-dim))),
-    rgb(var(--bg) / calc(0.55 * var(--hero-dim))) 50%,
-    rgb(var(--bg) / calc(0.20 * var(--hero-dim))));
+    rgb(var(--hero-wash) / calc(0.95 * var(--hero-dim))),
+    rgb(var(--hero-wash) / calc(0.55 * var(--hero-dim))) 50%,
+    rgb(var(--hero-wash) / calc(0.20 * var(--hero-dim))));
 }
 .hero-wash-foot {
   background: linear-gradient(to top,
-    rgb(var(--bg) / calc(1.00 * var(--hero-dim))),
-    rgb(var(--bg) / calc(0.10 * var(--hero-dim))) 50%,
+    rgb(var(--hero-wash) / calc(1.00 * var(--hero-dim))),
+    rgb(var(--hero-wash) / calc(0.10 * var(--hero-dim))) 50%,
     transparent);
 }
 .hero-wash-foot--page {
   background: linear-gradient(to top,
-    rgb(var(--bg) / calc(1.00 * var(--hero-dim))),
-    rgb(var(--bg) / calc(0.25 * var(--hero-dim))) 50%,
+    rgb(var(--hero-wash) / calc(1.00 * var(--hero-dim))),
+    rgb(var(--hero-wash) / calc(0.25 * var(--hero-dim))) 50%,
     transparent);
 }
 
@@ -278,9 +295,9 @@ html:not(.dark) { --hero-dim: 1; }
   .hero-wash-side,
   .hero-wash-side--page {
     background: linear-gradient(to top,
-      rgb(var(--bg) / calc(0.95 * var(--hero-dim))),
-      rgb(var(--bg) / calc(0.70 * var(--hero-dim))) 45%,
-      rgb(var(--bg) / calc(0.35 * var(--hero-dim))));
+      rgb(var(--hero-wash) / calc(0.95 * var(--hero-dim))),
+      rgb(var(--hero-wash) / calc(0.70 * var(--hero-dim))) 45%,
+      rgb(var(--hero-wash) / calc(0.35 * var(--hero-dim))));
   }
 }
 
