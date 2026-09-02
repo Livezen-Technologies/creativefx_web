@@ -145,7 +145,7 @@ class HomeContentSeeder extends Seeder
                 // falls back to its gradient treatment rather than showing the
                 // previous brand's factory footage. Set these when footage arrives.
                 'src_path'      => '',
-                'poster_path'   => '',
+                'poster_path'   => '/media/magiccorn/best-corn.jpg',
                 'is_muted_loop' => 1,
                 'status'        => 'published',
                 'created_at'    => $now,
@@ -155,9 +155,10 @@ class HomeContentSeeder extends Seeder
             // Only clear a path still pointing at the previous brand's footage;
             // a film added later in Admin -> Videos is left alone.
             $current = $videos->where('key', 'home_launch')->get()->getRowArray();
-            if (str_contains((string) ($current['src_path'] ?? ''), '/media/video/home-hero')) {
+            if (str_contains((string) ($current['src_path'] ?? ''), '/media/video/home-hero')
+                || ($current['poster_path'] ?? '') === '') {
                 $videos->where('key', 'home_launch')->update([
-                    'src_path' => '', 'poster_path' => '', 'updated_at' => $now,
+                    'src_path' => '', 'poster_path' => '/media/magiccorn/best-corn.jpg', 'updated_at' => $now,
                 ]);
             }
         }

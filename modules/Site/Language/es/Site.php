@@ -153,9 +153,9 @@ return [
     ],
     'products' => [
         'meta'           => 'Catálogo de productos Norlanka: ropa de bebé, infantil, de dormir, deportiva y básicos, desarrollados del diseño a la entrega.',
-        'eyebrow'        => 'Catálogo de productos',
-        'title'          => 'Nuestros productos',
-        'intro'          => 'Explora estilos representativos de cada categoría que fabricamos, desarrollados de principio a fin: del primer boceto a la entrega global.',
+        'eyebrow'        => 'Tienda',
+        'title'          => 'Nuestra gama',
+        'intro'          => 'Maíz en vaso en nuestros locales y maíz dulce congelado para llevar o para pedidos al por mayor.',
         'all'            => 'Todos',
         'filter'         => 'Filtrar',
         'back'           => 'Todos los productos',

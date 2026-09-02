@@ -33,7 +33,7 @@ $nav = [
         <!-- Logo: official NL monogram + wordmark (static sizes so it renders
              correctly even before/without JS). -->
         <a href="<?= esc(locale_url('')) ?>" class="flex items-center gap-2.5 shrink-0" aria-label="Magic Corn — home">
-            <span class="font-display text-lg font-semibold uppercase tracking-[0.22em] text-white">Magic Corn</span>
+            <img src="/media/brand/magiccorn-logo.png" alt="Magic Corn" width="643" height="307" class="h-9 w-auto">
         </a>
 
         <!-- Desktop nav -->

@@ -33,6 +33,7 @@
     <!-- Brand loading screen (shown once per session; dismissed by preloader.js). -->
     <div id="preloader" aria-hidden="true">
         <div class="pre-inner">
+            <img src="/media/brand/magiccorn-mark.jpg" alt="" width="60" height="60" class="pre-logo">
             <span class="pre-word">Magic Corn</span>
             <span class="pre-bar"><span class="pre-bar-fill"></span></span>
         </div>

@@ -157,9 +157,9 @@ return [
     ],
     'products' => [
         'meta'           => 'Magic Corn shop — frozen sweet corn packs and corn in a cup, made in Sri Lanka.',
-        'eyebrow'        => 'Product Catalog',
-        'title'          => 'Our Products',
-        'intro'          => 'Explore representative styles from every category we manufacture — each developed end-to-end, from first sketch to global delivery.',
+        'eyebrow'        => 'Shop',
+        'title'          => 'Our range',
+        'intro'          => 'Corn in a cup at our outlets, and frozen sweet corn to take home or supply in bulk.',
         'all'            => 'All',
         'filter'         => 'Filter',
         'back'           => 'All products',

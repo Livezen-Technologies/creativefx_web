@@ -3,7 +3,7 @@
     <div class="container-x grid gap-10 py-16 md:grid-cols-4">
         <div class="md:col-span-2">
             <a href="<?= esc(locale_url('')) ?>" class="inline-flex items-center gap-2.5" aria-label="Magic Corn — home">
-                <span class="font-display text-xl font-semibold uppercase tracking-[0.22em] text-white">Magic Corn</span>
+                <img src="/media/brand/magiccorn-logo.png" alt="Magic Corn" width="643" height="307" class="h-11 w-auto">
             </a>
             <p class="mt-4 max-w-sm text-sm leading-relaxed text-white/60">
                 <?php
@@ -33,8 +33,15 @@
             <h4 class="text-xs font-semibold uppercase tracking-widest text-white/50"><?= esc(lang('Site.footer.connect')) ?></h4>
             <ul class="mt-4 space-y-2 text-sm text-white/70">
                 <li><a href="mailto:<?= esc(setting('email', '', 'contact')) ?>" class="hover:text-white"><?= esc(setting('email', 'shankerv@viswakula.com', 'contact')) ?></a></li>
-                <li><a href="<?= esc(setting('linkedin', '#', 'social')) ?>" class="hover:text-white" target="_blank" rel="noopener">LinkedIn</a></li>
-                <li><a href="<?= esc(setting('instagram', '#', 'social')) ?>" class="hover:text-white" target="_blank" rel="noopener">Instagram</a></li>
+                <?php if ($fb = setting('facebook', '', 'social')): ?>
+                    <li><a href="<?= esc($fb) ?>" class="hover:text-white" target="_blank" rel="noopener">Facebook</a></li>
+                <?php endif; ?>
+                <?php if ($ig = setting('instagram', '', 'social')): ?>
+                    <li><a href="<?= esc($ig) ?>" class="hover:text-white" target="_blank" rel="noopener">Instagram</a></li>
+                <?php endif; ?>
+                <?php if ($tel = setting('phone', '', 'contact')): ?>
+                    <li><a href="tel:<?= esc(preg_replace('/[^+0-9]/', '', $tel), 'attr') ?>" class="hover:text-white"><?= esc($tel) ?></a></li>
+                <?php endif; ?>
             </ul>
         </div>
     </div>

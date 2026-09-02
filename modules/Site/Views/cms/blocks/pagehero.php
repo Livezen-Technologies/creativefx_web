@@ -3,9 +3,13 @@
 // animated aurora when no video is configured, so every page hero still works.
 $heroVideo  = $content['video'] ?? null;
 $heroPoster = $content['poster'] ?? null;
+$heroImage  = $content['image'] ?? null;
 $hasVideo   = ! empty($heroVideo) && is_file(FCPATH . ltrim((string) $heroVideo, '/'));
+// A still is the common case here — most pages have photography, not film.
+$hasImage   = ! $hasVideo && ! empty($heroImage) && is_file(FCPATH . ltrim((string) $heroImage, '/'));
+$hasBg      = $hasVideo || $hasImage;
 ?>
-<section class="relative overflow-hidden <?= $hasVideo ? 'hero-full flex items-end' : '' ?>"
+<section class="relative overflow-hidden <?= $hasBg ? 'hero-full flex items-end' : '' ?>"
          <?= $hasVideo ? 'x-data="{ playing: true, toggleVid() { const v = $refs.bgv; if (!v) return; if (v.paused) { delete v.dataset.userPaused; v.play(); this.playing = true; } else { v.dataset.userPaused = \'1\'; v.pause(); this.playing = false; } } }"' : '' ?>>
     <?php if ($hasVideo): ?>
         <!-- Background film. The poster paints immediately (LCP) while the
@@ -27,12 +31,19 @@ $hasVideo   = ! empty($heroVideo) && is_file(FCPATH . ltrim((string) $heroVideo,
             <svg x-show="playing" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
             <svg x-show="!playing" x-cloak class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5l12 7-12 7z"/></svg>
         </button>
+    <?php elseif ($hasImage): ?>
+        <!-- Still hero. Same scrims as the film branch so the copy stays legible. -->
+        <img src="<?= esc($heroImage, 'attr') ?>" alt="" aria-hidden="true"
+             class="absolute inset-0 -z-30 h-full w-full object-cover">
+        <div class="absolute inset-0 -z-20 bg-gradient-to-r from-brand-black/95 via-brand-black/55 to-brand-black/20"></div>
+        <div class="absolute inset-0 -z-20 bg-gradient-to-t from-brand-black via-brand-black/25 to-transparent"></div>
+        <div class="hero-red-glow absolute inset-0 -z-10"></div>
     <?php else: ?>
         <div class="hero-aurora absolute inset-0 -z-20"></div>
         <div class="absolute inset-0 -z-10 bg-gradient-to-b from-brand-black/40 via-brand-black/10 to-brand-black"></div>
     <?php endif; ?>
 
-    <div class="container-x flex <?= $hasVideo ? 'w-full pb-28' : 'min-h-[60vh] pb-16' ?> flex-col justify-end pt-40">
+    <div class="container-x flex <?= $hasBg ? 'w-full pb-28' : 'min-h-[60vh] pb-16' ?> flex-col justify-end pt-40">
         <?php if (! empty($content['eyebrow'])): ?>
             <p class="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-brand-red" data-gsap="reveal"><?= esc(t_field($content['eyebrow'])) ?></p>
         <?php endif; ?>
@@ -42,7 +53,7 @@ $hasVideo   = ! empty($heroVideo) && is_file(FCPATH . ltrim((string) $heroVideo,
         <?php endif; ?>
     </div>
 
-    <?php if ($hasVideo): ?>
+    <?php if ($hasBg): ?>
         <!-- A full-viewport hero hides everything below it — give the reader a cue. -->
         <button type="button"
                 onclick="this.closest('section').nextElementSibling?.scrollIntoView({behavior:'smooth',block:'start'})"

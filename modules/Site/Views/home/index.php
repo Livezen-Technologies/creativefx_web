@@ -52,7 +52,7 @@ $impact = [
 <div id="fp" class="fp">
 
 <!-- ===================== HERO ===================== -->
-<?php $heroPoster = $video['poster_path'] ?? '/media/video/home-hero-poster.jpg'; ?>
+<?php $heroPoster = ! empty($video['poster_path']) ? $video['poster_path'] : '/media/magiccorn/best-corn.jpg'; ?>
 <section
     id="hero"
     data-gsap="hero-out"
@@ -79,6 +79,10 @@ $impact = [
             <svg x-show="playing" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
             <svg x-show="!playing" x-cloak class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5l12 7-12 7z"/></svg>
         </button>
+    <?php elseif (! empty($heroPoster) && is_file(FCPATH . ltrim((string) $heroPoster, '/'))): ?>
+        <!-- No film supplied; the poster carries the hero as a still. -->
+        <img src="<?= esc($heroPoster, 'attr') ?>" alt="" aria-hidden="true"
+             class="absolute inset-0 -z-30 h-full w-full object-cover">
     <?php else: ?>
         <div class="hero-aurora absolute inset-0 -z-30"></div>
         <div data-three-hero class="absolute inset-0 -z-20 opacity-70"></div>

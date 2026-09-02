@@ -105,12 +105,15 @@ class CorporateContentSeeder extends Seeder
         ];
     }
 
-    private function hero(array $eyebrow, array $title, array $subtitle, ?string $video = null, ?string $poster = null): array
+    private function hero(array $eyebrow, array $title, array $subtitle, ?string $video = null, ?string $poster = null, ?string $image = null): array
     {
         $content = ['eyebrow' => $eyebrow, 'title' => $title, 'subtitle' => $subtitle];
         if ($video !== null) {
             $content['video']  = $video;
             $content['poster'] = $poster;
+        }
+        if ($image !== null) {
+            $content['image'] = $image;
         }
 
         return ['key' => 'hero', 'type' => 'hero', 'blocks' => [['pagehero', $content]]];
@@ -137,7 +140,8 @@ class CorporateContentSeeder extends Seeder
                 $this->hero(
                     $this->loc('About Us', 'Sobre Nosotros', '会社概要', '关于我们'),
                     $this->loc('Sri Lanka’s original corn in a cup'),
-                    $this->loc('A 100% homegrown brand, cultivating sweet corn on a commercial scale since 2007.')
+                    $this->loc('A 100% homegrown brand, cultivating sweet corn on a commercial scale since 2007.'),
+                    null, null, '/media/magiccorn/corn.jpg'
                 ),
                 ['key' => 'story', 'type' => 'richtext', 'blocks' => [
                     ['richtext', [
@@ -178,6 +182,18 @@ class CorporateContentSeeder extends Seeder
                         ],
                     ]],
                 ]],
+                ['key' => 'gallery', 'type' => 'gallery', 'blocks' => [
+                    ['gallery', [
+                        'eyebrow' => $this->loc('Magic Corn'),
+                        'title'   => $this->loc('From the field to the cup'),
+                        'items'   => [
+                            ['src' => '/media/magiccorn/5.jpg', 'caption' => $this->loc('Sweet corn grown on a commercial scale in Sri Lanka')],
+                            ['src' => '/media/magiccorn/4.jpg', 'caption' => $this->loc('Harvested and brought in for processing')],
+                            ['src' => '/media/magiccorn/6.jpg', 'caption' => $this->loc('Husked and prepared at our factory')],
+                            ['src' => '/media/magiccorn/2.jpg', 'caption' => $this->loc('Served hot in a cup at our outlets')],
+                        ],
+                    ]],
+                ]],
                 ['key' => 'impact', 'type' => 'statement', 'blocks' => [
                     ['statement', [
                         'items' => [
@@ -203,7 +219,8 @@ class CorporateContentSeeder extends Seeder
                 $this->hero(
                     $this->loc('Our Business', 'Nuestro Negocio', '事業内容', '我们的业务'),
                     $this->loc('From our fields to your cup'),
-                    $this->loc('We grow, process and serve sweet corn — the whole chain, under one brand.')
+                    $this->loc('We grow, process and serve sweet corn — the whole chain, under one brand.'),
+                    null, null, '/media/magiccorn/5.jpg'
                 ),
                 ['key' => 'process', 'type' => 'process', 'blocks' => [
                     ['process_steps', [
@@ -263,7 +280,8 @@ class CorporateContentSeeder extends Seeder
                 $this->hero(
                     $this->loc('Our Locations', 'Nuestras Ubicaciones', '店舗情報', '门店位置'),
                     $this->loc('Thirty-plus outlets across the island'),
-                    $this->loc('Find your nearest Magic Corn, or talk to us about opening one.')
+                    $this->loc('Find your nearest Magic Corn, or talk to us about opening one.'),
+                    null, null, '/media/magiccorn/2.jpg'
                 ),
                 ['key' => 'map', 'type' => 'map', 'blocks' => [
                     ['map', [
@@ -300,7 +318,8 @@ class CorporateContentSeeder extends Seeder
                 $this->hero(
                     $this->loc('Contact Us', 'Contacto', 'お問い合わせ', '联系我们'),
                     $this->loc('Get in touch'),
-                    $this->loc('Open every day, 9:00 AM to 8:00 PM.')
+                    $this->loc('Open every day, 9:00 AM to 8:00 PM.'),
+                    null, null, '/media/magiccorn/best-corn.jpg'
                 ),
                 ['key' => 'form', 'type' => 'contact', 'blocks' => [
                     ['contact_block', [

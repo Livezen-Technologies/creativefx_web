@@ -26,8 +26,14 @@ export function initFullpage() {
     // Pull the global footer in as the final panel so it participates in snapping.
     const footer = document.querySelector('body > footer');
     if (footer) {
-      footer.dataset.fpTitle =
-        (footer.querySelector('.font-display')?.textContent || 'Norlanka').trim();
+      // The footer's brand may be a wordmark or a logo image, so fall back
+      // through both before resorting to a generic label — a hard-coded brand
+      // name here silently outlives a rebrand.
+      footer.dataset.fpTitle = (
+        footer.querySelector('.font-display')?.textContent
+        || footer.querySelector('img[alt]')?.alt
+        || 'Home'
+      ).trim();
       root.appendChild(footer);
     }
 

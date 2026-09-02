@@ -38,6 +38,10 @@ class ProductSeeder extends Seeder
             'Toppings combined to your taste',
         ]);
 
+        // The site has one product photograph — the branded cup with cobs. It
+        // stands in for every flavour until per-flavour shots are supplied.
+        $cupShot = '/media/magiccorn/Magic-Corn-with-corn.png';
+
         $cups = [
             ['butter-corn-cup', 'Butter Corn Cup', 'Maíz con mantequilla',
                 'The classic. Sweet corn steamed to order and stirred through with butter until every kernel is glossy.', 'bestseller', 1],
@@ -66,8 +70,8 @@ class ProductSeeder extends Seeder
                 'features'          => $cupFeatures,
                 'applications'      => $j(['Outlets', 'Events and catering']),
                 'specs'             => $cupSpecs,
-                'hero_image'        => null,
-                'gallery'           => null,
+                'hero_image'        => $cupShot,
+                'gallery'           => $j([$cupShot]),
                 'certifications'    => 'ISO 9001',
                 'label'             => $label,
                 'is_featured'       => $featured,
@@ -93,8 +97,8 @@ class ProductSeeder extends Seeder
                 ['label' => 'Additives',  'value' => 'No preservatives'],
                 ['label' => 'Origin',     'value' => 'Grown and processed in Sri Lanka'],
             ]),
-            'hero_image'        => null,
-            'gallery'           => null,
+            'hero_image'        => '/media/magiccorn/4.jpg',
+            'gallery'           => $j(['/media/magiccorn/4.jpg', '/media/magiccorn/6.jpg']),
             'certifications'    => 'ISO 9001',
             'label'             => null,
             'is_featured'       => 1,
