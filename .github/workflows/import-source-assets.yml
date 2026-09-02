@@ -144,8 +144,13 @@ jobs:
             [ "$f" = "/tmp/src/probe.html" ] && continue
             echo "===== $(basename "$f") — $(wc -c < "$f") bytes ====="
             echo "-- pattern in page:"
-            grep -ohE ".{0,60}${PAT}.{0,60}" "$f" | head -5 || echo "  (not found)"
-            grep -ohE 'href="[^"]+\.css[^"]*"' "$f" | sed -E 's/^href="//; s/"$//' | sort -u | while read -r CSS; do
+            grep -ohE ".{0,60}${PAT}.{0,60}" "$f" 2>/dev/null | head -5 || echo "  (not found)"
+            # A page that 404s is an answer, not a reason to abandon the
+            # remaining pages. pipefail makes a grep that matches nothing fail
+            # the whole pipeline, and bash -e then kills the step — so the one
+            # empty page took the report down with it.
+            grep -ohE 'href="[^"]+\.css[^"]*"' "$f" 2>/dev/null | sed -E 's/^href="//; s/"$//' | sort -u > /tmp/css.txt || true
+            while read -r CSS; do
               case "$CSS" in
                 //*) URL="https:$CSS" ;;
                 /*)  URL="$BASE$CSS" ;;
@@ -156,7 +161,7 @@ jobs:
               code=$(curl -sSL -m 30 -o "$OUT" -w '%{http_code}' "$URL" || echo 000)
               echo "-- $URL -> $code ($(wc -c < "$OUT" 2>/dev/null || echo 0) bytes)"
               grep -ohE ".{0,80}${PAT}.{0,80}" "$OUT" | head -5 || echo "   (pattern not in this stylesheet)"
-            done
+            done < /tmp/css.txt
 
             echo "-- media referenced by this page, with the status it returns:"
             # esc() writes attributes HTML-escaped, so a src can arrive as
@@ -165,7 +170,7 @@ jobs:
             grep -ohE '(src|href)="[^"]+\.(jpe?g|png|webp|svg|gif|mp4|webm)"' "$f" \
               | sed -E 's/^(src|href)="//; s/"$//' \
               | sed -e 's/&#x2F;/\//g' -e 's/&#47;/\//g' -e 's/&amp;/\&/g' \
-              | sort -u | head -40 > /tmp/media.txt
+              | sort -u | head -40 > /tmp/media.txt || true
             while read -r M; do
               case "$M" in
                 http*) MU="$M" ;;
