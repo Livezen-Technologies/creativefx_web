@@ -43,6 +43,10 @@ concurrency:
 jobs:
   assets:
     runs-on: ubuntu-latest
+    # The default workflow token is read-only, so the import's commit could not
+    # be pushed. The download itself succeeded; only the push was refused.
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
         with:
