@@ -32,7 +32,17 @@
         <div>
             <h4 class="text-xs font-semibold uppercase tracking-widest text-white/50"><?= esc(lang('Site.footer.connect')) ?></h4>
             <ul class="mt-4 space-y-2 text-sm text-white/70">
-                <li><a href="mailto:<?= esc(setting('email', '', 'contact')) ?>" class="hover:text-white"><?= esc(setting('email', 'shankerv@viswakula.com', 'contact')) ?></a></li>
+                <?php // Guarded like every other row. Unguarded it rendered an
+                      // empty bullet holding a dead `mailto:` — and its display
+                      // fallback was a real address belonging to somebody at an
+                      // unrelated company, one empty setting away from being
+                      // published as this hotel's inbox. ?>
+                <?php if ($mail = setting('email', '', 'contact')): ?>
+                    <li><a href="mailto:<?= esc($mail, 'attr') ?>" class="hover:text-white"><?= esc($mail) ?></a></li>
+                <?php endif; ?>
+                <?php foreach (array_filter([setting('phone', '', 'contact'), setting('phone_alt', '', 'contact')]) as $num): ?>
+                    <li><a href="tel:<?= esc(preg_replace('/[^0-9+]/', '', $num), 'attr') ?>" class="hover:text-white"><?= esc($num) ?></a></li>
+                <?php endforeach; ?>
                 <?php if ($fb = setting('facebook', '', 'social')): ?>
                     <li><a href="<?= esc($fb) ?>" class="hover:text-white" target="_blank" rel="noopener">Facebook</a></li>
                 <?php endif; ?>

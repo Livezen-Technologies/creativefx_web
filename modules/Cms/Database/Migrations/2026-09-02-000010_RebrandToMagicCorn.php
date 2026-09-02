@@ -87,7 +87,10 @@ class RebrandToMagicCorn extends Migration
         $settings = [
             ['general', 'site_name', 'Magic Corn'],
             ['general', 'tagline',   'Corn in a Cup'],
-            ['contact', 'email',     'shankerv@viswakula.com'],
+            // Was a real address belonging to somebody at an unrelated company.
+            // It is nobody's contact address for this site, and an empty
+            // setting renders nothing rather than publishing a stranger.
+            ['contact', 'email',     ''],
             ['contact', 'phone',     '+94 11 366 4444'],
             ['contact', 'whatsapp',  '+94714545610'],
         ];

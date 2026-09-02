@@ -50,6 +50,11 @@
     </main>
 
     <?= $this->include('Modules\Core\Views\partials\footer', ['pageDark' => $pageDark ?? false]) ?>
+
+    <?php // Site-wide rather than per-page: a chat button that exists only where
+          // somebody remembered to include it is one a visitor cannot rely on.
+          // It renders nothing when no WhatsApp number is set. ?>
+    <?= $this->include('Modules\Core\Views\partials\whatsapp_widget') ?>
     <?= $this->renderSection('scripts') ?>
 </body>
 </html>

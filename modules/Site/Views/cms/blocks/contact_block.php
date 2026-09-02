@@ -1,9 +1,23 @@
 <?php
 helper(['norlanka', 'url']);
-$email    = setting('email', 'shankerv@viswakula.com', 'contact');
+
+/**
+ * The hotel's contact details, beside the enquiry form.
+ *
+ * Every row renders only when its setting holds something. The email default
+ * used to be a real address belonging to somebody at an unrelated company —
+ * left over from whatever this template was first written for — which meant one
+ * empty setting away from publishing a stranger's inbox as the hotel's. A blank
+ * default is the safe one: nothing to show, so nothing is shown.
+ */
+$email    = setting('email', '', 'contact');
 $phone    = setting('phone', '', 'contact');
+$phoneAlt = setting('phone_alt', '', 'contact');
+$address  = setting('address', '', 'contact');
 $whatsapp = setting('whatsapp', '', 'contact');
 $wa       = $whatsapp !== '' ? 'https://wa.me/' . preg_replace('/[^0-9]/', '', $whatsapp) : '';
+
+$tel = static fn (string $n): string => preg_replace('/[^0-9+]/', '', $n);
 ?>
 <section class="bg-brand-black py-16">
     <div class="container-x grid gap-12 lg:grid-cols-2">
@@ -13,21 +27,42 @@ $wa       = $whatsapp !== '' ? 'https://wa.me/' . preg_replace('/[^0-9]/', '', $
             <?php if (! empty($content['intro'])): ?>
                 <p class="mt-4 max-w-md text-white/70"><?= esc(t_field($content['intro'])) ?></p>
             <?php endif; ?>
-            <dl class="mt-8 space-y-4 text-sm">
-                <div>
-                    <dt class="text-xs uppercase tracking-widest text-white/40">Email</dt>
-                    <dd><a class="text-white hover:text-brand-red" href="mailto:<?= esc($email) ?>"><?= esc($email) ?></a></dd>
-                </div>
-                <?php if ($phone !== ''): ?>
+            <dl class="mt-8 space-y-5 text-sm">
+                <?php if ($address !== ''): ?>
+                    <div>
+                        <dt class="text-xs uppercase tracking-widest text-white/40">Address</dt>
+                        <dd class="mt-1 leading-relaxed"><?= esc($address) ?></dd>
+                    </div>
+                <?php endif; ?>
+                <?php if ($phone !== '' || $phoneAlt !== ''): ?>
                     <div>
                         <dt class="text-xs uppercase tracking-widest text-white/40">Phone</dt>
-                        <dd><a class="text-white hover:text-brand-red" href="tel:<?= esc(preg_replace('/[^0-9+]/', '', $phone)) ?>"><?= esc($phone) ?></a></dd>
+                        <?php foreach (array_filter([$phone, $phoneAlt]) as $n): ?>
+                            <dd class="mt-1"><a class="text-white hover:text-brand-red" href="tel:<?= esc($tel($n), 'attr') ?>"><?= esc($n) ?></a></dd>
+                        <?php endforeach; ?>
                     </div>
                 <?php endif; ?>
                 <?php if ($wa !== ''): ?>
                     <div>
                         <dt class="text-xs uppercase tracking-widest text-white/40">WhatsApp</dt>
-                        <dd><a class="text-white hover:text-brand-red" href="<?= esc($wa) ?>" target="_blank" rel="noopener"><?= esc($whatsapp) ?></a></dd>
+                        <?php // The number is almost always one of the phone numbers
+                              // directly above, so printing it again says nothing.
+                              // What the reader wants here is the action. ?>
+                        <dd class="mt-1">
+                            <a class="inline-flex items-center gap-2 text-white hover:text-brand-red"
+                               href="<?= esc($wa, 'attr') ?>" target="_blank" rel="noopener">
+                                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                    <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.33 4.97L2 22l5.25-1.38a9.87 9.87 0 004.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0012.04 2zm0 18.15h-.01a8.2 8.2 0 01-4.18-1.15l-.3-.18-3.11.82.83-3.04-.2-.31a8.2 8.2 0 01-1.26-4.38c0-4.54 3.7-8.23 8.24-8.23a8.2 8.2 0 015.82 2.42 8.18 8.18 0 012.41 5.82c0 4.54-3.7 8.23-8.24 8.23z"/>
+                                </svg>
+                                <?= esc(lang('Site.whatsapp.hint')) ?>
+                            </a>
+                        </dd>
+                    </div>
+                <?php endif; ?>
+                <?php if ($email !== ''): ?>
+                    <div>
+                        <dt class="text-xs uppercase tracking-widest text-white/40">Email</dt>
+                        <dd class="mt-1"><a class="text-white hover:text-brand-red" href="mailto:<?= esc($email, 'attr') ?>"><?= esc($email) ?></a></dd>
                     </div>
                 <?php endif; ?>
             </dl>

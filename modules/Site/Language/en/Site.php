@@ -67,6 +67,11 @@ return [
     // Header mega-menu (titles reuse home.cap.*_t).
 
     // Bespoke home page.
+    'whatsapp' => [
+        'hint' => 'Chat with us',
+        'aria' => 'Chat with us on WhatsApp',
+    ],
+
     'booking' => [
         'title'      => 'Request a room',
         'intro'      => 'Tell us when you would like to come and we will confirm availability by phone or email. Nothing is charged here.',

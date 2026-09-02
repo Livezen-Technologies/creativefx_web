@@ -24,7 +24,7 @@ class SettingSeeder extends Seeder
             ['contact', 'phone_alt', '+94 76 758 4908', 'string', 1],
             ['contact', 'whatsapp', '+94765735600', 'string', 1],
             ['contact', 'address', 'Dam Site, Project Road, Kukuleganga, Kalawana 70450, Sri Lanka', 'string', 1],
-            ['social', 'facebook', 'https://www.facebook.com/giantsforest/', 'string', 1],
+            ['social', 'facebook', 'https://www.facebook.com/giantsforestkukuleganga/', 'string', 1],
             ['social', 'instagram', '', 'string', 1],
             ['analytics', 'ga4_measurement_id', '', 'string', 0],
         ];
