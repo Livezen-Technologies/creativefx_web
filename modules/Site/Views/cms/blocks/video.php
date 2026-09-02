@@ -44,7 +44,7 @@ if ($embedUrl === null && empty($content['src'])) {
             <?php else: ?>
                 <video controls preload="metadata" playsinline class="aspect-video w-full bg-black object-cover"
                        <?= ! empty($content['poster']) ? 'poster="' . esc($content['poster'], 'attr') . '"' : '' ?>>
-                    <source src="<?= esc($content['src'], 'attr') ?>" type="video/mp4">
+                    <source src="<?= esc(media_src($content['src']), 'attr') ?>" type="video/mp4">
                 </video>
             <?php endif; ?>
             <?php if (! empty($content['caption'])): ?>

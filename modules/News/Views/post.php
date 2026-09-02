@@ -80,7 +80,7 @@ $renderBody = static function (string $text): string {
         <div class="container-x">
             <?php if (! empty($post['image'])): ?>
                 <figure class="isolate mt-2 overflow-hidden rounded-3xl border border-white/10" data-gsap="reveal">
-                    <img src="<?= esc($post['image'], 'attr') ?>" alt="<?= esc($pTitle, 'attr') ?>" class="aspect-[21/9] w-full object-cover">
+                    <img src="<?= esc(media_src($post['image']), 'attr') ?>" alt="<?= esc($pTitle, 'attr') ?>" class="aspect-[21/9] w-full object-cover">
                 </figure>
             <?php endif; ?>
 

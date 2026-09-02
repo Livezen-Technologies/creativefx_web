@@ -70,7 +70,7 @@ if ($currentPage === 1 && $activeCategory === null && $posts !== []) {
                    class="group isolate mt-8 grid overflow-hidden rounded-3xl border border-white/10 bg-white/[0.02] transition hover:border-brand-red/40 md:grid-cols-2">
                     <?php if (! empty($lead['image'])): ?>
                         <span class="relative block aspect-[16/10] overflow-hidden md:aspect-auto md:min-h-[20rem]">
-                            <img src="<?= esc($lead['image'], 'attr') ?>" alt="<?= esc($lTitle, 'attr') ?>"
+                            <img src="<?= esc(media_src($lead['image']), 'attr') ?>" alt="<?= esc($lTitle, 'attr') ?>"
                                  class="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]">
                         </span>
                     <?php endif; ?>

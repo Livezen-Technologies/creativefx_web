@@ -18,7 +18,7 @@ $hasBg      = $hasVideo || $hasImage;
                class="hero-media absolute inset-0 -z-30 h-full w-full object-cover"
                autoplay muted loop playsinline preload="auto"
                <?= $heroPoster ? 'poster="' . esc($heroPoster, 'attr') . '"' : '' ?>>
-            <source src="<?= esc($heroVideo, 'attr') ?>" type="video/mp4">
+            <source src="<?= esc(media_src($heroVideo), 'attr') ?>" type="video/mp4">
         </video>
         <!-- Scrims: keep the copy legible while the film stays visible. -->
         <div class="hero-wash-side--page absolute inset-0 -z-20"></div>
@@ -33,7 +33,7 @@ $hasBg      = $hasVideo || $hasImage;
         </button>
     <?php elseif ($hasImage): ?>
         <!-- Still hero. Same scrims as the film branch so the copy stays legible. -->
-        <img src="<?= esc($heroImage, 'attr') ?>" alt="" aria-hidden="true"
+        <img src="<?= esc(media_src($heroImage), 'attr') ?>" alt="" aria-hidden="true"
              class="hero-media absolute inset-0 -z-30 h-full w-full object-cover">
         <div class="hero-wash-side--page absolute inset-0 -z-20"></div>
         <div class="hero-wash-foot--page absolute inset-0 -z-20"></div>

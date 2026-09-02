@@ -14,7 +14,7 @@
         <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3" data-gsap="reveal">
             <?php foreach ($content['items'] as $item): if (empty($item['src'])) { continue; } ?>
                 <figure class="group isolate relative overflow-hidden rounded-2xl border border-white/10">
-                    <img src="<?= esc($item['src'], 'attr') ?>" alt="<?= esc(t_field($item['caption'] ?? []), 'attr') ?>" loading="lazy"
+                    <img src="<?= esc(media_src($item['src']), 'attr') ?>" alt="<?= esc(t_field($item['caption'] ?? []), 'attr') ?>" loading="lazy"
                          class="aspect-[4/3] w-full object-cover transition duration-500 group-hover:scale-[1.04]">
                     <?php if (! empty($item['caption'])): ?>
                         <figcaption class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 to-transparent px-5 pb-4 pt-10 text-sm font-medium text-[#f4f4f5]">

@@ -11,7 +11,7 @@ $badge  = $product['label'] ?? '';
    class="group isolate flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] transition hover:border-brand-red/40 hover:bg-white/[0.05]">
     <span class="relative block aspect-[4/5] overflow-hidden">
         <?php if (! empty($product['hero_image'])): ?>
-            <img src="<?= esc($product['hero_image'], 'attr') ?>" alt="<?= esc($cName, 'attr') ?>" loading="lazy"
+            <img src="<?= esc(media_src($product['hero_image']), 'attr') ?>" alt="<?= esc($cName, 'attr') ?>" loading="lazy"
                  class="h-full w-full transition duration-500 group-hover:scale-[1.04] <?= is_cutout_image($product['hero_image']) ? 'object-contain p-3' : 'object-cover' ?>">
         <?php endif; ?>
         <?php if ($badge !== '' && $badge !== null): ?>

@@ -11,7 +11,7 @@ $cDate    = ! empty($post['published_at']) ? date('j M Y', strtotime($post['publ
    class="group isolate flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] transition hover:border-brand-red/40 hover:bg-white/[0.05]">
     <?php if (! empty($post['image'])): ?>
         <span class="relative block aspect-[16/9] overflow-hidden">
-            <img src="<?= esc($post['image'], 'attr') ?>" alt="<?= esc($cTitle, 'attr') ?>" loading="lazy"
+            <img src="<?= esc(media_src($post['image']), 'attr') ?>" alt="<?= esc($cTitle, 'attr') ?>" loading="lazy"
                  class="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]">
         </span>
     <?php endif; ?>

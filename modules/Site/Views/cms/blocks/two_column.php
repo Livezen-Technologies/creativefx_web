@@ -27,7 +27,7 @@ $items = (! empty($content['items']) && is_array($content['items'])) ? $content[
                 <figure class="nl-profile__media mt-9">
                     <video controls preload="metadata" playsinline class="aspect-video w-full bg-black object-cover"
                            <?= $poster !== null ? 'poster="' . esc($poster, 'attr') . '"' : '' ?>>
-                        <source src="<?= esc($video, 'attr') ?>" type="video/mp4">
+                        <source src="<?= esc(media_src($video), 'attr') ?>" type="video/mp4">
                     </video>
                     <?php if (! empty($content['video_caption'])): ?>
                         <figcaption><?= esc(t_field($content['video_caption'])) ?></figcaption>

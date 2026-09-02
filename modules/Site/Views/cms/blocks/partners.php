@@ -63,7 +63,7 @@ $copies    = max(2, (int) ceil(3840 / $setWidth) + 1);
                 <?php foreach ($marks as $mark): ?>
                     <span class="<?= $mark['logo'] ? 'brand-card' : 'cert-card' ?>" <?= $copy > 0 ? 'aria-hidden="true"' : '' ?>>
                         <?php if ($mark['logo']): ?>
-                            <img src="<?= esc($mark['logo'], 'attr') ?>" alt="<?= esc($mark['label'], 'attr') ?>" loading="lazy" width="160" height="72">
+                            <img src="<?= esc(media_src($mark['logo']), 'attr') ?>" alt="<?= esc($mark['label'], 'attr') ?>" loading="lazy" width="160" height="72">
                         <?php else: ?>
                             <?= esc($mark['label']) ?>
                         <?php endif; ?>

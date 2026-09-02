@@ -14,7 +14,7 @@
                         <figure class="isolate mb-5 overflow-hidden rounded-xl border border-white/10">
                             <!-- 4:5 keeps studio headshots in their natural crop; object-top
                                  protects the face if a supplied photo is a different ratio. -->
-                            <img src="<?= esc($photo, 'attr') ?>" alt="<?= esc(t_field($item['name'] ?? []), 'attr') ?>" loading="lazy" class="aspect-[4/5] w-full object-cover object-top">
+                            <img src="<?= esc(media_src($photo), 'attr') ?>" alt="<?= esc(t_field($item['name'] ?? []), 'attr') ?>" loading="lazy" class="aspect-[4/5] w-full object-cover object-top">
                         </figure>
                     <?php endif; ?>
                     <div class="flex items-center gap-4">

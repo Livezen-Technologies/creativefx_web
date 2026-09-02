@@ -23,7 +23,7 @@
                     <a href="<?= esc($url, 'attr') ?>" target="_blank" rel="noopener noreferrer" class="nl-portfolio__item">
                         <span class="nl-portfolio__disc">
                             <?php if ($image !== null): ?>
-                                <img src="<?= esc($image, 'attr') ?>" alt="" loading="lazy">
+                                <img src="<?= esc(media_src($image), 'attr') ?>" alt="" loading="lazy">
                             <?php endif; ?>
                         </span>
                         <span class="nl-portfolio__name"><?= esc($name) ?></span>

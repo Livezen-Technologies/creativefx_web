@@ -196,6 +196,45 @@ if (! function_exists('translatable_locales')) {
     }
 }
 
+if (! function_exists('media_src')) {
+    /**
+     * Stamp a local media path with the file's own modification time.
+     *
+     * nginx serves /media/ with `expires 30d`, which is right for photography
+     * that rarely changes and wrong the moment one does: the URL never moves,
+     * so a browser that saw the old file keeps showing it for a month. Relighting
+     * the home hero is exactly that case — the origin was serving the new
+     * photograph while visitors carried on seeing the old one.
+     *
+     * The mtime rides in a query string, which nginx ignores when resolving a
+     * static file, so nothing about how the file is served changes; only the
+     * cache key does. Absolute URLs, data URIs and paths with no file behind
+     * them are handed back untouched.
+     */
+    function media_src(?string $path): string
+    {
+        static $seen = [];
+
+        $path = (string) $path;
+        if ($path === '' || $path[0] !== '/' || str_starts_with($path, '//')) {
+            return $path;
+        }
+
+        if (isset($seen[$path])) {
+            return $seen[$path];
+        }
+
+        [$file, $query] = array_pad(explode('?', $path, 2), 2, null);
+        $mtime = @filemtime(FCPATH . ltrim($file, '/'));
+
+        if ($mtime === false) {
+            return $seen[$path] = $path;
+        }
+
+        return $seen[$path] = $file . ($query === null ? '?' : '?' . $query . '&') . 'v=' . $mtime;
+    }
+}
+
 if (! function_exists('is_cutout_image')) {
     /**
      * Is this image a cut-out — a subject on transparency — or a photograph?

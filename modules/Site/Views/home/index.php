@@ -66,10 +66,10 @@ $impact = [
         <video x-ref="bgv"
                class="hero-media absolute inset-0 -z-30 h-full w-full object-cover"
                autoplay muted loop playsinline preload="auto"
-               poster="<?= esc($heroPoster) ?>">
-            <source src="<?= esc($video['src_path']) ?>" type="video/mp4">
+               poster="<?= esc(media_src($heroPoster)) ?>">
+            <source src="<?= esc(media_src($video['src_path'])) ?>" type="video/mp4">
             <?php if (! empty($video['src_path_webm'])): ?>
-                <source src="<?= esc($video['src_path_webm']) ?>" type="video/webm">
+                <source src="<?= esc(media_src($video['src_path_webm'])) ?>" type="video/webm">
             <?php endif; ?>
         </video>
         <!-- Subtle corner control (kept far from the CTAs so it never competes). -->
@@ -81,7 +81,7 @@ $impact = [
         </button>
     <?php elseif (! empty($heroPoster) && is_file(FCPATH . ltrim((string) $heroPoster, '/'))): ?>
         <!-- No film supplied; the poster carries the hero as a still. -->
-        <img src="<?= esc($heroPoster, 'attr') ?>" alt="" aria-hidden="true"
+        <img src="<?= esc(media_src($heroPoster), 'attr') ?>" alt="" aria-hidden="true"
              class="hero-media absolute inset-0 -z-30 h-full w-full object-cover">
     <?php else: ?>
         <div class="hero-aurora absolute inset-0 -z-30"></div>

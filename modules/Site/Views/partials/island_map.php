@@ -45,8 +45,7 @@ $place = static function (float $lat, float $lon) use ($b, $scale, $geo): array 
         <g class="lk-zoom" :style="`transform:${transform}`">
             <?php foreach ($geo['paths'] as $d): ?>
                 <path d="<?= esc($d, 'attr') ?>"
-                      fill="rgb(var(--fg) / 0.07)"
-                      stroke="rgb(var(--fg) / 0.22)"
+                      class="lk-land"
                       stroke-width="2"
                       vector-effect="non-scaling-stroke"/>
             <?php endforeach; ?>

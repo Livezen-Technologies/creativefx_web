@@ -20,7 +20,7 @@
                         <div class="flip-card__inner">
                             <?php if ($image): ?>
                                 <div class="flip-card__face flip-card__front value-tile">
-                                    <img src="<?= esc($image, 'attr') ?>" alt="" loading="lazy" class="value-tile__img">
+                                    <img src="<?= esc(media_src($image), 'attr') ?>" alt="" loading="lazy" class="value-tile__img">
                                     <span class="value-tile__scrim" aria-hidden="true"></span>
                                     <span class="value-tile__body">
                                         <h3 class="value-tile__title value-tile__title--lg"><?= esc(t_field($pillar['title'] ?? [])) ?></h3>

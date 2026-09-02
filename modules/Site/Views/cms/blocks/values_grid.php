@@ -27,7 +27,7 @@ $valueIcons = [
                         <?php if ($image): ?>
                             <!-- Photo front: image, scrim, icon + name pinned to the bottom. -->
                             <div class="flip-card__face flip-card__front value-tile">
-                                <img src="<?= esc($image, 'attr') ?>" alt="" loading="lazy" class="value-tile__img">
+                                <img src="<?= esc(media_src($image), 'attr') ?>" alt="" loading="lazy" class="value-tile__img">
                                 <span class="value-tile__scrim" aria-hidden="true"></span>
                                 <span class="value-tile__body">
                                     <?php if ($icon): ?>

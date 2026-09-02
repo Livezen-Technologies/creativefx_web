@@ -20,8 +20,8 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="theme-color" content="#CF2030">
     <meta name="color-scheme" content="light dark">
-    <link rel="icon" type="image/png" sizes="32x32" href="/media/brand/favicon-32.png">
-    <link rel="apple-touch-icon" href="/media/brand/favicon-180.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="<?= esc(media_src('/media/brand/favicon-32.png'), 'attr') ?>">
+    <link rel="apple-touch-icon" href="<?= esc(media_src('/media/brand/favicon-180.png'), 'attr') ?>">
     <?= vite_tags('resources/js/app.js') ?>
     <?php if ($ga = setting('ga4_measurement_id', '', 'analytics')): ?>
     <script async src="https://www.googletagmanager.com/gtag/js?id=<?= esc($ga) ?>"></script>

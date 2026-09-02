@@ -50,7 +50,7 @@ $firstSlug = $categories[0]['slug'] ?? '';
                    style="background: linear-gradient(150deg, <?= esc($c0, 'attr') ?>40, <?= esc($c1, 'attr') ?>22 45%, #0b0b0c 82%);">
                     <?php if (! empty($cat['image'])): ?>
                         <!-- Real category photo (company portfolio) with a legibility scrim -->
-                        <img src="<?= esc($cat['image']) ?>" alt="" loading="lazy"
+                        <img src="<?= esc(media_src($cat['image'])) ?>" alt="" loading="lazy"
                              class="absolute inset-0 -z-20 h-full w-full object-cover transition duration-500 group-hover:scale-105">
                         <div class="absolute inset-0 -z-10 bg-gradient-to-t from-[#0b0b0c] via-[#0b0b0c]/55 to-transparent"></div>
                     <?php endif; ?>

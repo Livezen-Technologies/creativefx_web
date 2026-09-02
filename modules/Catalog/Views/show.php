@@ -69,7 +69,7 @@ $chips   = array_values(array_intersect_key($chips, array_unique(array_map(
                 <p class="mt-2 text-center text-xs uppercase tracking-widest text-white/40"><?= esc(lang('Site.products.drag')) ?></p>
             <?php elseif (! empty($product['hero_image'])): ?>
                 <figure class="isolate overflow-hidden rounded-3xl border border-white/10" data-gsap="reveal">
-                    <img src="<?= esc($product['hero_image'], 'attr') ?>" alt="<?= esc($pName, 'attr') ?>"
+                    <img src="<?= esc(media_src($product['hero_image']), 'attr') ?>" alt="<?= esc($pName, 'attr') ?>"
                          class="w-full <?= is_cutout_image($product['hero_image']) ? 'p-8' : 'object-cover' ?>">
                 </figure>
             <?php endif; ?>
@@ -79,7 +79,7 @@ $chips   = array_values(array_intersect_key($chips, array_unique(array_map(
                 <div class="mt-4 grid grid-cols-3 gap-3 sm:grid-cols-4">
                     <?php foreach ($thumbs as $img): ?>
                         <figure class="isolate overflow-hidden rounded-xl border border-white/10">
-                            <img src="<?= esc($img, 'attr') ?>" alt="<?= esc($pName, 'attr') ?>" loading="lazy"
+                            <img src="<?= esc(media_src($img), 'attr') ?>" alt="<?= esc($pName, 'attr') ?>" loading="lazy"
                                  class="aspect-square w-full <?= is_cutout_image($img) ? 'object-contain p-3' : 'object-cover' ?>">
                         </figure>
                     <?php endforeach; ?>

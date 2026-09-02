@@ -3,7 +3,7 @@
     <div class="container-x grid gap-10 py-16 md:grid-cols-4">
         <div class="md:col-span-2">
             <a href="<?= esc(locale_url('')) ?>" class="inline-flex items-center gap-2.5" aria-label="Magic Corn — home">
-                <img src="/media/brand/magiccorn-logo.png" alt="Magic Corn" width="643" height="307" class="h-11 w-auto">
+                <img src="<?= esc(media_src('/media/brand/magiccorn-logo.png'), 'attr') ?>" alt="Magic Corn" width="643" height="307" class="h-11 w-auto">
             </a>
             <p class="mt-4 max-w-sm text-sm leading-relaxed text-white/60">
                 <?php
