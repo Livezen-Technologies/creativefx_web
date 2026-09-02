@@ -206,10 +206,17 @@ if (! function_exists('media_src')) {
      * the home hero is exactly that case — the origin was serving the new
      * photograph while visitors carried on seeing the old one.
      *
-     * The mtime rides in a query string, which nginx ignores when resolving a
-     * static file, so nothing about how the file is served changes; only the
-     * cache key does. Absolute URLs, data URIs and paths with no file behind
-     * them are handed back untouched.
+     * The key is the file's size rather than its mtime: the deploy's
+     * `git reset --hard` restamps mtimes on every run, so an mtime key would
+     * re-bust every photograph on the site each time anything shipped. Size is
+     * a stat rather than a read, costs nothing, survives a checkout, and moves
+     * whenever an image is genuinely re-encoded — the relight took this one
+     * from 392243 bytes to 410989.
+     *
+     * It rides in a query string, which nginx ignores when resolving a static
+     * file, so nothing about how the file is served changes; only the cache key
+     * does. Absolute URLs, data URIs and paths with no file behind them are
+     * handed back untouched.
      */
     function media_src(?string $path): string
     {
@@ -225,13 +232,13 @@ if (! function_exists('media_src')) {
         }
 
         [$file, $query] = array_pad(explode('?', $path, 2), 2, null);
-        $mtime = @filemtime(FCPATH . ltrim($file, '/'));
+        $size = @filesize(FCPATH . ltrim($file, '/'));
 
-        if ($mtime === false) {
+        if ($size === false) {
             return $seen[$path] = $path;
         }
 
-        return $seen[$path] = $file . ($query === null ? '?' : '?' . $query . '&') . 'v=' . $mtime;
+        return $seen[$path] = $file . ($query === null ? '?' : '?' . $query . '&') . 'v=' . $size;
     }
 }
 
