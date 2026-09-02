@@ -100,6 +100,20 @@ jobs:
             echo "===== OUR vhost (listen/root/ssl only) ====="
             grep -nE 'listen|server_name|root|ssl' /etc/nginx/sites-available/${DOMAIN}.conf 2>/dev/null
             echo
+            echo "===== redirect chains (the thing browsers actually follow) ====="
+            for U in "http://127.0.0.1/" "https://127.0.0.1/" "https://127.0.0.1/en" "https://127.0.0.1/en/"; do
+              echo "--- $U ---"
+              curl -s -k -m 10 -o /dev/null -w '  %{http_code} -> %{redirect_url}\n' "$U" -H "Host: ${DOMAIN}"
+            done
+            echo "--- follow the /en chain (max 10) ---"
+            curl -s -k -m 15 -L --max-redirs 10 -o /dev/null \
+                 -w '  hops=%{num_redirects} final=%{http_code} url=%{url_effective}\n' \
+                 "https://127.0.0.1/en" -H "Host: ${DOMAIN}" 2>&1 | tail -3
+            echo "===== app env (what PHP believes) ====="
+            grep -E '^app\.(baseURL|forceGlobalSecureRequests|indexPage)|^app\.uriProtocol' "$APP_DIR/.env" 2>/dev/null
+            echo "===== HTTPS fastcgi param present in our vhost? ====="
+            grep -n 'fastcgi_param HTTPS\|listen\|server_name\|return 301' /etc/nginx/sites-available/${DOMAIN}.conf 2>/dev/null
+
             echo "===== what answers :80 for our host ====="
             curl -s -i -m 8 http://127.0.0.1/ -H "Host: ${DOMAIN}" 2>&1 | head -15
             echo
