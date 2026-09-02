@@ -14,16 +14,19 @@
 /* Theme tokens (RGB channels).
    Ground/foreground: light-grey site by default; `.on-dark` flips a section to
    the dark treatment (hero over video, CTA bands, showroom, header/footer).
-   Accent: Norlanka red by default; a page scope can override it (e.g. green). */
+   Accent: Magic Corn amber by default; a page scope can override it.
+   Accent values are picked so white label text stays AA-legible on the accent
+   (.btn-brand forces #fff in both themes) while the accent itself still reads
+   as text on the ground. */
 :root {
-  --bg: 243 244 245;          /* #F3F4F5 light grey ground */
-  --fg: 24 26 29;             /* #181A1D ink */
-  --accent: 207 32 48;        /* #CF2030 brand red */
-  --accent-dark: 165 18 31;   /* #A5121F */
+  --bg: 253 251 244;          /* #FDFBF4 warm cream ground */
+  --fg: 30 26 20;             /* #1E1A14 warm ink */
+  --accent: 180 83 9;         /* #B45309 roasted amber — 4.85:1 on cream, white-on 5.02:1 */
+  --accent-dark: 146 64 14;   /* #92400E */
 }
 .on-dark {
-  --bg: 11 11 13;             /* #0B0B0D near-black */
-  --fg: 244 244 245;          /* #F4F4F5 near-white */
+  --bg: 18 16 11;             /* #12100B warm near-black */
+  --fg: 246 243 234;          /* #F6F3EA warm near-white */
   /* Re-declare color: redefining --fg alone doesn't change *inherited* color,
      so headings/text without an explicit colour class would keep the light
      theme's ink. This makes the whole dark subtree inherit near-white. */
@@ -40,10 +43,11 @@
    head script (persisted in localStorage as `nl_theme`). Because the whole site
    reads from these tokens, flipping them here re-themes every surface at once. */
 html.dark {
-  --bg: 11 11 13;             /* #0B0B0D clean near-black */
-  --fg: 244 244 245;          /* #F4F4F5 soft white */
-  --accent: 207 32 48;        /* brand red — pops on dark */
-  --accent-dark: 165 18 31;
+  --bg: 18 16 11;             /* #12100B warm near-black */
+  --fg: 246 243 234;          /* #F6F3EA warm white */
+  --accent: 186 93 0;         /* #BA5D00 — lifted for dark: 4.21:1 on the ground,
+                                 and white label text still clears AA at 4.51:1 */
+  --accent-dark: 154 76 0;    /* #9A4C00 */
 }
 html.dark .theme-esg-green {  /* Impact page green scope, dark variant */
   --bg: 12 20 15;             /* deep green-tinted ground */

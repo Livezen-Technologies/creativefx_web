@@ -5,8 +5,8 @@ $this->extend('Modules\Core\Views\layouts\main');
 // --- Hero content (from the seeded CMS 'hero' block, with sensible fallbacks) ---
 $heroRaw      = $sections['hero']['blocks'][0]['content'] ?? null;
 $hero         = $heroRaw ? json_decode($heroRaw, true) : [];
-$heroHeadline = $hero['headline'] ?? ['en' => "We craft the world's apparel, responsibly."];
-$heroSubhead  = $hero['subhead']  ?? ['en' => 'Design. Innovation. Responsible sourcing — at global scale.'];
+$heroHeadline = $hero['headline'] ?? ['en' => 'Sweet corn, served hot in a cup.'];
+$heroSubhead  = $hero['subhead']  ?? ['en' => 'Sri Lanka’s original corn in a cup.'];
 
 // Kinetic-typography headline parts (fall back to the plain headline split into words).
 $kPre      = t_field($hero['pre'] ?? []);
@@ -42,33 +42,6 @@ $impact = [
     ['title' => lang('Site.home.impact.p3_t'), 'text' => lang('Site.home.impact.p3_d')],
 ];
 
-// Global footprint regions (localized list).
-$regions = lang('Site.home.footprint.regions');
-if (! is_array($regions)) { $regions = ['Sri Lanka', 'South Asia', 'South-East Asia', 'Europe', 'North America', 'Global brands']; }
-
-// Interactive presence map — normalized coordinates (0..1) computed with the same
-// plate-carrée projection as the land-dot field (scripts/gen-dotmap.mjs), so the
-// markers sit exactly on the map. The three points are Norlanka's real footprint
-// (company profile): Sri Lanka HQ + manufacturing, India manufacturing and the UK
-// design studio. Labels/roles are localized.
-$pointNames = lang('Site.home.footprint.points');
-$pointRoles = lang('Site.home.footprint.roles');
-$mapPoints = [];
-foreach ([
-    ['key' => 'hq',       'x' => 0.7218, 'y' => 0.5473, 'hq' => true], // Colombo, Sri Lanka
-    ['key' => 'india',    'x' => 0.7167, 'y' => 0.4353],               // Tirupur & Delhi, India
-    ['key' => 'uk',       'x' => 0.4969, 'y' => 0.2185],               // Leicester, UK
-] as $p) {
-    $mapPoints[] = [
-        'key'  => $p['key'],
-        'x'    => $p['x'],
-        'y'    => $p['y'],
-        'hq'   => ! empty($p['hq']),
-        'name' => is_array($pointNames) ? ($pointNames[$p['key']] ?? $p['key']) : $p['key'],
-        'role' => is_array($pointRoles) ? ($pointRoles[$p['key']] ?? '') : '',
-    ];
-}
-$hqPoint = $mapPoints[0];
 ?>
 
 <?= $this->section('content') ?>
@@ -137,11 +110,11 @@ $hqPoint = $mapPoints[0];
 
         <!-- CTA hierarchy: one dominant primary, one quiet secondary -->
         <div class="mt-10 flex flex-wrap items-center gap-6" data-gsap="reveal">
-            <a href="<?= esc(locale_url('our-expertise')) ?>" class="btn-brand btn-lg group">
+            <a href="<?= esc(locale_url('our-business')) ?>" class="btn-brand btn-lg group">
                 <?= esc(lang('Site.home.hero.primary')) ?>
                 <svg class="ml-2 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </a>
-            <a href="<?= esc(locale_url('showroom')) ?>" class="group inline-flex items-center gap-3 text-sm font-semibold uppercase tracking-widest text-white/85 transition hover:text-white">
+            <a href="<?= esc(locale_url('our-locations')) ?>" class="group inline-flex items-center gap-3 text-sm font-semibold uppercase tracking-widest text-white/85 transition hover:text-white">
                 <span class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/30 transition group-hover:border-brand-red group-hover:bg-brand-red/10">
                     <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5l11 7-11 7z"/></svg>
                 </span>
@@ -180,7 +153,7 @@ $hqPoint = $mapPoints[0];
             <p class="text-lg leading-relaxed text-white/65">
                 <?= esc(lang('Site.home.intro.body')) ?>
             </p>
-            <a href="<?= esc(locale_url('our-story')) ?>"
+            <a href="<?= esc(locale_url('about-us')) ?>"
                class="mt-6 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-widest text-white transition hover:text-brand-red">
                 <?= esc(lang('Site.cta.our_story')) ?>
                 <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -225,7 +198,7 @@ $hqPoint = $mapPoints[0];
             <p class="mt-5 max-w-xl text-lg leading-relaxed text-white/70">
                 <?= esc(lang('Site.home.impact.body')) ?>
             </p>
-            <a href="<?= esc(locale_url('impact')) ?>" class="btn-brand mt-8"><?= esc(lang('Site.home.impact.cta')) ?></a>
+            <a href="<?= esc(locale_url('about-us')) ?>" class="btn-brand mt-8"><?= esc(lang('Site.home.impact.cta')) ?></a>
         </div>
 
         <div class="grid gap-4" data-gsap="reveal">
@@ -242,118 +215,8 @@ $hqPoint = $mapPoints[0];
     </div>
 </section>
 
-<!-- ===================== GLOBAL FOOTPRINT (interactive map) ===================== -->
-<?php
-// Pre-compute the HQ→market connection arcs in the SVG viewBox space (0 0 1000 386).
-$vbW = 1000; $vbH = 386;
-$hx  = $hqPoint['x'] * $vbW; $hy = $hqPoint['y'] * $vbH;
-$arcs = [];
-foreach ($mapPoints as $mp) {
-    if ($mp['hq']) { continue; }
-    $mx = $mp['x'] * $vbW; $my = $mp['y'] * $vbH;
-    $cx = ($hx + $mx) / 2;
-    $dist = sqrt(($mx - $hx) ** 2 + ($my - $hy) ** 2);
-    $cy = min($hy, $my) - $dist * 0.22;      // lift the control point above the pair
-    $arcs[] = sprintf('M%.1f %.1f Q%.1f %.1f %.1f %.1f', $hx, $hy, $cx, $cy, $mx, $my);
-}
-?>
-<section class="relative overflow-hidden bg-brand-black py-24 sm:py-28"
-         x-data="worldMap(<?= esc(json_encode($mapPoints), 'attr') ?>)" x-init="init()">
-    <div class="container-x">
-        <div class="grid gap-12 lg:grid-cols-12 lg:items-center">
-            <!-- Left: copy + region list -->
-            <div class="lg:col-span-4" data-gsap="reveal">
-                <p class="eyebrow"><?= esc(lang('Site.home.footprint.eyebrow')) ?></p>
-                <h2 class="mt-5 text-3xl font-bold sm:text-5xl"><?= esc(lang('Site.home.footprint.title')) ?></h2>
-                <p class="mt-5 text-lg leading-relaxed text-white/65">
-                    <?= esc(lang('Site.home.footprint.body')) ?>
-                </p>
-
-                <ul class="mt-7 flex flex-col gap-1">
-                    <?php foreach ($mapPoints as $i => $mp): ?>
-                        <li>
-                            <button type="button"
-                                    class="nl-region group flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left transition"
-                                    :class="isActive(<?= $i ?>) ? 'bg-white/[0.06]' : 'hover:bg-white/[0.03]'"
-                                    @mouseenter="setActive(<?= $i ?>)" @mouseleave="clearActive()"
-                                    @focus="setActive(<?= $i ?>)" @blur="clearActive()">
-                                <span class="nl-region__dot <?= $mp['hq'] ? 'nl-region__dot--hq' : '' ?>"
-                                      :class="isActive(<?= $i ?>) ? 'scale-125' : ''"></span>
-                                <span class="flex-1">
-                                    <span class="block text-sm font-semibold text-white"><?= esc($mp['name']) ?></span>
-                                    <span class="block text-xs text-white/45"><?= esc($mp['role']) ?></span>
-                                </span>
-                            </button>
-                        </li>
-                    <?php endforeach; ?>
-                </ul>
-                <p class="mt-4 text-xs italic text-white/35"><?= esc(lang('Site.home.footprint.note')) ?></p>
-            </div>
-
-            <!-- Right: the map stage -->
-            <div class="lg:col-span-8" data-gsap="reveal">
-                <div class="nl-map" x-ref="stage" style="aspect-ratio: <?= esc($vbW / $vbH) ?>;">
-                    <canvas class="nl-map__dots" x-ref="canvas" aria-hidden="true"></canvas>
-
-                    <svg class="nl-map__arcs" viewBox="0 0 <?= $vbW ?> <?= $vbH ?>" preserveAspectRatio="none" aria-hidden="true">
-                        <?php foreach ($arcs as $d): ?>
-                            <path class="nl-arc" d="<?= esc($d, 'attr') ?>" fill="none"></path>
-                        <?php endforeach; ?>
-                    </svg>
-
-                    <?php foreach ($mapPoints as $i => $mp): ?>
-                        <button type="button"
-                                class="nl-marker <?= $mp['hq'] ? 'nl-marker--hq' : '' ?>"
-                                style="left: <?= esc($mp['x'] * 100) ?>%; top: <?= esc($mp['y'] * 100) ?>%;"
-                                :class="isActive(<?= $i ?>) ? 'is-active' : ''"
-                                @mouseenter="setActive(<?= $i ?>)" @mouseleave="clearActive()"
-                                @focus="setActive(<?= $i ?>)" @blur="clearActive()"
-                                aria-label="<?= esc($mp['name'] . ' — ' . $mp['role'], 'attr') ?>">
-                            <span class="nl-marker__pulse" aria-hidden="true"></span>
-                            <span class="nl-marker__dot" aria-hidden="true"></span>
-                            <span class="nl-marker__label">
-                                <span class="nl-marker__name"><?= esc($mp['name']) ?></span>
-                                <span class="nl-marker__role"><?= esc($mp['role']) ?></span>
-                            </span>
-                        </button>
-                    <?php endforeach; ?>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
 <!-- ===================== VIRTUAL SHOWROOM (CMS-driven CTA) ===================== -->
 <?= view('Modules\Site\Views\home\sections\cta', ['section' => $sections['cta'] ?? null]) ?>
-
-<!-- ===================== TRUSTED BY GLOBAL BRANDS ===================== -->
-<section class="bg-brand-black py-24 sm:py-28" data-fp-title="<?= esc(lang('Site.home.brands.title'), 'attr') ?>">
-    <div class="container-x text-center">
-        <p class="text-xs font-semibold uppercase tracking-widest text-brand-red" data-gsap="reveal"><?= esc(lang('Site.home.brands.eyebrow')) ?></p>
-        <h2 class="mt-3 text-3xl font-bold sm:text-4xl" data-gsap="reveal"><?= esc(lang('Site.home.brands.title')) ?></h2>
-        <p class="mx-auto mt-4 max-w-xl text-white/60" data-gsap="reveal"><?= esc(lang('Site.home.brands.body')) ?></p>
-    </div>
-    <?php
-    // Customer logos extracted from the official marketing deck (Feb 2026).
-    $brandLogos = array_values(array_filter(
-        glob(FCPATH . 'media/brands/customer-*.png') ?: [],
-        'is_file'
-    ));
-    ?>
-    <?php if ($brandLogos !== []): ?>
-        <div class="brand-marquee mt-12" data-gsap="reveal" aria-label="<?= esc(lang('Site.home.brands.title'), 'attr') ?>">
-            <div class="brand-marquee__track">
-                <?php foreach ([0, 1] as $copy): // duplicated track = seamless loop ?>
-                    <?php foreach ($brandLogos as $logo): $rel = '/media/brands/' . basename($logo); ?>
-                        <span class="brand-card" <?= $copy === 1 ? 'aria-hidden="true"' : '' ?>>
-                            <img src="<?= esc($rel, 'attr') ?>" alt="" loading="lazy" width="160" height="72">
-                        </span>
-                    <?php endforeach; ?>
-                <?php endforeach; ?>
-            </div>
-        </div>
-    <?php endif; ?>
-</section>
 
 <!-- ===================== PARTNER / CLOSING CTA ===================== -->
 <section class="bg-brand-black pb-28">
@@ -366,7 +229,7 @@ foreach ($mapPoints as $mp) {
                 </div>
                 <div class="flex flex-wrap gap-4 lg:justify-end">
                     <a href="<?= esc(locale_url('contact')) ?>" class="btn-brand"><?= esc(lang('Site.cta.contact_us')) ?></a>
-                    <a href="<?= esc(locale_url('careers')) ?>" class="btn-ghost"><?= esc(lang('Site.cta.view_careers')) ?></a>
+                    <a href="<?= esc(locale_url('our-locations')) ?>" class="btn-ghost"><?= esc(lang('Site.cta.find_outlet')) ?></a>
                 </div>
             </div>
         </div>

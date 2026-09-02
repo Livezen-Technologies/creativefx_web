@@ -4,13 +4,10 @@ $parts = explode('/', trim(uri_string(), '/'));
 $currentSlug = $parts[1] ?? '';
 
 $nav = [
-    'our-story'     => lang('Site.nav.story'),
-    'our-expertise' => lang('Site.nav.expertise'),
-    'showroom'      => lang('Site.nav.showroom'),
-    'impact'        => lang('Site.nav.impact'),
-    // 'news' is intentionally not in the main menu — the section stays live
-    // and reachable from the footer, the home page and direct links.
-    'careers'       => lang('Site.nav.careers'),
+    'about-us'      => lang('Site.nav.about'),
+    'our-business'  => lang('Site.nav.business'),
+    'our-locations' => lang('Site.nav.locations'),
+    'products'      => lang('Site.nav.products'),
     'contact'       => lang('Site.nav.contact'),
 ];
 
@@ -35,9 +32,8 @@ $nav = [
          :class="scrolled ? 'h-16' : 'h-20'">
         <!-- Logo: official NL monogram + wordmark (static sizes so it renders
              correctly even before/without JS). -->
-        <a href="<?= esc(locale_url('')) ?>" class="flex items-center gap-2.5 shrink-0" aria-label="Norlanka — home">
-            <img src="/media/brand/nl-symbol.png" alt="Norlanka" width="36" height="36" class="h-9 w-auto">
-            <span class="font-display text-lg font-semibold uppercase tracking-[0.22em] text-white">Norlanka</span>
+        <a href="<?= esc(locale_url('')) ?>" class="flex items-center gap-2.5 shrink-0" aria-label="Magic Corn — home">
+            <span class="font-display text-lg font-semibold uppercase tracking-[0.22em] text-white">Magic Corn</span>
         </a>
 
         <!-- Desktop nav -->

@@ -1,5 +1,5 @@
 <?php helper('norlanka'); if (empty($content['items']) || ! is_array($content['items'])) { return; } ?>
-<!-- Image gallery block (e.g. Life @ Norlanka — engagement & wellbeing). -->
+<!-- Image gallery block. -->
 <section class="bg-brand-black py-16">
     <div class="container-x">
         <?php if (! empty($content['eyebrow'])): ?>

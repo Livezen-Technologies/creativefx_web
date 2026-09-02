@@ -2,21 +2,17 @@
 
 return [
     'nav' => [
-        'story'     => 'Our Story',
-        'expertise' => 'Our Expertise',
-        'manufacturing' => 'Manufacturing',
-        'showroom'  => 'Showroom',
-        'impact'    => 'Our Impact',
-        'news'      => 'News',
-        'products'  => 'Products',
-        'careers'   => 'Careers',
-        'contact'   => 'Contact',
+        'about'     => 'About Us',
+        'business'  => 'Our Business',
+        'products'  => 'Shop',
+        'locations' => 'Our Locations',
+        'contact'   => 'Contact Us',
     ],
     'footer' => [
         'explore' => 'Explore',
         'connect' => 'Connect',
         'rights'  => 'All rights reserved.',
-        'built'   => 'Responsible Sourcing · Design · Innovation',
+        'built'   => 'Corn in a Cup · Homegrown in Sri Lanka since 2007',
     ],
     'experience' => [
         'play'      => 'Play with sound',
@@ -38,7 +34,7 @@ return [
 
     // Careers portal (job detail + application form).
     'careers' => [
-        'meta'           => 'Careers at Norlanka — open positions and online applications.',
+        'meta'           => 'Careers at Magic Corn — open positions and online applications.',
         'all'            => 'All openings',
         'none'           => 'There are no open positions right now — check back soon, or contact us with your profile.',
         'view_apply'     => 'View & apply',
@@ -63,7 +59,7 @@ return [
     'cta' => [
         'get_in_touch' => 'Get in touch',
         'contact_us'   => 'Contact us',
-        'view_careers' => 'View careers',
+        'find_outlet'  => 'Find an outlet',
         'our_story'    => 'Our story',
     ],
 
@@ -72,66 +68,44 @@ return [
     // Bespoke home page.
     'home' => [
         'hero' => [
-            'eyebrow'   => 'Responsible Apparel Manufacturing',
-            'primary'   => 'Explore our expertise',
-            'secondary' => 'Enter the showroom',
-            'trust'     => 'Trusted by the world’s leading brands & retailers',
+            'eyebrow'   => 'Corn in a Cup',
+            'primary'   => 'See our flavours',
+            'secondary' => 'Find an outlet',
+            'trust'     => 'Homegrown in Sri Lanka since 2007',
         ],
         'intro' => [
             'eyebrow' => 'Who we are',
-            'title'   => 'A partner the world’s brands trust to make apparel the right way.',
-            'body'    => 'Norlanka is a full-service apparel manufacturer, providing solutions from design to delivery for over 20 international fashion brands and retailers. Part of PDS Limited, we ship over 60 million garments a year through a network of 25+ manufacturing partners across Sri Lanka and India — one of Sri Lanka’s largest sustainable exporters.',
+            'title'   => 'Sri Lanka’s original corn in a cup.',
+            'body'    => 'Magic Corn was founded in 2007 by Mr. Shanker Viswakula, who introduced the “Corn in a Cup” concept to the Sri Lankan snack industry. We cultivate sweet corn on a commercial scale and remain a 100% homegrown brand — now ISO 9001 certified, with more than thirty outlets across the island.',
         ],
         'cap' => [
             'eyebrow'    => 'What we do',
-            'title'      => 'End-to-end solutions, under one roof.',
-            'intro'      => 'Full-service capabilities that take a collection from first sketch to global shelf — backed by 6,000+ machines.',
-            'design_t'    => 'Design & Innovation',
-            'design_d'    => 'Bringing concepts to life through trend-led design, innovation, and product development.',
-            'mfg_t'       => 'Manufacturing Excellence',
-            'mfg_d'       => 'Precision-driven production delivering quality, speed, and consistency at scale.',
-            'sourcing_t'  => 'Responsible Sourcing',
-            'sourcing_d'  => 'Partnering with trusted suppliers committed to ethical, sustainable, and responsible sourcing.',
-            'partner_t'   => 'Global Partnership',
-            'partner_d'   => 'Building trusted relationships through collaboration, transparency, and reliable delivery.',
+            'title'      => 'From our fields to your cup.',
+            'intro'      => 'We grow, process and serve sweet corn — the whole chain, under one brand.',
+            'design_t'   => 'Grown here',
+            'design_d'   => 'Sweet corn cultivated on a commercial scale in Sri Lanka, by a fully homegrown brand.',
+            'mfg_t'      => 'Precooked & frozen',
+            'mfg_d'      => 'Harvested corn is precooked and frozen at our ISO 9001 certified processing factory.',
+            'sourcing_t' => 'Steamed to order',
+            'sourcing_d' => 'At the outlet it is steamed and mixed with 100% natural spices — no MSG, no preservatives.',
+            'partner_t'  => 'Topped your way',
+            'partner_d'  => 'Butter, garlic, cheese, mayo, minced chicken, lime and oyster sauce — combined to taste.',
         ],
         'impact' => [
             'eyebrow' => 'Our impact',
-            'title'   => 'Sustainability, woven into every stitch.',
-            'body'    => 'Our Better Tomorrow strategy is aligned to the UN Sustainable Development Goals — turning purpose into action across the environment, our people and the way we govern.',
-            'cta'     => 'Explore our impact',
-            'p1_t'    => 'Protect our environment',
-            'p1_d'    => 'Cutting emissions, water and waste — solar power, rainwater harvesting and Sri Lanka’s first zero-landfilling operation.',
-            'p2_t'    => 'Together with people',
-            'p2_d'    => 'Women in leadership, employee training and community programmes reaching thousands of beneficiaries.',
-            'p3_t'    => 'Trust in everything',
-            'p3_d'    => 'Higg-verified facilities, science-based targets and award-winning environmental governance.',
-        ],
-        'brands' => [
-            'eyebrow' => 'Our customers',
-            'title'   => 'Trusted by Global Brands',
-            'body'    => 'Partnering with leading retailers and fashion brands across the world.',
-        ],
-        'footprint' => [
-            'eyebrow' => 'Global footprint',
-            'title'   => 'Made in Sri Lanka & India. Delivered to the world.',
-            'body'    => 'Manufacturing across Sri Lanka and India and a design studio in the UK — design-to-delivery solutions for brands in every major market.',
-            'regions' => ['Sri Lanka', 'India', 'United Kingdom', 'Global brands'],
-            'points'  => [
-                'hq'       => 'Sri Lanka',
-                'india'    => 'India',
-                'uk'       => 'United Kingdom',
-            ],
-            'roles' => [
-                'hq'       => 'Headquarters & manufacturing',
-                'india'    => 'Norlanka Manufacturing India — Bangalore',
-                'uk'       => 'Design studio — Leicester',
-            ],
-            'note'          => 'Manufacturing, design and customer teams across three countries.',
+            'title'   => 'Good corn, made the right way.',
+            'body'    => 'A homegrown supply chain, a certified process and real livelihoods in rural Sri Lanka — what goes into the cup matters as much as what comes out of it.',
+            'cta'     => 'About Magic Corn',
+            'p1_t'    => 'Nothing artificial',
+            'p1_d'    => 'No MSG, no added flavours and no preservatives are used in preparing our corn.',
+            'p2_t'    => 'Livelihoods in rural areas',
+            'p2_d'    => 'Our processing factory employs more than forty women, giving their families an additional income.',
+            'p3_t'    => 'ISO 9001 certified',
+            'p3_d'    => 'Sweet corn processing run to a certified quality management standard, from field to cup.',
         ],
         'closing' => [
-            'title' => 'Let’s build your next collection together.',
-            'body'  => 'Partner with a manufacturer that delivers quality, scale and responsibility — or join a team shaping the future of apparel.',
+            'title' => 'Come and find your cup.',
+            'body'  => 'Find your nearest outlet, order a frozen pack, or talk to us about bulk supply and events.',
         ],
     ],
 
@@ -160,10 +134,10 @@ return [
 
     // Newsroom (listing + article pages).
     'news' => [
-        'meta'     => 'News & insights from Norlanka — company milestones, sustainability updates, CSR programmes and events.',
+        'meta'     => 'News from Magic Corn — new outlets, products and events.',
         'eyebrow'  => 'Newsroom',
         'title'    => 'News & Insights',
-        'intro'    => 'Milestones, sustainability updates and stories from across Norlanka.',
+        'intro'    => 'New outlets, new flavours and stories from across Magic Corn.',
         'all'      => 'All',
         'read'     => 'Read article',
         'back'     => 'All news',
@@ -182,7 +156,7 @@ return [
         'new_tab' => '(opens in a new tab)',
     ],
     'products' => [
-        'meta'           => 'Norlanka product catalog — babywear, childrenswear, nightwear, activewear and essentials, developed from design to delivery.',
+        'meta'           => 'Magic Corn shop — frozen sweet corn packs and corn in a cup, made in Sri Lanka.',
         'eyebrow'        => 'Product Catalog',
         'title'          => 'Our Products',
         'intro'          => 'Explore representative styles from every category we manufacture — each developed end-to-end, from first sketch to global delivery.',

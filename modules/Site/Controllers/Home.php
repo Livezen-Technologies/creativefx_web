@@ -28,7 +28,7 @@ class Home extends BaseController
             'page'            => $page,
             'sections'        => $sections,
             'video'           => $video,
-            'title'           => 'Norlanka — ' . lang('Site.home.hero.eyebrow'),
+            'title'           => setting('site_name', 'Magic Corn') . ' — ' . lang('Site.home.hero.eyebrow'),
             'metaDescription' => lang('Site.home.intro.title'),
         ]);
     }

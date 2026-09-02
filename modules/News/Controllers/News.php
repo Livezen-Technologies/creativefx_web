@@ -47,7 +47,7 @@ class News extends BaseController
             'activeCategory'  => $activeCategory,
             'currentPage'     => $pager->getCurrentPage(),
             'pageCount'       => $pager->getPageCount(),
-            'title'           => lang('Site.news.title') . ' — Norlanka',
+            'title'           => lang('Site.news.title') . ' — ' . setting('site_name', 'Magic Corn'),
             'metaDescription' => lang('Site.news.meta'),
         ]);
     }
@@ -70,7 +70,7 @@ class News extends BaseController
             'post'            => $post,
             'category'        => $category,
             'related'         => $postModel->related($post),
-            'title'           => t_field($post['meta_title'] ?: $post['title']) . ' — Norlanka',
+            'title'           => t_field($post['meta_title'] ?: $post['title']) . ' — ' . setting('site_name', 'Magic Corn'),
             'metaDescription' => t_field($post['meta_description'] ?: $post['excerpt']),
             'ogImage'         => $post['image'] ?? null,
         ]);

@@ -23,8 +23,8 @@ class HomeContentSeeder extends Seeder
             $pages->insert([
                 'slug'             => 'home',
                 'title'            => $j(['en' => 'Norlanka', 'es' => 'Norlanka', 'ja' => 'ノーランカ', 'zh' => '诺兰卡']),
-                'meta_title'       => $j(['en' => 'Norlanka — Responsible apparel manufacturing']),
-                'meta_description' => $j(['en' => 'Design, innovation and responsible sourcing at global scale.']),
+                'meta_title'       => $j(['en' => 'Magic Corn — Corn in a Cup']),
+                'meta_description' => $j(['en' => 'Sri Lanka’s original corn in a cup — sweet corn grown, steamed and topped your way since 2007.']),
                 'template'         => 'home',
                 'is_home'          => 1,
                 'status'           => 'published',
@@ -75,48 +75,47 @@ class HomeContentSeeder extends Seeder
         $hero = $addSection('hero', 'hero', 0);
         $addBlock($hero, 'hero', [
             'headline' => [
-                'en' => "We craft the world's apparel, responsibly.",
-                'es' => 'Creamos la ropa del mundo, de forma responsable.',
-                'ja' => '世界のアパレルを、責任を持って創る。',
-                'zh' => '我们以负责任的方式，打造世界的服饰。',
+                'en' => 'Sweet corn, served hot in a cup.',
+                'es' => 'Maíz dulce, servido caliente en vaso.',
+                'ja' => 'スイートコーンを、あつあつのカップで。',
+                'zh' => '甜玉米，热腾腾装进杯里。',
             ],
             'subhead' => [
-                'en' => 'Design. Innovation. Responsible sourcing — at global scale.',
-                'es' => 'Diseño. Innovación. Abastecimiento responsable, a escala global.',
-                'ja' => 'デザイン。革新。責任ある調達 — グローバルな規模で。',
-                'zh' => '设计、创新、负责任的采购——全球规模。',
+                'en' => 'Grown, steamed and topped your way — Sri Lanka’s original corn in a cup.',
+                'es' => 'Cultivado, cocido al vapor y con los toppings que elijas: el maíz en vaso original de Sri Lanka.',
+                'ja' => '自社栽培、蒸したて、トッピングはお好みで — スリランカ発、カップコーンの原点。',
+                'zh' => '自种、现蒸、配料自选——斯里兰卡最早的杯装甜玉米。',
             ],
             // Kinetic-typography hero: pre + cycling word + post.
             'pre' => [
-                'en' => "We craft the world's",
-                'es' => 'Creamos',
-                'ja' => '私たちは世界の',
-                'zh' => '我们打造世界的',
+                'en' => 'Sweet corn, served',
+                'es' => 'Maíz dulce, servido',
+                'ja' => 'スイートコーンを、',
+                'zh' => '甜玉米，就要',
             ],
             'post' => [
-                'en' => 'responsibly.',
-                'es' => 'del mundo, de forma responsable.',
-                'ja' => 'を、責任を持って創る。',
-                'zh' => '，以负责任的方式。',
+                'en' => 'in a cup.',
+                'es' => 'en vaso.',
+                'ja' => 'カップで。',
+                'zh' => '装进杯里。',
             ],
-            // Cycling words follow the real product portfolio (company profile).
+            // Cycling words are the toppings the outlets actually serve.
             'rotators' => [
-                ['en' => 'apparel', 'es' => 'moda', 'ja' => 'アパレル', 'zh' => '服饰'],
-                ['en' => 'babywear', 'es' => 'ropa de bebé', 'ja' => 'ベビーウェア', 'zh' => '婴儿装'],
-                ['en' => 'childrenswear', 'es' => 'ropa infantil', 'ja' => '子ども服', 'zh' => '童装'],
-                ['en' => 'activewear', 'es' => 'ropa deportiva', 'ja' => 'アクティブウェア', 'zh' => '运动装'],
-                ['en' => 'essentials', 'es' => 'básicos', 'ja' => '定番', 'zh' => '基础款'],
+                ['en' => 'buttered', 'es' => 'con mantequilla', 'ja' => 'バターで', 'zh' => '黄油'],
+                ['en' => 'cheesy', 'es' => 'con queso', 'ja' => 'チーズで', 'zh' => '芝士'],
+                ['en' => 'garlicky', 'es' => 'con ajo', 'ja' => 'ガーリックで', 'zh' => '蒜香'],
+                ['en' => 'spiced', 'es' => 'con especias', 'ja' => 'スパイスで', 'zh' => '香料'],
+                ['en' => 'hot', 'es' => 'caliente', 'ja' => 'あつあつで', 'zh' => '热腾腾'],
             ],
         ], 0);
 
         // ---- Stats ------------------------------------------------------
         $stats = $addSection('stats', 'stats', 1);
-        // Real figures from the Norlanka company profile (Feb 2026).
         $statData = [
-            ['value' => '60', 'suffix' => 'M+', 'label' => ['en' => 'Garments shipped per year', 'es' => 'Prendas enviadas al año', 'ja' => '年間出荷着数', 'zh' => '每年出货服装（件）']],
-            ['value' => '25', 'suffix' => '+', 'label' => ['en' => 'Manufacturing partners — Sri Lanka & India', 'es' => 'Socios de fabricación', 'ja' => '製造パートナー（スリランカ・インド）', 'zh' => '制造合作伙伴（斯里兰卡与印度）']],
-            ['value' => '12000', 'suffix' => '+', 'label' => ['en' => 'Associates & workforce', 'es' => 'Colaboradores y personal', 'ja' => '従業員・ワークフォース', 'zh' => '员工与劳动力']],
-            ['value' => '20', 'suffix' => '+', 'label' => ['en' => 'Global brands & retailers', 'es' => 'Marcas y minoristas globales', 'ja' => 'グローバルブランド・小売', 'zh' => '全球品牌与零售商']],
+            ['value' => '2007', 'suffix' => '', 'label' => ['en' => 'Serving corn in a cup since', 'es' => 'Sirviendo maíz en vaso desde', 'ja' => 'カップコーンの提供開始', 'zh' => '杯装玉米始于']],
+            ['value' => '30', 'suffix' => '+', 'label' => ['en' => 'Outlets island-wide', 'es' => 'Locales en toda la isla', 'ja' => '島内の店舗数', 'zh' => '全岛门店']],
+            ['value' => '40', 'suffix' => '+', 'label' => ['en' => 'Women employed at our factory', 'es' => 'Mujeres empleadas en nuestra fábrica', 'ja' => '工場で働く女性従業員', 'zh' => '工厂女性员工']],
+            ['value' => '100', 'suffix' => '%', 'label' => ['en' => 'Homegrown Sri Lankan brand', 'es' => 'Marca 100% de Sri Lanka', 'ja' => '100%スリランカ国産ブランド', 'zh' => '100% 斯里兰卡本土品牌']],
         ];
         foreach ($statData as $i => $s) {
             $addBlock($stats, 'stat', $s, $i);
@@ -125,10 +124,10 @@ class HomeContentSeeder extends Seeder
         // ---- CTA --------------------------------------------------------
         $cta = $addSection('cta', 'cta', 2);
         $addBlock($cta, 'cta', [
-            'title'  => ['en' => 'Step into our Virtual Showroom', 'es' => 'Entra en nuestro Showroom Virtual', 'ja' => 'バーチャルショールームへ', 'zh' => '进入虚拟展厅'],
-            'text'   => ['en' => 'Explore our collections in immersive 3D.', 'es' => 'Explora nuestras colecciones en 3D inmersivo.', 'ja' => '没入型3Dでコレクションを体験。', 'zh' => '在沉浸式 3D 中探索我们的系列。'],
-            'button' => ['en' => 'Enter Showroom', 'es' => 'Entrar al Showroom', 'ja' => 'ショールームへ', 'zh' => '进入展厅'],
-            'url'    => 'showroom',
+            'title'  => ['en' => 'Take Magic Corn home', 'es' => 'Llévate Magic Corn a casa', 'ja' => 'Magic Cornをおうちで', 'zh' => '把 Magic Corn 带回家'],
+            'text'   => ['en' => 'Our 1kg frozen sweet corn pack — the same corn we serve at the outlets.', 'es' => 'Nuestro paquete de 1 kg de maíz dulce congelado, el mismo que servimos en los locales.', 'ja' => '店舗と同じスイートコーンを1kg冷凍パックで。', 'zh' => '1 公斤冷冻甜玉米装——与门店同款。'],
+            'button' => ['en' => 'Visit the shop', 'es' => 'Ir a la tienda', 'ja' => 'ショップを見る', 'zh' => '前往商店'],
+            'url'    => 'products',
         ], 0);
 
         $this->seedVideo($now, $j);
@@ -141,22 +140,26 @@ class HomeContentSeeder extends Seeder
         if ($videos->where('key', 'home_launch')->get()->getRowArray() === null) {
             $videos->insert([
                 'key'           => 'home_launch',
-                'title'         => $j(['en' => 'Norlanka Launch Film']),
-                // Background launch film (swap for a CDN/S3 URL in production).
-                'src_path'      => '/media/video/home-hero.mp4',
-                'poster_path'   => '/media/video/home-hero-poster.jpg',
+                'title'         => $j(['en' => 'Magic Corn Film']),
+                // No Magic Corn film supplied yet. Left empty on purpose: the hero
+                // falls back to its gradient treatment rather than showing the
+                // previous brand's factory footage. Set these when footage arrives.
+                'src_path'      => '',
+                'poster_path'   => '',
                 'is_muted_loop' => 1,
                 'status'        => 'published',
                 'created_at'    => $now,
                 'updated_at'    => $now,
             ]);
         } else {
-            // Keep the background film + poster in sync on re-seed.
-            $videos->where('key', 'home_launch')->update([
-                'src_path'    => '/media/video/home-hero.mp4',
-                'poster_path' => '/media/video/home-hero-poster.jpg',
-                'updated_at'  => $now,
-            ]);
+            // Only clear a path still pointing at the previous brand's footage;
+            // a film added later in Admin -> Videos is left alone.
+            $current = $videos->where('key', 'home_launch')->get()->getRowArray();
+            if (str_contains((string) ($current['src_path'] ?? ''), '/media/video/home-hero')) {
+                $videos->where('key', 'home_launch')->update([
+                    'src_path' => '', 'poster_path' => '', 'updated_at' => $now,
+                ]);
+            }
         }
         $videoId = (int) $videos->where('key', 'home_launch')->get()->getRowArray()['id'];
 

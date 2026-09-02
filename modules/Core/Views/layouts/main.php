@@ -7,10 +7,10 @@
     <script>document.documentElement.classList.add('js');try{if(localStorage.getItem('nl_theme')==='light')document.documentElement.classList.remove('dark');}catch(e){}try{if(sessionStorage.getItem('nl_preloaded'))document.documentElement.classList.add('preloaded');}catch(e){}</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= esc($title ?? setting('site_name', 'Norlanka')) ?></title>
+    <title><?= esc($title ?? setting('site_name', 'Magic Corn')) ?></title>
     <meta name="description" content="<?= esc($metaDescription ?? setting('tagline', '')) ?>">
     <?php // Social sharing (per-page OG image is editable in Admin → Pages).
-    $ogTitle = $title ?? setting('site_name', 'Norlanka');
+    $ogTitle = $title ?? setting('site_name', 'Magic Corn');
     $ogDesc  = $metaDescription ?? setting('tagline', '');
     $ogImg   = ! empty($ogImage) ? $ogImage : '/media/brand/favicon-180.png'; ?>
     <meta property="og:type" content="website">
@@ -33,8 +33,7 @@
     <!-- Brand loading screen (shown once per session; dismissed by preloader.js). -->
     <div id="preloader" aria-hidden="true">
         <div class="pre-inner">
-            <img src="/media/brand/nl-symbol.png" alt="" width="60" height="60" class="pre-logo">
-            <span class="pre-word">Norlanka</span>
+            <span class="pre-word">Magic Corn</span>
             <span class="pre-bar"><span class="pre-bar-fill"></span></span>
         </div>
     </div>

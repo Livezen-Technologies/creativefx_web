@@ -1,6 +1,6 @@
 <?php
 helper(['norlanka', 'url']);
-$email    = setting('email', 'info@norlankamfg.com', 'contact');
+$email    = setting('email', 'shankerv@viswakula.com', 'contact');
 $phone    = setting('phone', '', 'contact');
 $whatsapp = setting('whatsapp', '', 'contact');
 $wa       = $whatsapp !== '' ? 'https://wa.me/' . preg_replace('/[^0-9]/', '', $whatsapp) : '';
