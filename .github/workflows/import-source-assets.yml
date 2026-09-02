@@ -237,7 +237,11 @@ jobs:
             n=$((n+1)); printf '  %-52s %8s bytes\n' "$FN" "$SZ"
           done < /tmp/urls.txt
           echo "imported: $n"
-          ls -la "$DEST" | head -40
+          # `ls | head` closes the pipe early, ls takes SIGPIPE, and pipefail
+          # turns that into a failed step — after every file has downloaded
+          # successfully. The commit step is then skipped and the whole import
+          # is thrown away because the summary listing was too long.
+          ls -la "$DEST" | head -40 || true
 
       - name: Commit
         if: ${{ github.event.inputs.action == 'import' }}
