@@ -260,6 +260,14 @@ html:not(.dark) { --hero-dim: 1; }
    matter how far the scrim is pulled back, so the media itself is lifted. */
 .hero-media { filter: brightness(var(--hero-lift, 1)); }
 
+/* The home hero carries 8% less light than the photograph itself. It goes on
+   the media rather than the scrim on purpose: the scrim is shaped — pooled
+   behind the copy, clear everywhere else — so thickening it would darken the
+   headline block and leave the rest of the frame where it was. Brightness is
+   even across the whole picture, which is what "a bit darker" asks for, and it
+   leaves the wash free to keep doing its own job. */
+#hero .hero-media { --hero-lift: 0.92; }
+
 .hero-wash-side {
   background: linear-gradient(to right,
     rgb(var(--hero-wash) / calc(0.95 * var(--hero-dim))),
