@@ -18,6 +18,8 @@ foreach ($items as $item) {
     $lat = (float) $item['lat'];
     $lon = (float) $item['lon'];
     $points[] = [
+        'lat'         => $lat,
+        'lon'         => $lon,
         'x'           => (($lon + 180) / 360),
         'y'           => ((83 - $lat) / 139),
         'hq'          => ! empty($item['hq']),
@@ -31,8 +33,16 @@ foreach ($points as $i => $p) {
     if ($p['hq']) { $hubIndex = $i; break; }
 }
 ?>
+<?php
+$geoFile = ROOTPATH . 'resources/data/sri-lanka.json';
+$geo     = is_file($geoFile) ? json_decode((string) file_get_contents($geoFile), true) : null;
+$island  = is_array($geo) && $points !== [];
+$mapData = $island
+    ? esc(json_encode(['geo' => $geo, 'points' => $points], JSON_UNESCAPED_SLASHES), 'attr')
+    : '';
+?>
 <section class="relative overflow-hidden bg-brand-black py-20"
-         <?= $points !== [] ? 'x-data="worldMap(' . esc(json_encode($points), 'attr') . ')" x-init="init()"' : '' ?>>
+         <?= $island ? 'x-data="islandMap(' . $mapData . ')"' : ($points !== [] ? 'x-data="worldMap(' . esc(json_encode($points), 'attr') . ')" x-init="init()"' : '') ?>>
     <div class="container-x">
         <?php if ($points !== []): ?>
             <div class="grid gap-10 lg:grid-cols-12 lg:items-center">
@@ -49,11 +59,10 @@ foreach ($points as $i => $p) {
                             <li>
                                 <button type="button"
                                         class="nl-region group flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left transition"
-                                        :class="isActive(<?= $i ?>) ? 'bg-white/[0.06]' : 'hover:bg-white/[0.03]'"
-                                        @mouseenter="setActive(<?= $i ?>)" @mouseleave="clearActive()"
-                                        @focus="setActive(<?= $i ?>)" @blur="clearActive()">
+                                        <?= $island ? ':class="isSelected(' . $i . ') ? \'bg-white/[0.08] ring-1 ring-brand-red/40\' : \'hover:bg-white/[0.03]\'" @click="select(' . $i . ')" :aria-pressed="isSelected(' . $i . ')"'
+                                                    : ':class="isActive(' . $i . ') ? \'bg-white/[0.06]\' : \'hover:bg-white/[0.03]\'" @mouseenter="setActive(' . $i . ')" @mouseleave="clearActive()" @focus="setActive(' . $i . ')" @blur="clearActive()"' ?>>
                                     <span class="nl-region__dot <?= $p['hq'] ? 'nl-region__dot--hq' : '' ?>"
-                                          :class="isActive(<?= $i ?>) ? 'scale-125' : ''"></span>
+                                          :class="<?= $island ? 'isSelected(' . $i . ')' : 'isActive(' . $i . ')' ?> ? 'scale-125' : ''"></span>
                                     <span class="flex-1">
                                         <span class="block text-sm font-semibold text-white"><?= esc($p['name']) ?></span>
                                         <?php if ($p['role'] !== ''): ?>
@@ -67,7 +76,11 @@ foreach ($points as $i => $p) {
                 </div>
 
                 <div class="lg:col-span-8" data-gsap="reveal">
-                    <?= view('Modules\Site\Views\partials\world_map', ['points' => $points, 'hubIndex' => $hubIndex]) ?>
+                    <?php if ($island): ?>
+                        <?= view('Modules\Site\Views\partials\island_map', ['points' => $points]) ?>
+                    <?php else: ?>
+                        <?= view('Modules\Site\Views\partials\world_map', ['points' => $points, 'hubIndex' => $hubIndex]) ?>
+                    <?php endif; ?>
                 </div>
             </div>
         <?php else: ?>

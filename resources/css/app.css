@@ -324,6 +324,27 @@ html:not(.dark) { --hero-dim: 1; }
   }
 }
 
+/* Sri Lanka locator ------------------------------------------------------
+   SVG transforms are applied through CSS so the zoom is composited rather than
+   re-laid-out. transform-box makes the percentages and translations resolve
+   against the viewBox instead of the element's own bounding box, which is what
+   lets a pin's translate use map units. */
+.lk-zoom,
+.lk-zoom g {
+  transform-box: view-box;
+  transform-origin: 0 0;
+}
+.lk-zoom {
+  transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.lk-zoom g {
+  transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .lk-zoom,
+  .lk-zoom g { transition: none; }
+}
+
 /* Full-viewport page hero (used when a hero has a background film).
    `svh` keeps mobile browser chrome from pushing the hero taller than the
    visible area; `vh` stays as the fallback for browsers without svh. */

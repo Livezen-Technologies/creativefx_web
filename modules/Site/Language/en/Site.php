@@ -185,4 +185,8 @@ return [
         'baseline' => 'Baseline',
         'target'   => 'Target',
     ],
+    'locations' => [
+        'map_alt'  => 'Map of Sri Lanka showing Magic Corn locations',
+        'show_all' => 'Show all',
+    ],
 ];

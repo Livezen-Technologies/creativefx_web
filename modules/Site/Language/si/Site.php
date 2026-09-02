@@ -162,4 +162,8 @@ return [
         'baseline' => 'ආරම්භක අගය',
         'target'   => 'ඉලක්කය',
     ],
+    'locations' => [
+        'map_alt'  => 'Magic Corn ස්ථාන පෙන්වන ශ්‍රී ලංකා සිතියම',
+        'show_all' => 'සියල්ල බලන්න',
+    ],
 ];
