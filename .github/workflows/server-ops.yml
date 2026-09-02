@@ -1,4 +1,4 @@
-name: Server ops (norlankamfg.livezencloud.com)
+name: Server ops
 
 # Manual, scoped server operations run over SSH from the GitHub runner.
 # `diagnose-tls`     — READ-ONLY: inspect who serves :80/:443, web stack, our
@@ -24,6 +24,14 @@ on:
         description: Email for Let's Encrypt (setup-tls-certbot only)
         required: false
         default: ''
+      domain:
+        description: Domain to diagnose / issue a certificate for
+        required: true
+        default: norlankamfg.livezencloud.com
+      app_dir:
+        description: Install directory of that site (diagnose-tls only)
+        required: true
+        default: /var/www/norlankamfg
       deploy_host:
         description: Server host/IP (overrides DEPLOY_HOST secret)
         required: false
@@ -37,8 +45,9 @@ on:
         required: false
         default: ''
 
+# Per-domain, so operating on one site never queues behind another.
 concurrency:
-  group: server-ops-norlankamfg
+  group: server-ops-${{ github.event.inputs.domain }}
   cancel-in-progress: false
 
 jobs:
@@ -68,7 +77,8 @@ jobs:
           command_timeout: 5m
           script: |
             set +e
-            DOMAIN=norlankamfg.livezencloud.com
+            DOMAIN="${{ github.event.inputs.domain }}"
+            APP_DIR="${{ github.event.inputs.app_dir }}"
             echo "===== sockets listening on :80 / :443 ====="
             (ss -ltnp 2>/dev/null || netstat -ltnp 2>/dev/null) | grep -E ':80 |:443 '
             echo
@@ -110,7 +120,7 @@ jobs:
               curl -s -I -k -m 10 "https://127.0.0.1${f}" -H "Host: ${DOMAIN}" 2>&1 | grep -iE 'HTTP/|content-type|content-length|accept-ranges'
             done
             echo "--- file on disk ---"
-            ls -la /var/www/norlankamfg/public/media/video/ 2>/dev/null
+            ls -la "$APP_DIR"/public/media/video/ 2>/dev/null
             echo
             echo "===== DONE (read-only) ====="
 
@@ -126,7 +136,7 @@ jobs:
           envs: LE_EMAIL
           script: |
             set -e
-            DOMAIN=norlankamfg.livezencloud.com
+            DOMAIN="${{ github.event.inputs.domain }}"
             LE_EMAIL="${{ github.event.inputs.le_email }}"
             [ -n "$LE_EMAIL" ] || { echo "le_email input is required"; exit 1; }
             if ! command -v certbot >/dev/null; then
