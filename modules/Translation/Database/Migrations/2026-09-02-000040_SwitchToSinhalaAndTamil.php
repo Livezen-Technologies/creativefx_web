@@ -73,14 +73,36 @@ class SwitchToSinhalaAndTamil extends Migration
             }
         }
 
-        // 3. The home page title was never rebranded.
+        // 3. The home page was never rebranded — its title and meta title still
+        //    named the previous company. The rendered title comes from the
+        //    site_name setting so this was invisible on the page itself, but it
+        //    is what the Pages editor shows and what any future template that
+        //    reads the column would publish.
         if ($this->db->tableExists('pages')) {
-            $row = $this->db->table('pages')->select('id, title')->where('slug', 'home')->get()->getRowArray();
-            if ($row !== null && str_contains((string) $row['title'], 'Norlanka')) {
-                $this->db->table('pages')->where('id', $row['id'])->update([
-                    'title'      => json_encode(['en' => 'Magic Corn'], JSON_UNESCAPED_UNICODE),
-                    'updated_at' => date('Y-m-d H:i:s'),
-                ]);
+            $row = $this->db->table('pages')
+                ->select('id, title, meta_title')
+                ->where('slug', 'home')
+                ->get()
+                ->getRowArray();
+
+            if ($row !== null) {
+                $update = [];
+
+                if (str_contains((string) $row['title'], 'Norlanka')) {
+                    $update['title'] = json_encode(['en' => 'Magic Corn'], JSON_UNESCAPED_UNICODE);
+                }
+
+                if (str_contains((string) $row['meta_title'], 'Norlanka')) {
+                    $update['meta_title'] = json_encode(
+                        ['en' => 'Magic Corn — Corn in a Cup'],
+                        JSON_UNESCAPED_UNICODE,
+                    );
+                }
+
+                if ($update !== []) {
+                    $update['updated_at'] = date('Y-m-d H:i:s');
+                    $this->db->table('pages')->where('id', $row['id'])->update($update);
+                }
             }
         }
     }
