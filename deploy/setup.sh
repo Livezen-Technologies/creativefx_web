@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Norlanka — first-time deploy for plain Nginx + PHP-FPM.
+# CreativeFX — first-time deploy for plain Nginx + PHP-FPM.
 #
 # ISOLATION GUARANTEES — this script only ADDS a new site:
 #   • app code        -> $APP_DIR (its own directory)
@@ -10,21 +10,21 @@
 # changes global PHP config. Review it before running.
 #
 # Usage (as root):
-#   REPO_URL='https://<token>@github.com/livezen-technologies/norlanka_web.git' \
+#   REPO_URL='https://github.com/Livezen-Technologies/creativefx_web.git' \
 #   bash deploy/setup.sh
 #
 set -euo pipefail
 
 # ---- Configuration (override via environment) ----------------------------
-DOMAIN="${DOMAIN:-norlankamfg.livezencloud.com}"
-APP_DIR="${APP_DIR:-/var/www/norlankamfg}"
-DB_NAME="${DB_NAME:-norlanka_prod}"
-DB_USER="${DB_USER:-norlanka_prod}"
+DOMAIN="${DOMAIN:-magiccorn.livezencloud.com}"
+APP_DIR="${APP_DIR:-/var/www/magiccorn}"
+DB_NAME="${DB_NAME:-magiccorn_prod}"
+DB_USER="${DB_USER:-magiccorn_prod}"
 # Short name for log files and the TLS session-cache zone. Derived from the
 # domain's first label so two sites on one box never collide.
 SLUG="${SLUG:-$(printf '%s' "${DOMAIN%%.*}" | tr -c 'a-zA-Z0-9' '_')}"
 REPO_URL="${REPO_URL:-}"
-BRANCH="${BRANCH:-claude/awesome-planck-01cc95}"
+BRANCH="${BRANCH:-claude/maintenance-mode-build-7b22jh}"
 WEB_USER="${WEB_USER:-www-data}"
 PHP_BIN="${PHP_BIN:-php}"
 ASSUME_YES="${ASSUME_YES:-0}"

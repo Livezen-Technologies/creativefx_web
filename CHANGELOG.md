@@ -159,6 +159,12 @@ lives only in the git history.
   - The brand mark, favicons, the offline page and the 53 placeholder panels
     were all regenerated in amber. `scripts/gen-brand.mjs` rebuilds every
     favicon size from one source file, so replacing the logo is one command.
+- **The deploy targets `magiccorn.livezencloud.com`.** Every default in
+  `deploy/setup.sh`, `deploy/update.sh` and the Deploy workflow now points at
+  the CreativeFX host, database (`magiccorn_prod`) and install directory
+  (`/var/www/magiccorn`) instead of Norlanka's — so running any of them
+  without arguments provisions the right site rather than the wrong one. The
+  server-generated `app.baseURL` follows the domain automatically.
 - **The site is now CreativeFX, not Norlanka.** The name, wordmark, mark,
   favicons, preloader and social image all change on deploy, and a data
   migration rewrites the `settings` rows that carry the brand — but only where

@@ -5,8 +5,8 @@
 #
 set -euo pipefail
 
-APP_DIR="${APP_DIR:-/var/www/norlankamfg}"
-BRANCH="${BRANCH:-claude/awesome-planck-01cc95}"
+APP_DIR="${APP_DIR:-/var/www/magiccorn}"
+BRANCH="${BRANCH:-claude/maintenance-mode-build-7b22jh}"
 WEB_USER="${WEB_USER:-www-data}"
 PHP_BIN="${PHP_BIN:-php}"
 
