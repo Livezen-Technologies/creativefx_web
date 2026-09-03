@@ -23,7 +23,7 @@ helper('admin');
                     : site_url('admin/pages/' . $c['id'] . '/content'); ?>
                 <li>
                     <a href="<?= $href ?>" class="flex items-center gap-4 px-6 py-3 transition hover:bg-white/[0.03]">
-                        <span class="rounded-md bg-white/8 px-2 py-1 text-[10px] font-bold uppercase tracking-widest text-white/50"><?= esc($c['kind']) ?></span>
+                        <span class="rounded-md bg-white/10 px-2 py-1 text-[10px] font-bold uppercase tracking-widest text-white/50"><?= esc($c['kind']) ?></span>
                         <span class="min-w-0 flex-1 truncate text-sm font-medium"><?= esc(t_field(json_decode($c['title'] ?? '[]', true) ?: []) ?: $c['slug']) ?></span>
                         <span class="hidden text-xs text-white/40 sm:block"><?= esc($c['updated_at'] ? date('j M Y, H:i', strtotime($c['updated_at'])) : '') ?></span>
                         <?= admin_chip((string) $c['status']) ?>

@@ -26,6 +26,11 @@ import { PNG } from 'pngjs';
  * actually lands on.
  *
  * Usage: node scripts/check-hero-contrast.mjs [url] [selector] [width...]
+ *        THEME=dark node scripts/check-hero-contrast.mjs …
+ *
+ * The theme matters wherever a region follows it: the same colour that clears
+ * AA on the light ground can fail on the dark one, and checking only the
+ * default means finding that out from a reader.
  */
 
 const url = process.argv[2] || 'http://127.0.0.1:8083/en';
@@ -49,7 +54,14 @@ const browser = await chromium.launch({ executablePath: '/opt/pw-browsers/chromi
 let failures = 0;
 
 for (const width of WIDTHS) {
-  const page = await browser.newPage({ viewport: { width, height: 900 } });
+  const context = await browser.newContext({ viewport: { width, height: 900 } });
+  await context.addInitScript((theme) => {
+    try {
+      localStorage.setItem('nl_locale', 'en');
+      if (theme === 'dark') localStorage.setItem('nl_theme', 'dark');
+    } catch (e) { /* private window */ }
+  }, process.env.THEME || 'light');
+  const page = await context.newPage();
   await page.goto(url, { waitUntil: 'networkidle' });
   await page.waitForTimeout(1200);
 
@@ -186,7 +198,7 @@ for (const width of WIDTHS) {
   }
 
   console.log(`  ${width}px — ${runs.length} runs, tightest ${worst.toFixed(2)}:1 ("${worstText}")`);
-  await page.close();
+  await context.close();
 }
 
 await browser.close();

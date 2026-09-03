@@ -23,7 +23,7 @@ helper('admin');
             <?php foreach ($recent as $r): ?>
                 <li>
                     <a href="<?= site_url('admin/contacts/' . $r['id'] . '/edit') ?>" class="flex items-center gap-4 px-6 py-3.5 transition hover:bg-white/[0.03]">
-                        <span class="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-white/8 text-sm font-bold text-white/70"><?= esc(strtoupper(mb_substr((string) $r['name'], 0, 1))) ?></span>
+                        <span class="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-white/10 text-sm font-bold text-white/70"><?= esc(strtoupper(mb_substr((string) $r['name'], 0, 1))) ?></span>
                         <span class="min-w-0 flex-1">
                             <span class="block truncate text-sm font-medium"><?= esc($r['name']) ?> <span class="font-normal text-white/40">· <?= esc($r['email']) ?></span></span>
                             <span class="block truncate text-xs text-white/45"><?= esc($r['subject'] ?: '—') ?></span>

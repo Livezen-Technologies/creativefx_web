@@ -133,7 +133,16 @@ globally-ordered timestamp prefixes so cross-module references resolve.
   `/api` are never shadowed by a language prefix.
 - Tailwind only compiles classes it can see. The content globs cover `Views`,
   `Libraries`, `Config` and `Controllers` — a class emitted from PHP outside
-  those is silently never built, which is a failure with no error message.
+  those is silently never built, which is a failure with no error message. The
+  same applies to a class Tailwind *can* see but will not generate: an opacity
+  modifier off the scale (`/98`, `/8`) produces nothing at all, and reads as
+  correct in the markup. `bg-brand-black/98` shipped a full-screen navigation
+  drawer with no background. `scripts/check-tailwind-classes.mjs` catches both.
+- **The header's menu is a measurement, not a breakpoint** — the same eight
+  items are half again as wide in Tamil, so `siteHeader.js` lays the nav out and
+  asks whether it overflowed. Anything whose visibility depends on that answer
+  must read the same `fits` state; a CSS breakpoint alongside it will disagree,
+  and did: the drawer was `lg:hidden` while the button that opened it was not.
 
 ---
 
@@ -169,6 +178,9 @@ node scripts/check-pages.mjs           # every page, 4 widths, 3 languages:
                                        # invisible blocks, unresolved lang keys
 node scripts/test-language-switch.mjs  # Clause 3.15's switching behaviour
 node scripts/test-language-modal.mjs   # the first-visit language chooser
+node scripts/test-navigation.mjs       # the menu is reachable at every width,
+                                       # in every language — inline or drawer
+node scripts/check-tailwind-classes.mjs # every utility written actually exists
 node scripts/test-hero-slider.mjs      # the hero slideshow: advance, pause,
                                        # focus, reduced motion, a11y
 node scripts/test-assistant.mjs        # the help assistant: focus, answers,

@@ -95,7 +95,7 @@ if (! function_exists('admin_chip')) {
             'new'      => 'bg-brand-red/15 text-brand-red',
             'read'     => 'bg-white/10 text-white/60',
             'replied'  => 'bg-emerald-500/15 text-emerald-300',
-            'archived' => 'bg-white/8 text-white/40',
+            'archived' => 'bg-white/10 text-white/40',
         ];
 
         return '<span class="rounded-full ' . ($map[$status] ?? 'bg-white/10 text-white/60')

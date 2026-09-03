@@ -38,25 +38,14 @@ $isCurrent = static function (array $item) use ($currentSlug): bool {
     <?php // Not sticky means the bar scrolls away with the page. absolute rather
           // than static so it still sits over the hero rather than pushing it
           // down — the hero is built to have the header on top of it. ?>
-    <?php // Always the dark scope, in both themes. The bar floats over the
-          // hero, and the hero is a dark green panel whichever way the reader
-          // has set the site — so a header that followed the page theme was a
-          // cream bar over a dark photograph in light mode, with its own logo
-          // and links washing out against the picture behind them. Fixing it in
-          // one place also means the scrolled state, the top wash and the logo
-          // knockout all agree with each other instead of each guessing. ?>
-    class="site-header on-dark <?= $sticky ? 'fixed' : 'absolute' ?> inset-x-0 top-0 z-50"
+    <?php // Follows the page theme, as it did before: a light bar on a light
+          // page, dark on dark. Only the footer is pinned to the dark scope. ?>
+    class="site-header <?= $sticky ? 'fixed' : 'absolute' ?> inset-x-0 top-0 z-50"
 >
-    <!-- The ground the un-scrolled bar sits on. It has to hold the nav on its
-         own, because what is behind it is whatever page happens to be underneath
-         — the dark hero on the home page, a near-white article everywhere else.
-         The old wash faded from 90% to 45% across the bar's own height, which
-         put the right-hand links on a mid-tone at 2.8:1 over a light page. It
-         now stays near-opaque for the height of the bar and only fades below
-         it, so the blend into the page is still soft and the words are never on
-         the gradient's thin end. -->
+    <!-- Top shade: a soft light wash that keeps the dark logo/nav legible over
+         hero media at the top of the page; fades out once the solid header kicks in. -->
     <div aria-hidden="true"
-         class="header-wash pointer-events-none absolute inset-x-0 top-0 -z-10 h-32 transition-opacity duration-300"
+         class="pointer-events-none absolute inset-x-0 top-0 -z-10 h-32 bg-gradient-to-b from-brand-black/90 via-brand-black/45 to-transparent transition-opacity duration-300"
          :class="scrolled ? 'opacity-0' : 'opacity-100'"></div>
 
     <!-- Scroll progress bar -->
@@ -189,10 +178,25 @@ $isCurrent = static function (array $item) use ($currentSlug): bool {
         </div>
     </div>
 
-    <!-- Mobile menu -->
+    <!-- The drawer.
+         Its visibility follows `fits`, exactly like the button that opens it,
+         and that is the whole point: the button appears whenever the nav does
+         not fit — a measurement, not a breakpoint — while this was hidden by a
+         hard `lg:hidden`. Between 1024px and the width the menu actually fits
+         at (1440 in English, 1920 in Tamil) that left a hamburger which opened
+         a drawer CSS refused to paint. Every link on the site was unreachable
+         at the width most laptops run at, and nothing on screen said so.
+
+         One state decides both, so they cannot disagree again. -->
     <div x-show="mobile" x-cloak x-transition.opacity
-         :class="scrolled ? 'top-16' : 'top-24'"
-         class="fixed inset-0 z-40 bg-brand-black/98 backdrop-blur-xl lg:hidden"
+         :class="[scrolled ? 'top-16' : 'top-24', fits ? 'lg:hidden' : '']"
+         <?php // /95, not /98. Tailwind's opacity scale stops at 90, 95, 100 —
+               // there is no 98, so the utility was silently dropped and the
+               // drawer had no ground at all: a full-screen menu with only a
+               // blur behind it, the page showing through every link. It is the
+               // worst kind of failure, because the class is right there in the
+               // markup and reads as if it works. ?>
+         class="fixed inset-0 z-40 bg-brand-black/95 backdrop-blur-xl"
          @click.self="mobile=false">
         <nav class="container-x flex flex-col gap-1 py-8" aria-label="Mobile">
             <?php // No disclosure widgets on the phone: a dropdown's children are
