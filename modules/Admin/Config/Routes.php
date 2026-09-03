@@ -48,6 +48,7 @@ $routes->group('admin', ['namespace' => 'Modules\Admin\Controllers'], static fun
         // Page builder (block-content editor + structure operations).
         $routes->get('pages/(:num)/content', 'Content::edit/$1');
         $routes->post('pages/(:num)/content', 'Content::update/$1');
+        $routes->post('pages/(:num)/content/reset', 'Content::resetToDefault/$1');
         $routes->post('pages/(:num)/sections', 'Content::addSection/$1');
         $routes->post('sections/(:num)/move', 'Content::moveSection/$1');
         $routes->post('sections/(:num)/toggle', 'Content::toggleSection/$1');

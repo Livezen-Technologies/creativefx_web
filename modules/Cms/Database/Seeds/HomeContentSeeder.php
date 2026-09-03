@@ -35,12 +35,26 @@ class HomeContentSeeder extends Seeder
             'status'           => 'published',
             'updated_at'       => $now,
         ];
-        if ($pages->where('slug', 'home')->get()->getRowArray() === null) {
+        $existing = $pages->where('slug', 'home')->get()->getRowArray();
+
+        if ($existing === null) {
             $pages->insert($pageMeta + ['slug' => 'home', 'created_at' => $now]);
         } else {
             $pages->where('slug', 'home')->update($pageMeta);
         }
         $pageId = (int) $pages->where('slug', 'home')->get()->getRowArray()['id'];
+
+        // Once the home page has been edited in the admin console it belongs to
+        // whoever edited it. Everything below clears its sections and writes
+        // them again, which would take that edit away one deploy later without
+        // saying so. The video and its tracks are seeded either way: they are
+        // media records, not page content, and have their own admin screens.
+        if ((int) ($existing['is_custom'] ?? 0) === 1) {
+            $this->seedVideo($now, $j);
+            $this->seedEsgMetrics($now, $j);
+
+            return;
+        }
 
         // Idempotency: clear existing sections/blocks for this page, then reseed.
         $existingSections = array_column(

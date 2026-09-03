@@ -55,12 +55,23 @@ class CorporateContentSeeder extends Seeder
             'updated_at'       => $now,
         ];
 
-        if ($pages->where('slug', $slug)->get()->getRowArray() === null) {
+        $existing = $pages->where('slug', $slug)->get()->getRowArray();
+
+        if ($existing === null) {
             $pages->insert($data + ['created_at' => $now]);
         } else {
             $pages->where('slug', $slug)->update($data);
         }
         $pageId = (int) $pages->where('slug', $slug)->get()->getRowArray()['id'];
+
+        // A page an administrator has edited is theirs. The reset below deletes
+        // every section and block and writes them again, which is right for a
+        // page nobody has touched — that is how this copy stays in version
+        // control — and destroys the edit otherwise, silently, one deploy after
+        // it was made. See the AddPageCustomFlag migration.
+        if ((int) ($existing['is_custom'] ?? 0) === 1) {
+            return;
+        }
 
         // Idempotent reset of this page's structure.
         $ids = array_column(

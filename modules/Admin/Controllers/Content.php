@@ -41,12 +41,48 @@ class Content extends BaseController
                 continue;
             }
             $model->update((int) $blockId, ['content' => json_encode($decoded, JSON_UNESCAPED_UNICODE)]);
+            $saved = true;
+        }
+
+        if (! empty($saved)) {
+            $this->claimPage((int) $pageId);
         }
 
         $redirect = redirect()->to(site_url('admin/pages/' . $pageId . '/content'));
         return $bad === []
             ? $redirect->with('message', 'Content updated.')
             : $redirect->with('error', 'Some blocks had invalid JSON and were skipped: #' . implode(', #', $bad));
+    }
+
+    /**
+     * Hand a page back to the seeder and take its shipped content again.
+     *
+     * The custom flag has to be reversible or it is a one-way door: an
+     * administrator who tries the builder once, changes their mind, and wants
+     * the designed page back would otherwise have no way to ask for it, and the
+     * page would sit frozen at whatever they left it as through every future
+     * release.
+     *
+     * Destructive and says so — the confirmation is on the button.
+     */
+    public function resetToDefault($pageId)
+    {
+        $pageModel = model('Modules\Cms\Models\PageModel');
+        $page      = $pageModel->find((int) $pageId);
+        if ($page === null) {
+            return redirect()->to(site_url('admin/pages'))->with('error', 'Page not found.');
+        }
+
+        // Clearing the flag first is what lets the seeder rewrite the page; it
+        // skips any page still marked as somebody's own.
+        $pageModel->update((int) $pageId, ['is_custom' => 0]);
+
+        $seeder = \Config\Database::seeder();
+        $seeder->call((int) ($page['is_home'] ?? 0) === 1 || ($page['template'] ?? '') === 'home'
+            ? 'Modules\Cms\Database\Seeds\HomeContentSeeder'
+            : 'Modules\Cms\Database\Seeds\CorporateContentSeeder');
+
+        return $this->backToBuilder((int) $pageId, 'Page reset to its shipped content.');
     }
 
     // ---- Sections -----------------------------------------------------------
@@ -64,6 +100,8 @@ class Content extends BaseController
             'sort_order' => (int) ($max['sort_order'] ?? 0) + 1,
             'status'     => 'published',
         ]);
+
+        $this->claimPage((int) $pageId);
 
         return redirect()->to(site_url('admin/pages/' . $pageId . '/content'))->with('message', 'Section added.');
     }
@@ -85,6 +123,7 @@ class Content extends BaseController
         if ($row !== null) {
             model('Modules\Cms\Models\PageBlockModel')->where('section_id', (int) $sectionId)->delete();
             $model->delete((int) $sectionId);
+            $this->claimPage((int) $row['page_id']);
         }
         return $this->backToBuilder($row['page_id'] ?? null, 'Section deleted.');
     }
@@ -111,6 +150,8 @@ class Content extends BaseController
             'status'     => 'published',
         ]);
 
+        $this->claimPage((int) $section['page_id']);
+
         return $this->backToBuilder((int) $section['page_id'], ucfirst($type) . ' block added — fill in its content below.');
     }
 
@@ -131,6 +172,7 @@ class Content extends BaseController
         $pageId = $row !== null ? $this->pageIdOf($row) : null;
         if ($row !== null) {
             $model->delete((int) $blockId);
+            $this->claimPage($pageId);
         }
         return $this->backToBuilder($pageId, 'Block deleted.');
     }
@@ -155,6 +197,7 @@ class Content extends BaseController
         if ($neighbour !== null) {
             $model->update($id, ['sort_order' => $neighbour['sort_order']]);
             $model->update($neighbour['id'], ['sort_order' => $row['sort_order']]);
+            $this->claimPage($this->pageIdOf($row));
         }
 
         return $this->backToBuilder($this->pageIdOf($row));
@@ -168,8 +211,32 @@ class Content extends BaseController
             return redirect()->to(site_url('admin/pages'))->with('error', 'Item not found.');
         }
         $model->update($id, ['status' => $row['status'] === 'published' ? 'draft' : 'published']);
+        $this->claimPage($this->pageIdOf($row));
 
         return $this->backToBuilder($this->pageIdOf($row));
+    }
+
+    /**
+     * Record that this page's content is now an administrator's, not the
+     * seeder's.
+     *
+     * The content seeders delete every section and block belonging to their
+     * pages and write them again on each deploy. Without this flag an edit made
+     * here survives until the next release and then disappears — no error, no
+     * record of what it was. Set on the first change of any kind, because the
+     * seeder cannot preserve half a page: it either owns the structure or it
+     * leaves it alone.
+     */
+    private function claimPage(?int $pageId): void
+    {
+        if ($pageId === null) {
+            return;
+        }
+        $model = model('Modules\Cms\Models\PageModel');
+        $page  = $model->find($pageId);
+        if ($page !== null && (int) ($page['is_custom'] ?? 0) !== 1) {
+            $model->update($pageId, ['is_custom' => 1]);
+        }
     }
 
     /** Resolve the owning page id for a section- or block-row. */

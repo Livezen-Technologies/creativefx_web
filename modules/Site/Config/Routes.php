@@ -25,6 +25,11 @@ $routes->get('(:retiredlocale)/(:any)', static fn (string $locale, string $rest 
 
 $siteOptions = ['filter' => 'applocale', 'namespace' => 'Modules\Site\Controllers'];
 
+// The sitemap sits outside the locale group on purpose: it lists every language
+// and is fetched by crawlers at a fixed, unprefixed address. Declared before the
+// locale routes so nothing else can claim it.
+$routes->get('sitemap.xml', 'Sitemap::index', ['namespace' => 'Modules\Site\Controllers']);
+
 // Localized home, e.g. /en, /ja. The leading capture is the locale (the
 // applocale filter reads + validates it from the URI).
 $routes->get('(:locale)', 'Home::index', $siteOptions);

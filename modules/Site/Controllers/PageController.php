@@ -4,6 +4,7 @@ namespace Modules\Site\Controllers;
 
 use App\Controllers\BaseController;
 use CodeIgniter\Exceptions\PageNotFoundException;
+use Modules\Cms\Libraries\PageSeo;
 use Modules\Cms\Models\PageModel;
 
 /**
@@ -30,12 +31,9 @@ class PageController extends BaseController
         // Per-page colour scope: Our Impact renders in the ESG "Regenerate" green.
         $pageTheme = $slug === 'impact' ? 'theme-esg-green' : '';
 
-        return view('Modules\Site\Views\cms\page', [
-            'page'            => $page,
-            'title'           => t_field($page['meta_title'] ?? $page['title'] ?? ''),
-            'metaDescription' => t_field($page['meta_description'] ?? ''),
-            'ogImage'         => $page['og_image'] ?? null,
-            'pageTheme'       => $pageTheme,
+        return view('Modules\Site\Views\cms\page', PageSeo::for($page)->toViewData(current_url()) + [
+            'page'      => $page,
+            'pageTheme' => $pageTheme,
         ]);
     }
 }

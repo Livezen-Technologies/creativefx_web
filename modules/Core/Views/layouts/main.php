@@ -12,12 +12,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= esc($title ?? setting('site_name', '')) ?></title>
-    <meta name="description" content="<?= esc($metaDescription ?? setting('tagline', '')) ?>">
-    <?php // Social sharing (per-page OG image is editable in Admin → Pages).
-    $ogTitle = $title ?? setting('site_name', '');
-    $ogDesc  = $metaDescription ?? setting('tagline', '');
+    <meta name="description" content="<?= esc($metaDescription ?: setting('tagline', '')) ?>">
+    <?php // Per-page SEO, all editable in Admin → Pages. Each field is emitted
+          // only when it holds something: an empty keywords tag or a canonical
+          // pointing nowhere is worse than the absence of either.
+          //
+          // The Open Graph title and description fall back to the page's own
+          // through PageSeo, so a page that has not been given separate share
+          // copy still shares correctly.
+    $ogTitle = $ogTitle ?? ($title ?? setting('site_name', ''));
+    $ogDesc  = $ogDescription ?? ($metaDescription ?? setting('tagline', ''));
     $ogImg   = ! empty($ogImage) ? $ogImage : '/media/giantforests/Welcome-to-Giants-Forest-1-1.jpg'; ?>
+    <?php if (! empty($metaKeywords)): ?>
+    <meta name="keywords" content="<?= esc($metaKeywords, 'attr') ?>">
+    <?php endif; ?>
+    <?php if (! empty($canonical)): ?>
+    <link rel="canonical" href="<?= esc($canonical, 'attr') ?>">
+    <?php endif; ?>
     <meta property="og:type" content="website">
+    <meta property="og:site_name" content="<?= esc(setting('site_name', ''), 'attr') ?>">
+    <?php if (! empty($canonical)): ?>
+    <meta property="og:url" content="<?= esc($canonical, 'attr') ?>">
+    <?php endif; ?>
     <meta property="og:title" content="<?= esc($ogTitle, 'attr') ?>">
     <meta property="og:description" content="<?= esc($ogDesc, 'attr') ?>">
     <meta property="og:image" content="<?= esc(base_url(ltrim($ogImg, '/')), 'attr') ?>">
