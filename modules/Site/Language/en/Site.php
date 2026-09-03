@@ -317,6 +317,16 @@ return [
         'back_home'      => 'Back to the home page',
     ],
 
+    // Controls on the home page hero slideshow. Read aloud by a screen
+    // reader, so they name the action rather than the shape of the icon.
+    'slider' => [
+        'previous' => 'Previous photograph',
+        'next'     => 'Next photograph',
+        'play'     => 'Play the slideshow',
+        'pause'    => 'Pause the slideshow',
+        'slide'    => 'Photograph',
+    ],
+
     'search' => [
         'title'       => 'Search',
         'meta'        => 'Search the whole of the Tea Small Holdings Development Authority website — pages, news, documents, services and the staff directory.',

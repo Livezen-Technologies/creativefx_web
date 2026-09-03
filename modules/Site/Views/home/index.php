@@ -14,42 +14,9 @@ $this->extend('Modules\Core\Views\layouts\main');
 <?php // ── Masthead ──────────────────────────────────────────────────────────
       // A government portal's first screen is not an advertisement. It says who
       // this is, and it puts the two things most visitors came for — the search
-      // box and the way to their own service — above the fold. ?>
-<section class="relative overflow-hidden border-b border-line">
-    <div class="hero-aurora absolute inset-0 -z-10 opacity-50"></div>
-    <div class="container-x py-14 sm:py-20">
-        <p class="text-xs font-semibold uppercase tracking-[0.3em] text-brand-red"><?= esc(setting('parent_org', '', 'general')) ?></p>
-        <?php // The Authority's name in the language the reader chose. The
-              // site_name setting is the legal English name — it belongs in the
-              // browser tab, in email and in the copyright line — but a Tamil
-              // reader arriving at a Tamil page should not be greeted by it in
-              // English. The translated form is a language string, so it is
-              // editable in the Translation Manager like everything else. ?>
-        <h1 class="mt-4 max-w-4xl text-3xl font-bold leading-tight sm:text-5xl">
-            <?= esc(lang('Site.home.hero')) ?>
-        </h1>
-        <p class="mt-5 max-w-2xl text-lg leading-relaxed text-white/70"><?= esc(lang('Site.home.lede')) ?></p>
-
-        <?php // Search is a primary navigation route on an information portal,
-              // not a utility tucked in the header. Clause 3.12's search, on the
-              // first screen. ?>
-        <form method="get" action="<?= esc(locale_url('search')) ?>" role="search"
-              class="mt-8 flex max-w-2xl flex-wrap gap-3">
-            <label class="min-w-[14rem] flex-1">
-                <span class="sr-only"><?= esc(lang('Site.search.label')) ?></span>
-                <input type="search" name="q" class="field" placeholder="<?= esc(lang('Site.search.placeholder'), 'attr') ?>">
-            </label>
-            <button type="submit" class="btn-brand"><?= esc(lang('Site.search.button')) ?></button>
-        </form>
-
-        <ul class="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-sm text-white/60">
-            <li><?= esc(lang('Site.search.popular')) ?></li>
-            <?php foreach (['replanting-subsidy' => 'Site.nav.replanting', 'fertilizer-subsidy' => 'Site.nav.fertilizer', 'smallholder-registration' => 'Site.nav.registration'] as $slug => $key): ?>
-                <li><a href="<?= esc(locale_url('services/' . $slug)) ?>" class="underline decoration-white/25 underline-offset-4 transition hover:text-brand-red hover:decoration-brand-red"><?= esc(lang($key)) ?></a></li>
-            <?php endforeach; ?>
-        </ul>
-    </div>
-</section>
+      // box and the way to their own service — above the fold. The photography
+      // sits behind that, never in place of it. ?>
+<?= view('Modules\Site\Views\home\_hero', ['heroSlides' => $heroSlides ?? []], ['saveData' => false]) ?>
 
 <?php // ── B.I Stakeholder service clusters ──────────────────────────────────
       // Grouped by who you are, not by the Authority's org chart, so a visitor

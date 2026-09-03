@@ -51,7 +51,57 @@ class Home extends BaseController
             'topic'      => $this->safe(static fn () => (new DiscussionTopicModel())->current(), null),
             'comments'   => [],
             'links'      => $this->safe(static fn () => (new OrgLinkModel())->live('related'), []),
+            'heroSlides' => $this->safe(fn () => $this->heroSlides(), []),
         ] + $this->discussion());
+    }
+
+    /**
+     * The photographs behind the hero panel.
+     *
+     * They live in the Media library's `hero` folder rather than in a table of
+     * their own, so the CMT adds one exactly the way they add any other image,
+     * and the caption is the media record's own `alt` — a locale map, so a
+     * photograph can be described in all three languages instead of carrying an
+     * English description into a Tamil page.
+     *
+     * Ordered by the uploaded filename, so prefixing 01-, 02- sets the
+     * sequence. Upload order would leave no way to reorder a slideshow short of
+     * deleting and re-uploading it.
+     *
+     * A row whose file has been removed from disk is skipped rather than
+     * rendered as a broken image: the hero is the first thing anyone sees.
+     */
+    private function heroSlides(int $limit = 6): array
+    {
+        $rows = model('Modules\Media\Models\MediaModel')
+            ->where('folder', 'hero')
+            ->like('mime_type', 'image/', 'after')
+            ->orderBy('original_name', 'ASC')
+            ->findAll($limit);
+
+        $slides = [];
+
+        foreach ($rows as $row) {
+            $path = ltrim((string) ($row['path'] ?? ''), '/');
+            if ($path === '' || ! is_file(FCPATH . $path)) {
+                continue;
+            }
+
+            // The uploader writes a WebP sibling beside every image it accepts.
+            // Offer it first and keep the original as the fallback source, so a
+            // browser that cannot decode WebP still gets the photograph.
+            $webp = preg_replace('/\.[a-z0-9]+$/i', '.webp', $path);
+
+            $slides[] = [
+                'src'    => (string) ($row['url'] ?? '/' . $path),
+                'webp'   => $webp !== $path && is_file(FCPATH . $webp) ? '/' . $webp : null,
+                'alt'    => t_field($row['alt'] ?? null),
+                'width'  => isset($row['width']) ? (int) $row['width'] : null,
+                'height' => isset($row['height']) ? (int) $row['height'] : null,
+            ];
+        }
+
+        return $slides;
     }
 
     /** The current topic's approved comments, if there is a current topic. */

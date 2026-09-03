@@ -101,6 +101,11 @@ globally-ordered timestamp prefixes so cross-module references resolve.
   `is_custom` flag an admin edit sets; list tables (menus, offices, notices,
   FAQs) seed only while empty; services and news upsert by slug and stop at a
   row somebody has touched. A release must not be able to undo the CMT's work.
+- **The home page hero reads the Media library's `hero` folder**, in filename
+  order, first six. No table of its own: the CMT adds a photograph the way they
+  add any other, and its `alt` is a locale map, so the picture is described in
+  all three languages. An empty folder is a supported state — the panel falls
+  back to the emblem, so the site ships before the photography is signed off.
 - **`php spark migrate --all`** — module migrations only run with `--all`.
 - The locale filter alias is `applocale`, not `locale`, which collides with
   PHP's case-insensitive built-in `\Locale`.
@@ -143,10 +148,18 @@ node scripts/check-pages.mjs           # every page, 4 widths, 3 languages:
                                        # status, JS errors, sideways scroll,
                                        # invisible blocks, unresolved lang keys
 node scripts/test-language-switch.mjs  # Clause 3.15's switching behaviour
+node scripts/test-hero-slider.mjs      # the hero slideshow: advance, pause,
+                                       # focus, reduced motion, a11y
+node scripts/check-hero-contrast.mjs   # hero text vs the pixels behind it
 bash scripts/check-media-paths.sh      # every /media/ reference has a file
 node scripts/screenshot.mjs <url> <out.png> [w] [h] [full]
 node scripts/make-favicon.mjs          # re-render the icon set from the emblem
 ```
+
+`check-hero-contrast.mjs` is the one to run after changing anything about the
+hero. It hides the glyphs, photographs the panel and measures each run of text
+against the pixels actually behind it — the only way to know that a photograph
+nobody has uploaded yet will not quietly take the front page below AA.
 
 ---
 
@@ -189,6 +202,9 @@ every issued token and make everything already encrypted unreadable.
 - SMTP details under Settings → Email, and reCAPTCHA keys under Settings →
   Security. Until both are set the site stores submissions without emailing and
   accepts forms without scoring them — which is what it does today.
+- Photographs for the home page hero. Upload them to the Media library's `hero`
+  folder — until then the panel shows the emblem rather than a stock picture of
+  somebody else's tea garden.
 - The cron line from `/admin/tasks`, pasted into the server's crontab.
 - Sinhala and Tamil for the long editorial prose, once the English is signed off
   by the CMT. Every title, label and short summary is already translated.

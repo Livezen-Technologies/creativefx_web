@@ -1583,3 +1583,190 @@ html.fp-active body {
   display: flex !important;
   visibility: hidden;
 }
+
+/* ── Home page hero ───────────────────────────────────────────────────────────
+   A single rounded panel, inset from the page edges, with the Authority's
+   photography sliding behind the words.
+
+   The panel keeps its own colours rather than inheriting the page scope. It is
+   a dark green card in both the light and the dark theme, which means the
+   contrast of everything on it is a fixed, measured number instead of one that
+   changes with a preference:
+
+     --hero-ink    #F2F8F4 on #0A2E20 — 13.7:1
+     --hero-muted  the same ink at 78% — 8.9:1
+     --hero-gold   #D6B25C — 8.0:1; the eyebrow and link hover
+     --hero-fill   #6AC898 with #061E14 as its label — 7.3:1
+
+   The scrim is what makes those numbers hold for a photograph nobody has
+   uploaded yet. It runs opaque at the reading edge and clears towards the
+   outside, so the words are never on bare image whatever the CMT adds next. */
+@layer components {
+  .hero-box {
+    --hero-ground: 10 46 32;
+    --hero-ink: 242 248 244;
+    --hero-gold: 214 178 92;
+    --hero-fill: 106 200 152;
+    --hero-fill-ink: 6 30 20;
+
+    @apply relative isolate flex flex-col overflow-hidden rounded-[1.75rem]
+           lg:min-h-[36rem] lg:justify-center;
+    background: rgb(var(--hero-ground));
+    /* A hairline in the theme's own line colour keeps the card attached to the
+       page in light mode, where a dark panel would otherwise float. */
+    box-shadow: 0 1px 0 0 rgb(var(--line)), 0 24px 60px -32px rgb(var(--hero-ground) / 0.55);
+  }
+
+  /* No photographs yet. Not a broken hero — a plain one: the emblem at low
+     opacity over the same ground, so the Authority can launch before the
+     photography is signed off. */
+  .hero-box--bare {
+    background:
+      radial-gradient(70% 90% at 88% 15%, rgb(var(--hero-fill) / 0.16), transparent 62%),
+      radial-gradient(60% 80% at 10% 90%, rgb(var(--hero-fill) / 0.10), transparent 60%),
+      rgb(var(--hero-ground));
+  }
+  .hero-box--bare::after {
+    content: '';
+    background: url('/media/tshda/tshda-emblem.svg') no-repeat center / contain;
+    @apply pointer-events-none absolute -right-10 top-1/2 -z-10 hidden h-[26rem] w-[26rem]
+           -translate-y-1/2 opacity-[0.07] lg:block;
+  }
+
+  .hero-slider {
+    @apply relative z-0 h-52 w-full overflow-hidden sm:h-64;
+  }
+  @screen lg {
+    .hero-slider { @apply absolute inset-0 -z-20 h-full; }
+  }
+  .hero-slider .swiper-slide {
+    @apply h-full w-full;
+  }
+  .hero-slider picture,
+  .hero-slider img {
+    @apply block h-full w-full;
+  }
+  .hero-slider img {
+    @apply object-cover;
+    /* The scrim covers the reading edge, so favour the far side of the frame:
+       a photograph whose subject sits mid-left would otherwise be the half
+       nobody can see. On a narrow screen the scrim runs bottom-up instead and
+       the whole frame is visible, so the bias is dropped. */
+    object-position: center;
+  }
+  @screen lg {
+    .hero-slider img { object-position: 72% center; }
+  }
+
+  /* Bottom-up on a narrow screen, where the copy spans the full width;
+     left-to-right from `lg`, where it occupies about half. */
+  /* Only needed where the words are over the picture, which is `lg` and up.
+     Below that the banner and the copy have separate ground and the scrim
+     would just be dimming a photograph for no reason. */
+  .hero-scrim { @apply hidden; }
+  @screen lg {
+    .hero-scrim { @apply absolute inset-0 -z-10 block; }
+  }
+  @screen lg {
+    /* The stops are not taste. The copy column ends at about 55% of the panel,
+       so the scrim holds near-opaque to there and only then falls away —
+       measured with scripts/check-hero-contrast.mjs against a deliberately
+       bright frame, which is the case that breaks a prettier gradient. */
+    .hero-scrim {
+      background: linear-gradient(
+        to right,
+        rgb(var(--hero-ground) / 0.98) 0%,
+        rgb(var(--hero-ground) / 0.97) 50%,
+        rgb(var(--hero-ground) / 0.88) 62%,
+        rgb(var(--hero-ground) / 0.45) 82%,
+        rgb(var(--hero-ground) / 0.12) 100%
+      );
+    }
+  }
+
+  .hero-body {
+    @apply relative px-6 py-10 sm:px-10 sm:py-12 lg:px-14 lg:py-20;
+  }
+
+  .text-hero-ink   { color: rgb(var(--hero-ink)); }
+  .text-hero-muted { color: rgb(var(--hero-ink) / 0.78); }
+  .text-hero-gold  { color: rgb(var(--hero-gold)); }
+
+  /* The search box sits on the panel, not on the page, so it takes the panel's
+     colours. Left on the page's .field it would be a white box on dark green in
+     light mode and near-invisible in dark. */
+  .field-on-hero {
+    border-color: rgb(var(--hero-ink) / 0.28);
+    background: rgb(var(--hero-ink) / 0.10);
+    color: rgb(var(--hero-ink));
+    @apply placeholder:text-[rgb(var(--hero-ink)/0.55)];
+  }
+  .field-on-hero:focus {
+    border-color: rgb(var(--hero-fill));
+    background: rgb(var(--hero-ink) / 0.16);
+  }
+
+  .btn-hero {
+    @apply inline-flex items-center justify-center rounded-full px-7 py-3 text-sm
+           font-semibold uppercase tracking-widest transition
+           focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
+    background: rgb(var(--hero-fill));
+    color: rgb(var(--hero-fill-ink));
+    --tw-ring-color: rgb(var(--hero-fill));
+    --tw-ring-offset-color: rgb(var(--hero-ground));
+  }
+  .btn-hero:hover { background: rgb(var(--hero-fill) / 0.86); }
+
+  /* ── Controls ──────────────────────────────────────────────────────────────
+     Bottom-right on a wide screen, under the copy on a narrow one. Real
+     buttons: a slideshow a keyboard cannot stop fails WCAG 2.2.2, and an
+     unlabelled chevron fails 4.1.2. */
+  .hero-controls {
+    @apply relative z-10 flex flex-wrap items-center gap-2 px-6 pb-8 sm:px-10
+           lg:absolute lg:bottom-8 lg:right-10 lg:px-0 lg:pb-0;
+  }
+  .hero-ctl {
+    @apply inline-flex h-10 w-10 items-center justify-center rounded-full border
+           transition focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
+    border-color: rgb(var(--hero-ink) / 0.32);
+    background: rgb(var(--hero-ground) / 0.55);
+    color: rgb(var(--hero-ink));
+    --tw-ring-color: rgb(var(--hero-fill));
+    --tw-ring-offset-color: rgb(var(--hero-ground));
+    backdrop-filter: blur(6px);
+  }
+  .hero-ctl:hover {
+    background: rgb(var(--hero-ink) / 0.18);
+    border-color: rgb(var(--hero-ink) / 0.55);
+  }
+  .hero-ctl svg { @apply h-4 w-4; }
+  /* One button, two glyphs: whichever action the button will perform next. */
+  .hero-ctl--play .hero-ctl-play { @apply hidden; }
+  .hero-ctl--play.is-paused .hero-ctl-pause { @apply hidden; }
+  .hero-ctl--play.is-paused .hero-ctl-play { @apply block; }
+
+  .hero-dots {
+    @apply ml-1 flex items-center gap-1.5 rounded-full px-3 py-2.5;
+    background: rgb(var(--hero-ground) / 0.55);
+    backdrop-filter: blur(6px);
+  }
+  .hero-dots:empty { @apply hidden; }
+  .hero-dot {
+    @apply h-2 w-2 rounded-full border-0 p-0 transition
+           focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
+    background: rgb(var(--hero-ink) / 0.38);
+    --tw-ring-color: rgb(var(--hero-fill));
+    --tw-ring-offset-color: rgb(var(--hero-ground));
+  }
+  .hero-dot:hover { background: rgb(var(--hero-ink) / 0.65); }
+  .hero-dot.is-active {
+    background: rgb(var(--hero-fill));
+    @apply w-6;
+  }
+}
+
+/* A slideshow that moves on its own is exactly what this preference is about.
+   The JS also refuses to start autoplay; this is the backstop for the fade. */
+@media (prefers-reduced-motion: reduce) {
+  .hero-slider .swiper-slide { transition: none !important; }
+}

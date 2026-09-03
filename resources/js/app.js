@@ -27,6 +27,7 @@ import themeToggle from './alpine/themeToggle.js';
 import { initScrollStory } from './gsap/scroll.js';
 import { initKineticHero } from './gsap/kinetic.js';
 import { initCarousels } from './carousels.js';
+import { initHeroSlider } from './heroSlider.js';
 import { initHeroVideo } from './heroVideo.js';
 import { initPreloader } from './preloader.js';
 import { initTracking } from './track.js';
@@ -64,6 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   initCarousels();
+  initHeroSlider();
   initHeroVideo();
 });
 
