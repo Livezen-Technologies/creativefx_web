@@ -88,7 +88,15 @@ class Dashboard extends BaseController
         } catch (\Throwable $e) {
         }
 
+        // Which panels this administrator has chosen, and the full list for the
+        // customiser. Both come from the same registry, so a widget added in a
+        // release appears for people who already have a saved arrangement.
+        $layout = new \Modules\Admin\Libraries\DashboardLayout();
+
         return view('Modules\Admin\Views\dashboard', [
+            'widgets'      => $layout->visible(),
+            'allWidgets'   => $layout->widgets(),
+            'sizes'        => \Modules\Admin\Libraries\DashboardLayout::SIZES,
             'title'        => 'Dashboard',
             'active'       => 'dashboard',
             'kpis'         => $kpis,
@@ -108,5 +116,45 @@ class Dashboard extends BaseController
                 'newMsgs'   => $count('contacts', ['status' => 'new']),
             ],
         ]);
+    }
+
+    /** Turning a panel on or off, resizing it, moving it, or starting again. */
+    public function toggleWidget(string $key)
+    {
+        $layout  = new \Modules\Admin\Libraries\DashboardLayout();
+        $current = [];
+        foreach ($layout->widgets() as $w) {
+            $current[$w['key']] = $w;
+        }
+        if (! isset($current[$key])) {
+            return redirect()->to(site_url('admin'))->with('error', 'Unknown panel.');
+        }
+
+        $layout->setEnabled($key, ! $current[$key]['enabled']);
+
+        return redirect()->to(site_url('admin'))
+            ->with('message', $current[$key]['label'] . ($current[$key]['enabled'] ? ' hidden.' : ' shown.'));
+    }
+
+    public function resizeWidget(string $key)
+    {
+        (new \Modules\Admin\Libraries\DashboardLayout())->setSize($key, (string) $this->request->getPost('size'));
+
+        return redirect()->to(site_url('admin'));
+    }
+
+    public function moveWidget(string $key)
+    {
+        $dir = $this->request->getPost('dir') === 'up' ? 'up' : 'down';
+        (new \Modules\Admin\Libraries\DashboardLayout())->move($key, $dir);
+
+        return redirect()->to(site_url('admin'));
+    }
+
+    public function resetLayout()
+    {
+        (new \Modules\Admin\Libraries\DashboardLayout())->reset();
+
+        return redirect()->to(site_url('admin'))->with('message', 'Dashboard back to its default arrangement.');
     }
 }

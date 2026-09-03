@@ -59,6 +59,11 @@ $routes->group('admin', ['namespace' => 'Modules\Admin\Controllers'], static fun
         // Page builder (block-content editor + structure operations).
         $routes->get('pages/(:num)/content', 'Content::edit/$1');
         $routes->post('pages/(:num)/content', 'Content::update/$1');
+        $routes->post('dashboard/layout/(:segment)/toggle', 'Dashboard::toggleWidget/$1');
+        $routes->post('dashboard/layout/(:segment)/size', 'Dashboard::resizeWidget/$1');
+        $routes->post('dashboard/layout/(:segment)/move', 'Dashboard::moveWidget/$1');
+        $routes->post('dashboard/layout/reset', 'Dashboard::resetLayout');
+
         $routes->get('tasks', 'Tasks::index');
         $routes->post('tasks/(:segment)/run', 'Tasks::run/$1');
         $routes->post('tasks/(:segment)/toggle', 'Tasks::toggle/$1');

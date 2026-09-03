@@ -5,6 +5,14 @@ export default {
   content: [
     './app/Views/**/*.php',
     './modules/**/Views/**/*.php',
+    // Class names are not only written in templates. The dashboard's column
+    // widths are declared in a PHP library so the layout can be data rather
+    // than markup, and until this glob existed Tailwind never saw them: the
+    // grid compiled with no col-span rules at all and every panel collapsed
+    // into a narrow column. Anything that can emit a class has to be scanned.
+    './modules/**/Libraries/**/*.php',
+    './modules/**/Config/**/*.php',
+    './modules/**/Controllers/**/*.php',
     './resources/js/**/*.js',
   ],
   theme: {
