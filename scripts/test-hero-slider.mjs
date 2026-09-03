@@ -86,12 +86,12 @@ const activeIndex = (page) =>
   await page.goto(url, { waitUntil: 'networkidle' });
   await page.waitForTimeout(600);
 
-  await page.focus('.hero-body input[type="search"]');
+  await page.focus('.hero-card input[type="search"]');
   const before = await activeIndex(page);
   await page.waitForTimeout(7500);
   check('focus in the panel stops autoplay', (await activeIndex(page)) === before);
 
-  await page.$eval('.hero-body input[type="search"]', (el) => el.blur());
+  await page.$eval('.hero-card input[type="search"]', (el) => el.blur());
   await page.waitForTimeout(8000);
   check('autoplay resumes when focus leaves', (await activeIndex(page)) !== before);
 
@@ -134,7 +134,7 @@ const activeIndex = (page) =>
     await page.$$eval('[data-hero-controls] button', (els) =>
       els.every((e) => (e.getAttribute('aria-label') || '').trim().length > 0)));
   check('exactly one h1 in the panel',
-    await page.$$eval('.hero-box h1', (els) => els.length === 1));
+    await page.$$eval('.hero-full h1', (els) => els.length === 1));
 
   await page.close();
 }

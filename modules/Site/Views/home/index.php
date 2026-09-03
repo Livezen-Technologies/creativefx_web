@@ -4,19 +4,19 @@ $this->extend('Modules\Core\Views\layouts\main');
 ?>
 <?= $this->section('content') ?>
 
-<?php // ── B.IV Priority notices ─────────────────────────────────────────────
-      // Above everything, because that is what "immediate public attention"
-      // means. Renders nothing at all when there are none. ?>
-<div class="pt-24 sm:pt-28">
-    <?= view('Modules\Tshda\Views\partials\notice_band', ['notices' => $notices], ['saveData' => false]) ?>
-</div>
-
-<?php // ── Masthead ──────────────────────────────────────────────────────────
+<?php // ── Masthead, with B.IV priority notices beside it ────────────────────
       // A government portal's first screen is not an advertisement. It says who
-      // this is, and it puts the two things most visitors came for — the search
-      // box and the way to their own service — above the fold. The photography
-      // sits behind that, never in place of it. ?>
-<?= view('Modules\Site\Views\home\_hero', ['heroSlides' => $heroSlides ?? []], ['saveData' => false]) ?>
+      // this is, and it puts the three things most visitors came for — the
+      // search box, the way to their own service, and anything needing
+      // immediate public attention — above the fold together. The photography
+      // sits behind that, never in place of it.
+      //
+      // The header is fixed and transparent over this section, so the hero
+      // carries the space for it rather than a spacer div above. ?>
+<?= view('Modules\Site\Views\home\_hero', [
+    'heroSlides' => $heroSlides ?? [],
+    'notices'    => $notices ?? [],
+], ['saveData' => false]) ?>
 
 <?php // ── B.I Stakeholder service clusters ──────────────────────────────────
       // Grouped by who you are, not by the Authority's org chart, so a visitor

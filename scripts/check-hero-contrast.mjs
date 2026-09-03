@@ -47,16 +47,16 @@ for (const width of WIDTHS) {
   await page.goto(url, { waitUntil: 'networkidle' });
   await page.waitForTimeout(1200);
 
-  const box = await page.$('.hero-box');
+  const box = await page.$('.hero-full');
   if (!box) {
-    console.log(`  ${width}px — no .hero-box on the page`);
+    console.log(`  ${width}px — no .hero-full on the page`);
     await page.close();
     continue;
   }
 
   // Every run of text in the panel, with the rectangles its glyphs occupy.
   const runs = await page.evaluate(() => {
-    const panel = document.querySelector('.hero-box');
+    const panel = document.querySelector('.hero-full');
     const origin = panel.getBoundingClientRect();
     const out = [];
     const walker = document.createTreeWalker(panel, NodeFilter.SHOW_TEXT);
@@ -75,15 +75,37 @@ for (const width of WIDTHS) {
       const ownRect = el.getBoundingClientRect();
       if (ownRect.width < 4 || ownRect.height < 4) continue;
 
+      // Text clipped away by a scrolling ancestor is not on the screen, but its
+      // Range rects still report where it *would* be. Measuring those samples
+      // the page underneath the container and reports failures for words nobody
+      // can see — so every rect is clipped to what is actually visible first.
+      const clip = (r) => {
+        let box = { top: r.top, left: r.left, right: r.right, bottom: r.bottom };
+        for (let a = el; a && a !== document.body; a = a.parentElement) {
+          const st = getComputedStyle(a);
+          if (st.overflow === 'visible' && st.overflowX === 'visible' && st.overflowY === 'visible') continue;
+          const ar = a.getBoundingClientRect();
+          box = {
+            top: Math.max(box.top, ar.top),
+            left: Math.max(box.left, ar.left),
+            right: Math.min(box.right, ar.right),
+            bottom: Math.min(box.bottom, ar.bottom),
+          };
+        }
+        return box.right - box.left > 1 && box.bottom - box.top > 1 ? box : null;
+      };
+
       const range = document.createRange();
       range.selectNodeContents(node);
       const rects = [...range.getClientRects()]
         .filter((r) => r.width > 1 && r.height > 1)
+        .map(clip)
+        .filter(Boolean)
         .map((r) => ({
-          x: Math.round(r.x - origin.x),
-          y: Math.round(r.y - origin.y),
-          w: Math.round(r.width),
-          h: Math.round(r.height),
+          x: Math.round(r.left - origin.x),
+          y: Math.round(r.top - origin.y),
+          w: Math.round(r.right - r.left),
+          h: Math.round(r.bottom - r.top),
         }));
       if (rects.length === 0) continue;
 
@@ -104,8 +126,21 @@ for (const width of WIDTHS) {
 
   // Hide the glyphs and photograph the panel: what remains is the ground.
   await page.addStyleTag({
-    content: '.hero-box *, .hero-box { color: transparent !important; }' +
-             '.hero-box svg, .hero-box .hero-dot { visibility: hidden !important; }',
+    content: '.hero-full *, .hero-full { color: transparent !important; }' +
+             '.hero-full svg, .hero-full .hero-dot { visibility: hidden !important; }',
+  });
+
+  // Floating overlays — the header, the help launcher — are fixed to the
+  // viewport, so an element screenshot composites them wherever the capture
+  // happened to be scrolled. Left in, they become the "ground" for whatever
+  // text they landed on and report failures the hero is not responsible for.
+  await page.evaluate(() => {
+    const hero = document.querySelector('.hero-full');
+    document.querySelectorAll('body *').forEach((el) => {
+      if (getComputedStyle(el).position !== 'fixed') return;
+      if (hero && hero.contains(el)) return;
+      el.style.setProperty('visibility', 'hidden', 'important');
+    });
   });
   await page.waitForTimeout(150);
   const png = PNG.sync.read(await box.screenshot());

@@ -1585,125 +1585,118 @@ html.fp-active body {
 }
 
 /* ── Home page hero ───────────────────────────────────────────────────────────
-   A single rounded panel, inset from the page edges, with the Authority's
-   photography sliding behind the words.
+   A full-bleed photograph with the Authority's words on a translucent card over
+   it, and the priority notices beside them.
 
-   The panel keeps its own colours rather than inheriting the page scope. It is
-   a dark green card in both the light and the dark theme, which means the
-   contrast of everything on it is a fixed, measured number instead of one that
-   changes with a preference:
+   The photograph is meant to be seen, so the veil over it is light — nowhere
+   near enough to carry text. The contrast comes from the cards, which is the
+   whole trick: a panel-wide scrim heavy enough for AA is a panel-wide scrim you
+   cannot see the photograph through. Card opacity is therefore not a taste
+   setting, it is the number scripts/check-hero-contrast.mjs measures against a
+   deliberately bright frame.
 
-     --hero-ink    #F2F8F4 on #0A2E20 — 13.7:1
-     --hero-muted  the same ink at 78% — 8.9:1
-     --hero-gold   #D6B25C — 8.0:1; the eyebrow and link hover
+   The cards keep their own colours rather than inheriting the page scope, so
+   the contrast of everything on them is a fixed number instead of one that
+   changes with a light/dark preference:
+
+     --hero-ink    #F2F8F4 on the card — measured, not assumed
+     --hero-gold   #D6B25C — the eyebrow and link hover
      --hero-fill   #6AC898 with #061E14 as its label — 7.3:1
 
-   The scrim is what makes those numbers hold for a photograph nobody has
-   uploaded yet. It runs opaque at the reading edge and clears towards the
-   outside, so the words are never on bare image whatever the CMT adds next. */
+   Notices are the exception and deliberately so: a warm, near-opaque card, the
+   loudest thing on the screen, because an alert that looks like the rest of the
+   site is not an alert. */
 @layer components {
-  .hero-box {
+  .hero-full {
     --hero-ground: 10 46 32;
     --hero-ink: 242 248 244;
-    --hero-gold: 214 178 92;
+    --hero-gold: 232 206 138;   /* lighter than the page's gold: on a 0.74 card
+                                   over a bright frame the deeper #D6B25C
+                                   measures 4.47:1, just under AA */
     --hero-fill: 106 200 152;
     --hero-fill-ink: 6 30 20;
 
-    @apply relative isolate flex flex-col overflow-hidden rounded-[1.75rem]
-           lg:min-h-[36rem] lg:justify-center;
+    /* Full width, edge to edge, and tall enough that the photograph reads as a
+       photograph rather than a strip. Capped against the viewport so the copy
+       does not run off the bottom of a short laptop screen. */
+    @apply relative isolate flex w-full flex-col justify-center overflow-hidden
+           pb-12 pt-28 sm:pb-16 sm:pt-32 lg:pb-20 lg:pt-36;
+    min-height: min(38rem, calc(100vh - 4rem));
     background: rgb(var(--hero-ground));
-    /* A hairline in the theme's own line colour keeps the card attached to the
-       page in light mode, where a dark panel would otherwise float. */
-    box-shadow: 0 1px 0 0 rgb(var(--line)), 0 24px 60px -32px rgb(var(--hero-ground) / 0.55);
   }
 
-  /* No photographs yet. Not a broken hero — a plain one: the emblem at low
-     opacity over the same ground, so the Authority can launch before the
-     photography is signed off. */
-  .hero-box--bare {
+  /* No photographs yet. Not a broken hero — a plain one, so the Authority can
+     launch before the photography is signed off. */
+  .hero-full--bare {
     background:
-      radial-gradient(70% 90% at 88% 15%, rgb(var(--hero-fill) / 0.16), transparent 62%),
+      radial-gradient(70% 90% at 85% 15%, rgb(var(--hero-fill) / 0.16), transparent 62%),
       radial-gradient(60% 80% at 10% 90%, rgb(var(--hero-fill) / 0.10), transparent 60%),
       rgb(var(--hero-ground));
   }
-  .hero-box--bare::after {
+  .hero-full--bare::after {
     content: '';
     background: url('/media/tshda/tshda-emblem.svg') no-repeat center / contain;
-    @apply pointer-events-none absolute -right-10 top-1/2 -z-10 hidden h-[26rem] w-[26rem]
-           -translate-y-1/2 opacity-[0.07] lg:block;
+    @apply pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[30rem] w-[30rem]
+           -translate-x-1/2 -translate-y-1/2 opacity-[0.06];
   }
 
   .hero-slider {
-    @apply relative z-0 h-52 w-full overflow-hidden sm:h-64;
+    @apply absolute inset-0 -z-20 h-full w-full;
   }
-  @screen lg {
-    .hero-slider { @apply absolute inset-0 -z-20 h-full; }
-  }
-  .hero-slider .swiper-slide {
+  .hero-slider .swiper-slide,
+  .hero-slider picture,
+  .hero-slider img {
     @apply h-full w-full;
   }
   .hero-slider picture,
-  .hero-slider img {
-    @apply block h-full w-full;
-  }
-  .hero-slider img {
-    @apply object-cover;
-    /* The scrim covers the reading edge, so favour the far side of the frame:
-       a photograph whose subject sits mid-left would otherwise be the half
-       nobody can see. On a narrow screen the scrim runs bottom-up instead and
-       the whole frame is visible, so the bias is dropped. */
-    object-position: center;
-  }
-  @screen lg {
-    .hero-slider img { object-position: 72% center; }
+  .hero-slider img { @apply block; }
+  .hero-slider img { @apply object-cover; object-position: center; }
+
+  /* Transparent mode: enough to keep a blown-out sky from bleaching the top of
+     the section and to seat the cards, and no more. Nothing here is doing
+     contrast work. */
+  .hero-veil {
+    @apply absolute inset-0 -z-10;
+    background:
+      linear-gradient(to bottom,
+        rgb(var(--hero-ground) / 0.42) 0%,
+        rgb(var(--hero-ground) / 0.18) 30%,
+        rgb(var(--hero-ground) / 0.18) 70%,
+        rgb(var(--hero-ground) / 0.45) 100%);
   }
 
-  /* Bottom-up on a narrow screen, where the copy spans the full width;
-     left-to-right from `lg`, where it occupies about half. */
-  /* Only needed where the words are over the picture, which is `lg` and up.
-     Below that the banner and the copy have separate ground and the scrim
-     would just be dimming a photograph for no reason. */
-  .hero-scrim { @apply hidden; }
-  @screen lg {
-    .hero-scrim { @apply absolute inset-0 -z-10 block; }
-  }
-  @screen lg {
-    /* The stops are not taste. The copy column ends at about 55% of the panel,
-       so the scrim holds near-opaque to there and only then falls away —
-       measured with scripts/check-hero-contrast.mjs against a deliberately
-       bright frame, which is the case that breaks a prettier gradient. */
-    .hero-scrim {
-      background: linear-gradient(
-        to right,
-        rgb(var(--hero-ground) / 0.98) 0%,
-        rgb(var(--hero-ground) / 0.97) 50%,
-        rgb(var(--hero-ground) / 0.88) 62%,
-        rgb(var(--hero-ground) / 0.45) 82%,
-        rgb(var(--hero-ground) / 0.12) 100%
-      );
-    }
+  .hero-grid {
+    @apply relative grid items-center gap-6 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:gap-10;
   }
 
-  .hero-body {
-    @apply relative px-6 py-10 sm:px-10 sm:py-12 lg:px-14 lg:py-20;
+  /* The card is what makes the text legible, so its ground is measured. Blur is
+     decoration on top of that, never the mechanism: a browser that ignores
+     backdrop-filter still gets every ratio, because the alpha alone carries
+     them. */
+  .hero-card {
+    @apply rounded-[1.5rem] p-6 sm:p-8 lg:p-10;
+    background: rgb(var(--hero-ground) / 0.74);
+    border: 1px solid rgb(var(--hero-ink) / 0.14);
+    backdrop-filter: blur(14px) saturate(1.1);
+    box-shadow: 0 24px 60px -30px rgb(0 0 0 / 0.55);
   }
 
   .text-hero-ink   { color: rgb(var(--hero-ink)); }
-  .text-hero-muted { color: rgb(var(--hero-ink) / 0.78); }
+  .text-hero-muted { color: rgb(var(--hero-ink) / 0.82); }
   .text-hero-gold  { color: rgb(var(--hero-gold)); }
 
-  /* The search box sits on the panel, not on the page, so it takes the panel's
+  /* The search box sits on the card, not on the page, so it takes the card's
      colours. Left on the page's .field it would be a white box on dark green in
      light mode and near-invisible in dark. */
   .field-on-hero {
-    border-color: rgb(var(--hero-ink) / 0.28);
-    background: rgb(var(--hero-ink) / 0.10);
+    border-color: rgb(var(--hero-ink) / 0.30);
+    background: rgb(var(--hero-ink) / 0.12);
     color: rgb(var(--hero-ink));
-    @apply placeholder:text-[rgb(var(--hero-ink)/0.55)];
+    @apply placeholder:text-[rgb(var(--hero-ink)/0.6)];
   }
   .field-on-hero:focus {
     border-color: rgb(var(--hero-fill));
-    background: rgb(var(--hero-ink) / 0.16);
+    background: rgb(var(--hero-ink) / 0.18);
   }
 
   .btn-hero {
@@ -1717,48 +1710,93 @@ html.fp-active body {
   }
   .btn-hero:hover { background: rgb(var(--hero-fill) / 0.86); }
 
+  /* ── Priority notices, beside the masthead ─────────────────────────────── */
+  .hero-notices {
+    --n-ground: 253 246 233;
+    --n-ink: 46 30 8;
+    --n-accent: 146 64 14;
+
+    @apply rounded-[1.5rem] p-5 sm:p-6;
+    background: rgb(var(--n-ground) / 0.95);
+    border: 1px solid rgb(var(--n-ink) / 0.12);
+    backdrop-filter: blur(14px);
+    box-shadow: 0 24px 60px -30px rgb(0 0 0 / 0.55);
+    color: rgb(var(--n-ink));
+  }
+  .hero-notices-title {
+    @apply text-xs font-bold uppercase tracking-[0.2em];
+    color: rgb(var(--n-accent));
+  }
+  .hero-notices-list {
+    @apply mt-4 space-y-4;
+  }
+  .hero-notices-list > li + li {
+    @apply border-t pt-4;
+    border-color: rgb(var(--n-ink) / 0.12);
+  }
+  .hero-notice-tag {
+    @apply inline-block rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider;
+    background: rgb(var(--n-accent) / 0.12);
+    color: rgb(var(--n-accent));
+  }
+  .hero-notice-tag--urgent {
+    background: rgb(var(--n-accent));
+    color: rgb(255 255 255);
+  }
+  .hero-notice-title {
+    @apply mt-1.5 text-sm font-semibold leading-snug;
+  }
+  .hero-notice-title a {
+    @apply underline underline-offset-4 transition;
+    text-decoration-color: rgb(var(--n-accent) / 0.45);
+  }
+  .hero-notice-title a:hover { text-decoration-color: rgb(var(--n-accent)); }
+  .hero-notice-body {
+    @apply mt-1 text-sm leading-relaxed;
+    color: rgb(var(--n-ink) / 0.78);
+  }
+
   /* ── Controls ──────────────────────────────────────────────────────────────
-     Bottom-right on a wide screen, under the copy on a narrow one. Real
-     buttons: a slideshow a keyboard cannot stop fails WCAG 2.2.2, and an
-     unlabelled chevron fails 4.1.2. */
+     Centred under the section on a wide screen, in flow below the cards on a
+     narrow one, where an absolutely-placed cluster would land on top of them. */
   .hero-controls {
-    @apply relative z-10 flex flex-wrap items-center gap-2 px-6 pb-8 sm:px-10
-           lg:absolute lg:bottom-8 lg:right-10 lg:px-0 lg:pb-0;
+    @apply relative z-10 mt-8 flex flex-wrap items-center justify-center gap-2
+           lg:absolute lg:bottom-7 lg:left-1/2 lg:mt-0 lg:-translate-x-1/2;
   }
   .hero-ctl {
     @apply inline-flex h-10 w-10 items-center justify-center rounded-full border
            transition focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
     border-color: rgb(var(--hero-ink) / 0.32);
-    background: rgb(var(--hero-ground) / 0.55);
+    background: rgb(var(--hero-ground) / 0.62);
     color: rgb(var(--hero-ink));
     --tw-ring-color: rgb(var(--hero-fill));
     --tw-ring-offset-color: rgb(var(--hero-ground));
     backdrop-filter: blur(6px);
   }
   .hero-ctl:hover {
-    background: rgb(var(--hero-ink) / 0.18);
+    background: rgb(var(--hero-ink) / 0.20);
     border-color: rgb(var(--hero-ink) / 0.55);
   }
   .hero-ctl svg { @apply h-4 w-4; }
-  /* One button, two glyphs: whichever action the button will perform next. */
+  /* One button, two glyphs: whichever action it will perform next. */
   .hero-ctl--play .hero-ctl-play { @apply hidden; }
   .hero-ctl--play.is-paused .hero-ctl-pause { @apply hidden; }
   .hero-ctl--play.is-paused .hero-ctl-play { @apply block; }
 
   .hero-dots {
     @apply ml-1 flex items-center gap-1.5 rounded-full px-3 py-2.5;
-    background: rgb(var(--hero-ground) / 0.55);
+    background: rgb(var(--hero-ground) / 0.62);
     backdrop-filter: blur(6px);
   }
   .hero-dots:empty { @apply hidden; }
   .hero-dot {
     @apply h-2 w-2 rounded-full border-0 p-0 transition
            focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
-    background: rgb(var(--hero-ink) / 0.38);
+    background: rgb(var(--hero-ink) / 0.42);
     --tw-ring-color: rgb(var(--hero-fill));
     --tw-ring-offset-color: rgb(var(--hero-ground));
   }
-  .hero-dot:hover { background: rgb(var(--hero-ink) / 0.65); }
+  .hero-dot:hover { background: rgb(var(--hero-ink) / 0.7); }
   .hero-dot.is-active {
     background: rgb(var(--hero-fill));
     @apply w-6;
