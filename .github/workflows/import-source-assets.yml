@@ -18,7 +18,7 @@ on:
         required: true
         default: inventory
         type: choice
-        options: [inventory, import, probe]
+        options: [inventory, import, probe, check-urls]
       origin_host:
         description: Site hostname
         required: true
@@ -47,6 +47,10 @@ on:
         description: "import only: folder under public/media/ to write into"
         required: false
         default: magiccorn
+      urls:
+        description: "check-urls only: space-separated absolute URLs to test"
+        required: false
+        default: ""
       probe_pattern:
         description: "probe only: extended regex to look for in the pages and their stylesheets"
         required: false
@@ -72,7 +76,32 @@ jobs:
         with:
           ref: ${{ github.event.inputs.branch }}
 
+      - name: Check URLs (read-only)
+        if: ${{ github.event.inputs.action == 'check-urls' }}
+        env:
+          URLS: ${{ github.event.inputs.urls }}
+        run: |
+          set -uo pipefail
+          # Citing a source link that 404s is worse than not citing one, and
+          # this sandbox cannot reach anything but github.com — so the check
+          # happens where there is a network.
+          FAILED=""
+          for U in $URLS; do
+            INFO=$(curl -sSL -m 25 -o /dev/null \
+                     -w '%{http_code} %{content_type} -> %{url_effective}' \
+                     -A 'Mozilla/5.0 (compatible; link-check)' "$U" || echo "000 - -")
+            printf '  %-58s %s\n' "$U" "$INFO"
+            case "$INFO" in 2*|3*) ;; *) FAILED="$FAILED $U" ;; esac
+          done
+          echo
+          if [ -n "$FAILED" ]; then
+            echo "did not answer:$FAILED"
+          else
+            echo "all URLs answered"
+          fi
+
       - name: Fetch pages
+        if: ${{ github.event.inputs.action != 'check-urls' }}
         env:
           HOSTN:    ${{ github.event.inputs.origin_host }}
           OIP:      ${{ github.event.inputs.origin_ip }}
