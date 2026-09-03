@@ -7,7 +7,18 @@
  * we actively (re)start it: on load, on canplay, when the tab becomes visible,
  * and on the first user gesture as a last resort. We also restart on `ended`
  * so it loops continuously even if the native loop hiccups.
+ *
+ * All of that is switched off for prefers-reduced-motion. Everything else on
+ * this site honours that setting — the scroll reveals, the panel engine, the
+ * counters — and a full-screen film running behind the headline is the single
+ * largest piece of motion on the page, so overriding the browser's own autoplay
+ * deferral there is precisely the wrong thing to do. Those readers get the
+ * poster frame, and the file is not downloaded at all. The corner control still
+ * works, so anyone who does want the film can start it.
  */
+const prefersReducedMotion = () =>
+  window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 export function initHeroVideo() {
   // The home hero plus any CMS page hero that has a background film.
   document.querySelectorAll('#hero video, [data-hero-video]').forEach(setupHeroVideo);
@@ -16,6 +27,16 @@ export function initHeroVideo() {
 function setupHeroVideo(v) {
   if (!v || v.dataset.heroReady) return;
   v.dataset.heroReady = '1';
+
+  if (prefersReducedMotion()) {
+    v.autoplay = false;
+    v.removeAttribute('autoplay');
+    // Nothing is going to play, so nothing needs downloading: several megabytes
+    // saved for the reader least likely to want them.
+    v.preload = 'none';
+    v.pause();
+    return;
+  }
 
   // Autoplay requires muted + inline.
   v.muted = true;

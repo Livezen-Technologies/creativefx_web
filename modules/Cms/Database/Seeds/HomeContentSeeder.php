@@ -234,11 +234,14 @@ class HomeContentSeeder extends Seeder
             $videos->insert([
                 'key'           => 'home_launch',
                 'title'         => $j(['en' => 'Kukuleganga Giants Forest']),
-                // The hotel's film is on YouTube, not a file we hold, so it plays
-                // in its own section rather than behind the hero. Empty on
-                // purpose: the hero shows its photograph. Upload a file in
-                // Admin -> Videos and the hero becomes a background film.
-                'src_path'      => '',
+                // The hotel's own film, behind the hero. It is muted and loops,
+                // so it carries no audio track: those are bytes every visitor
+                // downloads and nobody ever hears. The still stays as the
+                // poster, painting immediately while the film buffers, and
+                // covering for it entirely where the film cannot play.
+                'src_path'      => '/media/video/giants-forest-hero.mp4',
+                'src_path_webm' => '/media/video/giants-forest-hero.webm',
+                'duration_seconds' => 79,
                 'poster_path'   => '/media/giantforests/Welcome-to-Giants-Forest-3.jpg',
                 'is_muted_loop' => 1,
                 'status'        => 'published',
@@ -255,9 +258,13 @@ class HomeContentSeeder extends Seeder
             // seed-managed and should follow the seed. Upload one in
             // Admin -> Videos and both are left alone from then on.
             $current = $videos->where('key', 'home_launch')->get()->getRowArray();
-            if (($current['src_path'] ?? '') === '') {
+            if (($current['src_path'] ?? '') === '' || str_starts_with((string) $current['src_path'], '/media/video/giants-forest-hero')) {
                 $videos->where('key', 'home_launch')->update([
-                    'src_path' => '', 'poster_path' => '/media/giantforests/Welcome-to-Giants-Forest-3.jpg', 'updated_at' => $now,
+                    'src_path'      => '/media/video/giants-forest-hero.mp4',
+                    'src_path_webm' => '/media/video/giants-forest-hero.webm',
+                    'poster_path'   => '/media/giantforests/Welcome-to-Giants-Forest-3.jpg',
+                    'duration_seconds' => 79,
+                    'updated_at'    => $now,
                 ]);
             }
         }
