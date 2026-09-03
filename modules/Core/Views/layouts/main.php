@@ -22,10 +22,22 @@
     <meta property="og:description" content="<?= esc($ogDesc, 'attr') ?>">
     <meta property="og:image" content="<?= esc(base_url(ltrim($ogImg, '/')), 'attr') ?>">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="theme-color" content="#CF2030">
+    <?php // A page that exists only because a URL did not should not be offered
+          // to a crawler; without this the 404 competes in search with the pages
+          // it is apologising for. ?>
+    <?php if (! empty($noIndex)): ?>
+    <meta name="robots" content="noindex, follow">
+    <?php endif; ?>
+    <meta name="theme-color" content="#346142">
     <meta name="color-scheme" content="light dark">
-    <link rel="icon" type="image/png" sizes="32x32" href="<?= esc(media_src('/media/giantforests/Kukuleganga-Giants-Forest-Logo-1.png'), 'attr') ?>">
-    <link rel="apple-touch-icon" href="<?= esc(media_src('/media/giantforests/Kukuleganga-Giants-Forest-Logo-1.png'), 'attr') ?>">
+    <?php // Square icons built from the mark's own G (scripts/make-favicon.py).
+          // These used to point straight at the 300x200 lockup, which a browser
+          // squeezed into 16px and rendered as a smear — three lines of brush
+          // lettering in the space of a word. ?>
+    <link rel="icon" type="image/png" sizes="32x32" href="<?= esc(media_src('/favicon-32.png'), 'attr') ?>">
+    <link rel="icon" type="image/png" sizes="48x48" href="<?= esc(media_src('/favicon-48.png'), 'attr') ?>">
+    <link rel="icon" type="image/png" sizes="192x192" href="<?= esc(media_src('/favicon-192.png'), 'attr') ?>">
+    <link rel="apple-touch-icon" sizes="180x180" href="<?= esc(media_src('/apple-touch-icon.png'), 'attr') ?>">
     <?= vite_tags('resources/js/app.js') ?>
     <?php if ($ga = setting('ga4_measurement_id', '', 'analytics')): ?>
     <script async src="https://www.googletagmanager.com/gtag/js?id=<?= esc($ga) ?>"></script>
@@ -61,6 +73,7 @@
           // viewport, and the home page's panel column is transformed. Out here
           // it cannot be trapped in a panel. ?>
     <?= $this->include('Modules\Core\Views\partials\booking_modal') ?>
+    <?= $this->include('Modules\Core\Views\partials\film_modal') ?>
     <?= $this->include('Modules\Core\Views\partials\whatsapp_widget') ?>
     <?= $this->renderSection('scripts') ?>
 </body>
