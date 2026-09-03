@@ -48,6 +48,16 @@ export default function assistant(config = {}) {
       this.open ? this.close() : this.show();
     },
 
+    /**
+     * Escape belongs to whichever dialog is on top. This panel and the language
+     * chooser both listen on the window, so without this one keypress closes
+     * both and the focus each returns fights the other.
+     */
+    escape() {
+      if (document.documentElement.dataset.modalOpen) return;
+      this.close();
+    },
+
     show() {
       this.open = true;
       this.persist();

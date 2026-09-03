@@ -16,6 +16,28 @@ import { chromium } from 'playwright';
 const base = (process.argv[2] || 'http://127.0.0.1:8083').replace(/\/$/, '');
 const browser = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium' });
 
+/**
+ * A page belonging to somebody who already uses this site.
+ *
+ * Seeding the stored language keeps the first-visit chooser shut. Without it
+ * these checks are run against a modal dialog that locks scrolling and holds
+ * focus — which is correct behaviour for a first visit and has nothing to do
+ * with what this file is testing. scripts/test-language-modal.mjs covers the
+ * first visit itself.
+ */
+const returningVisitor = async (viewport = { width: 1280, height: 900 }) => {
+  const context = await browser.newContext({ viewport });
+  // Only when absent: this runs on every navigation, and overwriting the key
+  // each time would undo a switch the test just made and then assert it did not
+  // happen.
+  await context.addInitScript(() => {
+    try {
+      if (!localStorage.getItem('nl_locale')) localStorage.setItem('nl_locale', 'en');
+    } catch (e) { /* private window */ }
+  });
+  return context;
+};
+
 let pass = 0;
 let fail = 0;
 const check = (label, ok, detail = '') => {
@@ -29,7 +51,7 @@ const lastBubble = (page) =>
 
 // ── Opening, closing, focus ─────────────────────────────────────────────────
 {
-  const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
+  const page = await (await returningVisitor()).newPage();
   const errors = [];
   page.on('console', (m) => m.type() === 'error' && errors.push(m.text()));
   page.on('pageerror', (e) => errors.push(String(e)));
@@ -64,7 +86,7 @@ const lastBubble = (page) =>
 
 // ── A question it can answer ────────────────────────────────────────────────
 {
-  const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
+  const page = await (await returningVisitor()).newPage();
   await page.goto(`${base}/en`, { waitUntil: 'networkidle' });
   await page.click('.assistant-launcher');
   await page.waitForTimeout(300);
@@ -93,7 +115,7 @@ const lastBubble = (page) =>
 
 // ── A question it cannot answer ─────────────────────────────────────────────
 {
-  const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
+  const page = await (await returningVisitor()).newPage();
   await page.goto(`${base}/en`, { waitUntil: 'networkidle' });
   await page.click('.assistant-launcher');
   await page.waitForTimeout(300);
@@ -112,7 +134,7 @@ const lastBubble = (page) =>
 
 // ── A new session starts clean ──────────────────────────────────────────────
 {
-  const context = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+  const context = await returningVisitor();
   const page = await context.newPage();
   await page.goto(`${base}/en`, { waitUntil: 'networkidle' });
   await page.waitForTimeout(600);
@@ -122,7 +144,7 @@ const lastBubble = (page) =>
 
 // ── Trilingual ──────────────────────────────────────────────────────────────
 for (const locale of ['si', 'ta']) {
-  const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
+  const page = await (await returningVisitor()).newPage();
   await page.goto(`${base}/${locale}`, { waitUntil: 'networkidle' });
   await page.waitForTimeout(600);
 

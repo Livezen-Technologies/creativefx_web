@@ -19,7 +19,29 @@ import { existsSync } from 'node:fs';
 // Playwright has installed elsewhere.
 const chrome = process.env.PLAYWRIGHT_CHROMIUM ?? '/opt/pw-browsers/chromium';
 const browser = await chromium.launch(existsSync(chrome) ? { executablePath: chrome } : {});
-const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
+/**
+ * A page belonging to somebody who already uses this site.
+ *
+ * Seeding the stored language keeps the first-visit chooser shut. Without it
+ * these checks are run against a modal dialog that locks scrolling and holds
+ * focus — which is correct behaviour for a first visit and has nothing to do
+ * with what this file is testing. scripts/test-language-modal.mjs covers the
+ * first visit itself.
+ */
+const returningVisitor = async (viewport = { width: 1280, height: 900 }) => {
+  const context = await browser.newContext({ viewport });
+  // Only when absent: this runs on every navigation, and overwriting the key
+  // each time would undo a switch the test just made and then assert it did not
+  // happen.
+  await context.addInitScript(() => {
+    try {
+      if (!localStorage.getItem('nl_locale')) localStorage.setItem('nl_locale', 'en');
+    } catch (e) { /* private window */ }
+  });
+  return context;
+};
+
+const page = await (await returningVisitor()).newPage();
 let pass = 0, fail = 0;
 const ok = (m) => { console.log('  PASS  ' + m); pass++; };
 const bad = (m) => { console.log('  FAIL  ' + m); fail++; };
@@ -52,10 +74,24 @@ console.log('== Switching keeps the scroll position ==');
 await page.goto(B + '/en/about-us', { waitUntil: 'networkidle' });
 await page.waitForTimeout(500);
 await page.evaluate(() => window.scrollTo(0, 1400));
-await page.waitForTimeout(300);
+// Lenis animates the scroll, so the position 300ms later is wherever the
+// animation has got to — not 1400. Waiting for it to settle is the difference
+// between testing the restore and testing the easing curve.
+await page.waitForFunction(() => {
+  window.__last = window.__last ?? -1;
+  const settled = Math.abs(window.scrollY - window.__last) < 1 && window.scrollY > 100;
+  window.__last = window.scrollY;
+  return settled;
+}, null, { timeout: 5000, polling: 120 }).catch(() => {});
+const before = await page.evaluate(() => Math.round(window.scrollY));
 await switchTo('සිංහල');
 const y = await page.evaluate(() => window.scrollY);
-y > 900 ? ok(`scroll restored to ${Math.round(y)}px`) : bad(`scroll fell back to ${Math.round(y)}px`);
+// Within a viewport of where the reader was, not to the pixel: the Sinhala
+// page sets different type and is not the same height, so an exact match would
+// be asserting something the clause does not ask for.
+Math.abs(y - before) < 400
+  ? ok(`scroll restored to ${Math.round(y)}px (left at ${before}px)`)
+  : bad(`scroll fell back to ${Math.round(y)}px from ${before}px`);
 
 console.log('== The choice is remembered at the welcome page ==');
 const stored = await page.evaluate(() => localStorage.getItem('nl_locale'));

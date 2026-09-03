@@ -72,7 +72,7 @@ $topics = [
          the button that opened it. -->
     <div x-show="open" x-cloak x-transition.opacity.duration.150ms
          x-ref="panel" id="assistant-panel" role="dialog" aria-labelledby="assistant-title"
-         @keydown.escape.window="close()"
+         @keydown.escape.window="escape()"
          class="assistant-panel">
 
         <header class="assistant-head">

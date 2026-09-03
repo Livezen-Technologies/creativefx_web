@@ -107,6 +107,15 @@ globally-ordered timestamp prefixes so cross-module references resolve.
   add any other, and its `alt` is a locale map, so the picture is described in
   all three languages. An empty folder is a supported state — the panel falls
   back to the emblem, so the site ships before the photography is signed off.
+- **The language is asked once, and the answer is shared.** `nl_locale` in
+  localStorage is written by the header switcher and by the first-visit chooser,
+  and read by the welcome page. Choosing anywhere means nothing asks again —
+  and dismissing the chooser counts as choosing what is already on screen,
+  because a dialog that reappears is nagging rather than asking.
+- **Anything that moves the page must go through the scroll engine.** Lenis
+  holds its own target position and animates towards it every frame, so a raw
+  `window.scrollTo` is applied and then pulled back. `getLenis()` in
+  `resources/js/smooth.js` returns the live instance.
 - **The help assistant answers from this site, not from a model.** It reads the
   published FAQ first and the site search after it, so every answer is something
   the CMT wrote and can edit. Nothing third-party loads and no question leaves
@@ -154,6 +163,7 @@ node scripts/check-pages.mjs           # every page, 4 widths, 3 languages:
                                        # status, JS errors, sideways scroll,
                                        # invisible blocks, unresolved lang keys
 node scripts/test-language-switch.mjs  # Clause 3.15's switching behaviour
+node scripts/test-language-modal.mjs   # the first-visit language chooser
 node scripts/test-hero-slider.mjs      # the hero slideshow: advance, pause,
                                        # focus, reduced motion, a11y
 node scripts/test-assistant.mjs        # the help assistant: focus, answers,

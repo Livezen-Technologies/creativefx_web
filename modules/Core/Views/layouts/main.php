@@ -163,6 +163,12 @@ $lastUpdated = $lastUpdated ?? ($page['updated_at'] ?? null);
           // types leaves the Authority's server. Off with
           // Settings → Assistant → enabled = 0. ?>
     <?= $this->include('Modules\Core\Views\partials\assistant') ?>
+
+    <?php // Asked once, of readers who arrived deep in the site and so never
+          // passed the welcome page's trilingual front door. It renders hidden
+          // and shows itself only when no preference is stored. Off with
+          // Settings → Language modal → enabled = 0. ?>
+    <?= $this->include('Modules\Core\Views\partials\language_modal') ?>
     <?= $this->renderSection('scripts') ?>
 </body>
 </html>

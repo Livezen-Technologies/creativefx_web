@@ -29,13 +29,33 @@ const check = (label, ok, detail = '') => {
 const activeIndex = (page) =>
   page.$eval('.hero-slider', (el) => (el.swiper ? el.swiper.realIndex : -1));
 
-// ── Default: it runs, and it can be stopped ─────────────────────────────────
+// ── No photographs is a supported state, not a broken one ───────────────────
+// The `hero` folder starts empty, so this is what the site looks like until the
+// Authority's photography is signed off. Assert it rather than crashing on a
+// slider that is correctly absent — and stop, because there is no slideshow to
+// exercise.
 {
   const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
   await page.goto(url, { waitUntil: 'networkidle' });
   await page.waitForTimeout(600);
 
-  check('slider is present', (await page.$('.hero-slider')) !== null);
+  if ((await page.$('.hero-slider')) === null) {
+    check('the hero still renders with no photographs', (await page.$('.hero-full')) !== null);
+    check('it falls back to the plain panel',
+      await page.$eval('.hero-full', (el) => el.classList.contains('hero-full--bare')));
+    check('no slideshow controls are offered', (await page.$('[data-hero-controls]')) === null);
+    check('the masthead is intact', (await page.$$eval('.hero-full h1', (els) => els.length)) === 1);
+    check('the search box is still there',
+      (await page.$('.hero-card input[type="search"]')) !== null);
+
+    await page.close();
+    await browser.close();
+    console.log('\n' + `${pass} passed, ${fail} failed.`);
+    console.log('The `hero` media folder is empty, so the slideshow itself was not exercised.');
+    process.exit(fail === 0 ? 0 : 1);
+  }
+
+  check('slider is present', true);
   check('controls are present', (await page.$('[data-hero-controls]')) !== null);
 
   const dots = await page.$$('.hero-dot');

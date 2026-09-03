@@ -33,6 +33,15 @@ let checked = 0;
 
 for (const width of WIDTHS) {
   const ctx = await browser.newContext({ viewport: { width, height: 900 } });
+  // Seed the stored language so the first-visit chooser stays shut. This sweep
+  // is about the pages: a modal that covers every one of them, locks scrolling
+  // and holds focus would be measured instead of the page behind it — and it is
+  // correct behaviour, covered by scripts/test-language-modal.mjs.
+  await ctx.addInitScript(() => {
+    try {
+      if (!localStorage.getItem('nl_locale')) localStorage.setItem('nl_locale', 'en');
+    } catch (e) { /* private window */ }
+  });
   const page = await ctx.newPage();
 
   for (const locale of LOCALES) {

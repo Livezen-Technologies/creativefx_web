@@ -20,8 +20,17 @@
 const STORE_KEY = 'nl_locale';
 const SCROLL_KEY = 'nl_lang_scroll';
 
-/** Restore the offset a language switch stashed, if it was for this page. */
-export function restoreLangScroll() {
+/**
+ * Restore the offset a language switch stashed, if it was for this page.
+ *
+ * @param {object|null} scroller The smooth-scroll engine, when one is running.
+ *   It has to be asked rather than bypassed: Lenis holds its own target
+ *   position and animates towards it every frame, so a raw window.scrollTo is
+ *   applied and then pulled back to wherever Lenis thinks the page is — which
+ *   is the top, on a page that has just loaded. The reader ends up at zero and
+ *   the clause's promise is quietly broken with nothing in the console.
+ */
+export function restoreLangScroll(scroller = null) {
   let stashed;
   try {
     stashed = JSON.parse(sessionStorage.getItem(SCROLL_KEY) || 'null');
@@ -31,10 +40,18 @@ export function restoreLangScroll() {
   }
   if (! stashed || stashed.path !== window.location.pathname) return;
 
+  const y = stashed.y || 0;
+
   // After paint: the layout is not final until fonts and images have settled,
   // and scrolling to an offset measured against a shorter page lands short.
   window.requestAnimationFrame(() => {
-    window.requestAnimationFrame(() => window.scrollTo(0, stashed.y || 0));
+    window.requestAnimationFrame(() => {
+      if (scroller && typeof scroller.scrollTo === 'function') {
+        scroller.scrollTo(y, { immediate: true });
+      } else {
+        window.scrollTo(0, y);
+      }
+    });
   });
 }
 

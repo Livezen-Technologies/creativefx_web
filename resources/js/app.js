@@ -25,6 +25,7 @@ import langSwitcher, { restoreLangScroll } from './alpine/langSwitcher.js';
 import siteHeader from './alpine/siteHeader.js';
 import themeToggle from './alpine/themeToggle.js';
 import assistant from './alpine/assistant.js';
+import languageModal from './alpine/languageModal.js';
 import { initScrollStory } from './gsap/scroll.js';
 import { initKineticHero } from './gsap/kinetic.js';
 import { initCarousels } from './carousels.js';
@@ -42,6 +43,7 @@ Alpine.data('langSwitcher', langSwitcher);
 Alpine.data('siteHeader', siteHeader);
 Alpine.data('themeToggle', themeToggle);
 Alpine.data('assistant', assistant);
+Alpine.data('languageModal', languageModal);
 
 window.Alpine = Alpine;
 Alpine.start();
@@ -52,19 +54,24 @@ Alpine.start();
 // storytelling. The two models are mutually exclusive, so we branch on #fp.
 document.addEventListener('DOMContentLoaded', () => {
   initPreloader();
-  // Before anything that scrolls: a language switch stashed the reader's
-  // position, and it applies whichever scroll model this page uses.
-  restoreLangScroll();
   initTracking();
   initRecaptcha();
   initKineticHero();
 
+  // The scroll engine first, then the restore — in that order, because the
+  // restore has to go through whichever engine owns the page. Done the other
+  // way round the offset is applied and then animated straight back to the top.
+  let scroller = null;
   if (document.getElementById('fp')) {
     initFullpage();
   } else {
-    initSmoothScroll();
+    scroller = initSmoothScroll();
     initScrollStory();
   }
+
+  // A language switch stashed the reader's position on the way out of the
+  // previous page; put them back where they were.
+  restoreLangScroll(scroller);
 
   initCarousels();
   initHeroSlider();
