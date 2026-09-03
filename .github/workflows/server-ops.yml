@@ -23,12 +23,17 @@ on:
           - inspect-media
           - setup-tls-certbot
           - dump-content
+          - hero-images
         default: diagnose-tls
         required: true
       le_email:
         description: Email for Let's Encrypt (setup-tls-certbot only)
         required: false
         default: ''
+      hero_args:
+        description: "hero-images only: e.g. `list`, `add /media/uploads/x.jpg`, `remove 12`"
+        required: false
+        default: list
       media_path:
         description: "inspect-media only: site-absolute path of the file to trace"
         required: false
@@ -262,6 +267,28 @@ jobs:
 
             echo
             echo "===== DONE (read-only) ====="
+
+      - name: Hero images (promote an uploaded image to the home page hero)
+        if: ${{ github.event.inputs.action == 'hero-images' }}
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ env.DEPLOY_HOST }}
+          username: ${{ env.DEPLOY_USER }}
+          password: ${{ env.DEPLOY_PASSWORD }}
+          key: ${{ env.DEPLOY_SSH_KEY }}
+          port: 22
+          script_stop: true
+          command_timeout: 5m
+          envs: APP_DIR,HERO_ARGS
+          script: |
+            set -euo pipefail
+            cd "$APP_DIR"
+            # As www-data, because the media rows and files belong to it and a
+            # root-run command can leave a file the web server cannot read.
+            sudo -u www-data php spark hero:images $HERO_ARGS
+        env:
+          APP_DIR: ${{ github.event.inputs.app_dir }}
+          HERO_ARGS: ${{ github.event.inputs.hero_args }}
 
       - name: Setup TLS via certbot (scoped to our domain)
         if: ${{ github.event.inputs.action == 'setup-tls-certbot' }}

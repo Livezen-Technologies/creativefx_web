@@ -102,11 +102,16 @@ globally-ordered timestamp prefixes so cross-module references resolve.
   `is_custom` flag an admin edit sets; list tables (menus, offices, notices,
   FAQs) seed only while empty; services and news upsert by slug and stop at a
   row somebody has touched. A release must not be able to undo the CMT's work.
-- **The home page hero reads the Media library's `hero` folder**, in filename
-  order, first six. No table of its own: the CMT adds a photograph the way they
-  add any other, and its `alt` is a locale map, so the picture is described in
-  all three languages. An empty folder is a supported state — the panel falls
-  back to the emblem, so the site ships before the photography is signed off.
+- **The home page hero reads the Media library**, in filename order, first six.
+  An image counts as a hero image if it is in the folder `hero` *or* carries the
+  tag `hero` — the second because the first is a trap: uploading is the obvious
+  action and the folder box is easy to miss, so the first real photograph landed
+  in `uploads` and the hero went on showing its empty state. `php spark
+  hero:images add <id|path>` promotes an image already uploaded, without moving
+  the file. No table of its own: the `alt` is a locale map, so the picture is
+  described in all three languages. No photographs is a supported state — the
+  panel draws its own hillside, so the site ships before the photography is
+  signed off.
 - **The language is asked once, and the answer is shared.** `nl_locale` in
   localStorage is written by the header switcher and by the first-visit chooser,
   and read by the welcome page. Choosing anywhere means nothing asks again —

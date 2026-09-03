@@ -58,11 +58,19 @@ class Home extends BaseController
     /**
      * The photographs behind the hero panel.
      *
-     * They live in the Media library's `hero` folder rather than in a table of
-     * their own, so the CMT adds one exactly the way they add any other image,
-     * and the caption is the media record's own `alt` — a locale map, so a
-     * photograph can be described in all three languages instead of carrying an
-     * English description into a Tamil page.
+     * They live in the Media library rather than in a table of their own, so the
+     * CMT adds one exactly the way they add any other image, and the caption is
+     * the media record's own `alt` — a locale map, so a photograph can be
+     * described in all three languages instead of carrying an English
+     * description into a Tamil page.
+     *
+     * Marked either by the folder `hero` or by the tag `hero`, and the second
+     * one exists because the first is a trap. Uploading is the obvious action
+     * and the folder box is easy to miss, so the first real upload landed in
+     * `uploads` and the hero carried on showing its empty state — the person
+     * did the natural thing and the site ignored it. Accepting the tag means an
+     * image already uploaded can be promoted where it sits, without moving the
+     * file or uploading it twice.
      *
      * Ordered by the uploaded filename, so prefixing 01-, 02- sets the
      * sequence. Upload order would leave no way to reorder a slideshow short of
@@ -73,15 +81,37 @@ class Home extends BaseController
      */
     private function heroSlides(int $limit = 6): array
     {
+        // The coarse match in SQL, the exact one in PHP. Deciding "is `hero` one
+        // of this row's comma-separated tags" in SQL means string concatenation,
+        // and that is `||` in SQLite and CONCAT() in MySQL — this site runs on
+        // both, so the query would work in development and mean something else
+        // in production.
         $rows = model('Modules\Media\Models\MediaModel')
-            ->where('folder', 'hero')
+            ->groupStart()
+                ->where('folder', 'hero')
+                ->orLike('tags', 'hero')
+            ->groupEnd()
             ->like('mime_type', 'image/', 'after')
             ->orderBy('original_name', 'ASC')
-            ->findAll($limit);
+            ->findAll(max($limit * 4, 24));
 
         $slides = [];
 
         foreach ($rows as $row) {
+            if (count($slides) >= $limit) {
+                break;
+            }
+
+            // Whole tag, not substring: a photograph tagged "heroine" or
+            // "hero-shot" is not a request to put it on the front page.
+            $tags = array_map(
+                'strtolower',
+                array_map('trim', explode(',', (string) ($row['tags'] ?? '')))
+            );
+            if (($row['folder'] ?? '') !== 'hero' && ! in_array('hero', $tags, true)) {
+                continue;
+            }
+
             $path = ltrim((string) ($row['path'] ?? ''), '/');
             if ($path === '' || ! is_file(FCPATH . $path)) {
                 continue;

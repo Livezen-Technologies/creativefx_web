@@ -1,0 +1,155 @@
+<?php
+
+namespace App\Commands;
+
+use CodeIgniter\CLI\BaseCommand;
+use CodeIgniter\CLI\CLI;
+use Modules\Media\Models\MediaModel;
+
+/**
+ * Promote an already-uploaded image to the home page hero, from the CLI.
+ *
+ * The reason this exists: uploading is the obvious action and the folder box on
+ * the upload form is easy to miss, so the first real photograph landed in
+ * `uploads` and the hero carried on showing its empty state. Re-uploading it
+ * into the right folder works, but it is the wrong answer to "I already put the
+ * file on your server" — and moving files by hand risks leaving the database
+ * row pointing at a path that no longer exists.
+ *
+ * So this marks the row instead. The file stays exactly where it is; the hero
+ * reads the `hero` tag as well as the `hero` folder.
+ *
+ *   php spark hero:images                          list what the hero will show
+ *   php spark hero:images add 12                    by media id
+ *   php spark hero:images add /media/uploads/x.jpg  by path or URL
+ *   php spark hero:images remove 12
+ */
+class HeroImages extends BaseCommand
+{
+    protected $group       = 'TSHDA';
+    protected $name        = 'hero:images';
+    protected $description = 'List, add or remove the images the home page hero shows.';
+    protected $usage       = 'hero:images [list|add|remove] [id|path]';
+
+    public function run(array $params)
+    {
+        $action = $params[0] ?? 'list';
+        $model  = model(MediaModel::class);
+
+        if ($action === 'list') {
+            return $this->list($model);
+        }
+
+        if (! in_array($action, ['add', 'remove'], true)) {
+            CLI::error('Unknown action: ' . $action . '. Use list, add or remove.');
+
+            return 1;
+        }
+
+        $needle = trim((string) ($params[1] ?? ''));
+        if ($needle === '') {
+            CLI::error('Which image? Give a media id, or the path it was uploaded to.');
+
+            return 1;
+        }
+
+        $row = $this->find($model, $needle);
+        if ($row === null) {
+            CLI::error('No image in the media library matches: ' . $needle);
+            CLI::write('Run `php spark hero:images list` to see what is there.', 'dark_gray');
+
+            return 1;
+        }
+
+        $tags = $this->tags($row['tags'] ?? '');
+
+        if ($action === 'add') {
+            if (in_array('hero', $tags, true)) {
+                CLI::write('Already a hero image: ' . $row['path'], 'yellow');
+
+                return 0;
+            }
+            $tags[] = 'hero';
+        } else {
+            $tags = array_values(array_filter($tags, static fn (string $t): bool => $t !== 'hero'));
+        }
+
+        $model->update($row['id'], ['tags' => implode(',', $tags) ?: null]);
+
+        CLI::write(($action === 'add' ? 'Added to' : 'Removed from') . ' the hero: ' . $row['path'], 'green');
+        CLI::newLine();
+
+        return $this->list($model);
+    }
+
+    /** Everything the hero will actually render, in the order it will render it. */
+    private function list(MediaModel $model): int
+    {
+        $rows = $model
+            ->groupStart()
+                ->where('folder', 'hero')
+                ->orLike('tags', 'hero')
+            ->groupEnd()
+            ->like('mime_type', 'image/', 'after')
+            ->orderBy('original_name', 'ASC')
+            ->findAll(50);
+
+        $shown = [];
+        foreach ($rows as $row) {
+            if (($row['folder'] ?? '') !== 'hero'
+                && ! in_array('hero', $this->tags($row['tags'] ?? ''), true)) {
+                continue;
+            }
+            $onDisk = is_file(FCPATH . ltrim((string) $row['path'], '/'));
+            $shown[] = [
+                (string) $row['id'],
+                (string) $row['path'],
+                $onDisk ? 'on disk' : 'MISSING',
+                trim((string) ($row['tags'] ?? '')) ?: '—',
+            ];
+        }
+
+        if ($shown === []) {
+            CLI::write('The hero has no photographs, so it is drawing its own hillside.', 'yellow');
+            CLI::write('Add one with:  php spark hero:images add <id|path>', 'dark_gray');
+
+            return 0;
+        }
+
+        CLI::table($shown, ['id', 'path', 'file', 'tags']);
+        CLI::write(count($shown) . ' image(s); the hero shows the first 6, in this order.', 'dark_gray');
+
+        return 0;
+    }
+
+    /**
+     * Find a media row by id, or by any recognisable form of its path — the
+     * stored `path`, the site-absolute `url`, or just the filename, because the
+     * three get copied out of different places and a command that only accepts
+     * one of them is a command people give up on.
+     */
+    private function find(MediaModel $model, string $needle): ?array
+    {
+        if (ctype_digit($needle)) {
+            $row = $model->find((int) $needle);
+            if ($row !== null) {
+                return $row;
+            }
+        }
+
+        $bare = ltrim($needle, '/');
+
+        return $model->where('path', $bare)->first()
+            ?? $model->where('url', '/' . $bare)->first()
+            ?? $model->like('path', basename($bare))->first();
+    }
+
+    /** @return list<string> */
+    private function tags(?string $raw): array
+    {
+        return array_values(array_filter(array_map(
+            static fn (string $t): string => strtolower(trim($t)),
+            explode(',', (string) $raw)
+        ), static fn (string $t): bool => $t !== ''));
+    }
+}
