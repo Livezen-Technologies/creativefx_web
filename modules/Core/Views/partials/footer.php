@@ -3,7 +3,10 @@
     <div class="container-x grid gap-10 py-16 md:grid-cols-4">
         <div class="md:col-span-2">
             <a href="<?= esc(locale_url('')) ?>" class="inline-flex items-center gap-2.5" aria-label="Kukuleganga Giants Forest — home">
-                <?= view('Modules\\Core\\Views\\partials\\logo', ['class' => 'h-11 w-auto']) ?>
+                <?php // Larger than the header's mark. The footer is where the
+                      // wordmark has room, and at 44px it read as a repeat of the
+                      // header rather than a sign-off. ?>
+                <?= view('Modules\\Core\\Views\\partials\\logo', ['class' => 'h-16 w-auto sm:h-20']) ?>
             </a>
             <p class="mt-4 max-w-sm text-sm leading-relaxed text-white/60">
                 <?php

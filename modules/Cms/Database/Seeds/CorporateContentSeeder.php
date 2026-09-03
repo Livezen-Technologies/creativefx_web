@@ -438,6 +438,18 @@ class CorporateContentSeeder extends Seeder
                                 'image'     => '/media/giantforests/Sinharaja-Tracking-3.jpg',
                                 'image_alt' => $this->loc('A bright orange bracket fungus on a wet rainforest branch'),
                             ],
+                            // A sixth, added at the client's request: five cards
+                            // left a hole in the bottom-right of a three-column
+                            // grid. Boating rather than another waterfall, since
+                            // the second card already covers falls and pools —
+                            // and it is one of the hotel's own activities, so the
+                            // photograph is theirs.
+                            [
+                                'title'     => $this->loc('Boat rides on the reservoir'),
+                                'text'      => $this->loc('Head out on Kukuleganga Reservoir between forested banks, with birdlife along the shore and the hills beyond.'),
+                                'image'     => '/media/giantforests/Boat-Tour-2-Giants-Forests-Hotel.jpg',
+                                'image_alt' => $this->loc('A small boat on a calm river channel with forest along both banks'),
+                            ],
                         ],
                     ]],
                 ]],
