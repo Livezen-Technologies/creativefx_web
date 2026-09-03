@@ -32,13 +32,13 @@ if ($rooms === []) { return; }
             <?php endif; ?>
         </div>
 
-        <div class="mt-12 grid gap-10 sm:grid-cols-2" data-parallax="5">
+        <div class="mt-12 grid gap-10 sm:grid-cols-2">
             <?php foreach ($rooms as $room): ?>
                 <article data-gsap="reveal">
                     <?php if (! empty($room['image'])): ?>
                         <img src="<?= esc(media_src($room['image']), 'attr') ?>"
                              alt="<?= esc(t_field($room['title'] ?? []), 'attr') ?>"
-                             loading="lazy" width="900" height="600"
+                             loading="lazy" width="900" height="600" data-parallax="5"
                              class="aspect-[3/2] w-full rounded-sm object-cover">
                     <?php endif; ?>
                     <h3 class="mt-7 text-2xl font-bold" style="color: rgb(var(--accent))">

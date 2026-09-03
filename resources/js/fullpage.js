@@ -89,6 +89,13 @@ export function initFullpage() {
     const parallax = (panel, dir, entering) => {
       if (reduce || ! panel) return;
       panel.querySelectorAll('[data-parallax]').forEach((el) => {
+        // The two effects must not share an element. animateIn fades a reveal
+        // target in from autoAlpha 0 and this kills tweens before starting its
+        // own, so putting both on one node left it permanently invisible —
+        // four sections shipped with an empty half and no error anywhere.
+        // Skipping is the safe failure: a missing shift rather than missing
+        // content. Put data-parallax on the picture inside the reveal.
+        if (el.dataset.gsap === 'reveal') return;
         const depth = parseFloat(el.dataset.parallax) || 8;
         gsap.killTweensOf(el);
         if (entering) {

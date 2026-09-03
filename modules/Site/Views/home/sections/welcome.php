@@ -19,10 +19,10 @@ if ($c === []) { return; }
 
             <!-- Collage -->
             <?php if (! empty($c['image_a'])): ?>
-                <div class="relative" data-gsap="reveal" data-parallax="7">
+                <div class="relative" data-gsap="reveal">
                     <img src="<?= esc(media_src($c['image_a']), 'attr') ?>"
                          alt="<?= esc(t_field($c['image_a_alt'] ?? []), 'attr') ?>"
-                         loading="lazy" width="902" height="1024"
+                         loading="lazy" width="902" height="1024" data-parallax="6"
                          class="w-full max-w-md rounded-sm object-cover shadow-2xl sm:w-4/5">
                     <?php if (! empty($c['image_b'])): ?>
                         <!-- Pulled up into the first image on wide screens; in normal
@@ -30,7 +30,7 @@ if ($c === []) { return; }
                              hide the subject rather than layer it. -->
                         <img src="<?= esc(media_src($c['image_b']), 'attr') ?>"
                              alt="<?= esc(t_field($c['image_b_alt'] ?? []), 'attr') ?>"
-                             loading="lazy" width="1024" height="576"
+                             loading="lazy" width="1024" height="576" data-parallax="10"
                              class="mt-6 w-full rounded-sm object-cover shadow-2xl
                                     sm:absolute sm:-bottom-10 sm:right-0 sm:mt-0 sm:w-3/5">
                     <?php endif; ?>
