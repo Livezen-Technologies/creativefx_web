@@ -156,6 +156,7 @@ final class SettingsSchema
                 'blurb' => 'Site-wide defaults. Each page has its own title, description and share card under Pages.',
                 'fields' => [
                     ['key' => 'enabled', 'group' => 'analytics', 'label' => 'Measure visits on this server', 'type' => 'checkbox', 'help' => 'Records page views in the site\'s own database for the Analytics screen. No third-party script, no cookie, and no IP address is stored — a visitor is counted by a hash that changes every day. Requests sending Do Not Track are never recorded'],
+                    ['key' => 'retention_days', 'group' => 'analytics', 'label' => 'Keep visit data for', 'type' => 'number', 'placeholder' => '400', 'help' => 'Days. Older rows are deleted by the daily housekeeping task under Scheduled tasks. Minimum 7'],
                     ['key' => 'ga4_measurement_id', 'group' => 'analytics', 'label' => 'Google Analytics 4 ID', 'type' => 'text', 'placeholder' => 'G-XXXXXXXXXX', 'help' => 'Separate from the above, and optional. Blank means no Google tag is loaded at all — no script, no cookie'],
                     ['key' => 'meta_keywords', 'group' => 'seo', 'label' => 'Default keywords', 'type' => 'text', 'help' => 'Comma-separated. Google has not used these for many years; other engines still read them'],
                     ['key' => 'robots', 'group' => 'seo', 'label' => 'Allow search engines', 'type' => 'checkbox', 'help' => 'Off puts a noindex on every page. Use while the site is being prepared — and remember to turn it back on'],

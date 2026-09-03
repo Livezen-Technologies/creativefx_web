@@ -70,6 +70,7 @@ class SettingSeeder extends Seeder
             ['whatsapp', 'hide_on', '', 'string', 1],
             ['seo', 'robots', '1', 'bool', 1],
             ['analytics', 'enabled', '1', 'bool', 1],
+            ['analytics', 'retention_days', '400', 'string', 0],
 
             // Mail and spam protection. All blank or off: until a hotel supplies
             // its own SMTP account and reCAPTCHA keys, the site saves enquiries

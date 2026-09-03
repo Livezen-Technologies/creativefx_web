@@ -22,6 +22,7 @@ $icons = [
     'target'    => 'M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20Zm0-6a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm0-3a1 1 0 1 0 0-2',
     'menu'      => 'M4 6h16M4 12h16M4 18h10',
     'chart'     => 'M3 3v18h18M7 15V9m5 6V5m5 10v-4',
+    'clock'     => 'M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20Zm0-14v5l3 2',
     'bed'       => 'M2 20v-8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v8M2 16h20M6 10V7a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3M2 20v-2',
     'pin'       => 'M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Zm-8 3a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z',
     'settings'  => 'M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm7.4-3a7.4 7.4 0 0 0-.1-1l2-1.6-2-3.4-2.4 1a7.5 7.5 0 0 0-1.7-1L14.8 3h-4l-.4 2.6a7.5 7.5 0 0 0-1.7 1l-2.4-1-2 3.4 2 1.6a7.4 7.4 0 0 0 0 2l-2 1.6 2 3.4 2.4-1a7.5 7.5 0 0 0 1.7 1l.4 2.4h4l.4-2.6a7.5 7.5 0 0 0 1.7-1l2.4 1 2-3.4-2-1.6c.07-.3.1-.7.1-1Z',
@@ -56,6 +57,7 @@ $groups = [
         ['translations', 'Translations', 'admin/translations', 'globe'],
         ['esg', 'ESG Metrics', 'admin/esg-metrics', 'leaf'],
         ['site-settings', 'Settings', 'admin/site-settings', 'settings'],
+        ['tasks', 'Scheduled tasks', 'admin/tasks', 'clock'],
         ['settings', 'Settings (raw)', 'admin/settings', 'settings'],
     ]],
 ];

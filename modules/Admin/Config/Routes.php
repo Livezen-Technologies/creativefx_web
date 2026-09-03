@@ -59,6 +59,10 @@ $routes->group('admin', ['namespace' => 'Modules\Admin\Controllers'], static fun
         // Page builder (block-content editor + structure operations).
         $routes->get('pages/(:num)/content', 'Content::edit/$1');
         $routes->post('pages/(:num)/content', 'Content::update/$1');
+        $routes->get('tasks', 'Tasks::index');
+        $routes->post('tasks/(:segment)/run', 'Tasks::run/$1');
+        $routes->post('tasks/(:segment)/toggle', 'Tasks::toggle/$1');
+
         $routes->get('analytics', 'Analytics::index');
         $routes->get('analytics/export', 'Analytics::export');
 
