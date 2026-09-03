@@ -1,11 +1,26 @@
-<?php helper(['url', 'norlanka']); $locale = current_locale(); ?>
+<?php helper(['url', 'norlanka']); $locale = current_locale();
+
+// Which columns appear, and the small print. Defaults are what the footer did
+// before any of these existed, so an install that has never opened Settings
+// looks exactly as it always has.
+$showNav     = setting('show_nav', '1', 'footer') !== '0';
+$showContact = setting('show_contact', '1', 'footer') !== '0';
+$showReviews = setting('show_reviews', '1', 'footer') !== '0';
+$privacyUrl  = trim((string) setting('privacy_url', '', 'footer'));
+$termsUrl    = trim((string) setting('terms_url', '', 'footer'));
+
+// Columns are counted rather than assumed: with one turned off the remaining
+// three should share the row, not leave a gap where the fourth used to be.
+$columns = 1 + (int) $showNav + (int) $showContact + (int) $showReviews;
+$cols    = ['1' => 'xl:grid-cols-1', '2' => 'xl:grid-cols-2', '3' => 'xl:grid-cols-3', '4' => 'xl:grid-cols-4'][(string) $columns];
+?>
 <footer class="<?= ($pageDark ?? false) ? 'on-dark' : '' ?> border-t border-white/10 bg-brand-black">
     <?php // Four content columns now, and the brand block gives up the double
       // width it had. The single row waits for xl rather than lg: a rating
       // badge measures 250px, and four tracks in a 1024 viewport are 206 each,
       // which cut the pills off inside their own column. Two abreast in
       // between, which is roomier than the row it replaces was. ?>
-<div class="container-x grid gap-10 py-16 sm:grid-cols-2 xl:grid-cols-4 [&>*]:min-w-0">
+<div class="container-x grid gap-10 py-16 sm:grid-cols-2 <?= $cols ?> [&>*]:min-w-0">
         <div>
             <a href="<?= esc(locale_url('')) ?>" class="inline-flex items-center gap-2.5" aria-label="Kukuleganga Giants Forest — home">
                 <?php // Larger than the header's mark. The footer is where the
@@ -38,6 +53,7 @@
             </div>
         </div>
 
+        <?php if ($showNav): ?>
         <div>
             <h4 class="text-xs font-semibold uppercase tracking-widest text-white/50"><?= esc(lang('Site.footer.explore')) ?></h4>
             <?php // The site's real pages, from the same list the header uses. This
@@ -57,7 +73,9 @@
                 <?php endforeach; ?>
             </ul>
         </div>
+        <?php endif; ?>
 
+        <?php if ($showContact): ?>
         <div>
             <h4 class="text-xs font-semibold uppercase tracking-widest text-white/50"><?= esc(lang('Site.footer.connect')) ?></h4>
             <?php // Contact details, each rendered only when it holds something.
@@ -89,7 +107,9 @@
                 <?php endif; ?>
             </ul>
         </div>
+        <?php endif; ?>
 
+        <?php if ($showReviews): ?>
         <?php // The ratings, where somebody who has read to the bottom of the
               // page is deciding whether to trust it. Same partial as the hero,
               // stacked and a size down to fit a footer column; it renders
@@ -97,17 +117,33 @@
         <div>
             <h4 class="text-xs font-semibold uppercase tracking-widest text-white/50"><?= esc(lang('Site.reviews.footer_heading')) ?></h4>
             <div class="mt-4">
-                <?= view('Modules\\Core\\Views\\partials\\review_badges', ['layout' => 'stack', 'size' => 'sm']) ?>
+                <?= view('Modules\\Core\\Views\\partials\\review_badges', ['layout' => 'stack', 'size' => 'sm'], ['saveData' => false]) ?>
             </div>
         </div>
+        <?php endif; ?>
     </div>
     <div class="border-t border-white/10">
         <div class="container-x flex flex-col items-center justify-between gap-2 py-6 text-xs text-white/40 sm:flex-row">
             <?php // The brand was hard-coded here, which is why it survived every
                   // settings and translation fix: it was in neither. It follows
                   // site_name now, like the loading screen and the logo. ?>
-            <p>&copy; <?= date('Y') ?> <?= esc(setting('site_name', '')) ?>. <?= esc(lang('Site.footer.rights')) ?></p>
-            <p><?= esc(lang('Site.footer.built')) ?></p>
+            <?php // A custom copyright line replaces the default wholesale. The
+                  // year is still substituted, because a hard-coded one is wrong
+                  // every January and nobody notices until somebody else does. ?>
+            <?php $copyright = trim((string) setting('copyright', '', 'footer')); ?>
+            <p><?= $copyright !== ''
+                ? esc(str_replace(['{year}', '{name}'], [date('Y'), (string) setting('site_name', '')], $copyright))
+                : '© ' . date('Y') . ' ' . esc(setting('site_name', '')) . '. ' . esc(lang('Site.footer.rights')) ?></p>
+
+            <div class="flex flex-wrap items-center justify-center gap-x-5 gap-y-1 sm:justify-end">
+                <?php if ($privacyUrl !== ''): ?>
+                    <a href="<?= esc(menu_link($privacyUrl), 'attr') ?>" class="hover:text-white/70"><?= esc(lang('Site.footer.privacy')) ?></a>
+                <?php endif; ?>
+                <?php if ($termsUrl !== ''): ?>
+                    <a href="<?= esc(menu_link($termsUrl), 'attr') ?>" class="hover:text-white/70"><?= esc(lang('Site.footer.terms')) ?></a>
+                <?php endif; ?>
+                <p><?= esc(lang('Site.footer.built')) ?></p>
+            </div>
         </div>
     </div>
 </footer>

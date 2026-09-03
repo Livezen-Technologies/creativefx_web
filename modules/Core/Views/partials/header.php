@@ -5,6 +5,16 @@ $currentSlug = $parts[1] ?? '';
 
 $nav = site_nav('header');
 
+// Header behaviour, all editable under Settings → Header. Defaults match what
+// the site did before any of them existed, so an install that has never opened
+// the screen behaves exactly as it always has.
+$sticky      = setting('sticky', '1', 'header') !== '0';
+$showSocials = setting('show_socials', '1', 'header') !== '0';
+$ctaLabel    = trim((string) setting('cta_label', '', 'header'));
+$ctaUrl      = trim((string) setting('cta_url', '', 'header'));
+// "booking" is a word, not an address: it means open the dialog in place.
+$ctaIsModal  = strtolower($ctaUrl) === 'booking';
+
 // An item is current if it is the page, or if the open page sits inside its
 // dropdown — otherwise a parent goes dim the moment one of its children is
 // opened, which reads as having navigated away from it.
@@ -25,7 +35,10 @@ $isCurrent = static function (array $item) use ($currentSlug): bool {
     @scroll.window="onScroll()"
     @keydown.escape.window="mobile=false"
     :class="scrolled ? 'is-scrolled' : ''"
-    class="site-header <?= ($pageDark ?? false) ? 'on-dark' : '' ?> fixed inset-x-0 top-0 z-50"
+    <?php // Not sticky means the bar scrolls away with the page. absolute rather
+          // than static so it still sits over the hero rather than pushing it
+          // down — the hero is built to have the header on top of it. ?>
+    class="site-header <?= ($pageDark ?? false) ? 'on-dark' : '' ?> <?= $sticky ? 'fixed' : 'absolute' ?> inset-x-0 top-0 z-50"
 >
     <!-- Top shade: a soft light wash that keeps the dark logo/nav legible over
          hero media at the top of the page; fades out once the solid header kicks in. -->
@@ -123,7 +136,7 @@ $isCurrent = static function (array $item) use ($currentSlug): bool {
                   // centring at exactly 1280 — measured, and about 1% of the
                   // width. Below xl there is genuinely no room, and the mobile
                   // menu carries them. ?>
-            <div class="hidden xl:block">
+            <div class="<?= $showSocials ? 'hidden xl:block' : 'hidden' ?>">
                 <?php // view(), not $this->include(): include()'s second argument
                       // is render options, not view data, so every array passed
                       // to it here was quietly discarded. That is why the mobile
@@ -138,6 +151,18 @@ $isCurrent = static function (array $item) use ($currentSlug): bool {
                     'only'    => ['Facebook', 'WhatsApp'],
                 ], ['saveData' => false]) ?>
             </div>
+            <?php if ($ctaLabel !== ''): ?>
+                <?php // A booking button in the bar, off until somebody gives it a
+                      // label. It appears from lg, where the row has the width for
+                      // it; below that the mobile menu and the hero both already
+                      // carry the same call to action. ?>
+                <a href="<?= esc($ctaIsModal ? locale_url('contact') : menu_link($ctaUrl), 'attr') ?>"
+                   <?= $ctaIsModal ? 'x-data @click.prevent="$dispatch(\'booking-open\')"' : '' ?>
+                   class="hidden rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-widest transition hover:opacity-90 lg:inline-flex"
+                   style="background: rgb(var(--accent-fill)); color: rgb(var(--accent-ink))">
+                    <?= esc($ctaLabel) ?>
+                </a>
+            <?php endif; ?>
             <?= $this->include('Modules\Core\Views\partials\theme_toggle') ?>
             <?= $this->include('Modules\Core\Views\partials\lang_switcher') ?>
             <!-- Mobile toggle -->

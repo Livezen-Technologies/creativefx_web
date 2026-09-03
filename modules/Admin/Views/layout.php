@@ -53,7 +53,8 @@ $groups = [
         ['media', 'Media Library', 'admin/media', 'image'],
         ['translations', 'Translations', 'admin/translations', 'globe'],
         ['esg', 'ESG Metrics', 'admin/esg-metrics', 'leaf'],
-        ['settings', 'Settings', 'admin/settings', 'settings'],
+        ['site-settings', 'Settings', 'admin/site-settings', 'settings'],
+        ['settings', 'Settings (raw)', 'admin/settings', 'settings'],
     ]],
 ];
 

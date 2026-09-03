@@ -21,12 +21,18 @@
  */
 $class = $class ?? 'h-9 w-auto';
 $alt   = setting('site_name', '');
+
+// Both colourways are settings, so replacing the logo is an upload rather than
+// a deploy. The shipped files are the fallback: a blank setting must not leave
+// the header with an empty box where the mark should be.
+$light = (string) setting('logo_color', '', 'brand') ?: '/media/giantforests/Kukuleganga-Giants-Forest-Logo-1.png';
+$dark  = (string) setting('logo_white', '', 'brand') ?: '/media/giantforests/Kukuleganga-Giants-Forest-Logo-white.png';
 ?>
 <span class="brand-logo">
     <img class="brand-logo__on-light <?= esc($class, 'attr') ?>"
-         src="<?= esc(media_src('/media/giantforests/Kukuleganga-Giants-Forest-Logo-1.png'), 'attr') ?>"
+         src="<?= esc(media_src($light), 'attr') ?>"
          alt="<?= esc($alt, 'attr') ?>" width="300" height="200">
     <img class="brand-logo__on-dark <?= esc($class, 'attr') ?>"
-         src="<?= esc(media_src('/media/giantforests/Kukuleganga-Giants-Forest-Logo-white.png'), 'attr') ?>"
+         src="<?= esc(media_src($dark), 'attr') ?>"
          alt="" aria-hidden="true" width="300" height="200">
 </span>

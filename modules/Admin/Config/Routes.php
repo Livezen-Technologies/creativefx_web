@@ -49,6 +49,12 @@ $routes->group('admin', ['namespace' => 'Modules\Admin\Controllers'], static fun
         // Page builder (block-content editor + structure operations).
         $routes->get('pages/(:num)/content', 'Content::edit/$1');
         $routes->post('pages/(:num)/content', 'Content::update/$1');
+        // The guided settings screen. The raw key/value CRUD stays at
+        // admin/settings for anything this form does not declare.
+        $routes->get('site-settings', 'SiteSettings::index');
+        $routes->get('site-settings/(:segment)', 'SiteSettings::index/$1');
+        $routes->post('site-settings/(:segment)', 'SiteSettings::save/$1');
+
         $routes->post('pages/(:num)/content/reset', 'Content::resetToDefault/$1');
         $routes->post('pages/(:num)/sections', 'Content::addSection/$1');
         $routes->post('sections/(:num)/move', 'Content::moveSection/$1');

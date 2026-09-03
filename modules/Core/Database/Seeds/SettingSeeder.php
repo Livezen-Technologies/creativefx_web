@@ -48,6 +48,39 @@ class SettingSeeder extends Seeder
             ['social', 'facebook_recommend', '100', 'string', 1],
             ['social', 'facebook_review_count', '22', 'string', 1],
             ['analytics', 'ga4_measurement_id', '', 'string', 0],
+
+            // Header, footer and chat-button behaviour. Every default here is
+            // what the site did before these were settings, so seeding them
+            // changes nothing on a site that has never opened the screen — it
+            // only gives the Settings form real rows to edit.
+            ['header', 'sticky', '1', 'bool', 1],
+            ['header', 'show_socials', '1', 'bool', 1],
+            ['header', 'cta_label', '', 'string', 1],
+            ['header', 'cta_url', 'booking', 'string', 1],
+            ['footer', 'show_nav', '1', 'bool', 1],
+            ['footer', 'show_contact', '1', 'bool', 1],
+            ['footer', 'show_reviews', '1', 'bool', 1],
+            ['footer', 'copyright', '', 'string', 1],
+            ['footer', 'privacy_url', '', 'string', 1],
+            ['footer', 'terms_url', '', 'string', 1],
+            ['whatsapp', 'enabled', '1', 'bool', 1],
+            ['whatsapp', 'label', '', 'string', 1],
+            ['whatsapp', 'message', '', 'string', 1],
+            ['whatsapp', 'position', 'left', 'string', 1],
+            ['whatsapp', 'hide_on', '', 'string', 1],
+            ['seo', 'robots', '1', 'bool', 1],
+            ['seo', 'meta_keywords', '', 'string', 1],
+            // Blank means "use the files that ship with the build"; an upload
+            // in the console replaces them without a deploy.
+            ['brand', 'logo_color', '', 'string', 1],
+            ['brand', 'logo_white', '', 'string', 1],
+            ['brand', 'favicon', '', 'string', 1],
+            ['brand', 'og_default', '', 'string', 1],
+            ['general', 'site_url', '', 'string', 0],
+            ['general', 'admin_email', '', 'string', 0],
+            ['general', 'timezone', 'Asia/Colombo', 'string', 1],
+            ['general', 'date_format', 'j M Y', 'string', 1],
+            ['general', 'currency', 'LKR', 'string', 1],
         ];
 
         $rows = [];

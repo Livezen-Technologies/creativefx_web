@@ -18,16 +18,42 @@
 $number = preg_replace('/\D+/', '', (string) setting('whatsapp', '', 'contact'));
 if ($number === '') { return; }
 
+// Everything below is editable under Settings → WhatsApp button, and every
+// default is what the button did before the settings existed.
+if (setting('enabled', '1', 'whatsapp') === '0') { return; }
+
+// Pages the button is kept off, by slug. A hotel might not want a chat bubble
+// over its gallery, or on the contact page that already offers three ways to
+// get in touch.
+$hideOn = array_filter(array_map(
+    static fn (string $s): string => strtolower(trim($s)),
+    explode(',', (string) setting('hide_on', '', 'whatsapp')),
+));
+if ($hideOn !== []) {
+    $parts = explode('/', trim(uri_string(), '/'));
+    $slug  = strtolower($parts[1] ?? 'home');
+    if (in_array($slug, $hideOn, true)) { return; }
+}
+
 $greeting = trim((string) setting('site_name', ''));
-$prefill  = $greeting !== ''
-    ? sprintf('Hello %s, I would like to ask about a room.', $greeting)
-    : 'Hello, I would like to ask about a room.';
+$prefill  = trim((string) setting('message', '', 'whatsapp'));
+if ($prefill === '') {
+    $prefill = $greeting !== ''
+        ? sprintf('Hello %s, I would like to ask about a room.', $greeting)
+        : 'Hello, I would like to ask about a room.';
+}
+
+$label = trim((string) setting('label', '', 'whatsapp')) ?: lang('Site.whatsapp.hint');
+
+// Bottom-left by default: the panel engine's section dots run down the
+// right-hand edge of the home page, and a floating button there sits on them.
+$side = setting('position', 'left', 'whatsapp') === 'right' ? 'right-5' : 'left-5';
+// The label sits on whichever side has room for it.
+$flow = $side === 'right-5' ? 'flex-row' : 'flex-row-reverse';
 
 $href = 'https://wa.me/' . $number . '?text=' . rawurlencode($prefill);
 ?>
-<?php // Bottom-left. The panel engine's section dots run down the right-hand
-      // edge of the home page, and a floating button there sat on top of them. ?>
-<div x-data="{ hint: false }" class="fixed bottom-5 left-5 z-40 flex flex-row-reverse items-center gap-3 print:hidden">
+<div x-data="{ hint: false }" class="fixed bottom-5 <?= $side ?> z-40 flex <?= $flow ?> items-center gap-3 print:hidden">
 
     <!-- The label is not a tooltip: it is readable without hover, on the side
          where there is room for it, and it is hidden from assistive tech
@@ -35,7 +61,7 @@ $href = 'https://wa.me/' . $number . '?text=' . rawurlencode($prefill);
     <span x-show="hint" x-cloak x-transition.opacity aria-hidden="true"
           class="hidden whitespace-nowrap rounded-full bg-brand-black/95 px-4 py-2 text-xs font-semibold
                  uppercase tracking-widest shadow-lg backdrop-blur sm:block">
-        <?= esc(lang('Site.whatsapp.hint')) ?>
+        <?= esc($label) ?>
     </span>
 
     <a href="<?= esc($href, 'attr') ?>" target="_blank" rel="noopener"

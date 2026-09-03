@@ -18,6 +18,8 @@ return [
         // "Follow Us" over an email address until the two were separated.
         'connect' => 'Contact',
         'rights'  => 'All rights reserved.',
+        'privacy' => 'Privacy policy',
+        'terms'   => 'Terms',
         'built'   => 'Kukuleganga, Kalawana · at the edge of the Sinharaja rainforest',
     ],
     'experience' => [
