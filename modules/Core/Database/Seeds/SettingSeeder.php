@@ -26,12 +26,19 @@ class SettingSeeder extends Seeder
             ['contact', 'address', 'Dam Site, Project Road, Kukuleganga, Kalawana 70450, Sri Lanka', 'string', 1],
             ['social', 'facebook', 'https://www.facebook.com/giantsforestkukuleganga/', 'string', 1],
             ['social', 'instagram', '', 'string', 1],
-            // The rating badge in the hero. Blank rating hides the badge, so a
-            // stale or unverified score is never published by default; an
-            // editor fills these in from the hotel's own Google listing.
+            // The rating badge in the hero. Both numbers go stale on their own —
+            // the count climbs whenever a guest writes something and the score
+            // moves with it — so they are settings an editor can correct in the
+            // console rather than constants that need a deploy. A blank rating
+            // hides the badge entirely.
+            //
+            // These two were read off a search summary of the hotel's Google
+            // listing rather than the listing itself, which is a JavaScript
+            // application this build cannot render. Worth checking against the
+            // Business Profile before they drift.
             ['social', 'google_reviews_url', 'https://www.google.com/travel/search?q=Giants%20Forest%20-%20Kukuleganga&ap=ugEHcmV2aWV3cw', 'string', 1],
-            ['social', 'google_rating', '', 'string', 1],
-            ['social', 'google_review_count', '', 'string', 1],
+            ['social', 'google_rating', '4.7', 'string', 1],
+            ['social', 'google_review_count', '125', 'string', 1],
             ['analytics', 'ga4_measurement_id', '', 'string', 0],
         ];
 
