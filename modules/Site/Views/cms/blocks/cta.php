@@ -31,7 +31,7 @@
                       // parsed, bound to nothing, and the link simply navigated.
                       // An empty x-data makes the anchor its own root, which costs
                       // nothing and works wherever the block is placed. ?>
-                   <?= ($content['modal'] ?? '') === 'booking' ? 'x-data @click.prevent="$dispatch(\'booking-open\')"' : '' ?>
+                   <?= booking_open($content) ?>
                    <?= str_ends_with($href, '.pdf') ? 'target="_blank" rel="noopener"' : '' ?>
                    class="btn-brand"><?= esc(t_field($content['button'])) ?></a>
                 <?php // An optional second, quieter action beside the first. Blocks

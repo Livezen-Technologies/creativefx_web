@@ -13,7 +13,7 @@
               // block asks for it. It stays a real link to the same destination, so
               // without JavaScript it still goes somewhere useful. ?>
         <a href="<?= esc(locale_url($c['url'] ?? 'contact')) ?>"
-           <?= ($c['modal'] ?? '') === 'booking' ? 'x-data @click.prevent="$dispatch(\'booking-open\')"' : '' ?>
+           <?= booking_open($c) ?>
            class="btn-brand mt-8"><?= esc(t_field($c['button'] ?? [])) ?></a>
     </div>
 </section>

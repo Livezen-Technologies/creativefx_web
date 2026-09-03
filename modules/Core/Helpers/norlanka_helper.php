@@ -344,3 +344,26 @@ if (! function_exists('source_link')) {
         );
     }
 }
+
+if (! function_exists('booking_open')) {
+    /**
+     * Attributes that make a link open the booking dialog instead of navigating.
+     *
+     * The same three-line ternary had been copied into every template that
+     * renders a call to action, which is how two of them ended up without it:
+     * the room cards each carry a Book Now that walked the visitor to the
+     * contact page while every other Book Now on the site opened the form in
+     * place. One function, called from every button, cannot drift like that.
+     *
+     * The href stays on the anchor and the default is only prevented once
+     * Alpine is running, so the contact page is still where it goes without
+     * JavaScript. x-data is bare and local because $dispatch walks up for an
+     * Alpine scope and a plain page gives it none.
+     */
+    function booking_open(array $content): string
+    {
+        return ($content['modal'] ?? '') === 'booking'
+            ? 'x-data @click.prevent="$dispatch(\'booking-open\')"'
+            : '';
+    }
+}

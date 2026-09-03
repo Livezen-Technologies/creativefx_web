@@ -46,7 +46,8 @@ if ($rooms === []) { return; }
                     </h3>
                     <p class="mt-4 leading-relaxed text-white/70"><?= esc(t_field($room['text'] ?? [])) ?></p>
                     <?php if (! empty($room['button'])): ?>
-                        <a href="<?= esc(locale_url($room['url'] ?? 'contact')) ?>" class="btn-brand mt-7">
+                        <a href="<?= esc(locale_url($room['url'] ?? 'contact')) ?>" class="btn-brand mt-7"
+                           <?= booking_open($room) ?>>
                             <?= esc(t_field($room['button'])) ?>
                         </a>
                     <?php endif; ?>

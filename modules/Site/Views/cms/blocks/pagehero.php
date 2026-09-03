@@ -58,7 +58,7 @@ $hasBg      = $hasVideo || $hasImage;
             $h = ($u !== '' && ($u[0] === '/' || str_starts_with($u, 'http'))) ? $u : locale_url($u); ?>
             <div class="mt-9" data-gsap="reveal">
                 <a href="<?= esc($h) ?>"
-                   <?= ($content['modal'] ?? '') === 'booking' ? 'x-data @click.prevent="$dispatch(\'booking-open\')"' : '' ?>
+                   <?= booking_open($content) ?>
                    class="btn-brand btn-lg"><?= esc(t_field($content['button'])) ?></a>
             </div>
         <?php endif; ?>

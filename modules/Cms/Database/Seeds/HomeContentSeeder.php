@@ -158,6 +158,7 @@ class HomeContentSeeder extends Seeder
                 'image'  => '/media/giantforests/Deluxe-Room-Giants-forest.jpg',
                 'button' => ['en' => 'Book Now'],
                 'url'    => 'contact',
+                'modal'  => 'booking',
             ],
             [
                 'title'  => ['en' => 'Standard Room'],
@@ -165,6 +166,7 @@ class HomeContentSeeder extends Seeder
                 'image'  => '/media/giantforests/Single-Room-Giants-forest.jpg',
                 'button' => ['en' => 'Book Now'],
                 'url'    => 'contact',
+                'modal'  => 'booking',
             ],
         ];
         foreach ($roomData as $i => $room) {
@@ -208,8 +210,10 @@ class HomeContentSeeder extends Seeder
         $addBlock($film, 'film', [
             'eyebrow'    => ['en' => 'See before you feel'],
             'title'      => ['en' => 'Our Captions at the Hotel Premises'],
-            'youtube_id' => 'hOcQxQi61d0',
-            'poster'     => '/media/giantforests/Gallery-Giants-Forests-Hotel.jpg',
+            // The film itself, not an embed of it. See the film section for why.
+            'video'      => '/media/video/giants-forest-film.mp4',
+            'video_webm' => '/media/video/giants-forest-film.webm',
+            'poster'     => '/media/video/giants-forest-film-poster.jpg',
             'button'     => ['en' => 'View Gallery'],
             'url'        => 'gallery',
         ], 0);
