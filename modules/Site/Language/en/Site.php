@@ -229,12 +229,43 @@ return [
         'show_all' => 'Show all',
     ],
 
-    // Google rating badge. The numbers come from settings, not from here, so
-    // only the wording around them is translated.
+    // Guest-rating badges. The numbers come from settings, not from here, so
+    // only the wording around them is translated. Google publishes a five-star
+    // average; Facebook publishes the share of reviewers who recommend the
+    // place, so the two read differently on purpose.
     'reviews' => [
-        'count'       => '%s Google reviews',
-        'badge'       => 'Rated %s out of 5 on Google.',
-        'badge_count' => 'Rated %s out of 5 from %s Google reviews.',
-        'badge_hint'  => 'Read them on Google — opens in a new tab.',
+        'count_google'        => '%s Google reviews',
+        'count_facebook'      => 'recommend · %s reviews',
+        'recommend'           => 'recommend',
+        'aria_google'         => 'Rated %s out of 5 on Google.',
+        'aria_google_count'   => 'Rated %s out of 5 from %s Google reviews.',
+        'aria_facebook'       => '%s%% of Facebook reviewers recommend us.',
+        'aria_facebook_count' => '%s%% of %s Facebook reviewers recommend us.',
+        'badge_hint'          => 'Read the reviews — opens in a new tab.',
+        'footer_heading'      => 'Guest reviews',
+    ],
+
+    // The 404 page. Apologetic without being cute: somebody has hit a dead end
+    // and wants a way on, not a joke about it.
+    'notfound' => [
+        'eyebrow'    => 'Page not found',
+        'title'      => 'This path does not lead anywhere.',
+        'body'       => 'The page you were looking for has moved, or the link that brought you here was wrong. Everything else is still where it was.',
+        'home'       => 'Back to the hotel',
+        'try'        => 'Or try one of these',
+        'meta_title' => 'Page not found — Kukuleganga Giants Forest',
+        'meta'       => 'That page could not be found. Browse rooms, dining, things to do and how to reach the hotel.',
+    ],
+
+    // The site's own video player, which replaced a YouTube embed.
+    'video' => [
+        'play'            => 'Play the film',
+        'pause'           => 'Pause',
+        'mute'            => 'Mute',
+        'unmute'          => 'Unmute',
+        'seek'            => 'Seek through the film',
+        'fullscreen'      => 'Full screen',
+        'exit_fullscreen' => 'Leave full screen',
+        'close'           => 'Close the film',
     ],
 ];

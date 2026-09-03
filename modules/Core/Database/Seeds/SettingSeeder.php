@@ -39,6 +39,12 @@ class SettingSeeder extends Seeder
             ['social', 'google_reviews_url', 'https://www.google.com/travel/search?q=Giants%20Forest%20-%20Kukuleganga&ap=ugEHcmV2aWV3cw', 'string', 1],
             ['social', 'google_rating', '4.7', 'string', 1],
             ['social', 'google_review_count', '125', 'string', 1],
+            // Facebook stopped publishing a star average years ago and shows the
+            // share of reviewers who recommend the place instead, so the badge
+            // carries a percentage, not a score out of five.
+            ['social', 'facebook_reviews_url', 'https://www.facebook.com/giantsforestkukuleganga/reviews', 'string', 1],
+            ['social', 'facebook_recommend', '100', 'string', 1],
+            ['social', 'facebook_review_count', '22', 'string', 1],
             ['analytics', 'ga4_measurement_id', '', 'string', 0],
         ];
 

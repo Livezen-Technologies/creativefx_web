@@ -162,8 +162,11 @@ $splitWords = static function (string $text): string {
                 <?= esc(lang('Site.home.hero.primary')) ?>
                 <svg class="ml-2 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </a>
+            <?php // Opens the film over the page rather than walking the reader
+                  // down to it. The href still points at the section, so without
+                  // JavaScript the link goes somewhere real. ?>
             <a href="#film" class="group inline-flex items-center gap-3 text-sm font-semibold uppercase tracking-widest text-white/85 transition hover:text-white"
-               @click="$dispatch('film-play')">
+               @click.prevent="$dispatch('film-open')">
                 <span class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/30 transition group-hover:border-brand-red group-hover:bg-brand-red/10">
                     <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5l11 7-11 7z"/></svg>
                 </span>
@@ -175,7 +178,7 @@ $splitWords = static function (string $text): string {
               // question the buttons just asked. Renders only when a rating and
               // a link are both configured. ?>
         <div class="mt-8" data-gsap="reveal">
-            <?= view('Modules\\Core\\Views\\partials\\google_rating') ?>
+            <?= view('Modules\\Core\\Views\\partials\\review_badges', ['layout' => 'row', 'size' => 'md']) ?>
         </div>
 
         <?php // The single rule was a lead-in to left-aligned copy. Centred, one

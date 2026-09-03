@@ -1,7 +1,12 @@
 <?php helper(['url', 'norlanka']); $locale = current_locale(); ?>
 <footer class="<?= ($pageDark ?? false) ? 'on-dark' : '' ?> border-t border-white/10 bg-brand-black">
-    <div class="container-x grid gap-10 py-16 md:grid-cols-4 [&>*]:min-w-0">
-        <div class="md:col-span-2">
+    <?php // Four content columns now, and the brand block gives up the double
+      // width it had. The single row waits for xl rather than lg: a rating
+      // badge measures 250px, and four tracks in a 1024 viewport are 206 each,
+      // which cut the pills off inside their own column. Two abreast in
+      // between, which is roomier than the row it replaces was. ?>
+<div class="container-x grid gap-10 py-16 sm:grid-cols-2 xl:grid-cols-4 [&>*]:min-w-0">
+        <div>
             <a href="<?= esc(locale_url('')) ?>" class="inline-flex items-center gap-2.5" aria-label="Kukuleganga Giants Forest — home">
                 <?php // Larger than the header's mark. The footer is where the
                       // wordmark has room, and at 44px it read as a repeat of the
@@ -70,6 +75,17 @@
                     <li><a href="mailto:<?= esc($mail, 'attr') ?>" class="break-words hover:text-white"><?= esc($mail) ?></a></li>
                 <?php endif; ?>
             </ul>
+        </div>
+
+        <?php // The ratings, where somebody who has read to the bottom of the
+              // page is deciding whether to trust it. Same partial as the hero,
+              // stacked and a size down to fit a footer column; it renders
+              // nothing at all when neither network is configured. ?>
+        <div>
+            <h4 class="text-xs font-semibold uppercase tracking-widest text-white/50"><?= esc(lang('Site.reviews.footer_heading')) ?></h4>
+            <div class="mt-4">
+                <?= view('Modules\\Core\\Views\\partials\\review_badges', ['layout' => 'stack', 'size' => 'sm']) ?>
+            </div>
         </div>
     </div>
     <div class="border-t border-white/10">
