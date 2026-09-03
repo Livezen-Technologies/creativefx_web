@@ -55,3 +55,10 @@ $routes->get('(:locale)', 'Home::index', $siteOptions);
 
 // CMS catch-all: /{locale}/{slug} -> PageController::show($slug)  ($2 = slug)
 $routes->get('(:locale)/(:segment)', 'PageController::show/$2', $siteOptions);
+
+// Anything that matched nothing at all. The framework's own 404 view is a
+// standalone document with its own inline stylesheet, so it was the one page on
+// the site that did not look like the site — shown at the moment a visitor is
+// deciding whether to keep going. Routing it through a controller puts it back
+// inside the normal request: layout, header, footer, theme and a way onward.
+$routes->set404Override('Modules\Site\Controllers\NotFound::index');
