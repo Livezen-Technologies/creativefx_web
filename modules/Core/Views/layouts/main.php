@@ -105,13 +105,21 @@ $lastUpdated = $lastUpdated ?? ($page['updated_at'] ?? null);
         </div>
     </div>
 
-    <?= $this->include('Modules\Core\Views\partials\header', ['pageDark' => $pageDark ?? false]) ?>
+    <?= view('Modules\Core\Views\partials\header', ['pageDark' => $pageDark ?? false], ['saveData' => false]) ?>
 
     <main id="main">
         <?= $this->renderSection('content') ?>
     </main>
 
-    <?= $this->include('Modules\Core\Views\partials\footer', ['pageDark' => $pageDark ?? false]) ?>
+    <?php // view() rather than $this->include(): include's second argument is
+          // render options, not data, so the variables below were never reaching
+          // the partial and the last-updated stamp never rendered. saveData is
+          // off so neither partial can leak its locals into the next render on
+          // the shared renderer. ?>
+    <?= view('Modules\Core\Views\partials\footer', [
+        'pageDark'    => $pageDark ?? false,
+        'lastUpdated' => $lastUpdated,
+    ], ['saveData' => false]) ?>
 
     <?php // Both site-wide. A chat button that exists only where somebody
           // remembered to include it is one a visitor cannot rely on, and the

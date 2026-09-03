@@ -148,7 +148,7 @@ $isCurrent = static function (array $item) use ($currentSlug): bool {
                       // came back carrying this row's two. ?>
                 <?= view('Modules\Core\Views\partials\social_links', [
                     'compact' => true,
-                    'only'    => ['Facebook', 'WhatsApp'],
+                    'only'    => ['Facebook', 'YouTube'],
                 ], ['saveData' => false]) ?>
             </div>
             <?php if ($ctaLabel !== ''): ?>

@@ -1,5 +1,8 @@
 <?php helper(['url', 'norlanka']); $locale = current_locale();
 
+// Passed by the layout; defaulted so the partial can be rendered on its own.
+$lastUpdated = $lastUpdated ?? null;
+
 // Which columns appear, and the small print. Defaults are what the footer did
 // before any of these existed, so an install that has never opened Settings
 // looks exactly as it always has.

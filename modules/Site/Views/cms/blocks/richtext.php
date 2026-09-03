@@ -9,7 +9,7 @@
                 <h2 class="text-2xl font-semibold sm:text-3xl"><?= esc(t_field($content['title'])) ?></h2>
             <?php endif; ?>
             <?php if (! empty($content['text'])): ?>
-                <div class="mt-4 leading-relaxed text-white/70"><?= rich_text($content['text']) ?></div>
+                <div class="mt-4 leading-relaxed text-white/80"><?= rich_text($content['text']) ?></div>
             <?php endif; ?>
             <?php // Optional citation. Renders only when the block carries one, so
                   // every page already using this block is unchanged. ?>

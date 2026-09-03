@@ -16,29 +16,28 @@ $routes->group('admin', ['namespace' => 'Modules\Admin\Controllers'], static fun
 
         // Generic CRUD resources: segment => controller.
         $resources = [
-            'pages'       => 'Pages',
-            'menu-items'  => 'MenuItems',
-            'rooms'       => 'Rooms',
-            'locations'   => 'Locations',
-            'settings'    => 'Settings',
-            'contacts'    => 'Contacts',
-            'leads'       => 'Leads',
+            'pages'               => 'Pages',
+            'menu-items'          => 'MenuItems',
             'news-categories'     => 'NewsCategories',
             'news-posts'          => 'NewsPosts',
-            // Retired with the apparel and manufacturing build this codebase
-            // started as: a product catalogue, a 3D showroom and a careers
-            // portal, none of which this hotel routes on the public site. The
-            // controllers, models and tables are untouched — only the way in
-            // is gone — so restoring one is a line here and a line in the
-            // sidebar rather than a rebuild.
-            //   'categories' => 'Categories',
-            //   'products'   => 'Products',
-            //   'showroom-categories' => 'ShowroomCategories',
-            //   'showroom-products'   => 'ShowroomProducts',
-            //   'jobs'       => 'Jobs',
-            //   'esg-metrics' => 'EsgMetrics',   (sustainability reporting for a
-            //     garment manufacturer: water, energy and emissions per unit of
-            //     production, with no public page rendering any of it)
+            'jobs'                => 'Jobs',
+            'settings'            => 'Settings',
+            'contacts'            => 'Contacts',
+            'leads'               => 'Leads',
+
+            // The Authority's own subject matter.
+            'notices'             => 'Notices',
+            'services'            => 'Services',
+            'documents'           => 'Documents',
+            'document-categories' => 'DocumentCategories',
+            'faqs'                => 'Faqs',
+            'offices'             => 'Offices',
+            'staff'               => 'Staff',
+            'statistics'          => 'Statistics',
+            'programmes'          => 'Programmes',
+            'societies'           => 'Societies',
+            'discussion-topics'   => 'DiscussionTopics',
+            'org-links'           => 'OrgLinks',
         ];
         foreach ($resources as $seg => $ctrl) {
             $routes->get($seg, $ctrl . '::index');
@@ -49,14 +48,36 @@ $routes->group('admin', ['namespace' => 'Modules\Admin\Controllers'], static fun
             $routes->post($seg . '/(:num)/delete', $ctrl . '::delete/$1');
         }
 
-        // The HR recruitment dashboard is retired with the careers portal it
-        // belonged to — the public /careers routes were commented out when this
-        // became a hotel, so the pipeline had no applications to receive.
-        //   $routes->get('applications', 'Applications::index');
-        //   $routes->get('applications/export', 'Applications::export');
-        //   $routes->get('applications/(:num)', 'Applications::show/$1');
-        //   $routes->post('applications/(:num)', 'Applications::update/$1');
-        //   $routes->get('applications/(:num)/cv', 'Applications::download/$1');
+        // The recruitment pipeline: applications received against the
+        // vacancies in Clause 3.9 G.
+        $routes->get('applications', 'Applications::index');
+        $routes->get('applications/export', 'Applications::export');
+        $routes->get('applications/(:num)', 'Applications::show/$1');
+        $routes->post('applications/(:num)', 'Applications::update/$1');
+        $routes->get('applications/(:num)/cv', 'Applications::download/$1');
+
+        // Queues rather than CRUD: each of these is a decision an officer
+        // makes about something a member of the public sent in, not a record
+        // they author, so they get their own screens.
+        $routes->get('bookings', 'Bookings::index');
+        $routes->post('bookings/(:num)', 'Bookings::update/$1');
+
+        $routes->get('comments', 'Comments::index');
+        $routes->post('comments/(:num)', 'Comments::update/$1');
+        $routes->post('comments/(:num)/delete', 'Comments::delete/$1');
+
+        $routes->get('feedback', 'Feedback::index');
+        $routes->get('feedback/(:num)', 'Feedback::show/$1');
+        $routes->post('feedback/(:num)', 'Feedback::update/$1');
+        $routes->get('feedback/(:num)/attachment', 'Feedback::attachment/$1');
+
+        $routes->get('officer-submissions', 'OfficerSubmissions::index');
+        $routes->post('officer-submissions/(:num)', 'OfficerSubmissions::update/$1');
+        $routes->get('officer-submissions/(:num)/attachment', 'OfficerSubmissions::attachment/$1');
+
+        $routes->get('subscribers', 'Subscribers::index');
+        $routes->get('subscribers/export', 'Subscribers::export');
+        $routes->post('subscribers/(:num)/delete', 'Subscribers::delete/$1');
 
         // Page builder (block-content editor + structure operations).
         $routes->get('pages/(:num)/content', 'Content::edit/$1');

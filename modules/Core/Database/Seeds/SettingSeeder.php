@@ -13,7 +13,7 @@ class SettingSeeder extends Seeder
         $settings = [
             ['general', 'site_name', 'Tea Small Holdings Development Authority', 'string', 1],
             ['general', 'site_short', 'TSHDA', 'string', 1],
-            ['general', 'tagline', 'Serving Sri Lanka\'s tea smallholder', 'string', 1],
+            ['general', 'tagline', 'Serving Sri Lanka’s tea smallholders', 'string', 1],
             ['general', 'parent_org', 'Ministry of Plantation and Community Infrastructure', 'string', 1],
             ['brand', 'color_primary', '#0F6B45', 'string', 1],
             ['brand', 'color_secondary', '#8A6A18', 'string', 1],

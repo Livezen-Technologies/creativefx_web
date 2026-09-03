@@ -6,7 +6,7 @@
         <?php endif; ?>
         <h2 class="text-3xl font-bold sm:text-4xl"><?= esc(t_field($content['title'] ?? [])) ?></h2>
         <?php if (! empty($content['intro'])): ?>
-            <p class="mt-4 text-lg leading-relaxed text-white/70"><?= esc(t_field($content['intro'])) ?></p>
+            <p class="mt-4 text-lg leading-relaxed text-white/80"><?= esc(t_field($content['intro'])) ?></p>
         <?php endif; ?>
     </div>
 </section>

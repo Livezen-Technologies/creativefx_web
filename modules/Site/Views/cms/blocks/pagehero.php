@@ -43,7 +43,11 @@ $hasBg      = $hasVideo || $hasImage;
         <div class="absolute inset-0 -z-10 bg-gradient-to-b from-brand-black/40 via-brand-black/10 to-brand-black"></div>
     <?php endif; ?>
 
-    <div class="container-x flex <?= $hasBg ? 'w-full pb-28' : 'min-h-[60vh] pb-16' ?> flex-col justify-end pt-40">
+    <?php // With a photograph behind it the hero fills the viewport and the copy
+          // sits at the bottom of it. Without one there is nothing to fill: the
+          // same measurements then produce half a screen of empty ground above
+          // the page title, which reads as a page that failed to load its image. ?>
+    <div class="container-x flex flex-col justify-end <?= $hasBg ? 'w-full pb-28 pt-40' : 'pb-10 pt-32 sm:pt-36' ?>">
         <?php if (! empty($content['eyebrow'])): ?>
             <p class="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-brand-red" data-gsap="reveal"><?= esc(t_field($content['eyebrow'])) ?></p>
         <?php endif; ?>

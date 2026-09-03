@@ -25,6 +25,14 @@ $icons = [
     'clock'     => 'M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20Zm0-14v5l3 2',
     'bed'       => 'M2 20v-8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v8M2 16h20M6 10V7a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3M2 20v-2',
     'pin'       => 'M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Zm-8 3a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z',
+    'alert'     => 'M12 9v4m0 4h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z',
+    'list'      => 'M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01',
+    'download'  => 'M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3',
+    'help'      => 'M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20Zm-2.4-12.5a2.5 2.5 0 1 1 3.4 2.3c-.6.3-1 .9-1 1.6v.6M12 17h.01',
+    'building'  => 'M3 21h18M5 21V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v16M9 7h2m-2 4h2m-2 4h2m4-8h2a2 2 0 0 1 2 2v10',
+    'chat'      => 'M21 11.5a8.4 8.4 0 0 1-9 8.4 8.6 8.6 0 0 1-3.9-.9L3 21l1.9-5a8.4 8.4 0 0 1-.9-3.9 8.4 8.4 0 0 1 8.4-8.4h.6a8.4 8.4 0 0 1 8 8v.3Z',
+    'mail'      => 'M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Zm18 2-10 7L2 6',
+    'link'      => 'M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7',
     'settings'  => 'M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm7.4-3a7.4 7.4 0 0 0-.1-1l2-1.6-2-3.4-2.4 1a7.5 7.5 0 0 0-1.7-1L14.8 3h-4l-.4 2.6a7.5 7.5 0 0 0-1.7 1l-2.4-1-2 3.4 2 1.6a7.4 7.4 0 0 0 0 2l-2 1.6 2 3.4 2.4-1a7.5 7.5 0 0 0 1.7 1l.4 2.4h4l.4-2.6a7.5 7.5 0 0 0 1.7-1l2.4 1 2-3.4-2-1.6c.07-.3.1-.7.1-1Z',
 ];
 
@@ -35,25 +43,40 @@ $groups = [
     ]],
     ['Content', [
         ['pages', 'Pages', 'admin/pages', 'file'],
+        ['notices', 'Priority notices', 'admin/notices', 'alert'],
+        ['news-posts', 'News & announcements', 'admin/news-posts', 'news'],
+        ['news-categories', 'News categories', 'admin/news-categories', 'tag'],
         ['menu-items', 'Navigation menus', 'admin/menu-items', 'menu'],
-        ['news-posts', 'News Posts', 'admin/news-posts', 'news'],
-        ['news-categories', 'News Categories', 'admin/news-categories', 'tag'],
-        ['videos', 'Launch Video', 'admin/videos', 'video'],
+        ['org-links', 'Organisation links', 'admin/org-links', 'link'],
+        ['videos', 'Video', 'admin/videos', 'video'],
     ]],
-    // Was Catalog and People: a product catalogue, a 3D showroom and a careers
-    // portal, all inherited from the apparel build this codebase started as and
-    // none of them routed on a hotel's public site. A menu of screens that lead
-    // nowhere is worse than a short menu.
-    ['The hotel', [
-        ['rooms', 'Rooms', 'admin/rooms', 'bed'],
-        ['locations', 'Tourist locations', 'admin/locations', 'pin'],
+    ['The Authority', [
+        ['services', 'Services', 'admin/services', 'list'],
+        ['documents', 'Downloads', 'admin/documents', 'download'],
+        ['document-categories', 'Download categories', 'admin/document-categories', 'tag'],
+        ['statistics', 'Statistics', 'admin/statistics', 'chart'],
+        ['offices', 'Offices', 'admin/offices', 'building'],
+        ['staff', 'Staff directory', 'admin/staff', 'users'],
+        ['societies', 'Societies', 'admin/societies', 'users'],
+        ['faqs', 'FAQs', 'admin/faqs', 'help'],
+        ['jobs', 'Vacancies', 'admin/jobs', 'briefcase'],
     ]],
-    ['Engagement', [
-        ['contacts', 'Contact Inbox', 'admin/contacts', 'inbox'],
-        ['leads', 'Leads', 'admin/leads', 'target'],
+    ['Hantana', [
+        ['hantana', 'Programmes', 'admin/programmes', 'leaf'],
+        ['bookings', 'Applications', 'admin/bookings', 'inbox'],
+    ]],
+    ['The public', [
+        ['feedback', 'Feedback & petitions', 'admin/feedback', 'inbox'],
+        ['discussion', 'Discussion', 'admin/discussion-topics', 'chat'],
+        ['subscribers', 'Alert subscribers', 'admin/subscribers', 'mail'],
+        ['contacts', 'Contact inbox', 'admin/contacts', 'inbox'],
+        ['applications', 'Job applications', 'admin/applications', 'briefcase'],
+    ]],
+    ['Field officers', [
+        ['officers', 'Submissions', 'admin/officer-submissions', 'users'],
     ]],
     ['System', [
-        ['media', 'Media Library', 'admin/media', 'image'],
+        ['media', 'Media library', 'admin/media', 'image'],
         ['translations', 'Translations', 'admin/translations', 'globe'],
         ['site-settings', 'Settings', 'admin/site-settings', 'settings'],
         ['tasks', 'Scheduled tasks', 'admin/tasks', 'clock'],
