@@ -113,13 +113,20 @@ $splitWords = static function (string $text): string {
         <div data-three-hero class="absolute inset-0 -z-20 opacity-70"></div>
     <?php endif; ?>
 
-    <!-- Lighter, directional scrim (legible text on the left, the film stays visible on the right) -->
+    <!-- Soft pool of shade under the copy, so the type stays legible without
+         flattening the film behind it. The pool sits where the copy sits: it
+         was offset left while the copy was, and follows it to the middle. -->
     <div class="hero-wash-pool absolute inset-0 -z-20"></div>
     <div class="hero-wash-foot absolute inset-0 -z-20"></div>
     <!-- Brand-red glow to break the monochrome -->
     <div class="hero-red-glow absolute inset-0 -z-10"></div>
 
-    <div class="container-x relative w-full pt-28">
+    <?php // Centred hero. text-center carries the eyebrow (an inline-flex box)
+          // and the headline; the two measured blocks below need mx-auto as well,
+          // because a max-width still leaves them parked at the start of the
+          // line box, and the two rows of controls are flex containers, which
+          // text-align does not reach into at all. ?>
+    <div class="container-x relative w-full pb-24 pt-28 text-center sm:pb-0">
         <p class="eyebrow mb-6" data-gsap="reveal"><?= esc(lang('Site.home.hero.eyebrow')) ?></p>
 
         <?php // font-sans overrides the base layer, which sets Playfair on every
@@ -128,7 +135,7 @@ $splitWords = static function (string $text): string {
               // only thing on screen not speaking the same voice. Tracking is
               // pulled in slightly because Poppins at 72px sets looser than a
               // serif does at the same size. ?>
-        <h1 class="kinetic-hero max-w-4xl font-sans text-4xl font-bold leading-[1.05] tracking-[-0.02em] sm:text-5xl lg:text-6xl xl:text-7xl" aria-label="<?= esc(t_field($heroHeadline), 'attr') ?>">
+        <h1 class="kinetic-hero mx-auto max-w-4xl font-sans text-4xl font-bold leading-[1.05] tracking-[-0.02em] sm:text-5xl lg:text-6xl xl:text-7xl" aria-label="<?= esc(t_field($heroHeadline), 'attr') ?>">
             <?php if ($kPre !== ''): ?><span class="kline" data-kinetic><?= $splitWords($kPre) ?></span><?php endif; ?>
             <?php if ($kRotators !== []): ?>
                 <span class="rotator-wrap text-brand-red" data-rotator aria-hidden="true">
@@ -141,7 +148,7 @@ $splitWords = static function (string $text): string {
             <?php if ($kPost !== ''): ?><span class="kline" data-kinetic><?= $splitWords($kPost) ?></span><?php endif; ?>
         </h1>
 
-        <p class="mt-6 max-w-xl text-lg leading-relaxed text-white/75" data-gsap="reveal"><?= esc(t_field($heroSubhead)) ?></p>
+        <p class="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-white/90" data-gsap="reveal"><?= esc(t_field($heroSubhead)) ?></p>
 
         <!-- CTA hierarchy: one dominant primary, one quiet secondary.
              Both are real links first and behave without JavaScript: Book Now
@@ -149,7 +156,7 @@ $splitWords = static function (string $text): string {
              With JavaScript the first opens the booking dialog in place and the
              second scrolls to the film and starts it. A button that only works
              once a bundle has parsed is a button that sometimes does nothing. -->
-        <div class="mt-10 flex flex-wrap items-center gap-6" data-gsap="reveal">
+        <div class="mt-10 flex flex-wrap items-center justify-center gap-6" data-gsap="reveal">
             <a href="<?= esc(locale_url('contact')) ?>" class="btn-brand btn-lg group"
                @click.prevent="$dispatch('booking-open')">
                 <?= esc(lang('Site.home.hero.primary')) ?>
@@ -164,11 +171,24 @@ $splitWords = static function (string $text): string {
             </a>
         </div>
 
-        <div class="mt-14 flex items-center gap-4" data-gsap="reveal">
-            <span class="h-px w-10 bg-white/20"></span>
-            <p class="text-[11px] uppercase tracking-[0.3em] text-white/45">
+        <?php // Social proof directly under the buttons, where it answers the
+              // question the buttons just asked. Renders only when a rating and
+              // a link are both configured. ?>
+        <div class="mt-8" data-gsap="reveal">
+            <?= view('Modules\\Core\\Views\\partials\\google_rating') ?>
+        </div>
+
+        <?php // The single rule was a lead-in to left-aligned copy. Centred, one
+              // rule on one side reads as a mistake, so the line is bracketed. ?>
+        <div class="mt-8 flex items-center justify-center gap-4 sm:mt-10" data-gsap="reveal">
+            <?php // The rules bracket a single line. On a phone the sentence wraps
+                  // to two and they end up floating beside the middle of a
+                  // paragraph, so below sm the line stands on its own. ?>
+            <span class="hidden h-px w-10 bg-white/20 sm:block"></span>
+            <p class="text-[11px] uppercase tracking-[0.3em] text-white/70">
                 <?= esc(lang('Site.home.hero.trust')) ?>
             </p>
+            <span class="hidden h-px w-10 bg-white/20 sm:block"></span>
         </div>
     </div>
 
@@ -205,10 +225,5 @@ $splitWords = static function (string $text): string {
 <?= view('Modules\\Site\\Views\\home\\sections\\cta', ['section' => $sections['cta'] ?? null]) ?>
 
 </div><!-- /#fp -->
-
-<?php // Outside the panels on purpose: #fp is transformed, and a fixed overlay
-      // inside a transformed ancestor is positioned against that ancestor
-      // instead of the viewport — the dialog would be trapped in one panel. ?>
-<?= view('Modules\\Core\\Views\\partials\\booking_modal') ?>
 
 <?= $this->endSection() ?>

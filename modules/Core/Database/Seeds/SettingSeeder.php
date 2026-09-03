@@ -26,6 +26,12 @@ class SettingSeeder extends Seeder
             ['contact', 'address', 'Dam Site, Project Road, Kukuleganga, Kalawana 70450, Sri Lanka', 'string', 1],
             ['social', 'facebook', 'https://www.facebook.com/giantsforestkukuleganga/', 'string', 1],
             ['social', 'instagram', '', 'string', 1],
+            // The rating badge in the hero. Blank rating hides the badge, so a
+            // stale or unverified score is never published by default; an
+            // editor fills these in from the hotel's own Google listing.
+            ['social', 'google_reviews_url', 'https://www.google.com/travel/search?q=Giants%20Forest%20-%20Kukuleganga&ap=ugEHcmV2aWV3cw', 'string', 1],
+            ['social', 'google_rating', '', 'string', 1],
+            ['social', 'google_review_count', '', 'string', 1],
             ['analytics', 'ga4_measurement_id', '', 'string', 0],
         ];
 

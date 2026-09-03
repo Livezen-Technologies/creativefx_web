@@ -365,10 +365,13 @@ html.dark .theme-esg-green {  /* Impact page green scope, dark variant */
   .btn-lg { @apply px-8 py-4 text-sm; }
 
   /* Hero red brand glow + soft accents. */
+  /* Two corner accents rather than one weighted side, now that nothing on the
+     hero is anchored left. */
   .hero-red-glow {
     background:
-      radial-gradient(40% 55% at 12% 78%, rgb(var(--accent) / calc(0.34 * var(--hero-dim))), transparent 70%),
-      radial-gradient(30% 40% at 85% 20%, rgb(var(--accent) / calc(0.16 * var(--hero-dim))), transparent 70%);
+      radial-gradient(38% 52% at 10% 80%, rgb(var(--accent) / calc(0.26 * var(--hero-dim))), transparent 70%),
+      radial-gradient(38% 52% at 90% 80%, rgb(var(--accent) / calc(0.20 * var(--hero-dim))), transparent 70%),
+      radial-gradient(30% 40% at 85% 18%, rgb(var(--accent) / calc(0.14 * var(--hero-dim))), transparent 70%);
   }
 }
 
@@ -430,9 +433,12 @@ html:not(.dark) { --hero-dim: 1; }
    before the photograph gets appreciably clearer. This puts the darkening only
    where the copy actually sits — an ellipse anchored to the lower left — and
    leaves the rest of the frame at the photograph's own exposure. */
+/* The pool follows the copy. It was struck at 30% across while the hero was
+   left-aligned; with the copy centred, an off-centre pool leaves the right-hand
+   half of the headline on bare photograph. */
 .hero-wash-pool {
   background:
-    radial-gradient(62% 72% at 30% 48%,
+    radial-gradient(66% 72% at 50% 48%,
       rgb(var(--hero-wash) / calc(0.95 * var(--hero-dim))) 0%,
       rgb(var(--hero-wash) / calc(0.80 * var(--hero-dim))) 30%,
       rgb(var(--hero-wash) / calc(0.42 * var(--hero-dim))) 58%,

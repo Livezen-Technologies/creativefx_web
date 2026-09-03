@@ -228,4 +228,13 @@ return [
         'map_alt'  => 'Map of Sri Lanka showing where the hotel is',
         'show_all' => 'Show all',
     ],
+
+    // Google rating badge. The numbers come from settings, not from here, so
+    // only the wording around them is translated.
+    'reviews' => [
+        'count'       => '%s Google reviews',
+        'badge'       => 'Rated %s out of 5 on Google.',
+        'badge_count' => 'Rated %s out of 5 from %s Google reviews.',
+        'badge_hint'  => 'Read them on Google — opens in a new tab.',
+    ],
 ];

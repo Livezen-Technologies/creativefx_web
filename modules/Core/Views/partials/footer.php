@@ -1,6 +1,6 @@
 <?php helper(['url', 'norlanka']); $locale = current_locale(); ?>
 <footer class="<?= ($pageDark ?? false) ? 'on-dark' : '' ?> border-t border-white/10 bg-brand-black">
-    <div class="container-x grid gap-10 py-16 md:grid-cols-4">
+    <div class="container-x grid gap-10 py-16 md:grid-cols-4 [&>*]:min-w-0">
         <div class="md:col-span-2">
             <a href="<?= esc(locale_url('')) ?>" class="inline-flex items-center gap-2.5" aria-label="Kukuleganga Giants Forest — home">
                 <?php // Larger than the header's mark. The footer is where the
@@ -58,8 +58,16 @@
                 ])) as $num): ?>
                     <li><a href="tel:<?= esc(preg_replace('/[^0-9+]/', '', $num), 'attr') ?>" class="hover:text-white"><?= esc($num) ?></a></li>
                 <?php endforeach; ?>
+                <?php // An address has no spaces in it, so the default wrapping
+                      // rules cannot break it anywhere. A grid column's automatic
+                      // minimum is its content's minimum, so one 264px-wide
+                      // unbreakable string widened this column past its share and
+                      // pushed the whole footer 18px beyond the viewport at every
+                      // width from 768 up. break-words lets it wrap mid-address
+                      // when there is no room; min-w-0 lets the column agree to be
+                      // narrower than its content once it can. ?>
                 <?php if ($mail = setting('email', '', 'contact')): ?>
-                    <li><a href="mailto:<?= esc($mail, 'attr') ?>" class="hover:text-white"><?= esc($mail) ?></a></li>
+                    <li><a href="mailto:<?= esc($mail, 'attr') ?>" class="break-words hover:text-white"><?= esc($mail) ?></a></li>
                 <?php endif; ?>
             </ul>
         </div>
