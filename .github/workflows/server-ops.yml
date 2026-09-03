@@ -157,6 +157,16 @@ jobs:
                 printf '  %s -> ' "$a"
                 curl -s -o /dev/null -w '%{http_code}\n' -k -m 10 "https://127.0.0.1${a}" -H "Host: ${DOMAIN}"
               done
+            # The assistant's endpoint, against the real database. It works
+            # locally on SQLite and runs on MySQL here, so "it passed on my
+            # machine" is not evidence about this one.
+            echo "===== assistant endpoint ====="
+            for L in en si ta; do
+              printf '  /%s/assistant/ask -> ' "$L"
+              curl -s -k -m 10 "https://127.0.0.1/$L/assistant/ask?q=subsidy" -H "Host: ${DOMAIN}" \
+                -o /tmp/asst.json -w '%{http_code} '
+              head -c 90 /tmp/asst.json | tr -d '\n'; echo
+            done
             echo "--- media on disk ---"
             ls -la "$APP_DIR"/public/media/*/ 2>/dev/null
             echo
