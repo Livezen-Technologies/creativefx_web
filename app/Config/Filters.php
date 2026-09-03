@@ -15,6 +15,7 @@ use CodeIgniter\Filters\SecureHeaders;
 use Modules\Admin\Filters\AdminAuthFilter;
 use Modules\Auth\Filters\JwtAuthFilter;
 use Modules\Core\Filters\LocaleFilter;
+use Modules\Analytics\Filters\TrackPageView;
 
 class Filters extends BaseFilters
 {
@@ -45,6 +46,7 @@ class Filters extends BaseFilters
         'jwt'           => JwtAuthFilter::class,
         'applocale'     => LocaleFilter::class,
         'adminauth'     => AdminAuthFilter::class,
+        'trackview'     => TrackPageView::class,
     ];
 
     /**
@@ -88,6 +90,11 @@ class Filters extends BaseFilters
             // 'invalidchars',
         ],
         'after' => [
+            // Records a page view for public HTML responses. The filter decides
+            // for itself what to skip — the admin, assets, redirects, bots, and
+            // any request carrying Do Not Track — so it is registered globally
+            // rather than route by route, where a new page would be missed.
+            'trackview',
             // 'honeypot',
             // 'secureheaders',
         ],

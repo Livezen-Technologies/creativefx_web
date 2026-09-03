@@ -5,9 +5,9 @@ namespace Modules\Admin\Controllers;
 use App\Controllers\BaseController;
 
 /**
- * Admin dashboard: KPI cards with 7-day deltas, a 14-day activity chart
- * (applications + contact messages), the application pipeline, recent
- * activity feeds, recently updated content, and quick actions.
+ * Admin dashboard: KPI cards with 7-day deltas, a 14-day traffic chart,
+ * most-viewed pages, where visitors came from, recent enquiries, recently
+ * updated content, and quick actions.
  */
 class Dashboard extends BaseController
 {
@@ -38,58 +38,33 @@ class Dashboard extends BaseController
         };
 
         // ---- KPI cards: total, 7-day delta ------------------------------
+        // Cards for a hotel, not for the apparel manufacturer this codebase
+        // started as: applications and open jobs pointed at screens that no
+        // longer exist, and counted a pipeline nobody runs.
         $kpis = [
-            ['label' => 'Applications', 'icon' => 'users', 'total' => $count('job_applications'), 'week' => $countSince('job_applications', 7), 'path' => 'admin/applications'],
             ['label' => 'Contact messages', 'icon' => 'inbox', 'total' => $count('contacts'), 'week' => $countSince('contacts', 7), 'path' => 'admin/contacts'],
             ['label' => 'Leads', 'icon' => 'target', 'total' => $count('leads'), 'week' => $countSince('leads', 7), 'path' => 'admin/leads'],
-            ['label' => 'Open jobs', 'icon' => 'briefcase', 'total' => $count('jobs', ['status' => 'open']), 'week' => null, 'path' => 'admin/jobs'],
-            ['label' => 'Published news', 'icon' => 'news', 'total' => $count('news_posts', ['status' => 'published']), 'week' => null, 'path' => 'admin/news-posts'],
+            ['label' => 'Rooms', 'icon' => 'bed', 'total' => $count('rooms', ['status' => 'published']), 'week' => null, 'path' => 'admin/rooms'],
+            ['label' => 'Tourist locations', 'icon' => 'pin', 'total' => $count('locations', ['status' => 'published']), 'week' => null, 'path' => 'admin/locations'],
+            ['label' => 'Published pages', 'icon' => 'file', 'total' => $count('pages', ['status' => 'published']), 'week' => null, 'path' => 'admin/pages'],
             ['label' => 'Media files', 'icon' => 'image', 'total' => $count('media_library'), 'week' => $countSince('media_library', 7), 'path' => 'admin/media'],
         ];
 
-        // ---- 14-day activity chart --------------------------------------
-        $days = [];
-        for ($i = 13; $i >= 0; $i--) {
-            $d = date('Y-m-d', strtotime("-{$i} days"));
-            $days[$d] = ['label' => date('j M', strtotime($d)), 'apps' => 0, 'contacts' => 0];
-        }
-        $bucket = static function (string $table, string $key) use ($db, &$days): void {
-            try {
-                $rows = $db->table($table)
-                    ->select("substr(created_at, 1, 10) AS d, COUNT(*) AS n")
-                    ->where('created_at >=', date('Y-m-d 00:00:00', strtotime('-13 days')))
-                    ->groupBy('d')->get()->getResultArray();
-                foreach ($rows as $r) {
-                    if (isset($days[$r['d']])) {
-                        $days[$r['d']][$key] = (int) $r['n'];
-                    }
-                }
-            } catch (\Throwable $e) {
-            }
-        };
-        $bucket('job_applications', 'apps');
-        $bucket('contacts', 'contacts');
-
-        // ---- Application pipeline ---------------------------------------
-        $pipeline = [];
-        try {
-            foreach ($db->table('job_applications')->select('status, COUNT(*) AS n')->groupBy('status')->get()->getResultArray() as $r) {
-                $pipeline[$r['status']] = (int) $r['n'];
-            }
-        } catch (\Throwable $e) {
-        }
+        // ---- 14 days of traffic -----------------------------------------
+        // Was applications and contact messages: a careers pipeline this hotel
+        // does not run, so the chart was two rows of zeros with a legend over
+        // them. Visits and visitors are what a hotel looks at first, and both
+        // now have data behind them.
+        $stats = new \Modules\Analytics\Libraries\Stats();
+        $from  = date('Y-m-d', strtotime('-13 days'));
+        $to    = date('Y-m-d');
+        $days  = $stats->daily($from, $to);
+        $traffic = $stats->summary($from, $to);
+        $today   = $stats->summary($to, $to);
 
         // ---- Feeds ------------------------------------------------------
-        $applications = [];
-        $recent       = [];
-        $content      = [];
-        try {
-            $applications = $db->table('job_applications')
-                ->select('job_applications.*, jobs.title AS job_title')
-                ->join('jobs', 'jobs.id = job_applications.job_id', 'left')
-                ->orderBy('job_applications.id', 'DESC')->limit(6)->get()->getResultArray();
-        } catch (\Throwable $e) {
-        }
+        $recent  = [];
+        $content = [];
         try {
             $recent = $db->table('contacts')->orderBy('id', 'DESC')->limit(6)->get()->getResultArray();
         } catch (\Throwable $e) {
@@ -118,18 +93,19 @@ class Dashboard extends BaseController
             'active'       => 'dashboard',
             'kpis'         => $kpis,
             'days'         => array_values($days),
-            'pipeline'     => $pipeline,
-            'applications' => $applications,
+            'traffic'      => $traffic,
+            'today'        => $today,
             'recent'       => $recent,
             'content'      => $content,
             'storage'      => $storage,
+            'topPaths'     => $stats->topPaths($from, $to, 6),
+            'referrers'    => $stats->topReferrers($from, $to, 6),
             'counts'       => [
-                'pages'    => $count('pages'),
-                'products' => $count('products'),
-                'showroom' => $count('showroom_products'),
-                'jobs'     => $count('jobs'),
-                'newApps'  => $count('job_applications', ['status' => 'new']),
-                'newMsgs'  => $count('contacts', ['status' => 'new']),
+                'pages'     => $count('pages'),
+                'rooms'     => $count('rooms'),
+                'locations' => $count('locations'),
+                'menu'      => $count('menu_items'),
+                'newMsgs'   => $count('contacts', ['status' => 'new']),
             ],
         ]);
     }

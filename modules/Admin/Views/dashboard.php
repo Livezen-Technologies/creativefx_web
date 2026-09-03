@@ -52,7 +52,7 @@ $userName = trim((string) (session()->get('admin_user')['first_name'] ?? '')) ?:
     </div>
     <div class="flex flex-wrap gap-2">
         <a href="<?= site_url('admin/news-posts/new') ?>" class="flex items-center gap-1.5 rounded-lg bg-brand-red px-3.5 py-2 text-xs font-semibold text-white transition hover:bg-brand-red/85"><?= $icon('plus', 'h-3.5 w-3.5') ?> News post</a>
-        <a href="<?= site_url('admin/jobs/new') ?>" class="flex items-center gap-1.5 rounded-lg border border-white/15 px-3.5 py-2 text-xs font-semibold text-white/80 transition hover:border-white/40"><?= $icon('briefcase', 'h-3.5 w-3.5') ?> Post a job</a>
+        <a href="<?= site_url('admin/rooms/new') ?>" class="flex items-center gap-1.5 rounded-lg border border-white/15 px-3.5 py-2 text-xs font-semibold text-white/80 transition hover:border-white/40"><?= $icon('bed', 'h-3.5 w-3.5') ?> Add a room</a>
         <a href="<?= site_url('admin/media') ?>" class="flex items-center gap-1.5 rounded-lg border border-white/15 px-3.5 py-2 text-xs font-semibold text-white/80 transition hover:border-white/40"><?= $icon('upload', 'h-3.5 w-3.5') ?> Upload media</a>
         <a href="<?= site_url('admin/pages') ?>" class="flex items-center gap-1.5 rounded-lg border border-white/15 px-3.5 py-2 text-xs font-semibold text-white/80 transition hover:border-white/40"><?= $icon('edit', 'h-3.5 w-3.5') ?> Edit pages</a>
     </div>
@@ -74,26 +74,49 @@ $userName = trim((string) (session()->get('admin_user')['first_name'] ?? '')) ?:
     <?php endforeach; ?>
 </div>
 
-<!-- Chart + pipeline row -->
+<!-- Traffic + most-viewed row -->
 <div class="mt-6 grid gap-6 xl:grid-cols-3">
-    <!-- 14-day activity chart -->
+    <?php // Visits and visitors, which is what a hotel looks at first. This was
+          // applications and contact messages — a careers pipeline the hotel
+          // does not run, so it drew two rows of zeros under a legend. ?>
     <div class="rounded-2xl border border-white/10 bg-white/[0.02] p-6 xl:col-span-2">
-        <div class="mb-5 flex items-center justify-between">
-            <h3 class="text-sm font-semibold uppercase tracking-widest text-white/60">Activity — last 14 days</h3>
+        <div class="mb-5 flex flex-wrap items-start justify-between gap-3">
+            <div>
+                <h3 class="text-sm font-semibold uppercase tracking-widest text-white/60">Traffic — last 14 days</h3>
+                <p class="mt-2 flex flex-wrap items-baseline gap-x-4 gap-y-1">
+                    <span class="text-2xl font-bold"><?= number_format($traffic['views']) ?></span>
+                    <span class="text-xs uppercase tracking-widest text-white/45">page views</span>
+                    <span class="text-2xl font-bold"><?= number_format($traffic['visitors']) ?></span>
+                    <span class="text-xs uppercase tracking-widest text-white/45">visitors</span>
+                    <?php // A change against the previous fortnight, shown only
+                          // when there is a previous fortnight to compare to. ?>
+                    <?php if ($traffic['views_change'] !== null && $traffic['views_prev'] > 0): ?>
+                        <span class="text-xs font-semibold <?= $traffic['views_change'] >= 0 ? 'text-emerald-400' : 'text-brand-red' ?>">
+                            <?= $traffic['views_change'] >= 0 ? '+' : '' ?><?= esc($traffic['views_change']) ?>% vs the fortnight before
+                        </span>
+                    <?php endif; ?>
+                </p>
+            </div>
             <div class="flex items-center gap-4 text-[11px] text-white/50">
-                <span class="flex items-center gap-1.5"><span class="h-2 w-2 rounded-full bg-brand-red"></span> Applications</span>
-                <span class="flex items-center gap-1.5"><span class="h-2 w-2 rounded-full bg-white/35"></span> Messages</span>
+                <span class="flex items-center gap-1.5"><span class="h-2 w-2 rounded-full bg-brand-red"></span> Page views</span>
+                <span class="flex items-center gap-1.5"><span class="h-2 w-2 rounded-full bg-white/35"></span> Visitors</span>
             </div>
         </div>
         <?php
         $max = 1;
-        foreach ($days as $d) { $max = max($max, $d['apps'], $d['contacts']); }
+        foreach ($days as $d) { $max = max($max, $d['views'], $d['visitors']); }
         ?>
         <div class="flex h-40 items-end gap-1.5 sm:gap-2.5">
             <?php foreach ($days as $d): ?>
-                <div class="group relative flex h-full flex-1 items-end justify-center gap-[3px]" title="<?= esc($d['label'] . ': ' . $d['apps'] . ' applications, ' . $d['contacts'] . ' messages', 'attr') ?>">
-                    <div class="w-1/2 max-w-[14px] rounded-t bg-brand-red/80 transition group-hover:bg-brand-red" style="height: <?= max(4, (int) round($d['apps'] / $max * 100)) ?>%"></div>
-                    <div class="w-1/2 max-w-[14px] rounded-t bg-white/25 transition group-hover:bg-white/45" style="height: <?= max(4, (int) round($d['contacts'] / $max * 100)) ?>%"></div>
+                <div class="group relative flex h-full flex-1 items-end justify-center gap-[3px]"
+                     title="<?= esc($d['label'] . ': ' . $d['views'] . ' page views, ' . $d['visitors'] . ' visitors', 'attr') ?>">
+                    <?php // A bar for a day with nothing in it is drawn at zero
+                          // height, not at a 4% minimum: a floor makes an empty
+                          // fortnight look like a quiet one. ?>
+                    <div class="w-1/2 max-w-[14px] rounded-t bg-brand-red/80 transition group-hover:bg-brand-red"
+                         style="height: <?= $d['views'] > 0 ? max(4, (int) round($d['views'] / $max * 100)) : 0 ?>%"></div>
+                    <div class="w-1/2 max-w-[14px] rounded-t bg-white/25 transition group-hover:bg-white/45"
+                         style="height: <?= $d['visitors'] > 0 ? max(4, (int) round($d['visitors'] / $max * 100)) : 0 ?>%"></div>
                 </div>
             <?php endforeach; ?>
         </div>
@@ -102,44 +125,64 @@ $userName = trim((string) (session()->get('admin_user')['first_name'] ?? '')) ?:
             <span><?= esc($days[(int) (count($days) / 2)]['label'] ?? '') ?></span>
             <span>Today</span>
         </div>
+
+        <?php // Today and this month beside the chart, and the two things a
+              // visitor can do that are worth counting. ?>
+        <div class="mt-6 grid grid-cols-2 gap-4 border-t border-white/10 pt-5 sm:grid-cols-4">
+            <?php foreach ([
+                ['Today', number_format($today['views']), number_format($today['visitors']) . ' visitors'],
+                ['Enquiries', number_format($traffic['bookings'] + $traffic['messages']), 'in 14 days'],
+                ['WhatsApp clicks', number_format($traffic['whatsapp']), 'in 14 days'],
+                ['Conversion', $traffic['conversion'] . '%', 'enquiries per visitor'],
+            ] as [$label, $value, $note]): ?>
+                <div>
+                    <p class="text-[10px] uppercase tracking-widest text-white/40"><?= esc($label) ?></p>
+                    <p class="mt-1 text-xl font-bold"><?= esc($value) ?></p>
+                    <p class="text-[11px] text-white/35"><?= esc($note) ?></p>
+                </div>
+            <?php endforeach; ?>
+        </div>
+        <a href="<?= site_url('admin/analytics') ?>" class="mt-5 inline-block text-xs font-semibold text-brand-red hover:underline">
+            Full analytics &rarr;
+        </a>
     </div>
 
-    <!-- Application pipeline + storage -->
+    <?php // Was the application pipeline and a catalogue count. Both belonged
+          // to the apparel build: the pipeline drew stages of a recruitment
+          // process this hotel does not run, and the counts linked to product
+          // and showroom screens that no longer exist. ?>
     <div class="flex flex-col gap-6">
         <div class="rounded-2xl border border-white/10 bg-white/[0.02] p-6">
-            <h3 class="mb-4 text-sm font-semibold uppercase tracking-widest text-white/60">Application pipeline</h3>
-            <?php
-            $stages = ['new' => 'bg-brand-red', 'reviewing' => 'bg-sky-400', 'shortlisted' => 'bg-emerald-400', 'interviewed' => 'bg-violet-400', 'hired' => 'bg-emerald-300', 'rejected' => 'bg-white/20'];
-            $totalApps = array_sum($pipeline) ?: 0;
-            ?>
-            <?php if ($totalApps > 0): ?>
-                <div class="flex h-2.5 overflow-hidden rounded-full bg-white/5">
-                    <?php foreach ($stages as $stage => $color): $n = $pipeline[$stage] ?? 0; if (! $n) { continue; } ?>
-                        <div class="<?= $color ?>" style="width: <?= round($n / $totalApps * 100, 1) ?>%"></div>
-                    <?php endforeach; ?>
-                </div>
-                <ul class="mt-4 space-y-2">
-                    <?php foreach ($stages as $stage => $color): $n = $pipeline[$stage] ?? 0; if (! $n && $stage !== 'new') { continue; } ?>
-                        <li class="flex items-center justify-between text-sm">
-                            <span class="flex items-center gap-2 capitalize text-white/65"><span class="h-2 w-2 rounded-full <?= $color ?>"></span><?= esc($stage) ?></span>
-                            <span class="font-semibold tabular-nums"><?= esc($n) ?></span>
+            <h3 class="mb-4 text-sm font-semibold uppercase tracking-widest text-white/60">Most-viewed pages</h3>
+            <?php if ($topPaths === []): ?>
+                <p class="text-sm text-white/40">No page views recorded yet — they will appear here as people visit.</p>
+            <?php else: ?>
+                <?php $topMax = max(1, max(array_column($topPaths, 'views'))); ?>
+                <ul class="space-y-3">
+                    <?php foreach ($topPaths as $t): ?>
+                        <li>
+                            <div class="flex items-baseline justify-between gap-3 text-sm">
+                                <span class="min-w-0 truncate text-white/75"><?= esc($t['label']) ?></span>
+                                <span class="shrink-0 tabular-nums text-white/45"><?= number_format($t['views']) ?></span>
+                            </div>
+                            <div class="mt-1 h-1.5 overflow-hidden rounded-full bg-white/5">
+                                <div class="h-full rounded-full bg-brand-red/70" style="width: <?= max(2, (int) round($t['views'] / $topMax * 100)) ?>%"></div>
+                            </div>
                         </li>
                     <?php endforeach; ?>
                 </ul>
-                <a href="<?= site_url('admin/applications') ?>" class="mt-4 inline-block text-xs font-semibold text-brand-red hover:underline">Review applications →</a>
-            <?php else: ?>
-                <p class="text-sm text-white/40">No applications yet — they'll appear here as candidates apply.</p>
+                <a href="<?= site_url('admin/analytics') ?>" class="mt-4 inline-block text-xs font-semibold text-brand-red hover:underline">Full analytics &rarr;</a>
             <?php endif; ?>
         </div>
 
         <div class="rounded-2xl border border-white/10 bg-white/[0.02] p-6">
-            <h3 class="mb-3 text-sm font-semibold uppercase tracking-widest text-white/60">Library &amp; catalog</h3>
+            <h3 class="mb-3 text-sm font-semibold uppercase tracking-widest text-white/60">The site</h3>
             <ul class="space-y-2.5 text-sm">
                 <li class="flex justify-between"><span class="text-white/55">Media storage</span><span class="font-semibold tabular-nums"><?= esc($fmtBytes($storage['bytes'])) ?> · <?= esc($storage['files']) ?> files</span></li>
                 <li class="flex justify-between"><span class="text-white/55">Pages</span><span class="font-semibold tabular-nums"><?= esc($counts['pages']) ?></span></li>
-                <li class="flex justify-between"><span class="text-white/55">Products</span><span class="font-semibold tabular-nums"><?= esc($counts['products']) ?></span></li>
-                <li class="flex justify-between"><span class="text-white/55">Showroom products</span><span class="font-semibold tabular-nums"><?= esc($counts['showroom']) ?></span></li>
-                <li class="flex justify-between"><span class="text-white/55">Jobs (all)</span><span class="font-semibold tabular-nums"><?= esc($counts['jobs']) ?></span></li>
+                <li class="flex justify-between"><span class="text-white/55">Rooms</span><span class="font-semibold tabular-nums"><?= esc($counts['rooms']) ?></span></li>
+                <li class="flex justify-between"><span class="text-white/55">Tourist locations</span><span class="font-semibold tabular-nums"><?= esc($counts['locations']) ?></span></li>
+                <li class="flex justify-between"><span class="text-white/55">Menu items</span><span class="font-semibold tabular-nums"><?= esc($counts['menu']) ?></span></li>
             </ul>
         </div>
     </div>
@@ -147,28 +190,21 @@ $userName = trim((string) (session()->get('admin_user')['first_name'] ?? '')) ?:
 
 <!-- Feeds row -->
 <div class="mt-6 grid gap-6 xl:grid-cols-2">
-    <!-- Recent applications -->
+    <?php // Was a recent-applications feed for a careers portal this site does
+          // not run. Enquiries are what actually arrives here. ?>
     <div class="rounded-2xl border border-white/10 bg-white/[0.02]">
         <div class="flex items-center justify-between border-b border-white/10 px-6 py-4">
-            <h3 class="text-sm font-semibold uppercase tracking-widest text-white/60">Recent applications</h3>
-            <?php if (($counts['newApps'] ?? 0) > 0): ?>
-                <span class="rounded-full bg-brand-red/15 px-2.5 py-0.5 text-[11px] font-bold text-brand-red"><?= esc($counts['newApps']) ?> new</span>
-            <?php endif; ?>
+            <h3 class="text-sm font-semibold uppercase tracking-widest text-white/60">Where visitors came from</h3>
+            <a href="<?= site_url('admin/analytics') ?>" class="text-xs font-semibold text-brand-red hover:underline">Analytics</a>
         </div>
-        <?php if ($applications === []): ?>
-            <p class="px-6 py-10 text-center text-sm text-white/40">No applications yet.</p>
+        <?php if ($referrers === []): ?>
+            <p class="px-6 py-10 text-center text-sm text-white/40">Nothing recorded yet.</p>
         <?php else: ?>
             <ul class="divide-y divide-white/5">
-                <?php foreach ($applications as $a): ?>
-                    <li>
-                        <a href="<?= site_url('admin/applications/' . $a['id']) ?>" class="flex items-center gap-4 px-6 py-3.5 transition hover:bg-white/[0.03]">
-                            <span class="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-white/8 text-sm font-bold text-white/70"><?= esc(strtoupper(mb_substr((string) $a['name'], 0, 1))) ?></span>
-                            <span class="min-w-0 flex-1">
-                                <span class="block truncate text-sm font-medium"><?= esc($a['name']) ?></span>
-                                <span class="block truncate text-xs text-white/45"><?= esc(t_field(json_decode($a['job_title'] ?? '[]', true) ?: [])) ?: 'General application' ?> · <?= esc(date('j M', strtotime($a['created_at']))) ?></span>
-                            </span>
-                            <?= $chip((string) $a['status']) ?>
-                        </a>
+                <?php foreach ($referrers as $r): ?>
+                    <li class="flex items-center justify-between gap-4 px-6 py-3.5">
+                        <span class="min-w-0 truncate text-sm text-white/75"><?= esc($r['label']) ?></span>
+                        <span class="shrink-0 text-sm tabular-nums text-white/45"><?= number_format($r['visitors']) ?> visitors</span>
                     </li>
                 <?php endforeach; ?>
             </ul>

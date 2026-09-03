@@ -30,6 +30,10 @@ $siteOptions = ['filter' => 'applocale', 'namespace' => 'Modules\Site\Controller
 // locale routes so nothing else can claim it.
 $routes->get('sitemap.xml', 'Sitemap::index', ['namespace' => 'Modules\Site\Controllers']);
 
+// Outbound clicks the server cannot otherwise see. Outside the locale group
+// because the page reporting one already knows its own path.
+$routes->post('api/track', 'Track::event', ['namespace' => 'Modules\Analytics\Controllers']);
+
 // Localized home, e.g. /en, /ja. The leading capture is the locale (the
 // applocale filter reads + validates it from the URI).
 $routes->get('(:locale)', 'Home::index', $siteOptions);

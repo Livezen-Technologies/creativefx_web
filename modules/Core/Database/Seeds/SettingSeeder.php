@@ -69,6 +69,7 @@ class SettingSeeder extends Seeder
             ['whatsapp', 'position', 'left', 'string', 1],
             ['whatsapp', 'hide_on', '', 'string', 1],
             ['seo', 'robots', '1', 'bool', 1],
+            ['analytics', 'enabled', '1', 'bool', 1],
             ['seo', 'meta_keywords', '', 'string', 1],
             // Blank means "use the files that ship with the build"; an upload
             // in the console replaces them without a deploy.

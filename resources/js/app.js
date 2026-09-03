@@ -24,6 +24,7 @@ import { initKineticHero } from './gsap/kinetic.js';
 import { initCarousels } from './carousels.js';
 import { initHeroVideo } from './heroVideo.js';
 import { initPreloader } from './preloader.js';
+import { initTracking } from './track.js';
 import { initSmoothScroll } from './smooth.js';
 import { initFullpage } from './fullpage.js';
 
@@ -58,6 +59,7 @@ Alpine.start();
 // storytelling. The two models are mutually exclusive, so we branch on #fp.
 document.addEventListener('DOMContentLoaded', () => {
   initPreloader();
+  initTracking();
   initKineticHero();
 
   if (document.getElementById('fp')) {

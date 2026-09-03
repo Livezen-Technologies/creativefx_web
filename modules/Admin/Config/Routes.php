@@ -59,6 +59,9 @@ $routes->group('admin', ['namespace' => 'Modules\Admin\Controllers'], static fun
         // Page builder (block-content editor + structure operations).
         $routes->get('pages/(:num)/content', 'Content::edit/$1');
         $routes->post('pages/(:num)/content', 'Content::update/$1');
+        $routes->get('analytics', 'Analytics::index');
+        $routes->get('analytics/export', 'Analytics::export');
+
         // The guided settings screen. The raw key/value CRUD stays at
         // admin/settings for anything this form does not declare.
         $routes->get('site-settings', 'SiteSettings::index');
