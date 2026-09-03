@@ -32,7 +32,7 @@ return [
         'statistics'        => 'සංඛ්‍යාලේඛන',
         'downloads'         => 'බාගැනීම්',
         'vacancies'         => 'පුරප්පාඩු',
-        'directory'         => 'නිලධාරී නාමාවලිය',
+        'directory'         => 'නාමාවලිය',
         'contact'           => 'අප අමතන්න',
         'faqs'              => 'නිතර අසන ප්‍රශ්න',
         'sitemap'           => 'අඩවි සිතියම',

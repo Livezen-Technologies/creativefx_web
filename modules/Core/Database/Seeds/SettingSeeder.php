@@ -47,7 +47,7 @@ class SettingSeeder extends Seeder
             ['analytics', 'ga4_measurement_id', '', 'string', 0],
 
             ['header', 'sticky', '1', 'bool', 1],
-            ['header', 'show_socials', '1', 'bool', 1],
+            ['header', 'show_socials', '0', 'bool', 1],
             ['header', 'cta_label', '', 'string', 1],
             ['header', 'cta_url', 'services', 'string', 1],
             ['footer', 'show_nav', '1', 'bool', 1],

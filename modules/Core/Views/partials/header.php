@@ -59,11 +59,13 @@ $isCurrent = static function (array $item) use ($currentSlug): bool {
           // items plus the controls do not leave that much: forcing it there
           // squeezed the logo's track to zero and the mark vanished. Below xl
           // the row stays the flex it was, which fits. ?>
-    <div class="header-bar flex w-full items-center justify-between px-6 transition-all duration-300 lg:px-10 xl:grid xl:grid-cols-[1fr_auto_1fr]"
-         :class="scrolled ? 'h-16' : 'h-24'">
+    <div x-ref="bar"
+         class="header-bar flex w-full items-center justify-between px-6 transition-all duration-300 lg:px-10"
+         :class="[scrolled ? 'h-16' : 'h-24', fits ? 'xl:grid xl:grid-cols-[1fr_auto_1fr]' : '']">
         <!-- Logo: official NL monogram + wordmark (static sizes so it renders
              correctly even before/without JS). -->
-        <a href="<?= esc(locale_url('')) ?>" class="flex shrink-0 items-center gap-2.5" aria-label="Kukuleganga Giants Forest — home">
+        <a x-ref="logo" href="<?= esc(locale_url('')) ?>" class="flex shrink-0 items-center gap-2.5"
+           aria-label="<?= esc(setting('site_name', ''), 'attr') ?>">
             <?php // Half again as tall while the header is at rest over the hero,
                   // where there is room for it; back to its old size the moment
                   // the compact bar takes over, which is sized in CSS so it
@@ -72,7 +74,13 @@ $isCurrent = static function (array $item) use ($currentSlug): bool {
         </a>
 
         <!-- Desktop nav -->
-        <nav class="hidden items-center justify-center gap-4 lg:flex xl:gap-6 2xl:gap-7" aria-label="Primary">
+        <?php // `fits` is measured, not assumed — see siteHeader.js. When the
+              // menu is too wide for the bar in this language, at this width,
+              // with these labels, it is hidden and the drawer button appears
+              // in its place. ?>
+        <nav x-ref="nav" :class="fits ? 'lg:flex' : ''"
+             class="primary-nav hidden items-center justify-center gap-4 whitespace-nowrap 2xl:gap-6"
+             aria-label="Primary">
             <?php foreach ($nav as $item):
                 $active = $isCurrent($item); ?>
 
@@ -124,19 +132,11 @@ $isCurrent = static function (array $item) use ($currentSlug): bool {
         </nav>
 
         <!-- Right side -->
-        <div class="flex items-center justify-end gap-2.5 sm:gap-3">
-            <?php // Two accounts, not five: the header row is for the ones a
-                  // guest actually messages the hotel on, and five marks beside
-                  // the theme switch and the language menu read as a toolbar.
-                  // The full set is in the footer and the mobile menu.
-                  //
-                  // Two also buy back the breakpoint. At five the row had to
-                  // wait for 2xl or the nav could not sit in the middle of the
-                  // bar; at two it returns at xl, and the only cost is 13px of
-                  // centring at exactly 1280 — measured, and about 1% of the
-                  // width. Below xl there is genuinely no room, and the mobile
-                  // menu carries them. ?>
-            <div class="<?= $showSocials ? 'hidden xl:block' : 'hidden' ?>">
+        <div x-ref="controls" class="flex shrink-0 items-center justify-end gap-2.5 sm:gap-3">
+            <?php // Rides with the desktop nav: if the menu did not fit, five
+                  // more pixels of icons certainly do not. The mobile drawer
+                  // carries the full set. ?>
+            <div class="hidden shrink-0"<?= $showSocials ? ' :class="fits ? \'xl:block\' : \'\'"' : '' ?>>
                 <?php // view(), not $this->include(): include()'s second argument
                       // is render options, not view data, so every array passed
                       // to it here was quietly discarded. That is why the mobile
@@ -167,7 +167,8 @@ $isCurrent = static function (array $item) use ($currentSlug): bool {
             <?= $this->include('Modules\Core\Views\partials\lang_switcher') ?>
             <!-- Mobile toggle -->
             <button type="button" @click="mobile=!mobile" :aria-expanded="mobile"
-                    class="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-white/15 text-white lg:hidden"
+                    :class="fits ? 'lg:hidden' : ''"
+                    class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-white/15 text-white"
                     aria-label="Toggle menu">
                 <svg x-show="!mobile" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
                 <svg x-show="mobile" x-cloak class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>

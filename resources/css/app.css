@@ -1569,3 +1569,23 @@ html.fp-active body {
   .org-children { margin-left: 1.25rem; }
   .org-children > .org-node::before { @apply w-7; }
 }
+
+
+/* ── Measuring the header's navigation ───────────────────────────────────────
+   siteHeader.measure() asks whether the primary nav fits beside the logo and
+   the controls, and hides it when it does not. That question cannot be asked
+   of a `display: none` element — its scrollWidth is 0, which reads as "fits",
+   which shows it again, which makes it not fit: the header would flicker on
+   every resize. So for the instant of the measurement the nav is laid out and
+   merely invisible. */
+.header-bar.is-measuring {
+  /* Out of the centring grid for the length of the measurement. In the grid the
+     logo and the controls fill their 1fr tracks, so measuring them there returns
+     the track width rather than the content width — and the nav is then judged
+     against far less room than it actually has. */
+  display: flex !important;
+}
+.header-bar.is-measuring .primary-nav {
+  display: flex !important;
+  visibility: hidden;
+}

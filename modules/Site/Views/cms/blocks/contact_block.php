@@ -2,13 +2,13 @@
 helper(['norlanka', 'url']);
 
 /**
- * The hotel's contact details, beside the enquiry form.
+ * The Authority's contact details, beside the enquiry form.
  *
  * Every row renders only when its setting holds something. The email default
- * used to be a real address belonging to somebody at an unrelated company —
- * left over from whatever this template was first written for — which meant one
- * empty setting away from publishing a stranger's inbox as the hotel's. A blank
- * default is the safe one: nothing to show, so nothing is shown.
+ * was once a real address belonging to somebody at an unrelated company — left
+ * over from whatever this template was first written for — which meant one
+ * empty setting away from publishing a stranger's inbox as the Authority's.
+ * A blank default is the safe one: nothing to show, so nothing is shown.
  */
 $email    = setting('email', '', 'contact');
 $phone    = setting('phone', '', 'contact');
