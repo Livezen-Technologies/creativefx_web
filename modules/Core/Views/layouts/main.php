@@ -127,7 +127,7 @@ $lastUpdated = $lastUpdated ?? ($page['updated_at'] ?? null);
         </div>
     </div>
 
-    <?= view('Modules\Core\Views\partials\header', ['pageDark' => $pageDark ?? false], ['saveData' => false]) ?>
+    <?= view('Modules\Core\Views\partials\header', [], ['saveData' => false]) ?>
 
     <main id="main">
         <?= $this->renderSection('content') ?>
@@ -139,7 +139,6 @@ $lastUpdated = $lastUpdated ?? ($page['updated_at'] ?? null);
           // off so neither partial can leak its locals into the next render on
           // the shared renderer. ?>
     <?= view('Modules\Core\Views\partials\footer', [
-        'pageDark'    => $pageDark ?? false,
         'lastUpdated' => $lastUpdated,
     ], ['saveData' => false]) ?>
 

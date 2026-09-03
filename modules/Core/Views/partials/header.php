@@ -38,12 +38,25 @@ $isCurrent = static function (array $item) use ($currentSlug): bool {
     <?php // Not sticky means the bar scrolls away with the page. absolute rather
           // than static so it still sits over the hero rather than pushing it
           // down — the hero is built to have the header on top of it. ?>
-    class="site-header <?= ($pageDark ?? false) ? 'on-dark' : '' ?> <?= $sticky ? 'fixed' : 'absolute' ?> inset-x-0 top-0 z-50"
+    <?php // Always the dark scope, in both themes. The bar floats over the
+          // hero, and the hero is a dark green panel whichever way the reader
+          // has set the site — so a header that followed the page theme was a
+          // cream bar over a dark photograph in light mode, with its own logo
+          // and links washing out against the picture behind them. Fixing it in
+          // one place also means the scrolled state, the top wash and the logo
+          // knockout all agree with each other instead of each guessing. ?>
+    class="site-header on-dark <?= $sticky ? 'fixed' : 'absolute' ?> inset-x-0 top-0 z-50"
 >
-    <!-- Top shade: a soft light wash that keeps the dark logo/nav legible over
-         hero media at the top of the page; fades out once the solid header kicks in. -->
+    <!-- The ground the un-scrolled bar sits on. It has to hold the nav on its
+         own, because what is behind it is whatever page happens to be underneath
+         — the dark hero on the home page, a near-white article everywhere else.
+         The old wash faded from 90% to 45% across the bar's own height, which
+         put the right-hand links on a mid-tone at 2.8:1 over a light page. It
+         now stays near-opaque for the height of the bar and only fades below
+         it, so the blend into the page is still soft and the words are never on
+         the gradient's thin end. -->
     <div aria-hidden="true"
-         class="pointer-events-none absolute inset-x-0 top-0 -z-10 h-32 bg-gradient-to-b from-brand-black/90 via-brand-black/45 to-transparent transition-opacity duration-300"
+         class="header-wash pointer-events-none absolute inset-x-0 top-0 -z-10 h-32 transition-opacity duration-300"
          :class="scrolled ? 'opacity-0' : 'opacity-100'"></div>
 
     <!-- Scroll progress bar -->

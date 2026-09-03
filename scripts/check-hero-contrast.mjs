@@ -20,11 +20,17 @@ import { PNG } from 'pngjs';
  *     drawn at less than full alpha is judged as it is seen rather than as it
  *     is declared.
  *
- * Usage: node scripts/check-hero-contrast.mjs [url] [width...]
+ * It takes a selector, so it is not only about the hero: the header and the
+ * footer carry the dark scope in both themes, which is exactly the situation
+ * where a colour is chosen once and never checked against the ground it
+ * actually lands on.
+ *
+ * Usage: node scripts/check-hero-contrast.mjs [url] [selector] [width...]
  */
 
 const url = process.argv[2] || 'http://127.0.0.1:8083/en';
-const widths = process.argv.slice(3).map(Number);
+const SELECTOR = process.argv[3] || '.hero-full';
+const widths = process.argv.slice(4).map(Number);
 const WIDTHS = widths.length ? widths : [390, 768, 1280, 1920];
 
 const lin = (c) => {
@@ -47,17 +53,17 @@ for (const width of WIDTHS) {
   await page.goto(url, { waitUntil: 'networkidle' });
   await page.waitForTimeout(1200);
 
-  const box = await page.$('.hero-full');
+  const box = await page.$(SELECTOR);
   if (!box) {
-    console.log(`  ${width}px — no .hero-full on the page`);
+    console.log(`  ${width}px — no ${SELECTOR} on the page`);
     await page.close();
     continue;
   }
 
   // Every run of text in the panel, with the rectangles its glyphs occupy.
-  const runs = await page.evaluate(() => {
-    const panel = document.querySelector('.hero-full');
-    const origin = panel.getBoundingClientRect();
+  const runs = await page.evaluate((SEL) => {
+    const panel = document.querySelector(SEL);
+    if (!panel) return [];
     const out = [];
     const walker = document.createTreeWalker(panel, NodeFilter.SHOW_TEXT);
 
@@ -102,8 +108,8 @@ for (const width of WIDTHS) {
         .map(clip)
         .filter(Boolean)
         .map((r) => ({
-          x: Math.round(r.left - origin.x),
-          y: Math.round(r.top - origin.y),
+          x: Math.round(r.left + window.scrollX),
+          y: Math.round(r.top + window.scrollY),
           w: Math.round(r.right - r.left),
           h: Math.round(r.bottom - r.top),
         }));
@@ -122,28 +128,33 @@ for (const width of WIDTHS) {
       });
     }
     return out;
-  });
+  }, SELECTOR);
 
   // Hide the glyphs and photograph the panel: what remains is the ground.
   await page.addStyleTag({
-    content: '.hero-full *, .hero-full { color: transparent !important; }' +
-             '.hero-full svg, .hero-full .hero-dot { visibility: hidden !important; }',
+    content: `${SELECTOR} *, ${SELECTOR} { color: transparent !important; }`
+           + `${SELECTOR} svg, ${SELECTOR} img, ${SELECTOR} .hero-dot { visibility: hidden !important; }`,
   });
 
   // Floating overlays — the header, the help launcher — are fixed to the
   // viewport, so an element screenshot composites them wherever the capture
   // happened to be scrolled. Left in, they become the "ground" for whatever
   // text they landed on and report failures the hero is not responsible for.
-  await page.evaluate(() => {
-    const hero = document.querySelector('.hero-full');
+  await page.evaluate((SEL) => {
+    const hero = document.querySelector(SEL);
     document.querySelectorAll('body *').forEach((el) => {
       if (getComputedStyle(el).position !== 'fixed') return;
       if (hero && hero.contains(el)) return;
       el.style.setProperty('visibility', 'hidden', 'important');
     });
-  });
+  }, SELECTOR);
   await page.waitForTimeout(150);
-  const png = PNG.sync.read(await box.screenshot());
+  // Full page, not the element. An element taller than the viewport is captured
+  // by scrolling and stitching, and the result does not line up with
+  // coordinates measured beforehand — which reported the footer's text as
+  // sitting on the light page ground three screens above it. Document
+  // coordinates against a document-sized image cannot drift.
+  const png = PNG.sync.read(await page.screenshot({ fullPage: true }));
 
   let worst = Infinity;
   let worstText = '';
@@ -179,5 +190,5 @@ for (const width of WIDTHS) {
 }
 
 await browser.close();
-console.log(failures === 0 ? '\nAll hero text clears WCAG 2.1 AA.' : `\n${failures} contrast failure(s).`);
+console.log(failures === 0 ? `\nAll text in ${SELECTOR} clears WCAG 2.1 AA.` : `\n${failures} contrast failure(s).`);
 process.exit(failures === 0 ? 0 : 1);

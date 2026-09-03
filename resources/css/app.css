@@ -335,6 +335,21 @@ html.dark .theme-notice {
     transition: background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
     border-bottom: 1px solid transparent;
   }
+
+  /* The stops are measured, not chosen. The bar is about 90px of a 128px wash,
+     so it holds ~0.92 to 70% and only then falls away: the nav links land at
+     7.4:1 over a light page instead of the 2.8:1 the old 90%→45% fade gave
+     them. Inside .on-dark — which the header always carries — --bg is the dark
+     ground, so this is dark in both themes. */
+  .header-wash {
+    background: linear-gradient(
+      to bottom,
+      rgb(var(--bg) / 0.95) 0%,
+      rgb(var(--bg) / 0.92) 70%,
+      rgb(var(--bg) / 0.45) 86%,
+      rgb(var(--bg) / 0) 100%
+    );
+  }
   /* This used to force the white knockout whenever the header was un-scrolled,
      on the reasoning that it floats over hero media. That holds in dark mode
      and is exactly wrong in light: the wash behind the un-scrolled header is

@@ -34,7 +34,11 @@ $accessUrl   = trim((string) setting('accessibility_url', '', 'footer'));
 $columns = 1 + (int) $showNav + (int) $showContact + (int) $showGovLinks;
 $cols    = ['1' => 'xl:grid-cols-1', '2' => 'xl:grid-cols-2', '3' => 'xl:grid-cols-3', '4' => 'xl:grid-cols-4', '5' => 'xl:grid-cols-5'][(string) $columns];
 ?>
-<footer class="<?= ($pageDark ?? false) ? 'on-dark' : '' ?> border-t border-white/10 bg-brand-black">
+<?php // Always the dark scope, in both themes: the footer is the page's base,
+      // and a dark base under a light page is what tells the reader the content
+      // has ended. It is also where the government links live, so it carries
+      // the same weight on every page regardless of the theme. ?>
+<footer class="on-dark border-t border-white/10 bg-brand-black">
     <?php // Four content columns now, and the brand block gives up the double
       // width it had. The single row waits for xl rather than lg: a rating
       // badge measures 250px, and four tracks in a 1024 viewport are 206 each,
@@ -48,7 +52,7 @@ $cols    = ['1' => 'xl:grid-cols-1', '2' => 'xl:grid-cols-2', '3' => 'xl:grid-co
                       // header rather than a sign-off. ?>
                 <?= view('Modules\\Core\\Views\\partials\\logo', ['class' => 'h-16 w-auto sm:h-20']) ?>
             </a>
-            <p class="mt-4 max-w-sm text-sm leading-relaxed text-white/60">
+            <p class="mt-4 max-w-sm text-sm leading-relaxed text-white/75">
                 <?php
                 // The tagline setting is a single plain string, so it can't carry
                 // translations. Show the localized strapline unless an admin has
@@ -73,7 +77,7 @@ $cols    = ['1' => 'xl:grid-cols-1', '2' => 'xl:grid-cols-2', '3' => 'xl:grid-co
 
         <?php if ($showNav): ?>
         <div>
-            <h4 class="text-xs font-semibold uppercase tracking-widest text-white/50"><?= esc(lang('Site.footer.explore')) ?></h4>
+            <h4 class="text-xs font-semibold uppercase tracking-widest text-white/70"><?= esc(lang('Site.footer.explore')) ?></h4>
             <?php // The site's real pages, from the same list the header uses. This
                   // column used to carry its own hard-coded copy naming the
                   // manufacturer's pages, so every link 404'd and every label
@@ -86,7 +90,7 @@ $cols    = ['1' => 'xl:grid-cols-1', '2' => 'xl:grid-cols-2', '3' => 'xl:grid-co
                 <?php foreach (site_nav('footer') as $item): ?>
                     <li><a href="<?= esc($item['url'], 'attr') ?>"<?= $item['target'] === '_blank' ? ' target="_blank" rel="noopener noreferrer"' : '' ?> class="hover:text-white"><?= esc($item['label']) ?></a></li>
                     <?php foreach ($item['children'] as $child): ?>
-                        <li class="pl-3"><a href="<?= esc($child['url'], 'attr') ?>"<?= $child['target'] === '_blank' ? ' target="_blank" rel="noopener noreferrer"' : '' ?> class="text-white/55 hover:text-white"><?= esc($child['label']) ?></a></li>
+                        <li class="pl-3"><a href="<?= esc($child['url'], 'attr') ?>"<?= $child['target'] === '_blank' ? ' target="_blank" rel="noopener noreferrer"' : '' ?> class="text-white/70 hover:text-white"><?= esc($child['label']) ?></a></li>
                     <?php endforeach; ?>
                 <?php endforeach; ?>
             </ul>
@@ -95,7 +99,7 @@ $cols    = ['1' => 'xl:grid-cols-1', '2' => 'xl:grid-cols-2', '3' => 'xl:grid-co
 
         <?php if ($showContact): ?>
         <div>
-            <h4 class="text-xs font-semibold uppercase tracking-widest text-white/50"><?= esc(lang('Site.footer.connect')) ?></h4>
+            <h4 class="text-xs font-semibold uppercase tracking-widest text-white/70"><?= esc(lang('Site.footer.connect')) ?></h4>
             <?php // Contact details, each rendered only when it holds something.
                   // The phone number appeared twice here: a row of its own and
                   // again inside the list added beside it. Social links moved out
@@ -129,7 +133,7 @@ $cols    = ['1' => 'xl:grid-cols-1', '2' => 'xl:grid-cols-2', '3' => 'xl:grid-co
 
         <?php if ($showGovLinks): ?>
         <div>
-            <h4 class="text-xs font-semibold uppercase tracking-widest text-white/50"><?= esc(lang('Site.footer.gov_links')) ?></h4>
+            <h4 class="text-xs font-semibold uppercase tracking-widest text-white/70"><?= esc(lang('Site.footer.gov_links')) ?></h4>
             <ul class="mt-4 space-y-2 text-sm text-white/70">
                 <?php foreach ($govLinks as $link): ?>
                     <li>
@@ -144,7 +148,7 @@ $cols    = ['1' => 'xl:grid-cols-1', '2' => 'xl:grid-cols-2', '3' => 'xl:grid-co
 
     </div>
     <div class="border-t border-white/10">
-        <div class="container-x flex flex-col items-center justify-between gap-2 py-6 text-xs text-white/40 sm:flex-row">
+        <div class="container-x flex flex-col items-center justify-between gap-2 py-6 text-xs text-white/70 sm:flex-row">
             <?php // The brand was hard-coded here, which is why it survived every
                   // settings and translation fix: it was in neither. It follows
                   // site_name now, like the loading screen and the logo. ?>
@@ -158,13 +162,13 @@ $cols    = ['1' => 'xl:grid-cols-1', '2' => 'xl:grid-cols-2', '3' => 'xl:grid-co
 
             <div class="flex flex-wrap items-center justify-center gap-x-5 gap-y-1 sm:justify-end">
                 <?php if ($privacyUrl !== ''): ?>
-                    <a href="<?= esc(menu_link($privacyUrl), 'attr') ?>" class="hover:text-white/70"><?= esc(lang('Site.footer.privacy')) ?></a>
+                    <a href="<?= esc(menu_link($privacyUrl), 'attr') ?>" class="hover:text-white"><?= esc(lang('Site.footer.privacy')) ?></a>
                 <?php endif; ?>
                 <?php if ($termsUrl !== ''): ?>
-                    <a href="<?= esc(menu_link($termsUrl), 'attr') ?>" class="hover:text-white/70"><?= esc(lang('Site.footer.terms')) ?></a>
+                    <a href="<?= esc(menu_link($termsUrl), 'attr') ?>" class="hover:text-white"><?= esc(lang('Site.footer.terms')) ?></a>
                 <?php endif; ?>
                 <?php if ($accessUrl !== ''): ?>
-                    <a href="<?= esc(menu_link($accessUrl), 'attr') ?>" class="hover:text-white/70"><?= esc(lang('Site.nav.accessibility')) ?></a>
+                    <a href="<?= esc(menu_link($accessUrl), 'attr') ?>" class="hover:text-white"><?= esc(lang('Site.nav.accessibility')) ?></a>
                 <?php endif; ?>
                 <?php // Clause 3.10: "date of last update is displayed
                       // automatically on every web page, derived from the CMS

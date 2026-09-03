@@ -39,6 +39,30 @@ const activeIndex = (page) =>
   await page.goto(url, { waitUntil: 'networkidle' });
   await page.waitForTimeout(600);
 
+  const slideCount = await page.$$eval(
+    '.hero-slider .swiper-slide:not(.swiper-slide-duplicate)',
+    (els) => els.length
+  ).catch(() => 0);
+
+  // Exactly one photograph is a still, not a slideshow: no controls, nothing
+  // moving, nothing to pause. It is the most likely state of a real site — one
+  // good picture — so it is asserted rather than skipped.
+  if (slideCount === 1) {
+    check('a single photograph renders', true);
+    check('no slideshow controls for one image', (await page.$('[data-hero-controls]')) === null);
+    check('it does not loop or autoplay',
+      await page.$eval('.hero-slider', (el) => !el.swiper?.autoplay?.running));
+    check('the image is decoration, not content',
+      await page.$eval('.hero-slider', (el) => el.getAttribute('aria-hidden') === 'true'));
+    check('the masthead is intact', (await page.$$eval('.hero-full h1', (els) => els.length)) === 1);
+
+    await page.close();
+    await browser.close();
+    console.log('\n' + `${pass} passed, ${fail} failed.`);
+    console.log('Only one hero photograph, so the slideshow itself was not exercised.');
+    process.exit(fail === 0 ? 0 : 1);
+  }
+
   if ((await page.$('.hero-slider')) === null) {
     check('the hero still renders with no photographs', (await page.$('.hero-full')) !== null);
     check('it falls back to the plain panel',
