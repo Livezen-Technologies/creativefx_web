@@ -267,11 +267,13 @@ systemctl reload nginx
 note "Deploy complete"
 cat <<DONE
 
-Site:   http://${DOMAIN}/   (redirects to /en)
-Admin:  ${SITE_SCHEME}://${DOMAIN}/admin/login   (admin@norlanka.local / norlanka123)
+Site:   ${SITE_SCHEME}://${DOMAIN}/   (the welcome page; each language hangs off it)
+Admin:  ${SITE_SCHEME}://${DOMAIN}/admin/login
 
 NEXT STEPS:
-  1. Change the admin password immediately (Admin > … or update the users row).
+  1. Sign in with the administrator the seeder printed above, and change that
+     password. It was printed once, into this log, and a build log is not a
+     place to leave a working credential.
   2. TLS: either point Cloudflare SSL to "Full" with a Cloudflare Origin
      Certificate on this box, or run:  certbot --nginx -d ${DOMAIN}
      then set app.forceGlobalSecureRequests = true in $APP_DIR/.env
