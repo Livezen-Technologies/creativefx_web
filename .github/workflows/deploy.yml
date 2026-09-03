@@ -22,7 +22,7 @@ on:
     inputs:
       branch:
         description: Branch to deploy
-        default: claude/awesome-planck-01cc95
+        default: tshda
         required: true
       deploy_host:
         description: Server host/IP (overrides DEPLOY_HOST secret)
@@ -39,15 +39,15 @@ on:
       domain:
         description: Site domain (vhost server_name and app.baseURL)
         required: true
-        default: norlankamfg.livezencloud.com
+        default: tshda.livezencloud.com
       app_dir:
         description: Install directory on the server
         required: true
-        default: /var/www/norlankamfg
+        default: /var/www/tshda
       db_name:
         description: MySQL database and user name
         required: true
-        default: norlanka_prod
+        default: tshda_prod
 
 # Per-domain, so deploying one site never queues behind another.
 concurrency:

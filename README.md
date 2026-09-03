@@ -156,10 +156,11 @@ node scripts/make-favicon.mjs          # re-render the icon set from the emblem
 *adds* one: its own directory, its own database, its own vhost. It refuses to
 clobber a vhost it did not write, and never touches another site's database.
 
-The `Deploy` workflow runs it over SSH from a GitHub runner. Deploying a second
-site means setting `domain`, `app_dir` and `db_name` together — each defaults
-to a production value, and leaving one behind would point the new site at an
-existing install.
+The `Deploy` workflow runs it over SSH from a GitHub runner. Dispatched from
+the `tshda` branch its inputs default to this site, so re-deploying needs no
+edits. Deploying a *second* site means changing `domain`, `app_dir` and
+`db_name` together — leaving one behind points the new site at an existing
+install's directory or database.
 
 The first run serves plain HTTP, because naming a certificate that does not
 exist yet makes `nginx -t` fail *after* the database has been created. Then:

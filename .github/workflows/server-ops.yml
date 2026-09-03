@@ -32,15 +32,15 @@ on:
       media_path:
         description: "inspect-media only: site-absolute path of the file to trace"
         required: false
-        default: /media/magiccorn/best-corn.jpg
+        default: /media/tshda/tshda-logo.svg
       domain:
         description: Domain to diagnose / issue a certificate for
         required: true
-        default: norlankamfg.livezencloud.com
+        default: tshda.livezencloud.com
       app_dir:
         description: Install directory of that site (diagnose-tls only)
         required: true
-        default: /var/www/norlankamfg
+        default: /var/www/tshda
       deploy_host:
         description: Server host/IP (overrides DEPLOY_HOST secret)
         required: false
@@ -143,13 +143,22 @@ jobs:
             echo "===== running panel/web services ====="
             systemctl list-units --type=service --state=running 2>/dev/null | grep -Ei 'nginx|apache|httpd|lsws|litespeed|cyber|cloudbox|panel|caddy'
             echo
-            echo "===== hero media (served over :443) ====="
-            for f in /media/video/home-hero.mp4 /media/video/home-hero-poster.jpg; do
+            # Probe what this site actually serves. A diagnostic that reports
+            # 404 on every run for files nobody ships teaches people to skim
+            # past its output, which is the one thing it must not do.
+            echo "===== static assets (served over :443) ====="
+            for f in /media/tshda/tshda-logo.svg /media/tshda/tshda-emblem.svg /favicon.ico; do
               echo "--- $f ---"
               curl -s -I -k -m 10 "https://127.0.0.1${f}" -H "Host: ${DOMAIN}" 2>&1 | grep -iE 'HTTP/|content-type|content-length|accept-ranges'
             done
-            echo "--- file on disk ---"
-            ls -la "$APP_DIR"/public/media/video/ 2>/dev/null
+            echo "--- built bundle referenced by the page ---"
+            curl -s -k -m 10 "https://127.0.0.1/" -H "Host: ${DOMAIN}" \
+              | grep -oE '/build/assets/app-[A-Za-z0-9_-]+\.(js|css)' | sort -u | while read -r a; do
+                printf '  %s -> ' "$a"
+                curl -s -o /dev/null -w '%{http_code}\n' -k -m 10 "https://127.0.0.1${a}" -H "Host: ${DOMAIN}"
+              done
+            echo "--- media on disk ---"
+            ls -la "$APP_DIR"/public/media/*/ 2>/dev/null
             echo
             echo "===== DONE (read-only) ====="
 

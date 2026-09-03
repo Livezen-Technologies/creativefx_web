@@ -31,17 +31,19 @@ defaults in `setup.sh` belong to the first site it was written for.
 runner, so nobody needs to SSH in. Manual trigger only — it never deploys on
 push.
 
-Actions → **Deploy** → Run workflow, and set **all four** of:
+Actions → **Deploy** → Run workflow. Dispatched from the `tshda` branch, the
+four inputs already default to this site, so a plain re-deploy needs no edits:
 
-| Input | This site |
+| Input | Default on this branch |
 |---|---|
 | `branch` | `tshda` |
 | `domain` | `tshda.livezencloud.com` |
 | `app_dir` | `/var/www/tshda` |
 | `db_name` | `tshda_prod` |
 
-Each defaults to another site's production value, so leaving one behind points
-the new site at an existing install's directory or database. They go together.
+Deploying a *different* site means changing all four together. They are not
+independent: `domain` with somebody else's `db_name` runs this branch's
+migrations against that site's live database.
 
 Credentials resolve as repo secret → dispatch input: set `DEPLOY_HOST`,
 `DEPLOY_USER` and `DEPLOY_SSH_KEY` (preferred) or `DEPLOY_PASSWORD` under
