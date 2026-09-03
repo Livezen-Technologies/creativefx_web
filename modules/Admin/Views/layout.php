@@ -78,7 +78,7 @@ $renderNav = static function () use ($groups, $active, $navIcon): void {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf" data-name="<?= csrf_token() ?>" content="<?= csrf_hash() ?>">
-    <title><?= esc($title ?? 'Admin') ?> — <?= esc(setting('site_name', 'Magic Corn')) ?> Admin</title>
+    <title><?= esc($title ?? 'Admin') ?> — <?= esc(setting('site_name', '')) ?> Admin</title>
     <script>window.ADMIN_BASE = <?= json_encode(site_url('admin')) ?>;</script>
     <?= vite_tags('resources/js/app.js') ?>
     <?= vite_tags('resources/js/admin.js') ?>

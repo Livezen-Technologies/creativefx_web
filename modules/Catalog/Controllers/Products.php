@@ -52,7 +52,7 @@ class Products extends BaseController
             'activeLabel'     => $label,
             'currentPage'     => $pager->getCurrentPage(),
             'pageCount'       => $pager->getPageCount(),
-            'title'           => lang('Site.products.title') . ' — ' . setting('site_name', 'Magic Corn'),
+            'title'           => lang('Site.products.title') . ' — ' . setting('site_name', ''),
             'metaDescription' => lang('Site.products.meta'),
         ]);
     }
@@ -75,7 +75,7 @@ class Products extends BaseController
             'product'         => $product,
             'category'        => $category,
             'related'         => $model->related($product),
-            'title'           => t_field($product['meta_title'] ?: $product['name']) . ' — ' . setting('site_name', 'Magic Corn'),
+            'title'           => t_field($product['meta_title'] ?: $product['name']) . ' — ' . setting('site_name', ''),
             'metaDescription' => t_field($product['meta_description'] ?: $product['short_description']),
             'ogImage'         => $product['hero_image'] ?? null,
         ]);
