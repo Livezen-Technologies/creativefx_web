@@ -11,7 +11,10 @@ return [
     ],
     'footer' => [
         'explore' => 'Navigation',
-        'connect' => 'Follow Us',
+        // The column under this heading holds the address and phone numbers, not
+        // social accounts — those are the icon row under the wordmark. It read
+        // "Follow Us" over an email address until the two were separated.
+        'connect' => 'Contact',
         'rights'  => 'All rights reserved.',
         'built'   => 'Kukuleganga, Kalawana · at the edge of the Sinharaja rainforest',
     ],

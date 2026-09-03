@@ -283,3 +283,30 @@ if (! function_exists('is_cutout_image')) {
         };
     }
 }
+
+if (! function_exists('site_nav')) {
+    /**
+     * The site's primary pages, slug => label.
+     *
+     * One list, because there were two. The header carried the hotel's pages
+     * while the footer carried the manufacturer's — about-us, our-business,
+     * products, our-locations — none of which this site routes, and whose
+     * labels named language keys that no longer exist. lang() returns the key
+     * when it cannot resolve one, so the footer rendered five links reading
+     * "Site.nav.about", "Site.nav.business" and so on, pointing at 404s.
+     *
+     * Two copies of a list drift the moment one is edited. This one cannot.
+     *
+     * @return array<string, string>
+     */
+    function site_nav(): array
+    {
+        return [
+            'accommodation' => lang('Site.nav.accommodation'),
+            'dining'        => lang('Site.nav.dining'),
+            'things-to-do'  => lang('Site.nav.things_to_do'),
+            'gallery'       => lang('Site.nav.gallery'),
+            'contact'       => lang('Site.nav.contact'),
+        ];
+    }
+}

@@ -3,13 +3,7 @@
 $parts = explode('/', trim(uri_string(), '/'));
 $currentSlug = $parts[1] ?? '';
 
-$nav = [
-    'accommodation' => lang('Site.nav.accommodation'),
-    'dining'        => lang('Site.nav.dining'),
-    'things-to-do'  => lang('Site.nav.things_to_do'),
-    'gallery'       => lang('Site.nav.gallery'),
-    'contact'       => lang('Site.nav.contact'),
-];
+$nav = site_nav();
 
 ?>
 <header

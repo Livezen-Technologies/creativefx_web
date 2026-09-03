@@ -16,41 +16,47 @@
                     : $tagline);
                 ?>
             </p>
+
+            <?php // The existing icon row, which already renders only the accounts
+                  // that are actually set. ?>
+            <div class="mt-6">
+                <?= view('Modules\\Core\\Views\\partials\\social_links', ['compact' => false]) ?>
+            </div>
         </div>
 
         <div>
             <h4 class="text-xs font-semibold uppercase tracking-widest text-white/50"><?= esc(lang('Site.footer.explore')) ?></h4>
+            <?php // The site's real pages, from the same list the header uses. This
+                  // column used to carry its own hard-coded copy naming the
+                  // manufacturer's pages, so every link 404'd and every label
+                  // rendered as the language key it could not resolve. ?>
             <ul class="mt-4 space-y-2 text-sm text-white/70">
-                <li><a href="<?= esc(locale_url('about-us')) ?>" class="hover:text-white"><?= esc(lang('Site.nav.about')) ?></a></li>
-                <li><a href="<?= esc(locale_url('our-business')) ?>" class="hover:text-white"><?= esc(lang('Site.nav.business')) ?></a></li>
-                <li><a href="<?= esc(locale_url('products')) ?>" class="hover:text-white"><?= esc(lang('Site.nav.products')) ?></a></li>
-                <li><a href="<?= esc(locale_url('our-locations')) ?>" class="hover:text-white"><?= esc(lang('Site.nav.locations')) ?></a></li>
-                <li><a href="<?= esc(locale_url('contact')) ?>" class="hover:text-white"><?= esc(lang('Site.nav.contact')) ?></a></li>
+                <?php foreach (site_nav() as $slug => $label): ?>
+                    <li><a href="<?= esc(locale_url($slug)) ?>" class="hover:text-white"><?= esc($label) ?></a></li>
+                <?php endforeach; ?>
             </ul>
         </div>
 
         <div>
             <h4 class="text-xs font-semibold uppercase tracking-widest text-white/50"><?= esc(lang('Site.footer.connect')) ?></h4>
+            <?php // Contact details, each rendered only when it holds something.
+                  // The phone number appeared twice here: a row of its own and
+                  // again inside the list added beside it. Social links moved out
+                  // to the icon row under the wordmark, where they are icons
+                  // rather than words and are not filed under a heading that
+                  // says "connect" over an email address. ?>
             <ul class="mt-4 space-y-2 text-sm text-white/70">
-                <?php // Guarded like every other row. Unguarded it rendered an
-                      // empty bullet holding a dead `mailto:` — and its display
-                      // fallback was a real address belonging to somebody at an
-                      // unrelated company, one empty setting away from being
-                      // published as this hotel's inbox. ?>
-                <?php if ($mail = setting('email', '', 'contact')): ?>
-                    <li><a href="mailto:<?= esc($mail, 'attr') ?>" class="hover:text-white"><?= esc($mail) ?></a></li>
+                <?php if ($addr = setting('address', '', 'contact')): ?>
+                    <li class="max-w-xs leading-relaxed"><?= esc($addr) ?></li>
                 <?php endif; ?>
-                <?php foreach (array_filter([setting('phone', '', 'contact'), setting('phone_alt', '', 'contact')]) as $num): ?>
+                <?php foreach (array_unique(array_filter([
+                    setting('phone', '', 'contact'),
+                    setting('phone_alt', '', 'contact'),
+                ])) as $num): ?>
                     <li><a href="tel:<?= esc(preg_replace('/[^0-9+]/', '', $num), 'attr') ?>" class="hover:text-white"><?= esc($num) ?></a></li>
                 <?php endforeach; ?>
-                <?php if ($fb = setting('facebook', '', 'social')): ?>
-                    <li><a href="<?= esc($fb) ?>" class="hover:text-white" target="_blank" rel="noopener">Facebook</a></li>
-                <?php endif; ?>
-                <?php if ($ig = setting('instagram', '', 'social')): ?>
-                    <li><a href="<?= esc($ig) ?>" class="hover:text-white" target="_blank" rel="noopener">Instagram</a></li>
-                <?php endif; ?>
-                <?php if ($tel = setting('phone', '', 'contact')): ?>
-                    <li><a href="tel:<?= esc(preg_replace('/[^+0-9]/', '', $tel), 'attr') ?>" class="hover:text-white"><?= esc($tel) ?></a></li>
+                <?php if ($mail = setting('email', '', 'contact')): ?>
+                    <li><a href="mailto:<?= esc($mail, 'attr') ?>" class="hover:text-white"><?= esc($mail) ?></a></li>
                 <?php endif; ?>
             </ul>
         </div>

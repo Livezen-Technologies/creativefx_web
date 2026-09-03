@@ -7,8 +7,12 @@ use Modules\Translation\Models\TranslationModel;
 
 /**
  * Seeds the translations table from the Site language files (group "Site") so
- * the Translation Manager has the UI chrome strings ready to edit. Existing
- * values are preserved (onlyIfMissing) so re-seeding never clobbers edits.
+ * the Translation Manager has the UI chrome strings ready to edit.
+ *
+ * Rows nobody has edited follow the files, so rewording a string in a file
+ * reaches every site on its next deploy. Rows edited in the Translation Manager
+ * are marked and left alone. Before that distinction existed the seeder could
+ * only insert, and a file edit never reached a seeded site at all.
  */
 class TranslationSeeder extends Seeder
 {
@@ -26,7 +30,7 @@ class TranslationSeeder extends Seeder
                 continue;
             }
             foreach (TranslationModel::flatten($data) as $key => $value) {
-                $model->put($locale, 'Site', $key, $value, true);
+                $model->putFromFile($locale, 'Site', $key, $value);
             }
         }
     }

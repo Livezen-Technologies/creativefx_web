@@ -22,6 +22,7 @@ on:
           - diagnose-tls
           - inspect-media
           - setup-tls-certbot
+          - dump-content
         default: diagnose-tls
         required: true
       le_email:
@@ -199,6 +200,47 @@ jobs:
             echo
             echo "===== nginx caching that could hold a stale body ====="
             grep -RsnE 'open_file_cache|proxy_cache|fastcgi_cache|sendfile|aio' /etc/nginx/nginx.conf /etc/nginx/conf.d/ /etc/nginx/sites-enabled/ 2>/dev/null
+            echo
+            echo "===== DONE (read-only) ====="
+
+      - name: Dump content rows (read-only)
+        if: ${{ github.event.inputs.action == 'dump-content' }}
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ env.DEPLOY_HOST }}
+          username: ${{ env.DEPLOY_USER }}
+          password: ${{ env.DEPLOY_PASSWORD }}
+          key: ${{ env.DEPLOY_SSH_KEY }}
+          script: |
+            set -uo pipefail
+            APP_DIR="${{ github.event.inputs.app_dir }}"
+
+            # The settings and translations tables are where the previous brand
+            # keeps surviving: seeders insert-only, migrations run once, and the
+            # deployed templates are right while the database is not. Two
+            # corrections have already been written that matched nothing,
+            # because they guessed which wrong value was in a row. This reads
+            # the rows instead. Read-only — it selects and prints, nothing else.
+            cd "$APP_DIR" || { echo "no $APP_DIR"; exit 1; }
+            DB=$(grep -E "^database.default.database" .env | cut -d= -f2- | tr -d " '\"")
+            DU=$(grep -E "^database.default.username" .env | cut -d= -f2- | tr -d " '\"")
+            DP=$(grep -E "^database.default.password" .env | cut -d= -f2- | tr -d " '\"")
+
+            echo "===== settings ====="
+            mysql -u"$DU" -p"$DP" "$DB" -e \
+              "SELECT \`group\`, \`key\`, value FROM settings ORDER BY \`group\`, \`key\`;" 2>/dev/null \
+              || echo "  (could not read settings)"
+
+            echo
+            echo "===== Site translations that differ from nothing obvious ====="
+            mysql -u"$DU" -p"$DP" "$DB" -e \
+              "SELECT \`key\`, LEFT(value, 70) AS value FROM translations
+               WHERE \`group\`='Site' AND locale='en'
+                 AND (value LIKE '%Magic Corn%' OR value LIKE '%outlet%' OR value LIKE '%flavour%'
+                      OR value LIKE '%Norlanka%' OR value LIKE '%corn%')
+               ORDER BY \`key\`;" 2>/dev/null \
+              || echo "  (could not read translations)"
+
             echo
             echo "===== DONE (read-only) ====="
 

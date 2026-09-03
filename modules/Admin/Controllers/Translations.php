@@ -109,7 +109,7 @@ class Translations extends BaseController
                 continue;
             }
             foreach (TranslationModel::flatten($data) as $key => $value) {
-                $model->put($locale, 'Site', $key, $value, true);
+                $model->putFromFile($locale, 'Site', $key, $value);
                 $count++;
             }
         }
