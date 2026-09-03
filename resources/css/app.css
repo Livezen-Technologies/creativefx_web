@@ -131,6 +131,13 @@ html.dark .theme-esg-green {  /* Impact page green scope, dark variant */
      — including inside the header, which is transparent over a dark photograph
      at the top of a page and solid cream once scrolled. */
   .brand-logo { display: inline-flex; }
+
+  /* The header mark, at rest and once the compact bar takes over. 54px is half
+     again the 36px it used to be everywhere; the scrolled bar keeps that old
+     size, so only the resting state grew. Sized here rather than through an
+     Alpine :class so it is correct on first paint, before any script runs. */
+  .brand-mark { height: 3.375rem; transition: height 0.3s ease; }
+  .site-header.is-scrolled .brand-mark { height: 2.25rem; }
   .brand-logo__on-dark { display: none; }
   html.dark .brand-logo__on-light,
   .on-dark .brand-logo__on-light { display: none; }
@@ -315,15 +322,21 @@ html.dark .theme-esg-green {  /* Impact page green scope, dark variant */
     box-shadow: 0 14px 34px -16px rgba(0, 0, 0, 0.28);
   }
 
+  /* Six items, one of them "Explore Kalawana", set uppercase with tracking:
+     at the old 0.95rem the row measured 801px, which is most of a 1280 bar and
+     more than a 1024 one has to give. It steps up with the viewport instead, so
+     the widest screens still get the size it was drawn at. */
   .nav-link {
     position: relative;
-    font-size: 0.95rem;
+    font-size: 0.8rem;
     font-weight: 500;
     letter-spacing: 0.05em;
     text-transform: uppercase;
     color: rgb(var(--fg) / 0.9);
     transition: color 0.2s ease;
   }
+  @media (min-width: 1280px) { .nav-link { font-size: 0.875rem; } }
+  @media (min-width: 1536px) { .nav-link { font-size: 0.95rem; } }
   .nav-link::after {
     content: '';
     position: absolute;
@@ -363,6 +376,54 @@ html.dark .theme-esg-green {  /* Impact page green scope, dark variant */
 
   /* Larger primary CTA for clear hero hierarchy. */
   .btn-lg { @apply px-8 py-4 text-sm; }
+
+  /* --- Video player ------------------------------------------------------
+     The control bar sits over the film, so every target needs its own hit
+     area and a visible focus ring against moving picture rather than against
+     a known background. */
+  .vp-btn {
+    @apply inline-flex h-9 w-9 items-center justify-center rounded-full
+           text-white/85 transition hover:bg-white/15 hover:text-white
+           focus:outline-none focus-visible:ring-2 focus-visible:ring-white;
+  }
+
+  /* The scrubber is a real range input laid over the drawn bars, so dragging,
+     arrow keys, Home and End all work and a screen reader is given a value.
+     Its own track and fill are transparent; only the thumb is painted. */
+  .vp-range {
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    height: 1rem;
+    margin: 0;
+    cursor: pointer;
+  }
+  .vp-range:focus { outline: none; }
+  .vp-range::-webkit-slider-runnable-track { height: 1rem; background: transparent; }
+  .vp-range::-moz-range-track { height: 1rem; background: transparent; }
+  .vp-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 0.75rem;
+    width: 0.75rem;
+    border-radius: 9999px;
+    background: #fff;
+    border: none;
+    margin-top: 0.125rem;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+    transition: transform 0.15s ease;
+  }
+  .vp-range::-moz-range-thumb {
+    height: 0.75rem;
+    width: 0.75rem;
+    border-radius: 9999px;
+    background: #fff;
+    border: none;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+  }
+  .vp:hover .vp-range::-webkit-slider-thumb,
+  .vp-range:focus-visible::-webkit-slider-thumb { transform: scale(1.25); }
+  .vp-range:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 3px rgb(255 255 255 / 0.6); }
+  .vp-range:focus-visible::-moz-range-thumb { box-shadow: 0 0 0 3px rgb(255 255 255 / 0.6); }
 
   /* Hero red brand glow + soft accents. */
   /* Two corner accents rather than one weighted side, now that nothing on the
@@ -836,6 +897,7 @@ html.fp-active body {
     animation: none;
   }
   .site-header,
+  .brand-mark,
   .nav-link::after {
     transition: none;
   }

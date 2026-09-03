@@ -22,16 +22,30 @@ $nav = site_nav();
     <!-- Scroll progress bar -->
     <div class="absolute inset-x-0 top-0 h-0.5 bg-brand-red origin-left" :style="`transform:scaleX(${progress/100})`"></div>
 
-    <div class="header-bar flex w-full items-center justify-between px-6 transition-all duration-300 lg:px-10"
-         :class="scrolled ? 'h-16' : 'h-20'">
+    <?php // justify-between hangs the nav off the logo's width, so it sat left
+          // of centre by however much wider the logo is than the controls
+          // opposite it. Three explicit columns with the outer two sharing what
+          // is left put the nav in the middle of the bar regardless.
+          //
+          // Only from xl, though. Centring means both margins are as wide as
+          // the wider of the two flanks, and between 1024 and 1280 the six nav
+          // items plus the controls do not leave that much: forcing it there
+          // squeezed the logo's track to zero and the mark vanished. Below xl
+          // the row stays the flex it was, which fits. ?>
+    <div class="header-bar flex w-full items-center justify-between px-6 transition-all duration-300 lg:px-10 xl:grid xl:grid-cols-[1fr_auto_1fr]"
+         :class="scrolled ? 'h-16' : 'h-24'">
         <!-- Logo: official NL monogram + wordmark (static sizes so it renders
              correctly even before/without JS). -->
-        <a href="<?= esc(locale_url('')) ?>" class="flex items-center gap-2.5 shrink-0" aria-label="Kukuleganga Giants Forest — home">
-            <?= view('Modules\\Core\\Views\\partials\\logo', ['class' => 'h-9 w-auto']) ?>
+        <a href="<?= esc(locale_url('')) ?>" class="flex shrink-0 items-center gap-2.5" aria-label="Kukuleganga Giants Forest — home">
+            <?php // Half again as tall while the header is at rest over the hero,
+                  // where there is room for it; back to its old size the moment
+                  // the compact bar takes over, which is sized in CSS so it
+                  // still transitions without JavaScript deciding it. ?>
+            <?= view('Modules\\Core\\Views\\partials\\logo', ['class' => 'brand-mark w-auto']) ?>
         </a>
 
         <!-- Desktop nav -->
-        <nav class="hidden items-center gap-7 lg:flex" aria-label="Primary">
+        <nav class="hidden items-center justify-center gap-4 lg:flex xl:gap-6 2xl:gap-7" aria-label="Primary">
             <?php foreach ($nav as $slug => $label):
                 $active = $slug === $currentSlug; ?>
                 <a href="<?= esc(locale_url($slug)) ?>" class="nav-link <?= $active ? 'nav-link-active' : '' ?>"><?= esc($label) ?></a>
@@ -39,10 +53,11 @@ $nav = site_nav();
         </nav>
 
         <!-- Right side -->
-        <div class="flex items-center gap-2.5 sm:gap-3">
-            <!-- Social accounts. Hidden below sm, where the row would crowd the
-                 language switcher out; the mobile menu carries them instead. -->
-            <div class="hidden sm:block">
+        <div class="flex items-center justify-end gap-2.5 sm:gap-3">
+            <!-- Social accounts. Hidden below xl, where the row crowds the nav
+                 and the language switcher; the mobile menu and the footer both
+                 carry them, so nothing is lost. -->
+            <div class="hidden 2xl:block">
                 <?= $this->include('Modules\Core\Views\partials\social_links', ['compact' => true]) ?>
             </div>
             <?= $this->include('Modules\Core\Views\partials\theme_toggle') ?>
@@ -59,7 +74,8 @@ $nav = site_nav();
 
     <!-- Mobile menu -->
     <div x-show="mobile" x-cloak x-transition.opacity
-         class="fixed inset-0 top-16 z-40 bg-brand-black/98 backdrop-blur-xl lg:hidden"
+         :class="scrolled ? 'top-16' : 'top-24'"
+         class="fixed inset-0 z-40 bg-brand-black/98 backdrop-blur-xl lg:hidden"
          @click.self="mobile=false">
         <nav class="container-x flex flex-col gap-1 py-8" aria-label="Mobile">
             <?php foreach ($nav as $slug => $label):
