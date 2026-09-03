@@ -20,7 +20,7 @@ $parent   = setting('parent_org', '', 'general');
 // list written in English.
 $names = [
     'en' => 'Tea Small Holdings Development Authority',
-    'si' => 'තේ කුඩා වතු සංවර්ධන අධිකාරිය',
+    'si' => 'කුඩා තේ වතු සංවර්ධන අධිකාරිය',
     'ta' => 'தேயிலை சிறு தோட்ட அபிவிருத்தி அதிகார சபை',
 ];
 $enter = ['en' => 'Enter the website', 'si' => 'වෙබ් අඩවියට පිවිසෙන්න', 'ta' => 'இணையதளத்தில் நுழையவும்'];

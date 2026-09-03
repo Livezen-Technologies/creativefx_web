@@ -38,7 +38,7 @@ $locales = supported_locales();
 // who reads only Sinhala should see the organisation they were looking for.
 $names = [
     'en' => 'Tea Small Holdings Development Authority',
-    'si' => 'තේ කුඩා වතු සංවර්ධන අධිකාරිය',
+    'si' => 'කුඩා තේ වතු සංවර්ධන අධිකාරිය',
     'ta' => 'தேயிலை சிறு தோட்ட அபிவிருத்தி அதிகார சபை',
 ];
 $ask = [

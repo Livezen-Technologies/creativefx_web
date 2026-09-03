@@ -39,15 +39,22 @@ class ServiceSeeder extends Seeder
                 'icon'          => $def['icon'] ?? null,
                 'sort_order'    => $order++,
                 'status'        => 'published',
-                'updated_at'    => $now,
             ];
 
             $existing = $this->db->table('services')->where('slug', $slug)->get()->getRowArray();
 
             if ($existing === null) {
-                $this->db->table('services')->insert($row + ['created_at' => $now]);
+                $this->db->table('services')->insert($row + ['created_at' => $now, 'updated_at' => $now]);
             } elseif (($existing['updated_at'] ?? '') === ($existing['created_at'] ?? '')) {
-                $this->db->table('services')->where('slug', $slug)->update($row);
+                // Keep updated_at pinned to created_at. The row's own timestamp
+                // is what marks it as edited by hand, so stamping it here made
+                // the seeder look like an officer: after one release the guard
+                // above saw a "touched" row and never updated it again. A typo
+                // corrected in this file could then never reach a running site,
+                // which is the opposite of what the guard is for.
+                $this->db->table('services')->where('slug', $slug)->update(
+                    $row + ['updated_at' => $existing['created_at']]
+                );
             }
         }
     }
