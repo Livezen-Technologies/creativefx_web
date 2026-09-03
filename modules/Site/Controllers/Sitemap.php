@@ -4,7 +4,13 @@ namespace Modules\Site\Controllers;
 
 use App\Controllers\BaseController;
 use Config\App;
+use Modules\Careers\Models\JobModel;
 use Modules\Cms\Models\PageModel;
+use Modules\News\Models\NewsPostModel;
+use Modules\Tshda\Models\DiscussionTopicModel;
+use Modules\Tshda\Models\ProgrammeModel;
+use Modules\Tshda\Models\ServiceModel;
+use Modules\Tshda\Models\StatisticModel;
 
 /**
  * The XML sitemap, built from the pages table rather than a hand-kept list.
@@ -18,6 +24,14 @@ use Modules\Cms\Models\PageModel;
  * through xhtml:link alternates. That is what tells a search engine these are
  * translations of one page rather than several thin pages saying similar
  * things — and it is why the file is not simply a list of URLs.
+ *
+ * Most of this site is not in the pages table, though. The service catalogue,
+ * the statistics, the training calendar, the newsroom and the vacancies are
+ * their own records with their own addresses, and a sitemap listing only the
+ * editorial pages would leave the majority of the Authority's content
+ * undiscoverable. Each of those is added below, from the same query the public
+ * controller uses — so a closed vacancy or a draft dataset is absent here for
+ * the same reason it is absent from the site.
  */
 class Sitemap extends BaseController
 {
@@ -54,9 +68,83 @@ class Sitemap extends BaseController
             }
         }
 
+        // The section indexes: real addresses, and the entry point to
+        // everything below them.
+        foreach ([
+            'services'    => '0.9',
+            'directory'   => '0.8',
+            'statistics'  => '0.8',
+            'downloads'   => '0.8',
+            'hantana'     => '0.8',
+            'vacancies'   => '0.8',
+            'news'        => '0.8',
+            'announcements' => '0.8',
+            'discussion'  => '0.6',
+            'faqs'        => '0.7',
+            'contact'     => '0.8',
+            'feedback'    => '0.7',
+            'gallery'     => '0.6',
+            'videos'      => '0.6',
+            'sitemap'     => '0.4',
+        ] as $slug => $priority) {
+            $entries = array_merge($entries, $this->localized($slug, $locales, null, $priority, 'weekly'));
+        }
+
+        // The records. Wrapped, because a sitemap is fetched by a crawler
+        // rather than a person: one unreachable table must not take the whole
+        // file down and cost the site its indexing.
+        foreach ([
+            ['services/',   fn () => (new ServiceModel())->live()->findAll(),        '0.7', 'monthly'],
+            ['statistics/', fn () => (new StatisticModel())->live(),                 '0.6', 'monthly'],
+            ['hantana/',    fn () => (new ProgrammeModel())->calendar(),             '0.6', 'weekly'],
+            ['news/',       fn () => (new NewsPostModel())->live()->findAll(200),    '0.6', 'monthly'],
+            ['vacancies/',  fn () => (new JobModel())->openJobs(),                   '0.6', 'weekly'],
+            ['discussion/', fn () => (new DiscussionTopicModel())->live(),           '0.5', 'weekly'],
+        ] as [$prefix, $fetch, $priority, $freq]) {
+            try {
+                foreach ($fetch() as $row) {
+                    $entries = array_merge($entries, $this->localized(
+                        $prefix . $row['slug'],
+                        $locales,
+                        $this->stamp($row),
+                        $priority,
+                        $freq
+                    ));
+                }
+            } catch (\Throwable $e) {
+                log_message('error', 'Sitemap section ' . $prefix . ' skipped: ' . $e->getMessage());
+            }
+        }
+
         return $this->response
             ->setHeader('Content-Type', 'application/xml; charset=UTF-8')
             ->setBody($this->renderXml(['entries' => $entries]));
+    }
+
+    /**
+     * One address, in every language, each entry naming the others.
+     *
+     * @return list<array>
+     */
+    private function localized(string $path, array $locales, ?string $lastmod, string $priority, string $changefreq): array
+    {
+        $urls = [];
+        foreach ($locales as $locale) {
+            $urls[$locale] = rtrim(base_url($locale . '/' . ltrim($path, '/')), '/');
+        }
+
+        $out = [];
+        foreach ($locales as $locale) {
+            $out[] = [
+                'loc'        => $urls[$locale],
+                'alternates' => $urls,
+                'lastmod'    => $lastmod,
+                'priority'   => $priority,
+                'changefreq' => $changefreq,
+            ];
+        }
+
+        return $out;
     }
 
     /**
@@ -80,7 +168,7 @@ class Sitemap extends BaseController
     /** W3C-datetime lastmod, or null when the row has no usable timestamp. */
     private function stamp(array $page): ?string
     {
-        $raw = $page['updated_at'] ?? $page['created_at'] ?? null;
+        $raw = $page['updated_at'] ?? $page['published_at'] ?? $page['created_at'] ?? null;
         if (empty($raw)) {
             return null;
         }
