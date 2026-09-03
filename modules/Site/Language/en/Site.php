@@ -35,7 +35,7 @@ return [
 
     // Careers portal (job detail + application form).
     'careers' => [
-        'meta'           => 'Careers at Magic Corn — open positions and online applications.',
+        'meta'           => 'Careers at Kukuleganga Giants Forest — open positions and applications.',
         'all'            => 'All openings',
         'none'           => 'There are no open positions right now — check back soon, or contact us with your profile.',
         'view_apply'     => 'View & apply',
@@ -62,6 +62,7 @@ return [
         'contact_us'   => 'Book Now',
         'find_outlet'  => 'Things to do',
         'our_story'    => 'See the rooms',
+        'watch_film'   => 'Watch the film',
     ],
 
     // Header mega-menu (titles reuse home.cap.*_t).
@@ -165,10 +166,10 @@ return [
 
     // Newsroom (listing + article pages).
     'news' => [
-        'meta'     => 'News from Magic Corn — new outlets, products and events.',
+        'meta'     => 'News from Kukuleganga Giants Forest.',
         'eyebrow'  => 'Newsroom',
         'title'    => 'News & Insights',
-        'intro'    => 'New outlets, new flavours and stories from across Magic Corn.',
+        'intro'    => 'Stories from the hotel and the forest around it.',
         'all'      => 'All',
         'read'     => 'Read article',
         'back'     => 'All news',
@@ -187,10 +188,10 @@ return [
         'new_tab' => '(opens in a new tab)',
     ],
     'products' => [
-        'meta'           => 'Magic Corn shop — frozen sweet corn packs and corn in a cup, made in Sri Lanka.',
+        'meta'           => 'Kukuleganga Giants Forest.',
         'eyebrow'        => 'Shop',
         'title'          => 'Our range',
-        'intro'          => 'Corn in a cup at our outlets, and frozen sweet corn to take home or supply in bulk.',
+        'intro'          => 'Rooms and stays at Kukuleganga Giants Forest.',
         'all'            => 'All',
         'filter'         => 'Filter',
         'back'           => 'All products',
@@ -217,7 +218,7 @@ return [
         'target'   => 'Target',
     ],
     'locations' => [
-        'map_alt'  => 'Map of Sri Lanka showing Magic Corn locations',
+        'map_alt'  => 'Map of Sri Lanka showing where the hotel is',
         'show_all' => 'Show all',
     ],
 ];

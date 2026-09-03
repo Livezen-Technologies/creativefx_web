@@ -122,7 +122,13 @@ $splitWords = static function (string $text): string {
     <div class="container-x relative w-full pt-28">
         <p class="eyebrow mb-6" data-gsap="reveal"><?= esc(lang('Site.home.hero.eyebrow')) ?></p>
 
-        <h1 class="kinetic-hero max-w-4xl text-4xl font-bold leading-[1.05] sm:text-5xl lg:text-6xl xl:text-7xl" aria-label="<?= esc(t_field($heroHeadline), 'attr') ?>">
+        <?php // font-sans overrides the base layer, which sets Playfair on every
+              // h1-h4. The rest of this hero — eyebrow, subhead, both buttons,
+              // the nav above it — is Poppins, and the serif headline was the
+              // only thing on screen not speaking the same voice. Tracking is
+              // pulled in slightly because Poppins at 72px sets looser than a
+              // serif does at the same size. ?>
+        <h1 class="kinetic-hero max-w-4xl font-sans text-4xl font-bold leading-[1.05] tracking-[-0.02em] sm:text-5xl lg:text-6xl xl:text-7xl" aria-label="<?= esc(t_field($heroHeadline), 'attr') ?>">
             <?php if ($kPre !== ''): ?><span class="kline" data-kinetic><?= $splitWords($kPre) ?></span><?php endif; ?>
             <?php if ($kRotators !== []): ?>
                 <span class="rotator-wrap text-brand-red" data-rotator aria-hidden="true">
