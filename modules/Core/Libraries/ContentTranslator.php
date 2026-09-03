@@ -17,15 +17,24 @@ class ContentTranslator
 {
     /** Localized JSON columns, by table. */
     private const COLUMNS = [
-        'pages'               => ['title', 'meta_description'],
-        'products'            => ['name', 'short_description', 'description', 'meta_title', 'meta_description'],
-        'product_categories'  => ['name', 'description'],
+        'pages'               => ['title', 'meta_description', 'meta_title'],
         'news_posts'          => ['title', 'excerpt', 'body', 'meta_title', 'meta_description'],
         'news_categories'     => ['name', 'description'],
         'jobs'                => ['title', 'description'],
-        'showroom_products'   => ['name', 'description'],
-        'showroom_categories' => ['name'],
-        'esg_metrics'         => ['label'],
+        // The Authority's own tables. Every one of these columns is a locale
+        // map an officer authors in English; the dictionary completes the
+        // Sinhala and Tamil so a record is not published in one language only.
+        'notices'             => ['title', 'body'],
+        'services'            => ['title', 'summary', 'eligibility', 'fee', 'duration', 'division', 'contact_point'],
+        'document_categories' => ['name'],
+        'documents'           => ['title', 'description'],
+        'faqs'                => ['question', 'answer'],
+        'offices'             => ['name', 'address'],
+        'staff'               => ['designation', 'division', 'subject_area'],
+        'statistics_datasets' => ['title', 'description', 'unit', 'source'],
+        'programmes'          => ['title', 'summary', 'description', 'audience', 'fee', 'venue'],
+        'discussion_topics'   => ['title', 'body'],
+        'org_links'           => ['name'],
     ];
 
     private array $dict;

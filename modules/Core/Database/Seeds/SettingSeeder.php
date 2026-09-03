@@ -11,59 +11,54 @@ class SettingSeeder extends Seeder
         $now = date('Y-m-d H:i:s');
 
         $settings = [
-            ['general', 'site_name', 'Kukuleganga Giants Forest', 'string', 1],
-            ['general', 'tagline', 'Stay in Sapphire Land', 'string', 1],
-            ['brand', 'color_primary', '#346142', 'string', 1],
-            ['brand', 'color_secondary', '#1B2E22', 'string', 1],
-            // The source site's theme obfuscates both addresses, so the real
-            // ones could not be read off it. Left blank rather than guessed:
-            // the footer and contact page render an address only when set, so
-            // a wrong one cannot be published by accident.
-            ['contact', 'email', 'giantsforest.kukuleganga@gmail.com', 'string', 1],
-            ['contact', 'phone', '+94 76 573 5600', 'string', 1],
-            ['contact', 'phone_alt', '+94 76 758 4908', 'string', 1],
-            ['contact', 'whatsapp', '+94765735600', 'string', 1],
-            ['contact', 'address', 'Dam Site, Project Road, Kukuleganga, Kalawana 70450, Sri Lanka', 'string', 1],
-            ['social', 'facebook', 'https://www.facebook.com/giantsforestkukuleganga/', 'string', 1],
-            ['social', 'instagram', 'https://www.instagram.com/giants_forest/', 'string', 1],
-            ['social', 'x', 'https://x.com/kukuleganga', 'string', 1],
-            ['social', 'tiktok', 'https://www.tiktok.com/@giantsforest_kukuleganga', 'string', 1],
-            // The rating badge in the hero. Both numbers go stale on their own —
-            // the count climbs whenever a guest writes something and the score
-            // moves with it — so they are settings an editor can correct in the
-            // console rather than constants that need a deploy. A blank rating
-            // hides the badge entirely.
-            //
-            // These two were read off a search summary of the hotel's Google
-            // listing rather than the listing itself, which is a JavaScript
-            // application this build cannot render. Worth checking against the
-            // Business Profile before they drift.
-            ['social', 'google_reviews_url', 'https://www.google.com/travel/search?q=Giants%20Forest%20-%20Kukuleganga&ap=ugEHcmV2aWV3cw', 'string', 1],
-            ['social', 'google_rating', '4.7', 'string', 1],
-            ['social', 'google_review_count', '125', 'string', 1],
-            // Facebook stopped publishing a star average years ago and shows the
-            // share of reviewers who recommend the place instead, so the badge
-            // carries a percentage, not a score out of five.
-            ['social', 'facebook_reviews_url', 'https://www.facebook.com/giantsforestkukuleganga/reviews', 'string', 1],
-            ['social', 'facebook_recommend', '100', 'string', 1],
-            ['social', 'facebook_review_count', '22', 'string', 1],
+            ['general', 'site_name', 'Tea Small Holdings Development Authority', 'string', 1],
+            ['general', 'site_short', 'TSHDA', 'string', 1],
+            ['general', 'tagline', 'Serving Sri Lanka\'s tea smallholder', 'string', 1],
+            ['general', 'parent_org', 'Ministry of Plantation and Community Infrastructure', 'string', 1],
+            ['brand', 'color_primary', '#0F6B45', 'string', 1],
+            ['brand', 'color_secondary', '#8A6A18', 'string', 1],
+
+            // Head Office details. The telephone and postal address are the
+            // published ones; the general email address is deliberately blank
+            // rather than guessed, because a wrong address on a government
+            // contact page routes the public's petitions into nowhere. Set it
+            // under Settings -> Contact before launch.
+            ['contact', 'email', '', 'string', 1],
+            ['contact', 'phone', '+94 117 909 021', 'string', 1],
+            ['contact', 'phone_alt', '', 'string', 1],
+            ['contact', 'fax', '', 'string', 1],
+            ['contact', 'whatsapp', '', 'string', 1],
+            ['contact', 'address', 'No. 70, Parliament Road, Pelawatte, Battaramulla, Sri Lanka', 'string', 1],
+            ['contact', 'hours', 'Monday to Friday, 8.30 a.m. to 4.30 p.m.', 'string', 1],
+
+            ['social', 'facebook', 'https://www.facebook.com/p/Tea-Small-Holdings-Development-Authority-100066699876421/', 'string', 1],
+            ['social', 'youtube', 'https://www.youtube.com/@tshda', 'string', 1],
+            ['social', 'instagram', '', 'string', 1],
+            ['social', 'x', '', 'string', 1],
+            ['social', 'tiktok', '', 'string', 1],
+            // The review badges are a hotel's furniture, not an Authority's.
+            // Blank rating hides the badge row entirely.
+            ['social', 'google_reviews_url', '', 'string', 1],
+            ['social', 'google_rating', '', 'string', 1],
+            ['social', 'google_review_count', '', 'string', 1],
+            ['social', 'facebook_reviews_url', '', 'string', 1],
+            ['social', 'facebook_recommend', '', 'string', 1],
+            ['social', 'facebook_review_count', '', 'string', 1],
             ['analytics', 'ga4_measurement_id', '', 'string', 0],
 
-            // Header, footer and chat-button behaviour. Every default here is
-            // what the site did before these were settings, so seeding them
-            // changes nothing on a site that has never opened the screen — it
-            // only gives the Settings form real rows to edit.
             ['header', 'sticky', '1', 'bool', 1],
             ['header', 'show_socials', '1', 'bool', 1],
             ['header', 'cta_label', '', 'string', 1],
-            ['header', 'cta_url', 'booking', 'string', 1],
+            ['header', 'cta_url', 'services', 'string', 1],
             ['footer', 'show_nav', '1', 'bool', 1],
             ['footer', 'show_contact', '1', 'bool', 1],
-            ['footer', 'show_reviews', '1', 'bool', 1],
+            ['footer', 'show_reviews', '0', 'bool', 1],
+            ['footer', 'show_gov_links', '1', 'bool', 1],
             ['footer', 'copyright', '', 'string', 1],
-            ['footer', 'privacy_url', '', 'string', 1],
-            ['footer', 'terms_url', '', 'string', 1],
-            ['whatsapp', 'enabled', '1', 'bool', 1],
+            ['footer', 'privacy_url', 'privacy', 'string', 1],
+            ['footer', 'terms_url', 'terms', 'string', 1],
+            ['footer', 'accessibility_url', 'accessibility', 'string', 1],
+            ['whatsapp', 'enabled', '0', 'bool', 1],
             ['whatsapp', 'label', '', 'string', 1],
             ['whatsapp', 'message', '', 'string', 1],
             ['whatsapp', 'position', 'left', 'string', 1],
@@ -72,10 +67,9 @@ class SettingSeeder extends Seeder
             ['analytics', 'enabled', '1', 'bool', 1],
             ['analytics', 'retention_days', '400', 'string', 0],
 
-            // Mail and spam protection. All blank or off: until a hotel supplies
-            // its own SMTP account and reCAPTCHA keys, the site saves enquiries
-            // without emailing and accepts forms without scoring them — which is
-            // exactly what it did before either existed.
+            // Mail and spam protection. All blank or off until the Authority
+            // supplies its own SMTP account and reCAPTCHA keys: the site saves
+            // enquiries without emailing and accepts forms without scoring them.
             ['smtp', 'host', '', 'string', 0],
             ['smtp', 'port', '587', 'string', 0],
             ['smtp', 'crypto', 'tls', 'string', 0],
@@ -92,9 +86,7 @@ class SettingSeeder extends Seeder
             ['recaptcha', 'on_booking', '1', 'bool', 0],
             ['recaptcha', 'on_contact', '1', 'bool', 0],
             ['recaptcha', 'on_login', '0', 'bool', 0],
-            ['seo', 'meta_keywords', '', 'string', 1],
-            // Blank means "use the files that ship with the build"; an upload
-            // in the console replaces them without a deploy.
+            ['seo', 'meta_keywords', 'tea smallholdings, TSHDA, Sri Lanka tea, replanting subsidy, fertilizer subsidy, tea nursery, Tea Shakthi', 'string', 1],
             ['brand', 'logo_color', '', 'string', 1],
             ['brand', 'logo_white', '', 'string', 1],
             ['brand', 'favicon', '', 'string', 1],

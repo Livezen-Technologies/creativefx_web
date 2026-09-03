@@ -6,13 +6,31 @@
 $showNav     = setting('show_nav', '1', 'footer') !== '0';
 $showContact = setting('show_contact', '1', 'footer') !== '0';
 $showReviews = setting('show_reviews', '1', 'footer') !== '0';
+// Clause 3.10 requires persistent links to the Sri Lanka Government web portal
+// and the local languages website in the footer of every page. They are rows in
+// org_links rather than markup, so the Authority can add the ones it is asked
+// to add without a deploy — but the column is on by default, because the clause
+// is not optional.
+$showGovLinks = setting('show_gov_links', '1', 'footer') !== '0';
+$govLinks     = [];
+if ($showGovLinks) {
+    try {
+        $govLinks = model('Modules\Tshda\Models\OrgLinkModel')->live('government');
+    } catch (\Throwable $e) {
+        $govLinks = [];
+    }
+}
+$showGovLinks = $showGovLinks && $govLinks !== [];
 $privacyUrl  = trim((string) setting('privacy_url', '', 'footer'));
 $termsUrl    = trim((string) setting('terms_url', '', 'footer'));
+// An accessibility statement is a mandatory element under the ICTA guidelines,
+// and it belongs beside the privacy notice rather than buried in the sitemap.
+$accessUrl   = trim((string) setting('accessibility_url', '', 'footer'));
 
 // Columns are counted rather than assumed: with one turned off the remaining
 // three should share the row, not leave a gap where the fourth used to be.
-$columns = 1 + (int) $showNav + (int) $showContact + (int) $showReviews;
-$cols    = ['1' => 'xl:grid-cols-1', '2' => 'xl:grid-cols-2', '3' => 'xl:grid-cols-3', '4' => 'xl:grid-cols-4'][(string) $columns];
+$columns = 1 + (int) $showNav + (int) $showContact + (int) $showGovLinks + (int) $showReviews;
+$cols    = ['1' => 'xl:grid-cols-1', '2' => 'xl:grid-cols-2', '3' => 'xl:grid-cols-3', '4' => 'xl:grid-cols-4', '5' => 'xl:grid-cols-5'][(string) $columns];
 ?>
 <footer class="<?= ($pageDark ?? false) ? 'on-dark' : '' ?> border-t border-white/10 bg-brand-black">
     <?php // Four content columns now, and the brand block gives up the double
@@ -22,7 +40,7 @@ $cols    = ['1' => 'xl:grid-cols-1', '2' => 'xl:grid-cols-2', '3' => 'xl:grid-co
       // between, which is roomier than the row it replaces was. ?>
 <div class="container-x grid gap-10 py-16 sm:grid-cols-2 <?= $cols ?> [&>*]:min-w-0">
         <div>
-            <a href="<?= esc(locale_url('')) ?>" class="inline-flex items-center gap-2.5" aria-label="Kukuleganga Giants Forest — home">
+            <a href="<?= esc(locale_url('')) ?>" class="inline-flex items-center gap-2.5" aria-label="<?= esc(setting('site_name', ''), 'attr') ?>">
                 <?php // Larger than the header's mark. The footer is where the
                       // wordmark has room, and at 44px it read as a repeat of the
                       // header rather than a sign-off. ?>
@@ -34,9 +52,7 @@ $cols    = ['1' => 'xl:grid-cols-1', '2' => 'xl:grid-cols-2', '3' => 'xl:grid-co
                 // translations. Show the localized strapline unless an admin has
                 // overridden the setting with their own wording.
                 $tagline = (string) setting('tagline', '');
-                echo esc($tagline === '' || $tagline === 'Responsible Sourcing · Design · Innovation'
-                    ? lang('Site.footer.built')
-                    : $tagline);
+                echo esc($tagline === '' ? lang('Site.footer.built') : $tagline);
                 ?>
             </p>
 
@@ -109,6 +125,21 @@ $cols    = ['1' => 'xl:grid-cols-1', '2' => 'xl:grid-cols-2', '3' => 'xl:grid-co
         </div>
         <?php endif; ?>
 
+        <?php if ($showGovLinks): ?>
+        <div>
+            <h4 class="text-xs font-semibold uppercase tracking-widest text-white/50"><?= esc(lang('Site.footer.gov_links')) ?></h4>
+            <ul class="mt-4 space-y-2 text-sm text-white/70">
+                <?php foreach ($govLinks as $link): ?>
+                    <li>
+                        <a href="<?= esc($link['url'], 'attr') ?>" target="_blank" rel="noopener noreferrer" class="hover:text-white">
+                            <?= esc(t_field($link['name'])) ?>
+                        </a>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+        <?php endif; ?>
+
         <?php if ($showReviews): ?>
         <?php // The ratings, where somebody who has read to the bottom of the
               // page is deciding whether to trust it. Same partial as the hero,
@@ -142,7 +173,21 @@ $cols    = ['1' => 'xl:grid-cols-1', '2' => 'xl:grid-cols-2', '3' => 'xl:grid-co
                 <?php if ($termsUrl !== ''): ?>
                     <a href="<?= esc(menu_link($termsUrl), 'attr') ?>" class="hover:text-white/70"><?= esc(lang('Site.footer.terms')) ?></a>
                 <?php endif; ?>
-                <p><?= esc(lang('Site.footer.built')) ?></p>
+                <?php if ($accessUrl !== ''): ?>
+                    <a href="<?= esc(menu_link($accessUrl), 'attr') ?>" class="hover:text-white/70"><?= esc(lang('Site.nav.accessibility')) ?></a>
+                <?php endif; ?>
+                <?php // Clause 3.10: "date of last update is displayed
+                      // automatically on every web page, derived from the CMS
+                      // revision record — not typed by hand and therefore never
+                      // stale". $lastUpdated is set by the layout from whatever
+                      // record the page was rendered from; a page with no record
+                      // behind it shows nothing rather than today's date, which
+                      // would be a lie told automatically. ?>
+                <?php if (! empty($lastUpdated)): ?>
+                    <p><?= esc(lang('Site.footer.last_updated')) ?>
+                        <time datetime="<?= esc(date('Y-m-d', strtotime((string) $lastUpdated)), 'attr') ?>"><?= esc(date('j F Y', strtotime((string) $lastUpdated))) ?></time>
+                    </p>
+                <?php endif; ?>
             </div>
         </div>
     </div>

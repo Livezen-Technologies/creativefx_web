@@ -47,6 +47,7 @@ class Filters extends BaseFilters
         'applocale'     => LocaleFilter::class,
         'adminauth'     => AdminAuthFilter::class,
         'trackview'     => TrackPageView::class,
+        'officerauth'   => \Modules\Tshda\Filters\OfficerAuthFilter::class,
     ];
 
     /**

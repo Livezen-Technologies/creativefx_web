@@ -12,48 +12,90 @@ use CodeIgniter\Database\Seeder;
  * the table exists, and a seeder that rewrote them on every deploy would undo
  * that work exactly the way the content seeders used to undo page edits.
  *
- * The labels are the same language keys the header already used, resolved at
- * render time rather than frozen here, so an item nobody has renamed still
- * follows the translation files.
+ * Labels are stored as the language key, resolved at render time rather than
+ * frozen here, so an item nobody has renamed still follows the translation
+ * files — which is how the same menu reads in Sinhala and Tamil without an
+ * editor retyping it three times.
  */
 class MenuSeeder extends Seeder
 {
-    private const ITEMS = [
-        ['accommodation', 'Site.nav.accommodation', 'Accommodation'],
-        ['dining',        'Site.nav.dining',         'Dining'],
-        ['things-to-do',  'Site.nav.things_to_do',   'Things to Do'],
-        ['kalawana',      'Site.nav.kalawana',       'Explore Kalawana'],
-        ['gallery',       'Site.nav.gallery',        'Gallery'],
-        ['contact',       'Site.nav.contact',        'Contact Us'],
+    /** [slug, language key, children[]] */
+    private const HEADER = [
+        ['about-us', 'Site.nav.about', [
+            ['about-us',                 'Site.nav.overview'],
+            ['vision-mission',           'Site.nav.vision_mission'],
+            ['strategic-plan',           'Site.nav.strategic_plan'],
+            ['senior-management',        'Site.nav.senior_management'],
+            ['divisions',                'Site.nav.divisions'],
+            ['organisational-structure', 'Site.nav.org_structure'],
+        ]],
+        ['services', 'Site.nav.services', [
+            ['services',         'Site.nav.all_services'],
+            ['land-development', 'Site.nav.land_development'],
+            ['societies',        'Site.nav.societies'],
+            ['hantana',          'Site.nav.hantana'],
+        ]],
+        ['media-centre', 'Site.nav.media_centre', [
+            ['news',          'Site.nav.news'],
+            ['announcements', 'Site.nav.announcements'],
+            ['gallery',       'Site.nav.photo_gallery'],
+            ['videos',        'Site.nav.video_gallery'],
+        ]],
+        ['statistics', 'Site.nav.statistics', []],
+        ['downloads',  'Site.nav.downloads',  []],
+        ['vacancies',  'Site.nav.vacancies',  []],
+        ['directory',  'Site.nav.directory',  []],
+        ['contact',    'Site.nav.contact',    []],
+    ];
+
+    private const FOOTER = [
+        ['about-us',        'Site.nav.about',         []],
+        ['services',        'Site.nav.services',      []],
+        ['downloads',       'Site.nav.downloads',     []],
+        ['statistics',      'Site.nav.statistics',    []],
+        ['vacancies',       'Site.nav.vacancies',     []],
+        ['directory',       'Site.nav.directory',     []],
+        ['faqs',            'Site.nav.faqs',          []],
+        ['sitemap',         'Site.nav.sitemap',       []],
+        ['feedback',        'Site.nav.feedback',      []],
+        ['field-officer',   'Site.nav.field_officer', []],
     ];
 
     public function run(): void
     {
         $now = date('Y-m-d H:i:s');
 
-        foreach (['header', 'footer'] as $location) {
-            $existing = $this->db->table('menu_items')->where('location', $location)->countAllResults();
-            if ($existing > 0) {
+        foreach (['header' => self::HEADER, 'footer' => self::FOOTER] as $location => $items) {
+            if ($this->db->table('menu_items')->where('location', $location)->countAllResults() > 0) {
                 continue;
             }
 
             $order = 0;
-            foreach (self::ITEMS as [$slug, $key, $fallback]) {
-                // Stored as the language key. render_menu() resolves a value
-                // that looks like a key through lang(), so an untouched item
-                // stays translatable while an edited one keeps what was typed.
-                $this->db->table('menu_items')->insert([
-                    'location'   => $location,
-                    'parent_id'  => null,
-                    'label'      => json_encode(['en' => $key], JSON_UNESCAPED_UNICODE),
-                    'url'        => $slug,
-                    'target'     => '_self',
-                    'sort_order' => $order++,
-                    'status'     => 'published',
-                    'created_at' => $now,
-                    'updated_at' => $now,
-                ]);
+            foreach ($items as [$slug, $key, $children]) {
+                $parentId = $this->insertItem($location, null, $slug, $key, $order++, $now);
+
+                $childOrder = 0;
+                foreach ($children as [$childSlug, $childKey]) {
+                    $this->insertItem($location, $parentId, $childSlug, $childKey, $childOrder++, $now);
+                }
             }
         }
+    }
+
+    private function insertItem(string $location, ?int $parentId, string $slug, string $key, int $order, string $now): int
+    {
+        $this->db->table('menu_items')->insert([
+            'location'   => $location,
+            'parent_id'  => $parentId,
+            'label'      => json_encode(['en' => $key], JSON_UNESCAPED_UNICODE),
+            'url'        => $slug,
+            'target'     => '_self',
+            'sort_order' => $order,
+            'status'     => 'published',
+            'created_at' => $now,
+            'updated_at' => $now,
+        ]);
+
+        return (int) $this->db->insertID();
     }
 }

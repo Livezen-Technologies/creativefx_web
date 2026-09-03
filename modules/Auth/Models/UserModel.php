@@ -12,7 +12,7 @@ class UserModel extends Model
     protected $useTimestamps  = true;
     protected $useSoftDeletes = true;
     protected $allowedFields  = [
-        'email', 'username', 'password_hash', 'first_name', 'last_name', 'status', 'last_login_at',
+        'email', 'username', 'password_hash', 'first_name', 'last_name', 'office_id', 'status', 'last_login_at',
     ];
 
     /**

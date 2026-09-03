@@ -5,69 +5,125 @@ namespace Modules\Careers\Database\Seeds;
 use CodeIgniter\Database\Seeder;
 
 /**
- * Sample vacancies across the blueprint's job categories so the careers portal
- * is browsable on day one. Upserts by slug — never deletes — so HR's edits in
- * the admin panel and received applications are preserved across deploys.
- * HR can edit or close these in Admin → Jobs.
+ * Starting vacancies, so the Vacancies section (Clause 3.9 G) is browsable and
+ * reviewable from day one.
+ *
+ * Upserts by slug and never deletes, so posts the Administration Division has
+ * edited or closed in the console — and the applications already received
+ * against them — survive a release.
+ *
+ * These are drafted against the Authority's own grades. They carry a closing
+ * date relative to the seed run, which is what exercises the automatic expiry
+ * Clause 3.9 G asks for: a post whose closing date passes drops off the listing
+ * on the day, without anybody remembering to unpublish it.
  */
 class CareersSeeder extends Seeder
 {
     public function run(): void
     {
-        $j   = static fn (array $v): string => json_encode($v, JSON_UNESCAPED_UNICODE);
+        helper('norlanka');
         $now = date('Y-m-d H:i:s');
 
-        $jobs = [
+        foreach ($this->jobs() as $job) {
+            $exists = $this->db->table('jobs')->where('slug', $job['slug'])->countAllResults() > 0;
+            if ($exists) {
+                continue;
+            }
+
+            $this->db->table('jobs')->insert([
+                'slug'            => $job['slug'],
+                'title'           => $this->loc($job['title']),
+                'description'     => $this->loc($job['description']),
+                'department'      => $job['department'],
+                'country'         => 'Sri Lanka',
+                'location'        => $job['location'],
+                'employment_type' => 'full-time',
+                'experience'      => $job['experience'],
+                'qualifications'  => json_encode($job['qualifications'], JSON_UNESCAPED_UNICODE),
+                'skills'          => json_encode($job['skills'], JSON_UNESCAPED_UNICODE),
+                'salary_range'    => $job['salary'],
+                'status'          => 'open',
+                'posted_at'       => $now,
+                'closes_at'       => date('Y-m-d H:i:s', strtotime('+' . $job['closes'] . ' days')),
+                'created_at'      => $now,
+                'updated_at'      => $now,
+            ]);
+        }
+    }
+
+    private function loc(string $en): string
+    {
+        return json_encode(content_locales(['en' => $en]), JSON_UNESCAPED_UNICODE);
+    }
+
+    private function jobs(): array
+    {
+        return [
             [
-                'slug' => 'merchandiser-colombo',
-                'title' => $j(['en' => 'Merchandiser']),
-                'description' => $j(['en' => "Own the order book for a portfolio of international brands — from costing and sampling through production follow-up to delivery. You will coordinate daily with our design studio, partner factories and customers to keep every style on time and on quality."]),
-                'department' => 'Merchandising', 'country' => 'Sri Lanka', 'location' => 'Colombo (Head Office)',
-                'employment_type' => 'full-time', 'experience' => '2–4 years in apparel merchandising',
-                'qualifications' => $j(['Degree or diploma in apparel/textile management or related field', 'Experience working with international fashion brands', 'Strong costing and critical-path management skills']),
-                'skills' => $j(['Merchandising', 'Costing', 'Critical path', 'Communication', 'MS Excel / SAP']),
-                'salary_range' => null, 'status' => 'open', 'posted_at' => $now,
+                'slug' => 'tea-inspector',
+                'title' => 'Tea Inspector',
+                'description' => 'The Authority’s point of contact with the tea smallholder. A Tea Inspector knows the holdings in their range, inspects blocks for subsidy and certifies the work at each stage, advises on field practice, and keeps the register of holdings accurate. Posts are advertised for named ranges across the tea-growing districts; the ranges being filled in this round are stated in the recruitment notice.',
+                'department' => 'Extension & Training',
+                'location' => 'Tea-growing districts (range to be assigned)',
+                'experience' => 'As stated in the scheme of recruitment',
+                'qualifications' => [
+                    'National Diploma in Agriculture, or an equivalent qualification recognised by the Authority',
+                    'Sri Lankan citizenship, and the age limits stated in the recruitment notice',
+                    'Willingness to be posted to any tea-growing district',
+                    'A valid motorcycle licence is an advantage',
+                ],
+                'skills' => ['Field extension', 'Tea agronomy', 'Record keeping', 'Working with smallholder communities'],
+                'salary' => 'On the Authority’s salary scale, as stated in the recruitment notice',
+                'closes' => 30,
             ],
             [
-                'slug' => 'production-executive-trincomalee',
-                'title' => $j(['en' => 'Production Executive']),
-                'description' => $j(['en' => 'Drive daily production performance at our LEED Gold-certified Trincomalee plant. Plan lines, track efficiency and quality KPIs, and work with QA and industrial engineering to hit delivery targets responsibly.']),
-                'department' => 'Production', 'country' => 'Sri Lanka', 'location' => 'Trincomalee',
-                'employment_type' => 'full-time', 'experience' => '3+ years in apparel production',
-                'qualifications' => $j(['Degree/diploma in production or industrial engineering', 'Hands-on knowledge of sewing operations and line balancing']),
-                'skills' => $j(['Line planning', 'Lean manufacturing', 'Quality management', 'Team leadership']),
-                'salary_range' => null, 'status' => 'open', 'posted_at' => $now,
+                'slug' => 'extension-officer',
+                'title' => 'Extension Officer',
+                'description' => 'Delivers the Authority’s technical advisory service in the field: advice on planting material, pruning, plucking rounds, nutrition, pest and disease management and leaf quality; support to societies in the range; and the field inspections on which subsidy instalments are released.',
+                'department' => 'Extension & Training',
+                'location' => 'Tea-growing districts',
+                'experience' => 'As stated in the scheme of recruitment',
+                'qualifications' => [
+                    'Degree or National Diploma in Agriculture or a related field',
+                    'Sri Lankan citizenship, and the age limits stated in the recruitment notice',
+                    'Fluency in Sinhala or Tamil, with a working knowledge of the other and of English',
+                ],
+                'skills' => ['Extension advisory', 'Soil and crop management', 'Community engagement', 'Reporting'],
+                'salary' => 'On the Authority’s salary scale',
+                'closes' => 30,
             ],
             [
-                'slug' => 'sustainability-executive',
-                'title' => $j(['en' => 'Sustainability Executive']),
-                'description' => $j(['en' => "Help deliver our Better Tomorrow 2028 roadmap: emissions, water and waste programmes, Higg/Worldly verification, biodiversity projects and ESG reporting across our facilities and partner factories."]),
-                'department' => 'Sustainability', 'country' => 'Sri Lanka', 'location' => 'Colombo',
-                'employment_type' => 'full-time', 'experience' => '1–3 years in sustainability/ESG',
-                'qualifications' => $j(['Degree in environmental science, engineering or related field', 'Familiarity with Higg FEM, GHG accounting or ISO 14064 an advantage']),
-                'skills' => $j(['ESG reporting', 'Data analysis', 'Stakeholder engagement', 'Project management']),
-                'salary_range' => null, 'status' => 'open', 'posted_at' => $now,
+                'slug' => 'management-assistant',
+                'title' => 'Management Assistant (Technical / Non-Technical)',
+                'description' => 'Administrative and clerical support at Head Office and the regional offices: correspondence, registers, subsidy files, procurement paperwork and the day-to-day running of an office that the public walks into.',
+                'department' => 'Administration',
+                'location' => 'Head Office, Battaramulla and regional offices',
+                'experience' => 'As stated in the scheme of recruitment',
+                'qualifications' => [
+                    'Six passes at G.C.E. (Ordinary Level) including Sinhala or Tamil, English and Mathematics',
+                    'Three passes at G.C.E. (Advanced Level) in one sitting',
+                    'Sri Lankan citizenship, and the age limits stated in the recruitment notice',
+                ],
+                'skills' => ['Office administration', 'Record keeping', 'Correspondence', 'Computer literacy'],
+                'salary' => 'On the Authority’s salary scale',
+                'closes' => 21,
             ],
             [
-                'slug' => 'hr-executive-colombo',
-                'title' => $j(['en' => 'Human Resources Executive']),
-                'description' => $j(['en' => 'Support the full employee lifecycle at our Colombo head office — recruitment, onboarding, engagement and learning & development for a 250+ team.']),
-                'department' => 'HR', 'country' => 'Sri Lanka', 'location' => 'Colombo (Head Office)',
-                'employment_type' => 'full-time', 'experience' => '1–3 years in HR',
-                'qualifications' => $j(['Degree/diploma in HR management', 'Great Place to Work culture champion']),
-                'skills' => $j(['Recruitment', 'Onboarding', 'HRIS', 'Employee engagement']),
-                'salary_range' => null, 'status' => 'open', 'posted_at' => $now,
+                'slug' => 'ict-officer',
+                'title' => 'Information and Communication Technology Officer',
+                'description' => 'Runs the Authority’s systems and registers, maintains this website and its content, supports the regional offices, and safeguards the data on which entitlements and allocations are calculated.',
+                'department' => 'Information & Communication Technology',
+                'location' => 'Head Office, Battaramulla',
+                'experience' => 'Three years in a comparable role',
+                'qualifications' => [
+                    'Degree in Information Technology, Computer Science or a related field',
+                    'Experience administering a web application and a relational database in production',
+                    'Working knowledge of information security practice',
+                ],
+                'skills' => ['Systems administration', 'Web content management', 'Databases', 'Information security', 'User support'],
+                'salary' => 'On the Authority’s salary scale',
+                'closes' => 45,
             ],
         ];
-
-        $table = $this->db->table('jobs');
-        foreach ($jobs as $job) {
-            $exists = $table->select('id')->where('slug', $job['slug'])->get()->getRowArray();
-            $table->resetQuery();
-            if ($exists === null) {
-                $this->db->table('jobs')->insert($job + ['created_at' => $now, 'updated_at' => $now]);
-            }
-            // Existing rows are left untouched — HR owns them after first seed.
-        }
     }
 }

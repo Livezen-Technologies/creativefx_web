@@ -25,8 +25,8 @@ $alt   = setting('site_name', '');
 // Both colourways are settings, so replacing the logo is an upload rather than
 // a deploy. The shipped files are the fallback: a blank setting must not leave
 // the header with an empty box where the mark should be.
-$light = (string) setting('logo_color', '', 'brand') ?: '/media/giantforests/Kukuleganga-Giants-Forest-Logo-1.png';
-$dark  = (string) setting('logo_white', '', 'brand') ?: '/media/giantforests/Kukuleganga-Giants-Forest-Logo-white.png';
+$light = (string) setting('logo_color', '', 'brand') ?: '/media/tshda/tshda-logo.svg';
+$dark  = (string) setting('logo_white', '', 'brand') ?: '/media/tshda/tshda-logo-white.svg';
 ?>
 <span class="brand-logo">
     <img class="brand-logo__on-light <?= esc($class, 'attr') ?>"

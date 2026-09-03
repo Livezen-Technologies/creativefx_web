@@ -16,17 +16,26 @@ $ogTitle         = $ogTitle         ?? null;
 $ogDescription   = $ogDescription   ?? null;
 $ogImage         = $ogImage         ?? null;
 $noIndex         = $noIndex         ?? false;
+
+// Clause 3.10: the date of last update is displayed on every page, derived from
+// the record the page was rendered from rather than typed. A CMS page brings
+// its own updated_at; a controller-driven listing can pass its own; a page with
+// nothing behind it shows no date at all, because an automatic date that is not
+// the truth is worse than no date.
+$lastUpdated = $lastUpdated ?? ($page['updated_at'] ?? null);
 ?>
 <!DOCTYPE html>
-<html lang="<?= esc($locale) ?>" class="dark">
+<html lang="<?= esc($locale) ?>">
 <head>
-    <!-- Dark ships as the default. The class is on the element itself so it
-         holds before any script runs and the first paint is never a light flash;
-         the script only strips it when the visitor has explicitly chosen light.
-         Both grounds are maintained: :root carries the cream palette, .on-dark
-         and html.dark the forest one, and the logo renders in whichever
+    <!-- Light ships as the default: a public-information portal is read in
+         daylight, on cheap screens, often by people who did not choose to be
+         here. Dark is kept as a preference — the ICTA guidelines ask for
+         legibility, not for one ground — and the script applies it before any
+         paint when the visitor has chosen it, so switching never flashes.
+         Both grounds are maintained: :root carries the light palette, .on-dark
+         and html.dark the deep-green one, and the logo renders in whichever
          colourway reads against the ground it lands on. -->
-    <script>document.documentElement.classList.add('js');try{if(localStorage.getItem('nl_theme')==='light')document.documentElement.classList.remove('dark');}catch(e){}try{if(sessionStorage.getItem('nl_preloaded'))document.documentElement.classList.add('preloaded');}catch(e){}</script>
+    <script>document.documentElement.classList.add('js');try{if(localStorage.getItem('nl_theme')==='dark')document.documentElement.classList.add('dark');}catch(e){}try{if(sessionStorage.getItem('nl_preloaded'))document.documentElement.classList.add('preloaded');}catch(e){}</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= esc($title ?: setting('site_name', '')) ?></title>
@@ -71,24 +80,9 @@ $noIndex         = $noIndex         ?? false;
     <?php if (! empty($noIndex)): ?>
     <meta name="robots" content="noindex, follow">
     <?php endif; ?>
-    <meta name="theme-color" content="#346142">
+    <meta name="theme-color" content="#0F6B45">
     <meta name="color-scheme" content="light dark">
-    <?php // Square icons built from the mark's own G (scripts/make-favicon.py).
-          // These used to point straight at the 300x200 lockup, which a browser
-          // squeezed into 16px and rendered as a smear — three lines of brush
-          // lettering in the space of a word. ?>
-    <?php // An uploaded favicon replaces the whole generated set rather than one
-          // size of it: mixing a custom 32px with a generated 192px would show
-          // two different marks depending on where the browser looked. ?>
-    <?php if ($favicon = (string) setting('favicon', '', 'brand')): ?>
-    <link rel="icon" href="<?= esc(media_src($favicon), 'attr') ?>">
-    <link rel="apple-touch-icon" href="<?= esc(media_src($favicon), 'attr') ?>">
-    <?php else: ?>
-    <link rel="icon" type="image/png" sizes="32x32" href="<?= esc(media_src('/favicon-32.png'), 'attr') ?>">
-    <link rel="icon" type="image/png" sizes="48x48" href="<?= esc(media_src('/favicon-48.png'), 'attr') ?>">
-    <link rel="icon" type="image/png" sizes="192x192" href="<?= esc(media_src('/favicon-192.png'), 'attr') ?>">
-    <link rel="apple-touch-icon" sizes="180x180" href="<?= esc(media_src('/apple-touch-icon.png'), 'attr') ?>">
-    <?php endif; ?>
+    <?= view('Modules\Core\Views\partials\favicons', [], ['saveData' => false]) ?>
     <?php // Only present when reCAPTCHA is fully configured, so a site that does
           // not use it never loads Google's script and never gets its cookie. ?>
     <?php if (\Modules\Core\Libraries\Recaptcha::isActive()): ?>

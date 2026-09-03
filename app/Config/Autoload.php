@@ -51,15 +51,13 @@ class Autoload extends AutoloadConfig
         'Modules\Cms'         => ROOTPATH . 'modules/Cms',
         'Modules\Translation' => ROOTPATH . 'modules/Translation',
         'Modules\Media'       => ROOTPATH . 'modules/Media',
-        'Modules\Catalog'     => ROOTPATH . 'modules/Catalog',
-        'Modules\Showroom'    => ROOTPATH . 'modules/Showroom',
         'Modules\Video'       => ROOTPATH . 'modules/Video',
-        'Modules\Esg'         => ROOTPATH . 'modules/Esg',
         'Modules\Careers'     => ROOTPATH . 'modules/Careers',
         'Modules\News'        => ROOTPATH . 'modules/News',
         'Modules\Crm'         => ROOTPATH . 'modules/Crm',
         'Modules\Analytics'   => ROOTPATH . 'modules/Analytics',
         'Modules\Admin'       => ROOTPATH . 'modules/Admin',
+        'Modules\Tshda'       => ROOTPATH . 'modules/Tshda',
     ];
 
     /**

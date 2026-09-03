@@ -52,6 +52,50 @@ class News extends BaseController
         ]);
     }
 
+    /**
+     * Announcements and notices (Clause 3.9 E.c and B.II).
+     *
+     * The same listing as the newsroom, pinned to the announcements category
+     * and shown with the alert-subscription form, because the two belong
+     * together: the page that tells you a fertilizer issue has been notified is
+     * the page where you ask to be told about the next one.
+     *
+     * A separate method rather than /news?category=announcements so the section
+     * has its own address, its own place in the menu, and its own title — a
+     * query string is a filter, not a section of a government website.
+     */
+    public function announcements(?string $locale = null)
+    {
+        helper('norlanka');
+
+        $categories = (new NewsCategoryModel())->published();
+
+        $category = null;
+        foreach ($categories as $c) {
+            if ($c['slug'] === 'announcements') {
+                $category = $c;
+                break;
+            }
+        }
+
+        $postModel = new NewsPostModel();
+        // No announcements category yet means show everything rather than
+        // nothing: an empty page here reads as an Authority with no notices.
+        $posts = $postModel->live($category['id'] ?? null)->paginate(self::PER_PAGE);
+        $pager = $postModel->pager;
+
+        return view('Modules\News\Views\index', [
+            'posts'           => $posts,
+            'categories'      => $categories,
+            'activeCategory'  => $category,
+            'isAnnouncements' => true,
+            'currentPage'     => $pager->getCurrentPage(),
+            'pageCount'       => $pager->getPageCount(),
+            'title'           => lang('Site.announcements.title') . ' — ' . setting('site_name', ''),
+            'metaDescription' => lang('Site.announcements.meta'),
+        ]);
+    }
+
     public function show(?string $locale = null, ?string $slug = null)
     {
         helper('norlanka');

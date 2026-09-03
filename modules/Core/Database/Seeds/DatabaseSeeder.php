@@ -20,23 +20,20 @@ class DatabaseSeeder extends Seeder
 
         $this->call('Modules\Core\Database\Seeds\SettingSeeder');
 
-        $this->call('Modules\Catalog\Database\Seeds\ProductCategorySeeder');
+        // The Authority's offices, senior posts and field structure. Runs
+        // before the services and the pages, because both refer to it.
+        $this->call('Modules\Tshda\Database\Seeds\DirectorySeeder');
 
-        // Catalog products (upsert-by-slug; merchandising edits preserved).
-        $this->call('Modules\Catalog\Database\Seeds\ProductSeeder');
+        // The service catalogue (Clause 3.9 D and E) and the stakeholder
+        // clusters the home page groups it into.
+        $this->call('Modules\Tshda\Database\Seeds\ServiceSeeder');
 
-        // Seeds the CMS Home page + sections/blocks + the launch video,
-        // its per-language audio tracks and subtitle files.
-        $this->call('Modules\Cms\Database\Seeds\HomeContentSeeder');
+        // Notices, FAQs, document categories, statistics, the Hantana calendar,
+        // the society register, the discussion topic and the related-org links.
+        $this->call('Modules\Tshda\Database\Seeds\TshdaDataSeeder');
 
-        // Corporate content pages (Our Story, Expertise, Manufacturing,
-        // Impact, Careers, Contact, Showroom).
-        $this->call('Modules\Cms\Database\Seeds\CorporateContentSeeder');
-
-        // Rooms and tourist locations. Seeds each table only while it is empty,
-        // for the same reason the menus do: once a hotel has edited its own
-        // rooms, a release has nothing useful to say about them.
-        $this->call('Modules\Cms\Database\Seeds\RoomLocationSeeder');
+        // The editorial pages, on the block CMS.
+        $this->call('Modules\Tshda\Database\Seeds\PageSeeder');
 
         // Header and footer navigation. Seeds each menu only while it is empty,
         // so reordering and renaming in the console is not undone by a release.
@@ -46,16 +43,13 @@ class DatabaseSeeder extends Seeder
         // Translation Manager).
         $this->call('Modules\Translation\Database\Seeds\TranslationSeeder');
 
-        // Virtual showroom: themed categories + products.
-        $this->call('Modules\Showroom\Database\Seeds\ShowroomSeeder');
-
-        // Careers portal: sample vacancies (upsert-by-slug; HR edits preserved).
+        // Vacancies (Clause 3.9 G) and the newsroom that carries press
+        // releases, announcements and events (B.II, E.c). Both upsert by slug,
+        // so an editor's changes survive a release.
         $this->call('Modules\Careers\Database\Seeds\CareersSeeder');
-
-        // Newsroom: editorial categories + starter articles (upsert-by-slug).
         $this->call('Modules\News\Database\Seeds\NewsSeeder');
 
-        // Last: complete ja/es/zh across everything the seeders just wrote.
+        // Last: complete si/ta across everything the seeders just wrote.
         // Only empty locales are filled, so translated content is preserved.
         (new \Modules\Core\Libraries\ContentTranslator())->backfill();
     }

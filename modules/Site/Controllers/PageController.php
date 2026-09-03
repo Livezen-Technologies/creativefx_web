@@ -29,7 +29,7 @@ class PageController extends BaseController
         $page = $pageModel->withStructure($page);
 
         // Per-page colour scope: Our Impact renders in the ESG "Regenerate" green.
-        $pageTheme = $slug === 'impact' ? 'theme-esg-green' : '';
+        $pageTheme = '';
 
         return view('Modules\Site\Views\cms\page', PageSeo::for($page)->toViewData(current_url()) + [
             'page'      => $page,

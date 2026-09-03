@@ -9,21 +9,13 @@ use CodeIgniter\Router\RouteCollection;
 // order in which module route files are discovered.
 $routes->addPlaceholder('locale', implode('|', config('App')->supportedLocales));
 
-// Languages the site used to be published in. Dropping them from
-// supportedLocales makes every /ja, /es and /zh URL a 404 — including anything
-// already linked or indexed — so they are redirected to the same path under the
-// default locale instead of disappearing. Permanent, because the move is.
-$retiredLocales = ['ja', 'es', 'zh'];
-$routes->addPlaceholder('retiredlocale', implode('|', $retiredLocales));
-$routes->get('(:retiredlocale)', static fn () => redirect()->to('/' . config('App')->defaultLocale, 301));
-// Both captures are passed, in order — the locale first, then the rest of the
-// path. Naming only the second would silently redirect /ja/about-us to /en/ja.
-$routes->get('(:retiredlocale)/(:any)', static fn (string $locale, string $rest = '') => redirect()->to(
-    '/' . config('App')->defaultLocale . '/' . $rest,
-    301,
-));
+$siteOptions  = ['filter' => 'applocale', 'namespace' => 'Modules\Site\Controllers'];
+$tshdaOptions = ['filter' => 'applocale', 'namespace' => 'Modules\Tshda\Controllers'];
 
-$siteOptions = ['filter' => 'applocale', 'namespace' => 'Modules\Site\Controllers'];
+// The welcome page (Clause 3.9 A): the trilingual entry choice, at the root,
+// outside the locale group because it is what a visitor reaches before they
+// have chosen a language.
+$routes->get('/', 'Welcome::index', ['namespace' => 'Modules\Tshda\Controllers']);
 
 // The sitemap sits outside the locale group on purpose: it lists every language
 // and is fetched by crawlers at a fixed, unprefixed address. Declared before the
@@ -34,33 +26,89 @@ $routes->get('sitemap.xml', 'Sitemap::index', ['namespace' => 'Modules\Site\Cont
 // because the page reporting one already knows its own path.
 $routes->post('api/track', 'Track::event', ['namespace' => 'Modules\Analytics\Controllers']);
 
-// Localized home, e.g. /en, /ja. The leading capture is the locale (the
+// Localized home, e.g. /en, /si, /ta. The leading capture is the locale (the
 // applocale filter reads + validates it from the URI).
 $routes->get('(:locale)', 'Home::index', $siteOptions);
 
-// Virtual Showroom (3D) — defined before the CMS catch-all so it wins.
-// $routes->get('(:locale)/showroom', '\Modules\Showroom\Controllers\Showroom::index/$1', ['filter' => 'applocale']);   // retired: no Magic Corn equivalent
-// $routes->get('(:locale)/showroom/(:segment)', '\Modules\Showroom\Controllers\Showroom::scene/$1/$2', ['filter' => 'applocale']);   // retired: no Magic Corn equivalent
+// ── The Authority's own sections ────────────────────────────────────────────
+// All declared before the CMS catch-all, which would otherwise swallow every
+// one of them as a page slug.
 
-// Careers portal (job detail + application). Co-located here (not in the
-// Careers module's own routes file) so the (:locale) placeholder above is
-// guaranteed to exist regardless of module discovery order.
-// $routes->get('(:locale)/careers/(:segment)', '\Modules\Careers\Controllers\Careers::show/$1/$2', ['filter' => 'applocale']);   // retired: no Magic Corn equivalent
-// $routes->post('(:locale)/careers/(:segment)/apply', '\Modules\Careers\Controllers\Careers::apply/$1/$2', ['filter' => 'applocale']);   // retired with the careers pages
+// Services (Clause 3.9 D and E).
+$routes->get('(:locale)/services', 'Services::index/$1', $tshdaOptions);
+$routes->get('(:locale)/services/(:segment)', 'Services::show/$1/$2', $tshdaOptions);
 
-// Newsroom (listing + article detail). Co-located here for the same
-// (:locale) placeholder-ordering reason as the careers routes above.
-// Retired for Giant Forests: the hotel has no news desk, and leaving the route
-// live served the previous brand's eight seeded posts on an indexable URL.
-// $routes->get('(:locale)/news', '\Modules\News\Controllers\News::index/$1', ['filter' => 'applocale']);
-// $routes->get('(:locale)/news/(:segment)', '\Modules\News\Controllers\News::show/$1/$2', ['filter' => 'applocale']);
+// Staff and contact directory (E.d, J.b).
+$routes->get('(:locale)/directory', 'Directory::index/$1', $tshdaOptions);
 
-// Product catalog (listing + product detail with GLB 3D viewer).
-// Retired for Giant Forests: a hotel has no shop, and this was still serving
-// the previous brand's catalogue — frozen sweet corn packs, priced in LKR — at
-// /en/products on a live, crawlable URL.
-// $routes->get('(:locale)/products', '\Modules\Catalog\Controllers\Products::index/$1', ['filter' => 'applocale']);
-// $routes->get('(:locale)/products/(:segment)', '\Modules\Catalog\Controllers\Products::show/$1/$2', ['filter' => 'applocale']);
+// Statistics (F). The CSV route is declared before the detail route so that
+// /statistics/foo.csv is an export and not a dataset whose slug ends in ".csv".
+$routes->get('(:locale)/statistics', 'Statistics::index/$1', $tshdaOptions);
+$routes->get('(:locale)/statistics/(:segment)/csv', 'Statistics::csv/$1/$2', $tshdaOptions);
+$routes->get('(:locale)/statistics/(:segment)', 'Statistics::show/$1/$2', $tshdaOptions);
+
+// Downloads (H).
+$routes->get('(:locale)/downloads', 'Downloads::index/$1', $tshdaOptions);
+$routes->get('(:locale)/downloads/(:segment)', 'Downloads::file/$1/$2', $tshdaOptions);
+
+// Hantana National Training Centre booking (Clause 3.1.IV).
+$routes->get('(:locale)/hantana', 'Hantana::index/$1', $tshdaOptions);
+$routes->get('(:locale)/hantana/(:segment)', 'Hantana::show/$1/$2', $tshdaOptions);
+$routes->post('(:locale)/hantana/(:segment)/apply', 'Hantana::apply/$1/$2', $tshdaOptions);
+
+// FAQs (K).
+$routes->get('(:locale)/faqs', 'Faqs::index/$1', $tshdaOptions);
+
+// Feedback, queries and petitions (J.a.iii), with tracking by reference.
+$routes->get('(:locale)/feedback', 'Feedback::index/$1', $tshdaOptions);
+$routes->post('(:locale)/feedback', 'Feedback::submit/$1', $tshdaOptions);
+$routes->get('(:locale)/feedback/track', 'Feedback::track/$1', $tshdaOptions);
+
+// Moderated discussion (B.V, Clause 3.14).
+$routes->get('(:locale)/discussion', 'Discussion::index/$1', $tshdaOptions);
+$routes->get('(:locale)/discussion/(:segment)', 'Discussion::show/$1/$2', $tshdaOptions);
+$routes->post('(:locale)/discussion/(:segment)', 'Discussion::comment/$1/$2', $tshdaOptions);
+
+// Alert subscriptions (Clause 3.13), double opt-in.
+$routes->post('(:locale)/alerts', 'Subscribe::create/$1', $tshdaOptions);
+$routes->get('(:locale)/alerts/confirm/(:segment)', 'Subscribe::confirm/$1/$2', $tshdaOptions);
+$routes->get('(:locale)/alerts/unsubscribe/(:segment)', 'Subscribe::unsubscribe/$1/$2', $tshdaOptions);
+
+// Site-wide search (Clause 3.12).
+$routes->get('(:locale)/search', 'Search::index/$1', $tshdaOptions);
+
+// Contact (J) and the human-readable sitemap (L).
+$routes->get('(:locale)/contact', 'Contact::index/$1', $tshdaOptions);
+$routes->get('(:locale)/sitemap', 'SitemapPage::index/$1', $tshdaOptions);
+
+// Media gallery (I).
+$routes->get('(:locale)/gallery', 'Gallery::photos/$1', $tshdaOptions);
+$routes->get('(:locale)/videos', 'Gallery::videos/$1', $tshdaOptions);
+
+// Vacancies (G): the listing here, the detail and the application in the
+// Careers module which already has both.
+$routes->get('(:locale)/vacancies', 'Vacancies::index/$1', $tshdaOptions);
+$routes->get('(:locale)/vacancies/(:segment)', '\Modules\Careers\Controllers\Careers::show/$1/$2', ['filter' => 'applocale']);
+$routes->post('(:locale)/vacancies/(:segment)/apply', '\Modules\Careers\Controllers\Careers::apply/$1/$2', ['filter' => 'applocale']);
+
+// Newsroom and announcements (B.II, E.c). /announcements is the same listing
+// filtered to the announcements category — a separate address because that is
+// what the clause names and what the menu points at.
+$routes->get('(:locale)/news', '\Modules\News\Controllers\News::index/$1', ['filter' => 'applocale']);
+$routes->get('(:locale)/announcements', '\Modules\News\Controllers\News::announcements/$1', ['filter' => 'applocale']);
+$routes->get('(:locale)/news/(:segment)', '\Modules\News\Controllers\News::show/$1/$2', ['filter' => 'applocale']);
+
+// ── Field Officer Portal (Clause 3.1.II) ────────────────────────────────────
+// The front door is public because it carries the sign-in form; everything
+// behind it is gated by the officer session, never by the admin one.
+$routes->get('(:locale)/field-officer', 'FieldOfficer::index/$1', $tshdaOptions);
+$routes->post('(:locale)/field-officer/login', 'FieldOfficer::login/$1', $tshdaOptions);
+$routes->get('(:locale)/field-officer/logout', 'FieldOfficer::logout/$1', $tshdaOptions);
+$routes->group('(:locale)/field-officer', ['filter' => 'officerauth', 'namespace' => 'Modules\Tshda\Controllers'], static function ($routes) {
+    $routes->get('dashboard', 'FieldOfficer::dashboard/$1');
+    $routes->post('submit', 'FieldOfficer::submit/$1');
+    $routes->get('attachment/(:segment)', 'FieldOfficer::attachment/$1/$2');
+});
 
 // CMS catch-all: /{locale}/{slug} -> PageController::show($slug)  ($2 = slug)
 $routes->get('(:locale)/(:segment)', 'PageController::show/$2', $siteOptions);

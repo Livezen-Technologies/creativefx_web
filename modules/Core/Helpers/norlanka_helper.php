@@ -297,12 +297,14 @@ if (! defined('DEFAULT_NAV')) {
      * exactly what this constant exists to stop happening again.
      */
     define('DEFAULT_NAV', [
-        ['url' => 'accommodation', 'label' => 'Site.nav.accommodation'],
-        ['url' => 'dining',        'label' => 'Site.nav.dining'],
-        ['url' => 'things-to-do',  'label' => 'Site.nav.things_to_do'],
-        ['url' => 'kalawana',      'label' => 'Site.nav.kalawana'],
-        ['url' => 'gallery',       'label' => 'Site.nav.gallery'],
-        ['url' => 'contact',       'label' => 'Site.nav.contact'],
+        ['url' => 'about-us',     'label' => 'Site.nav.about'],
+        ['url' => 'services',     'label' => 'Site.nav.services'],
+        ['url' => 'media-centre', 'label' => 'Site.nav.media_centre'],
+        ['url' => 'statistics',   'label' => 'Site.nav.statistics'],
+        ['url' => 'downloads',    'label' => 'Site.nav.downloads'],
+        ['url' => 'vacancies',    'label' => 'Site.nav.vacancies'],
+        ['url' => 'directory',    'label' => 'Site.nav.directory'],
+        ['url' => 'contact',      'label' => 'Site.nav.contact'],
     ]);
 }
 

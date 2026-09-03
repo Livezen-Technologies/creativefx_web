@@ -5,271 +5,158 @@ namespace Modules\News\Database\Seeds;
 use CodeIgniter\Database\Seeder;
 
 /**
- * Newsroom starter content: the blueprint's eight editorial categories plus
- * articles built from the facts already published on the site (marketing deck
- * + ESG Strategy). Upserts by slug — never deletes — so editorial changes made
- * in Admin → News survive redeploys.
+ * The newsroom's categories and its starting articles.
+ *
+ * Clause 3.9 B.II and E.c both feed off this table: the home page shows the
+ * latest items, and the Announcements section is the same listing pinned to
+ * the announcements category. The categories are the ones the Authority
+ * actually publishes under, so an editor never has to file a fertilizer issue
+ * notice under "Company News".
+ *
+ * Upserts by slug and never deletes, so editorial changes made in the console
+ * survive a release. The articles are written from the Authority's published
+ * record and are a starting draft for the Content Management Team; dates are
+ * relative to the seed run so the newsroom is never shipped already stale.
  */
 class NewsSeeder extends Seeder
 {
     public function run(): void
     {
+        helper('norlanka');
         $now = date('Y-m-d H:i:s');
 
         $this->seedCategories($now);
         $this->seedPosts($now);
     }
 
+    private function loc(string $en): string
+    {
+        return json_encode(content_locales(['en' => $en]), JSON_UNESCAPED_UNICODE);
+    }
+
     private function seedCategories(string $now): void
     {
-        $j = static fn (array $v): string => json_encode($v, JSON_UNESCAPED_UNICODE);
-
         $categories = [
-            ['company-news',   ['en' => 'Company News']],
-            ['press-releases', ['en' => 'Press Releases']],
-            ['sustainability', ['en' => 'Sustainability']],
-            ['esg',            ['en' => 'ESG']],
-            ['csr',            ['en' => 'CSR']],
-            ['events',         ['en' => 'Events']],
-            ['awards',         ['en' => 'Awards']],
-            ['innovation',     ['en' => 'Innovation']],
+            ['announcements',  'Announcements & Notices'],
+            ['press-releases', 'Press Releases'],
+            ['events',         'Events'],
+            ['tenders',        'Tenders'],
+            ['circulars',      'Circulars'],
+            ['programmes',     'Programmes & Projects'],
         ];
 
-        $table = $this->db->table('news_categories');
         foreach ($categories as $i => [$slug, $name]) {
-            $exists = $table->select('id')->where('slug', $slug)->get()->getRowArray();
-            $table->resetQuery();
-            if ($exists === null) {
-                $this->db->table('news_categories')->insert([
-                    'slug'       => $slug,
-                    'name'       => $j($name),
-                    'sort_order' => $i + 1,
-                    'status'     => 'published',
-                    'created_at' => $now,
-                    'updated_at' => $now,
-                ]);
+            $exists = $this->db->table('news_categories')->where('slug', $slug)->countAllResults() > 0;
+            if ($exists) {
+                continue;
             }
+            $this->db->table('news_categories')->insert([
+                'slug'       => $slug,
+                'name'       => $this->loc($name),
+                'sort_order' => $i + 1,
+                'status'     => 'published',
+                'created_at' => $now,
+                'updated_at' => $now,
+            ]);
         }
     }
 
     private function seedPosts(string $now): void
     {
-        $j = static fn (array $v): string => json_encode($v, JSON_UNESCAPED_UNICODE);
-
-        // slug => id map for category references.
         $catId = [];
-        foreach ($this->db->table('news_categories')->select('id, slug')->get()->getResultArray() as $row) {
+        foreach ($this->db->table('news_categories')->get()->getResultArray() as $row) {
             $catId[$row['slug']] = (int) $row['id'];
         }
 
-        $posts = [
+        foreach ($this->posts() as $post) {
+            $exists = $this->db->table('news_posts')->where('slug', $post['slug'])->countAllResults() > 0;
+            if ($exists) {
+                continue;
+            }
+
+            $this->db->table('news_posts')->insert([
+                'category_id'      => $catId[$post['category']] ?? null,
+                'slug'             => $post['slug'],
+                'title'            => $this->loc($post['title']),
+                'excerpt'          => $this->loc($post['excerpt']),
+                'body'             => $this->loc($post['body']),
+                'author'           => 'Tea Small Holdings Development Authority',
+                'meta_description' => $this->loc($post['excerpt']),
+                'status'           => 'published',
+                'published_at'     => date('Y-m-d H:i:s', strtotime('-' . $post['days'] . ' days')),
+                'created_at'       => $now,
+                'updated_at'       => $now,
+            ]);
+        }
+    }
+
+    private function posts(): array
+    {
+        return [
             [
-                'slug'        => 'better-tomorrow-2028-roadmap',
-                'category_id' => $catId['esg'] ?? null,
-                'title'       => $j([
-                    'en' => 'Better Tomorrow 2028: the next chapter of our ESG roadmap',
-                ]),
-                'excerpt' => $j([
-                    'en' => 'Our refreshed sustainability strategy sets measurable 2028 targets against a 2024 baseline across three pillars — Protect the Environment, Together with People, and Trust in Everything We Do.',
-                ]),
-                'body' => $j(['en' => <<<'TXT'
-Norlanka has launched Better Tomorrow 2028, the next phase of our environmental, social and governance roadmap. The strategy commits us to measurable 2028 targets against a 2024 baseline, organised under three pillars: Protect the Environment, Together with People, and Trust in Everything We Do.
-
-## What the roadmap commits to
-
-- Reduced emissions, water and waste intensity across our own facilities and partner factories
-- 100% Tier-1 Higg/Worldly verification
-- Deeper community programmes in education, health and biodiversity
-- Transparent, verified reporting — building on our ISO 14064-1 greenhouse-gas certification
-
-The roadmap builds on momentum from the last strategy cycle: a 630 kWp rooftop solar system at Trincomalee, USGBC LEED BD+C Gold certification for the plant, a Higg FEM score of 93, and community initiatives that have reached 2,882 beneficiaries to date.
-
-Progress against every target will be shared on our Impact page as the programme rolls out.
-TXT]),
-                'image'        => '/media/impact/tree-planting.jpg',
-                'tags'         => 'ESG,Roadmap 2028,Strategy',
-                'author'       => 'Norlanka Sustainability Team',
-                'status'       => 'published',
-                'published_at' => '2026-02-05 09:00:00',
+                'slug' => 'fertilizer-issue-notice-current-season',
+                'category' => 'announcements',
+                'days' => 2,
+                'title' => 'Fertilizer issue notices published for every district',
+                'excerpt' => 'Issue notices for the current season have been published for each district, naming the issuing point, the entitlement rate and the collection window.',
+                'body' => '<p>Fertilizer issue notices for the current season have been published for every district covered by the Authority. Each notice names the issuing point, the rate at which entitlement is calculated, the subsidised price and the window within which the allocation must be collected.</p>
+<p>Entitlement is calculated from the registered extent of the holding. Smallholders whose registered extent is out of date should ask their Tea Inspector to have the register corrected <em>before</em> the issue rather than after it — the allocation is read from the register, not from the application.</p>
+<p>Collect your allocation from the issuing point named on your district notice, taking your National Identity Card and your smallholder registration number. Where a society is the issuing point, take your society membership number as well.</p>
+<p>District notices are available under Downloads, and are sent to subscribers of the fertilizer and subsidy alert category.</p>',
             ],
             [
-                'slug'        => 'trincomalee-leed-gold',
-                'category_id' => $catId['awards'] ?? null,
-                'title'       => $j([
-                    'en' => 'Our Trincomalee plant is certified USGBC LEED BD+C Gold',
-                ]),
-                'excerpt' => $j([
-                    'en' => 'The U.S. Green Building Council has certified our Trincomalee manufacturing facility LEED BD+C Gold — recognising the plant\'s energy, water and materials performance.',
-                ]),
-                'body' => $j(['en' => <<<'TXT'
-Our Trincomalee manufacturing facility has been certified Gold under the U.S. Green Building Council's LEED Building Design and Construction (BD+C) programme.
-
-LEED Gold recognises the plant's performance across energy efficiency, water use, materials and indoor environmental quality. The certification caps a multi-year investment in the site, including the 630 kWp rooftop solar system commissioned in 2022 that now generates around 760 MWh of renewable energy every year.
-
-## Part of a bigger picture
-
-The certification is one milestone on our Better Tomorrow roadmap, alongside ISO 14064-1 greenhouse-gas certification and a Higg FEM score of 93 for the same site. It reflects the simple idea behind our impact programme: the factories where our clothes are made should be places the planet and our people can be proud of.
-TXT]),
-                'image'        => '/media/impact/leed-plant.jpg',
-                'tags'         => 'LEED Gold,Green building,Trincomalee',
-                'author'       => 'Norlanka Communications',
-                'status'       => 'published',
-                'published_at' => '2024-09-12 09:00:00',
+                'slug' => 'replanting-subsidy-applications-open',
+                'category' => 'announcements',
+                'days' => 6,
+                'title' => 'Replanting subsidy applications are open at every Regional Office',
+                'excerpt' => 'Applications for the replanting subsidy are being accepted at all regional offices. Speak to your Tea Inspector before uprooting any block.',
+                'body' => '<p>Applications for the replanting subsidy are being accepted at every Regional Office of the Authority.</p>
+<p>The subsidy is paid in instalments tied to the stages of the work — on uprooting, on planting, and on the establishment of the young tea — and each instalment is released only after the Tea Inspector has inspected the block and certified that the stage has been reached.</p>
+<p><strong>Speak to your Tea Inspector before you uproot anything.</strong> A block uprooted before it has been inspected cannot be certified at the first stage, and the assistance for that stage is lost. This is the single most common reason a replanting application fails, and it is entirely avoidable.</p>
+<p>The application form, the eligibility conditions and the current rate are published in the Services and Downloads sections of this site.</p>',
             ],
             [
-                'slug'        => 'rooftop-solar-760-mwh',
-                'category_id' => $catId['sustainability'] ?? null,
-                'title'       => $j([
-                    'en' => '630 kWp of rooftop solar: ~760 MWh of clean energy a year',
-                ]),
-                'excerpt' => $j([
-                    'en' => 'The rooftop solar array at our Trincomalee plant generates around 760 MWh of renewable electricity annually — avoiding roughly 1,300 tCO2e of emissions.',
-                ]),
-                'body' => $j(['en' => <<<'TXT'
-Commissioned in 2022, the 630 kWp rooftop photovoltaic system at our Trincomalee plant now generates approximately 760 MWh of renewable electricity every year — avoiding around 1,300 tCO2e of emissions.
-
-Solar is the backbone of the site's decarbonisation plan and one reason the facility earned USGBC LEED BD+C Gold certification. Under the Better Tomorrow 2028 roadmap we are extending renewable energy and energy-efficiency programmes across our operations and partner factories.
-
-## Beyond the roof
-
-Clean energy is only part of the site's environmental story: the plant scored 93 in Higg vFEM 2024 — including 100% on wastewater and chemicals management — and diverts production waste from landfill through recycling, composting and reuse.
-TXT]),
-                'image'        => '/media/impact/solar-roof.jpg',
-                'tags'         => 'Solar,Renewable energy,Climate',
-                'author'       => 'Norlanka Sustainability Team',
-                'status'       => 'published',
-                'published_at' => '2025-06-18 09:00:00',
+                'slug' => 'hantana-training-calendar-released',
+                'category' => 'programmes',
+                'days' => 9,
+                'title' => 'Hantana National Training Centre releases its new programme calendar',
+                'excerpt' => 'Residential and non-residential programmes for smallholders, society office bearers and field staff are now open for online application.',
+                'body' => '<p>The Hantana National Training Centre has released its programme calendar for the coming quarter. It includes residential and non-residential programmes for registered smallholders, society office bearers and the Authority’s own field staff.</p>
+<p>Programmes cover good agricultural practice, nursery management and cultivar selection, society management for office bearers, soil conservation on sloping land, and value addition and marketing for smallholder groups.</p>
+<p>Applications can now be made online, in English, Sinhala or Tamil. Each programme states its own capacity, and closes to applications automatically once it is full; where a programme is over-subscribed, applications are placed on a waiting list rather than refused. Applicants are notified of the outcome, and every application is given a reference number.</p>',
             ],
             [
-                'slug'        => 'higg-fem-93-trincomalee',
-                'category_id' => $catId['esg'] ?? null,
-                'title'       => $j([
-                    'en' => 'Higg FEM 2024: Trincomalee scores 93, up from 78 in 2022',
-                ]),
-                'excerpt' => $j([
-                    'en' => 'Our Trincomalee facility scored 93 in verified Higg FEM 2024 — with full marks on wastewater and chemicals management.',
-                ]),
-                'body' => $j(['en' => <<<'TXT'
-Our Trincomalee plant scored 93 in the verified Higg Facility Environmental Module (vFEM) for 2024 — a significant climb from 78 in 2022 — including 100% scores on wastewater and chemicals management.
-
-The Higg FEM, delivered on the Worldly platform, is the apparel industry's standard measure of facility-level environmental performance, covering energy, water, waste, chemicals and emissions.
-
-## What's next
-
-Under Better Tomorrow 2028 we are targeting 100% Higg/Worldly verification across our Tier-1 supply chain, extending the discipline we apply to our own site to every partner factory that makes Norlanka product.
-TXT]),
-                'image'        => '/media/company/factory-aerial.jpg',
-                'tags'         => 'Higg FEM,Worldly,Verification',
-                'author'       => 'Norlanka Sustainability Team',
-                'status'       => 'published',
-                'published_at' => '2025-03-10 09:00:00',
+                'slug' => 'society-registration-drive',
+                'category' => 'programmes',
+                'days' => 16,
+                'title' => 'Society formation and strengthening programme under way',
+                'excerpt' => 'The Authority is working with regional offices to form new Tea Smallholder Development Societies and to strengthen the standing of existing ones.',
+                'body' => '<p>The Authority has begun a programme of society formation and strengthening across the tea-growing districts, working through the regional offices and the Tea Inspector ranges.</p>
+<p>A Tea Smallholder Development Society is a village-level body of registered smallholders within one Tea Inspector range. It receives input allocations on behalf of its members, buys in bulk, runs savings and welfare schemes and represents its members to collectors and factories. Registration is what allows a group to do any of that.</p>
+<p>Groups interested in forming a society should speak to the Tea Inspector for their range. The formation process, the documents required and the current processing time are set out under Services.</p>
+<p>The programme also includes training for existing office bearers at the Hantana National Training Centre, on the constitution, meetings and minutes, accounts and member records — the things a society’s standing is assessed against.</p>',
             ],
             [
-                'slug'        => 'mangrove-restoration-chilaw',
-                'category_id' => $catId['sustainability'] ?? null,
-                'title'       => $j([
-                    'en' => '700 mangroves restored at Ambakandawila, Chilaw',
-                ]),
-                'excerpt' => $j([
-                    'en' => 'Our biodiversity programme has restored 700 mangroves on Sri Lanka\'s west coast — a thriving habitat that shelters the shoreline and stores carbon.',
-                ]),
-                'body' => $j(['en' => <<<'TXT'
-Seven hundred mangroves now stand at Ambakandawila, Chilaw, restored through Norlanka's biodiversity programme with local communities on Sri Lanka's west coast.
-
-Mangrove forests are among the most effective carbon sinks on the planet, and they shelter coastlines, fisheries and wildlife. The Chilaw restoration is part of a wider nature programme that has planted more than 8,000 saplings island-wide.
-
-## Growing with communities
-
-Alongside planting, the programme runs waste-segregation education in schools and coastal and mountain clean-ups — including the Sripada clean-up with the Central Environmental Authority — so the habitats we restore stay healthy for the long term.
-TXT]),
-                'image'        => '/media/impact/mangroves.jpg',
-                'tags'         => 'Biodiversity,Mangroves,Community',
-                'author'       => 'Norlanka Sustainability Team',
-                'status'       => 'published',
-                'published_at' => '2025-08-22 09:00:00',
+                'slug' => 'trilingual-website-launched',
+                'category' => 'press-releases',
+                'days' => 1,
+                'title' => 'The Authority launches its trilingual website',
+                'excerpt' => 'The Authority’s new website is published in English, Sinhala and Tamil, with online applications, a searchable staff directory and tracked public feedback.',
+                'body' => '<p>The Tea Small Holdings Development Authority has launched its new website, published in all three languages — English, Sinhala and Tamil — with the language switcher on every page keeping the reader on the page they were reading.</p>
+<p>The site brings together, for the first time in one place: a complete service catalogue stating who can apply for each service, what the process is and which documents are needed; a searchable directory of every office and officer, filterable by division, district and subject area; the Authority’s published statistics, with downloadable datasets; a central document repository whose search reaches inside the documents themselves; and online application to programmes at the Hantana National Training Centre.</p>
+<p>Members of the public can send feedback, questions and petitions through the site. Every submission is given a reference number, routed to a responsible officer and tracked until it is answered — and the person who submitted it can check its progress at any time with that reference.</p>
+<p>The site is built to the Guidelines for Developing Sri Lanka Government Websites published by the Information and Communication Technology Agency, and targets WCAG 2.1 Level AA for accessibility.</p>',
             ],
             [
-                'slug'        => 'grade-5-scholarship-programme',
-                'category_id' => $catId['csr'] ?? null,
-                'title'       => $j([
-                    'en' => 'Scholarship seminars and school supplies for Trincomalee students',
-                ]),
-                'excerpt' => $j([
-                    'en' => 'Since 2023 our Grade 5 scholarship seminars have supported students across Trincomalee, and each year around 300 children of team members receive school supplies.',
-                ]),
-                'body' => $j(['en' => <<<'TXT'
-Education is the heart of our community programme. Since 2023, Norlanka has run Grade 5 scholarship seminars for students across Trincomalee, helping children prepare for the national examination that opens doors to Sri Lanka's leading schools.
-
-Each year the programme also puts school supplies in the hands of around 300 children of our own team members, easing the back-to-school burden on families.
-
-## Together with people
-
-These initiatives sit within the Together with People pillar of our Better Tomorrow roadmap, which has reached 2,882 community beneficiaries to date — from student seminars to patient meals for the National Cancer Institute.
-TXT]),
-                'image'        => '/media/impact/education.jpg',
-                'tags'         => 'Education,Community,Trincomalee',
-                'author'       => 'Norlanka Communications',
-                'status'       => 'published',
-                'published_at' => '2026-01-15 09:00:00',
-            ],
-            [
-                'slug'        => 'great-place-to-work',
-                'category_id' => $catId['company-news'] ?? null,
-                'title'       => $j([
-                    'en' => 'Norlanka certified a Great Place to Work',
-                ]),
-                'excerpt' => $j([
-                    'en' => 'Norlanka has earned Great Place to Work certification — independent recognition of the trust, pride and camaraderie our people report.',
-                ]),
-                'body' => $j(['en' => <<<'TXT'
-Norlanka has been certified a Great Place to Work, the global benchmark for workplace culture based directly on what employees say about their experience.
-
-The certification arrived in the same year our Trincomalee plant switched on its rooftop solar system — a fitting pairing, because our belief is that responsible manufacturing starts with how we treat the people who make it happen.
-
-## Why it matters
-
-From merchandising in Colombo to the sewing floor in Trincomalee, more than 250 people design, develop and deliver over five million garments a year for international brands. Great Place to Work certification tells our customers — and future colleagues browsing our careers page — what our team already knows about working here.
-TXT]),
-                'image'        => '/media/company/head-office.jpg',
-                'tags'         => 'Great Place to Work,Culture,People',
-                'author'       => 'Norlanka Communications',
-                'status'       => 'published',
-                'published_at' => '2022-11-03 09:00:00',
-            ],
-            [
-                'slug'        => 'blood-donation-cancer-institute',
-                'category_id' => $catId['events'] ?? null,
-                'title'       => $j([
-                    'en' => 'Blood donation camps and 1,000+ patient meals for the National Cancer Institute',
-                ]),
-                'excerpt' => $j([
-                    'en' => 'Our community health programme has run blood donation camps since 2022 and provided food trolleys and more than 1,000 patient meals at the National Cancer Institute.',
-                ]),
-                'body' => $j(['en' => <<<'TXT'
-Norlanka team members have rolled up their sleeves — literally — at company blood donation camps every year since 2022, supporting Sri Lanka's national blood bank.
-
-At the National Cancer Institute in Maharagama, our community health programme funds food trolleys and has served more than 1,000 patient meals, bringing a little comfort to families during treatment.
-
-## An open invitation
-
-These events are organised by our own volunteers, and each camp welcomes participants from neighbouring businesses and communities. Follow our newsroom for dates of the next donation drive.
-TXT]),
-                'image'        => '/media/impact/blood-donation.jpg',
-                'tags'         => 'Health,Volunteering,Community',
-                'author'       => 'Norlanka Communications',
-                'status'       => 'published',
-                'published_at' => '2025-10-08 09:00:00',
+                'slug' => 'leaf-quality-consultation',
+                'category' => 'announcements',
+                'days' => 12,
+                'title' => 'Public consultation opens on leaf quality and price',
+                'excerpt' => 'The Authority is inviting comment from smallholders, society office bearers and buyers on how leaf quality is assessed at collection.',
+                'body' => '<p>The Authority has opened a public consultation on how green leaf quality is assessed at collection, and on how that assessment reaches the price paid to the smallholder.</p>
+<p>The Societies & Marketing Division is inviting comment from smallholders, society office bearers, collectors and factories. Comments are published after moderation and are read by the Division.</p>
+<p>The consultation is open for ninety days. Contribute through the Discussion section of this site, or write to the Division at Head Office.</p>',
             ],
         ];
-
-        $table = $this->db->table('news_posts');
-        foreach ($posts as $post) {
-            $exists = $table->select('id')->where('slug', $post['slug'])->get()->getRowArray();
-            $table->resetQuery();
-            if ($exists === null) {
-                $this->db->table('news_posts')->insert($post + ['created_at' => $now, 'updated_at' => $now]);
-            }
-            // Existing rows are left untouched — editors own them after first seed.
-        }
     }
 }

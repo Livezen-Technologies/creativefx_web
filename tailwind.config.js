@@ -31,12 +31,36 @@ export default {
         // Themeable foreground: ink on light ground, near-white inside .on-dark.
         // (No solid `bg-white` exists in the app, so this override is safe.)
         white: 'rgb(var(--fg) / <alpha-value>)',
+        // The secondary palette. `gold` is the Authority's second colour;
+        // `surface` is a card sitting a step above the ground; `line` is every
+        // hairline and table rule. All three flip with the scope, so a card on
+        // a dark band needs no dark: variant.
+        gold: 'rgb(var(--gold) / <alpha-value>)',
+        surface: 'rgb(var(--surface) / <alpha-value>)',
+        line: 'rgb(var(--line) / <alpha-value>)',
       },
       fontFamily: {
-        // Giant Forests uses the pairing the hotel's own site does: Playfair
-        // Display for headings, Poppins for everything else.
-        sans: ['Poppins', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-        display: ['Playfair Display', 'Georgia', 'ui-serif', 'serif'],
+        // One family across all three languages: Noto Sans for Latin, with the
+        // Sinhala and Tamil companions listed after it. A browser picks the
+        // first family that has a glyph for the character, so Sinhala text
+        // falls through to Noto Sans Sinhala automatically and nothing has to
+        // switch fonts by locale.
+        sans: [
+          'Noto Sans',
+          'Noto Sans Sinhala',
+          'Noto Sans Tamil',
+          'ui-sans-serif',
+          'system-ui',
+          'sans-serif',
+        ],
+        display: [
+          'Noto Sans',
+          'Noto Sans Sinhala',
+          'Noto Sans Tamil',
+          'ui-sans-serif',
+          'system-ui',
+          'sans-serif',
+        ],
       },
       letterSpacing: {
         widest: '0.2em',

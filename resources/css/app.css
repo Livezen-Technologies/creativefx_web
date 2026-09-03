@@ -12,71 +12,83 @@
 }
 
 /* Theme tokens (RGB channels).
-   Ground/foreground: light-grey site by default; `.on-dark` flips a section to
-   the dark treatment (hero over video, CTA bands, showroom, header/footer).
-   Accent: the Magic Corn brand orange #F2922E, taken from the live site.
-   It reads beautifully on dark (8.08:1) but only 2.27:1 as text on the cream
-   ground, and white on it is 2.35:1 — so it cannot be used for everything.
-   Two roles instead:
-     --accent       text/rules. The brand orange on dark; a same-hue darkened
-                    orange (#9E5C18, 5.07:1) where the ground is light.
-     --accent-fill  the brand orange itself, for filled surfaces, with
-                    --accent-ink as its label colour (7.36:1) rather than the
-                    white that used to be hard-coded. */
+   TSHDA's colours are the tea sector's own: the deep leaf green of the
+   Authority's mark, and a dry gold for the secondary accent. Ground and
+   foreground are token-driven so a page scope, the dark preference and the
+   `.on-dark` sections (hero bands, footer) all re-colour from one place.
+
+   Contrast is measured, not eyeballed, because this is a government portal and
+   Clause 3.15 commits to WCAG 2.1 AA:
+     --accent      #0F6B45 on the light ground — 6.4:1 as text.
+     --accent-fill the same green as a filled surface, with --accent-ink
+                   (white) as its label — 6.4:1.
+     --gold        #8A6A18 — 4.9:1 on the light ground; used for rules,
+                   markers and the notice band, never for small body text. */
 :root {
-  --bg: 250 248 243;          /* #FAF8F3 warm off-white */
-  --fg: 26 42 32;             /* #1A2A20 deep forest ink — 14.17:1 */
-  --accent: 52 97 66;         /* #346142 the brand green — 6.74:1 as text */
-  --accent-dark: 38 72 49;    /* #264831 */
-  --accent-fill: 52 97 66;    /* buttons carry the brand green itself */
-  --forest: 52 97 66;         /* the panel green, fixed — never flipped by scope */
-  --accent-ink: 255 255 255;  /* white label on that fill — 7.16:1 */
+  --bg: 248 250 248;          /* #F8FAF8 near-white, a hint of green */
+  --fg: 23 35 29;             /* #17231D deep leaf ink — 15.1:1 */
+  --accent: 15 107 69;        /* #0F6B45 the Authority green — 6.4:1 as text */
+  --accent-dark: 11 82 53;    /* #0B5235 */
+  --accent-fill: 15 107 69;   /* buttons carry the green itself */
+  --forest: 15 107 69;        /* the panel green, fixed — never flipped by scope */
+  --accent-ink: 255 255 255;  /* white label on that fill — 6.4:1 */
+  --gold: 138 106 24;         /* #8A6A18 — 4.9:1; rules, markers, notices */
+  --surface: 255 255 255;     /* cards and panels, a step above the ground */
+  --line: 214 224 218;        /* hairlines and table rules */
 }
 .on-dark {
-  --bg: 27 46 34;             /* #1B2E22 deep forest ground */
-  --fg: 242 245 239;          /* #F2F5EF near-white — 13.07:1 */
-  /* The brand green is only 2.01:1 on this ground, so it cannot carry text or
-     a button edge here. Dark mode uses a lighter tint of the same hue. */
-  --accent: 127 184 143;      /* #7FB88F — 6.27:1 */
-  --accent-dark: 100 155 116;
-  --accent-fill: 127 184 143; /* a #346142 button would vanish into the ground */
-  --accent-ink: 20 36 27;     /* dark label on the light-green fill */
+  --bg: 12 44 31;             /* #0C2C1F deep tea-leaf ground */
+  --fg: 240 246 242;          /* #F0F6F2 near-white — 14.0:1 */
+  /* #0F6B45 is 1.9:1 on this ground, so it cannot carry text or a button edge
+     here. The dark scope uses a lighter tint of the same hue. */
+  --accent: 106 200 152;      /* #6AC898 — 7.3:1 */
+  --accent-dark: 78 168 122;
+  --accent-fill: 106 200 152; /* a #0F6B45 button would vanish into the ground */
+  --accent-ink: 6 30 20;      /* dark label on the light-green fill */
+  --gold: 214 178 92;         /* #D6B25C — 8.1:1 on the dark ground */
+  --surface: 18 58 41;
+  --line: 44 88 66;
   /* Re-declare color: redefining --fg alone doesn't change *inherited* color,
      so headings/text without an explicit colour class would keep the light
      theme's ink. This makes the whole dark subtree inherit near-white. */
   color: rgb(var(--fg));
 }
-/* Our Impact page — ESG "Regenerate" green scope (soft green ground + accents). */
-.theme-esg-green {
-  --bg: 233 243 236;          /* #E9F3EC soft green ground */
-  --accent: 42 138 92;        /* #2A8A5C — AA-legible green on light */
-  --accent-dark: 23 105 70;   /* #176946 */
+/* Notice scope — the priority-notice band on the home page (Clause 3.9 B.IV).
+   Deliberately not green: an alert that looks like the rest of the site is not
+   an alert. */
+.theme-notice {
+  --bg: 253 245 230;          /* #FDF5E6 warm ground */
+  --accent: 146 64 14;        /* #92400E — 6.5:1 on that ground */
+  --accent-dark: 120 53 15;
+  --accent-fill: 146 64 14;
+  --accent-ink: 255 255 255;
+  --line: 232 210 170;
+  --surface: 255 251 242;
 }
 
-/* Site-wide dark mode. Toggled by the header switch and applied pre-paint by the
-   head script (persisted in localStorage as `nl_theme`). Because the whole site
-   reads from these tokens, flipping them here re-themes every surface at once. */
-/* The dark ground was #12100B — CIE L* 4.7, effectively black. Measured full
-   page, that put About Us at L* 18.1 and Our Business at 20.1, with the region
-   below each hero at L* 5.7: on pages where the hero is a fifth of the height,
-   four fifths of what you see was a void. It is why the site kept reading as
-   dark however far the hero scrims were pulled back — they only ever covered
-   the top of the page. #302B21 is L* 13.4 and takes About Us to 25.9 and Our
-   Business to 27.3. Still unmistakably a dark theme, and warm, which the
-   brand's own white-and-cream site is; body text sits at 12.7:1. */
+/* Site-wide dark mode. A preference, not the default — see the head script in
+   the layout. Because the whole site reads from these tokens, flipping them
+   here re-themes every surface at once. */
 html.dark {
-  --bg: 27 46 34;             /* #1B2E22 deep forest ground */
-  --fg: 242 245 239;          /* #F2F5EF near-white — 13.07:1 */
-  --accent: 127 184 143;      /* #7FB88F — 6.27:1; the brand green is 2.01 here */
-  --accent-dark: 100 155 116;
-  --accent-fill: 127 184 143;
-  --accent-ink: 20 36 27;
+  --bg: 12 44 31;
+  --fg: 240 246 242;
+  --accent: 106 200 152;
+  --accent-dark: 78 168 122;
+  --accent-fill: 106 200 152;
+  --accent-ink: 6 30 20;
+  --gold: 214 178 92;
+  --surface: 18 58 41;
+  --line: 44 88 66;
 }
-html.dark .theme-esg-green {  /* Impact page green scope, dark variant */
-  --bg: 12 20 15;             /* deep green-tinted ground */
-  --fg: 236 244 238;
-  --accent: 55 178 118;
-  --accent-dark: 30 120 82;
+html.dark .theme-notice {
+  --bg: 46 33 12;
+  --fg: 250 243 228;
+  --accent: 245 195 110;      /* #F5C36E — 9.4:1 on that ground */
+  --accent-dark: 214 164 82;
+  --accent-fill: 245 195 110;
+  --accent-ink: 40 28 8;
+  --line: 92 70 30;
+  --surface: 58 42 16;
 }
 
 @layer base {
@@ -102,6 +114,28 @@ html.dark .theme-esg-green {  /* Impact page green scope, dark variant */
   .container-x {
     @apply mx-auto w-full max-w-7xl px-6 lg:px-10;
   }
+  /* A form control. Every public form on this site is a government form —
+     an application, a petition, a subscription — so the controls are large,
+     high-contrast and obviously editable, rather than the hairline boxes a
+     marketing site can get away with. */
+  .field {
+    @apply block w-full rounded-lg border px-3.5 py-2.5 text-sm
+           transition placeholder:text-white/40
+           focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-red;
+    border-color: rgb(var(--line));
+    background: rgb(var(--surface));
+    color: rgb(var(--fg));
+  }
+  .field:focus { border-color: rgb(var(--accent)); }
+  textarea.field { @apply min-h-[8rem] leading-relaxed; }
+
+  /* Label above a field, and the hint or error below it. */
+  .field-label {
+    @apply mb-1.5 block text-xs font-semibold uppercase tracking-wider;
+    color: rgb(var(--fg) / 0.6);
+  }
+  .field-error { @apply mt-1.5 block text-xs font-medium text-brand-red; }
+
   .btn-brand {
     @apply inline-flex items-center justify-center rounded-full px-7 py-3
            text-sm font-semibold uppercase tracking-widest transition
@@ -463,7 +497,7 @@ html.dark .theme-esg-green {  /* Impact page green scope, dark variant */
    3.17 — so the wash keeps the near-black it was tuned against. Light theme
    has no such split: there the wash IS the cream ground. */
 :root { --hero-wash: var(--bg); }
-html.dark, .on-dark { --hero-wash: 12 22 16; }   /* deep forest, not brown */
+html.dark, .on-dark { --hero-wash: 8 34 24; }   /* deep tea leaf, not brown */
 
 /* The light theme is the exception: there `--bg` is the cream ground, so the
    scrim is not a shadow over the photo — it *is* the pale surface that keeps
@@ -1489,4 +1523,49 @@ html.fp-active body {
 .nl-drawer {
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
+}
+
+
+/* ── Organisation chart (Clause 3.9 C.f) ─────────────────────────────────────
+   A nested <ul> drawn as a tree. The markup is a list because that is what a
+   screen reader can navigate; the connectors are borders on the list items, so
+   nothing here depends on JavaScript, on an image, or on a fixed width. */
+.org-tree,
+.org-tree ul {
+  @apply m-0 list-none p-0;
+}
+.org-tree {
+  @apply inline-block min-w-full;
+}
+.org-node {
+  @apply relative pl-6;
+}
+.org-tree > .org-node {
+  @apply pl-0;
+}
+.org-card {
+  @apply relative my-1.5 inline-block max-w-md;
+}
+.org-children {
+  @apply relative;
+  /* The spine each child hangs off. */
+  border-left: 1px solid rgb(var(--line));
+  margin-left: 1rem;
+}
+.org-children > .org-node::before {
+  content: '';
+  @apply absolute left-0 top-[1.6rem] w-5;
+  border-top: 1px solid rgb(var(--line));
+}
+/* The last child's spine stops at its own connector rather than running past
+   it into empty space. */
+.org-children > .org-node:last-child::after {
+  content: '';
+  @apply absolute bottom-0 left-[-1px] top-[1.6rem] w-px;
+  background: rgb(var(--bg));
+}
+@media (min-width: 640px) {
+  .org-node { @apply pl-8; }
+  .org-children { margin-left: 1.25rem; }
+  .org-children > .org-node::before { @apply w-7; }
 }

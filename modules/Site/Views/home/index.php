@@ -1,232 +1,289 @@
 <?php
 helper(['norlanka', 'url']);
 $this->extend('Modules\Core\Views\layouts\main');
-
-// --- Hero content (from the seeded CMS 'hero' block, with sensible fallbacks) ---
-$heroRaw      = $sections['hero']['blocks'][0]['content'] ?? null;
-$hero         = $heroRaw ? json_decode($heroRaw, true) : [];
-$heroHeadline = $hero['headline'] ?? ['en' => 'Sweet corn, served hot in a cup.'];
-$heroSubhead  = $hero['subhead']  ?? ['en' => 'Sri Lanka’s original corn in a cup.'];
-
-// Kinetic-typography headline parts (fall back to the plain headline split into words).
-$kPre      = t_field($hero['pre'] ?? []);
-$kPost     = t_field($hero['post'] ?? []);
-$kRotators = array_values(array_filter(array_map(static fn ($r) => t_field($r), $hero['rotators'] ?? [])));
-if ($kPre === '' && $kPost === '' && $kRotators === []) {
-    $kPre = t_field($heroHeadline); // no kinetic data seeded → animate the whole headline
-}
-$splitWords = static function (string $text): string {
-    $text = trim($text);
-    if ($text === '') {
-        return '';
-    }
-    $html = '';
-    foreach (preg_split('/\s+/u', $text) as $w) {
-        $html .= '<span class="kw"><span class="kw-i">' . esc($w) . '</span></span> ';
-    }
-    return $html;
-};
-
 ?>
-
 <?= $this->section('content') ?>
 
-<!-- Screen-by-screen. Each direct-child <section> becomes a panel the height of
-     the viewport, and the footer is pulled in as the last one by fullpage.js.
-     A panel taller than the screen — the welcome, the facilities, the reviews —
-     scrolls inside itself first and only advances at its own end, so no copy is
-     lost to the panel height. Depth comes from [data-parallax] on the imagery,
-     which moves against the panel change instead of with it.
-     app.js branches on #fp; without JavaScript this is an ordinary block and
-     the page scrolls normally. -->
-<div id="fp" class="fp">
+<?php // ── B.IV Priority notices ─────────────────────────────────────────────
+      // Above everything, because that is what "immediate public attention"
+      // means. Renders nothing at all when there are none. ?>
+<div class="pt-24 sm:pt-28">
+    <?= view('Modules\Tshda\Views\partials\notice_band', ['notices' => $notices], ['saveData' => false]) ?>
+</div>
 
-<!-- ===================== HERO ===================== -->
-<!-- The hero scales to 1.08 as it scrolls away, which widens its own box past
-     the viewport; overflow-hidden on the section clips its children, not the
-     section itself. Kept even under #fp, whose panels clip anyway, so the hero
-     stays safe if the wrapper is ever removed again. -->
-<div class="overflow-hidden">
-<?php $heroPoster = ! empty($video['poster_path']) ? $video['poster_path'] : '/media/giantforests/Welcome-to-Giants-Forest-3.jpg'; ?>
-<section
-    id="hero"
-    data-gsap="hero-out"
-    x-data="{ playing: ! window.matchMedia('(prefers-reduced-motion: reduce)').matches, toggleVid() { const v = $refs.bgv; if (!v) return; if (v.paused) { delete v.dataset.userPaused; v.play(); this.playing = true; } else { v.dataset.userPaused = '1'; v.pause(); this.playing = false; } } }"
-    <?php // The hero is a photograph with type laid over it, so it is a dark
-          // surface no matter which theme the rest of the page is in — the same
-          // way the hotel's own site puts white type on a dark hero above a
-          // light page. .on-dark gives it the deep-forest wash and near-white
-          // ink, instead of the cream veil the light theme lays over photos.
-    ?>
-    class="on-dark relative flex min-h-screen items-center overflow-hidden"
->
-    <!-- Background: real launch film if set in the CMS, else the animated brand visual -->
-    <?php // A path in the database is not a film on disk. pagehero tests both;
-          // this tested only the path, so a record pointing at a file that had
-          // been removed rendered a <video> that plays nothing — and because the
-          // still is the *else* branch, the poster never got its turn either.
-    ?>
-    <?php if (! empty($video['src_path']) && is_file(FCPATH . ltrim((string) $video['src_path'], '/'))): ?>
-        <!-- Background film. Poster paints instantly (LCP) while it buffers; JS
-             force-plays it (see heroVideo.js) so it loops continuously. -->
-        <video x-ref="bgv"
-               class="hero-media absolute inset-0 -z-30 h-full w-full object-cover"
-               autoplay muted loop playsinline preload="auto"
-               poster="<?= esc(media_src($heroPoster)) ?>">
-            <?php // A browser plays the first source it can decode and never looks
-                  // at the rest, so this order decides what almost everyone gets.
-                  //
-                  // The usual advice is WebM first, on the assumption that VP9
-                  // beats H.264. Measured against a common reference, these two
-                  // files say otherwise: the MP4 is 7.5MB at SSIM 0.978, while
-                  // VP9 needs 8.8MB to reach 0.948 and lands at 0.943 for 6.6MB.
-                  // x264 wins on both axes here, partly because the source is
-                  // already H.264 at a low bitrate. So MP4 leads.
-                  //
-                  // The WebM is not redundant: Chromium builds without the
-                  // proprietary H.264 decoder — which is what this project's own
-                  // test browser is — cannot play the MP4 at all, and fall
-                  // through to it. It is a codec fallback, not an optimisation.
-                  //
-                  // Both are existence-checked. A path in the database with no
-                  // file behind it emits a <source> the browser requests and is
-                  // 404'd on before falling through: a wasted round trip on every
-                  // visit, invisible because the video still plays. ?>
-            <source src="<?= esc(media_src($video['src_path'])) ?>" type="video/mp4">
-            <?php if (! empty($video['src_path_webm']) && is_file(FCPATH . ltrim((string) $video['src_path_webm'], '/'))): ?>
-                <source src="<?= esc(media_src($video['src_path_webm'])) ?>" type="video/webm">
-            <?php endif; ?>
-        </video>
-        <!-- Subtle corner control (kept far from the CTAs so it never competes). -->
-        <button type="button" @click="toggleVid()"
-                class="absolute bottom-8 right-6 z-20 inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/25 bg-brand-black/50 text-white/80 backdrop-blur transition hover:border-white hover:text-white lg:right-10"
-                :aria-label="playing ? 'Pause background video' : 'Play background video'">
-            <svg x-show="playing" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
-            <svg x-show="!playing" x-cloak class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5l12 7-12 7z"/></svg>
-        </button>
-    <?php elseif (! empty($heroPoster) && is_file(FCPATH . ltrim((string) $heroPoster, '/'))): ?>
-        <!-- No film supplied; the poster carries the hero as a still. -->
-        <img src="<?= esc(media_src($heroPoster), 'attr') ?>" alt="" aria-hidden="true" data-parallax="12"
-             class="hero-media absolute inset-0 -z-30 h-full w-full object-cover">
-    <?php else: ?>
-        <div class="hero-aurora absolute inset-0 -z-30"></div>
-        <div data-three-hero class="absolute inset-0 -z-20 opacity-70"></div>
-    <?php endif; ?>
-
-    <!-- Soft pool of shade under the copy, so the type stays legible without
-         flattening the film behind it. The pool sits where the copy sits: it
-         was offset left while the copy was, and follows it to the middle. -->
-    <div class="hero-wash-pool absolute inset-0 -z-20"></div>
-    <div class="hero-wash-foot absolute inset-0 -z-20"></div>
-    <!-- Brand-red glow to break the monochrome -->
-    <div class="hero-red-glow absolute inset-0 -z-10"></div>
-
-    <?php // Centred hero. text-center carries the eyebrow (an inline-flex box)
-          // and the headline; the two measured blocks below need mx-auto as well,
-          // because a max-width still leaves them parked at the start of the
-          // line box, and the two rows of controls are flex containers, which
-          // text-align does not reach into at all. ?>
-    <div class="container-x relative w-full pb-24 pt-28 text-center sm:pb-0">
-        <p class="eyebrow mb-6" data-gsap="reveal"><?= esc(lang('Site.home.hero.eyebrow')) ?></p>
-
-        <?php // font-sans overrides the base layer, which sets Playfair on every
-              // h1-h4. The rest of this hero — eyebrow, subhead, both buttons,
-              // the nav above it — is Poppins, and the serif headline was the
-              // only thing on screen not speaking the same voice. Tracking is
-              // pulled in slightly because Poppins at 72px sets looser than a
-              // serif does at the same size. ?>
-        <h1 class="kinetic-hero mx-auto max-w-4xl font-sans text-4xl font-bold leading-[1.05] tracking-[-0.02em] sm:text-5xl lg:text-6xl xl:text-7xl" aria-label="<?= esc(t_field($heroHeadline), 'attr') ?>">
-            <?php if ($kPre !== ''): ?><span class="kline" data-kinetic><?= $splitWords($kPre) ?></span><?php endif; ?>
-            <?php if ($kRotators !== []): ?>
-                <span class="rotator-wrap text-brand-red" data-rotator aria-hidden="true">
-                    <span class="rotator-list">
-                        <?php foreach ($kRotators as $rw): ?><span class="rotator-word"><?= esc($rw) ?></span><?php endforeach; ?>
-                        <span class="rotator-word"><?= esc($kRotators[0]) ?></span>
-                    </span>
-                </span>
-            <?php endif; ?>
-            <?php if ($kPost !== ''): ?><span class="kline" data-kinetic><?= $splitWords($kPost) ?></span><?php endif; ?>
+<?php // ── Masthead ──────────────────────────────────────────────────────────
+      // A government portal's first screen is not an advertisement. It says who
+      // this is, and it puts the two things most visitors came for — the search
+      // box and the way to their own service — above the fold. ?>
+<section class="relative overflow-hidden border-b border-line">
+    <div class="hero-aurora absolute inset-0 -z-10 opacity-50"></div>
+    <div class="container-x py-14 sm:py-20">
+        <p class="text-xs font-semibold uppercase tracking-[0.3em] text-brand-red"><?= esc(setting('parent_org', '', 'general')) ?></p>
+        <h1 class="mt-4 max-w-4xl text-3xl font-bold leading-tight sm:text-5xl">
+            <?= esc(setting('site_name', 'Tea Small Holdings Development Authority')) ?>
         </h1>
+        <p class="mt-5 max-w-2xl text-lg leading-relaxed text-white/70"><?= esc(lang('Site.home.lede')) ?></p>
 
-        <p class="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-white/90" data-gsap="reveal"><?= esc(t_field($heroSubhead)) ?></p>
+        <?php // Search is a primary navigation route on an information portal,
+              // not a utility tucked in the header. Clause 3.12's search, on the
+              // first screen. ?>
+        <form method="get" action="<?= esc(locale_url('search')) ?>" role="search"
+              class="mt-8 flex max-w-2xl flex-wrap gap-3">
+            <label class="min-w-[14rem] flex-1">
+                <span class="sr-only"><?= esc(lang('Site.search.label')) ?></span>
+                <input type="search" name="q" class="field" placeholder="<?= esc(lang('Site.search.placeholder'), 'attr') ?>">
+            </label>
+            <button type="submit" class="btn-brand"><?= esc(lang('Site.search.button')) ?></button>
+        </form>
 
-        <!-- CTA hierarchy: one dominant primary, one quiet secondary.
-             Both are real links first and behave without JavaScript: Book Now
-             goes to the contact page, the film link goes to its own section.
-             With JavaScript the first opens the booking dialog in place and the
-             second scrolls to the film and starts it. A button that only works
-             once a bundle has parsed is a button that sometimes does nothing. -->
-        <div class="mt-10 flex flex-wrap items-center justify-center gap-6" data-gsap="reveal">
-            <a href="<?= esc(locale_url('contact')) ?>" class="btn-brand btn-lg group"
-               @click.prevent="$dispatch('booking-open')">
-                <?= esc(lang('Site.home.hero.primary')) ?>
-                <svg class="ml-2 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
-            <?php // Opens the film over the page rather than walking the reader
-                  // down to it. The href still points at the section, so without
-                  // JavaScript the link goes somewhere real. ?>
-            <a href="#film" class="group inline-flex items-center gap-3 text-sm font-semibold uppercase tracking-widest text-white/85 transition hover:text-white"
-               @click.prevent="$dispatch('film-open')">
-                <span class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/30 transition group-hover:border-brand-red group-hover:bg-brand-red/10">
-                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5l11 7-11 7z"/></svg>
-                </span>
-                <?= esc(lang('Site.home.hero.secondary')) ?>
-            </a>
+        <ul class="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-sm text-white/60">
+            <li><?= esc(lang('Site.search.popular')) ?></li>
+            <?php foreach (['replanting-subsidy' => 'Site.nav.replanting', 'fertilizer-subsidy' => 'Site.nav.fertilizer', 'smallholder-registration' => 'Site.nav.registration'] as $slug => $key): ?>
+                <li><a href="<?= esc(locale_url('services/' . $slug)) ?>" class="underline decoration-white/25 underline-offset-4 transition hover:text-brand-red hover:decoration-brand-red"><?= esc(lang($key)) ?></a></li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+</section>
+
+<?php // ── B.I Stakeholder service clusters ──────────────────────────────────
+      // Grouped by who you are, not by the Authority's org chart, so a visitor
+      // reaches their own path in one click. ?>
+<?php
+$audienceOrder = ['smallholder', 'society', 'officer', 'supplier', 'jobseeker'];
+$hasClusters   = array_filter($clusters ?? []);
+?>
+<?php if ($hasClusters): ?>
+<section class="bg-brand-black py-16 sm:py-20" aria-labelledby="services-heading">
+    <div class="container-x">
+        <div class="flex flex-wrap items-end justify-between gap-4">
+            <div>
+                <h2 id="services-heading" class="text-2xl font-bold sm:text-3xl"><?= esc(lang('Site.home.services_title')) ?></h2>
+                <p class="mt-2 max-w-2xl text-white/70"><?= esc(lang('Site.home.services_intro')) ?></p>
+            </div>
+            <a href="<?= esc(locale_url('services')) ?>" class="text-sm font-semibold text-brand-red hover:underline"><?= esc(lang('Site.home.all_services')) ?> &rarr;</a>
         </div>
 
-        <?php // Social proof directly under the buttons, where it answers the
-              // question the buttons just asked. Renders only when a rating and
-              // a link are both configured. ?>
-        <div class="mt-8" data-gsap="reveal">
-            <?= view('Modules\\Core\\Views\\partials\\review_badges', ['layout' => 'row', 'size' => 'md']) ?>
-        </div>
-
-        <?php // The single rule was a lead-in to left-aligned copy. Centred, one
-              // rule on one side reads as a mistake, so the line is bracketed. ?>
-        <div class="mt-8 flex items-center justify-center gap-4 sm:mt-10" data-gsap="reveal">
-            <?php // The rules bracket a single line. On a phone the sentence wraps
-                  // to two and they end up floating beside the middle of a
-                  // paragraph, so below sm the line stands on its own. ?>
-            <span class="hidden h-px w-10 bg-white/20 sm:block"></span>
-            <p class="text-[11px] uppercase tracking-[0.3em] text-white/70">
-                <?= esc(lang('Site.home.hero.trust')) ?>
-            </p>
-            <span class="hidden h-px w-10 bg-white/20 sm:block"></span>
+        <div class="mt-10 grid gap-6 lg:grid-cols-2">
+            <?php foreach ($audienceOrder as $audience): ?>
+                <?php $rows = $clusters[$audience] ?? []; if ($rows === []) { continue; } ?>
+                <div class="rounded-2xl border border-line bg-surface p-6" data-gsap="reveal">
+                    <h3 class="text-lg font-semibold"><?= esc(lang('Site.audience.' . $audience)) ?></h3>
+                    <p class="mt-1 text-sm text-white/60"><?= esc(lang('Site.audience.' . $audience . '_note')) ?></p>
+                    <ul class="mt-4 space-y-2.5" role="list">
+                        <?php foreach (array_slice($rows, 0, 5) as $service): ?>
+                            <li>
+                                <a href="<?= esc(locale_url('services/' . $service['slug'])) ?>"
+                                   class="group flex items-start gap-2.5 text-sm">
+                                    <span aria-hidden="true" class="mt-[0.35rem] h-1.5 w-1.5 shrink-0 rounded-full bg-brand-red"></span>
+                                    <span class="font-medium transition group-hover:text-brand-red"><?= esc(t_field($service['title'])) ?></span>
+                                    <?php if ((int) $service['window_open'] !== 1): ?>
+                                        <span class="ml-1 shrink-0 rounded-full bg-white/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-white/50"><?= esc(lang('Site.services.closed')) ?></span>
+                                    <?php endif; ?>
+                                </a>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                    <?php if (count($rows) > 5): ?>
+                        <a href="<?= esc(locale_url('services?for=' . $audience)) ?>" class="mt-4 inline-block text-sm font-semibold text-brand-red hover:underline">
+                            <?= esc(lang('Site.home.more_for', [count($rows) - 5])) ?> &rarr;
+                        </a>
+                    <?php endif; ?>
+                </div>
+            <?php endforeach; ?>
         </div>
     </div>
-
-    <a href="#welcome" data-fp-next
-            class="absolute inset-x-0 bottom-8 flex cursor-pointer justify-center bg-transparent"
-            aria-label="<?= esc(lang('Site.experience.scroll'), 'attr') ?>">
-        <span class="flex flex-col items-center gap-2 text-[10px] uppercase tracking-[0.3em] text-white/40 transition hover:text-white/70">
-            <?= esc(lang('Site.experience.scroll')) ?>
-            <svg class="h-4 w-4 animate-bounce text-brand-red" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M6 13l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </span>
-    </a>
 </section>
-</div><!-- /hero clip -->
+<?php endif; ?>
 
-<!-- ===================== WELCOME ===================== -->
-<?php // The anchor lives on the section itself. As its own element it was a
-      // direct child of #fp, which counts direct children as panels — so the
-      // scroll cue pointed at an empty screen rather than at the welcome. ?>
-<?= view('Modules\\Site\\Views\\home\\sections\\welcome', ['section' => $sections['welcome'] ?? null]) ?>
+<?php // ── B.II News, press releases, announcements and events ───────────────
+      // Latest first, straight off the newsroom. ?>
+<?php if (! empty($posts)): ?>
+<section class="border-y border-line bg-surface py-16 sm:py-20" aria-labelledby="news-heading">
+    <div class="container-x">
+        <div class="flex flex-wrap items-end justify-between gap-4">
+            <h2 id="news-heading" class="text-2xl font-bold sm:text-3xl"><?= esc(lang('Site.home.news_title')) ?></h2>
+            <div class="flex flex-wrap gap-4 text-sm font-semibold">
+                <a href="<?= esc(locale_url('announcements')) ?>" class="text-brand-red hover:underline"><?= esc(lang('Site.nav.announcements')) ?> &rarr;</a>
+                <a href="<?= esc(locale_url('news')) ?>" class="text-brand-red hover:underline"><?= esc(lang('Site.home.all_news')) ?> &rarr;</a>
+            </div>
+        </div>
 
-<!-- ===================== OUR FACILITIES ===================== -->
-<?= view('Modules\\Site\\Views\\home\\sections\\facilities', ['section' => $sections['facilities'] ?? null]) ?>
+        <ul class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4" role="list">
+            <?php foreach ($posts as $post): ?>
+                <li class="flex flex-col rounded-2xl border border-line bg-brand-black p-5" data-gsap="reveal">
+                    <?php if (! empty($post['published_at'])): ?>
+                        <time datetime="<?= esc(date('Y-m-d', strtotime((string) $post['published_at'])), 'attr') ?>"
+                              class="text-xs font-semibold uppercase tracking-wider text-white/50">
+                            <?= esc(date('j M Y', strtotime((string) $post['published_at']))) ?>
+                        </time>
+                    <?php endif; ?>
+                    <h3 class="mt-2 text-base font-semibold leading-snug">
+                        <a href="<?= esc(locale_url('news/' . $post['slug'])) ?>" class="transition hover:text-brand-red"><?= esc(t_field($post['title'])) ?></a>
+                    </h3>
+                    <p class="mt-2 line-clamp-3 text-sm leading-relaxed text-white/60"><?= esc(mb_substr(strip_tags(t_field($post['excerpt'] ?: $post['body'])), 0, 160)) ?></p>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+</section>
+<?php endif; ?>
 
-<!-- ===================== ROOMS & SUITES ===================== -->
-<?= view('Modules\\Site\\Views\\home\\sections\\rooms', ['section' => $sections['rooms'] ?? null]) ?>
+<?php // ── Training calendar + statistics ────────────────────────────────────
+      // The two things the Authority publishes on a schedule, side by side. ?>
+<?php if (! empty($programmes) || ! empty($datasets)): ?>
+<section class="bg-brand-black py-16 sm:py-20">
+    <div class="container-x grid gap-10 lg:grid-cols-2">
+        <?php if (! empty($programmes)): ?>
+            <div>
+                <div class="flex flex-wrap items-end justify-between gap-3">
+                    <h2 class="text-2xl font-bold sm:text-3xl"><?= esc(lang('Site.home.training_title')) ?></h2>
+                    <a href="<?= esc(locale_url('hantana')) ?>" class="text-sm font-semibold text-brand-red hover:underline"><?= esc(lang('Site.home.full_calendar')) ?> &rarr;</a>
+                </div>
+                <ul class="mt-6 divide-y divide-line rounded-2xl border border-line" role="list">
+                    <?php foreach ($programmes as $programme): ?>
+                        <li class="flex items-start gap-4 p-5">
+                            <?php if (! empty($programme['starts_on'])): ?>
+                                <div class="w-14 shrink-0 rounded-lg border border-line bg-surface py-2 text-center">
+                                    <span class="block text-lg font-bold leading-none"><?= esc(date('j', strtotime((string) $programme['starts_on']))) ?></span>
+                                    <span class="block text-[10px] font-semibold uppercase tracking-wider text-white/60"><?= esc(date('M', strtotime((string) $programme['starts_on']))) ?></span>
+                                </div>
+                            <?php endif; ?>
+                            <div class="min-w-0">
+                                <h3 class="text-sm font-semibold leading-snug">
+                                    <a href="<?= esc(locale_url('hantana/' . $programme['slug'])) ?>" class="transition hover:text-brand-red"><?= esc(t_field($programme['title'])) ?></a>
+                                </h3>
+                                <p class="mt-1 text-xs text-white/60">
+                                    <?= esc((int) $programme['residential'] === 1 ? lang('Site.hantana.residential') : lang('Site.hantana.non_residential')) ?>
+                                    <?php $left = \Modules\Tshda\Models\ProgrammeModel::seatsLeft($programme); ?>
+                                    <?php if ($left !== null): ?>
+                                        · <?= esc(lang('Site.hantana.seats_left', [$left])) ?>
+                                    <?php endif; ?>
+                                </p>
+                            </div>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        <?php endif; ?>
 
-<!-- ===================== PEOPLE SAY ===================== -->
-<?= view('Modules\\Site\\Views\\home\\sections\\testimonials', ['section' => $sections['testimonials'] ?? null]) ?>
+        <?php if (! empty($datasets)): ?>
+            <div>
+                <div class="flex flex-wrap items-end justify-between gap-3">
+                    <h2 class="text-2xl font-bold sm:text-3xl"><?= esc(lang('Site.home.statistics_title')) ?></h2>
+                    <a href="<?= esc(locale_url('statistics')) ?>" class="text-sm font-semibold text-brand-red hover:underline"><?= esc(lang('Site.home.all_statistics')) ?> &rarr;</a>
+                </div>
+                <ul class="mt-6 grid gap-4 sm:grid-cols-2" role="list">
+                    <?php foreach (array_slice($datasets, 0, 4) as $dataset): ?>
+                        <li class="rounded-2xl border border-line bg-surface p-5">
+                            <h3 class="text-sm font-semibold leading-snug">
+                                <a href="<?= esc(locale_url('statistics/' . $dataset['slug'])) ?>" class="transition hover:text-brand-red"><?= esc(t_field($dataset['title'])) ?></a>
+                            </h3>
+                            <p class="mt-1.5 line-clamp-3 text-xs leading-relaxed text-white/60"><?= esc(t_field($dataset['description'])) ?></p>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        <?php endif; ?>
+    </div>
+</section>
+<?php endif; ?>
 
-<!-- ===================== THE FILM ===================== -->
-<?= view('Modules\\Site\\Views\\home\\sections\\film', ['section' => $sections['film'] ?? null]) ?>
+<?php // ── B.V Discussion topic + moderated comments ─────────────────────────
+      // and B.III the Facebook wall, side by side: both are "what people are
+      // saying", and the social feed is the one that may not arrive. ?>
+<section class="border-t border-line bg-surface py-16 sm:py-20">
+    <div class="container-x grid gap-10 lg:grid-cols-2">
+        <div>
+            <h2 class="text-2xl font-bold sm:text-3xl"><?= esc(lang('Site.home.discussion_title')) ?></h2>
+            <?php if (! empty($topic)): ?>
+                <h3 class="mt-4 text-lg font-semibold">
+                    <a href="<?= esc(locale_url('discussion/' . $topic['slug'])) ?>" class="transition hover:text-brand-red"><?= esc(t_field($topic['title'])) ?></a>
+                </h3>
+                <p class="mt-2 text-sm leading-relaxed text-white/70"><?= esc(mb_substr(strip_tags(t_field($topic['body'])), 0, 260)) ?>…</p>
 
-<!-- ===================== BOOK ===================== -->
-<?= view('Modules\\Site\\Views\\home\\sections\\cta', ['section' => $sections['cta'] ?? null]) ?>
+                <?php if (! empty($comments)): ?>
+                    <ul class="mt-6 space-y-4" role="list">
+                        <?php foreach ($comments as $comment): ?>
+                            <li class="rounded-xl border border-line bg-brand-black p-4">
+                                <p class="text-sm leading-relaxed text-white/80"><?= esc(mb_substr($comment['body'], 0, 220)) ?></p>
+                                <p class="mt-2 text-xs text-white/50">
+                                    <?= esc($comment['author']) ?><?= ! empty($comment['district']) ? ' · ' . esc($comment['district']) : '' ?>
+                                </p>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                <?php endif; ?>
 
-</div><!-- /#fp -->
+                <a href="<?= esc(locale_url('discussion/' . $topic['slug'])) ?>" class="btn-brand mt-6 inline-flex"><?= esc(lang('Site.home.join_discussion')) ?></a>
+            <?php else: ?>
+                <p class="mt-4 text-sm text-white/60"><?= esc(lang('Site.home.no_discussion')) ?></p>
+            <?php endif; ?>
+        </div>
+
+        <?php // B.III The official Facebook wall. Loaded after the page is
+              // interactive and inside an <iframe> so a slow or unavailable
+              // social service can never delay this page or block its render —
+              // the specific requirement in Clause 3.9 B.III. ?>
+        <div x-data="{ shown: false }" x-init="setTimeout(() => shown = true, 800)">
+            <h2 class="text-2xl font-bold sm:text-3xl"><?= esc(lang('Site.home.facebook_title')) ?></h2>
+            <?php $fb = trim((string) setting('facebook', '', 'social')); ?>
+            <?php if ($fb !== ''): ?>
+                <div class="mt-4 overflow-hidden rounded-2xl border border-line bg-brand-black">
+                    <template x-if="shown">
+                        <iframe
+                            :src="'https://www.facebook.com/plugins/page.php?href=<?= rawurlencode($fb) ?>&tabs=timeline&width=500&height=560&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=false'"
+                            title="<?= esc(lang('Site.home.facebook_title'), 'attr') ?>"
+                            class="h-[560px] w-full border-0" loading="lazy" scrolling="no"
+                            allow="encrypted-media"></iframe>
+                    </template>
+                    <div x-show="!shown" class="flex h-[560px] items-center justify-center text-sm text-white/50">
+                        <?= esc(lang('Site.home.facebook_loading')) ?>
+                    </div>
+                </div>
+                <p class="mt-3 text-sm">
+                    <a href="<?= esc($fb) ?>" target="_blank" rel="noopener noreferrer" class="font-semibold text-brand-red hover:underline"><?= esc(lang('Site.home.facebook_open')) ?> &rarr;</a>
+                </p>
+            <?php endif; ?>
+        </div>
+    </div>
+</section>
+
+<?php // ── B.VI Media gallery + B.VII Related organisations ──────────────────
+      // and the alert subscription, which is the thing a visitor who read the
+      // notices at the top of this page most plausibly wants next. ?>
+<section class="bg-brand-black py-16 sm:py-20">
+    <div class="container-x grid gap-10 lg:grid-cols-3">
+        <div class="lg:col-span-2">
+            <?= view('Modules\Tshda\Views\partials\alerts_form', [], ['saveData' => false]) ?>
+
+            <?php if (! empty($links)): ?>
+                <h2 class="mt-12 text-2xl font-bold sm:text-3xl"><?= esc(lang('Site.home.related_title')) ?></h2>
+                <ul class="mt-5 grid gap-3 sm:grid-cols-2" role="list">
+                    <?php foreach ($links as $link): ?>
+                        <li>
+                            <a href="<?= esc($link['url']) ?>" target="_blank" rel="noopener noreferrer"
+                               class="flex items-center justify-between gap-3 rounded-xl border border-line bg-surface px-4 py-3 text-sm font-medium transition hover:border-brand-red">
+                                <span><?= esc(t_field($link['name'])) ?></span>
+                                <span aria-hidden="true" class="text-brand-red">&#8599;</span>
+                                <span class="sr-only"><?= esc(lang('Site.home.opens_new_tab')) ?></span>
+                            </a>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            <?php endif; ?>
+        </div>
+
+        <div>
+            <h2 class="text-2xl font-bold sm:text-3xl"><?= esc(lang('Site.home.gallery_title')) ?></h2>
+            <p class="mt-2 text-sm leading-relaxed text-white/70"><?= esc(lang('Site.home.gallery_intro')) ?></p>
+            <div class="mt-5 flex flex-col gap-3">
+                <a href="<?= esc(locale_url('gallery')) ?>" class="rounded-xl border border-line bg-surface px-4 py-3 text-sm font-semibold transition hover:border-brand-red"><?= esc(lang('Site.nav.photo_gallery')) ?> &rarr;</a>
+                <a href="<?= esc(locale_url('videos')) ?>" class="rounded-xl border border-line bg-surface px-4 py-3 text-sm font-semibold transition hover:border-brand-red"><?= esc(lang('Site.nav.video_gallery')) ?> &rarr;</a>
+                <a href="<?= esc(locale_url('downloads')) ?>" class="rounded-xl border border-line bg-surface px-4 py-3 text-sm font-semibold transition hover:border-brand-red"><?= esc(lang('Site.nav.downloads')) ?> &rarr;</a>
+                <a href="<?= esc(locale_url('vacancies')) ?>" class="rounded-xl border border-line bg-surface px-4 py-3 text-sm font-semibold transition hover:border-brand-red"><?= esc(lang('Site.nav.vacancies')) ?> &rarr;</a>
+            </div>
+        </div>
+    </div>
+</section>
 
 <?= $this->endSection() ?>

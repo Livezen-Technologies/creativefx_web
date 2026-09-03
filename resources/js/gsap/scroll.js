@@ -22,28 +22,56 @@ export function initScrollStory() {
     return;
   }
 
-  gsap.utils.toArray('[data-gsap="reveal"]').forEach((el) => {
-    const tween = {
-      opacity: 0,
-      y: 48,
-      duration: 1,
-      ease: 'power3.out',
-    };
+  /*
+   * Reveal-on-scroll, arranged so that it can never hide public information.
+   *
+   * The obvious implementation is gsap.from({opacity: 0}), which writes the
+   * hidden state the moment the tween is created and unwrites it when the
+   * trigger fires. That is fine until the trigger does not fire — a
+   * ScrollTrigger whose start line is above the element, a layout that shifts
+   * after measurement, a browser that never reaches the section — and then a
+   * paragraph of an Authority notice is simply invisible, with the page
+   * reporting no error at all. On a marketing site that is a missed animation.
+   * Here it is a citizen who cannot read a fertilizer issue notice.
+   *
+   * So the element's resting state is visible, and it is hidden only for the
+   * instant between the observer being armed and the tween running. fromTo with
+   * immediateRender:false means GSAP writes nothing until the trigger fires;
+   * the fallback timer unhides anything the observer has not reached within a
+   * few seconds, whatever the reason.
+   */
+  const reveals = gsap.utils.toArray('[data-gsap="reveal"]');
 
-    // Anything already on screen at load (hero copy, short pages, tall
-    // viewports) must animate straight away — a ScrollTrigger whose start
-    // line sits above it would never fire, leaving the content invisible
-    // until the reader scrolls.
-    if (el.getBoundingClientRect().top < window.innerHeight) {
-      gsap.from(el, { ...tween, delay: 0.1 });
-      return;
-    }
+  reveals.forEach((el) => {
+    const onScreen = el.getBoundingClientRect().top < window.innerHeight;
 
-    gsap.from(el, {
-      ...tween,
-      scrollTrigger: { trigger: el, start: 'top 82%', once: true },
-    });
+    gsap.fromTo(
+      el,
+      { opacity: 0, y: 48 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: 'power3.out',
+        immediateRender: false,
+        // Anything already on screen at load animates straight away rather
+        // than waiting for a start line the reader has already passed.
+        ...(onScreen
+          ? { delay: 0.1 }
+          : { scrollTrigger: { trigger: el, start: 'top 90%', once: true } }),
+      },
+    );
   });
+
+  // Whatever happened above, nothing stays transparent. Cheap, and it is the
+  // difference between a decorative failure and a content failure.
+  window.setTimeout(() => {
+    reveals.forEach((el) => {
+      if (parseFloat(window.getComputedStyle(el).opacity) < 0.99) {
+        gsap.set(el, { opacity: 1, y: 0 });
+      }
+    });
+  }, 4000);
 
   gsap.utils.toArray('[data-gsap="parallax"]').forEach((el) => {
     const speed = parseFloat(el.dataset.speed || '0.2');
