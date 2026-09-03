@@ -51,9 +51,16 @@
 
     <?= $this->include('Modules\Core\Views\partials\footer', ['pageDark' => $pageDark ?? false]) ?>
 
-    <?php // Site-wide rather than per-page: a chat button that exists only where
-          // somebody remembered to include it is one a visitor cannot rely on.
-          // It renders nothing when no WhatsApp number is set. ?>
+    <?php // Both site-wide. A chat button that exists only where somebody
+          // remembered to include it is one a visitor cannot rely on, and the
+          // booking dialog is now opened from calls to action on several pages,
+          // not just the home hero.
+          //
+          // After the footer on purpose: a fixed overlay inside a transformed
+          // ancestor is positioned against that ancestor rather than the
+          // viewport, and the home page's panel column is transformed. Out here
+          // it cannot be trapped in a panel. ?>
+    <?= $this->include('Modules\Core\Views\partials\booking_modal') ?>
     <?= $this->include('Modules\Core\Views\partials\whatsapp_widget') ?>
     <?= $this->renderSection('scripts') ?>
 </body>

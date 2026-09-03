@@ -134,6 +134,7 @@ class CorporateContentSeeder extends Seeder
                 'title'  => $this->loc('Reserve your room at Giants Forest'),
                 'text'   => $this->loc('Tell us your dates and we will confirm availability by phone or email.'),
                 'button' => $this->loc('Book Now'),
+                'modal'  => 'booking',
                 'url'    => 'contact',
             ]],
         ]];
@@ -491,6 +492,7 @@ class CorporateContentSeeder extends Seeder
                         'text'    => $this->loc('Stay close to nature and experience the rainforest, waterfalls, and peaceful surroundings of Kalawana.'),
                         'button'  => $this->loc('Book Your Stay'),
                         'url'     => 'accommodation',
+                        'modal'   => 'booking',
                         'button2' => $this->loc('Contact Us'),
                         'url2'    => 'contact',
                         'image'   => '/media/giantforests/Sinharaja-Tracking-1.jpg',

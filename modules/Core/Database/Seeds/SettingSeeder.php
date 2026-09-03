@@ -19,7 +19,7 @@ class SettingSeeder extends Seeder
             // ones could not be read off it. Left blank rather than guessed:
             // the footer and contact page render an address only when set, so
             // a wrong one cannot be published by accident.
-            ['contact', 'email', '', 'string', 1],
+            ['contact', 'email', 'giantsforest.kukuleganga@gmail.com', 'string', 1],
             ['contact', 'phone', '+94 76 573 5600', 'string', 1],
             ['contact', 'phone_alt', '+94 76 758 4908', 'string', 1],
             ['contact', 'whatsapp', '+94765735600', 'string', 1],

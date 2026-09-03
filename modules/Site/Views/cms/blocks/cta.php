@@ -22,7 +22,18 @@
             $ctaUrl = (string) ($content['url'] ?? '');
             $href   = ($ctaUrl !== '' && ($ctaUrl[0] === '/' || str_starts_with($ctaUrl, 'http'))) ? $ctaUrl : locale_url($ctaUrl); ?>
             <div class="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
-                <a href="<?= esc($href) ?>" <?= str_ends_with($href, '.pdf') ? 'target="_blank" rel="noopener"' : '' ?> class="btn-brand"><?= esc(t_field($content['button'])) ?></a>
+                <?php // A booking button opens the dialog rather than navigating, when the
+                      // block asks for it. It stays a real link to the same destination, so
+                      // without JavaScript it still goes somewhere useful. ?>
+                <a href="<?= esc($href) ?>"
+                   <?php // $dispatch resolves through an Alpine component, and a CMS page has
+                      // no x-data anywhere near this button — so the directive was
+                      // parsed, bound to nothing, and the link simply navigated.
+                      // An empty x-data makes the anchor its own root, which costs
+                      // nothing and works wherever the block is placed. ?>
+                   <?= ($content['modal'] ?? '') === 'booking' ? 'x-data @click.prevent="$dispatch(\'booking-open\')"' : '' ?>
+                   <?= str_ends_with($href, '.pdf') ? 'target="_blank" rel="noopener"' : '' ?>
+                   class="btn-brand"><?= esc(t_field($content['button'])) ?></a>
                 <?php // An optional second, quieter action beside the first. Blocks
                       // that seed only one button render exactly as before. ?>
                 <?php if (! empty($content['button2'])):

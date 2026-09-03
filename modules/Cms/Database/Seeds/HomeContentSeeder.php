@@ -221,6 +221,7 @@ class HomeContentSeeder extends Seeder
             'text'   => ['en' => 'Send us your dates and we will confirm availability. Nothing is charged on this site.'],
             'button' => ['en' => 'Book Now'],
             'url'    => 'contact',
+            'modal'  => 'booking',
             // Rainforest at dawn, with the mist drifting across it. The band was
             // a flat gradient, which on a hotel at the edge of a rainforest was
             // the one place on the page saying nothing about where it is.
