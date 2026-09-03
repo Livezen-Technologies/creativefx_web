@@ -49,7 +49,7 @@ $icon = $compact ? 'h-[18px] w-[18px]' : 'h-5 w-5';
     <?php foreach ($accounts as $a): ?>
         <li>
             <a href="<?= esc($a['url'], 'attr') ?>" target="_blank" rel="noopener noreferrer"
-               aria-label="<?= esc('Magic Corn on ' . $a['label'], 'attr') ?>"
+               aria-label="<?= esc(trim(setting('site_name', '') . ' on ' . $a['label'], ' '), 'attr') ?>"
                title="<?= esc($a['label'], 'attr') ?>"
                class="inline-flex <?= $size ?> items-center justify-center rounded-lg text-white/70 transition hover:bg-white/10 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/60">
                 <svg class="<?= $icon ?>" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">

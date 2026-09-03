@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Norlanka Admin — Sign in</title>
+    <title><?= esc(setting('site_name', '')) ?> Admin — Sign in</title>
     <?= vite_tags('resources/js/app.js') ?>
 </head>
 <body class="on-dark flex min-h-screen items-center justify-center bg-brand-black font-sans text-white antialiased">

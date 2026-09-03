@@ -25,7 +25,7 @@ class Careers extends BaseController
 
         return view('Modules\Careers\Views\job', [
             'job'             => $job,
-            'title'           => t_field(json_decode($job['title'] ?? '[]', true) ?: []) . ' — Norlanka Careers',
+            'title'           => t_field(json_decode($job['title'] ?? '[]', true) ?: []) . ' — ' . setting('site_name', ''),
             'metaDescription' => lang('Site.careers.meta'),
         ]);
     }

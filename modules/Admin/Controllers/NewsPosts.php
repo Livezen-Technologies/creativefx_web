@@ -27,7 +27,7 @@ class NewsPosts extends BaseCrudController
         ['name' => 'body', 'label' => 'Body', 'type' => 'locale_richtext', 'help' => 'Full rich-text: headings, lists, links — drop or paste images straight into the editor'],
         ['name' => 'image', 'label' => 'Featured image', 'type' => 'image', 'folder' => 'news', 'help' => 'Shown on article cards and at the top of the story'],
         ['name' => 'tags', 'label' => 'Tags', 'help' => 'Comma-separated, e.g. Solar,Climate,Trincomalee'],
-        ['name' => 'author', 'label' => 'Author', 'help' => 'e.g. Norlanka Communications'],
+        ['name' => 'author', 'label' => 'Author', 'help' => 'e.g. the name of whoever wrote it'],
         ['name' => 'meta_title', 'label' => 'SEO meta title', 'type' => 'locale', 'help' => 'Overrides the browser-tab / search-result title'],
         ['name' => 'meta_description', 'label' => 'Meta description', 'type' => 'locale'],
         ['name' => 'status', 'label' => 'Status', 'type' => 'select', 'options' => ['draft' => 'Draft', 'published' => 'Published', 'archived' => 'Archived']],

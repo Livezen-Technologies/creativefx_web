@@ -57,7 +57,10 @@
     </div>
     <div class="border-t border-white/10">
         <div class="container-x flex flex-col items-center justify-between gap-2 py-6 text-xs text-white/40 sm:flex-row">
-            <p>&copy; <?= date('Y') ?> Magic Corn. <?= esc(lang('Site.footer.rights')) ?></p>
+            <?php // The brand was hard-coded here, which is why it survived every
+                  // settings and translation fix: it was in neither. It follows
+                  // site_name now, like the loading screen and the logo. ?>
+            <p>&copy; <?= date('Y') ?> <?= esc(setting('site_name', '')) ?>. <?= esc(lang('Site.footer.rights')) ?></p>
             <p><?= esc(lang('Site.footer.built')) ?></p>
         </div>
     </div>

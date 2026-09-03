@@ -71,7 +71,7 @@ $jobTitle = t_field(json_decode($row['job_title'] ?? '[]', true) ?: []);
             <textarea name="notes" rows="6" class="mt-2 w-full rounded-lg border border-white/15 bg-black/40 px-3 py-2 text-sm focus:border-brand-red focus:outline-none" placeholder="Interview notes, next steps…"><?= esc($row['notes'] ?? '') ?></textarea>
 
             <button type="submit" class="mt-5 w-full rounded-lg bg-brand-red px-5 py-2.5 text-xs font-semibold uppercase tracking-widest text-white hover:bg-brand-red-dark">Save</button>
-            <a href="mailto:<?= esc($row['email'], 'attr') ?>?subject=<?= rawurlencode('Your application — ' . $jobTitle . ' at Norlanka') ?>"
+            <a href="mailto:<?= esc($row['email'], 'attr') ?>?subject=<?= rawurlencode('Your application — ' . $jobTitle . ' at ' . setting('site_name', '')) ?>"
                class="mt-3 block rounded-lg border border-white/15 px-5 py-2.5 text-center text-xs font-semibold uppercase tracking-widest hover:border-white">Email candidate</a>
         </form>
     </div>
