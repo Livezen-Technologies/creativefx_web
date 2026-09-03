@@ -56,6 +56,48 @@ $many    = count($slides) > 1;
         </div>
     <?php endif; ?>
 
+    <?php if ($slides === []): ?>
+        <?php // No photographs yet, so the panel draws its own.
+              //
+              // The first version of this state was a flat green rectangle with
+              // the emblem at 6% — and the first person to look at it reported
+              // the hero image as broken, which is exactly what a large empty
+              // coloured box says. It reads as a failure, not as a decision.
+              //
+              // This is a stylised tea hillside: terrace contours in tones of
+              // the Authority's own green, with the light coming from where the
+              // notices card sits. Drawn rather than fetched, so it costs no
+              // request, scales to any screen and re-colours with the panel. It
+              // is decoration — aria-hidden, and the moment a real photograph
+              // is added to the `hero` folder it is replaced by one. ?>
+        <svg class="hero-terraces" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice"
+             aria-hidden="true" focusable="false">
+            <defs>
+                <linearGradient id="hero-sky" x1="0" y1="0" x2="0.35" y2="1">
+                    <stop offset="0%" stop-color="#12452F"/>
+                    <stop offset="100%" stop-color="#0A2E20"/>
+                </linearGradient>
+                <radialGradient id="hero-sun" cx="0.78" cy="0.16" r="0.55">
+                    <stop offset="0%" stop-color="#6AC898" stop-opacity="0.34"/>
+                    <stop offset="100%" stop-color="#6AC898" stop-opacity="0"/>
+                </radialGradient>
+            </defs>
+
+            <rect width="1600" height="900" fill="url(#hero-sky)"/>
+            <rect width="1600" height="900" fill="url(#hero-sun)"/>
+
+            <?php // Each band is one terrace, further away the higher it sits,
+                  // so they lighten and flatten towards the top the way a
+                  // hillside does. ?>
+            <path d="M0 300 C 300 250, 620 286, 900 262 S 1380 214, 1600 246 L1600 900 L0 900 Z" fill="#14563A" opacity="0.55"/>
+            <path d="M0 386 C 260 344, 560 392, 880 366 S 1340 316, 1600 352 L1600 900 L0 900 Z" fill="#125034" opacity="0.7"/>
+            <path d="M0 474 C 300 430, 640 486, 940 458 S 1370 408, 1600 444 L1600 900 L0 900 Z" fill="#104830" opacity="0.8"/>
+            <path d="M0 570 C 280 522, 600 582, 920 552 S 1360 500, 1600 538 L1600 900 L0 900 Z" fill="#0E402A" opacity="0.85"/>
+            <path d="M0 672 C 320 622, 660 686, 980 654 S 1380 600, 1600 640 L1600 900 L0 900 Z" fill="#0C3624" opacity="0.9"/>
+            <path d="M0 782 C 260 736, 620 796, 960 766 S 1370 712, 1600 752 L1600 900 L0 900 Z" fill="#0A2E20"/>
+        </svg>
+    <?php endif; ?>
+
     <div class="hero-veil" aria-hidden="true"></div>
 
     <div class="container-x hero-grid">
