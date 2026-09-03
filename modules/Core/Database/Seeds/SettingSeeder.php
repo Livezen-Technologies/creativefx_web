@@ -25,7 +25,9 @@ class SettingSeeder extends Seeder
             ['contact', 'whatsapp', '+94765735600', 'string', 1],
             ['contact', 'address', 'Dam Site, Project Road, Kukuleganga, Kalawana 70450, Sri Lanka', 'string', 1],
             ['social', 'facebook', 'https://www.facebook.com/giantsforestkukuleganga/', 'string', 1],
-            ['social', 'instagram', '', 'string', 1],
+            ['social', 'instagram', 'https://www.instagram.com/giants_forest/', 'string', 1],
+            ['social', 'x', 'https://x.com/kukuleganga', 'string', 1],
+            ['social', 'tiktok', 'https://www.tiktok.com/@giantsforest_kukuleganga', 'string', 1],
             // The rating badge in the hero. Both numbers go stale on their own —
             // the count climbs whenever a guest writes something and the score
             // moves with it — so they are settings an editor can correct in the
