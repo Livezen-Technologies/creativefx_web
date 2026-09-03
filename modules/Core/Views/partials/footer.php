@@ -45,8 +45,15 @@
                   // manufacturer's pages, so every link 404'd and every label
                   // rendered as the language key it could not resolve. ?>
             <ul class="mt-4 space-y-2 text-sm text-white/70">
-                <?php foreach (site_nav() as $slug => $label): ?>
-                    <li><a href="<?= esc(locale_url($slug)) ?>" class="hover:text-white"><?= esc($label) ?></a></li>
+                <?php // The footer has its own menu now, so it can be shorter
+                      // than the header's — or longer, carrying the pages that
+                      // do not earn a place in the bar. Children are listed flat
+                      // beneath their parent; a footer column is already a list. ?>
+                <?php foreach (site_nav('footer') as $item): ?>
+                    <li><a href="<?= esc($item['url'], 'attr') ?>"<?= $item['target'] === '_blank' ? ' target="_blank" rel="noopener noreferrer"' : '' ?> class="hover:text-white"><?= esc($item['label']) ?></a></li>
+                    <?php foreach ($item['children'] as $child): ?>
+                        <li class="pl-3"><a href="<?= esc($child['url'], 'attr') ?>"<?= $child['target'] === '_blank' ? ' target="_blank" rel="noopener noreferrer"' : '' ?> class="text-white/55 hover:text-white"><?= esc($child['label']) ?></a></li>
+                    <?php endforeach; ?>
                 <?php endforeach; ?>
             </ul>
         </div>

@@ -33,6 +33,10 @@ class DatabaseSeeder extends Seeder
         // Impact, Careers, Contact, Showroom).
         $this->call('Modules\Cms\Database\Seeds\CorporateContentSeeder');
 
+        // Header and footer navigation. Seeds each menu only while it is empty,
+        // so reordering and renaming in the console is not undone by a release.
+        $this->call('Modules\Cms\Database\Seeds\MenuSeeder');
+
         // Import UI chrome strings into the translations table (editable in the
         // Translation Manager).
         $this->call('Modules\Translation\Database\Seeds\TranslationSeeder');

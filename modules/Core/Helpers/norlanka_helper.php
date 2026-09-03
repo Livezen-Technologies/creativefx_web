@@ -284,31 +284,125 @@ if (! function_exists('is_cutout_image')) {
     }
 }
 
+if (! defined('DEFAULT_NAV')) {
+    /**
+     * The menu the site falls back to when the database cannot answer.
+     *
+     * Not a second copy of the seeded rows so much as the floor beneath them: a
+     * failed query, a checkout before migrations have run, or a database that is
+     * briefly unreachable should cost a visitor a stale menu, not a header with
+     * nothing in it. It was two copies once — the header carried the hotel's
+     * pages while the footer carried the manufacturer's, so the footer rendered
+     * five links reading "Site.nav.about" and pointing at 404s — and that is
+     * exactly what this constant exists to stop happening again.
+     */
+    define('DEFAULT_NAV', [
+        ['url' => 'accommodation', 'label' => 'Site.nav.accommodation'],
+        ['url' => 'dining',        'label' => 'Site.nav.dining'],
+        ['url' => 'things-to-do',  'label' => 'Site.nav.things_to_do'],
+        ['url' => 'kalawana',      'label' => 'Site.nav.kalawana'],
+        ['url' => 'gallery',       'label' => 'Site.nav.gallery'],
+        ['url' => 'contact',       'label' => 'Site.nav.contact'],
+    ]);
+}
+
+if (! function_exists('menu_link')) {
+    /**
+     * Turn a stored menu URL into one a browser can follow.
+     *
+     * An editor types "contact", not "/en/contact", and should not have to know
+     * the site is localized. Anything that already names a scheme, or starts at
+     * the site root, or is an in-page anchor, is left exactly as written — that
+     * is how a booking engine on another domain, or a link straight to a PDF,
+     * gets through unmangled.
+     */
+    function menu_link(?string $url): string
+    {
+        $url = trim((string) $url);
+
+        if ($url === '') {
+            return locale_url('');
+        }
+        if (preg_match('~^([a-z][a-z0-9+.-]*:|//|/|#)~i', $url) === 1) {
+            return $url;
+        }
+
+        return locale_url($url);
+    }
+}
+
+if (! function_exists('menu_label')) {
+    /**
+     * A menu item's text.
+     *
+     * Seeded items store a language key rather than a word, so an item nobody
+     * has renamed still follows the translation files and still switches with
+     * the locale. Once an editor types their own label it is a plain string and
+     * is shown as typed — lang() returns its argument unchanged when it cannot
+     * resolve it, so both cases run through the same call safely.
+     */
+    function menu_label(array $item): string
+    {
+        $label = $item['label'] ?? '';
+
+        if (is_string($label)) {
+            $decoded = json_decode($label, true);
+            $label   = json_last_error() === JSON_ERROR_NONE ? $decoded : $label;
+        }
+
+        $text = is_array($label) ? t_field($label) : (string) $label;
+        $text = trim($text);
+
+        return $text === '' ? '' : lang($text);
+    }
+}
+
 if (! function_exists('site_nav')) {
     /**
-     * The site's primary pages, slug => label.
+     * One navigation menu, ready to render.
      *
-     * One list, because there were two. The header carried the hotel's pages
-     * while the footer carried the manufacturer's — about-us, our-business,
-     * products, our-locations — none of which this site routes, and whose
-     * labels named language keys that no longer exist. lang() returns the key
-     * when it cannot resolve one, so the footer rendered five links reading
-     * "Site.nav.about", "Site.nav.business" and so on, pointing at 404s.
+     * Reads the menu_items table so labels, order, nesting and visibility are
+     * editable in the console. Falls back to DEFAULT_NAV if the table is empty
+     * or unreachable, and caches per location because the header and the footer
+     * both ask for one on every request.
      *
-     * Two copies of a list drift the moment one is edited. This one cannot.
-     *
-     * @return array<string, string>
+     * @return list<array{label:string,url:string,slug:string,target:string,children:list<array>}>
      */
-    function site_nav(): array
+    function site_nav(string $location = 'header'): array
     {
-        return [
-            'accommodation' => lang('Site.nav.accommodation'),
-            'dining'        => lang('Site.nav.dining'),
-            'things-to-do'  => lang('Site.nav.things_to_do'),
-            'kalawana'      => lang('Site.nav.kalawana'),
-            'gallery'       => lang('Site.nav.gallery'),
-            'contact'       => lang('Site.nav.contact'),
-        ];
+        static $cache = [];
+
+        if (isset($cache[$location])) {
+            return $cache[$location];
+        }
+
+        $items = [];
+
+        try {
+            $items = model('Modules\Cms\Models\MenuItemModel')->tree($location);
+        } catch (\Throwable $e) {
+            $items = [];
+        }
+
+        if ($items === []) {
+            $items = array_map(static fn (array $i): array => $i + ['children' => []], DEFAULT_NAV);
+        }
+
+        $shape = static function (array $item) use (&$shape): array {
+            return [
+                'label'    => menu_label($item),
+                'url'      => menu_link($item['url'] ?? ''),
+                // The raw slug, for the active-state comparison the header does.
+                'slug'     => trim((string) ($item['url'] ?? '')),
+                'target'   => ($item['target'] ?? '_self') === '_blank' ? '_blank' : '_self',
+                'children' => array_map($shape, $item['children'] ?? []),
+            ];
+        };
+
+        return $cache[$location] = array_values(array_filter(
+            array_map($shape, $items),
+            static fn (array $i): bool => $i['label'] !== '',
+        ));
     }
 }
 

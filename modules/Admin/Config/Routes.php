@@ -17,6 +17,7 @@ $routes->group('admin', ['namespace' => 'Modules\Admin\Controllers'], static fun
         // Generic CRUD resources: segment => controller.
         $resources = [
             'pages'       => 'Pages',
+            'menu-items'  => 'MenuItems',
             'categories'  => 'Categories',
             'products'    => 'Products',
             'esg-metrics' => 'EsgMetrics',

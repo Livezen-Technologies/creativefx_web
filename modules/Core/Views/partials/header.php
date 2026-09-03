@@ -3,8 +3,22 @@
 $parts = explode('/', trim(uri_string(), '/'));
 $currentSlug = $parts[1] ?? '';
 
-$nav = site_nav();
+$nav = site_nav('header');
 
+// An item is current if it is the page, or if the open page sits inside its
+// dropdown — otherwise a parent goes dim the moment one of its children is
+// opened, which reads as having navigated away from it.
+$isCurrent = static function (array $item) use ($currentSlug): bool {
+    if ($item['slug'] === $currentSlug) {
+        return true;
+    }
+    foreach ($item['children'] as $child) {
+        if ($child['slug'] === $currentSlug) {
+            return true;
+        }
+    }
+    return false;
+};
 ?>
 <header
     x-data="siteHeader()"
@@ -46,9 +60,53 @@ $nav = site_nav();
 
         <!-- Desktop nav -->
         <nav class="hidden items-center justify-center gap-4 lg:flex xl:gap-6 2xl:gap-7" aria-label="Primary">
-            <?php foreach ($nav as $slug => $label):
-                $active = $slug === $currentSlug; ?>
-                <a href="<?= esc(locale_url($slug)) ?>" class="nav-link <?= $active ? 'nav-link-active' : '' ?>"><?= esc($label) ?></a>
+            <?php foreach ($nav as $item):
+                $active = $isCurrent($item); ?>
+
+                <?php if ($item['children'] === []): ?>
+                    <a href="<?= esc($item['url'], 'attr') ?>"<?= $item['target'] === '_blank' ? ' target="_blank" rel="noopener noreferrer"' : '' ?>
+                       class="nav-link <?= $active ? 'nav-link-active' : '' ?>"><?= esc($item['label']) ?></a>
+                <?php else: ?>
+                    <?php // A dropdown opens on hover for a mouse and on click,
+                          // Enter or Space for everything else — hover alone is
+                          // unreachable by keyboard, and click alone feels broken
+                          // with a pointer. Escape closes it and puts focus back
+                          // on the trigger.
+                          //
+                          // focusin belongs on the panel, not on this wrapper.
+                          // On the wrapper it fired when the trigger itself
+                          // received focus, so tabbing to the button opened the
+                          // menu and the Enter that should have opened it closed
+                          // it again — the one route a keyboard user has. Here
+                          // it only keeps an already-open panel open while focus
+                          // moves through its links. ?>
+                    <div class="relative" x-data="{ open: false }"
+                         @mouseenter="open = true" @mouseleave="open = false"
+                         @focusout="if (! $el.contains($event.relatedTarget)) open = false"
+                         @keydown.escape.stop="open = false; $refs.trigger.focus()">
+                        <button type="button" x-ref="trigger" @click="open = ! open" @keydown.space.prevent="open = ! open"
+                                :aria-expanded="open ? 'true' : 'false'" aria-haspopup="true"
+                                class="nav-link inline-flex items-center gap-1.5 <?= $active ? 'nav-link-active' : '' ?>">
+                            <?= esc($item['label']) ?>
+                            <svg class="h-3 w-3 transition-transform" :class="open && 'rotate-180'" viewBox="0 0 24 24"
+                                 fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </button>
+                        <div x-show="open" x-cloak x-transition.opacity.duration.150ms
+                             @focusin="open = true"
+                             class="absolute left-1/2 top-full z-50 min-w-[13rem] -translate-x-1/2 pt-3">
+                            <ul class="overflow-hidden rounded-xl border border-white/10 bg-brand-black/95 py-2 shadow-2xl backdrop-blur-xl">
+                                <?php foreach ($item['children'] as $child): ?>
+                                    <li>
+                                        <a href="<?= esc($child['url'], 'attr') ?>"<?= $child['target'] === '_blank' ? ' target="_blank" rel="noopener noreferrer"' : '' ?>
+                                           class="block px-4 py-2.5 text-sm text-white/80 transition hover:bg-white/10 hover:text-white <?= $child['slug'] === $currentSlug ? 'text-white' : '' ?>">
+                                            <?= esc($child['label']) ?>
+                                        </a>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </div>
+                    </div>
+                <?php endif; ?>
             <?php endforeach; ?>
         </nav>
 
@@ -98,13 +156,23 @@ $nav = site_nav();
          class="fixed inset-0 z-40 bg-brand-black/98 backdrop-blur-xl lg:hidden"
          @click.self="mobile=false">
         <nav class="container-x flex flex-col gap-1 py-8" aria-label="Mobile">
-            <?php foreach ($nav as $slug => $label):
-                $active = $slug === $currentSlug; ?>
-                <a href="<?= esc(locale_url($slug)) ?>" @click="mobile=false"
+            <?php // No disclosure widgets on the phone: a dropdown's children are
+                  // listed under their parent, indented. One tap reaches every
+                  // page instead of two, and there is no state to get stuck. ?>
+            <?php foreach ($nav as $item):
+                $active = $isCurrent($item); ?>
+                <a href="<?= esc($item['url'], 'attr') ?>" @click="mobile=false"<?= $item['target'] === '_blank' ? ' target="_blank" rel="noopener noreferrer"' : '' ?>
                    class="flex items-center justify-between border-b border-white/5 py-4 text-lg font-medium <?= $active ? 'text-brand-red' : 'text-white/85' ?>">
-                    <?= esc($label) ?>
+                    <?= esc($item['label']) ?>
                     <svg class="h-4 w-4 text-white/30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </a>
+                <?php foreach ($item['children'] as $child): ?>
+                    <a href="<?= esc($child['url'], 'attr') ?>" @click="mobile=false"<?= $child['target'] === '_blank' ? ' target="_blank" rel="noopener noreferrer"' : '' ?>
+                       class="flex items-center justify-between border-b border-white/5 py-3 pl-5 text-base <?= $child['slug'] === $currentSlug ? 'text-brand-red' : 'text-white/70' ?>">
+                        <?= esc($child['label']) ?>
+                        <svg class="h-3.5 w-3.5 text-white/25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </a>
+                <?php endforeach; ?>
             <?php endforeach; ?>
 
             <!-- The header's icon row is hidden at this width, so the accounts

@@ -1,5 +1,5 @@
 <?php
-helper('url');
+helper(['url', 'norlanka']);
 $user   = session()->get('admin_user') ?? [];
 $active = $active ?? '';
 
@@ -20,6 +20,7 @@ $icons = [
     'image'     => 'M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2ZM9 10a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm12 5-3.5-3.5a2 2 0 0 0-3 0L6 21',
     'inbox'     => 'M22 12h-6l-2 3h-4l-2-3H2m3.5-7 -3.5 7v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.5-7a2 2 0 0 0-1.8-1H7.3a2 2 0 0 0-1.8 1Z',
     'target'    => 'M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20Zm0-6a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm0-3a1 1 0 1 0 0-2',
+    'menu'      => 'M4 6h16M4 12h16M4 18h10',
     'settings'  => 'M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm7.4-3a7.4 7.4 0 0 0-.1-1l2-1.6-2-3.4-2.4 1a7.5 7.5 0 0 0-1.7-1L14.8 3h-4l-.4 2.6a7.5 7.5 0 0 0-1.7 1l-2.4-1-2 3.4 2 1.6a7.4 7.4 0 0 0 0 2l-2 1.6 2 3.4 2.4-1a7.5 7.5 0 0 0 1.7 1l.4 2.4h4l.4-2.6a7.5 7.5 0 0 0 1.7-1l2.4 1 2-3.4-2-1.6c.07-.3.1-.7.1-1Z',
 ];
 
@@ -29,6 +30,7 @@ $groups = [
     ]],
     ['Content', [
         ['pages', 'Pages', 'admin/pages', 'file'],
+        ['menu-items', 'Navigation menus', 'admin/menu-items', 'menu'],
         ['news-posts', 'News Posts', 'admin/news-posts', 'news'],
         ['news-categories', 'News Categories', 'admin/news-categories', 'tag'],
         ['videos', 'Launch Video', 'admin/videos', 'video'],
@@ -90,7 +92,9 @@ if (localStorage.getItem('admin-theme') === 'light') { document.body.classList.r
     <!-- Sidebar (desktop) -->
     <aside class="hidden w-64 flex-none border-r border-white/10 bg-brand-black lg:flex lg:flex-col">
         <div class="flex h-16 flex-none items-center border-b border-white/10 px-6">
-            <a href="<?= site_url('admin') ?>" class="text-lg font-bold tracking-widest">NOR<span class="text-brand-red">LANKA</span></a>
+            <a href="<?= site_url('admin') ?>" aria-label="<?= esc(setting('site_name', ''), 'attr') ?> admin">
+                <?= view('Modules\\Core\\Views\\partials\\logo', ['class' => 'h-9 w-auto'], ['saveData' => false]) ?>
+            </a>
             <span class="ml-2 rounded bg-white/10 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-widest text-white/50">Admin</span>
         </div>
         <nav class="flex-1 overflow-y-auto px-3 py-4"><?php $renderNav(); ?></nav>
@@ -112,7 +116,9 @@ if (localStorage.getItem('admin-theme') === 'light') { document.body.classList.r
         <div class="absolute inset-0 bg-black/70" @click="open = false"></div>
         <aside class="absolute inset-y-0 left-0 flex w-72 flex-col border-r border-white/10 bg-brand-black">
             <div class="flex h-16 flex-none items-center justify-between border-b border-white/10 px-5">
-                <a href="<?= site_url('admin') ?>" class="text-lg font-bold tracking-widest">NOR<span class="text-brand-red">LANKA</span></a>
+                <a href="<?= site_url('admin') ?>" aria-label="<?= esc(setting('site_name', ''), 'attr') ?> admin">
+                <?= view('Modules\\Core\\Views\\partials\\logo', ['class' => 'h-9 w-auto'], ['saveData' => false]) ?>
+            </a>
                 <button @click="open = false" class="rounded-lg p-2 text-white/60 hover:bg-white/10" aria-label="Close menu">
                     <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
                 </button>

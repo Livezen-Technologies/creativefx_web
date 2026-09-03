@@ -50,11 +50,11 @@ $this->extend('Modules\Core\Views\layouts\main');
                 <?= esc(lang('Site.notfound.try')) ?>
             </p>
             <ul class="mx-auto mt-5 flex max-w-3xl flex-wrap items-center justify-center gap-x-6 gap-y-3">
-                <?php foreach (site_nav() as $slug => $label): ?>
+                <?php foreach (site_nav('header') as $item): ?>
                     <li>
-                        <a href="<?= esc(locale_url($slug)) ?>"
+                        <a href="<?= esc($item['url'], 'attr') ?>"
                            class="text-sm font-medium uppercase tracking-wider text-white/75 underline-offset-4 transition hover:text-white hover:underline">
-                            <?= esc($label) ?>
+                            <?= esc($item['label']) ?>
                         </a>
                     </li>
                 <?php endforeach; ?>
