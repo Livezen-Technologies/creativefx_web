@@ -24,6 +24,7 @@ import videoExperience from './alpine/videoExperience.js';
 import langSwitcher, { restoreLangScroll } from './alpine/langSwitcher.js';
 import siteHeader from './alpine/siteHeader.js';
 import themeToggle from './alpine/themeToggle.js';
+import assistant from './alpine/assistant.js';
 import { initScrollStory } from './gsap/scroll.js';
 import { initKineticHero } from './gsap/kinetic.js';
 import { initCarousels } from './carousels.js';
@@ -40,6 +41,7 @@ Alpine.data('videoExperience', videoExperience);
 Alpine.data('langSwitcher', langSwitcher);
 Alpine.data('siteHeader', siteHeader);
 Alpine.data('themeToggle', themeToggle);
+Alpine.data('assistant', assistant);
 
 window.Alpine = Alpine;
 Alpine.start();

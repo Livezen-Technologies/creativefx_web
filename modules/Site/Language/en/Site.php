@@ -317,6 +317,33 @@ return [
         'back_home'      => 'Back to the home page',
     ],
 
+    // The help assistant. It is not a person and the wording never suggests
+    // one: it answers out of this site's own FAQ and pages, and says so.
+    'assistant' => [
+        'launcher'   => 'Need help?',
+        'title'      => 'TSHDA Assistant',
+        'status'     => 'Automated — answers from this website',
+        'close'      => 'Close the assistant',
+        'close_short'=> 'Close',
+        'open'       => 'Open the help assistant',
+        'today'      => 'Today',
+        'greeting'   => 'Ayubowan! What are you looking for?',
+        'prompt'     => 'Choose a topic, or type your question below.',
+        'placeholder'=> 'Type your question…',
+        'send'       => 'Send',
+        'thinking'   => 'Looking…',
+        'related'    => 'These may help:',
+        'source'     => 'Read the full answer',
+        'search_all' => 'Search the whole website',
+        'none'       => 'I could not find that on this website.',
+        'none_help'  => 'Try the full search, or contact the Authority directly — a person will answer.',
+        'error'      => 'Something went wrong. Please try again.',
+        'note'       => 'Answers come from this website. For anything else, contact us.',
+        'topic_subsidy'      => 'Apply for a subsidy',
+        'topic_office'       => 'Find my regional office',
+        'topic_registration' => 'Smallholder registration',
+    ],
+
     // Controls on the home page hero slideshow. Read aloud by a screen
     // reader, so they name the action rather than the shape of the icon.
     'slider' => [

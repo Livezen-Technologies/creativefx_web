@@ -157,6 +157,12 @@ $lastUpdated = $lastUpdated ?? ($page['updated_at'] ?? null);
           // dialog and its film player went with the hotel: the Authority's
           // application flow is the Hantana booking form, which is a page. ?>
     <?= $this->include('Modules\Core\Views\partials\whatsapp_widget') ?>
+
+    <?php // The help assistant, bottom-right. It answers from this site's own
+          // FAQ and pages — no third-party chat script, and nothing a visitor
+          // types leaves the Authority's server. Off with
+          // Settings → Assistant → enabled = 0. ?>
+    <?= $this->include('Modules\Core\Views\partials\assistant') ?>
     <?= $this->renderSection('scripts') ?>
 </body>
 </html>

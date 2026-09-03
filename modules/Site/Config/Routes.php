@@ -77,6 +77,10 @@ $routes->get('(:locale)/alerts/unsubscribe/(:segment)', 'Subscribe::unsubscribe/
 // Site-wide search (Clause 3.12).
 $routes->get('(:locale)/search', 'Search::index/$1', $tshdaOptions);
 
+// The help assistant's lookup. GET because it reads and changes nothing, which
+// also means it needs no CSRF token to reach from the widget.
+$routes->get('(:locale)/assistant/ask', 'Assistant::ask/$1', $tshdaOptions);
+
 // Contact (J) and the human-readable sitemap (L).
 $routes->get('(:locale)/contact', 'Contact::index/$1', $tshdaOptions);
 $routes->get('(:locale)/sitemap', 'SitemapPage::index/$1', $tshdaOptions);

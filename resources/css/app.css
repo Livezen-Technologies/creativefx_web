@@ -1770,3 +1770,170 @@ html.fp-active body {
 @media (prefers-reduced-motion: reduce) {
   .hero-slider .swiper-slide { transition: none !important; }
 }
+
+/* ── Help assistant ───────────────────────────────────────────────────────────
+   The floating helper, bottom-right. Like the hero panel it carries its own
+   colours rather than the page scope's, so a reader in dark mode and a reader
+   in light mode see the same measured contrast:
+
+     ink #F7F5EE on the green head — 12.4:1
+     the gold avatar and send button take dark ink, not white
+     the thread is a warm near-white with the page's own foreground ink
+
+   It is a helper, not a modal: the page behind stays visible and usable, and
+   nothing here traps focus. */
+@layer components {
+  .assistant-launcher {
+    --a-green: 20 60 43;
+    --a-gold: 201 168 90;
+    --a-ink: 247 245 238;
+
+    @apply inline-flex items-center gap-3 rounded-full py-2.5 pl-2.5 pr-6 text-base font-bold
+           shadow-xl transition focus:outline-none focus-visible:ring-4;
+    background: rgb(var(--a-green));
+    color: rgb(var(--a-ink));
+    --tw-ring-color: rgb(var(--a-gold) / 0.65);
+  }
+  .assistant-launcher:hover { background: rgb(var(--a-green) / 0.9); }
+
+  .assistant-spark {
+    @apply inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full;
+    background: rgb(var(--a-gold));
+    color: rgb(20 60 43);
+  }
+  .assistant-spark svg { @apply h-5 w-5; }
+
+  .assistant-panel {
+    --a-green: 20 60 43;
+    --a-gold: 201 168 90;
+    --a-ink: 247 245 238;
+    --a-thread: 247 245 240;
+    --a-body: 24 36 30;
+
+    @apply flex w-[min(23rem,calc(100vw-2.5rem))] flex-col overflow-hidden rounded-2xl shadow-2xl;
+    /* Tall enough to hold a conversation, never taller than the screen — on a
+       small phone in landscape a fixed height would put the input off-screen,
+       which is the one part that must always be reachable. */
+    max-height: min(34rem, calc(100vh - 8rem));
+    background: rgb(var(--a-thread));
+    color: rgb(var(--a-body));
+  }
+
+  .assistant-head {
+    @apply flex items-center gap-3 px-4 py-3.5;
+    background: rgb(var(--a-green));
+    color: rgb(var(--a-ink));
+  }
+  .assistant-status {
+    @apply truncate text-xs;
+    color: rgb(var(--a-ink) / 0.72);
+  }
+  .assistant-x {
+    @apply inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition
+           focus:outline-none focus-visible:ring-2;
+    background: rgb(var(--a-ink) / 0.14);
+    color: rgb(var(--a-ink));
+    --tw-ring-color: rgb(var(--a-gold));
+  }
+  .assistant-x:hover { background: rgb(var(--a-ink) / 0.26); }
+  .assistant-x svg { @apply h-4 w-4; }
+
+  .assistant-avatar {
+    @apply inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full
+           text-lg font-bold;
+    background: rgb(var(--a-gold));
+    color: rgb(20 60 43);
+  }
+  .assistant-avatar--sm { @apply h-8 w-8 text-sm; }
+
+  .assistant-thread {
+    @apply flex-1 space-y-3 overflow-y-auto px-4 py-4 text-sm;
+    overscroll-behavior: contain;
+  }
+
+  /* "Today", with a rule running out on both sides. */
+  .assistant-day {
+    @apply flex items-center gap-3 text-center text-xs;
+    color: rgb(var(--a-body) / 0.5);
+  }
+  .assistant-day::before,
+  .assistant-day::after {
+    content: '';
+    @apply h-px flex-1;
+    background: rgb(var(--a-body) / 0.14);
+  }
+
+  .assistant-turn { @apply flex items-start gap-2.5; }
+  .assistant-turn--you { @apply justify-end; }
+
+  .assistant-bubble {
+    @apply max-w-[85%] rounded-2xl px-3.5 py-2.5 leading-relaxed;
+    background: rgb(255 255 255);
+    border: 1px solid rgb(var(--a-body) / 0.10);
+  }
+  .assistant-bubble--you {
+    background: rgb(var(--a-green));
+    color: rgb(var(--a-ink));
+    border-color: transparent;
+  }
+
+  .assistant-prompt {
+    @apply pt-1 text-sm;
+    color: rgb(var(--a-body) / 0.66);
+  }
+
+  .assistant-topics { @apply space-y-2; }
+  .assistant-links { @apply mt-2 space-y-2; }
+  .assistant-links-label {
+    @apply text-xs font-semibold;
+    color: rgb(var(--a-body) / 0.6);
+  }
+
+  .assistant-topic {
+    @apply flex w-full items-center justify-between gap-3 rounded-xl px-3.5 py-3
+           text-left text-sm font-medium transition
+           focus:outline-none focus-visible:ring-2;
+    background: rgb(255 255 255);
+    border: 1px solid rgb(var(--a-body) / 0.12);
+    color: rgb(var(--a-body));
+    --tw-ring-color: rgb(var(--a-green));
+  }
+  .assistant-topic:hover {
+    border-color: rgb(var(--a-green) / 0.45);
+    background: rgb(var(--a-green) / 0.05);
+  }
+  .assistant-topic svg { @apply h-4 w-4 shrink-0 opacity-60; }
+
+  .assistant-compose {
+    @apply flex items-center gap-2 px-3 pb-2 pt-3;
+    background: rgb(255 255 255);
+    border-top: 1px solid rgb(var(--a-body) / 0.10);
+  }
+  .assistant-input {
+    @apply w-full rounded-full px-4 py-2.5 text-sm transition
+           focus:outline-none;
+    background: rgb(255 255 255);
+    border: 1.5px solid rgb(var(--a-body) / 0.20);
+    color: rgb(var(--a-body));
+  }
+  .assistant-input:focus { border-color: rgb(var(--a-green)); }
+  .assistant-input::placeholder { color: rgb(var(--a-body) / 0.45); }
+  .assistant-input:disabled { opacity: 0.6; }
+
+  .assistant-send {
+    @apply inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition
+           focus:outline-none focus-visible:ring-2;
+    background: rgb(var(--a-gold));
+    color: rgb(20 60 43);
+    --tw-ring-color: rgb(var(--a-green));
+  }
+  .assistant-send:hover:not(:disabled) { background: rgb(var(--a-gold) / 0.88); }
+  .assistant-send:disabled { @apply cursor-not-allowed opacity-45; }
+  .assistant-send svg { @apply h-4 w-4; }
+
+  .assistant-note {
+    @apply px-4 pb-3 text-center text-[11px] leading-snug;
+    background: rgb(255 255 255);
+    color: rgb(var(--a-body) / 0.5);
+  }
+}

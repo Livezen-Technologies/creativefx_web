@@ -36,6 +36,7 @@ the way it is is usually pointing at the clause that required it.
 | 3.15 | Trilingual with in-place switching, hreflang, WCAG 2.1 AA | `alpine/langSwitcher.js`, `layouts/main.php` |
 | 3.10 | Last-updated stamp, government links in every footer | `layouts/main.php`, `partials/footer.php` |
 | 3.17 | Self-hosted traffic statistics | Analytics module, `/admin/analytics` |
+| 3.12 | Help assistant — answers from the FAQ and pages | `Controllers\Assistant`, `partials/assistant.php` |
 
 Controllers named without a namespace above are in `Modules\Tshda\Controllers`.
 
@@ -106,6 +107,11 @@ globally-ordered timestamp prefixes so cross-module references resolve.
   add any other, and its `alt` is a locale map, so the picture is described in
   all three languages. An empty folder is a supported state — the panel falls
   back to the emblem, so the site ships before the photography is signed off.
+- **The help assistant answers from this site, not from a model.** It reads the
+  published FAQ first and the site search after it, so every answer is something
+  the CMT wrote and can edit. Nothing third-party loads and no question leaves
+  the server. When it has no answer it says so and offers the contact page — it
+  never guesses, and it never claims a person is reading.
 - **`php spark migrate --all`** — module migrations only run with `--all`.
 - The locale filter alias is `applocale`, not `locale`, which collides with
   PHP's case-insensitive built-in `\Locale`.
@@ -150,6 +156,8 @@ node scripts/check-pages.mjs           # every page, 4 widths, 3 languages:
 node scripts/test-language-switch.mjs  # Clause 3.15's switching behaviour
 node scripts/test-hero-slider.mjs      # the hero slideshow: advance, pause,
                                        # focus, reduced motion, a11y
+node scripts/test-assistant.mjs        # the help assistant: focus, answers,
+                                       # the no-answer path, all three languages
 node scripts/check-hero-contrast.mjs   # hero text vs the pixels behind it
 bash scripts/check-media-paths.sh      # every /media/ reference has a file
 node scripts/screenshot.mjs <url> <out.png> [w] [h] [full]
