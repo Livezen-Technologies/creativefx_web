@@ -8,7 +8,6 @@ $lastUpdated = $lastUpdated ?? null;
 // looks exactly as it always has.
 $showNav     = setting('show_nav', '1', 'footer') !== '0';
 $showContact = setting('show_contact', '1', 'footer') !== '0';
-$showReviews = setting('show_reviews', '1', 'footer') !== '0';
 // Clause 3.10 requires persistent links to the Sri Lanka Government web portal
 // and the local languages website in the footer of every page. They are rows in
 // org_links rather than markup, so the Authority can add the ones it is asked
@@ -32,7 +31,7 @@ $accessUrl   = trim((string) setting('accessibility_url', '', 'footer'));
 
 // Columns are counted rather than assumed: with one turned off the remaining
 // three should share the row, not leave a gap where the fourth used to be.
-$columns = 1 + (int) $showNav + (int) $showContact + (int) $showGovLinks + (int) $showReviews;
+$columns = 1 + (int) $showNav + (int) $showContact + (int) $showGovLinks;
 $cols    = ['1' => 'xl:grid-cols-1', '2' => 'xl:grid-cols-2', '3' => 'xl:grid-cols-3', '4' => 'xl:grid-cols-4', '5' => 'xl:grid-cols-5'][(string) $columns];
 ?>
 <footer class="<?= ($pageDark ?? false) ? 'on-dark' : '' ?> border-t border-white/10 bg-brand-black">
@@ -143,18 +142,6 @@ $cols    = ['1' => 'xl:grid-cols-1', '2' => 'xl:grid-cols-2', '3' => 'xl:grid-co
         </div>
         <?php endif; ?>
 
-        <?php if ($showReviews): ?>
-        <?php // The ratings, where somebody who has read to the bottom of the
-              // page is deciding whether to trust it. Same partial as the hero,
-              // stacked and a size down to fit a footer column; it renders
-              // nothing at all when neither network is configured. ?>
-        <div>
-            <h4 class="text-xs font-semibold uppercase tracking-widest text-white/50"><?= esc(lang('Site.reviews.footer_heading')) ?></h4>
-            <div class="mt-4">
-                <?= view('Modules\\Core\\Views\\partials\\review_badges', ['layout' => 'stack', 'size' => 'sm'], ['saveData' => false]) ?>
-            </div>
-        </div>
-        <?php endif; ?>
     </div>
     <div class="border-t border-white/10">
         <div class="container-x flex flex-col items-center justify-between gap-2 py-6 text-xs text-white/40 sm:flex-row">

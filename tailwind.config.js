@@ -18,9 +18,10 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Norlanka brand palette. The accent is driven by CSS variables so a
-        // page scope (e.g. .theme-esg-green on Our Impact) can recolour every
-        // brand-red utility without touching templates.
+        // The Authority's palette, driven by CSS variables so a page scope
+        // (e.g. .theme-notice on the priority-notice band) can recolour every
+        // brand utility without touching a template. The names are historical —
+        // `brand-red` is the accent, whatever colour the accent currently is.
         brand: {
           DEFAULT: 'rgb(var(--accent) / <alpha-value>)',
           red: 'rgb(var(--accent) / <alpha-value>)',

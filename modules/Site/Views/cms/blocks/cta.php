@@ -1,14 +1,6 @@
 <?php helper(['norlanka', 'url']); ?>
-<?php // A jungle photograph with mist drifting over it when the block seeds
-      // one; the gradient aurora otherwise, so pages that seed no image are
-      // unchanged. ?>
-<?php $mist = (string) ($content['image'] ?? ''); $hasMist = $mist !== '' && is_file(FCPATH . ltrim($mist, '/')); ?>
-<section class="relative overflow-hidden py-24 <?= $hasMist ? 'mist-scene' : '' ?>">
-    <?php if ($hasMist): ?>
-        <?= view('Modules\\Core\\Views\\partials\\mist_scene', ['image' => $mist, 'alt' => '']) ?>
-    <?php else: ?>
-        <div class="hero-aurora absolute inset-0 -z-10 opacity-70"></div>
-    <?php endif; ?>
+<section class="relative overflow-hidden py-24">
+    <div class="hero-aurora absolute inset-0 -z-10 opacity-70"></div>
     <div class="container-x text-center" data-gsap="reveal">
         <?php if (! empty($content['title'])): ?>
             <h2 class="text-3xl font-bold sm:text-4xl"><?= esc(t_field($content['title'])) ?></h2>

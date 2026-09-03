@@ -50,7 +50,7 @@ $lastUpdated = $lastUpdated ?? ($page['updated_at'] ?? null);
     $ogTitle = $ogTitle ?: ($title ?: setting('site_name', ''));
     $ogDesc  = $ogDescription ?: ($metaDescription ?: setting('tagline', ''));
     $ogImg   = ! empty($ogImage) ? $ogImage
-        : ((string) setting('og_default', '', 'brand') ?: '/media/giantforests/Welcome-to-Giants-Forest-1-1.jpg'); ?>
+        : ((string) setting('og_default', '', 'brand') ?: '/favicon-512.png'); ?>
     <?php // One switch turns the whole site away from search engines, for while
           // it is being prepared. It is deliberately a site-wide setting rather
           // than a per-page one, because the mistake it prevents — launching
@@ -152,8 +152,10 @@ $lastUpdated = $lastUpdated ?? ($page['updated_at'] ?? null);
           // ancestor is positioned against that ancestor rather than the
           // viewport, and the home page's panel column is transformed. Out here
           // it cannot be trapped in a panel. ?>
-    <?= $this->include('Modules\Core\Views\partials\booking_modal') ?>
-    <?= $this->include('Modules\Core\Views\partials\film_modal') ?>
+    <?php // The WhatsApp button is off by default and renders nothing until a
+          // number is set under Settings → WhatsApp. The hotel's room-booking
+          // dialog and its film player went with the hotel: the Authority's
+          // application flow is the Hantana booking form, which is a page. ?>
     <?= $this->include('Modules\Core\Views\partials\whatsapp_widget') ?>
     <?= $this->renderSection('scripts') ?>
 </body>

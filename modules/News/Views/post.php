@@ -54,8 +54,6 @@ $renderBody = static function (string $text): string {
     <section class="relative overflow-hidden">
         <!-- The article's own picture runs in the body below, so the hero band
              carries the same newsroom photograph as the index. -->
-        <img src="/media/magiccorn/3.jpg" alt="" aria-hidden="true"
-             class="hero-media absolute inset-0 -z-30 h-full w-full object-cover">
         <div class="hero-wash-side--page absolute inset-0 -z-20"></div>
         <div class="hero-wash-foot--page absolute inset-0 -z-20"></div>
         <div class="hero-red-glow absolute inset-0 -z-10"></div>

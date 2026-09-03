@@ -1,80 +1,105 @@
-# Deploying Norlanka — plain Nginx + PHP-FPM
+# Deploying — plain Nginx + PHP-FPM
 
-A git-pull deployment that adds **only** the `norlankamfg.livezencloud.com`
-site. It does **not** touch other vhosts, databases, or global PHP config.
+A git-pull deployment that **adds** one site to a box and touches nothing else:
+not another vhost, not another database, not the global PHP config.
+
+This branch deploys `tshda.livezencloud.com`. The same script serves the other
+sites on the box; each passes its own `DOMAIN`, `APP_DIR` and `DB_NAME`, and the
+defaults in `setup.sh` belong to the first site it was written for.
 
 ## What it creates (and nothing else)
-- App code: `/var/www/norlankamfg` (this branch)
-- Database: `norlanka_prod` + user `norlanka_prod@localhost` (created if missing)
-- Nginx vhost: `/etc/nginx/sites-available/norlankamfg.livezencloud.com.conf` (refuses to overwrite a foreign file)
-- App secrets (`.env`, DB password, JWT secret, encryption key): generated on the server, **never** in git
+- App code: `$APP_DIR` — `/var/www/tshda` for this site
+- Database: `$DB_NAME` + user `$DB_NAME@localhost`, created if missing
+- Nginx vhost: `/etc/nginx/sites-available/$DOMAIN.conf` — refuses to overwrite
+  a file it did not write
+- App secrets (`.env`, DB password, JWT secret, encryption key): generated on
+  the server, **never** in git, and preserved across deploys
 
 ## Prerequisites on the server
-- Ubuntu/Debian with **Nginx**, **PHP-FPM 8.3+** (`intl mbstring mysqli gd curl json` extensions), **MySQL 8** running, `git`, `curl`, `openssl`.
-- Composer and Node are installed automatically if missing (Node is only used to build assets; pass `SKIP_NODE=1` to skip and build elsewhere).
-- DNS / Cloudflare already points the domain at this server (it does).
-- Git access to this repo from the server: a **deploy key** or a **personal access token** in `REPO_URL` (the repo is private).
+- Ubuntu/Debian with **Nginx**, **PHP-FPM 8.3+** (`intl mbstring mysqli gd curl
+  json`), **MySQL 8** running, plus `git`, `curl`, `openssl`.
+- Composer and Node are installed automatically if missing. Node is only used to
+  build assets — pass `SKIP_NODE=1` to skip it and build elsewhere. Nothing on
+  the running site needs a Node runtime.
+- DNS already points the domain at this server.
+- Git access to this repo from the server: a deploy key, or a personal access
+  token in `REPO_URL`.
 
-## First deploy
+## Deploy via GitHub Actions (the usual route)
+
+`.github/workflows/deploy.yml` runs `setup.sh` on the server from a GitHub
+runner, so nobody needs to SSH in. Manual trigger only — it never deploys on
+push.
+
+Actions → **Deploy** → Run workflow, and set **all four** of:
+
+| Input | This site |
+|---|---|
+| `branch` | `tshda` |
+| `domain` | `tshda.livezencloud.com` |
+| `app_dir` | `/var/www/tshda` |
+| `db_name` | `tshda_prod` |
+
+Each defaults to another site's production value, so leaving one behind points
+the new site at an existing install's directory or database. They go together.
+
+Credentials resolve as repo secret → dispatch input: set `DEPLOY_HOST`,
+`DEPLOY_USER` and `DEPLOY_SSH_KEY` (preferred) or `DEPLOY_PASSWORD` under
+Settings → Secrets and variables → Actions. A password passed as an input is
+recorded in the run — rotate it afterwards.
+
+## By hand
+
 ```bash
 # as root on the server
-REPO_URL='https://<GITHUB_TOKEN>@github.com/livezen-technologies/norlanka_web.git' \
-bash <(curl -fsSL https://raw.githubusercontent.com/livezen-technologies/norlanka_web/claude/awesome-planck-01cc95/deploy/setup.sh)
-
-# …or clone first and run locally:
-git clone --branch claude/awesome-planck-01cc95 \
-  'https://<GITHUB_TOKEN>@github.com/livezen-technologies/norlanka_web.git' /tmp/norlanka
-REPO_URL='https://<GITHUB_TOKEN>@github.com/livezen-technologies/norlanka_web.git' \
-  bash /tmp/norlanka/deploy/setup.sh
+REPO_URL='https://<GITHUB_TOKEN>@github.com/Livezen-Technologies/creativefx_web.git' \
+BRANCH=tshda DOMAIN=tshda.livezencloud.com \
+APP_DIR=/var/www/tshda DB_NAME=tshda_prod DB_USER=tshda_prod \
+bash deploy/setup.sh
 ```
-The script prints a summary and asks for confirmation before changing anything
-(set `ASSUME_YES=1` to skip the prompt). Override any default inline, e.g.
-`APP_DIR=/srv/norlanka DB_NAME=norlanka_live bash deploy/setup.sh`.
 
-After it finishes:
-- Site: `http://norlankamfg.livezencloud.com/` → redirects to `/en`
-- Admin: `/admin/login` — **admin@norlanka.local / norlanka123** (change immediately)
+The script prints what it is about to do and asks for confirmation; set
+`ASSUME_YES=1` to skip the prompt. `SKIP_SEED=1` skips the seeders.
 
-## Deploy via GitHub Actions (no SSH from your machine)
-
-If you'd rather not SSH in yourself, the workflow at
-`.github/workflows/deploy.yml` runs `setup.sh` on the server from a GitHub
-runner. One-time setup:
-
-1. Repo → **Settings → Secrets and variables → Actions → New repository secret**:
-   - `DEPLOY_HOST` = `178.105.165.144`
-   - `DEPLOY_USER` = `root`
-   - `DEPLOY_PASSWORD` = the server password  *(or `DEPLOY_SSH_KEY` = a private key — preferred)*
-2. Repo → **Actions → "Deploy (norlankamfg.livezencloud.com)" → Run workflow**.
-
-The runner copies `setup.sh` to the server and runs it (cloning this repo with the
-run's `GITHUB_TOKEN`). It's manual-trigger only and never deploys on push.
+The seeder prints the first administrator's password once, on creation. Sign in
+and change it — a build log is not a place to leave a working credential.
 
 ## TLS
-The vhost listens on :80. Choose one:
-- **Cloudflare**: install a Cloudflare *Origin Certificate* on the box and set the
-  domain's SSL mode to **Full (strict)**; or
-- **certbot**: `certbot --nginx -d norlankamfg.livezencloud.com`
 
-Then set `app.forceGlobalSecureRequests = true` in `/var/www/norlankamfg/.env`.
-The vhost already forwards Cloudflare's `X-Forwarded-Proto` so the app builds
-`https://` URLs.
+The first deploy serves plain HTTP, deliberately: naming a certificate that does
+not exist yet makes `nginx -t` fail, and it would fail *after* the database has
+been created and seeded. Then:
+
+1. Actions → **Server ops** → `setup-tls-certbot`, with the same `domain`.
+2. Re-run **Deploy**. It installs the TLS vhost and sets `app.baseURL` to
+   `https://`.
+
+The vhost forwards Cloudflare's `X-Forwarded-Proto`, so the app agrees with the
+edge about the scheme whether the zone is on Flexible or Full — a disagreement
+there is what produces an endless redirect.
 
 ## Updating later
-```bash
-bash /var/www/norlankamfg/deploy/update.sh
-```
-Pulls the branch, reinstalls deps, rebuilds assets, runs migrations, reloads php-fpm.
+
+Re-run the Deploy workflow. It pulls the branch, reinstalls dependencies,
+rebuilds assets, runs migrations and re-seeds. The seeders will not overwrite
+content the CMT has edited: pages carry an `is_custom` flag, list tables seed
+only while empty, and the rest upsert by slug and stop at a row somebody has
+touched.
 
 ## Rollback
+
 ```bash
-cd /var/www/norlankamfg && git reset --hard <previous_commit> \
+cd /var/www/tshda && git reset --hard <previous_commit> \
   && composer install --no-dev -o && npm run build \
   && sudo -u www-data php spark migrate --all
 ```
 
 ## Safety notes
-- Review `setup.sh` before running — it is intentionally conservative and aborts
-  rather than overwrite anything it didn't create.
-- Secrets are generated server-side; rotate the shared root password.
-- The DB user is granted privileges on `norlanka_prod` **only**.
+
+- Read `setup.sh` before running it. It is deliberately conservative and aborts
+  rather than overwrite anything it did not create.
+- Secrets are generated server-side and kept. Rotating `jwt.secret` invalidates
+  every issued token; rotating `encryption.key` makes everything already
+  encrypted — SMTP passwords, API secrets — permanently unreadable.
+- The database user is granted privileges on its own database only.
+- Rotate any server password that has been shared or passed as a workflow input.

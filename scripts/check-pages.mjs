@@ -77,7 +77,12 @@ for (const width of WIDTHS) {
         return {
           overflow: doc.scrollWidth - doc.clientWidth,
           invisible,
-          h1: document.querySelectorAll('h1').length,
+          // CodeIgniter's debug toolbar injects its own <h1> (the framework
+          // version) in development. It is not part of the page and is not
+          // there in production, so it does not count against the one-<h1>
+          // rule this is checking.
+          h1: [...document.querySelectorAll('h1')]
+            .filter((h) => ! h.closest('#debug-bar, #toolbar, .toolbar')).length,
           untranslated: (document.body.innerText.match(/Site\.[a-z_]+\.[a-z_0-9]+/g) || []).length,
         };
       });

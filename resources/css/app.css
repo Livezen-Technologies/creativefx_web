@@ -1,15 +1,9 @@
-/* Brand fonts (Brand Guide): K2D + Montserrat are self-hosted via @fontsource
-   (imported in resources/js/app.js). Avenir is licensed and can't be bundled —
-   prefer a locally-installed Avenir when present, else fall back to Montserrat. */
+/* Type: Noto Sans and its Sinhala and Tamil companions, self-hosted via
+   @fontsource (imported in resources/js/app.js). One family across all three
+   scripts, so nothing has to switch font by locale — see tailwind.config.js. */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@font-face {
-  font-family: 'Avenir';
-  src: local('Avenir'), local('Avenir Next'), local('AvenirNext');
-  font-display: swap;
-}
 
 /* Theme tokens (RGB channels).
    TSHDA's colours are the tea sector's own: the deep leaf green of the
@@ -691,7 +685,7 @@ html.dark .theme-switch__moon { display: block; }
 .pre-inner { display: flex; flex-direction: column; align-items: center; gap: 1.1rem; }
 .pre-logo { height: 60px; width: auto; animation: pre-pulse 1.5s ease-in-out infinite; }
 .pre-word {
-  font-family: 'K2D', ui-sans-serif, sans-serif;
+  font-family: inherit;
   font-weight: 600; font-size: 0.82rem; letter-spacing: 0.32em;
   text-transform: uppercase; color: rgb(var(--fg));
 }
@@ -814,7 +808,7 @@ html.lenis, html.lenis body { height: auto; }
 }
 .nl-marker__name {
   display: block;
-  font-family: 'K2D', ui-sans-serif, sans-serif;
+  font-family: inherit;
   font-size: 0.78rem;
   font-weight: 600;
   color: rgb(var(--bg));
@@ -1148,7 +1142,7 @@ html.fp-active body {
   filter: drop-shadow(0 2px 6px rgba(0,0,0,0.5));
 }
 .value-tile__title {
-  font-family: 'K2D', ui-sans-serif, sans-serif;
+  font-family: inherit;
   font-size: 1.05rem;
   font-weight: 700;
   line-height: 1.25;
@@ -1259,7 +1253,7 @@ html.fp-active body {
 
 .nl-timeline__year {
   display: block;
-  font-family: 'K2D', ui-sans-serif, system-ui, sans-serif;
+  font-family: inherit;
   font-size: 1.6rem;
   font-weight: 700;
   line-height: 1;
@@ -1434,7 +1428,7 @@ html.fp-active body {
 .nl-portfolio__item:hover .nl-portfolio__disc img { transform: scale(1.06); }
 
 .nl-portfolio__name {
-  font-family: 'K2D', ui-sans-serif, system-ui, sans-serif;
+  font-family: inherit;
   font-size: 0.95rem;
   font-weight: 600;
   line-height: 1.35;

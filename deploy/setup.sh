@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 #
-# Norlanka — first-time deploy for plain Nginx + PHP-FPM.
+# First-time deploy for plain Nginx + PHP-FPM.
+#
+# One script, several sites: the DOMAIN / APP_DIR / DB_NAME defaults below are
+# the first site this was written for, and every other site passes its own.
 #
 # ISOLATION GUARANTEES — this script only ADDS a new site:
 #   • app code        -> $APP_DIR (its own directory)
@@ -10,7 +13,8 @@
 # changes global PHP config. Review it before running.
 #
 # Usage (as root):
-#   REPO_URL='https://<token>@github.com/livezen-technologies/norlanka_web.git' \
+#   REPO_URL='https://<token>@github.com/<owner>/<repo>.git' \
+#   DOMAIN=example.livezencloud.com APP_DIR=/var/www/example DB_NAME=example_prod \
 #   bash deploy/setup.sh
 #
 set -euo pipefail

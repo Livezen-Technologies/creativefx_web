@@ -31,8 +31,6 @@ if ($currentPage === 1 && $activeCategory === null && $posts !== []) {
 <section class="relative overflow-hidden">
     <!-- Photographic hero, dressed with the same washes as the CMS page heroes
          so this band reads like the rest of the site instead of a flat panel. -->
-    <img src="/media/magiccorn/3.jpg" alt="" aria-hidden="true"
-         class="hero-media absolute inset-0 -z-30 h-full w-full object-cover">
     <div class="hero-wash-side--page absolute inset-0 -z-20"></div>
     <div class="hero-wash-foot--page absolute inset-0 -z-20"></div>
     <div class="hero-red-glow absolute inset-0 -z-10"></div>

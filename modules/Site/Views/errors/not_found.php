@@ -8,10 +8,6 @@ $this->extend('Modules\Core\Views\layouts\main');
 <?php // The mist scene the rest of the site uses, so a wrong URL still lands
       // somewhere that looks like the hotel rather than on a plain error page. ?>
 <section class="mist-scene on-dark relative flex min-h-screen items-center overflow-hidden">
-    <?= view('Modules\\Core\\Views\\partials\\mist_scene', [
-        'image' => '/media/giantforests/Sinharaja-Tracking-2.jpg',
-        'alt'   => '',
-    ]) ?>
     <div class="hero-wash-pool absolute inset-0 -z-20"></div>
     <div class="hero-wash-foot absolute inset-0 -z-20"></div>
 
@@ -37,7 +33,7 @@ $this->extend('Modules\Core\Views\layouts\main');
             </a>
             <?php // Same dialog as every other Book Now on the site; the href is
                   // the contact page so it still goes somewhere without JS. ?>
-            <a href="<?= esc(locale_url('contact')) ?>" x-data @click.prevent="$dispatch('booking-open')"
+            <a href="<?= esc(locale_url('contact')) ?>"
                class="inline-flex items-center gap-3 text-sm font-semibold uppercase tracking-widest text-white/85 transition hover:text-white">
                 <?= esc(lang('Site.home.hero.primary')) ?>
             </a>
