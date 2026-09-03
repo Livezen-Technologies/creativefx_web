@@ -76,10 +76,13 @@ $tel = static fn (string $n): string => preg_replace('/[^0-9+]/', '', $n);
                 async submit() {
                     this.loading = true; this.error = '';
                     try {
+                        // Present only when the site is configured for reCAPTCHA;
+                        // an empty string is what the server expects otherwise.
+                        const token = window.recaptchaToken ? await window.recaptchaToken('contact') : '';
                         const res = await fetch('/api/contact', {
                             method: 'POST',
                             headers: { 'Accept': 'application/json' },
-                            body: new URLSearchParams({ ...this.form, locale: document.documentElement.lang })
+                            body: new URLSearchParams({ ...this.form, locale: document.documentElement.lang, recaptcha_token: token })
                         });
                         const data = await res.json();
                         this.loading = false;

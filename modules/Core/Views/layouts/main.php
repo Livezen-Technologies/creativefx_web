@@ -89,6 +89,11 @@ $noIndex         = $noIndex         ?? false;
     <link rel="icon" type="image/png" sizes="192x192" href="<?= esc(media_src('/favicon-192.png'), 'attr') ?>">
     <link rel="apple-touch-icon" sizes="180x180" href="<?= esc(media_src('/apple-touch-icon.png'), 'attr') ?>">
     <?php endif; ?>
+    <?php // Only present when reCAPTCHA is fully configured, so a site that does
+          // not use it never loads Google's script and never gets its cookie. ?>
+    <?php if (\Modules\Core\Libraries\Recaptcha::isActive()): ?>
+    <meta name="recaptcha-site-key" content="<?= esc(\Modules\Core\Libraries\Recaptcha::siteKey(), 'attr') ?>">
+    <?php endif; ?>
     <?= vite_tags('resources/js/app.js') ?>
     <?php if ($ga = setting('ga4_measurement_id', '', 'analytics')): ?>
     <script async src="https://www.googletagmanager.com/gtag/js?id=<?= esc($ga) ?>"></script>

@@ -25,6 +25,7 @@ import { initCarousels } from './carousels.js';
 import { initHeroVideo } from './heroVideo.js';
 import { initPreloader } from './preloader.js';
 import { initTracking } from './track.js';
+import { initRecaptcha } from './recaptcha.js';
 import { initSmoothScroll } from './smooth.js';
 import { initFullpage } from './fullpage.js';
 
@@ -60,6 +61,7 @@ Alpine.start();
 document.addEventListener('DOMContentLoaded', () => {
   initPreloader();
   initTracking();
+  initRecaptcha();
   initKineticHero();
 
   if (document.getElementById('fp')) {

@@ -150,6 +150,20 @@ $group    = $groups[$current];
     </div>
 </form>
 
+<?php if ($current === 'security'): ?>
+    <form method="post" action="<?= site_url('admin/site-settings-test-recaptcha') ?>" class="mt-6 max-w-3xl rounded-xl border border-white/10 bg-white/[0.02] p-5">
+        <?= csrf_field() ?>
+        <h3 class="text-sm font-semibold uppercase tracking-widest text-white/60">Check the keys</h3>
+        <p class="mt-2 text-sm leading-relaxed text-white/50">
+            Asks Google whether it recognises the secret key. It cannot produce a real score — that needs a visitor —
+            but it tells the difference between a key Google accepts and one it does not. Save any changes first.
+        </p>
+        <button class="mt-4 rounded-lg border border-white/15 px-4 py-2 text-sm font-semibold text-white/80 transition hover:border-white/40 hover:text-white">
+            Check the keys
+        </button>
+    </form>
+<?php endif; ?>
+
 <?php if ($current === 'email'): ?>
     <?php // A separate form: a test must send what is stored, so the settings
           // have to be saved first. Combining them would test values that are

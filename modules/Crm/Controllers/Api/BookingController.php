@@ -49,6 +49,17 @@ class BookingController extends ResourceController
             return $this->failValidationErrors($this->validator->getErrors());
         }
 
+        // Checked after the fields, so a guest who mistyped their email hears
+        // about that rather than about a score they cannot see or influence.
+        if (\Modules\Core\Libraries\Recaptcha::guards('booking')) {
+            $check = \Modules\Core\Libraries\Recaptcha::verify($this->request->getVar('recaptcha_token'), 'booking');
+            if (! $check['ok']) {
+                log_message('warning', 'Booking refused by reCAPTCHA: ' . $check['reason']);
+
+                return $this->failValidationErrors(['name' => lang('Site.booking.err_robot')]);
+            }
+        }
+
         $checkIn  = $this->request->getVar('check_in');
         $checkOut = $this->request->getVar('check_out');
 

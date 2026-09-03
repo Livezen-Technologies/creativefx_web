@@ -70,6 +70,27 @@ class SettingSeeder extends Seeder
             ['whatsapp', 'hide_on', '', 'string', 1],
             ['seo', 'robots', '1', 'bool', 1],
             ['analytics', 'enabled', '1', 'bool', 1],
+
+            // Mail and spam protection. All blank or off: until a hotel supplies
+            // its own SMTP account and reCAPTCHA keys, the site saves enquiries
+            // without emailing and accepts forms without scoring them — which is
+            // exactly what it did before either existed.
+            ['smtp', 'host', '', 'string', 0],
+            ['smtp', 'port', '587', 'string', 0],
+            ['smtp', 'crypto', 'tls', 'string', 0],
+            ['smtp', 'user', '', 'string', 0],
+            ['smtp', 'pass', '', 'string', 0],
+            ['smtp', 'from_email', '', 'string', 0],
+            ['smtp', 'from_name', '', 'string', 0],
+            ['smtp', 'booking_to', '', 'string', 0],
+            ['smtp', 'contact_to', '', 'string', 0],
+            ['recaptcha', 'enabled', '0', 'bool', 0],
+            ['recaptcha', 'site_key', '', 'string', 1],
+            ['recaptcha', 'secret_key', '', 'string', 0],
+            ['recaptcha', 'threshold', '0.5', 'string', 0],
+            ['recaptcha', 'on_booking', '1', 'bool', 0],
+            ['recaptcha', 'on_contact', '1', 'bool', 0],
+            ['recaptcha', 'on_login', '0', 'bool', 0],
             ['seo', 'meta_keywords', '', 'string', 1],
             // Blank means "use the files that ship with the build"; an upload
             // in the console replaces them without a deploy.

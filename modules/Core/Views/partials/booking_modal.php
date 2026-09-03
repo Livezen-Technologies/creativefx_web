@@ -56,6 +56,7 @@ $tomorrow = date('Y-m-d', strtotime('+1 day'));
             </div>
 
             <form x-show="! sent" method="post" action="<?= esc(site_url('api/booking'), 'attr') ?>"
+                  data-recaptcha="booking"
                   @submit.prevent="submit($event.target)" novalidate>
                 <?= csrf_field() ?>
                 <input type="hidden" name="locale" value="<?= esc(current_locale(), 'attr') ?>">

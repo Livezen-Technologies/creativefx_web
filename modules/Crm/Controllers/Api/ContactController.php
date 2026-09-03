@@ -32,8 +32,16 @@ class ContactController extends ResourceController
             return $this->failValidationErrors($this->validator->getErrors());
         }
 
-        $model = new ContactModel();
-        $model->insert([
+        if (\Modules\Core\Libraries\Recaptcha::guards('contact')) {
+            $check = \Modules\Core\Libraries\Recaptcha::verify($this->request->getVar('recaptcha_token'), 'contact');
+            if (! $check['ok']) {
+                log_message('warning', 'Message refused by reCAPTCHA: ' . $check['reason']);
+
+                return $this->failValidationErrors(['name' => lang('Site.booking.err_robot')]);
+            }
+        }
+
+        $message = [
             'name'    => $this->request->getVar('name'),
             'email'   => $this->request->getVar('email'),
             'phone'   => $this->request->getVar('phone'),
@@ -42,8 +50,48 @@ class ContactController extends ResourceController
             'locale'  => substr((string) $this->request->getVar('locale'), 0, 5) ?: 'en',
             'source'  => 'contact_form',
             'status'  => 'new',
-        ]);
+        ];
+
+        (new ContactModel())->insert($message);
+
+        // Saved first, notified second — for the same reason as a booking: a
+        // mail server being down must not be able to lose somebody's message.
+        $this->notify($message);
 
         return $this->respondCreated(['status' => 'success']);
+    }
+
+    /** Pass a message on to whoever is listed, if mail is configured at all. */
+    private function notify(array $message): void
+    {
+        try {
+            $to = \Modules\Core\Libraries\Mailer::contactRecipients();
+            if ($to === '' || ! \Modules\Core\Libraries\Mailer::isConfigured()) {
+                return;
+            }
+
+            $html = '<h2 style="margin:0 0 16px">New message from the website</h2>'
+                . '<table cellpadding="6" style="border-collapse:collapse">'
+                . '<tr><td style="color:#666">Name</td><td><strong>' . esc((string) $message['name']) . '</strong></td></tr>'
+                . '<tr><td style="color:#666">Email</td><td><strong>' . esc((string) $message['email']) . '</strong></td></tr>'
+                . '<tr><td style="color:#666">Phone</td><td><strong>' . esc((string) ($message['phone'] ?: '—')) . '</strong></td></tr>'
+                . '<tr><td style="color:#666">Subject</td><td><strong>' . esc((string) ($message['subject'] ?: '—')) . '</strong></td></tr>'
+                . '</table>'
+                . '<p style="margin-top:16px">' . nl2br(esc((string) $message['message'])) . '</p>'
+                . '<p style="margin-top:20px;color:#666;font-size:12px">Reply to this message to answer them directly.</p>';
+
+            $result = \Modules\Core\Libraries\Mailer::send(
+                $to,
+                'Website message — ' . $message['name'],
+                $html,
+                (string) $message['email'],
+            );
+
+            if (! $result['sent']) {
+                log_message('error', 'Contact notification not sent: ' . ($result['detail'] ?: $result['error']));
+            }
+        } catch (\Throwable $e) {
+            log_message('error', 'Contact notification threw: ' . $e->getMessage());
+        }
     }
 }

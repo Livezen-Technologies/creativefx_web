@@ -68,6 +68,7 @@ $routes->group('admin', ['namespace' => 'Modules\Admin\Controllers'], static fun
         $routes->get('site-settings/(:segment)', 'SiteSettings::index/$1');
         $routes->post('site-settings/(:segment)', 'SiteSettings::save/$1');
         $routes->post('site-settings-test-email', 'SiteSettings::testEmail');
+        $routes->post('site-settings-test-recaptcha', 'SiteSettings::testRecaptcha');
 
         $routes->post('pages/(:num)/content/reset', 'Content::resetToDefault/$1');
         $routes->post('pages/(:num)/sections', 'Content::addSection/$1');

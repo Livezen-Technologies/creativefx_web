@@ -160,6 +160,21 @@ class SiteSettings extends BaseController
         return $redirect->with('error', 'Could not send: ' . $result['error']);
     }
 
+    /** Asks Google whether the secret key is one it recognises. */
+    public function testRecaptcha()
+    {
+        if (! admin_can('settings.manage')) {
+            return redirect()->to(site_url('admin/site-settings/security'))->with('error', 'You do not have permission to run this test.');
+        }
+
+        $result   = \Modules\Core\Libraries\Recaptcha::testConnection();
+        $redirect = redirect()->to(site_url('admin/site-settings/security'));
+
+        return $result['ok']
+            ? $redirect->with('message', $result['message'])
+            : $redirect->with('error', $result['message']);
+    }
+
     /**
      * Every declared setting's current value, keyed by field key.
      *

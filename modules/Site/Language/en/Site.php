@@ -105,6 +105,9 @@ return [
         'err'        => 'That did not send. Please check the form and try again.',
         'err_order'  => 'The leaving date needs to be after the arriving date.',
         'err_past'   => 'That arrival date has already passed.',
+        // Shown when reCAPTCHA scores a submission as automated. Says what to
+        // do next, because the visitor cannot see or influence the score.
+        'err_robot'  => 'That did not go through — our spam check was not satisfied. Please try again, or call us and we will take the details over the phone.',
     ],
 
     'home' => [

@@ -109,10 +109,18 @@ export default () => ({
     this.failed = false;
     this.errors = {};
     try {
+      const payload = new FormData(form);
+
+      // A reCAPTCHA token, when the site is configured for one. Minted here
+      // rather than when the dialog opened: v3 tokens last two minutes and a
+      // guest picking dates often takes longer than that.
+      const token = window.recaptchaToken ? await window.recaptchaToken('booking') : '';
+      if (token) payload.append('recaptcha_token', token);
+
       const res = await fetch(form.action, {
         method: 'POST',
         headers: { Accept: 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
-        body: new FormData(form),
+        body: payload,
       });
       if (res.ok) {
         this.sent = true;
