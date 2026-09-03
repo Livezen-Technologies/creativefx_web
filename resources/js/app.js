@@ -21,7 +21,7 @@ import '../css/app.css';
 
 import Alpine from 'alpinejs';
 import videoExperience from './alpine/videoExperience.js';
-import langSwitcher from './alpine/langSwitcher.js';
+import langSwitcher, { restoreLangScroll } from './alpine/langSwitcher.js';
 import siteHeader from './alpine/siteHeader.js';
 import showroomScene from './alpine/showroomScene.js';
 import worldMap from './alpine/worldMap.js';
@@ -70,6 +70,9 @@ Alpine.start();
 // storytelling. The two models are mutually exclusive, so we branch on #fp.
 document.addEventListener('DOMContentLoaded', () => {
   initPreloader();
+  // Before anything that scrolls: a language switch stashed the reader's
+  // position, and it applies whichever scroll model this page uses.
+  restoreLangScroll();
   initTracking();
   initRecaptcha();
   initKineticHero();

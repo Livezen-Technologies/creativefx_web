@@ -19,8 +19,14 @@ $this->extend('Modules\Core\Views\layouts\main');
     <div class="hero-aurora absolute inset-0 -z-10 opacity-50"></div>
     <div class="container-x py-14 sm:py-20">
         <p class="text-xs font-semibold uppercase tracking-[0.3em] text-brand-red"><?= esc(setting('parent_org', '', 'general')) ?></p>
+        <?php // The Authority's name in the language the reader chose. The
+              // site_name setting is the legal English name — it belongs in the
+              // browser tab, in email and in the copyright line — but a Tamil
+              // reader arriving at a Tamil page should not be greeted by it in
+              // English. The translated form is a language string, so it is
+              // editable in the Translation Manager like everything else. ?>
         <h1 class="mt-4 max-w-4xl text-3xl font-bold leading-tight sm:text-5xl">
-            <?= esc(setting('site_name', 'Tea Small Holdings Development Authority')) ?>
+            <?= esc(lang('Site.home.hero')) ?>
         </h1>
         <p class="mt-5 max-w-2xl text-lg leading-relaxed text-white/70"><?= esc(lang('Site.home.lede')) ?></p>
 

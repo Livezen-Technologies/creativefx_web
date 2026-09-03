@@ -1,526 +1,471 @@
 <?php
 
 /**
- * Content translation dictionary: English source => the same line in every
- * other supported language.
+ * Content translation dictionary: English source => the same line in Sinhala
+ * and Tamil.
  *
- * Seeders author content in English only and content_locales() completes it
- * from here, so a wording lives in one place. A phrase that is missing simply
- * falls back to English at render time, which is why adding a language is a
- * matter of adding a key rather than touching any seeder.
+ * Seeders author content in English and content_locales() completes it from
+ * here, so a wording lives in one place and adding a language is a matter of
+ * adding a key rather than touching any seeder. A phrase that is missing falls
+ * back to English at render time, which is why a partial dictionary is safe.
+ *
+ * What is here and what is not, deliberately:
+ *
+ *   Every title, label, category and short summary the Authority's records
+ *   carry — the things that appear in menus, on cards, in tables and in the
+ *   sidebar of a service page, where an untranslated string is conspicuous and
+ *   makes a page look half-built.
+ *
+ *   The long editorial prose — the 500-word About Us and subject-area pages,
+ *   the FAQ answers, the news articles — is not. Those are drafts for the
+ *   Content Management Team to correct and sign off before they are worth
+ *   translating, and translating a draft produces three drafts to correct
+ *   instead of one. They are translated in the Translation Manager once the
+ *   English is agreed, which is the sequence Clause 3.10 assumes when it makes
+ *   Livezen responsible for "collecting, writing, preparing, translating and
+ *   typing all content".
  */
 
 return [
-    'Design, innovation and responsible sourcing at global scale.' => [
-        'si' => 'ගෝලීය මට්ටමින් නිර්මාණය, නවෝත්පාදනය සහ වගකීමෙන් යුතු අමුද්‍රව්‍ය සම්පාදනය.',
-        'ta' => 'Design, innovation and responsible sourcing at global scale.',
-    ],
-    'About Us' => [
-        'si' => 'අප ගැන',
-        'ta' => 'எங்களைப் பற்றி',
-    ],
-    'Magic Corn — the original corn in a cup, homegrown in Sri Lanka since 2007.' => [
-        'si' => 'Magic Corn — 2007 සිට ශ්‍රී ලංකාවේම හැදෙන, කෝප්පයක බඩ ඉරිඟු හඳුන්වා දුන් මුල්ම සන්නාමය.',
-        'ta' => 'Magic Corn — 2007 முதல் இலங்கையில் சொந்தமாக வளர்க்கப்படும் அசல் கப் சோளம்.',
-    ],
-    'Our Business' => [
-        'si' => 'අපේ ව්‍යාපාරය',
-        'ta' => 'எங்கள் தொழில்',
-    ],
-    'Magic Corn — cultivation, processing and retail of sweet corn across Sri Lanka.' => [
-        'si' => 'Magic Corn — ශ්‍රී ලංකාව පුරා සීනි බඩ ඉරිඟු වගාව, සැකසීම සහ අලෙවිය.',
-        'ta' => 'Magic Corn — இலங்கை முழுவதும் இனிப்புச் சோளப் பயிர்ச்செய்கை, பதப்படுத்தல் மற்றும் சில்லறை விற்பனை.',
-    ],
-    'Our Locations' => [
-        'si' => 'අපේ ස්ථාන',
-        'ta' => 'எங்கள் இடங்கள்',
-    ],
-    'Magic Corn outlets across Sri Lanka, and our head office in Dehiwala.' => [
-        'si' => 'ශ්‍රී ලංකාව පුරා ඇති Magic Corn අලෙවිසැල් සහ දෙහිවල පිහිටි අපේ ප්‍රධාන කාර්යාලය.',
-        'ta' => 'இலங்கை எங்கும் Magic Corn கடைகள், தெஹிவளையில் எங்கள் தலைமை அலுவலகம்.',
-    ],
-    'Contact Us' => [
-        'si' => 'අප හා සම්බන්ධ වන්න',
-        'ta' => 'தொடர்பு கொள்ள',
-    ],
-    'Talk to Magic Corn — orders, outlets, bulk supply and events.' => [
-        'si' => 'Magic Corn සමඟ කතා කරන්න — ඇණවුම්, අලෙවිසැල්, තොග සැපයුම් සහ උත්සව.',
-        'ta' => 'Magic Corn-உடன் பேசுங்கள் — ஆர்டர்கள், கடைகள், மொத்த விநியோகம், நிகழ்வுகள்.',
-    ],
-    'Sweet corn, served hot in a cup.' => [
-        'si' => 'සීනි බඩ ඉරිඟු, උණුසුම්ව කෝප්පයක.',
-        'ta' => 'இனிப்புச் சோளம், சூடாக ஒரு கப்பில்.',
-    ],
-    'Grown, steamed and topped your way — Sri Lanka’s original corn in a cup.' => [
-        'si' => 'අපේම වගාවෙන්, වාෂ්පයෙන් තම්බා, ඔබ කැමති ටොපිං සමඟ — ශ්‍රී ලංකාවේ මුල්ම කෝප්පයේ බඩ ඉරිඟු.',
-        'ta' => 'நாங்களே வளர்த்து, ஆவியில் வேகவைத்து, உங்கள் விருப்பப்படி டாப்பிங் சேர்த்து — இலங்கையின் அசல் கப் சோளம்.',
-    ],
-    'Sweet corn, served' => [
-        'si' => 'සීනි බඩ ඉරිඟු,',
-        'ta' => 'இனிப்புச் சோளம்,',
-    ],
-    'in a cup.' => [
-        'si' => 'කෝප්පයක.',
-        'ta' => 'ஒரு கப்பில்.',
-    ],
-    'buttered' => [
-        'si' => 'බටර් සමඟ',
-        'ta' => 'வெண்ணெயுடன்',
-    ],
-    'cheesy' => [
-        'si' => 'චීස් සමඟ',
-        'ta' => 'சீஸுடன்',
-    ],
-    'garlicky' => [
-        'si' => 'සුදුළූණු සමඟ',
-        'ta' => 'பூண்டுடன்',
-    ],
-    'spiced' => [
-        'si' => 'කුළුබඩු සමඟ',
-        'ta' => 'மசாலாவுடன்',
-    ],
-    'hot' => [
-        'si' => 'උණුසුම්ව',
-        'ta' => 'சூடாக',
-    ],
-    'Serving corn in a cup since' => [
-        'si' => 'සිට කෝප්පයක බඩ ඉරිඟු දෙමින්',
-        'ta' => 'முதல் கப்பில் சோளம் பரிமாறுகிறோம்',
-    ],
-    'Outlets island-wide' => [
-        'si' => 'දිවයින පුරා අලෙවිසැල්',
-        'ta' => 'நாடு முழுவதும் கடைகள்',
-    ],
-    'Women employed at our factory' => [
-        'si' => 'අපේ කර්මාන්තශාලාවේ සේවය කරන කාන්තාවෝ',
-        'ta' => 'எங்கள் தொழிற்சாலையில் பணிபுரியும் பெண்கள்',
-    ],
-    'Homegrown Sri Lankan brand' => [
-        'si' => 'දේශීය ශ්‍රී ලාංකික සන්නාමයක්',
-        'ta' => 'இலங்கையின் சொந்தப் பிராண்ட்',
-    ],
-    'Take Magic Corn home' => [
-        'si' => 'Magic Corn ගෙදරට',
-        'ta' => 'Magic Corn-ஐ வீட்டுக்கு எடுத்துச் செல்லுங்கள்',
-    ],
-    'Our 1kg frozen sweet corn pack — the same corn we serve at the outlets.' => [
-        'si' => 'අපේ 1kg ශීත කළ සීනි බඩ ඉරිඟු පැකට්ටුව — අලෙවිසැල්වල අපි දෙන එකම බඩ ඉරිඟු.',
-        'ta' => 'எங்கள் 1kg உறைவைத்த இனிப்புச் சோளப் பொதி — கடைகளில் நாங்கள் பரிமாறும் அதே சோளம்.',
-    ],
-    'Visit the shop' => [
-        'si' => 'සාප්පුව බලන්න',
-        'ta' => 'ஷொப்பைப் பார்க்க',
-    ],
-    'Sri Lanka’s original corn in a cup' => [
-        'si' => 'ශ්‍රී ලංකාවේ මුල්ම කෝප්පයේ බඩ ඉරිඟු',
-        'ta' => 'இலங்கையின் அசல் கப் சோளம்',
-    ],
-    'A 100% homegrown brand, cultivating sweet corn on a commercial scale since 2007.' => [
-        'si' => '2007 සිට වාණිජ මට්ටමින් සීනි බඩ ඉරිඟු වගා කරන, 100% දේශීය සන්නාමයක්.',
-        'ta' => '2007 முதல் வணிக அளவில் இனிப்புச் சோளம் பயிரிடும், 100% இலங்கைச் சொந்தப் பிராண்ட்.',
-    ],
-    'Our story' => [
-        'si' => 'අපේ කතාව',
-        'ta' => 'எங்கள் கதை',
-    ],
-    'From one outlet to a household name' => [
-        'si' => 'එක් අලෙවිසැලකින්, හැම ගෙදරකම නමක් දක්වා',
-        'ta' => 'ஒரு கடையிலிருந்து வீடுதோறும் அறியப்படும் பெயராக',
-    ],
-    'Magic Corn was founded in Sri Lanka in 2007 by Mr. Shanker Viswakula, who introduced the “Corn in a Cup” concept to the Sri Lankan snack industry. What began as a single outlet has grown to more than thirty across the island in the space of twelve years. We cultivate sweet corn on a commercial scale and remain a 100% homegrown brand — today an ISO 9001 certified company.' => [
-        'si' => 'Magic Corn 2007 දී ශ්‍රී ලංකාවේ ආරම්භ කළේ, ශ්‍රී ලාංකික කෙටි කෑම කර්මාන්තයට “Corn in a Cup” සංකල්පය හඳුන්වා දුන් ශංකර් විශ්වකුල මහතායි. එක් අලෙවිසැලකින් පටන් ගත් එය, වසර දොළහක් ඇතුළත දිවයින පුරා තිහකට වැඩි ගණනක් දක්වා වර්ධනය වුණා. අපි වාණිජ මට්ටමින් සීනි බඩ ඉරිඟු වගා කරන අතර, තවමත් 100% දේශීය සන්නාමයක් ලෙස රැඳී සිටිනවා — අද වන විට ISO 9001 සහතික ලත් සමාගමක්.',
-        'ta' => 'Magic Corn 2007ஆம் ஆண்டு இலங்கையில் திரு. ஷங்கர் விஸ்வகுல அவர்களால் தொடங்கப்பட்டது; இலங்கையின் சிற்றுண்டித் துறைக்கு “Corn in a Cup” என்ற கருத்தை அறிமுகப்படுத்தியவர் அவரே. ஒரே ஒரு கடையாகத் தொடங்கியது, பன்னிரண்டு ஆண்டுகளுக்குள் தீவு முழுவதும் முப்பதுக்கும் மேற்பட்ட கடைகளாக வளர்ந்துள்ளது. வணிக அளவில் இனிப்புச் சோளம் பயிரிட்டு, 100% இலங்கைச் சொந்தப் பிராண்டாகவே நாங்கள் தொடர்கிறோம் — இன்று ISO 9001 சான்றிதழ் பெற்ற நிறுவனம்.',
-    ],
-    'Magic Corn today' => [
-        'si' => 'Magic Corn අද',
-        'ta' => 'இன்றைய Magic Corn',
-    ],
-    'Founded in Sri Lanka' => [
-        'si' => 'ශ්‍රී ලංකාවේ ආරම්භ වුණා',
-        'ta' => 'இலங்கையில் தொடங்கப்பட்டது',
-    ],
-    'What goes in the cup' => [
-        'si' => 'කෝප්පයට යන දේ',
-        'ta' => 'கப்பில் என்ன இருக்கிறது',
-    ],
-    '100% natural spices' => [
-        'si' => '100% ස්වාභාවික කුළුබඩු',
-        'ta' => '100% இயற்கை மசாலா',
-    ],
-    'Precooked sweet corn, steamed and mixed with natural spices, then smothered in toppings to order.' => [
-        'si' => 'පෙර පිසූ සීනි බඩ ඉරිඟු වාෂ්පයෙන් තම්බා ස්වාභාවික කුළුබඩු සමඟ මිශ්‍ර කර, ඔබේ ඇණවුමට අනුව ටොපිංවලින් වසා දෙනවා.',
-        'ta' => 'முன்கூட்டியே சமைத்த இனிப்புச் சோளத்தை ஆவியில் வேகவைத்து, இயற்கை மசாலாவுடன் கலந்து, நீங்கள் கேட்கும் டாப்பிங்குகளால் நிரப்பிப் பரிமாறுகிறோம்.',
-    ],
-    'No MSG, no preservatives' => [
-        'si' => 'MSG නැහැ, කල් තබන ද්‍රව්‍ය නැහැ',
-        'ta' => 'MSG இல்லை, பிரிசர்வேட்டிவ் இல்லை',
-    ],
-    'No MSG, added flavours or preservatives are used in preparing our corn.' => [
-        'si' => 'අපේ බඩ ඉරිඟු සකස් කිරීමේදී MSG, එකතු කළ රසකාරක හෝ කල් තබන ද්‍රව්‍ය භාවිත කරන්නේ නැහැ.',
-        'ta' => 'எங்கள் சோளத்தைத் தயாரிப்பதில் MSG, சேர்க்கப்பட்ட சுவையூட்டிகள் அல்லது பிரிசர்வேட்டிவ்கள் எதுவும் பயன்படுத்தப்படுவதில்லை.',
-    ],
-    'ISO 9001 certified' => [
-        'si' => 'ISO 9001 සහතික ලත්',
-        'ta' => 'ISO 9001 சான்றிதழ் பெற்றது',
-    ],
-    'Our sweet corn processing is run to a certified quality management standard.' => [
-        'si' => 'අපේ සීනි බඩ ඉරිඟු සැකසීම සිදු වන්නේ සහතික ලත් තත්ත්ව කළමනාකරණ ප්‍රමිතියකට අනුවයි.',
-        'ta' => 'எங்கள் இனிப்புச் சோளப் பதப்படுத்தல், சான்றளிக்கப்பட்ட தர முகாமைத்துவத் தரநிலைக்கு ஏற்ப நடத்தப்படுகிறது.',
-    ],
-    'Grown and made here' => [
-        'si' => 'මෙහිම වවනවා, මෙහිම හදනවා',
-        'ta' => 'இங்கேயே வளர்ப்பு, இங்கேயே தயாரிப்பு',
-    ],
-    'Sweet corn cultivated on a commercial scale in Sri Lanka — a fully homegrown supply chain.' => [
-        'si' => 'ශ්‍රී ලංකාවේ වාණිජ මට්ටමින් වගා කරන සීනි බඩ ඉරිඟු — සම්පූර්ණයෙන්ම දේශීය සැපයුම් දාමයක්.',
-        'ta' => 'இலங்கையில் வணிக அளவில் பயிரிடப்படும் இனிப்புச் சோளம் — முழுமையாக உள்நாட்டிலேயே அமைந்த விநியோகச் சங்கிலி.',
-    ],
-    'Magic Corn' => [
-        'si' => 'Magic Corn',
-        'ta' => 'Magic Corn',
-    ],
-    'From the field to the cup' => [
-        'si' => 'වගා බිමේ සිට කෝප්පය දක්වා',
-        'ta' => 'வயலிலிருந்து கப் வரை',
-    ],
-    'Sweet corn grown on a commercial scale in Sri Lanka' => [
-        'si' => 'ශ්‍රී ලංකාවේ වාණිජ මට්ටමින් වගා කරන සීනි බඩ ඉරිඟු',
-        'ta' => 'இலங்கையில் வணிக அளவில் வளர்க்கப்படும் இனிப்புச் சோளம்',
-    ],
-    'Harvested and brought in for processing' => [
-        'si' => 'අස්වනු නෙළා සැකසීම සඳහා ගෙන එනවා',
-        'ta' => 'அறுவடை செய்யப்பட்டு, பதப்படுத்தக் கொண்டுவரப்படுகிறது',
-    ],
-    'Husked and prepared at our factory' => [
-        'si' => 'අපේ කර්මාන්තශාලාවේදී පොතු ගලවා සකසනවා',
-        'ta' => 'எங்கள் தொழிற்சாலையில் உரித்துத் தயார் செய்யப்படுகிறது',
-    ],
-    'Served hot in a cup at our outlets' => [
-        'si' => 'අලෙවිසැල්වලදී උණුසුම්ව කෝප්පයක දෙනවා',
-        'ta' => 'எங்கள் கடைகளில் சூடாகக் கப்பில் பரிமாறப்படுகிறது',
-    ],
-    'Livelihoods in rural Sri Lanka' => [
-        'si' => 'ගම්බද ශ්‍රී ලංකාවට ජීවනෝපායක්',
-        'ta' => 'இலங்கையின் கிராமப்புறங்களில் வாழ்வாதாரம்',
-    ],
-    'Our sweet corn processing factory provides job opportunities to more than forty female staff in rural areas, giving their families an additional income.' => [
-        'si' => 'අපේ සීනි බඩ ඉරිඟු සැකසුම් කර්මාන්තශාලාව ගම්බද ප්‍රදේශවල කාන්තාවන් හතළිහකට වැඩි පිරිසකට රැකියා අවස්ථා සලසා දෙනවා; එය ඔවුන්ගේ පවුල්වලට අමතර ආදායමක් වෙනවා.',
-        'ta' => 'எங்கள் இனிப்புச் சோளப் பதப்படுத்தும் தொழிற்சாலை, கிராமப்புறங்களில் நாற்பதுக்கும் மேற்பட்ட பெண்களுக்கு வேலைவாய்ப்பு வழங்கி, அவர்களது குடும்பங்களுக்கு மேலதிக வருமானத்தைத் தருகிறது.',
-    ],
-    'Bring Magic Corn to your event' => [
-        'si' => 'ඔබේ උත්සවයට Magic Corn',
-        'ta' => 'உங்கள் நிகழ்வுக்கு Magic Corn-ஐக் கொண்டு வாருங்கள்',
-    ],
-    'Outlet enquiries, bulk orders and event catering — talk to our team.' => [
-        'si' => 'අලෙවිසැල් පිළිබඳ විමසීම්, තොග ඇණවුම් සහ උත්සව ආහාර සැපයුම — අපේ කණ්ඩායම හා කතා කරන්න.',
-        'ta' => 'கடை தொடர்பான விசாரணைகள், மொத்த ஆர்டர்கள், நிகழ்வுகளுக்கான கேட்டரிங் — எங்கள் குழுவுடன் பேசுங்கள்.',
-    ],
-    'Contact us' => [
-        'si' => 'සම්බන්ධ වන්න',
-        'ta' => 'தொடர்பு கொள்ளுங்கள்',
-    ],
-    'From our fields to your cup' => [
-        'si' => 'අපේ වගා බිමේ සිට ඔබේ කෝප්පය දක්වා',
-        'ta' => 'எங்கள் வயல்களிலிருந்து உங்கள் கப் வரை',
-    ],
-    'We grow, process and serve sweet corn — the whole chain, under one brand.' => [
-        'si' => 'අපි සීනි බඩ ඉරිඟු වගා කරනවා, සකසනවා, දෙනවා — මුළු දාමයම එක් සන්නාමයක් යටතේ.',
-        'ta' => 'இனிப்புச் சோளத்தை நாங்களே வளர்க்கிறோம், பதப்படுத்துகிறோம், பரிமாறுகிறோம் — முழுச் சங்கிலியும் ஒரே பிராண்டின் கீழ்.',
-    ],
-    'How Magic Corn is made' => [
-        'si' => 'Magic Corn හැදෙන හැටි',
-        'ta' => 'Magic Corn எப்படித் தயாராகிறது',
-    ],
-    'Cultivation' => [
-        'si' => 'වගාව',
-        'ta' => 'பயிர்ச்செய்கை',
-    ],
-    'Sweet corn grown on a commercial scale in Sri Lanka.' => [
-        'si' => 'ශ්‍රී ලංකාවේ වාණිජ මට්ටමින් වගා කරන සීනි බඩ ඉරිඟු.',
-        'ta' => 'இலங்கையில் வணிக அளவில் வளர்க்கப்படும் இனிப்புச் சோளம்.',
-    ],
-    'Processing' => [
-        'si' => 'සැකසීම',
-        'ta' => 'பதப்படுத்தல்',
-    ],
-    'Harvested corn is precooked and frozen at our ISO 9001 certified factory.' => [
-        'si' => 'නෙළාගත් බඩ ඉරිඟු අපේ ISO 9001 සහතික ලත් කර්මාන්තශාලාවේදී පෙර පිසවා ශීත කරනවා.',
-        'ta' => 'அறுவடை செய்யப்பட்ட சோளம், ISO 9001 சான்றிதழ் பெற்ற எங்கள் தொழிற்சாலையில் முன்கூட்டியே வேகவைத்து உறைவைக்கப்படுகிறது.',
-    ],
-    'Steamed to order' => [
-        'si' => 'ඇණවුමට තම්බනවා',
-        'ta' => 'ஆர்டர் செய்ததும் ஆவியில் வேகவைத்தல்',
-    ],
-    'At the outlet the corn is steamed and mixed with 100% natural spices.' => [
-        'si' => 'අලෙවිසැලේදී බඩ ඉරිඟු වාෂ්පයෙන් තම්බා 100% ස්වාභාවික කුළුබඩු සමඟ මිශ්‍ර කරනවා.',
-        'ta' => 'கடையில் சோளம் ஆவியில் வேகவைக்கப்பட்டு, 100% இயற்கை மசாலாவுடன் கலக்கப்படுகிறது.',
-    ],
-    'Topped your way' => [
-        'si' => 'ඔබ කැමති ටොපිං',
-        'ta' => 'உங்கள் விருப்பப்படி டாப்பிங்',
-    ],
-    'Smothered in the toppings you choose, and served hot in a cup.' => [
-        'si' => 'ඔබ තෝරන ටොපිංවලින් වසා, උණුසුම්ව කෝප්පයක දෙනවා.',
-        'ta' => 'நீங்கள் தேர்ந்தெடுக்கும் டாப்பிங்குகளால் நிரப்பப்பட்டு, சூடாகக் கப்பில் பரிமாறப்படுகிறது.',
-    ],
-    'Flavours and toppings' => [
-        'si' => 'රස සහ ටොපිං',
-        'ta' => 'சுவைகளும் டாப்பிங்குகளும்',
-    ],
-    'Selected flavours are combined by our team to bring unique combinations to every cup.' => [
-        'si' => 'හැම කෝප්පයකටම අනන්‍ය සංයෝජනයක් ගෙන එන්න, තෝරාගත් රස අපේ කණ්ඩායම එකට මිශ්‍ර කරනවා.',
-        'ta' => 'தேர்ந்தெடுக்கப்பட்ட சுவைகளை எங்கள் குழு இணைத்து, ஒவ்வொரு கப்புக்கும் தனித்துவமான கலவையைத் தருகிறது.',
-    ],
-    'Butter' => [
-        'si' => 'බටර්',
-        'ta' => 'வெண்ணெய்',
-    ],
-    'The classic — melted through hot, freshly steamed corn.' => [
-        'si' => 'හැමදාමත් ප්‍රියතම එක — අලුතින් තැම්බූ උණුසුම් බඩ ඉරිඟු අතරින් දිය වෙනවා.',
-        'ta' => 'அசல் சுவை — சூடான, இப்போதுதான் ஆவியில் வெந்த சோளத்தில் உருகிக் கலந்து.',
-    ],
-    'Garlic' => [
-        'si' => 'සුදුළූණු',
-        'ta' => 'பூண்டு',
-    ],
-    'Savoury and aromatic, a favourite with regulars.' => [
-        'si' => 'රසයි, සුවඳයි, නිතර එන අයගේ ප්‍රියතම එක.',
-        'ta' => 'சுவையானதும் நறுமணமானதும், வழக்கமான வாடிக்கையாளர்களின் விருப்பம்.',
-    ],
-    'Cheese' => [
-        'si' => 'චීස්',
-        'ta' => 'சீஸ்',
-    ],
-    'Rich and generous, stirred right through the cup.' => [
-        'si' => 'ඝනයි, බහුලයි, කෝප්පය පුරාම කලවම් කරලා.',
-        'ta' => 'நிறைவாகவும் தாராளமாகவும், கப் முழுவதும் கலந்து.',
-    ],
-    'Mayo' => [
-        'si' => 'මයෝ',
-        'ta' => 'மயோ',
-    ],
-    'Creamy, and the base for many of our combinations.' => [
-        'si' => 'ක්‍රීමී, අපේ බොහෝ සංයෝජනවලට පදනම.',
-        'ta' => 'கிரீமியானது, எங்கள் பல கலவைகளுக்கு அடிப்படை.',
-    ],
-    'Minced chicken' => [
-        'si' => 'අඹරපු කුකුල් මස්',
-        'ta' => 'மின்ஸ் சிக்கன்',
-    ],
-    'For a cup that eats like a meal.' => [
-        'si' => 'කෑම වේලක් වගේ පිරෙන කෝප්පයකට.',
-        'ta' => 'ஒரு வேளை சாப்பாடு போல் நிறைவான கப்.',
-    ],
-    'Lime & oyster sauce' => [
-        'si' => 'දෙහි සහ ඔයිස්ටර් සෝස්',
-        'ta' => 'தேசிக்காய் & ஓய்ஸ்டர் சாஸ்',
-    ],
-    'Bright and savoury — the combination that regulars come back for.' => [
-        'si' => 'ඇඹුලයි, රසවත්යි — නිතර එන අය ආයෙත් ඉල්ලන සංයෝජනය.',
-        'ta' => 'புத்துணர்ச்சியான புளிப்பும் சுவையும் — வழக்கமான வாடிக்கையாளர்கள் திரும்பத் திரும்பக் கேட்கும் கலவை.',
-    ],
-    'Where to find us' => [
-        'si' => 'අප හමුවන තැන්',
-        'ta' => 'எங்களைக் காணும் இடங்கள்',
-    ],
-    'Our outlets' => [
-        'si' => 'අපේ අලෙවිසැල්',
-        'ta' => 'எங்கள் கடைகள்',
-    ],
-    'More than thirty Magic Corn outlets serving corn in a cup across the island.' => [
-        'si' => 'දිවයින පුරා කෝප්පයක බඩ ඉරිඟු දෙන Magic Corn අලෙවිසැල් තිහකට වැඩි ගණනක්.',
-        'ta' => 'தீவு முழுவதும் முப்பதுக்கும் மேற்பட்ட Magic Corn கடைகள் கப்பில் சோளம் பரிமாறுகின்றன.',
-    ],
-    'Frozen retail packs' => [
-        'si' => 'ශීත කළ අලෙවි පැකට්',
-        'ta' => 'உறைவைத்த சில்லறைப் பொதிகள்',
-    ],
-    'Take home our 1kg frozen sweet corn pack and make it your own way.' => [
-        'si' => 'අපේ 1kg ශීත කළ සීනි බඩ ඉරිඟු පැකට්ටුව ගෙදර අරන් ගිහින්, ඔබ කැමති විදිහට හදාගන්න.',
-        'ta' => 'எங்கள் 1kg உறைவைத்த இனிப்புச் சோளப் பொதியை வீட்டுக்கு எடுத்துச் சென்று, உங்கள் விருப்பப்படி தயாரியுங்கள்.',
-    ],
-    'Bulk and wholesale' => [
-        'si' => 'තොග අලෙවිය',
-        'ta' => 'மொத்த விநியோகம்',
-    ],
-    'Frozen sweet corn supplied to hotels, restaurants and caterers.' => [
-        'si' => 'හෝටල්, අවන්හල් සහ ආහාර සපයන්නන් සඳහා ශීත කළ සීනි බඩ ඉරිඟු.',
-        'ta' => 'ஹோட்டல்கள், உணவகங்கள், கேட்டரிங் நிறுவனங்களுக்கு உறைவைத்த இனிப்புச் சோளம் வழங்கப்படுகிறது.',
-    ],
-    'Events and catering' => [
-        'si' => 'උත්සව සහ ආහාර සැපයුම',
-        'ta' => 'நிகழ்வுகளும் கேட்டரிங்கும்',
-    ],
-    'Magic Corn carts and catering for parties, offices and functions.' => [
-        'si' => 'සාද, කාර්යාල සහ උත්සව සඳහා Magic Corn කරත්ත සහ ආහාර සැපයුම.',
-        'ta' => 'பார்ட்டிகள், அலுவலகங்கள், விழாக்களுக்கு Magic Corn வண்டிகளும் கேட்டரிங்கும்.',
-    ],
-    'Thirty-plus outlets across the island' => [
-        'si' => 'දිවයින පුරා අලෙවිසැල් තිහකට වැඩියි',
-        'ta' => 'தீவு முழுவதும் முப்பதுக்கும் மேற்பட்ட கடைகள்',
-    ],
-    'Find your nearest Magic Corn, or talk to us about opening one.' => [
-        'si' => 'ඔබට ළඟම Magic Corn සොයාගන්න, නැත්නම් අලුත් එකක් විවෘත කිරීම ගැන අප හා කතා කරන්න.',
-        'ta' => 'உங்களுக்கு அருகிலுள்ள Magic Corn கடையைக் கண்டறியுங்கள்; அல்லது ஒன்றைத் தொடங்குவது பற்றி எங்களுடன் பேசுங்கள்.',
-    ],
-    'Head office and factory' => [
-        'si' => 'ප්‍රධාන කාර්යාලය සහ කර්මාන්තශාලාව',
-        'ta' => 'தலைமை அலுவலகமும் தொழிற்சாலையும்',
-    ],
-    'Our head office is in Dehiwala, with sweet corn processing supplying every outlet.' => [
-        'si' => 'අපේ ප්‍රධාන කාර්යාලය දෙහිවල පිහිටා තිබෙනවා; සෑම අලෙවිසැලකටම සැපයුම ලැබෙන්නේ එහි සීනි බඩ ඉරිඟු සැකසුම් අංශයෙන්.',
-        'ta' => 'எங்கள் தலைமை அலுவலகம் தெஹிவளையில் அமைந்துள்ளது; அங்கிருந்து ஒவ்வொரு கடைக்கும் இனிப்புச் சோளம் பதப்படுத்தி வழங்கப்படுகிறது.',
-    ],
-    'Dehiwala' => [
-        'si' => 'දෙහිවල',
-        'ta' => 'தெஹிவளை',
-    ],
-    'Head office — No 119, Allen Avenue' => [
-        'si' => 'ප්‍රධාන කාර්යාලය — No 119, Allen Avenue',
-        'ta' => 'தலைமை அலுவலகம் — No 119, Allen Avenue',
-    ],
-    'Outlets' => [
-        'si' => 'අලෙවිසැල්',
-        'ta' => 'கடைகள்',
-    ],
-    'Find your nearest cup' => [
-        'si' => 'ඔබට ළඟම කෝප්පය සොයාගන්න',
-        'ta' => 'அருகிலுள்ள கப்பைக் கண்டறியுங்கள்',
-    ],
-    'Magic Corn has grown from a single outlet in 2007 to more than thirty across Sri Lanka. For the outlet nearest you, or to ask about opening a Magic Corn of your own, get in touch and our team will help.' => [
-        'si' => 'Magic Corn 2007 දී තිබූ එක් අලෙවිසැලකින්, අද වන විට ශ්‍රී ලංකාව පුරා තිහකට වැඩි ගණනක් දක්වා වර්ධනය වී තිබෙනවා. ඔබට ළඟම අලෙවිසැල දැනගන්නත්, ඔබේම Magic Corn එකක් විවෘත කිරීම ගැන විමසන්නත් අප හා සම්බන්ධ වන්න — අපේ කණ්ඩායම ඔබට උදව් කරනවා.',
-        'ta' => '2007ஆம் ஆண்டு ஒரே ஒரு கடையாகத் தொடங்கிய Magic Corn, இன்று இலங்கை முழுவதும் முப்பதுக்கும் மேற்பட்ட கடைகளாக வளர்ந்துள்ளது. உங்களுக்கு அருகிலுள்ள கடை எது என்று அறியவும், உங்கள் சொந்த Magic Corn கடையைத் தொடங்குவது பற்றிக் கேட்கவும் எங்களைத் தொடர்பு கொள்ளுங்கள் — எங்கள் குழு உதவும்.',
-    ],
-    'Get in touch' => [
-        'si' => 'අප හා කතා කරන්න',
-        'ta' => 'எங்களைத் தொடர்பு கொள்ள',
-    ],
-    'Open every day, 9:00 AM to 8:00 PM.' => [
-        'si' => 'දිනපතා විවෘතයි, පෙ.ව. 9:00 සිට ප.ව. 8:00 දක්වා.',
-        'ta' => 'தினமும் காலை 9:00 முதல் இரவு 8:00 வரை திறந்திருக்கும்.',
-    ],
-    'Send us a message' => [
-        'si' => 'අපට පණිවිඩයක් එවන්න',
-        'ta' => 'எங்களுக்கு ஒரு செய்தி அனுப்புங்கள்',
-    ],
-    'For orders, outlet enquiries, bulk supply or event catering — we would love to hear from you.' => [
-        'si' => 'ඇණවුම්, අලෙවිසැල් පිළිබඳ විමසීම්, තොග සැපයුම් හෝ උත්සව ආහාර සැපයුම — ඔබේ පණිවිඩයක් එනකම් අපි බලාගෙන ඉන්නවා.',
-        'ta' => 'ஆர்டர்கள், கடை தொடர்பான விசாரணைகள், மொத்த விநியோகம் அல்லது நிகழ்வுகளுக்கான கேட்டரிங் — எதுவாக இருந்தாலும் உங்கள் செய்திக்காக ஆவலுடன் காத்திருக்கிறோம்.',
-    ],
-    'Where we are' => [
-        'si' => 'අපේ ලිපිනය',
-        'ta' => 'நாங்கள் இருக்கும் இடம்',
-    ],
-    'No 119, Allen Avenue, Dehiwala, Sri Lanka.' => [
-        'si' => 'No 119, Allen Avenue, Dehiwala, Sri Lanka.',
-        'ta' => 'No 119, Allen Avenue, Dehiwala, Sri Lanka.',
-    ],
-    'Butter Corn Cup' => [
-        'si' => 'බටර් කෝන් කප්',
-        'ta' => 'பட்டர் கோர்ன் கப்',
-    ],
-    'The classic. Sweet corn steamed to order and stirred through with butter until every kernel is glossy.' => [
-        'si' => 'හැමදාමත් ප්‍රියතම එක. ඇණවුමට වාෂ්පයෙන් තම්බන සීනි බඩ ඉරිඟු, හැම ඇටයක්ම දිලිසෙන තුරු බටර් සමඟ කලවම් කරලා.',
-        'ta' => 'எப்போதும் பிடித்த அசல் சுவை. ஆர்டர் செய்ததும் ஆவியில் வேகவைத்த இனிப்புச் சோளத்தில், ஒவ்வொரு மணியும் பளபளக்கும் வரை வெண்ணெய் கலக்கப்படுகிறது.',
-    ],
-    'The classic. Sweet corn steamed to order and stirred through with butter until every kernel is glossy. Made with sweet corn we grow ourselves in Sri Lanka, precooked at our ISO 9001 certified factory and steamed fresh at the outlet.' => [
-        'si' => 'හැමදාමත් ප්‍රියතම එක. ඇණවුමට වාෂ්පයෙන් තම්බන සීනි බඩ ඉරිඟු, හැම ඇටයක්ම දිලිසෙන තුරු බටර් සමඟ කලවම් කරලා. ශ්‍රී ලංකාවේ අපිම වගා කරන සීනි බඩ ඉරිඟුවලින්, අපේ ISO 9001 සහතික ලත් කර්මාන්තශාලාවේදී පෙර පිසවා, අලෙවිසැලේදී අලුතින් වාෂ්පයෙන් තම්බා හදනවා.',
-        'ta' => 'எப்போதும் பிடித்த அசல் சுவை. ஆர்டர் செய்ததும் ஆவியில் வேகவைத்த இனிப்புச் சோளத்தில், ஒவ்வொரு மணியும் பளபளக்கும் வரை வெண்ணெய் கலக்கப்படுகிறது. இலங்கையில் நாங்களே வளர்க்கும் இனிப்புச் சோளத்தில் தயாரிக்கப்படுகிறது; ISO 9001 சான்றிதழ் பெற்ற எங்கள் தொழிற்சாலையில் முன்கூட்டியே வேகவைக்கப்பட்டு, கடையில் புதிதாக ஆவியில் வேகவைக்கப்படுகிறது.',
-    ],
-    'Garlic Corn Cup' => [
-        'si' => 'සුදුළූණු කෝන් කප්',
-        'ta' => 'கார்லிக் கோர்ன் கப்',
-    ],
-    'Savoury and aromatic — garlic folded through hot sweet corn. A favourite with regulars.' => [
-        'si' => 'රසයි, සුවඳයි — උණුසුම් සීනි බඩ ඉරිඟු අතරට සුදුළූණු කලවම් කරලා. නිතර එන අයගේ ප්‍රියතම එක.',
-        'ta' => 'சுவையும் நறுமணமும் — சூடான இனிப்புச் சோளத்தில் பூண்டு கலந்து. வழக்கமான வாடிக்கையாளர்களுக்குப் பிடித்த சுவை.',
-    ],
-    'Savoury and aromatic — garlic folded through hot sweet corn. A favourite with regulars. Made with sweet corn we grow ourselves in Sri Lanka, precooked at our ISO 9001 certified factory and steamed fresh at the outlet.' => [
-        'si' => 'රසයි, සුවඳයි — උණුසුම් සීනි බඩ ඉරිඟු අතරට සුදුළූණු කලවම් කරලා. නිතර එන අයගේ ප්‍රියතම එක. ශ්‍රී ලංකාවේ අපිම වගා කරන සීනි බඩ ඉරිඟුවලින්, අපේ ISO 9001 සහතික ලත් කර්මාන්තශාලාවේදී පෙර පිසවා, අලෙවිසැලේදී අලුතින් වාෂ්පයෙන් තම්බා හදනවා.',
-        'ta' => 'சுவையும் நறுமணமும் — சூடான இனிப்புச் சோளத்தில் பூண்டு கலந்து. வழக்கமான வாடிக்கையாளர்களுக்குப் பிடித்த சுவை. இலங்கையில் நாங்களே வளர்க்கும் இனிப்புச் சோளத்தில் தயாரிக்கப்படுகிறது; ISO 9001 சான்றிதழ் பெற்ற எங்கள் தொழிற்சாலையில் முன்கூட்டியே வேகவைக்கப்பட்டு, கடையில் புதிதாக ஆவியில் வேகவைக்கப்படுகிறது.',
-    ],
-    'Cheese Corn Cup' => [
-        'si' => 'චීස් කෝන් කප්',
-        'ta' => 'சீஸ் கோர்ன் கப்',
-    ],
-    'Rich and generous, with cheese stirred right through the cup while the corn is still steaming.' => [
-        'si' => 'ඝනයි, බහුලයි, බඩ ඉරිඟු තවම හුමාලය නගිද්දීම කෝප්පය පුරාම චීස් කලවම් කරලා.',
-        'ta' => 'நிறைவாகவும் தாராளமாகவும், சோளம் ஆவி பறக்கும்போதே கப் முழுவதும் சீஸ் கலக்கப்படுகிறது.',
-    ],
-    'Rich and generous, with cheese stirred right through the cup while the corn is still steaming. Made with sweet corn we grow ourselves in Sri Lanka, precooked at our ISO 9001 certified factory and steamed fresh at the outlet.' => [
-        'si' => 'ඝනයි, බහුලයි, බඩ ඉරිඟු තවම හුමාලය නගිද්දීම කෝප්පය පුරාම චීස් කලවම් කරලා. ශ්‍රී ලංකාවේ අපිම වගා කරන සීනි බඩ ඉරිඟුවලින්, අපේ ISO 9001 සහතික ලත් කර්මාන්තශාලාවේදී පෙර පිසවා, අලෙවිසැලේදී අලුතින් වාෂ්පයෙන් තම්බා හදනවා.',
-        'ta' => 'நிறைவாகவும் தாராளமாகவும், சோளம் ஆவி பறக்கும்போதே கப் முழுவதும் சீஸ் கலக்கப்படுகிறது. இலங்கையில் நாங்களே வளர்க்கும் இனிப்புச் சோளத்தில் தயாரிக்கப்படுகிறது; ISO 9001 சான்றிதழ் பெற்ற எங்கள் தொழிற்சாலையில் முன்கூட்டியே வேகவைக்கப்பட்டு, கடையில் புதிதாக ஆவியில் வேகவைக்கப்படுகிறது.',
-    ],
-    'Mayo Corn Cup' => [
-        'si' => 'මයෝ කෝන් කප්',
-        'ta' => 'மயோ கோர்ன் கப்',
-    ],
-    'Creamy and mild, and the base for many of our best combinations.' => [
-        'si' => 'ක්‍රීමී හා මෘදුයි, අපේ හොඳම සංයෝජන බොහොමයකට පදනමත් මේකයි.',
-        'ta' => 'கிரீமியானதும் மென்மையானதும், எங்கள் சிறந்த கலவைகள் பலவற்றுக்கு அடிப்படை.',
-    ],
-    'Creamy and mild, and the base for many of our best combinations. Made with sweet corn we grow ourselves in Sri Lanka, precooked at our ISO 9001 certified factory and steamed fresh at the outlet.' => [
-        'si' => 'ක්‍රීමී හා මෘදුයි, අපේ හොඳම සංයෝජන බොහොමයකට පදනමත් මේකයි. ශ්‍රී ලංකාවේ අපිම වගා කරන සීනි බඩ ඉරිඟුවලින්, අපේ ISO 9001 සහතික ලත් කර්මාන්තශාලාවේදී පෙර පිසවා, අලෙවිසැලේදී අලුතින් වාෂ්පයෙන් තම්බා හදනවා.',
-        'ta' => 'கிரீமியானதும் மென்மையானதும், எங்கள் சிறந்த கலவைகள் பலவற்றுக்கு அடிப்படை. இலங்கையில் நாங்களே வளர்க்கும் இனிப்புச் சோளத்தில் தயாரிக்கப்படுகிறது; ISO 9001 சான்றிதழ் பெற்ற எங்கள் தொழிற்சாலையில் முன்கூட்டியே வேகவைக்கப்பட்டு, கடையில் புதிதாக ஆவியில் வேகவைக்கப்படுகிறது.',
-    ],
-    'Minced Chicken Corn Cup' => [
-        'si' => 'අඹරපු කුකුල් මස් කෝන් කප්',
-        'ta' => 'மின்ஸ் சிக்கன் கோர்ன் கப்',
-    ],
-    'Seasoned minced chicken through buttered sweet corn — a cup that eats like a meal.' => [
-        'si' => 'බටර් දැමූ සීනි බඩ ඉරිඟු අතරින් රස කළ අඹරපු කුකුල් මස් — කෑම වේලක් වගේ පිරෙන කෝප්පයක්.',
-        'ta' => 'வெண்ணெய் கலந்த இனிப்புச் சோளத்துடன் மசாலா சேர்த்த மின்ஸ் சிக்கன் — ஒரு வேளை சாப்பாடு போல் நிறைவான கப்.',
-    ],
-    'Seasoned minced chicken through buttered sweet corn — a cup that eats like a meal. Made with sweet corn we grow ourselves in Sri Lanka, precooked at our ISO 9001 certified factory and steamed fresh at the outlet.' => [
-        'si' => 'බටර් දැමූ සීනි බඩ ඉරිඟු අතරින් රස කළ අඹරපු කුකුල් මස් — කෑම වේලක් වගේ පිරෙන කෝප්පයක්. ශ්‍රී ලංකාවේ අපිම වගා කරන සීනි බඩ ඉරිඟුවලින්, අපේ ISO 9001 සහතික ලත් කර්මාන්තශාලාවේදී පෙර පිසවා, අලෙවිසැලේදී අලුතින් වාෂ්පයෙන් තම්බා හදනවා.',
-        'ta' => 'வெண்ணெய் கலந்த இனிப்புச் சோளத்துடன் மசாலா சேர்த்த மின்ஸ் சிக்கன் — ஒரு வேளை சாப்பாடு போல் நிறைவான கப். இலங்கையில் நாங்களே வளர்க்கும் இனிப்புச் சோளத்தில் தயாரிக்கப்படுகிறது; ISO 9001 சான்றிதழ் பெற்ற எங்கள் தொழிற்சாலையில் முன்கூட்டியே வேகவைக்கப்பட்டு, கடையில் புதிதாக ஆவியில் வேகவைக்கப்படுகிறது.',
-    ],
-    'Lime & Oyster Sauce Corn Cup' => [
-        'si' => 'දෙහි සහ ඔයිස්ටර් සෝස් කෝන් කප්',
-        'ta' => 'தேசிக்காய் & ஓய்ஸ்டர் சாஸ் கோர்ன் கப்',
-    ],
-    'Bright lime against savoury oyster sauce — the combination regulars come back for.' => [
-        'si' => 'දෙහි ඇඹුල් රසත්, ඔයිස්ටර් සෝස් රසත් එකට — නිතර එන අය ආයෙත් ඉල්ලන සංයෝජනය.',
-        'ta' => 'புளிப்பான தேசிக்காயும் சுவையான ஓய்ஸ்டர் சாஸும் சேரும் கலவை — வாடிக்கையாளர்கள் திரும்பத் திரும்பக் கேட்பது இதைத்தான்.',
-    ],
-    'Bright lime against savoury oyster sauce — the combination regulars come back for. Made with sweet corn we grow ourselves in Sri Lanka, precooked at our ISO 9001 certified factory and steamed fresh at the outlet.' => [
-        'si' => 'දෙහි ඇඹුල් රසත්, ඔයිස්ටර් සෝස් රසත් එකට — නිතර එන අය ආයෙත් ඉල්ලන සංයෝජනය. ශ්‍රී ලංකාවේ අපිම වගා කරන සීනි බඩ ඉරිඟුවලින්, අපේ ISO 9001 සහතික ලත් කර්මාන්තශාලාවේදී පෙර පිසවා, අලෙවිසැලේදී අලුතින් වාෂ්පයෙන් තම්බා හදනවා.',
-        'ta' => 'புளிப்பான தேசிக்காயும் சுவையான ஓய்ஸ்டர் சாஸும் சேரும் கலவை — வாடிக்கையாளர்கள் திரும்பத் திரும்பக் கேட்பது இதைத்தான். இலங்கையில் நாங்களே வளர்க்கும் இனிப்புச் சோளத்தில் தயாரிக்கப்படுகிறது; ISO 9001 சான்றிதழ் பெற்ற எங்கள் தொழிற்சாலையில் முன்கூட்டியே வேகவைக்கப்பட்டு, கடையில் புதிதாக ஆவியில் வேகவைக்கப்படுகிறது.',
-    ],
-    '1kg Frozen Sweet Corn Pack' => [
-        'si' => '1kg ශීත කළ සීනි බඩ ඉරිඟු පැකට්ටුව',
-        'ta' => '1kg உறைவைத்த இனிப்புச் சோளப் பொதி',
-    ],
-    'A kilogram of our precooked sweet corn, frozen — make it your own way at home.' => [
-        'si' => 'පෙර පිසූ අපේ සීනි බඩ ඉරිඟු කිලෝ එකක්, ශීත කරලා — ගෙදරදී ඔබ කැමති විදිහට හදාගන්න.',
-        'ta' => 'முன்கூட்டியே வேகவைத்து உறைவைக்கப்பட்ட எங்கள் இனிப்புச் சோளம் ஒரு கிலோ — வீட்டிலேயே உங்கள் விருப்பப்படி தயாரியுங்கள்.',
-    ],
-    'The same sweet corn we serve at our outlets, precooked and frozen in a 1kg pack. Steam it, season it and top it however you like. Also supplied in bulk to hotels, restaurants and caterers.' => [
-        'si' => 'අලෙවිසැල්වල අපි දෙන එකම සීනි බඩ ඉරිඟු, පෙර පිසවා 1kg පැකට්ටුවක ශීත කරලා. වාෂ්පයෙන් තම්බලා, ඔබ කැමති රසට හදලා, කැමති ටොපිං දාගන්න. හෝටල්, අවන්හල් සහ ආහාර සපයන්නන් සඳහා තොග වශයෙනුත් සපයනවා.',
-        'ta' => 'எங்கள் கடைகளில் பரிமாறும் அதே இனிப்புச் சோளம், முன்கூட்டியே வேகவைத்து 1kg பொதியில் உறைவைக்கப்பட்டுள்ளது. ஆவியில் வேகவைத்து, மசாலா சேர்த்து, உங்கள் விருப்பப்படி டாப்பிங் போட்டுக் கொள்ளுங்கள். ஹோட்டல்கள், உணவகங்கள், கேட்டரிங் நிறுவனங்களுக்கும் மொத்தமாக வழங்கப்படுகிறது.',
-    ],
-    'Magic Corn DIY Home Pack' => [
-        'si' => 'Magic Corn DIY ගෙදර පැකට්ටුව',
-        'ta' => 'Magic Corn DIY வீட்டுப் பொதி',
-    ],
-    'The outlet in a box — our frozen sweet corn, the toppings, and the Magic Corn cups to serve it in.' => [
-        'si' => 'පෙට්ටියක් ඇතුළේ අලෙවිසැලක් — අපේ ශීත කළ සීනි බඩ ඉරිඟු, ටොපිං, සහ ඒවා දෙන්න Magic Corn කෝප්ප.',
-        'ta' => 'ஒரு பெட்டிக்குள் ஒரு கடையே — எங்கள் உறைவைத்த இனிப்புச் சோளம், டாப்பிங்குகள், பரிமாற Magic Corn கப்புகள்.',
-    ],
-    'A boxed kit for making corn in a cup at home: a catering pack of our precooked frozen sweet corn, cheese and butter to stir through it, a lime, and a stack of the same cups we serve in at the outlets. Cook the corn from frozen — boil it or microwave it — then top it however your table likes it.' => [
-        'si' => 'ගෙදරදීම කෝප්පයක බඩ ඉරිඟු හදාගන්න පෙට්ටියක බහාලූ කට්ටලයක්: පෙර පිසූ ශීත කළ අපේ සීනි බඩ ඉරිඟු කේටරින් පැකට්ටුවක්, එයට කලවම් කරගන්න චීස් සහ බටර්, දෙහි ගෙඩියක්, සහ අලෙවිසැල්වල අපි දෙන එකම කෝප්ප ගොඩක්. බඩ ඉරිඟු ශීත කළ තත්ත්වයෙන්ම උයාගන්න — තම්බලා හෝ මයික්‍රෝවේව් කරලා — ඊට පස්සේ ගෙදර අය කැමති විදිහට ටොපිං දාගන්න.',
-        'ta' => 'வீட்டிலேயே கப்பில் சோளம் தயாரிக்க ஒரு பெட்டிக் கிட்: முன்கூட்டியே வேகவைத்து உறைவைத்த எங்கள் இனிப்புச் சோளத்தின் கேட்டரிங் பொதி, அதில் கலக்க சீஸும் வெண்ணெயும், ஒரு தேசிக்காய், மேலும் கடைகளில் நாங்கள் பரிமாறும் அதே கப்புகள் ஒரு அடுக்கு. உறைந்த நிலையிலேயே சோளத்தைச் சமைக்கலாம் — கொதிக்க வைக்கலாம் அல்லது மைக்ரோவேவில் வைக்கலாம் — பிறகு உங்கள் வீட்டாருக்குப் பிடித்தபடி டாப்பிங் சேர்த்துக் கொள்ளுங்கள்.',
-    ],
-    'Corn in a Cup' => [
-        'si' => 'Corn in a Cup',
-        'ta' => 'Corn in a Cup',
-    ],
-    'Frozen Packs' => [
-        'si' => 'ශීත කළ පැකට්',
-        'ta' => 'உறைவைத்த பொதிகள்',
-    ],
-    'DIY Packs' => [
-        'si' => 'DIY පැකට්',
-        'ta' => 'DIY பொதிகள்',
-    ],
+    // ── Services ────────────────────────────────────────────────────────────
+    'Replanting subsidy' => [
+        'si' => 'නැවත වගා කිරීමේ සහනාධාරය',
+        'ta' => 'மீள்நடுகை மானியம்',
+    ],
+    'New planting subsidy' => [
+        'si' => 'නව වගා කිරීමේ සහනාධාරය',
+        'ta' => 'புதிய நடுகை மானியம்',
+    ],
+    'Fertilizer assistance' => [
+        'si' => 'පොහොර ආධාර',
+        'ta' => 'உர உதவி',
+    ],
+    'Soil conservation assistance' => [
+        'si' => 'පාංශු සංරක්ෂණ ආධාර',
+        'ta' => 'மண் பாதுகாப்பு உதவி',
+    ],
+    'Extension and technical advisory' => [
+        'si' => 'ව්‍යාප්ති සහ තාක්ෂණික උපදේශන සේවා',
+        'ta' => 'விரிவாக்கல் மற்றும் தொழினுட்ப ஆலோசனை',
+    ],
+    'Smallholder registration' => [
+        'si' => 'කුඩා වතු ලියාපදිංචිය',
+        'ta' => 'சிறு தோட்டப் பதிவு',
+    ],
+    'Tea Smallholder Development Society registration' => [
+        'si' => 'තේ කුඩා වතු සංවර්ධන සමිති ලියාපදිංචිය',
+        'ta' => 'தேயிலைச் சிறு தோட்ட அபிவிருத்திச் சங்கப் பதிவு',
+    ],
+    'Tea Shakthi programmes' => [
+        'si' => 'තේ ශක්ති වැඩසටහන්',
+        'ta' => 'தேயிலை சக்தி நிகழ்ச்சிகள்',
+    ],
+    'Training at the Hantana National Training Centre' => [
+        'si' => 'හන්තාන ජාතික පුහුණු මධ්‍යස්ථානයේ පුහුණුව',
+        'ta' => 'ஹந்தான தேசிய பயிற்சி நிலையத்தில் பயிற்சி',
+    ],
+    'Tea nursery registration' => [
+        'si' => 'තේ තවාන් ලියාපදිංචිය',
+        'ta' => 'தேயிலை நாற்றுமேடைப் பதிவு',
+    ],
+    'Right to Information request' => [
+        'si' => 'තොරතුරු දැනගැනීමේ අයිතිය පිළිබඳ ඉල්ලීම',
+        'ta' => 'தகவல் அறியும் உரிமைக் கோரிக்கை',
+    ],
+    'Recruitment and vacancies' => [
+        'si' => 'බඳවා ගැනීම් සහ පුරප්පාඩු',
+        'ta' => 'ஆட்சேர்ப்பும் வெற்றிடங்களும்',
+    ],
+
+    // ── Divisions and contact points ────────────────────────────────────────
+    'Land Development & Extension Services' => [
+        'si' => 'ඉඩම් සංවර්ධන සහ ව්‍යාප්ති සේවා අංශය',
+        'ta' => 'நிலம் அபிவிருத்தி மற்றும் விரிவாக்கல் சேவைகள் பிரிவு',
+    ],
+    'Societies & Marketing' => [
+        'si' => 'සමිති සහ අලෙවි අංශය',
+        'ta' => 'சங்கங்கள் மற்றும் சந்தைப்படுத்தல் பிரிவு',
+    ],
+    'Extension & Training' => [
+        'si' => 'ව්‍යාප්ති සහ පුහුණු අංශය',
+        'ta' => 'விரிவாக்கல் மற்றும் பயிற்சிப் பிரிவு',
+    ],
+    'Administration' => [
+        'si' => 'පරිපාලන අංශය',
+        'ta' => 'நிர்வாகப் பிரிவு',
+    ],
+    'Finance' => [
+        'si' => 'මූල්‍ය අංශය',
+        'ta' => 'நிதிப் பிரிவு',
+    ],
+    'Internal Audit' => [
+        'si' => 'අභ්‍යන්තර විගණන අංශය',
+        'ta' => 'உள்ளக கணக்காய்வுப் பிரிவு',
+    ],
+    'Development' => [
+        'si' => 'සංවර්ධන අංශය',
+        'ta' => 'அபிவிருத்திப் பிரிவு',
+    ],
+    'Planning & Monitoring' => [
+        'si' => 'සැලසුම් සහ අධීක්ෂණ අංශය',
+        'ta' => 'திட்டமிடல் மற்றும் கண்காணிப்புப் பிரிவு',
+    ],
+    'ICT' => [
+        'si' => 'තොරතුරු හා සන්නිවේදන තාක්ෂණ අංශය',
+        'ta' => 'தகவல் மற்றும் தொடர்பாடல் தொழினுட்பப் பிரிவு',
+    ],
+    'Regional Administration' => [
+        'si' => 'ප්‍රාදේශීය පරිපාලනය',
+        'ta' => 'பிராந்திய நிர்வாகம்',
+    ],
+    'Board & Chairman’s Office' => [
+        'si' => 'මණ්ඩලය සහ සභාපති කාර්යාලය',
+        'ta' => 'சபையும் தலைவர் அலுவலகமும்',
+    ],
+    'Director General’s Office' => [
+        'si' => 'අධ්‍යක්ෂ ජනරාල් කාර්යාලය',
+        'ta' => 'பணிப்பாளர் நாயகம் அலுவலகம்',
+    ],
+    'Your Tea Inspector, or the Regional Manager of your district office.' => [
+        'si' => 'ඔබගේ තේ පරීක්ෂක, නැතහොත් ඔබගේ දිස්ත්‍රික් කාර්යාලයේ ප්‍රාදේශීය කළමනාකරු.',
+        'ta' => 'உங்கள் தேயிலை ஆய்வாளர், அல்லது உங்கள் மாவட்ட அலுவலகத்தின் பிராந்திய முகாமையாளர்.',
+    ],
+    'Your Tea Inspector.' => [
+        'si' => 'ඔබගේ තේ පරීක්ෂක.',
+        'ta' => 'உங்கள் தேயிலை ஆய்வாளர்.',
+    ],
+    'Your Regional Office.' => [
+        'si' => 'ඔබගේ ප්‍රාදේශීය කාර්යාලය.',
+        'ta' => 'உங்கள் பிராந்திய அலுவலகம்.',
+    ],
+    'The Regional Manager of your district office.' => [
+        'si' => 'ඔබගේ දිස්ත්‍රික් කාර්යාලයේ ප්‍රාදේශීය කළමනාකරු.',
+        'ta' => 'உங்கள் மாவட்ட அலுவலகத்தின் பிராந்திய முகாமையாளர்.',
+    ],
+    'Hantana National Training Centre.' => [
+        'si' => 'හන්තාන ජාතික පුහුණු මධ්‍යස්ථානය.',
+        'ta' => 'ஹந்தான தேசிய பயிற்சி நிலையம்.',
+    ],
+    'Administration Division, Head Office.' => [
+        'si' => 'පරිපාලන අංශය, ප්‍රධාන කාර්යාලය.',
+        'ta' => 'நிர்வாகப் பிரிவு, தலைமை அலுவலகம்.',
+    ],
+    'Information Officer, Head Office.' => [
+        'si' => 'තොරතුරු නිලධාරී, ප්‍රධාන කාර්යාලය.',
+        'ta' => 'தகவல் அலுவலர், தலைமை அலுவலகம்.',
+    ],
+    'No application fee.' => [
+        'si' => 'අයදුම් ගාස්තුවක් නොමැත.',
+        'ta' => 'விண்ணப்பக் கட்டணம் இல்லை.',
+    ],
+    'No fee.' => [
+        'si' => 'ගාස්තුවක් නොමැත.',
+        'ta' => 'கட்டணம் இல்லை.',
+    ],
+    'Free of charge.' => [
+        'si' => 'නොමිලේ.',
+        'ta' => 'இலவசம்.',
+    ],
+    'As stated in the current guidelines.' => [
+        'si' => 'වත්මන් මාර්ගෝපදේශවල දක්වා ඇති පරිදි.',
+        'ta' => 'தற்போதைய வழிகாட்டல்களில் குறிப்பிடப்பட்டவாறு.',
+    ],
+    'Varies by programme.' => [
+        'si' => 'වැඩසටහන අනුව වෙනස් වේ.',
+        'ta' => 'நிகழ்ச்சிக்கேற்ப மாறுபடும்.',
+    ],
+    'By programme.' => [
+        'si' => 'වැඩසටහන අනුව.',
+        'ta' => 'நிகழ்ச்சிக்கேற்ப.',
+    ],
+
+    // ── Offices ─────────────────────────────────────────────────────────────
+    'Head Office — Battaramulla' => [
+        'si' => 'ප්‍රධාන කාර්යාලය — බත්තරමුල්ල',
+        'ta' => 'தலைமை அலுவலகம் — பத்தரமுல்ல',
+    ],
+    'Regional Office — Galle' => [
+        'si' => 'ප්‍රාදේශීය කාර්යාලය — ගාල්ල',
+        'ta' => 'பிராந்திய அலுவலகம் — காலி',
+    ],
+    'Regional Office — Matara' => [
+        'si' => 'ප්‍රාදේශීය කාර්යාලය — මාතර',
+        'ta' => 'பிராந்திய அலுவலகம் — மாத்தறை',
+    ],
+    'Regional Office — Ratnapura' => [
+        'si' => 'ප්‍රාදේශීය කාර්යාලය — රත්නපුර',
+        'ta' => 'பிராந்திய அலுவலகம் — இரத்தினபுரி',
+    ],
+    'Regional Office — Kegalle' => [
+        'si' => 'ප්‍රාදේශීය කාර්යාලය — කෑගල්ල',
+        'ta' => 'பிராந்திய அலுவலகம் — கேகாலை',
+    ],
+    'Regional Office — Kalutara' => [
+        'si' => 'ප්‍රාදේශීය කාර්යාලය — කළුතර',
+        'ta' => 'பிராந்திய அலுவலகம் — களுத்துறை',
+    ],
+    'Regional Office — Kandy' => [
+        'si' => 'ප්‍රාදේශීය කාර්යාලය — මහනුවර',
+        'ta' => 'பிராந்திய அலுவலகம் — கண்டி',
+    ],
+    'Regional Office — Nuwara Eliya' => [
+        'si' => 'ප්‍රාදේශීය කාර්යාලය — නුවරඑළිය',
+        'ta' => 'பிராந்திய அலுவலகம் — நுவரெலியா',
+    ],
+    'Regional Office — Bandarawela (Uva)' => [
+        'si' => 'ප්‍රාදේශීය කාර්යාලය — බණ්ඩාරවෙල (ඌව)',
+        'ta' => 'பிராந்திய அலுவலகம் — பண்டாரவளை (ஊவா)',
+    ],
+    'Hantana National Training Centre' => [
+        'si' => 'හන්තාන ජාතික පුහුණු මධ්‍යස්ථානය',
+        'ta' => 'ஹந்தான தேசிய பயிற்சி நிலையம்',
+    ],
+    'Hantana National Training Centre, Kandy' => [
+        'si' => 'හන්තාන ජාතික පුහුණු මධ්‍යස්ථානය, මහනුවර',
+        'ta' => 'ஹந்தான தேசிய பயிற்சி நிலையம், கண்டி',
+    ],
+    'No. 70, Parliament Road, Pelawatte, Battaramulla' => [
+        'si' => 'අංක 70, පාර්ලිමේන්තු පාර, පැලවත්ත, බත්තරමුල්ල',
+        'ta' => 'இல. 70, பாராளுமன்ற வீதி, பெலவத்த, பத்தரமுல்ல',
+    ],
+
+    // ── Designations ────────────────────────────────────────────────────────
+    'Chairman' => ['si' => 'සභාපති', 'ta' => 'தலைவர்'],
+    'Director General' => ['si' => 'අධ්‍යක්ෂ ජනරාල්', 'ta' => 'பணிப்பாளர் நாயகம்'],
+    'Deputy Director General (Development)' => [
+        'si' => 'නියෝජ්‍ය අධ්‍යක්ෂ ජනරාල් (සංවර්ධන)',
+        'ta' => 'பிரதிப் பணிப்பாளர் நாயகம் (அபிவிருத்தி)',
+    ],
+    'Deputy Director General (Administration)' => [
+        'si' => 'නියෝජ්‍ය අධ්‍යක්ෂ ජනරාල් (පරිපාලන)',
+        'ta' => 'பிரதிப் பணிப்பாளர் நாயகம் (நிர்வாகம்)',
+    ],
+    'Director (Extension & Training)' => [
+        'si' => 'අධ්‍යක්ෂ (ව්‍යාප්ති සහ පුහුණු)',
+        'ta' => 'பணிப்பாளர் (விரிவாக்கல் மற்றும் பயிற்சி)',
+    ],
+    'Director (Societies & Marketing)' => [
+        'si' => 'අධ්‍යක්ෂ (සමිති සහ අලෙවි)',
+        'ta' => 'பணிப்பாளர் (சங்கங்கள் மற்றும் சந்தைப்படுத்தல்)',
+    ],
+    'Chief Accountant' => ['si' => 'ප්‍රධාන ගණකාධිකාරී', 'ta' => 'பிரதம கணக்காளர்'],
+    'Chief Internal Auditor' => ['si' => 'ප්‍රධාන අභ්‍යන්තර විගණක', 'ta' => 'பிரதம உள்ளக கணக்காய்வாளர்'],
+    'Regional Manager' => ['si' => 'ප්‍රාදේශීය කළමනාකරු', 'ta' => 'பிராந்திய முகாமையாளர்'],
+    'Centre Manager' => ['si' => 'මධ්‍යස්ථාන කළමනාකරු', 'ta' => 'நிலைய முகாமையாளர்'],
+    'Information & Communication Technology Officer' => [
+        'si' => 'තොරතුරු හා සන්නිවේදන තාක්ෂණ නිලධාරී',
+        'ta' => 'தகவல் மற்றும் தொடர்பாடல் தொழினுட்ப அலுவலர்',
+    ],
+    'Information Officer (Right to Information)' => [
+        'si' => 'තොරතුරු නිලධාරී (තොරතුරු දැනගැනීමේ අයිතිය)',
+        'ta' => 'தகவல் அலுவலர் (தகவல் அறியும் உரிமை)',
+    ],
+    'To be confirmed' => ['si' => 'තහවුරු කිරීමට ඇත', 'ta' => 'உறுதிப்படுத்தப்பட வேண்டியுள்ளது'],
+
+    // ── Download categories ─────────────────────────────────────────────────
+    'Tender documents' => ['si' => 'ටෙන්ඩර් ලේඛන', 'ta' => 'கேள்விப்பத்திர ஆவணங்கள்'],
+    'Publications' => ['si' => 'ප්‍රකාශන', 'ta' => 'வெளியீடுகள்'],
+    'Acts' => ['si' => 'පනත්', 'ta' => 'சட்டங்கள்'],
+    'Regulations' => ['si' => 'රෙගුලාසි', 'ta' => 'ஒழுங்குவிதிகள்'],
+    'Annual reports' => ['si' => 'වාර්ෂික වාර්තා', 'ta' => 'வருடாந்த அறிக்கைகள்'],
+    'Application forms' => ['si' => 'අයදුම්පත්', 'ta' => 'விண்ணப்பப் படிவங்கள்'],
+    'Standards and guides' => ['si' => 'ප්‍රමිති සහ මාර්ගෝපදේශ', 'ta' => 'தரநிலைகளும் வழிகாட்டிகளும்'],
+    'Recruitment notices' => ['si' => 'බඳවා ගැනීමේ දැන්වීම්', 'ta' => 'ஆட்சேர்ப்பு அறிவித்தல்கள்'],
+
+    // ── News categories ─────────────────────────────────────────────────────
+    'Announcements & Notices' => ['si' => 'නිවේදන සහ දැනුම්දීම්', 'ta' => 'அறிவித்தல்களும் அறிவிப்புகளும்'],
+    'Press Releases' => ['si' => 'මාධ්‍ය නිවේදන', 'ta' => 'ஊடக அறிக்கைகள்'],
+    'Events' => ['si' => 'උත්සව', 'ta' => 'நிகழ்வுகள்'],
+    'Tenders' => ['si' => 'ටෙන්ඩර්', 'ta' => 'கேள்விப்பத்திரங்கள்'],
+    'Circulars' => ['si' => 'චක්‍රලේඛ', 'ta' => 'சுற்றுநிருபங்கள்'],
+    'Programmes & Projects' => ['si' => 'වැඩසටහන් සහ ව්‍යාපෘති', 'ta' => 'நிகழ்ச்சிகளும் திட்டங்களும்'],
+
+    // ── Statistics ──────────────────────────────────────────────────────────
+    'Registered tea smallholdings by district' => [
+        'si' => 'දිස්ත්‍රික්කය අනුව ලියාපදිංචි තේ කුඩා වතු',
+        'ta' => 'மாவட்ட ரீதியாகப் பதிவு செய்யப்பட்ட தேயிலைச் சிறு தோட்டங்கள்',
+    ],
+    'Field extension structure' => [
+        'si' => 'ක්ෂේත්‍ර ව්‍යාප්ති ව්‍යූහය',
+        'ta' => 'கள விரிவாக்கல் அமைப்பு',
+    ],
+    'Replanting and new planting progress' => [
+        'si' => 'නැවත වගා කිරීමේ සහ නව වගා කිරීමේ ප්‍රගතිය',
+        'ta' => 'மீள்நடுகை மற்றும் புதிய நடுகை முன்னேற்றம்',
+    ],
+    'Tea Small Holdings Development Authority' => [
+        'si' => 'තේ කුඩා වතු සංවර්ධන අධිකාරිය',
+        'ta' => 'தேயிலை சிறு தோட்ட அபிவிருத்தி அதிகார சபை',
+    ],
+    'District' => ['si' => 'දිස්ත්‍රික්කය', 'ta' => 'மாவட்டம்'],
+    'Registered holdings' => ['si' => 'ලියාපදිංචි වතු', 'ta' => 'பதிவு செய்யப்பட்ட தோட்டங்கள்'],
+    'Level' => ['si' => 'මට්ටම', 'ta' => 'மட்டம்'],
+    'Number' => ['si' => 'සංඛ්‍යාව', 'ta' => 'எண்ணிக்கை'],
+    'Year' => ['si' => 'වර්ෂය', 'ta' => 'ஆண்டு'],
+    'hectares' => ['si' => 'හෙක්ටයාර්', 'ta' => 'ஹெக்டேயார்'],
+    'holdings' => ['si' => 'වතු', 'ta' => 'தோட்டங்கள்'],
+    'units' => ['si' => 'ඒකක', 'ta' => 'அலகுகள்'],
+
+    // ── Training programmes ─────────────────────────────────────────────────
+    'Good agricultural practice for tea smallholdings' => [
+        'si' => 'තේ කුඩා වතු සඳහා යහපත් කෘෂිකාර්මික භාවිතයන්',
+        'ta' => 'தேயிலைச் சிறு தோட்டங்களுக்கான நல்ல விவசாய நடைமுறைகள்',
+    ],
+    'Tea nursery management and cultivar selection' => [
+        'si' => 'තේ තවාන් කළමනාකරණය සහ ප්‍රභේද තෝරාගැනීම',
+        'ta' => 'தேயிலை நாற்றுமேடை முகாமைத்துவமும் ரகத் தெரிவும்',
+    ],
+    'Society management for office bearers' => [
+        'si' => 'නිලධාරීන් සඳහා සමිති කළමනාකරණය',
+        'ta' => 'பதவியாளர்களுக்கான சங்க முகாமைத்துவம்',
+    ],
+    'Soil conservation on sloping tea land' => [
+        'si' => 'බෑවුම් සහිත තේ ඉඩම්වල පාංශු සංරක්ෂණය',
+        'ta' => 'சரிவான தேயிலை நிலங்களில் மண் பாதுகாப்பு',
+    ],
+    'Value addition and marketing for smallholder groups' => [
+        'si' => 'කුඩා වතු කණ්ඩායම් සඳහා අගය එකතු කිරීම සහ අලෙවිය',
+        'ta' => 'சிறு தோட்டக் குழுக்களுக்கான பெறுமதி சேர்ப்பும் சந்தைப்படுத்தலும்',
+    ],
+    'No course fee.' => ['si' => 'පාඨමාලා ගාස්තුවක් නොමැත.', 'ta' => 'பாட நெறிக் கட்டணம் இல்லை.'],
+    'No course fee. Accommodation and meals provided.' => [
+        'si' => 'පාඨමාලා ගාස්තුවක් නොමැත. නවාතැන් සහ ආහාර සපයනු ලැබේ.',
+        'ta' => 'பாட நெறிக் கட்டணம் இல்லை. தங்குமிடமும் உணவும் வழங்கப்படும்.',
+    ],
+    'No course fee. Lunch provided.' => [
+        'si' => 'පාඨමාලා ගාස්තුවක් නොමැත. දිවා ආහාරය සපයනු ලැබේ.',
+        'ta' => 'பாட நெறிக் கட்டணம் இல்லை. மதிய உணவு வழங்கப்படும்.',
+    ],
+    'As published with the programme.' => [
+        'si' => 'වැඩසටහන සමඟ ප්‍රකාශයට පත් කර ඇති පරිදි.',
+        'ta' => 'நிகழ்ச்சியுடன் வெளியிடப்பட்டவாறு.',
+    ],
+    'Registered smallholders and society office bearers' => [
+        'si' => 'ලියාපදිංචි කුඩා වතු හිමියන් සහ සමිති නිලධාරීන්',
+        'ta' => 'பதிவு செய்யப்பட்ட சிறு தோட்ட உரிமையாளர்களும் சங்கப் பதவியாளர்களும்',
+    ],
+    'Nursery operators, prospective operators and field staff' => [
+        'si' => 'තවාන් පවත්වාගෙන යන්නන්, අපේක්ෂකයින් සහ ක්ෂේත්‍ර කාර්ය මණ්ඩලය',
+        'ta' => 'நாற்றுமேடை நடத்துநர்கள், எதிர்பார்க்கும் நடத்துநர்கள் மற்றும் கள ஊழியர்கள்',
+    ],
+    'Chairpersons, secretaries and treasurers of registered societies' => [
+        'si' => 'ලියාපදිංචි සමිතිවල සභාපතිවරුන්, ලේකම්වරුන් සහ භාණ්ඩාගාරිකවරුන්',
+        'ta' => 'பதிவு செய்யப்பட்ட சங்கங்களின் தலைவர்கள், செயலாளர்கள் மற்றும் பொருளாளர்கள்',
+    ],
+    'Smallholders replanting on sloping land, and field staff' => [
+        'si' => 'බෑවුම් සහිත ඉඩම්වල නැවත වගා කරන කුඩා වතු හිමියන් සහ ක්ෂේත්‍ර කාර්ය මණ්ඩලය',
+        'ta' => 'சரிவான நிலங்களில் மீள்நடுகை செய்யும் சிறு தோட்ட உரிமையாளர்களும் கள ஊழியர்களும்',
+    ],
+    'Society groups and Tea Shakthi enterprise participants' => [
+        'si' => 'සමිති කණ්ඩායම් සහ තේ ශක්ති ව්‍යවසාය සහභාගිවන්නන්',
+        'ta' => 'சங்கக் குழுக்களும் தேயிலை சக்தி தொழில்முயற்சிப் பங்கேற்பாளர்களும்',
+    ],
+
+    // ── Notices ─────────────────────────────────────────────────────────────
+    'Fertilizer issue for the current season — district issue notices published' => [
+        'si' => 'මෙම කන්නය සඳහා පොහොර නිකුත් කිරීම — දිස්ත්‍රික් නිකුත් කිරීමේ දැනුම්දීම් ප්‍රකාශයට පත් කර ඇත',
+        'ta' => 'நடப்புப் பருவத்துக்கான உர விநியோகம் — மாவட்ட விநியோக அறிவிப்புகள் வெளியிடப்பட்டுள்ளன',
+    ],
+    'Replanting subsidy applications are open' => [
+        'si' => 'නැවත වගා කිරීමේ සහනාධාර අයදුම්පත් භාරගනු ලැබේ',
+        'ta' => 'மீள்நடுகை மானிய விண்ணப்பங்கள் ஏற்கப்படுகின்றன',
+    ],
+    'Hantana National Training Centre — new programme calendar released' => [
+        'si' => 'හන්තාන ජාතික පුහුණු මධ්‍යස්ථානය — නව වැඩසටහන් දිනදර්ශනය නිකුත් කර ඇත',
+        'ta' => 'ஹந்தான தேசிய பயிற்சி நிலையம் — புதிய நிகழ்ச்சி நாட்காட்டி வெளியிடப்பட்டுள்ளது',
+    ],
+
+    'Issue notices for each district are published in the Announcements section. Collect your allocation from the issuing point named on your district’s notice, within the window stated.' => [
+        'si' => 'එක් එක් දිස්ත්‍රික්කය සඳහා නිකුත් කිරීමේ දැනුම්දීම් නිවේදන අංශයේ ප්‍රකාශයට පත් කර ඇත. ඔබගේ දිස්ත්‍රික්කයේ දැනුම්දීමේ නම් කර ඇති නිකුත් කිරීමේ ස්ථානයෙන්, දක්වා ඇති කාලය තුළ ඔබගේ ප්‍රතිපාදනය ලබාගන්න.',
+        'ta' => 'ஒவ்வொரு மாவட்டத்துக்குமான விநியோக அறிவிப்புகள் அறிவித்தல்கள் பகுதியில் வெளியிடப்பட்டுள்ளன. உங்கள் மாவட்ட அறிவிப்பில் குறிப்பிடப்பட்டுள்ள விநியோக இடத்திலிருந்து, குறிப்பிட்ட காலத்திற்குள் உங்கள் ஒதுக்கீட்டைப் பெற்றுக் கொள்ளுங்கள்.',
+    ],
+    'Applications for the replanting subsidy are being accepted at every Regional Office. Speak to your Tea Inspector before uprooting any block.' => [
+        'si' => 'නැවත වගා කිරීමේ සහනාධාරය සඳහා අයදුම්පත් සෑම ප්‍රාදේශීය කාර්යාලයකදීම භාරගනු ලැබේ. කිසිදු බ්ලොක් එකක් උදුරා දැමීමට පෙර ඔබගේ තේ පරීක්ෂක සමඟ කතා කරන්න.',
+        'ta' => 'மீள்நடுகை மானியத்துக்கான விண்ணப்பங்கள் ஒவ்வொரு பிராந்திய அலுவலகத்திலும் ஏற்கப்படுகின்றன. எந்தவொரு தொகுதியையும் அகற்றுவதற்கு முன் உங்கள் தேயிலை ஆய்வாளருடன் கலந்துரையாடுங்கள்.',
+    ],
+    'The training calendar for the coming quarter is published, with residential and non-residential programmes for smallholders and society office bearers.' => [
+        'si' => 'කුඩා වතු හිමියන් සහ සමිති නිලධාරීන් සඳහා නේවාසික සහ නේවාසික නොවන වැඩසටහන් සහිතව, ඉදිරි කාර්තුව සඳහා පුහුණු දිනදර්ශනය ප්‍රකාශයට පත් කර ඇත.',
+        'ta' => 'சிறு தோட்ட உரிமையாளர்களுக்கும் சங்கப் பதவியாளர்களுக்குமான தங்கியிருந்து மற்றும் தங்காமல் நிகழ்ச்சிகளுடன், வரவிருக்கும் காலாண்டுக்கான பயிற்சி நாட்காட்டி வெளியிடப்பட்டுள்ளது.',
+    ],
+
+    // ── Related organisations ───────────────────────────────────────────────
+    'Ministry of Plantation and Community Infrastructure' => [
+        'si' => 'වැවිලි හා ප්‍රජා යටිතල පහසුකම් අමාත්‍යාංශය',
+        'ta' => 'பெருந்தோட்ட மற்றும் சமூக உட்கட்டமைப்பு அமைச்சு',
+    ],
+    'Sri Lanka Tea Board' => [
+        'si' => 'ශ්‍රී ලංකා තේ මණ්ඩලය',
+        'ta' => 'இலங்கை தேயிலை சபை',
+    ],
+    'Tea Research Institute of Sri Lanka' => [
+        'si' => 'ශ්‍රී ලංකා තේ පර්යේෂණ ආයතනය',
+        'ta' => 'இலங்கை தேயிலை ஆராய்ச்சி நிறுவனம்',
+    ],
+    'Sri Lanka Tea Factory Owners’ Association' => [
+        'si' => 'ශ්‍රී ලංකා තේ කර්මාන්තශාලා හිමියන්ගේ සංගමය',
+        'ta' => 'இலங்கை தேயிலைத் தொழிற்சாலை உரிமையாளர் சங்கம்',
+    ],
+    'Sri Lanka Government Web Portal' => [
+        'si' => 'ශ්‍රී ලංකා රජයේ වෙබ් ද්වාරය',
+        'ta' => 'இலங்கை அரசாங்க இணையவாயில்',
+    ],
+    'Local Languages Website' => [
+        'si' => 'දේශීය භාෂා වෙබ් අඩවිය',
+        'ta' => 'உள்ளூர் மொழிகள் இணையத்தளம்',
+    ],
+    'Government Information Centre (1919)' => [
+        'si' => 'රජයේ තොරතුරු මධ්‍යස්ථානය (1919)',
+        'ta' => 'அரச தகவல் மையம் (1919)',
+    ],
+    'Information and Communication Technology Agency' => [
+        'si' => 'තොරතුරු හා සන්නිවේදන තාක්ෂණ නියෝජිතායතනය',
+        'ta' => 'தகவல் மற்றும் தொடர்பாடல் தொழினுட்ப முகவரகம்',
+    ],
+
+    // ── Page titles ─────────────────────────────────────────────────────────
+    'About the Authority' => ['si' => 'අධිකාරිය ගැන', 'ta' => 'அதிகார சபை பற்றி'],
+    'Vision, Mission and Objectives' => [
+        'si' => 'දැක්ම, මෙහෙවර සහ අරමුණු',
+        'ta' => 'நோக்கு, பணிக்கூற்று மற்றும் நோக்கங்கள்',
+    ],
+    'Strategic Plan, Policies and Action Plan' => [
+        'si' => 'උපාය මාර්ගික සැලැස්ම, ප්‍රතිපත්ති සහ ක්‍රියාකාරී සැලැස්ම',
+        'ta' => 'மூலோபாயத் திட்டம், கொள்கைகள் மற்றும் செயற்திட்டம்',
+    ],
+    'Divisions and Functional Areas' => [
+        'si' => 'අංශ සහ ක්‍රියාකාරී ක්ෂේත්‍ර',
+        'ta' => 'பிரிவுகளும் செயற்பாட்டுத் துறைகளும்',
+    ],
+    'Organisational Structure' => ['si' => 'සංවිධාන ව්‍යූහය', 'ta' => 'நிறுவன அமைப்பு'],
+    'Land Development and Extension Services' => [
+        'si' => 'ඉඩම් සංවර්ධනය සහ ව්‍යාප්ති සේවා',
+        'ta' => 'நிலம் அபிவிருத்தி மற்றும் விரிவாக்கல் சேவைகள்',
+    ],
+    'Societies Management — Tea Shakthi and Cooperatives' => [
+        'si' => 'සමිති කළමනාකරණය — තේ ශක්ති සහ සමූපකාර',
+        'ta' => 'சங்க முகாமைத்துவம் — தேயிலை சக்தியும் கூட்டுறவுகளும்',
+    ],
+    'Privacy Notice' => ['si' => 'රහස්‍යතා දැනුම්දීම', 'ta' => 'தனியுரிமை அறிவிப்பு'],
+    'Terms of Use' => ['si' => 'භාවිත නියම', 'ta' => 'பயன்பாட்டு விதிமுறைகள்'],
+    'Accessibility Statement' => ['si' => 'ප්‍රවේශ්‍යතා ප්‍රකාශය', 'ta' => 'அணுகல்தன்மை அறிக்கை'],
+
+    // ── Section headings on the content pages ───────────────────────────────
+    'Overview' => ['si' => 'දළ විශ්ලේෂණය', 'ta' => 'கண்ணோட்டம்'],
+    'History' => ['si' => 'ඉතිහාසය', 'ta' => 'வரலாறு'],
+    'What the Authority does' => ['si' => 'අධිකාරිය කරන කාර්යය', 'ta' => 'அதிகார சபையின் பணி'],
+    'Vision' => ['si' => 'දැක්ම', 'ta' => 'நோக்கு'],
+    'Mission' => ['si' => 'මෙහෙවර', 'ta' => 'பணிக்கூற்று'],
+    'Objectives' => ['si' => 'අරමුණු', 'ta' => 'நோக்கங்கள்'],
+    'Strategic direction' => ['si' => 'උපාය මාර්ගික දිශානතිය', 'ta' => 'மூலோபாய திசை'],
+    'Strategic priorities' => ['si' => 'උපාය මාර්ගික ප්‍රමුඛතා', 'ta' => 'மூலோபாய முன்னுரிமைகள்'],
+    'Policy framework' => ['si' => 'ප්‍රතිපත්ති රාමුව', 'ta' => 'கொள்கைக் கட்டமைப்பு'],
+    'Action plan' => ['si' => 'ක්‍රියාකාරී සැලැස්ම', 'ta' => 'செயற்திட்டம்'],
+    'Head Office divisions' => ['si' => 'ප්‍රධාන කාර්යාලයේ අංශ', 'ta' => 'தலைமை அலுவலகப் பிரிவுகள்'],
+    'The field structure' => ['si' => 'ක්ෂේත්‍ර ව්‍යූහය', 'ta' => 'கள அமைப்பு'],
+    'How the Authority is organised' => ['si' => 'අධිකාරිය සංවිධානය වී ඇති ආකාරය', 'ta' => 'அதிகார சபை ஒழுங்கமைக்கப்பட்டுள்ள விதம்'],
+    'Reporting structure' => ['si' => 'වාර්තාකරණ ව්‍යූහය', 'ta' => 'அறிக்கையிடல் அமைப்பு'],
+    'Services in this area' => ['si' => 'මෙම ක්ෂේත්‍රයේ සේවාවන්', 'ta' => 'இந்தத் துறையின் சேவைகள்'],
+    'Society directory' => ['si' => 'සමිති නාමාවලිය', 'ta' => 'சங்க விபரப்பட்டியல்'],
+    'What this area covers' => ['si' => 'මෙම ක්ෂේත්‍රය ආවරණය කරන දෑ', 'ta' => 'இந்தத் துறை உள்ளடக்குபவை'],
+    'Why societies exist' => ['si' => 'සමිති පවතින්නේ ඇයි', 'ta' => 'சங்கங்கள் ஏன் உள்ளன'],
 ];

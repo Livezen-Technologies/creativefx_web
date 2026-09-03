@@ -64,6 +64,28 @@ $lastUpdated = $lastUpdated ?? ($page['updated_at'] ?? null);
     <?php endif; ?>
     <?php if (! empty($canonical)): ?>
     <link rel="canonical" href="<?= esc($canonical, 'attr') ?>">
+    <?php
+        // hreflang, as Clause 3.15 requires: this same page, addressed in each
+        // of the three languages, so a search engine offers a reader the
+        // version in their own. Built by swapping the locale segment of the
+        // canonical URL rather than from a stored list of translated URLs —
+        // the paths are identical across languages by construction, and a
+        // second list would be a second thing to get out of step.
+        $alternates = [];
+        foreach (config('App')->supportedLocales as $alt) {
+            $alternates[$alt] = preg_replace(
+                '~(' . preg_quote(rtrim(base_url(), '/'), '~') . ')/[a-z]{2}(/|$)~',
+                '$1/' . $alt . '$2',
+                $canonical
+            );
+        }
+    ?>
+    <?php foreach ($alternates as $alt => $href): ?>
+    <link rel="alternate" hreflang="<?= esc($alt, 'attr') ?>" href="<?= esc($href, 'attr') ?>">
+    <?php endforeach; ?>
+    <?php // x-default is the welcome page: the one address that does not
+          // presume a language, which is exactly what x-default means. ?>
+    <link rel="alternate" hreflang="x-default" href="<?= esc(base_url('/'), 'attr') ?>">
     <?php endif; ?>
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="<?= esc(setting('site_name', ''), 'attr') ?>">
