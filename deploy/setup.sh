@@ -220,13 +220,20 @@ chmod -R ug+rwX "$APP_DIR/writable"
 
 # ---- Migrate + seed ------------------------------------------------------
 note "Running migrations + seed"
-sudo -u "$WEB_USER" "$PHP_BIN" spark key:generate --force
+# No `spark key:generate` here, deliberately. It writes a *new* encryption.key
+# with --force, which would undo the preservation above nine lines after it was
+# done: every deploy would rotate the key, making anything already encrypted
+# with the old one — the SMTP password, API secrets — permanently unreadable,
+# and changing every ip_hash the feedback, booking and discussion tables have
+# already stored. The key is written into .env by set_env above; missing means
+# generated once, present means kept.
 sudo -u "$WEB_USER" "$PHP_BIN" spark migrate --all
 # Seed the database. Bootstrap seeders (roles / admin user / settings) skip
-# existing rows; the Home/Corporate/Showroom content seeders re-apply canonical
-# page content (idempotent), so a re-run brings live content in sync with the
-# repo — e.g. the hero video + kinetic copy. Pass SKIP_SEED=1 to skip (e.g. once
-# content is managed via the admin).
+# existing rows; the content seeders will not overwrite editorial work — pages
+# carry an is_custom flag an admin edit sets, list tables seed only while empty,
+# and the rest upsert by slug and stop at a row somebody has touched. So a
+# re-run brings a fresh install up to the repo without undoing the CMT's edits.
+# Pass SKIP_SEED=1 to skip entirely.
 if [ "${SKIP_SEED:-0}" != "1" ]; then
   sudo -u "$WEB_USER" "$PHP_BIN" spark db:seed "Modules\\Core\\Database\\Seeds\\DatabaseSeeder"
 else
