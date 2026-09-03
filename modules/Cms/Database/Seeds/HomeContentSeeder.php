@@ -51,8 +51,7 @@ class HomeContentSeeder extends Seeder
         // media records, not page content, and have their own admin screens.
         if ((int) ($existing['is_custom'] ?? 0) === 1) {
             $this->seedVideo($now, $j);
-            $this->seedEsgMetrics($now, $j);
-
+    
             return;
         }
 
@@ -247,7 +246,6 @@ class HomeContentSeeder extends Seeder
         ], 0);
 
         $this->seedVideo($now, $j);
-        $this->seedEsgMetrics($now, $j);
     }
 
     private function seedVideo(string $now, callable $j): void
@@ -330,6 +328,13 @@ class HomeContentSeeder extends Seeder
         $this->db->table('video_subtitles')->insertBatch($subs);
     }
 
+    /**
+     * Sustainability figures for the garment factory this codebase was built
+     * for — water, energy and emissions per unit of production. No page on a
+     * hotel's site renders any of it, and its admin screen has been retired,
+     * so it is no longer seeded. Kept rather than deleted: the table, model and
+     * migrations are untouched, so restoring it is uncommenting two calls.
+     */
     private function seedEsgMetrics(string $now, callable $j): void
     {
         $metrics = [

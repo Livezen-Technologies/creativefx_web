@@ -55,7 +55,6 @@ $groups = [
     ['System', [
         ['media', 'Media Library', 'admin/media', 'image'],
         ['translations', 'Translations', 'admin/translations', 'globe'],
-        ['esg', 'ESG Metrics', 'admin/esg-metrics', 'leaf'],
         ['site-settings', 'Settings', 'admin/site-settings', 'settings'],
         ['tasks', 'Scheduled tasks', 'admin/tasks', 'clock'],
         ['settings', 'Settings (raw)', 'admin/settings', 'settings'],

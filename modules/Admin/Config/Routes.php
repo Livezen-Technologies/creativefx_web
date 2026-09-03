@@ -20,7 +20,6 @@ $routes->group('admin', ['namespace' => 'Modules\Admin\Controllers'], static fun
             'menu-items'  => 'MenuItems',
             'rooms'       => 'Rooms',
             'locations'   => 'Locations',
-            'esg-metrics' => 'EsgMetrics',
             'settings'    => 'Settings',
             'contacts'    => 'Contacts',
             'leads'       => 'Leads',
@@ -37,6 +36,9 @@ $routes->group('admin', ['namespace' => 'Modules\Admin\Controllers'], static fun
             //   'showroom-categories' => 'ShowroomCategories',
             //   'showroom-products'   => 'ShowroomProducts',
             //   'jobs'       => 'Jobs',
+            //   'esg-metrics' => 'EsgMetrics',   (sustainability reporting for a
+            //     garment manufacturer: water, energy and emissions per unit of
+            //     production, with no public page rendering any of it)
         ];
         foreach ($resources as $seg => $ctrl) {
             $routes->get($seg, $ctrl . '::index');
