@@ -40,6 +40,16 @@ $group    = $groups[$current];
         <p class="mt-1 text-sm leading-relaxed text-white/50"><?= esc($group['blurb']) ?></p>
     </div>
 
+    <?php // Said before the editor types a password, not after they press Save. ?>
+    <?php $hasSecret = false; foreach ($group['fields'] as $gf) { $hasSecret = $hasSecret || ! empty($gf['secret']); } ?>
+    <?php if ($hasSecret && ! \Modules\Core\Libraries\SecretBox::hasKey()): ?>
+        <div class="mb-6 rounded-lg border border-amber-400/40 bg-amber-400/10 px-4 py-3 text-sm text-amber-200/90">
+            No encryption key is configured on this server, so passwords here cannot be stored safely and will be
+            refused. A deploy generates one automatically; on a local copy, set <code class="rounded bg-black/30 px-1">encryption.key</code>
+            in <code class="rounded bg-black/30 px-1">.env</code>.
+        </div>
+    <?php endif; ?>
+
     <?php foreach ($group['fields'] as $f):
         $key   = $f['key'];
         $type  = $f['type'];
@@ -107,6 +117,21 @@ $group    = $groups[$current];
                     </p>
                 </label>
 
+            <?php elseif ($type === 'password'):
+                // Never rendered with a value. The form reports whether one is
+                // stored; blank on save means keep what is there.
+                $isSet = ($values['__set_' . $key] ?? '') === '1'; ?>
+                <input type="password" id="<?= esc($fid, 'attr') ?>" name="<?= esc($key, 'attr') ?>" value=""
+                       autocomplete="new-password" spellcheck="false"
+                       placeholder="<?= $isSet ? '••••••••  (stored — leave blank to keep it)' : 'Not set' ?>"
+                       class="<?= $inputCls ?>">
+                <?php if ($isSet): ?>
+                    <p class="mt-1.5 flex items-center gap-1.5 text-xs text-emerald-400/80">
+                        <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        Stored and encrypted. Type a new value to replace it.
+                    </p>
+                <?php endif; ?>
+
             <?php else: ?>
                 <input type="<?= in_array($type, ['email', 'url', 'tel', 'number'], true) ? esc($type, 'attr') : 'text' ?>"
                        id="<?= esc($fid, 'attr') ?>" name="<?= esc($key, 'attr') ?>" value="<?= esc($value) ?>"
@@ -119,10 +144,27 @@ $group    = $groups[$current];
         </div>
     <?php endforeach; ?>
 
-    <div class="flex items-center gap-3 border-t border-white/10 pt-5">
+    <div class="flex flex-wrap items-center gap-3 border-t border-white/10 pt-5">
         <button class="btn-brand">Save <?= esc(strtolower($group['label'])) ?></button>
         <a href="<?= site_url() ?>" target="_blank" rel="noopener" class="text-sm text-white/50 transition hover:text-white">View the site &rarr;</a>
     </div>
 </form>
+
+<?php if ($current === 'email'): ?>
+    <?php // A separate form: a test must send what is stored, so the settings
+          // have to be saved first. Combining them would test values that are
+          // not yet in use. ?>
+    <form method="post" action="<?= site_url('admin/site-settings-test-email') ?>" class="mt-6 max-w-3xl rounded-xl border border-white/10 bg-white/[0.02] p-5">
+        <?= csrf_field() ?>
+        <h3 class="text-sm font-semibold uppercase tracking-widest text-white/60">Test it</h3>
+        <p class="mt-2 text-sm leading-relaxed text-white/50">
+            Sends a message to <strong class="text-white/75"><?= esc(session()->get('admin_user')['email'] ?? 'your account') ?></strong>,
+            the address you signed in with, using the settings as saved above. Save any changes first.
+        </p>
+        <button class="mt-4 rounded-lg border border-white/15 px-4 py-2 text-sm font-semibold text-white/80 transition hover:border-white/40 hover:text-white">
+            Send a test message
+        </button>
+    </form>
+<?php endif; ?>
 
 <?= $this->endSection() ?>

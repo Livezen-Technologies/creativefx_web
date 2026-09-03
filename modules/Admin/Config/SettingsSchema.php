@@ -121,6 +121,36 @@ final class SettingsSchema
                 ],
             ],
 
+            'email' => [
+                'label' => 'Email',
+                'blurb' => 'How the site sends mail, and who hears about a booking request. Until a host is set, nothing is sent — enquiries are still saved and visible under Contact Inbox.',
+                'fields' => [
+                    ['key' => 'host', 'group' => 'smtp', 'label' => 'SMTP host', 'type' => 'text', 'placeholder' => 'smtp.gmail.com'],
+                    ['key' => 'port', 'group' => 'smtp', 'label' => 'Port', 'type' => 'number', 'placeholder' => '587', 'help' => '587 with TLS is the usual answer; 465 with SSL for older servers'],
+                    ['key' => 'crypto', 'group' => 'smtp', 'label' => 'Encryption', 'type' => 'select', 'options' => ['tls' => 'TLS (recommended)', 'ssl' => 'SSL', '' => 'None']],
+                    ['key' => 'user', 'group' => 'smtp', 'label' => 'Username', 'type' => 'text'],
+                    ['key' => 'pass', 'group' => 'smtp', 'label' => 'Password', 'type' => 'password', 'secret' => true, 'help' => 'Stored encrypted and never shown again. Leave blank to keep the current one'],
+                    ['key' => 'from_email', 'group' => 'smtp', 'label' => 'Send from', 'type' => 'email', 'help' => 'Must be an address the SMTP account is allowed to send as, or the mail will be rejected or filed as spam'],
+                    ['key' => 'from_name', 'group' => 'smtp', 'label' => 'Sender name', 'type' => 'text'],
+                    ['key' => 'booking_to', 'group' => 'smtp', 'label' => 'Booking requests go to', 'type' => 'text', 'help' => 'One address, or several separated by commas. Blank falls back to the contact email under Contact details'],
+                    ['key' => 'contact_to', 'group' => 'smtp', 'label' => 'Messages go to', 'type' => 'text', 'help' => 'Blank falls back to the booking recipients, then the contact email'],
+                ],
+            ],
+
+            'security' => [
+                'label' => 'Security',
+                'blurb' => 'reCAPTCHA v3 scores a visitor in the background rather than asking them to identify traffic lights. A form is only rejected when Google is confident it is automated.',
+                'fields' => [
+                    ['key' => 'enabled', 'group' => 'recaptcha', 'label' => 'Enable reCAPTCHA', 'type' => 'checkbox', 'help' => 'Needs both keys below. With either missing, forms are accepted as they are today rather than rejected'],
+                    ['key' => 'site_key', 'group' => 'recaptcha', 'label' => 'Site key', 'type' => 'text', 'help' => 'Public — it appears in the page source, which is expected'],
+                    ['key' => 'secret_key', 'group' => 'recaptcha', 'label' => 'Secret key', 'type' => 'password', 'secret' => true, 'help' => 'Stored encrypted and never shown again. Leave blank to keep the current one'],
+                    ['key' => 'threshold', 'group' => 'recaptcha', 'label' => 'Score threshold', 'type' => 'text', 'placeholder' => '0.5', 'help' => 'Between 0 and 1. Google returns 1.0 for very likely human and 0.0 for very likely a bot; a submission scoring below this is refused. 0.5 is Google\'s own suggestion'],
+                    ['key' => 'on_booking', 'group' => 'recaptcha', 'label' => 'Protect the booking form', 'type' => 'checkbox'],
+                    ['key' => 'on_contact', 'group' => 'recaptcha', 'label' => 'Protect the contact form', 'type' => 'checkbox'],
+                    ['key' => 'on_login', 'group' => 'recaptcha', 'label' => 'Protect the admin sign-in', 'type' => 'checkbox'],
+                ],
+            ],
+
             'seo' => [
                 'label' => 'SEO and analytics',
                 'blurb' => 'Site-wide defaults. Each page has its own title, description and share card under Pages.',

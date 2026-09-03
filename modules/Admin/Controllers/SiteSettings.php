@@ -4,6 +4,7 @@ namespace Modules\Admin\Controllers;
 
 use App\Controllers\BaseController;
 use Modules\Admin\Config\SettingsSchema;
+use Modules\Core\Libraries\SecretBox;
 use Modules\Core\Models\SettingModel;
 
 /**
@@ -82,6 +83,20 @@ class SiteSettings extends BaseController
 
             $row = $model->where('group', $f['group'])->where('key', $f['key'])->first();
 
+            if (! empty($f['secret'])) {
+                // A blank secret field means "leave it alone", not "clear it" —
+                // the form never shows the stored value, so an editor saving
+                // the page for an unrelated reason would otherwise wipe it.
+                if ($value === '') {
+                    continue;
+                }
+                try {
+                    $value = SecretBox::encrypt($value);
+                } catch (\RuntimeException $e) {
+                    return redirect()->back()->withInput()->with('error', $e->getMessage());
+                }
+            }
+
             if ($row === null) {
                 $model->insert([
                     'group'     => $f['group'],
@@ -104,12 +119,71 @@ class SiteSettings extends BaseController
                 : $groups[$group]['label'] . ' settings saved (' . $saved . ' ' . ($saved === 1 ? 'change' : 'changes') . ').');
     }
 
-    /** Every declared setting's current value, keyed by field key. */
+    /**
+     * Send a message to whoever is signed in, to prove the settings work.
+     *
+     * Sent to the administrator's own address rather than to a field on the
+     * form: a test that lets you type any recipient is an open relay for
+     * anyone who reaches this page, and the person testing is the person who
+     * needs to see whether it arrived.
+     */
+    public function testEmail()
+    {
+        if (! admin_can('settings.manage')) {
+            return redirect()->to(site_url('admin/site-settings/email'))->with('error', 'You do not have permission to send a test.');
+        }
+
+        $to = trim((string) (session()->get('admin_user')['email'] ?? ''));
+        if ($to === '') {
+            return redirect()->to(site_url('admin/site-settings/email'))
+                ->with('error', 'Your account has no email address, so there is nowhere to send a test.');
+        }
+
+        $result = \Modules\Core\Libraries\Mailer::send(
+            $to,
+            (string) setting('site_name', '') . ' — test message',
+            '<p>This is a test from the ' . esc((string) setting('site_name', '')) . ' admin console.</p>'
+            . '<p>If you are reading it, the SMTP settings work and booking requests will reach their recipients.</p>'
+            . '<p style="color:#666;font-size:12px">Sent ' . esc(date('j M Y, H:i')) . '.</p>',
+        );
+
+        $redirect = redirect()->to(site_url('admin/site-settings/email'));
+
+        if ($result['sent']) {
+            return $redirect->with('message', 'Test message sent to ' . $to . '. If it does not arrive within a few minutes, check the spam folder and that "Send from" is an address this account may send as.');
+        }
+
+        // The reason, not "sending failed" — the whole point of a test is to
+        // find out what is wrong.
+        log_message('error', 'SMTP test failed: ' . ($result['detail'] ?: $result['error']));
+
+        return $redirect->with('error', 'Could not send: ' . $result['error']);
+    }
+
+    /**
+     * Every declared setting's current value, keyed by field key.
+     *
+     * A secret is reported as set or not set, never as its value. Rendering a
+     * password into an input puts it into every proxy log, browser cache and
+     * password manager between the server and the editor's screen, to save one
+     * person one retype.
+     */
     private function currentValues(): array
     {
+        $secret = [];
+        foreach (SettingsSchema::fields() as $f) {
+            if (! empty($f['secret'])) {
+                $secret[$f['key']] = true;
+            }
+        }
+
         $values = [];
         foreach (SettingsSchema::fields() as $f) {
-            $values[$f['key']] = (string) setting($f['key'], '', $f['group']);
+            $stored = (string) setting($f['key'], '', $f['group']);
+            $values[$f['key']] = isset($secret[$f['key']]) ? '' : $stored;
+            if (isset($secret[$f['key']])) {
+                $values['__set_' . $f['key']] = SecretBox::isSet($stored) ? '1' : '';
+            }
         }
 
         return $values;
@@ -128,6 +202,7 @@ class SiteSettings extends BaseController
             'url'    => 'permit_empty|valid_url_strict[https]|max_length[255]',
             'number' => 'permit_empty|numeric',
             'image'  => 'permit_empty|max_length[255]',
+            'password' => 'permit_empty|max_length[255]',
             'text', 'tel', 'color' => 'permit_empty|max_length[255]',
             default  => '',
         };

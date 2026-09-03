@@ -182,8 +182,24 @@ note "scheme: ${SITE_SCHEME}; vhost template: $VHOST_SRC"
 
 # ---- .env ----------------------------------------------------------------
 note "Writing .env"
-JWT_SECRET="$(openssl rand -hex 32)"
 cp -n deploy/.env.production.example "$APP_DIR/.env" 2>/dev/null || true
+
+# Secrets are generated once and then kept. Rotating them on every deploy is not
+# a security measure, it is a fault: a new jwt.secret invalidates every token
+# that has been issued, and a new encryption.key makes everything already
+# encrypted with the old one — SMTP passwords, API secrets — permanently
+# unreadable. Read what is there; generate only what is missing.
+read_env() { grep "^$1" "$APP_DIR/.env" 2>/dev/null | head -1 | sed "s/.*= *'\?\([^']*\)'\?.*/\1/"; }
+JWT_SECRET="$(read_env 'jwt.secret')"
+JWT_SECRET="${JWT_SECRET:-$(openssl rand -hex 32)}"
+ENCRYPTION_KEY="$(read_env 'encryption.key')"
+if [ -z "$ENCRYPTION_KEY" ]; then
+  # CodeIgniter expects the key prefixed with hex2bin: so it is decoded rather
+  # than used as literal text.
+  ENCRYPTION_KEY="hex2bin:$(openssl rand -hex 32)"
+  note "Generated an encryption key (stored only in $APP_DIR/.env)"
+fi
+
 # Write the dynamic values into .env (idempotent).
 set_env() { local k="$1" v="$2"; if grep -q "^$k" "$APP_DIR/.env"; then sed -i "s|^$k.*|$k = '$v'|" "$APP_DIR/.env"; else printf "\n%s = '%s'\n" "$k" "$v" >> "$APP_DIR/.env"; fi; }
 set_env "app.baseURL" "${SITE_SCHEME}://${DOMAIN}/"
@@ -191,6 +207,7 @@ set_env "database.default.database" "$DB_NAME"
 set_env "database.default.username" "$DB_USER"
 set_env "database.default.password" "$DB_PASS"
 set_env "jwt.secret" "$JWT_SECRET"
+set_env "encryption.key" "$ENCRYPTION_KEY"
 
 # ---- Permissions ---------------------------------------------------------
 note "Setting ownership to $WEB_USER"

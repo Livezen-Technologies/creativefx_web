@@ -63,7 +63,7 @@ class BookingController extends ResourceController
 
         $children = $this->request->getVar('children');
 
-        (new ContactModel())->insert([
+        $booking = [
             'name'      => $this->request->getVar('name'),
             'email'     => $this->request->getVar('email'),
             'phone'     => $this->request->getVar('phone'),
@@ -77,8 +77,63 @@ class BookingController extends ResourceController
             'locale'    => substr((string) $this->request->getVar('locale'), 0, 5) ?: 'en',
             'source'    => 'booking_form',
             'status'    => 'new',
-        ]);
+        ];
+
+        (new ContactModel())->insert($booking);
+
+        // The row is saved first and the notification is attempted afterwards,
+        // never the other way round: a mail server that is slow, misconfigured
+        // or down must not be able to lose a guest's request. If the email does
+        // not go, the request is still in the inbox and the failure is in the
+        // log for whoever wonders why nothing arrived.
+        $this->notify($booking);
 
         return $this->respondCreated(['status' => 'success']);
+    }
+
+    /** Tell the hotel, if it has said where to. Never fatal to the request. */
+    private function notify(array $booking): void
+    {
+        try {
+            $to = \Modules\Core\Libraries\Mailer::bookingRecipients();
+            if ($to === '' || ! \Modules\Core\Libraries\Mailer::isConfigured()) {
+                return;
+            }
+
+            $nights = (int) ((strtotime($booking['check_out']) - strtotime($booking['check_in'])) / 86400);
+            $rows   = [
+                'Name'      => $booking['name'],
+                'Email'     => $booking['email'],
+                'Phone'     => $booking['phone'] ?: '—',
+                'Room'      => ucfirst((string) $booking['room_type']),
+                'Arriving'  => date('j M Y', strtotime($booking['check_in'])),
+                'Leaving'   => date('j M Y', strtotime($booking['check_out'])) . ' (' . $nights . ' night' . ($nights === 1 ? '' : 's') . ')',
+                'Guests'    => $booking['adults'] . ' adult' . ($booking['adults'] === 1 ? '' : 's')
+                             . ($booking['children'] > 0 ? ', ' . $booking['children'] . ' child' . ($booking['children'] === 1 ? '' : 'ren') : ''),
+            ];
+
+            $html = '<h2 style="margin:0 0 16px">New room request</h2><table cellpadding="6" style="border-collapse:collapse">';
+            foreach ($rows as $label => $value) {
+                $html .= '<tr><td style="color:#666">' . esc($label) . '</td><td><strong>' . esc((string) $value) . '</strong></td></tr>';
+            }
+            $html .= '</table>';
+            if (trim((string) $booking['message']) !== '') {
+                $html .= '<p style="margin-top:16px"><em>' . nl2br(esc($booking['message'])) . '</em></p>';
+            }
+            $html .= '<p style="margin-top:20px;color:#666;font-size:12px">Reply to this message to answer the guest directly.</p>';
+
+            $result = \Modules\Core\Libraries\Mailer::send(
+                $to,
+                'Room request — ' . $booking['name'] . ', ' . date('j M', strtotime($booking['check_in'])),
+                $html,
+                (string) $booking['email'],
+            );
+
+            if (! $result['sent']) {
+                log_message('error', 'Booking notification not sent: ' . ($result['detail'] ?: $result['error']));
+            }
+        } catch (\Throwable $e) {
+            log_message('error', 'Booking notification threw: ' . $e->getMessage());
+        }
     }
 }
