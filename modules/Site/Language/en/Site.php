@@ -5,6 +5,8 @@ return [
         'accommodation' => 'Accommodation',
         'dining'        => 'Dining',
         'things_to_do'  => 'Things To Do',
+        // Short in the bar; the page's own title is the long SEO one.
+        'kalawana'      => 'Explore Kalawana',
         'gallery'       => 'Gallery',
         'contact'       => 'Contact Us',
         'book'          => 'Book Now',
@@ -92,6 +94,8 @@ return [
         'children'   => 'Children',
         'message'    => 'Anything we should know?',
         'send'       => 'Send request',
+        'whatsapp'   => 'Book on WhatsApp',
+        'or'         => 'or',
         'sending'    => 'Sending…',
         'close'      => 'Close',
         'ok_title'   => 'Request received',

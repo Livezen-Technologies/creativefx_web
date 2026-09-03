@@ -11,6 +11,11 @@
             <?php if (! empty($content['text'])): ?>
                 <div class="mt-4 leading-relaxed text-white/70"><?= rich_text($content['text']) ?></div>
             <?php endif; ?>
+            <?php // Optional citation. Renders only when the block carries one, so
+                  // every page already using this block is unchanged. ?>
+            <?php if (! empty($content['link'])): ?>
+                <p class="mt-5 text-sm"><?= source_link($content['link']) ?></p>
+            <?php endif; ?>
         </div>
     </div>
 </section>

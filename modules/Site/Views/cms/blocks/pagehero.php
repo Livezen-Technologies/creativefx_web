@@ -1,4 +1,4 @@
-<?php helper('norlanka');
+<?php helper(['norlanka', 'url']);
 // Optional background film (set per page in the CMS). Falls back to the
 // animated aurora when no video is configured, so every page hero still works.
 $heroVideo  = $content['video'] ?? null;
@@ -50,6 +50,15 @@ $hasBg      = $hasVideo || $hasImage;
         <h1 class="max-w-4xl text-4xl font-bold leading-[1.05] sm:text-6xl" data-gsap="reveal"><?= esc(t_field($content['title'] ?? [])) ?></h1>
         <?php if (! empty($content['subtitle'])): ?>
             <p class="mt-6 max-w-2xl text-lg text-white/70" data-gsap="reveal"><?= esc(t_field($content['subtitle'])) ?></p>
+        <?php endif; ?>
+        <?php // Optional action in the hero. Pages that seed no button render
+              // exactly as they did. ?>
+        <?php if (! empty($content['button'])):
+            $u = (string) ($content['url'] ?? '');
+            $h = ($u !== '' && ($u[0] === '/' || str_starts_with($u, 'http'))) ? $u : locale_url($u); ?>
+            <div class="mt-9" data-gsap="reveal">
+                <a href="<?= esc($h) ?>" class="btn-brand btn-lg"><?= esc(t_field($content['button'])) ?></a>
+            </div>
         <?php endif; ?>
     </div>
 

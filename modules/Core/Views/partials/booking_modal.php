@@ -128,9 +128,28 @@ $tomorrow = date('Y-m-d', strtotime('+1 day'));
                     <?= esc(lang('Site.booking.err')) ?>
                 </p>
 
-                <button type="submit" class="btn-brand mt-7 w-full sm:w-auto" :disabled="busy">
-                    <span x-text="busy ? '<?= esc(lang('Site.booking.sending'), 'attr') ?>' : '<?= esc(lang('Site.booking.send'), 'attr') ?>'"></span>
-                </button>
+                <?php // The same request, by whichever route the guest prefers. The
+                      // form reaches the inbox staff already watch; WhatsApp reaches
+                      // a phone, which for a small hotel is often answered sooner.
+                      // Both carry the same details, so neither is a lesser path.
+                      // Rendered only when a WhatsApp number is configured. ?>
+                <?php $waNumber = preg_replace('/\D+/', '', (string) setting('whatsapp', '', 'contact')); ?>
+                <div class="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center">
+                    <button type="submit" class="btn-brand w-full sm:w-auto" :disabled="busy">
+                        <span x-text="busy ? '<?= esc(lang('Site.booking.sending'), 'attr') ?>' : '<?= esc(lang('Site.booking.send'), 'attr') ?>'"></span>
+                    </button>
+                    <?php if ($waNumber !== ''): ?>
+                        <span class="hidden text-xs uppercase tracking-widest text-white/55 sm:inline"><?= esc(lang('Site.booking.or')) ?></span>
+                        <button type="button" @click="toWhatsApp($el.closest('form'))"
+                                class="btn-ghost w-full sm:w-auto"
+                                data-wa="<?= esc($waNumber, 'attr') ?>">
+                            <svg class="mr-2 h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.33 4.97L2 22l5.25-1.38a9.87 9.87 0 004.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0012.04 2z"/>
+                            </svg>
+                            <?= esc(lang('Site.booking.whatsapp')) ?>
+                        </button>
+                    <?php endif; ?>
+                </div>
             </form>
         </div>
     </div>

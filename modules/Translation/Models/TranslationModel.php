@@ -68,6 +68,31 @@ class TranslationModel extends Model
         $this->update($row['id'], ['value' => $value]);
     }
 
+    /**
+     * Drop file-managed rows for keys the language files no longer define.
+     *
+     * @param list<string> $keep keys still present in the file
+     */
+    public function pruneMissing(string $locale, string $group, array $keep): int
+    {
+        $builder = $this->builder()
+            ->where('locale', $locale)
+            ->where('group', $group)
+            ->where('is_custom', 0);
+
+        if ($keep !== []) {
+            $builder->whereNotIn('key', $keep);
+        }
+
+        $stale = array_column($builder->select('id')->get()->getResultArray(), 'id');
+
+        foreach (array_chunk($stale, 200) as $chunk) {
+            $this->whereIn('id', $chunk)->delete();
+        }
+
+        return count($stale);
+    }
+
     /** Flatten a nested language array into dot-notation keys. */
     public static function flatten(array $data, string $prefix = ''): array
     {

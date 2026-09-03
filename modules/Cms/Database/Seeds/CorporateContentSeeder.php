@@ -42,6 +42,13 @@ class CorporateContentSeeder extends Seeder
             'slug'             => $slug,
             'title'            => json_encode($def['title'], JSON_UNESCAPED_UNICODE),
             'meta_description' => json_encode($def['meta'] ?? $def['title'], JSON_UNESCAPED_UNICODE),
+            // The browser title and the social card. PageController already
+            // reads both — meta_title falling back to title, og_image falling
+            // back to a default — but nothing here ever wrote them, so a page
+            // could not carry an SEO title distinct from its heading, or its
+            // own sharing image.
+            'meta_title'       => json_encode($def['meta_title'] ?? $def['title'], JSON_UNESCAPED_UNICODE),
+            'og_image'         => $def['og_image'] ?? null,
             'template'         => 'default',
             'is_home'          => 0,
             'status'           => 'published',
@@ -99,6 +106,7 @@ class CorporateContentSeeder extends Seeder
             'accommodation' => $this->accommodation(),
             'dining'        => $this->dining(),
             'things-to-do'  => $this->thingsToDo(),
+            'kalawana'      => $this->kalawana(),
             'gallery'       => $this->gallery(),
             'contact'       => $this->contact(),
         ];
@@ -344,6 +352,136 @@ class CorporateContentSeeder extends Seeder
                             ['region' => $this->loc('Kukuleganga'), 'detail' => $this->loc('Dam Site, Project Road, Kalawana 70450'),
                              'lat' => 6.5586, 'lon' => 80.3242, 'hq' => true],
                         ],
+                    ]],
+                ]],
+            ],
+        ];
+    }
+
+    /**
+     * Kalawana as a destination — the reason a guest comes this far.
+     *
+     * The copy is reproduced exactly as the brief specifies it; the only
+     * editorial decisions here are which of the hotel's own photographs carry
+     * each section, and which sources to cite. Every cited URL was checked for
+     * a 200 from a runner before it was written in: UNESCO's Sinharaja page
+     * returns 403 to anything that is not a browser and the Forest Department's
+     * site did not answer at all, so neither is linked. Citing a source that
+     * does not load is worse than not citing one.
+     */
+    private function kalawana(): array
+    {
+        $tourism = 'https://www.srilanka.travel/sinharaja-forest-reserve';
+
+        return [
+            'title'      => $this->loc('Explore Kalawana'),
+            'meta_title' => $this->loc('Discover Kalawana – Gateway to Sinharaja Rain Forest'),
+            'meta'       => $this->loc('Plan your Kalawana stay: Sinharaja rainforest walks, waterfalls, birdwatching, tea-country villages, and travel tips for reaching the Kudawa entrance.'),
+            'og_image'   => '/media/giantforests/Sinharaja-Tracking-2.jpg',
+            'sections'   => [
+                // 1. Hero
+                ['key' => 'hero', 'type' => 'hero', 'blocks' => [
+                    ['pagehero', [
+                        'eyebrow'  => $this->loc('Ratnapura District, Sri Lanka'),
+                        'title'    => $this->loc('Discover Kalawana'),
+                        'subtitle' => $this->loc('Escape into Sri Lanka’s lush wet zone, where rainforest trails, waterfalls, tea-covered hills, and authentic village life meet.'),
+                        'image'    => '/media/giantforests/Sinharaja-Tracking-2.jpg',
+                        'button'   => $this->loc('Plan Your Stay'),
+                        'url'      => 'accommodation',
+                    ]],
+                ]],
+
+                // 2. Introduction
+                ['key' => 'intro', 'type' => 'intro', 'blocks' => [
+                    ['two_column', [
+                        'title'     => $this->loc('Gateway to Sinharaja'),
+                        'body'      => $this->loc('Kalawana is a peaceful nature destination in Sri Lanka’s Ratnapura District and a convenient route to the Kudawa entrance of Sinharaja Rain Forest Reserve. It is ideal for rainforest trekking, birdwatching, waterfall visits, and relaxed eco-travel. Sinharaja is a UNESCO World Heritage Site and one of Sri Lanka’s most important biodiversity areas.'),
+                        'layout'    => 'text-left',
+                        'image'     => '/media/giantforests/Sinharaja-Tracking-1.jpg',
+                        'image_alt' => $this->loc('Dense rainforest interior in Sinharaja, layered green canopy and tall trunks'),
+                        'link'      => ['label' => $this->loc('Sri Lanka Tourism'), 'url' => $tourism],
+                    ]],
+                ]],
+
+                // 3. Things to do
+                ['key' => 'things', 'type' => 'things', 'blocks' => [
+                    ['feature_cards', [
+                        'title' => $this->loc('Things to Do in Kalawana'),
+                        'items' => [
+                            [
+                                'title'     => $this->loc('Explore Sinharaja Rain Forest'),
+                                'text'      => $this->loc('Join a guided walk through dense rainforest, home to endemic birds, butterflies, reptiles, and plant life.'),
+                                'image'     => '/media/giantforests/Hiking-Jungle-Tour-1-Giants-Forests-Hotel.jpg',
+                                'image_alt' => $this->loc('A guided group walking a narrow trail through thick rainforest'),
+                            ],
+                            [
+                                'title'     => $this->loc('Waterfall adventures'),
+                                'text'      => $this->loc('Discover scenic waterfalls and natural pools around the Kalawana and Sinharaja region.'),
+                                'image'     => '/media/giantforests/Bopath-Falls-Ratnapura.jpg',
+                                'image_alt' => $this->loc('A wide waterfall falling into a rocky pool, with a rainbow in the spray'),
+                            ],
+                            [
+                                'title'     => $this->loc('Birdwatching and wildlife'),
+                                'text'      => $this->loc('Look out for the Sri Lanka blue magpie, giant squirrel, colourful butterflies, and rare rainforest species.'),
+                                'image'     => '/media/giantforests/Things-to-do-Giants-Forests-Hotel-1.jpg',
+                                'image_alt' => $this->loc('Rainforest wildlife near the hotel grounds'),
+                            ],
+                            [
+                                'title'     => $this->loc('Village and tea-country experiences'),
+                                'text'      => $this->loc('Enjoy rural landscapes, tea estates, local food, and the slower rhythm of village life.'),
+                                'image'     => '/media/giantforests/Cycle-tour-1.jpg',
+                                'image_alt' => $this->loc('Two cyclists on a lane between tea fields and wildflowers'),
+                            ],
+                            [
+                                'title'     => $this->loc('Nature photography'),
+                                'text'      => $this->loc('Capture misty forest views, rivers, tropical greenery, and waterfalls.'),
+                                'image'     => '/media/giantforests/Sinharaja-Tracking-3.jpg',
+                                'image_alt' => $this->loc('A bright orange bracket fungus on a wet rainforest branch'),
+                            ],
+                        ],
+                    ]],
+                ]],
+
+                // 4. Plan your visit
+                ['key' => 'plan', 'type' => 'plan', 'blocks' => [
+                    ['richtext', [
+                        'title' => $this->loc('Plan Your Visit'),
+                        'text'  => $this->loc('The main Kudawa entrance to Sinharaja is reached via Kalawana. A local guide is required for entry to the reserve. Bring comfortable walking shoes, rain protection, drinking water, insect repellent, and a camera.'),
+                        'link'  => ['label' => $this->loc('Visitor guidance'), 'url' => $tourism],
+                    ]],
+                ]],
+
+                // 5. Best time to visit
+                ['key' => 'when', 'type' => 'when', 'blocks' => [
+                    ['richtext', [
+                        'title' => $this->loc('Best Time to Visit'),
+                        'text'  => $this->loc('Kalawana is in Sri Lanka’s wet zone, so visitors should expect occasional rain throughout the year. January to early March and August to September are often more practical periods for rainforest walks, although the forest is beautiful in every season.'),
+                        'link'  => ['label' => $this->loc('Visitor guidance'), 'url' => $tourism],
+                    ]],
+                ]],
+
+                // 6. Getting here
+                ['key' => 'getting-here', 'type' => 'map', 'blocks' => [
+                    ['map', [
+                        'title' => $this->loc('Getting Here'),
+                        'intro' => $this->loc('From Colombo, travel via the Southern Expressway toward Welipenna and continue inland through Kalawana. The journey to the Kudawa entrance generally takes about 4–5 hours by road.'),
+                        'items' => [
+                            ['region' => $this->loc('Kalawana'), 'detail' => $this->loc('Gateway to the Kudawa entrance of Sinharaja'),
+                             'lat' => 6.5386, 'lon' => 80.4020, 'hq' => true],
+                        ],
+                    ]],
+                ]],
+
+                // 7. Call to action
+                ['key' => 'cta', 'type' => 'cta', 'blocks' => [
+                    ['cta', [
+                        'title'   => $this->loc('Start Your Kalawana Adventure'),
+                        'text'    => $this->loc('Stay close to nature and experience the rainforest, waterfalls, and peaceful surroundings of Kalawana.'),
+                        'button'  => $this->loc('Book Your Stay'),
+                        'url'     => 'accommodation',
+                        'button2' => $this->loc('Contact Us'),
+                        'url2'    => 'contact',
+                        'image'   => '/media/giantforests/Sinharaja-Tracking-1.jpg',
                     ]],
                 ]],
             ],

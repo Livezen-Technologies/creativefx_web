@@ -161,12 +161,74 @@ html.dark .theme-esg-green {  /* Impact page green scope, dark variant */
      ink, which is invisible on this ground. */
   .bk-input::-webkit-calendar-picker-indicator,
   .bk-input::-webkit-inner-spin-button { filter: invert(1); opacity: 0.7; }
-  .bk-input option { color: #1A2A20; }
+
+  /* A <select> otherwise renders in the operating system's own style — on macOS
+     a blue-tinted double chevron — which is the one control in this dialog that
+     looks like it belongs to a different application. appearance:none hands the
+     arrow back to us; the chevron below is drawn in the same white the labels
+     use, and the right-hand padding keeps the text clear of it. */
+  select.bk-input {
+    -webkit-appearance: none;
+    appearance: none;
+    padding-right: 2.6rem;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.9rem center;
+    background-size: 1.05rem;
+  }
+  /* The list itself is drawn by the OS, so it gets the page's ink on white
+     rather than white on white. */
+  .bk-input option { color: #1A2A20; background: #fff; }
   .bk-err {
     @apply mt-1 block text-xs font-medium;
     color: #FFD9D4;
   }
   .bk-err:empty { display: none; }
+
+  /* A photograph with mist drifting over it — see partials/mist_scene.php.
+     Three clouds on long, mismatched, alternating cycles: 42s, 67s and 89s
+     never come back into phase inside a visit, so the motion has no visible
+     loop point. Transform-only, so it runs on the compositor and costs no
+     layout. */
+  .mist-scene { position: relative; overflow: hidden; isolation: isolate; }
+  .mist-photo {
+    position: absolute; inset: 0; z-index: -30;
+    height: 100%; width: 100%; object-fit: cover;
+  }
+  .mist-veil {
+    position: absolute; inset: -12%; z-index: -20; pointer-events: none;
+    background:
+      radial-gradient(42% 34% at 18% 62%, rgb(255 255 255 / 0.20), transparent 70%),
+      radial-gradient(38% 28% at 72% 44%, rgb(255 255 255 / 0.15), transparent 72%),
+      radial-gradient(52% 38% at 46% 84%, rgb(255 255 255 / 0.12), transparent 70%);
+    animation: mist-drift 42s ease-in-out infinite alternate;
+    will-change: transform;
+  }
+  .mist-veil--slow {
+    animation-duration: 67s;
+    animation-direction: alternate-reverse;
+    opacity: 0.65;
+  }
+  /* The wash is what keeps type legible on a photograph, so it is not optional
+     and not decorative: --hero-wash is the same token the heroes are tuned
+     against, and it follows the theme. */
+  .mist-floor {
+    position: absolute; inset: 0; z-index: -10; pointer-events: none;
+    background:
+      linear-gradient(to top,
+        rgb(var(--hero-wash) / 0.94),
+        rgb(var(--hero-wash) / 0.62) 45%,
+        rgb(var(--hero-wash) / 0.86));
+    animation: mist-breathe 89s ease-in-out infinite alternate;
+  }
+  @keyframes mist-drift {
+    from { transform: translate3d(-3%, 1.5%, 0) scale(1.06); }
+    to   { transform: translate3d(4%, -2%, 0) scale(1.14); }
+  }
+  @keyframes mist-breathe {
+    from { opacity: 0.92; }
+    to   { opacity: 1; }
+  }
 
   .panel-forest {
     background: rgb(var(--forest));
@@ -238,11 +300,12 @@ html.dark .theme-esg-green {  /* Impact page green scope, dark variant */
     transition: background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
     border-bottom: 1px solid transparent;
   }
-  /* Un-scrolled, the header floats on hero media with only a soft wash behind
-     it, so the white knockout is the legible one whatever the page theme. Once
-     the solid header takes over, the mark follows the theme again. */
-  .site-header:not(.is-scrolled) .brand-logo__on-light { display: none; }
-  .site-header:not(.is-scrolled) .brand-logo__on-dark { display: inline-block; }
+  /* This used to force the white knockout whenever the header was un-scrolled,
+     on the reasoning that it floats over hero media. That holds in dark mode
+     and is exactly wrong in light: the wash behind the un-scrolled header is
+     `from-brand-black/90`, which resolves to the cream ground — so the mark was
+     white on cream, and the site's own logo was invisible until the reader
+     scrolled. The logo follows the theme, like the nav links beside it. */
 
   .site-header.is-scrolled {
     background-color: rgb(var(--bg) / 0.92);
@@ -771,6 +834,8 @@ html.fp-active body {
     transition: none;
   }
   .pre-logo { animation: none; }
+  /* The photograph and its wash stay; only the drift stops. */
+  .mist-veil, .mist-floor { animation: none; }
   #preloader { transition: none; }
   .nl-arc { animation: none; opacity: 0.5; }
   .nl-marker__pulse { animation: none; opacity: 0; }

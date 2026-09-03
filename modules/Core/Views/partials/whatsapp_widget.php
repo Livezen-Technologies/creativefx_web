@@ -25,14 +25,16 @@ $prefill  = $greeting !== ''
 
 $href = 'https://wa.me/' . $number . '?text=' . rawurlencode($prefill);
 ?>
-<div x-data="{ hint: false }" class="fixed bottom-5 right-5 z-40 flex items-center gap-3 print:hidden">
+<?php // Bottom-left. The panel engine's section dots run down the right-hand
+      // edge of the home page, and a floating button there sat on top of them. ?>
+<div x-data="{ hint: false }" class="fixed bottom-5 left-5 z-40 flex flex-row-reverse items-center gap-3 print:hidden">
 
     <!-- The label is not a tooltip: it is readable without hover, on the side
          where there is room for it, and it is hidden from assistive tech
          because the link below already carries the same words. -->
     <span x-show="hint" x-cloak x-transition.opacity aria-hidden="true"
-          class="hidden rounded-full bg-brand-black/95 px-4 py-2 text-xs font-semibold uppercase
-                 tracking-widest shadow-lg backdrop-blur sm:block">
+          class="hidden whitespace-nowrap rounded-full bg-brand-black/95 px-4 py-2 text-xs font-semibold
+                 uppercase tracking-widest shadow-lg backdrop-blur sm:block">
         <?= esc(lang('Site.whatsapp.hint')) ?>
     </span>
 

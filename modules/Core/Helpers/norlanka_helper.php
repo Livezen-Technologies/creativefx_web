@@ -305,8 +305,42 @@ if (! function_exists('site_nav')) {
             'accommodation' => lang('Site.nav.accommodation'),
             'dining'        => lang('Site.nav.dining'),
             'things-to-do'  => lang('Site.nav.things_to_do'),
+            'kalawana'      => lang('Site.nav.kalawana'),
             'gallery'       => lang('Site.nav.gallery'),
             'contact'       => lang('Site.nav.contact'),
         ];
+    }
+}
+
+if (! function_exists('source_link')) {
+    /**
+     * A citation under a paragraph: "Sri Lanka Tourism →".
+     *
+     * Rendered here rather than in each block so every one of them carries
+     * rel="noopener noreferrer" and target="_blank" without that having to be
+     * remembered four times. An off-site link opened with target="_blank" and
+     * no rel hands the new page a reference back to this one.
+     *
+     * @param array{label?: array|string, url?: string} $link
+     */
+    function source_link(array $link, string $class = ''): string
+    {
+        $url   = trim((string) ($link['url'] ?? ''));
+        $label = $link['label'] ?? '';
+        $label = is_array($label) ? t_field($label) : (string) $label;
+
+        if ($url === '' || trim($label) === '') {
+            return '';
+        }
+
+        $external = str_starts_with($url, 'http');
+
+        return sprintf(
+            '<a href="%s"%s class="%s">%s<span aria-hidden="true"> &rarr;</span></a>',
+            esc($url, 'attr'),
+            $external ? ' target="_blank" rel="noopener noreferrer"' : '',
+            esc(trim('nl-source ' . $class), 'attr'),
+            esc($label),
+        );
     }
 }

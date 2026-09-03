@@ -73,6 +73,37 @@ export default () => ({
     if (! outEl.value || outEl.value <= inEl.value) outEl.value = min;
   },
 
+  /**
+   * The same request, sent as a WhatsApp message instead of through the form.
+   *
+   * Composed from whatever the guest has filled in, so it works from an empty
+   * form as well as a complete one — a half-filled request that reaches a phone
+   * is worth more than a complete one nobody sends. Opened in a new tab so the
+   * page and anything already typed into it survive.
+   */
+  toWhatsApp(form) {
+    const number = this.$el.dataset.wa;
+    if (!number) return;
+
+    const f = new FormData(form);
+    const v = (k) => (f.get(k) || '').toString().trim();
+
+    const parts = ['Hello, I would like to request a room.'];
+    const line = (label, value) => { if (value) parts.push(`${label}: ${value}`); };
+
+    line('Name', v('name'));
+    line('Email', v('email'));
+    line('Phone', v('phone'));
+    line('Room', v('room_type'));
+    if (v('check_in') && v('check_out')) parts.push(`Dates: ${v('check_in')} to ${v('check_out')}`);
+    const guests = [v('adults') && `${v('adults')} adults`, Number(v('children')) > 0 && `${v('children')} children`]
+      .filter(Boolean).join(', ');
+    line('Guests', guests);
+    line('Notes', v('message'));
+
+    window.open(`https://wa.me/${number}?text=${encodeURIComponent(parts.join('\n'))}`, '_blank', 'noopener');
+  },
+
   async submit(form) {
     this.busy = true;
     this.failed = false;

@@ -29,9 +29,21 @@ class TranslationSeeder extends Seeder
             if (! is_array($data)) {
                 continue;
             }
-            foreach (TranslationModel::flatten($data) as $key => $value) {
+            $fromFile = TranslationModel::flatten($data);
+
+            foreach ($fromFile as $key => $value) {
                 $model->putFromFile($locale, 'Site', $key, $value);
             }
+
+            // A key deleted from the file leaves its row behind, and DbLanguage
+            // prefers the table — so the string carries on being served by a
+            // site whose code no longer mentions it. That is how four labels
+            // from the previous brand survived this clone. Importing keeps the
+            // values in step; this keeps the set of keys in step too.
+            //
+            // Only rows nobody has edited. A key somebody translated by hand and
+            // that has since left the files is their work, not ours to bin.
+            $model->pruneMissing($locale, 'Site', array_keys($fromFile));
         }
     }
 }
