@@ -342,18 +342,30 @@ html.dark .theme-notice {
      hero, left the right-hand links on a mid-tone over an article page, and on
      a phone the page's own text read straight through the bar and collided with
      the logo. A navigation bar that is only sometimes legible is not legible. */
+  /* Two states, one transition. At the top of the page the bar is transparent
+     over its wash — the original design, and the only place that wash is ever
+     seen. From the moment it becomes sticky it is opaque.
+
+     Opaque, not 92% with a blur. Translucency there is what let a phone render
+     the page's own text straight through the bar; and once the background is
+     solid the blur has nothing left to do, so it goes rather than costing a
+     compositing layer on every scroll. Everything comes from the theme tokens,
+     so Light and Dark each get their own solid ground, border and shadow
+     without a second rule. */
   .site-header {
-    background-color: rgb(var(--bg));
-    border-bottom: 1px solid rgb(var(--fg) / 0.10);
-    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+    background-color: rgb(var(--bg) / 0);
+    border-bottom: 1px solid transparent;
+    transition: background-color 0.28s ease, box-shadow 0.28s ease,
+                border-color 0.28s ease;
   }
 
-  /* Scrolling changes the shadow, not the ground. The reader still gets the
-     signal that the page has moved under a fixed bar, without the bar's
-     legibility depending on it. */
   .site-header.is-scrolled {
-    border-bottom-color: rgb(var(--fg) / 0.14);
-    box-shadow: 0 10px 30px -18px rgb(0 0 0 / 0.35);
+    background-color: rgb(var(--bg));
+    border-bottom-color: rgb(var(--fg) / 0.12);
+    /* Tinted with the foreground rather than pure black: a black shadow under a
+       dark bar on a dark page is invisible, so the dark theme would lose the
+       lift that tells a reader the bar is above the page. */
+    box-shadow: 0 10px 30px -18px rgb(var(--fg) / 0.28);
   }
 
   /* Six items, one of them "Explore Kalawana", set uppercase with tracking:

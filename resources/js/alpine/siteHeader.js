@@ -23,7 +23,14 @@ export default () => ({
    */
   fits: true,
 
+  /**
+   * True once an IntersectionObserver owns the sticky state, so the scroll
+   * handler stops writing it and only keeps the progress bar in step.
+   */
+  observed: false,
+
   init() {
+    this.watchStickiness();
     this.onScroll();
     this.measure();
     // Re-measure on resize and on the web fonts arriving, both of which change
@@ -50,6 +57,37 @@ export default () => ({
       this.scrolled = index > 0;
       this.progress = count > 1 ? (index / (count - 1)) * 100 : 0;
     });
+  },
+
+  /**
+   * Decide the sticky state by watching a 1px marker at the top of the
+   * document, not by listening for scroll.
+   *
+   * A scroll listener has to be told the page moved, and on a phone mid-fling
+   * that message is not guaranteed to arrive in time — which is how the bar
+   * came to be photographed in its transparent state half way down a page,
+   * with the page's own text reading through it. An observer is told by the
+   * compositor that the marker left the viewport; there is no event cadence to
+   * miss, and it costs nothing per frame.
+   *
+   * The scroll handler stays for the progress bar, and remains the fallback
+   * wherever IntersectionObserver is missing.
+   */
+  watchStickiness() {
+    const sentinel = document.getElementById('header-sentinel');
+    if (! sentinel || typeof IntersectionObserver !== 'function') return;
+
+    // The marker is 30px tall and sits at the top of the document, so it is
+    // the threshold — no rootMargin. A negative top margin would shrink the
+    // root past a 1px marker entirely, leaving it never intersecting and the
+    // header sticky from the first frame, which is how the first version of
+    // this went out: transparent normal state, and nobody ever saw it.
+    new IntersectionObserver(
+      ([entry]) => { this.scrolled = ! entry.isIntersecting; },
+      { threshold: 0 }
+    ).observe(sentinel);
+
+    this.observed = true;
   },
 
   /**
@@ -85,7 +123,9 @@ export default () => ({
 
   onScroll() {
     const y = window.scrollY || window.pageYOffset || 0;
-    this.scrolled = y > 30;
+    // Only when nothing better is watching: two writers that disagree on a
+    // frame make the bar flicker between its two states.
+    if (! this.observed) this.scrolled = y > 30;
     const max = document.documentElement.scrollHeight - window.innerHeight;
     this.progress = max > 0 ? Math.min(100, (y / max) * 100) : 0;
   },

@@ -146,6 +146,63 @@ for (const locale of LOCALES) {
   console.log(`  ${locale}  ${results.join('  ')}`);
 }
 
+// ── The header's two states ─────────────────────────────────────────────────
+// The bar is transparent over its wash at the top of the page and opaque from
+// the moment it is sticky. The second half is the one that failed in the wild —
+// photographed transparent half way down a page, with the page's own text
+// reading through it — so it is asserted rather than assumed, in both themes.
+for (const theme of ['light', 'dark']) {
+  const context = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+  await context.addInitScript((t) => {
+    try {
+      localStorage.setItem('nl_locale', 'en');
+      if (t === 'dark') localStorage.setItem('nl_theme', 'dark');
+    } catch (e) { /* private window */ }
+  }, theme);
+  const page = await context.newPage();
+  await page.goto(`${base}/en`, { waitUntil: 'domcontentloaded' });
+  await page.waitForTimeout(1600);
+
+  // rgb() has three components and rgba() four. Counting them is the reliable
+  // read: an optional trailing group in one regex captures the blue channel as
+  // the alpha and reports an opaque bar as 248 opacity.
+  const alpha = (css) => {
+    const parts = (css.match(/[\d.]+/g) || []).map(Number);
+    return parts.length >= 4 ? parts[3] : 1;
+  };
+  const bg = () => page.$eval('.site-header', (el) => getComputedStyle(el).backgroundColor);
+
+  check(`${theme}: the header is transparent at the top of the page`,
+    alpha(await bg()) < 0.1, await bg());
+
+  await page.evaluate(() => window.scrollTo(0, 1200));
+  await page.waitForTimeout(900);
+
+  const stuck = await page.$eval('.site-header', (el) => el.classList.contains('is-scrolled'));
+  check(`${theme}: the header becomes sticky once scrolled`, stuck);
+
+  const solid = await bg();
+  check(`${theme}: the sticky header is opaque`, alpha(solid) === 1, solid);
+
+  const edges = await page.$eval('.site-header', (el) => {
+    const st = getComputedStyle(el);
+    return { border: st.borderBottomColor, shadow: st.boxShadow, transition: st.transitionProperty };
+  });
+  check(`${theme}: the sticky header has a border`,
+    edges.border !== 'rgba(0, 0, 0, 0)' && !edges.border.includes(', 0)'), edges.border);
+  check(`${theme}: the sticky header has a shadow`, edges.shadow !== 'none', edges.shadow);
+  check(`${theme}: the change is transitioned, not abrupt`,
+    edges.transition.includes('background-color'), edges.transition);
+
+  // And back: returning to the top restores the normal appearance.
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await page.waitForTimeout(900);
+  check(`${theme}: returning to the top restores the normal state`,
+    alpha(await bg()) < 0.1, await bg());
+
+  await context.close();
+}
+
 await browser.close();
 console.log(`\n${pass} passed, ${fail} failed.`);
 process.exit(fail === 0 ? 0 : 1);

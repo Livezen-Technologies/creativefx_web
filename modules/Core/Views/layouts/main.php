@@ -127,6 +127,11 @@ $lastUpdated = $lastUpdated ?? ($page['updated_at'] ?? null);
         </div>
     </div>
 
+    <?php // A 1px marker at the top of the document. The header watches it with
+          // an IntersectionObserver to decide whether it is sticky — see
+          // siteHeader.js for why that is not a scroll listener. ?>
+    <div id="header-sentinel" aria-hidden="true" style="position:absolute;top:0;left:0;height:30px;width:1px;pointer-events:none"></div>
+
     <?= view('Modules\Core\Views\partials\header', [], ['saveData' => false]) ?>
 
     <main id="main">

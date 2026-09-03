@@ -42,13 +42,17 @@ $isCurrent = static function (array $item) use ($currentSlug): bool {
           // page, dark on dark. Only the footer is pinned to the dark scope. ?>
     class="site-header <?= $sticky ? 'fixed' : 'absolute' ?> inset-x-0 top-0 z-50"
 >
-    <?php // No wash. It existed to make the bar legible while it floated over
-          // hero media, and a fading gradient is a guess about what is behind
-          // it: over a photograph it worked, over an article page it left the
-          // right-hand links on a mid-tone, and on a phone the page's own text
-          // read straight through the bar and collided with the logo. The bar
-          // is solid at every scroll position now, so there is nothing to
-          // guess about. ?>
+    <?php // The normal state's ground: a soft wash so the bar reads over hero
+          // media at the top of the page, fading out as the solid sticky state
+          // takes over. Both are in the theme's tokens, so it is a light wash
+          // over a light page and a dark one over a dark page.
+          //
+          // This is only ever seen at the top of the document. Everything below
+          // that is the sticky state, which is opaque — the failure this used
+          // to cause was the sticky state not engaging, not the wash itself. ?>
+    <div aria-hidden="true"
+         class="pointer-events-none absolute inset-x-0 top-0 -z-10 h-32 bg-gradient-to-b from-brand-black/90 via-brand-black/45 to-transparent transition-opacity duration-300"
+         :class="scrolled ? 'opacity-0' : 'opacity-100'"></div>
 
     <!-- Scroll progress bar -->
     <div class="absolute inset-x-0 top-0 h-0.5 bg-brand-red origin-left" :style="`transform:scaleX(${progress/100})`"></div>
