@@ -90,7 +90,8 @@ $topics = [
         <!-- The thread. aria-live so a reply is announced when it arrives:
              without it a screen-reader user sends a question and is told
              nothing came back. -->
-        <div class="assistant-thread" x-ref="thread" aria-live="polite" aria-atomic="false">
+        <div class="assistant-thread" x-ref="thread" data-lenis-prevent
+             aria-live="polite" aria-atomic="false">
             <p class="assistant-day"><span><?= esc(lang('Site.assistant.today')) ?></span></p>
 
             <div class="assistant-turn">

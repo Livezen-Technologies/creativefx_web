@@ -331,9 +331,29 @@ html.dark .theme-notice {
 
 @layer components {
   /* Header / navigation ---------------------------------------------------- */
+  /* Solid at every scroll position, in both themes, from the theme's own
+     tokens — so switching Light/Dark re-colours the bar, its text, its icons,
+     its border and its hover states together, with nothing pinned to a literal
+     colour. (`white` in this project is aliased to rgb(var(--fg) / <alpha>),
+     which is why the controls already follow.)
+
+     It used to be transparent until scrolled, with a gradient wash behind it.
+     A fading gradient is a guess about what is underneath: it held over the
+     hero, left the right-hand links on a mid-tone over an article page, and on
+     a phone the page's own text read straight through the bar and collided with
+     the logo. A navigation bar that is only sometimes legible is not legible. */
   .site-header {
-    transition: background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-    border-bottom: 1px solid transparent;
+    background-color: rgb(var(--bg));
+    border-bottom: 1px solid rgb(var(--fg) / 0.10);
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+  }
+
+  /* Scrolling changes the shadow, not the ground. The reader still gets the
+     signal that the page has moved under a fixed bar, without the bar's
+     legibility depending on it. */
+  .site-header.is-scrolled {
+    border-bottom-color: rgb(var(--fg) / 0.14);
+    box-shadow: 0 10px 30px -18px rgb(0 0 0 / 0.35);
   }
 
   /* Six items, one of them "Explore Kalawana", set uppercase with tracking:
@@ -2086,4 +2106,88 @@ html.fp-active body {
 @media (prefers-reduced-motion: reduce) {
   .lang-modal-card { animation: none; }
   .lang-option-go { transition: none; }
+}
+
+/* ── The navigation drawer ────────────────────────────────────────────────────
+   The panel scrolls. It did not, and the body scroll is deliberately locked
+   while it is open, so with twenty-two links the ones past the fold could not
+   be reached at all — the menu opened, and half the site was simply not in it.
+
+   From `sm` the groups sit in columns. As one flowing list this is taller than
+   any phone and most laptops, which means scrolling a menu to find the thing
+   you opened the menu to find. Each parent keeps its children in one cell, so
+   the grouping survives the change of shape. */
+@layer components {
+  .drawer-panel {
+    overflow-y: auto;
+    /* The page behind is already locked, but a trackpad fling that reaches the
+       end of this list must not start moving anything else. */
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .drawer-nav {
+    /* Bottom padding, not margin: the last link has to clear the edge of a
+       scroll container, and on a phone the browser's own chrome as well. */
+    @apply pb-16 pt-6 sm:pb-20 sm:pt-8;
+  }
+
+  .drawer-grid {
+    @apply grid grid-cols-1 gap-x-10 gap-y-1 sm:grid-cols-2 lg:grid-cols-3;
+  }
+
+  .drawer-group {
+    @apply py-1;
+    break-inside: avoid;
+  }
+
+  .drawer-parent {
+    @apply flex items-center justify-between gap-3 rounded-lg px-3 py-3 text-lg
+           font-semibold transition;
+    color: rgb(var(--fg) / 0.92);
+  }
+  .drawer-parent:hover {
+    background: rgb(var(--fg) / 0.06);
+    color: rgb(var(--fg));
+  }
+  .drawer-parent.is-current { color: rgb(var(--accent)); }
+
+  .drawer-chevron {
+    @apply h-4 w-4 shrink-0 transition;
+    color: rgb(var(--fg) / 0.35);
+  }
+  .drawer-parent:hover .drawer-chevron {
+    @apply translate-x-0.5;
+    color: rgb(var(--accent));
+  }
+
+  /* A rule down the left rather than an indent alone: at three columns the
+     indent has nothing to be measured against, and the children stop reading as
+     belonging to the heading above them. */
+  .drawer-children {
+    @apply ml-3 flex flex-col border-l pl-3;
+    border-color: rgb(var(--fg) / 0.12);
+  }
+  .drawer-child {
+    @apply rounded-md px-3 py-2 text-[0.95rem] transition;
+    color: rgb(var(--fg) / 0.72);
+  }
+  .drawer-child:hover {
+    background: rgb(var(--fg) / 0.06);
+    color: rgb(var(--fg));
+  }
+  .drawer-child.is-current {
+    color: rgb(var(--accent));
+    font-weight: 600;
+  }
+
+  .drawer-socials {
+    @apply mt-10 flex justify-center border-t pt-8;
+    border-color: rgb(var(--fg) / 0.10);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .drawer-parent, .drawer-child, .drawer-chevron { transition: none; }
+  .drawer-parent:hover .drawer-chevron { transform: none; }
 }

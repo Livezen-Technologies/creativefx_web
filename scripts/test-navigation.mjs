@@ -76,6 +76,51 @@ for (const locale of LOCALES) {
         els.filter((e) => e.offsetParent !== null).length);
       route = 'drawer';
 
+      // Every link has to be *reachable*, not merely present. The body scroll
+      // is locked while the drawer is open, so if the panel itself does not
+      // scroll, anything past the fold is in the DOM and unreachable — which is
+      // exactly what happened: the menu opened and half the site was not in it.
+      const shape = await page.$eval('.drawer-panel', (el) => ({
+        overflows: el.scrollHeight > el.clientHeight + 1,
+        overflowY: getComputedStyle(el).overflowY,
+        scrollHeight: el.scrollHeight,
+        client: el.clientHeight,
+      }));
+
+      if (shape.overflows) {
+        // A real wheel event, not `el.scrollTop = …`. Assigning scrollTop moves
+        // an `overflow: hidden` container perfectly well, so the obvious version
+        // of this check passes against the very bug it is meant to catch —
+        // verified by breaking the CSS and watching it stay green. Only input
+        // the browser routes through the scrolling machinery proves a reader
+        // can do it.
+        const box = await page.$('.drawer-panel');
+        const b = await box.boundingBox();
+        await page.mouse.move(b.x + b.width / 2, b.y + b.height / 2);
+        await page.mouse.wheel(0, 600);
+        await page.waitForTimeout(350);
+        const moved = await page.$eval('.drawer-panel', (el) => el.scrollTop);
+
+        check(`${locale} ${width}px: the menu scrolls when a reader scrolls it`,
+          moved > 0,
+          `content ${shape.scrollHeight}px in ${shape.client}px, overflow-y: ${shape.overflowY}, stayed at 0`);
+      }
+
+      // The last link must land inside the panel once scrolled to, not under
+      // its edge.
+      await page.$eval('.drawer-panel', (el) => { el.scrollTop = el.scrollHeight; });
+      await page.waitForTimeout(200);
+      const lastVisible = await page.evaluate(() => {
+        const links = [...document.querySelectorAll('nav[aria-label="Mobile"] a')];
+        const last = links[links.length - 1];
+        if (!last) return false;
+        const r = last.getBoundingClientRect();
+        return r.bottom <= window.innerHeight + 1 && r.top >= 0;
+      });
+      check(`${locale} ${width}px: the last link can be brought into view`, lastVisible);
+
+      await page.$eval('.drawer-panel', (el) => { el.scrollTop = 0; });
+
       // And closes again, or it is a trap rather than a menu.
       await page.keyboard.press('Escape');
       await page.waitForTimeout(300);

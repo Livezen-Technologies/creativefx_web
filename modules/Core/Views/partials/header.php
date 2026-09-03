@@ -42,11 +42,13 @@ $isCurrent = static function (array $item) use ($currentSlug): bool {
           // page, dark on dark. Only the footer is pinned to the dark scope. ?>
     class="site-header <?= $sticky ? 'fixed' : 'absolute' ?> inset-x-0 top-0 z-50"
 >
-    <!-- Top shade: a soft light wash that keeps the dark logo/nav legible over
-         hero media at the top of the page; fades out once the solid header kicks in. -->
-    <div aria-hidden="true"
-         class="pointer-events-none absolute inset-x-0 top-0 -z-10 h-32 bg-gradient-to-b from-brand-black/90 via-brand-black/45 to-transparent transition-opacity duration-300"
-         :class="scrolled ? 'opacity-0' : 'opacity-100'"></div>
+    <?php // No wash. It existed to make the bar legible while it floated over
+          // hero media, and a fading gradient is a guess about what is behind
+          // it: over a photograph it worked, over an article page it left the
+          // right-hand links on a mid-tone, and on a phone the page's own text
+          // read straight through the bar and collided with the logo. The bar
+          // is solid at every scroll position now, so there is nothing to
+          // guess about. ?>
 
     <!-- Scroll progress bar -->
     <div class="absolute inset-x-0 top-0 h-0.5 bg-brand-red origin-left" :style="`transform:scaleX(${progress/100})`"></div>
@@ -196,31 +198,52 @@ $isCurrent = static function (array $item) use ($currentSlug): bool {
                // blur behind it, the page showing through every link. It is the
                // worst kind of failure, because the class is right there in the
                // markup and reads as if it works. ?>
-         class="fixed inset-0 z-40 bg-brand-black/95 backdrop-blur-xl"
+         <?php // Lenis takes the wheel for the whole document, so a scroll
+               // inside a nested panel never reaches it: the drawer had
+               // overflow-y: auto and still would not move. data-lenis-prevent
+               // hands wheel events inside this element back to the browser. ?>
+         data-lenis-prevent
+         class="drawer-panel fixed inset-0 z-40 bg-brand-black/95 backdrop-blur-xl"
          @click.self="mobile=false">
-        <nav class="container-x flex flex-col gap-1 py-8" aria-label="Mobile">
-            <?php // No disclosure widgets on the phone: a dropdown's children are
-                  // listed under their parent, indented. One tap reaches every
-                  // page instead of two, and there is no state to get stuck. ?>
-            <?php foreach ($nav as $item):
-                $active = $isCurrent($item); ?>
-                <a href="<?= esc($item['url'], 'attr') ?>" @click="mobile=false"<?= $item['target'] === '_blank' ? ' target="_blank" rel="noopener noreferrer"' : '' ?>
-                   class="flex items-center justify-between border-b border-white/5 py-4 text-lg font-medium <?= $active ? 'text-brand-red' : 'text-white/85' ?>">
-                    <?= esc($item['label']) ?>
-                    <svg class="h-4 w-4 text-white/30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </a>
-                <?php foreach ($item['children'] as $child): ?>
-                    <a href="<?= esc($child['url'], 'attr') ?>" @click="mobile=false"<?= $child['target'] === '_blank' ? ' target="_blank" rel="noopener noreferrer"' : '' ?>
-                       class="flex items-center justify-between border-b border-white/5 py-3 pl-5 text-base <?= $child['slug'] === $currentSlug ? 'text-brand-red' : 'text-white/70' ?>">
-                        <?= esc($child['label']) ?>
-                        <svg class="h-3.5 w-3.5 text-white/25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    </a>
+        <nav class="container-x drawer-nav" aria-label="Mobile">
+            <?php // No disclosure widgets: a dropdown's children are listed under
+                  // their parent. One tap reaches every page instead of two, and
+                  // there is no open/closed state to get stuck in.
+                  //
+                  // Laid out in columns from `sm`, because as one flowing list
+                  // this is twenty-two rows — taller than any phone and most
+                  // laptops, so the reader had to scroll a menu to find the
+                  // thing they opened the menu to find. Each parent and its
+                  // children stay together in one cell, so the grouping the
+                  // indentation implies is still true when they sit side by
+                  // side. ?>
+            <div class="drawer-grid">
+                <?php foreach ($nav as $item):
+                    $active = $isCurrent($item); ?>
+                    <div class="drawer-group">
+                        <a href="<?= esc($item['url'], 'attr') ?>" @click="mobile=false"<?= $item['target'] === '_blank' ? ' target="_blank" rel="noopener noreferrer"' : '' ?>
+                           class="drawer-parent<?= $active ? ' is-current' : '' ?>"<?= $active ? ' aria-current="page"' : '' ?>>
+                            <span><?= esc($item['label']) ?></span>
+                            <svg class="drawer-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </a>
+
+                        <?php if ($item['children'] !== []): ?>
+                            <div class="drawer-children">
+                                <?php foreach ($item['children'] as $child): ?>
+                                    <a href="<?= esc($child['url'], 'attr') ?>" @click="mobile=false"<?= $child['target'] === '_blank' ? ' target="_blank" rel="noopener noreferrer"' : '' ?>
+                                       class="drawer-child<?= $child['slug'] === $currentSlug ? ' is-current' : '' ?>"<?= $child['slug'] === $currentSlug ? ' aria-current="page"' : '' ?>>
+                                        <?= esc($child['label']) ?>
+                                    </a>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php endif; ?>
+                    </div>
                 <?php endforeach; ?>
-            <?php endforeach; ?>
+            </div>
 
             <!-- The header's icon row is hidden at this width, so the accounts
                  appear here instead rather than not at all. -->
-            <div class="mt-8 flex justify-center sm:hidden">
+            <div class="drawer-socials sm:hidden">
                 <?= view('Modules\Core\Views\partials\social_links', ['compact' => false], ['saveData' => false]) ?>
             </div>
         </nav>
