@@ -18,17 +18,25 @@ $routes->group('admin', ['namespace' => 'Modules\Admin\Controllers'], static fun
         $resources = [
             'pages'       => 'Pages',
             'menu-items'  => 'MenuItems',
-            'categories'  => 'Categories',
-            'products'    => 'Products',
+            'rooms'       => 'Rooms',
+            'locations'   => 'Locations',
             'esg-metrics' => 'EsgMetrics',
             'settings'    => 'Settings',
-            'jobs'        => 'Jobs',
             'contacts'    => 'Contacts',
             'leads'       => 'Leads',
-            'showroom-categories' => 'ShowroomCategories',
-            'showroom-products'   => 'ShowroomProducts',
             'news-categories'     => 'NewsCategories',
             'news-posts'          => 'NewsPosts',
+            // Retired with the apparel and manufacturing build this codebase
+            // started as: a product catalogue, a 3D showroom and a careers
+            // portal, none of which this hotel routes on the public site. The
+            // controllers, models and tables are untouched — only the way in
+            // is gone — so restoring one is a line here and a line in the
+            // sidebar rather than a rebuild.
+            //   'categories' => 'Categories',
+            //   'products'   => 'Products',
+            //   'showroom-categories' => 'ShowroomCategories',
+            //   'showroom-products'   => 'ShowroomProducts',
+            //   'jobs'       => 'Jobs',
         ];
         foreach ($resources as $seg => $ctrl) {
             $routes->get($seg, $ctrl . '::index');
@@ -39,12 +47,14 @@ $routes->group('admin', ['namespace' => 'Modules\Admin\Controllers'], static fun
             $routes->post($seg . '/(:num)/delete', $ctrl . '::delete/$1');
         }
 
-        // HR recruitment dashboard (custom pipeline UI, not generic CRUD).
-        $routes->get('applications', 'Applications::index');
-        $routes->get('applications/export', 'Applications::export');
-        $routes->get('applications/(:num)', 'Applications::show/$1');
-        $routes->post('applications/(:num)', 'Applications::update/$1');
-        $routes->get('applications/(:num)/cv', 'Applications::download/$1');
+        // The HR recruitment dashboard is retired with the careers portal it
+        // belonged to — the public /careers routes were commented out when this
+        // became a hotel, so the pipeline had no applications to receive.
+        //   $routes->get('applications', 'Applications::index');
+        //   $routes->get('applications/export', 'Applications::export');
+        //   $routes->get('applications/(:num)', 'Applications::show/$1');
+        //   $routes->post('applications/(:num)', 'Applications::update/$1');
+        //   $routes->get('applications/(:num)/cv', 'Applications::download/$1');
 
         // Page builder (block-content editor + structure operations).
         $routes->get('pages/(:num)/content', 'Content::edit/$1');

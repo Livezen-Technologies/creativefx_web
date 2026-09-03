@@ -6,10 +6,32 @@
  */
 $blocks = $section['blocks'];
 $head   = json_decode($blocks[0]['content'] ?? '[]', true) ?: [];
-$rooms  = [];
-foreach (array_slice($blocks, 1) as $b) {
-    $room = json_decode($b['content'] ?? '[]', true) ?: [];
-    if ($room !== []) { $rooms[] = $room; }
+
+// Rooms come from the rooms table, so adding one is a record rather than a
+// block typed into this page's structure. The blocks after the heading are
+// still read as a fallback: an install whose table has not been seeded yet, or
+// a page that wants to show something that is not a room, keeps working.
+$rooms = [];
+try {
+    foreach (model('Modules\\Cms\\Models\\RoomModel')->published() as $row) {
+        $rooms[] = [
+            'title'  => json_decode((string) $row['name'], true) ?: [],
+            'text'   => json_decode((string) ($row['summary'] ?: $row['description']), true) ?: [],
+            'image'  => $row['image'],
+            'button' => ['en' => lang('Site.home.hero.primary')],
+            'url'    => 'contact',
+            'modal'  => 'booking',
+        ];
+    }
+} catch (\Throwable $e) {
+    $rooms = [];
+}
+
+if ($rooms === []) {
+    foreach (array_slice($blocks, 1) as $b) {
+        $room = json_decode($b['content'] ?? '[]', true) ?: [];
+        if ($room !== []) { $rooms[] = $room; }
+    }
 }
 if ($rooms === []) { return; }
 ?>

@@ -419,6 +419,11 @@ class CorporateContentSeeder extends Seeder
                 ['key' => 'things', 'type' => 'things', 'blocks' => [
                     ['feature_cards', [
                         'title' => $this->loc('Things to Do in Kalawana'),
+                        // The cards come from the tourist locations table, so
+                        // adding a seventh place is a record rather than an
+                        // edit to this page's structure. The items below stay
+                        // as the fallback for an install whose table is empty.
+                        'source' => 'locations',
                         'items' => [
                             [
                                 'title'     => $this->loc('Explore Sinharaja Rain Forest'),

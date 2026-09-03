@@ -21,6 +21,8 @@ $icons = [
     'inbox'     => 'M22 12h-6l-2 3h-4l-2-3H2m3.5-7 -3.5 7v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.5-7a2 2 0 0 0-1.8-1H7.3a2 2 0 0 0-1.8 1Z',
     'target'    => 'M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20Zm0-6a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm0-3a1 1 0 1 0 0-2',
     'menu'      => 'M4 6h16M4 12h16M4 18h10',
+    'bed'       => 'M2 20v-8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v8M2 16h20M6 10V7a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3M2 20v-2',
+    'pin'       => 'M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Zm-8 3a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z',
     'settings'  => 'M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm7.4-3a7.4 7.4 0 0 0-.1-1l2-1.6-2-3.4-2.4 1a7.5 7.5 0 0 0-1.7-1L14.8 3h-4l-.4 2.6a7.5 7.5 0 0 0-1.7 1l-2.4-1-2 3.4 2 1.6a7.4 7.4 0 0 0 0 2l-2 1.6 2 3.4 2.4-1a7.5 7.5 0 0 0 1.7 1l.4 2.4h4l.4-2.6a7.5 7.5 0 0 0 1.7-1l2.4 1 2-3.4-2-1.6c.07-.3.1-.7.1-1Z',
 ];
 
@@ -35,15 +37,13 @@ $groups = [
         ['news-categories', 'News Categories', 'admin/news-categories', 'tag'],
         ['videos', 'Launch Video', 'admin/videos', 'video'],
     ]],
-    ['Catalog', [
-        ['categories', 'Product Categories', 'admin/categories', 'tag'],
-        ['products', 'Products', 'admin/products', 'box'],
-        ['showroom-cats', 'Showroom Categories', 'admin/showroom-categories', 'cube'],
-        ['showroom-products', 'Showroom Products', 'admin/showroom-products', 'cube'],
-    ]],
-    ['People', [
-        ['jobs', 'Jobs', 'admin/jobs', 'briefcase'],
-        ['applications', 'Applications', 'admin/applications', 'users'],
+    // Was Catalog and People: a product catalogue, a 3D showroom and a careers
+    // portal, all inherited from the apparel build this codebase started as and
+    // none of them routed on a hotel's public site. A menu of screens that lead
+    // nowhere is worse than a short menu.
+    ['The hotel', [
+        ['rooms', 'Rooms', 'admin/rooms', 'bed'],
+        ['locations', 'Tourist locations', 'admin/locations', 'pin'],
     ]],
     ['Engagement', [
         ['contacts', 'Contact Inbox', 'admin/contacts', 'inbox'],

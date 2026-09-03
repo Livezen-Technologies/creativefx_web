@@ -1,4 +1,40 @@
-<?php helper('norlanka'); if (empty($content['items']) || ! is_array($content['items'])) { return; } ?>
+<?php
+helper('norlanka');
+
+/**
+ * A grid of cards.
+ *
+ * A block can name a source instead of listing items — `"source": "locations"`
+ * pulls the tourist locations from their own table, so the Kalawana page shows
+ * whatever an editor has added there rather than a copy of it frozen into this
+ * page's structure. Anything else keeps listing its own items, which is what
+ * every other feature-cards block on the site does.
+ */
+$items = $content['items'] ?? [];
+
+if (($content['source'] ?? '') === 'locations') {
+    $items = [];
+    try {
+        foreach (model('Modules\Cms\Models\LocationModel')->published() as $row) {
+            $items[] = [
+                'title'     => json_decode((string) $row['name'], true) ?: [],
+                'text'      => json_decode((string) ($row['summary'] ?: $row['description']), true) ?: [],
+                'image'     => $row['image'],
+                'image_alt' => json_decode((string) $row['image_alt'], true) ?: [],
+            ];
+        }
+    } catch (\Throwable $e) {
+        // No table yet: fall back to whatever the block itself carries, so a
+        // page never empties out because a query failed.
+        $items = $content['items'] ?? [];
+    }
+    if ($items === []) {
+        $items = $content['items'] ?? [];
+    }
+}
+
+if (empty($items) || ! is_array($items)) { return; }
+?>
 <section class="bg-brand-black py-16">
     <div class="container-x">
         <?php if (! empty($content['title'])): ?>
@@ -8,7 +44,7 @@
             <p class="mb-10 max-w-2xl text-white/60" data-gsap="reveal"><?= esc(t_field($content['intro'])) ?></p>
         <?php endif; ?>
         <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            <?php foreach ($content['items'] as $item): ?>
+            <?php foreach ($items as $item): ?>
                 <?php // An optional picture above the heading. Cards seeded without
                       // one render exactly as before, so no existing page moves. ?>
                 <?php $img = ! empty($item['image']) && is_file(FCPATH . ltrim((string) $item['image'], '/'))

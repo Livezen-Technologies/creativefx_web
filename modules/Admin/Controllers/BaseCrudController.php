@@ -122,14 +122,36 @@ abstract class BaseCrudController extends BaseController
         return redirect()->to(site_url('admin/' . $this->route))->with('message', $this->singular . ' deleted.');
     }
 
+    /**
+     * Validation rules, keyed by the input name the form actually posts.
+     *
+     * A locale field is rendered as one input per language — name_en, name_si —
+     * and collect() folds them into a single JSON column afterwards. A rule
+     * declared against the column name therefore validates a field that is
+     * never submitted, so `required` on a locale field could not be satisfied
+     * by any input at all: the form bounced back with an error naming a field
+     * the editor could not see. The rule belongs on the default locale's input,
+     * which is the one that must be filled in for the row to mean anything.
+     *
+     * @return array<string, array{label:string, rules:string}>
+     */
     protected function rules(): array
     {
+        $localeTypes = ['locale', 'locale_textarea', 'locale_richtext'];
+        $default     = config('App')->defaultLocale;
+
         $rules = [];
         foreach ($this->fields as $f) {
-            if (! empty($f['rules'])) {
-                $rules[$f['name']] = $f['rules'];
+            if (empty($f['rules'])) {
+                continue;
             }
+            $key = in_array($f['type'] ?? 'text', $localeTypes, true)
+                ? $f['name'] . '_' . $default
+                : $f['name'];
+
+            $rules[$key] = ['label' => $f['label'] ?? $f['name'], 'rules' => $f['rules']];
         }
+
         return $rules;
     }
 

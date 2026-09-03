@@ -33,6 +33,11 @@ class DatabaseSeeder extends Seeder
         // Impact, Careers, Contact, Showroom).
         $this->call('Modules\Cms\Database\Seeds\CorporateContentSeeder');
 
+        // Rooms and tourist locations. Seeds each table only while it is empty,
+        // for the same reason the menus do: once a hotel has edited its own
+        // rooms, a release has nothing useful to say about them.
+        $this->call('Modules\Cms\Database\Seeds\RoomLocationSeeder');
+
         // Header and footer navigation. Seeds each menu only while it is empty,
         // so reordering and renaming in the console is not undone by a release.
         $this->call('Modules\Cms\Database\Seeds\MenuSeeder');
