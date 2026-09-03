@@ -28,7 +28,13 @@
             <?php // The existing icon row, which already renders only the accounts
                   // that are actually set. ?>
             <div class="mt-6">
-                <?= view('Modules\\Core\\Views\\partials\\social_links', ['compact' => false]) ?>
+                <?php // Every account, explicitly: 'only' is passed empty rather
+                      // than omitted so this row cannot inherit a shorter list
+                      // from an earlier render on the shared renderer. ?>
+                <?= view('Modules\\Core\\Views\\partials\\social_links', [
+                    'compact' => false,
+                    'only'    => [],
+                ], ['saveData' => false]) ?>
             </div>
         </div>
 

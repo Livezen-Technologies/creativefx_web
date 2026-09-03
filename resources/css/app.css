@@ -377,6 +377,19 @@ html.dark .theme-esg-green {  /* Impact page green scope, dark variant */
   /* Larger primary CTA for clear hero hierarchy. */
   .btn-lg { @apply px-8 py-4 text-sm; }
 
+  /* Social account chip. The marks used to be hairline outlines at 70% white,
+     which at any real viewing distance were five grey specks. A soft filled
+     ground gives each mark its own target and lets the glyph itself be solid
+     and full-size, which is how these marks are drawn to be seen. */
+  .social-chip {
+    @apply inline-flex items-center justify-center rounded-full
+           border border-white/10 bg-white/[0.07] text-white/80
+           transition duration-200
+           hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/[0.16] hover:text-white
+           focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2
+           focus-visible:outline-white/60;
+  }
+
   /* --- Video player ------------------------------------------------------
      The control bar sits over the film, so every target needs its own hit
      area and a visible focus ring against moving picture rather than against
@@ -901,6 +914,8 @@ html.fp-active body {
   .nav-link::after {
     transition: none;
   }
+  .social-chip { transition: none; }
+  .social-chip:hover { transform: none; }
   .pre-logo { animation: none; }
   /* The photograph and its wash stay; only the drift stops. */
   .mist-veil, .mist-floor { animation: none; }

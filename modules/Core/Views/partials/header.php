@@ -54,11 +54,31 @@ $nav = site_nav();
 
         <!-- Right side -->
         <div class="flex items-center justify-end gap-2.5 sm:gap-3">
-            <!-- Social accounts. Hidden below xl, where the row crowds the nav
-                 and the language switcher; the mobile menu and the footer both
-                 carry them, so nothing is lost. -->
-            <div class="hidden 2xl:block">
-                <?= $this->include('Modules\Core\Views\partials\social_links', ['compact' => true]) ?>
+            <?php // Two accounts, not five: the header row is for the ones a
+                  // guest actually messages the hotel on, and five marks beside
+                  // the theme switch and the language menu read as a toolbar.
+                  // The full set is in the footer and the mobile menu.
+                  //
+                  // Two also buy back the breakpoint. At five the row had to
+                  // wait for 2xl or the nav could not sit in the middle of the
+                  // bar; at two it returns at xl, and the only cost is 13px of
+                  // centring at exactly 1280 — measured, and about 1% of the
+                  // width. Below xl there is genuinely no room, and the mobile
+                  // menu carries them. ?>
+            <div class="hidden xl:block">
+                <?php // view(), not $this->include(): include()'s second argument
+                      // is render options, not view data, so every array passed
+                      // to it here was quietly discarded. That is why the mobile
+                      // menu's icons were the compact size it asked not to have,
+                      // and why this row would have kept showing all five. ?>
+                <?php // saveData: false, or this data persists on the shared
+                      // renderer and the next view() call inherits it — which it
+                      // did: the footer's own icon row, which asks for all five,
+                      // came back carrying this row's two. ?>
+                <?= view('Modules\Core\Views\partials\social_links', [
+                    'compact' => true,
+                    'only'    => ['Facebook', 'WhatsApp'],
+                ], ['saveData' => false]) ?>
             </div>
             <?= $this->include('Modules\Core\Views\partials\theme_toggle') ?>
             <?= $this->include('Modules\Core\Views\partials\lang_switcher') ?>
@@ -90,7 +110,7 @@ $nav = site_nav();
             <!-- The header's icon row is hidden at this width, so the accounts
                  appear here instead rather than not at all. -->
             <div class="mt-8 flex justify-center sm:hidden">
-                <?= $this->include('Modules\Core\Views\partials\social_links', ['compact' => false]) ?>
+                <?= view('Modules\Core\Views\partials\social_links', ['compact' => false], ['saveData' => false]) ?>
             </div>
         </nav>
     </div>
