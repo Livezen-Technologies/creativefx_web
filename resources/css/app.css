@@ -159,6 +159,9 @@ html.dark .theme-notice {
      — including inside the header, which is transparent over a dark photograph
      at the top of a page and solid cream once scrolled. */
   .brand-logo { display: inline-flex; }
+  /* The inline mark is one element, not a pair with one of them hidden, so it
+     needs no display juggling — just a box that respects its own viewBox. */
+  .brand-logo--inline { display: block; }
 
   /* The header mark, at rest and once the compact bar takes over. 54px is half
      again the 36px it used to be everywhere; the scrolled bar keeps that old
@@ -718,15 +721,16 @@ html.dark .theme-switch__moon { display: block; }
   text-transform: uppercase; color: rgb(var(--fg));
   line-height: 1.7;
   text-wrap: balance;
-  /* Tracking adds a space after the last letter too, which shifts a centred
-     line left by that much. Pulling it back is the difference between centred
-     and nearly centred. */
-  margin-inline-end: -0.32em;
+  /* No trailing-letter-space compensation. The usual `margin-inline-end: -1ch`
+     trick assumes the browser centres the trailing space along with the glyphs;
+     this one does not, so the correction was the thing knocking the wordmark
+     1–2px off centre. Measured both ways: without it the glyph run is exactly
+     centred on mobile and desktop, on both lines. */
 }
 /* Tighter on a phone, where the tracking is what makes it not fit. */
 @media (max-width: 30rem) {
   .pre-logo { height: 46px; }
-  .pre-word { font-size: 0.68rem; letter-spacing: 0.16em; margin-inline-end: -0.16em; }
+  .pre-word { font-size: 0.68rem; letter-spacing: 0.16em; }
   .pre-bar { width: 110px; }
 }
 .pre-bar { width: 150px; height: 2px; border-radius: 2px; background: rgb(var(--fg) / 0.12); overflow: hidden; }

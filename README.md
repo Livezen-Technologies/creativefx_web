@@ -138,6 +138,12 @@ globally-ordered timestamp prefixes so cross-module references resolve.
   modifier off the scale (`/98`, `/8`) produces nothing at all, and reads as
   correct in the markup. `bg-brand-black/98` shipped a full-screen navigation
   drawer with no background. `scripts/check-tailwind-classes.mjs` catches both.
+- **The logo is drawn, not fetched.** The two shipped colourways differ in
+  exactly three colours and those three are `--accent`, `--gold` and `--fg`, so
+  `partials/logo.php` inlines the mark from the tokens: no request, no aspect
+  ratio to declare wrongly, and a theme switch recolours it in the same frame as
+  everything else. A logo uploaded under Settings → Brand still renders as a
+  pair of `<img>`, since an uploaded file is not ours to recolour.
 - **The header's menu is a measurement, not a breakpoint** — the same eight
   items are half again as wide in Tamil, so `siteHeader.js` lays the nav out and
   asks whether it overflowed. Anything whose visibility depends on that answer
@@ -180,6 +186,8 @@ node scripts/test-language-switch.mjs  # Clause 3.15's switching behaviour
 node scripts/test-language-modal.mjs   # the first-visit language chooser
 node scripts/test-navigation.mjs       # the menu is reachable at every width,
                                        # in every language — inline or drawer
+node scripts/test-splash.mjs           # the loading screen: centring, sizing,
+                                       # and that the mark costs no request
 node scripts/check-tailwind-classes.mjs # every utility written actually exists
 node scripts/test-hero-slider.mjs      # the hero slideshow: advance, pause,
                                        # focus, reduced motion, a11y
