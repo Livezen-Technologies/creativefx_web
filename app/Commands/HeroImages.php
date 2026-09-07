@@ -109,7 +109,32 @@ class HeroImages extends BaseCommand
 
         if ($rows === []) {
             CLI::write('No hero photograph, so the home page shows its words full width.', 'yellow');
-            CLI::write('Add one with:  php spark hero:images add <id|path>', 'dark_gray');
+            CLI::newLine();
+
+            // The candidates, because "I uploaded it" and "the hero shows it"
+            // are two different things and this command could previously only
+            // report the second. Somebody who has just uploaded a photograph and
+            // is looking at an unchanged front page needs to be told the file
+            // arrived and what to type next — not an empty list, which reads as
+            // the upload having failed.
+            $recent = $model->like('mime_type', 'image/', 'after')
+                ->orderBy('id', 'DESC')
+                ->findAll(10);
+
+            if ($recent === []) {
+                CLI::write('There are no images in the media library at all.', 'dark_gray');
+                CLI::write('Upload one in the admin, then run this again.', 'dark_gray');
+            } else {
+                CLI::write('The most recent images in the library, any of which can be promoted:', 'dark_gray');
+                CLI::table(array_map(static fn (array $r): array => [
+                    (string) $r['id'],
+                    (string) $r['path'],
+                    trim((string) ($r['folder'] ?? '')) ?: '—',
+                    is_file(FCPATH . ltrim((string) $r['path'], '/')) ? 'on disk' : 'MISSING',
+                ], $recent), ['id', 'path', 'folder', 'file']);
+
+                CLI::write('Promote one with:  php spark hero:images add ' . $recent[0]['id'], 'dark_gray');
+            }
         } else {
             CLI::table(array_map(static fn (array $r): array => [
                 (string) $r['id'],
