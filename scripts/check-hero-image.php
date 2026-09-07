@@ -68,6 +68,10 @@ $home = static fn (): string => html_entity_decode(
 // starts failing the day somebody changes it.
 $dir  = FCPATH . 'media/hero';
 $rel  = 'media/hero/check-hero-image.jpg';
+// Two more, for the adopt-from-disk case at the end: a real image with no row,
+// and something that is only named like one.
+$orphanRel = 'media/hero/check-hero-orphan.jpg';
+$fakeRel   = 'media/hero/check-hero-notreally.jpg';
 @mkdir($dir, 0775, true);
 $im = imagecreatetruecolor(1600, 1200);
 imagefilledrectangle($im, 0, 0, 1600, 1200, imagecolorallocate($im, 210, 140, 40));
@@ -76,6 +80,8 @@ imagedestroy($im);
 
 $media = new MediaModel();
 $db->table('media_library')->where('path', $rel)->delete();
+$db->table('media_library')->where('path', $orphanRel)->delete();
+$db->table('media_library')->where('path', $fakeRel)->delete();
 
 try {
     // ── Nothing promoted ────────────────────────────────────────────────────
@@ -167,9 +173,56 @@ try {
         str_contains($home(), '/' . $rel), false);
     $check('and the hero falls back to the aurora',
         str_contains($home(), 'hero-aurora'), true);
+
+    // ── A file on disk with no row ──────────────────────────────────────────
+    // This site's uploads outlived their media_library rows: the photograph sat
+    // in public/media/uploads with the hero showing its empty state, and the
+    // admin could not offer it because the admin can only list what the table
+    // knows about. `hero:images add <path>` adopts such a file.
+    echo "\n";
+    $im = imagecreatetruecolor(1600, 900);
+    imagefilledrectangle($im, 0, 0, 1600, 900, imagecolorallocate($im, 40, 90, 180));
+    imagejpeg($im, FCPATH . $orphanRel, 82);
+    imagedestroy($im);
+
+    $check('a file on disk is not in the library',
+        $db->table('media_library')->where('path', $orphanRel)->countAllResults() > 0, false);
+
+    exec(sprintf('cd %s && php spark hero:images add %s 2>&1',
+        escapeshellarg(dirname(__DIR__)), escapeshellarg('/' . $orphanRel)), $out, $status);
+
+    $check('adding it by path succeeds', $status === 0, true);
+
+    $row = $db->table('media_library')->where('path', $orphanRel)->get()->getRowArray();
+    $check('and a row is written for it', $row !== null, true);
+    $check('with the dimensions read off the file',
+        $row === null ? null : [(int) $row['width'], (int) $row['height']], [1600, 900]);
+    $check('and the mime type read off the file, not the extension',
+        $row['mime_type'] ?? null, 'image/jpeg');
+    $check('and a site-absolute url', $row['url'] ?? null, '/' . $orphanRel);
+    $check('the hero now shows it',
+        str_contains($home(), '/' . $orphanRel), true);
+
+    // A path that climbs out of the web root must not be adopted, whatever it
+    // resolves to — the argument arrives from a workflow input.
+    exec(sprintf('cd %s && php spark hero:images add %s 2>&1',
+        escapeshellarg(dirname(__DIR__)), escapeshellarg('../app/Config/App.php')), $o2, $s2);
+    $check('a path outside public/ is refused', $s2 === 0, false);
+
+    // And a file that is not an image, however it is named.
+    file_put_contents(FCPATH . $fakeRel, 'this is not a jpeg');
+    exec(sprintf('cd %s && php spark hero:images add %s 2>&1',
+        escapeshellarg(dirname(__DIR__)), escapeshellarg('/' . $fakeRel)), $o3, $s3);
+    $check('a non-image named .jpg is refused', $s3 === 0, false);
+    $check('and no row is written for it',
+        $db->table('media_library')->where('path', $fakeRel)->countAllResults(), 0);
 } finally {
     $db->table('media_library')->where('path', $rel)->delete();
+    $db->table('media_library')->where('path', $orphanRel)->delete();
+    $db->table('media_library')->where('path', $fakeRel)->delete();
     @unlink(FCPATH . $rel);
+    @unlink(FCPATH . $orphanRel);
+    @unlink(FCPATH . $fakeRel);
     @rmdir($dir);
 }
 

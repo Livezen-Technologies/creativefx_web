@@ -373,6 +373,17 @@ jobs:
             mysql -u"$DU" -p"$DP" "$DB" -e \
               "SELECT id, original_name, folder, tags, mime_type, path FROM media_library ORDER BY id;" \
               || echo "  (SELECT failed, see above)"
+            # Whether a row was ever written here, which an empty table cannot
+            # say on its own. AUTO_INCREMENT still at 1 means nothing was ever
+            # inserted — the upload never reached the database — while a higher
+            # number means rows existed and were removed. Those point at
+            # opposite ends of the system, so it is worth one line to tell them
+            # apart rather than repairing the wrong one.
+            echo "  -- has anything ever been inserted? --"
+            mysql -u"$DU" -p"$DP" "$DB" -e \
+              "SELECT AUTO_INCREMENT FROM information_schema.TABLES
+               WHERE TABLE_SCHEMA='$DB' AND TABLE_NAME='media_library';" \
+              || echo "  (could not read table status, see above)"
 
             echo
             echo "===== DONE (read-only) ====="

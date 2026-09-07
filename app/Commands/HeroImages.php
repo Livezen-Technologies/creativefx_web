@@ -54,6 +54,21 @@ class HeroImages extends BaseCommand
         }
 
         $row = $this->find($model, $needle);
+
+        // A file on the server with no row to its name. That is not a typo to
+        // be reported, it is a repair to be made: this site's uploads survived
+        // on disk while the media_library rows did not, so the photograph was
+        // sitting in public/media/uploads with the hero showing its empty state
+        // and no way in through the admin, which can only list what the table
+        // knows about.
+        //
+        // Only on `add`, and only for a path. `remove` has nothing to do for a
+        // row that does not exist, and adopting a file in order to immediately
+        // strip a tag off it would be a strange way to spend a write.
+        if ($row === null && $action === 'add' && ! ctype_digit($needle)) {
+            $row = $this->adopt($model, $needle);
+        }
+
         if ($row === null) {
             CLI::error('No image in the media library matches: ' . $needle);
             CLI::write('Run `php spark hero:images list` to see what is there.', 'dark_gray');
@@ -165,6 +180,61 @@ class HeroImages extends BaseCommand
      * three get copied out of different places and a command that only accepts
      * one of them is a command people give up on.
      */
+    /**
+     * Register a file that is on disk but not in the library, and return it.
+     *
+     * Returns null when the path names nothing, points outside public/, or is
+     * not an image — the last of those decided by getimagesize() rather than by
+     * the extension, because the file is about to be put on the front page and
+     * "it ends in .jpg" is not the same claim as "it is a JPEG".
+     *
+     * The columns are filled the way the admin uploader fills them: `path`
+     * relative with no leading slash, `url` the same with one. A row written
+     * any other way renders as a broken image in the most prominent place on
+     * the site, which is the failure this command already exists to avoid.
+     */
+    private function adopt(MediaModel $model, string $needle): ?array
+    {
+        $rel = ltrim(trim($needle), '/');
+        $abs = realpath(FCPATH . $rel);
+
+        // realpath() resolves `..`, so this rejects a path that climbs out of
+        // the web root even though the string looked relative.
+        $root = realpath(FCPATH);
+        if ($abs === false || $root === false || ! str_starts_with($abs, $root . DIRECTORY_SEPARATOR) || ! is_file($abs)) {
+            return null;
+        }
+
+        $size = @getimagesize($abs);
+        if ($size === false) {
+            CLI::error('Not an image: ' . $rel);
+
+            return null;
+        }
+
+        $id = $model->insert([
+            'disk'          => 'local',
+            'path'          => $rel,
+            'url'           => '/' . $rel,
+            'original_name' => basename($rel),
+            'mime_type'     => $size['mime'] ?? (mime_content_type($abs) ?: null),
+            'size_bytes'    => filesize($abs) ?: null,
+            'hash'          => @sha1_file($abs) ?: null,
+            'width'         => (int) $size[0],
+            'height'        => (int) $size[1],
+        ], true);
+
+        if (! $id) {
+            CLI::error('Could not register ' . $rel . ': ' . implode('; ', $model->errors()));
+
+            return null;
+        }
+
+        CLI::write('Registered a file that was on disk but not in the library: ' . $rel, 'green');
+
+        return $model->find((int) $id);
+    }
+
     private function find(MediaModel $model, string $needle): ?array
     {
         if (ctype_digit($needle)) {
