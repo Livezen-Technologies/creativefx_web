@@ -230,7 +230,7 @@ jobs:
             # whether anybody can actually buy anything, and these are the four
             # addresses that decide that.
             echo "===== the pages that take money ====="
-            for P in /en/courses /en/course/photoshop-level-1 /en/schedule /en/cart; do
+            for P in /en/courses /en/course/photoshop-level-1 /en/schedule /en/cart /en/membership /si/membership; do
               probe "$P" "$MARK_PAGE"
             done
             # An index of the per-section sitemaps, not a list of URLs.
