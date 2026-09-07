@@ -89,11 +89,29 @@ class ContentTranslator
         $db      = db_connect();
         $updated = 0;
 
+        // Ask the schema first, rather than querying and catching. The catch
+        // below still runs the query and CodeIgniter logs the failure before
+        // throwing, so a table this install does not have wrote fourteen lines
+        // of stack trace to the application log on every seed. Eleven of the
+        // tables named above belong to the site this one was forked from, so
+        // that was the whole log: a hundred and fifty lines of expected,
+        // handled, deliberately-ignored errors, in the file somebody reads to
+        // find out why a page is 500ing.
+        //
+        // The try/catch stays, because tableExists() answers a narrower
+        // question than the catch does — a table that exists without one of
+        // these columns still throws, and still should be skipped.
+        $present = array_flip(array_map('strtolower', $db->listTables() ?: []));
+
         foreach (self::COLUMNS as $table => $columns) {
+            if (! isset($present[strtolower($db->prefixTable($table))])) {
+                continue; // not a table in this install
+            }
+
             try {
                 $rows = $db->table($table)->select('id, ' . implode(', ', $columns))->get()->getResultArray();
             } catch (\Throwable $e) {
-                continue; // table or column not present in this install
+                continue; // the table is here but a column is not
             }
 
             foreach ($rows as $row) {
