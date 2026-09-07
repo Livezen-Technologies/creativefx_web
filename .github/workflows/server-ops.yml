@@ -25,6 +25,7 @@ on:
           - dump-content
           - hero-images
           - admin-accounts
+          - app-log
         default: diagnose-tls
         required: true
       le_email:
@@ -35,6 +36,10 @@ on:
         description: "setup-tls-certbot only: ACME account id to issue under. Leave empty to reuse the account that already holds a certificate in this zone."
         required: false
         default: ''
+      log_lines:
+        description: "app-log only: how many lines from the end of today's application log"
+        required: false
+        default: '80'
       admin_args:
         description: "admin-accounts only: `list`, or `reset someone@example.com` (a password set this way is printed into this run's log — change it at /admin/account straight after)"
         required: false
@@ -380,6 +385,35 @@ jobs:
         env:
           APP_DIR: ${{ github.event.inputs.app_dir }}
           ADMIN_ARGS: ${{ github.event.inputs.admin_args }}
+
+      - name: Application log (read-only)
+        if: ${{ github.event.inputs.action == 'app-log' }}
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ env.DEPLOY_HOST }}
+          username: ${{ env.DEPLOY_USER }}
+          password: ${{ env.DEPLOY_PASSWORD }}
+          key: ${{ env.DEPLOY_SSH_KEY }}
+          port: 22
+          command_timeout: 5m
+          envs: APP_DIR,LOG_LINES
+          script: |
+            set -uo pipefail
+            # The gap that made a live 500 unreadable from here. A page can work
+            # on SQLite and fail on MySQL, and without the exception there is
+            # nothing to do but guess at which difference did it.
+            LOG="$APP_DIR/writable/logs/log-$(date +%Y-%m-%d).log"
+            if [ ! -f "$LOG" ]; then
+              echo "No log for today at $LOG"
+              ls -la "$APP_DIR/writable/logs/" 2>/dev/null | tail -5
+              exit 0
+            fi
+            echo "===== last ${LOG_LINES} lines of $(basename "$LOG") ====="
+            tail -n "${LOG_LINES}" "$LOG"
+            echo "===== DONE (read-only) ====="
+        env:
+          APP_DIR: ${{ github.event.inputs.app_dir }}
+          LOG_LINES: ${{ github.event.inputs.log_lines }}
 
       - name: Setup TLS via certbot (scoped to our domain)
         if: ${{ github.event.inputs.action == 'setup-tls-certbot' }}
