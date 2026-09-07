@@ -109,6 +109,14 @@ $routes->group('admin', ['namespace' => 'Modules\Admin\Controllers'], static fun
         $routes->get('analytics', 'Analytics::index');
         $routes->get('analytics/export', 'Analytics::export');
 
+        // The signed-in administrator's own account. Deliberately not behind a
+        // permission the way the resources above are: changing your own
+        // password is not a privilege one administrator can hold and another
+        // lack, and gating it is how an account ends up with a password that
+        // nobody — including its owner — is able to change.
+        $routes->get('account', 'Account::index');
+        $routes->post('account/password', 'Account::updatePassword');
+
         // The guided settings screen. The raw key/value CRUD stays at
         // admin/settings for anything this form does not declare.
         $routes->get('site-settings', 'SiteSettings::index');

@@ -131,7 +131,11 @@ if (localStorage.getItem('admin-theme') === 'light') { document.body.classList.r
                 </div>
                 <div class="min-w-0">
                     <p class="truncate text-xs font-medium"><?= esc($user['email'] ?? '') ?></p>
-                    <a href="<?= site_url('admin/logout') ?>" class="text-xs text-white/40 hover:text-brand-red">Sign out</a>
+                    <p class="text-xs text-white/40">
+                        <a href="<?= site_url('admin/account') ?>" class="hover:text-white">Your account</a>
+                        <span class="px-1 text-white/20">&middot;</span>
+                        <a href="<?= site_url('admin/logout') ?>" class="hover:text-brand-red">Sign out</a>
+                    </p>
                 </div>
             </div>
         </div>
@@ -171,6 +175,11 @@ if (localStorage.getItem('admin-theme') === 'light') { document.body.classList.r
                     <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6m4-3h6v6m-11 5L21 3"/></svg>
                     View site
                 </a>
+                <?php // Also in the header, not only in the sidebar footer: the
+                      // mobile drawer has no user block, so the sidebar link is
+                      // unreachable on a phone and this bar is the only place
+                      // the account screen can be got to. ?>
+                <a href="<?= site_url('admin/account') ?>" class="rounded-lg border border-white/15 px-3 py-1.5 text-xs text-white/70 transition hover:border-white/40 hover:text-white">Account</a>
                 <a href="<?= site_url('admin/logout') ?>" class="rounded-lg border border-white/15 px-3 py-1.5 text-xs text-white/70 transition hover:border-brand-red hover:text-white">Sign out</a>
             </div>
         </header>
