@@ -6,17 +6,17 @@
     {
       "type": "pagehero",
       "eyebrow": "About us",
-      "heading": "A training school for Adobe and AI skills",
-      "subtitle": "We teach Creative Cloud and generative AI to people who have to produce finished work, not just understand the theory."
+      "subtitle": "We teach Creative Cloud and generative AI to people who have to produce finished work, not just understand the theory.",
+      "title": "A training school for Adobe and AI skills"
     },
     {
       "type": "richtext",
-      "body": "<p>MyLearnPlus is an operating business of <strong>Livezen Technologies</strong>. We run instructor-led classes online and in Colombo, and we publish a self-paced library for people who cannot sit in a scheduled class. Everything we teach is software people are expected to use at work: Adobe Creative Cloud, generative AI tools, and the design and web skills that sit alongside them.</p><p>Our catalogue covers three pillars. The <strong>Adobe Creative Cloud</strong> pillar runs from Photoshop, Illustrator and InDesign through Premiere Pro, After Effects, Lightroom, Acrobat Pro, Adobe Express and Adobe Firefly, at introductory and advanced level. The <strong>AI and generative AI</strong> pillar covers foundations for non-technical staff, prompt engineering, AI assistants at work, generative AI for designers, AI video and audio, AI for marketing, automation and agents, building with LLM APIs, and governance and responsible use. The <strong>design and digital</strong> pillar covers Figma and UI/UX, web design with WordPress, digital marketing analytics, and presentation and data visualisation.</p><p>Classes are taught by working practitioners, in small groups, on live files. In a Photoshop class you retouch a real portrait and hand back a layered file that survives a client revision. In an InDesign long-document class you build a report with running headers, an automatic table of contents and an index. In an AI automation class you leave with a working assistant connected to a tool. If an outcome on a course page says you will build something, the module where you build it is listed in the curriculum on the same page.</p><p>We are based in Colombo and sell in two currencies. Learners and organisations in Sri Lanka pay in <strong>LKR</strong>; everyone else pays in <strong>USD</strong>. The same syllabus, materials and instructors apply to both.</p>"
+      "text": "<p>MyLearnPlus is an operating business of <strong>Livezen Technologies</strong>. We run instructor-led classes online and in Colombo, and we publish a self-paced library for people who cannot sit in a scheduled class. Everything we teach is software people are expected to use at work: Adobe Creative Cloud, generative AI tools, and the design and web skills that sit alongside them.</p><p>Our catalogue covers three pillars. The <strong>Adobe Creative Cloud</strong> pillar runs from Photoshop, Illustrator and InDesign through Premiere Pro, After Effects, Lightroom, Acrobat Pro, Adobe Express and Adobe Firefly, at introductory and advanced level. The <strong>AI and generative AI</strong> pillar covers foundations for non-technical staff, prompt engineering, AI assistants at work, generative AI for designers, AI video and audio, AI for marketing, automation and agents, building with LLM APIs, and governance and responsible use. The <strong>design and digital</strong> pillar covers Figma and UI/UX, web design with WordPress, digital marketing analytics, and presentation and data visualisation.</p><p>Classes are taught by working practitioners, in small groups, on live files. In a Photoshop class you retouch a real portrait and hand back a layered file that survives a client revision. In an InDesign long-document class you build a report with running headers, an automatic table of contents and an index. In an AI automation class you leave with a working assistant connected to a tool. If an outcome on a course page says you will build something, the module where you build it is listed in the curriculum on the same page.</p><p>We are based in Colombo and sell in two currencies. Learners and organisations in Sri Lanka pay in <strong>LKR</strong>; everyone else pays in <strong>USD</strong>. The same syllabus, materials and instructors apply to both.</p>"
     },
     {
       "type": "feature_cards",
-      "heading": "How you can study with us",
-      "cards": [
+      "title": "How you can study with us",
+      "items": [
         {
           "title": "Live online",
           "text": "Scheduled classes taught in real time, capped so the instructor can look at your screen and your work. You keep the recording for twelve months.",
@@ -41,13 +41,16 @@
     },
     {
       "type": "statement",
-      "heading": "What our certificate is, and what it is not",
-      "text": "Finish a course and you receive a MyLearnPlus certificate of completion recording the title, the hours and the date. That is a record of training. It is not an Adobe credential. Adobe Certified Professional certification is a separate exam sat with Certiport, and the exam voucher is bought separately. Our Adobe courses are written against the published exam objectives so that you sit the exam knowing the interface and the vocabulary it uses, but no course can guarantee a pass."
+      "items": [
+        {
+          "text": "Finish a course and you receive a MyLearnPlus certificate of completion recording the title, the hours and the date. That is a record of training. It is not an Adobe credential. Adobe Certified Professional certification is a separate exam sat with Certiport, and the exam voucher is bought separately. Our Adobe courses are written against the published exam objectives so that you sit the exam knowing the interface and the vocabulary it uses, but no course can guarantee a pass."
+        }
+      ]
     },
     {
       "type": "process_steps",
-      "heading": "How a course runs",
-      "steps": [
+      "title": "How a course runs",
+      "items": [
         {
           "title": "Book and get set up",
           "text": "You receive joining instructions, the version and system requirements, and the exercise files. If your software is not installed yet, join the pre-class setup check and we will get you working before day one."
@@ -68,10 +71,10 @@
     },
     {
       "type": "cta",
-      "heading": "Find the course you actually need",
       "text": "Browse the catalogue by software or by outcome. If you are not sure which level fits, send us the work you need to produce and we will tell you which class covers it.",
-      "button_label": "Browse all courses",
-      "button_url": "/courses"
+      "title": "Find the course you actually need",
+      "button": "Browse all courses",
+      "url": "/courses"
     }
   ],
   "seo": {

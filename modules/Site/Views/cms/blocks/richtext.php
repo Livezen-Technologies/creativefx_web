@@ -1,4 +1,30 @@
-<?php helper('norlanka'); if (empty($content['title']) && empty($content['text'])) { return; } ?>
+<?php
+helper('norlanka');
+
+/**
+ * A block of prose.
+ *
+ * The payload key is `text`. It is worth saying so, because for the whole of
+ * this build the seed files wrote `body` and this partial returned early on
+ * every one of them: the terms of service, the privacy notice, the refund,
+ * reschedule and accessibility policies, About and Why MyLearnPlus were all
+ * live, all returning 200 with the right heading, and all empty. Six of the
+ * seven block types had the same disagreement, each dropping whatever it did
+ * not recognise.
+ *
+ * The partials are the contract — they are shared with the other sites in this
+ * repository and they are the vocabulary the admin's block editor writes — so
+ * the seed files were brought to them rather than the other way round. A page
+ * seeded in one dialect and then edited in the admin would otherwise change
+ * shape on its first save.
+ *
+ * `spark check:cms` compares what each page stores against what it renders, so
+ * a block that silently drops its payload fails a check rather than a reader.
+ */
+if (empty($content['title']) && empty($content['text'])) {
+    return;
+}
+?>
 <section class="bg-brand-black py-16">
     <div class="container-x">
         <div class="max-w-3xl" data-gsap="reveal">

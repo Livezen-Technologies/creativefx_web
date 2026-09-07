@@ -6,17 +6,17 @@
     {
       "type": "pagehero",
       "eyebrow": "Why us",
-      "heading": "Training you can point at afterwards",
-      "subtitle": "Six things we commit to on every course, written plainly so you can hold us to them."
+      "subtitle": "Six things we commit to on every course, written plainly so you can hold us to them.",
+      "title": "Training you can point at afterwards"
     },
     {
       "type": "richtext",
-      "body": "<p>Most software training fails in the same way. The room is too big for the instructor to see anyone's screen, the exercises use clean sample files that behave, and a fortnight later nobody can repeat what they saw. We have built the school around fixing those three things.</p><p>The test we apply to every course is simple: at the end of it, can you produce the thing your job actually asks for, on your own machine, without the instructor sitting next to you. Every outcome listed on a course page maps to a module in that course's curriculum, so you can check the promise against the timetable before you spend anything.</p>"
+      "text": "<p>Most software training fails in the same way. The room is too big for the instructor to see anyone's screen, the exercises use clean sample files that behave, and a fortnight later nobody can repeat what they saw. We have built the school around fixing those three things.</p><p>The test we apply to every course is simple: at the end of it, can you produce the thing your job actually asks for, on your own machine, without the instructor sitting next to you. Every outcome listed on a course page maps to a module in that course's curriculum, so you can check the promise against the timetable before you spend anything.</p>"
     },
     {
       "type": "feature_cards",
-      "heading": "What every course includes",
-      "cards": [
+      "title": "What every course includes",
+      "items": [
         {
           "title": "Small classes",
           "text": "Public classes are capped at twelve learners so the instructor can watch your screen, catch the wrong click early and change pace when the room needs it. The cap is the same online and in the classroom.",
@@ -51,12 +51,14 @@
     },
     {
       "type": "statement",
-      "heading": "We prepare you for the exam. We do not award the certification",
-      "text": "Adobe Certified Professional is delivered through Certiport and currently covers Photoshop, Illustrator, InDesign, Premiere Pro, After Effects, Animate, Dreamweaver, Acrobat Pro, Adobe Express and Adobe Firefly. Specialty Credentials in Visual Design, Video Design, Web Design and Marketing Design are awarded when two related professional certifications are completed. You sit those exams with Certiport, not with us, and you buy the voucher separately. What we do is teach against the published objectives, so nothing in the exam is a surprise. We do not guarantee a pass, and anyone who does should be treated with suspicion."
+      "items": [
+        {
+          "text": "Adobe Certified Professional is delivered through Certiport and currently covers Photoshop, Illustrator, InDesign, Premiere Pro, After Effects, Animate, Dreamweaver, Acrobat Pro, Adobe Express and Adobe Firefly. Specialty Credentials in Visual Design, Video Design, Web Design and Marketing Design are awarded when two related professional certifications are completed. You sit those exams with Certiport, not with us, and you buy the voucher separately. What we do is teach against the published objectives, so nothing in the exam is a surprise. We do not guarantee a pass, and anyone who does should be treated with suspicion."
+        }
+      ]
     },
     {
       "type": "values_grid",
-      "heading": "How we behave when things go wrong",
       "items": [
         {
           "title": "If a date does not run",
@@ -74,14 +76,15 @@
           "title": "If your setup is broken on day one",
           "text": "Join the pre-class setup check. We confirm the version, the system requirements and the exercise files before the class rather than losing your first hour to installations."
         }
-      ]
+      ],
+      "title": "How we behave when things go wrong"
     },
     {
       "type": "cta",
-      "heading": "Compare a course against your own work",
       "text": "Open any course page and read the curriculum next to the outcomes. If the module that builds the thing you need is not there, tell us and we will point you at the course that has it.",
-      "button_label": "Browse all courses",
-      "button_url": "/courses"
+      "title": "Compare a course against your own work",
+      "button": "Browse all courses",
+      "url": "/courses"
     }
   ],
   "seo": {

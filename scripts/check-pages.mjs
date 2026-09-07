@@ -15,6 +15,7 @@ import { chromium } from 'playwright';
 
 const BASE = process.argv[2] || 'http://127.0.0.1:8083';
 const WIDTHS = [390, 768, 1280, 1920];
+
 const LOCALES = ['en', 'si'];
 const PATHS = [
   // The commercial spine first, because these are the pages a sweep is really

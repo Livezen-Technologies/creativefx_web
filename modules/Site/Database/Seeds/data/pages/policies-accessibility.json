@@ -6,17 +6,17 @@
     {
       "type": "pagehero",
       "eyebrow": "Policies",
-      "heading": "Accessibility statement",
-      "subtitle": "What we are building towards on the website, what we can adjust in a class, and how to tell us when something blocks you."
+      "subtitle": "What we are building towards on the website, what we can adjust in a class, and how to tell us when something blocks you.",
+      "title": "Accessibility statement"
     },
     {
       "type": "richtext",
-      "body": "<p>MyLearnPlus, operated by <strong>Livezen Technologies</strong>, is working to meet <strong>WCAG 2.2 Level AA</strong> across mylearnplus.com, the course catalogue, the checkout and the learner dashboard. The date this version took effect is shown at the foot of this page, and the statement is reviewed whenever the site changes materially.</p><p>We are stating a commitment and a method here, not a certificate. Where a part of the site does not yet meet the standard we would rather say so and fix it than claim conformance we have not tested. If you find something that does not work for you, the reporting route below reaches a person who can change the code.</p>"
+      "text": "<p>MyLearnPlus, operated by <strong>Livezen Technologies</strong>, is working to meet <strong>WCAG 2.2 Level AA</strong> across mylearnplus.com, the course catalogue, the checkout and the learner dashboard. The date this version took effect is shown at the foot of this page, and the statement is reviewed whenever the site changes materially.</p><p>We are stating a commitment and a method here, not a certificate. Where a part of the site does not yet meet the standard we would rather say so and fix it than claim conformance we have not tested. If you find something that does not work for you, the reporting route below reaches a person who can change the code.</p>"
     },
     {
       "type": "feature_cards",
-      "heading": "What we build into the site",
-      "cards": [
+      "title": "What we build into the site",
+      "items": [
         {
           "title": "Keyboard operable",
           "text": "Every control, menu, filter, form and video player can be reached and used with a keyboard alone, with a visible focus indicator and a skip link to the main content.",
@@ -51,18 +51,18 @@
     },
     {
       "type": "richtext",
-      "body": "<p><strong>Adjustments in class</strong></p><p>Tell us when you book, or email <strong>hello@mylearnplus.com</strong> at least five business days before the class, and we will arrange what you need. Adjustments we make routinely include:</p><ul><li>Workbooks and exercise files sent in advance so you can prepare, and in larger type or a plain-text version on request.</li><li>Captions on class recordings, and access to a recording of a session you could not attend live.</li><li>Extra or longer breaks, and a session split across more days where the schedule allows.</li><li>A seat near the screen, step-free access and a quiet space in classroom sessions in Colombo. Tell us your requirement and we will confirm what the venue can do before you commit.</li><li>Instructors describing what they are doing on screen rather than pointing at it silently, and reading out what they type.</li><li>Extra time in practice exercises, and a follow-up session with the instructor where a live class moved faster than was workable for you.</li><li>Screen reader and magnification use in class. Adobe applications vary in how well they work with assistive technology, and we will be honest with you before you book about what a given course will demand.</li></ul><p>You do not have to give a diagnosis or produce evidence to ask for an adjustment. What we ask for is enough detail to arrange the right thing, and enough notice to arrange it properly. Access requirements you share are used only to make the adjustment, shared only with the instructor delivering your course, and deleted afterwards.</p>"
+      "text": "<p><strong>Adjustments in class</strong></p><p>Tell us when you book, or email <strong>hello@mylearnplus.com</strong> at least five business days before the class, and we will arrange what you need. Adjustments we make routinely include:</p><ul><li>Workbooks and exercise files sent in advance so you can prepare, and in larger type or a plain-text version on request.</li><li>Captions on class recordings, and access to a recording of a session you could not attend live.</li><li>Extra or longer breaks, and a session split across more days where the schedule allows.</li><li>A seat near the screen, step-free access and a quiet space in classroom sessions in Colombo. Tell us your requirement and we will confirm what the venue can do before you commit.</li><li>Instructors describing what they are doing on screen rather than pointing at it silently, and reading out what they type.</li><li>Extra time in practice exercises, and a follow-up session with the instructor where a live class moved faster than was workable for you.</li><li>Screen reader and magnification use in class. Adobe applications vary in how well they work with assistive technology, and we will be honest with you before you book about what a given course will demand.</li></ul><p>You do not have to give a diagnosis or produce evidence to ask for an adjustment. What we ask for is enough detail to arrange the right thing, and enough notice to arrange it properly. Access requirements you share are used only to make the adjustment, shared only with the instructor delivering your course, and deleted afterwards.</p>"
     },
     {
       "type": "richtext",
-      "body": "<p><strong>Known limitations</strong></p><p>Some parts of the experience are outside our direct control and we will not pretend otherwise. The video conferencing platform used for live classes, the payment provider's card entry fields, and the Adobe and third-party AI applications you use in class each have their own accessibility characteristics. Where a third-party component creates a barrier, we will tell you what the barrier is, report it to that supplier, and offer a workaround: for example, taking payment by bank transfer or invoice if the card form is unusable, or supplying materials in a different format.</p><p><strong>Reporting a barrier</strong></p><p>Email <strong>hello@mylearnplus.com</strong> with the subject line <em>Accessibility</em>. Tell us the page or the class, what you were trying to do, what happened, and the browser, device and assistive technology you were using if you know them. We acknowledge within <strong>two business days</strong> and reply within <strong>ten business days</strong> with either a fix, a date for a fix, or an alternative way to do what you were trying to do. If our answer does not resolve it, say so and we will escalate it internally rather than close it.</p><p>If you cannot use email, use any contact route on our contact page and say that you are reporting an accessibility barrier.</p>"
+      "text": "<p><strong>Known limitations</strong></p><p>Some parts of the experience are outside our direct control and we will not pretend otherwise. The video conferencing platform used for live classes, the payment provider's card entry fields, and the Adobe and third-party AI applications you use in class each have their own accessibility characteristics. Where a third-party component creates a barrier, we will tell you what the barrier is, report it to that supplier, and offer a workaround: for example, taking payment by bank transfer or invoice if the card form is unusable, or supplying materials in a different format.</p><p><strong>Reporting a barrier</strong></p><p>Email <strong>hello@mylearnplus.com</strong> with the subject line <em>Accessibility</em>. Tell us the page or the class, what you were trying to do, what happened, and the browser, device and assistive technology you were using if you know them. We acknowledge within <strong>two business days</strong> and reply within <strong>ten business days</strong> with either a fix, a date for a fix, or an alternative way to do what you were trying to do. If our answer does not resolve it, say so and we will escalate it internally rather than close it.</p><p>If you cannot use email, use any contact route on our contact page and say that you are reporting an accessibility barrier.</p>"
     },
     {
       "type": "cta",
-      "heading": "Tell us what is not working",
       "text": "A specific report is worth more to us than a general one. Send the page, the step and the technology you were using, and we will fix it or explain why we cannot yet.",
-      "button_label": "Contact us",
-      "button_url": "/contact"
+      "title": "Tell us what is not working",
+      "button": "Contact us",
+      "url": "/contact"
     }
   ],
   "seo": {
