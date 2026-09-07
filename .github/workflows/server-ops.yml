@@ -354,17 +354,25 @@ jobs:
               || echo "  (could not read translations)"
 
             echo
-            echo "===== media library (every row, including deleted) ====="
+            echo "===== media library ====="
             # Every row and the columns that decide whether the hero can use
             # one: `hero:images` reported "no images in the media library at
-            # all", which is what its query returns for a soft-deleted row and
-            # for a row whose mime_type is not image/* just as much as for an
-            # empty table. Those are three different faults with three different
-            # fixes, so print the rows rather than infer which it was.
+            # all", which is what its query returns for a row whose mime_type is
+            # not image/* just as much as for an empty table — two faults with
+            # two different fixes, so print the rows rather than infer which.
+            #
+            # stderr is shown rather than dropped. The first version of this
+            # selected a column the table does not have and printed only "could
+            # not read media_library", which named the table it failed on and
+            # nothing about why — the same shape of unhelpfulness that made the
+            # membership 500 take a workflow to diagnose.
+            echo "  -- columns --"
+            mysql -u"$DU" -p"$DP" "$DB" -e "SHOW COLUMNS FROM media_library;" \
+              || echo "  (SHOW COLUMNS failed, see above)"
+            echo "  -- rows --"
             mysql -u"$DU" -p"$DP" "$DB" -e \
-              "SELECT id, original_name, folder, tags, mime_type, deleted_at, path
-               FROM media_library ORDER BY id;" 2>/dev/null \
-              || echo "  (could not read media_library)"
+              "SELECT id, original_name, folder, tags, mime_type, path FROM media_library ORDER BY id;" \
+              || echo "  (SELECT failed, see above)"
 
             echo
             echo "===== DONE (read-only) ====="
