@@ -141,14 +141,198 @@ if (! function_exists('rich_text')) {
         }
 
         if (preg_match('/^\s*<(?:p|h[1-6]|ul|ol|blockquote|div|figure|strong|em|br)[\s>\/]/i', $text)) {
-            $html = preg_replace('#<script\b[^>]*>.*?</script>#is', '', $text);
-            $html = preg_replace('/\son\w+\s*=\s*("[^"]*"|\'[^\']*\'|[^\s>]+)/i', '', (string) $html);
-            $html = preg_replace('/(href|src)\s*=\s*(["\']?)\s*javascript:[^"\'>\s]*\2/i', '$1="#"', (string) $html);
-
-            return '<div class="article-body">' . $html . '</div>';
+            return '<div class="article-body">' . sanitise_html($text) . '</div>';
         }
 
         return nl2br(esc($text));
+    }
+}
+
+if (! function_exists('sanitise_html')) {
+    /**
+     * Editor HTML, reduced to what is safe to put on a page.
+     *
+     * This used to be three regular expressions — remove `<script>`, remove
+     * ` on*=`, rewrite `javascript:` — and five of the six obvious payloads went
+     * straight through them, because a regular expression is reading a string
+     * and a browser is parsing a document:
+     *
+     *   <img/onerror=alert(1) src=x>          the separator is `/`, not a space
+     *   <a href="javascript:alert('1')">      the quote inside ends the match
+     *   <a href="javascript&colon;alert(1)">  the colon is an entity
+     *   <svg/onload=alert(1)>                 both of the above at once
+     *   <iframe src="//evil.example/x">       never considered at all
+     *
+     * So the document is parsed and walked instead, and anything not on the
+     * allowlist is removed. That inverts the burden: a payload has to be a tag
+     * and an attribute we named, rather than merely something the patterns did
+     * not anticipate. It also means an unclosed tag is repaired rather than
+     * left to swallow the rest of the page.
+     *
+     * The threat is not a stranger — only an administrator or editor reaches
+     * this — but "our own staff" is exactly who stored XSS is aimed through:
+     * the script runs for every visitor on a public page, and for the next
+     * administrator who opens the record.
+     */
+    function sanitise_html(string $html): string
+    {
+        static $allowed = [
+            'p' => [], 'br' => [], 'hr' => [], 'div' => [], 'span' => [],
+            'h2' => [], 'h3' => [], 'h4' => [], 'h5' => [], 'h6' => [],
+            'strong' => [], 'b' => [], 'em' => [], 'i' => [], 'u' => [], 's' => [],
+            'sub' => [], 'sup' => [], 'small' => [], 'code' => [], 'pre' => [],
+            'ul' => [], 'ol' => [], 'li' => [], 'blockquote' => ['cite'],
+            'figure' => [], 'figcaption' => [],
+            'table' => [], 'thead' => [], 'tbody' => [], 'tfoot' => [],
+            'tr' => [], 'th' => ['colspan', 'rowspan', 'scope'], 'td' => ['colspan', 'rowspan'],
+            'a' => ['href', 'title', 'target', 'rel'],
+            'img' => ['src', 'alt', 'title', 'width', 'height', 'loading'],
+        ];
+
+        // Carried on every element: they cannot execute, and the design leans
+        // on class for typography inside article bodies.
+        static $global = ['class', 'id', 'lang', 'dir'];
+
+        // Removed with their contents, rather than unwrapped. Unwrapping
+        // <script> would leave its source as visible text on the page.
+        static $strip = [
+            'script' => true, 'style' => true, 'iframe' => true, 'object' => true,
+            'embed' => true, 'form' => true, 'input' => true, 'button' => true,
+            'select' => true, 'textarea' => true, 'link' => true, 'meta' => true,
+            'base' => true, 'svg' => true, 'math' => true, 'template' => true,
+            'noscript' => true, 'frame' => true, 'frameset' => true, 'applet' => true,
+        ];
+
+        if (trim($html) === '') {
+            return '';
+        }
+
+        $doc = new DOMDocument();
+
+        // The XML prologue is what stops DOMDocument reading UTF-8 as Latin-1
+        // and turning every Sinhala character into mojibake. Errors are
+        // collected rather than raised: editor HTML is frequently invalid, and
+        // invalid is not a reason to blank a page.
+        $previous = libxml_use_internal_errors(true);
+        $doc->loadHTML(
+            '<?xml encoding="utf-8" ?><body>' . $html . '</body>',
+            LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD
+        );
+        libxml_clear_errors();
+        libxml_use_internal_errors($previous);
+
+        $body = $doc->getElementsByTagName('body')->item(0);
+        if ($body === null) {
+            return esc($html);
+        }
+
+        // Depth-first over a snapshot: removing a node while iterating a live
+        // DOMNodeList skips its sibling.
+        $walk = static function (DOMNode $node) use (&$walk, $allowed, $global, $strip): void {
+            foreach (iterator_to_array($node->childNodes) as $child) {
+                if ($child instanceof DOMComment) {
+                    $child->parentNode?->removeChild($child);
+
+                    continue;
+                }
+
+                if (! $child instanceof DOMElement) {
+                    continue;   // text, and nothing else survives loadHTML
+                }
+
+                $name = strtolower($child->nodeName);
+
+                if (isset($strip[$name])) {
+                    $child->parentNode?->removeChild($child);
+
+                    continue;
+                }
+
+                if (! isset($allowed[$name])) {
+                    // Unknown but harmless-looking: keep the words, drop the
+                    // tag. Deleting the subtree would silently lose prose to a
+                    // typo like <bold>.
+                    $walk($child);
+                    while ($child->firstChild !== null) {
+                        $child->parentNode?->insertBefore($child->firstChild, $child);
+                    }
+                    $child->parentNode?->removeChild($child);
+
+                    continue;
+                }
+
+                $keep = array_merge($allowed[$name], $global);
+                foreach (iterator_to_array($child->attributes) as $attr) {
+                    $attrName = strtolower($attr->nodeName);
+
+                    if (! in_array($attrName, $keep, true)) {
+                        $child->removeAttribute($attr->nodeName);
+
+                        continue;
+                    }
+
+                    if ($attrName === 'href' || $attrName === 'src') {
+                        $url = safe_url_value($attr->nodeValue ?? '');
+                        if ($url === null) {
+                            // href goes to a dead anchor rather than vanishing,
+                            // so the link text stays clickable-looking and the
+                            // editor can see something is wrong.
+                            $attrName === 'href'
+                                ? $child->setAttribute('href', '#')
+                                : $child->removeAttribute($attr->nodeName);
+                        } else {
+                            $child->setAttribute($attrName, $url);
+                        }
+                    }
+                }
+
+                // A link opening a new tab without this hands the opener to the
+                // destination via window.opener.
+                if ($name === 'a' && $child->getAttribute('target') !== '') {
+                    $child->setAttribute('rel', 'noopener noreferrer');
+                }
+
+                $walk($child);
+            }
+        };
+
+        $walk($body);
+
+        $out = '';
+        foreach ($body->childNodes as $child) {
+            $out .= $doc->saveHTML($child);
+        }
+
+        return $out;
+    }
+}
+
+if (! function_exists('safe_url_value')) {
+    /**
+     * A URL an editor may point at, or null.
+     *
+     * Decoded first, because `javascript&colon;alert(1)` and
+     * `java\tscript:alert(1)` are both `javascript:` by the time a browser
+     * reads them, and a check made before decoding is a check made against a
+     * string no browser ever sees.
+     */
+    function safe_url_value(string $value): ?string
+    {
+        $url = html_entity_decode($value, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+
+        // Every C0 control, plus the ones browsers strip from inside a scheme.
+        $url = trim(preg_replace('/[\x00-\x20\x7f]/', '', $url) ?? '');
+
+        if ($url === '') {
+            return null;
+        }
+
+        // Relative, rooted, protocol-relative or a fragment: no scheme to judge.
+        if (! preg_match('#^([a-z][a-z0-9+.\-]*):#i', $url, $m)) {
+            return $url;
+        }
+
+        return in_array(strtolower($m[1]), ['http', 'https', 'mailto', 'tel'], true) ? $url : null;
     }
 }
 

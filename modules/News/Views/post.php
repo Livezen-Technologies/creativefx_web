@@ -10,16 +10,15 @@ $tags     = array_values(array_filter(array_map('trim', explode(',', (string) ($
 
 /**
  * Article body renderer. Rich-text bodies (authored in the admin editor) are
- * stored as HTML and rendered directly — with scripts/handlers stripped as a
- * safety net. Legacy plain-text bodies keep the original minimal formatter:
- * blank lines split paragraphs, "## " starts a heading, "- " lines make lists.
+ * stored as HTML and passed through sanitise_html(), which parses the document
+ * and keeps an allowlist — this file used to carry its own copy of the three
+ * regular expressions that stripper replaced, and inherited every hole in them.
+ * Legacy plain-text bodies keep the original minimal formatter: blank lines
+ * split paragraphs, "## " starts a heading, "- " lines make lists.
  */
 $renderBody = static function (string $text): string {
     if (preg_match('/^\s*<(?:p|h[1-6]|ul|ol|blockquote|div|figure)[\s>]/i', $text)) {
-        $html = preg_replace('#<script\b[^>]*>.*?</script>#is', '', $text);
-        $html = preg_replace('/\son\w+\s*=\s*("[^"]*"|\'[^\']*\'|[^\s>]+)/i', '', $html);
-        $html = preg_replace('/(href|src)\s*=\s*(["\']?)\s*javascript:[^"\'>\s]*\2/i', '$1="#"', $html);
-        return '<div class="article-body">' . $html . '</div>';
+        return '<div class="article-body">' . sanitise_html($text) . '</div>';
     }
 
     $html = '';
