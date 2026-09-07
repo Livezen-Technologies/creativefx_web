@@ -246,6 +246,26 @@ jobs:
             # deliberately, because a missing price row must not sell a year of
             # the library for nothing — so a seeder that half-ran gives a page
             # that is 200, renders, and offers nothing to buy. Count the cards.
+            # The home page hero. `hero:images` can report a photograph as
+            # promoted while the page shows nothing — that has happened on this
+            # site twice, once because the model and the command disagreed about
+            # what a hero image is, and once because the photograph painted
+            # underneath the section's own background. Both times the command
+            # said it had worked. So ask the page.
+            echo "===== the home page hero ====="
+            curl -s -k -m 10 -o /tmp/probe.out "${BASE}/en" -H "Host: ${DOMAIN}"
+            if grep -q 'fetchpriority="high"' /tmp/probe.out; then
+              SRC=$(grep -o 'src="[^"]*"[^>]*fetchpriority' /tmp/probe.out | head -1 | sed 's/.*src="//; s/".*//')
+              printf '  hero <img> present, src %s\n' "${SRC:-?}"
+              # And the file it points at is actually served, because an <img>
+              # with a 404 behind it is a hero that renders as nothing.
+              HREF=$(printf '%s' "$SRC" | sed 's/&#x2F;/\//g; s/&#x3F;/?/g; s/&#x3D;/=/g')
+              printf '  that file                          -> %s\n' \
+                "$(curl -s -k -m 10 -o /dev/null -w '%{http_code}' "${BASE}${HREF}" -H "Host: ${DOMAIN}")"
+            else
+              echo "  *** no hero <img> on the home page — it is showing the empty state ***"
+            fi
+
             echo "===== membership plans actually on sale ====="
             for P in /en/membership /si/membership; do
               curl -s -k -m 10 -o /tmp/probe.out "${BASE}${P}" -H "Host: ${DOMAIN}"
