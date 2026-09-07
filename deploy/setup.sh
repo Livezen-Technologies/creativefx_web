@@ -289,6 +289,51 @@ if ! nginx -t; then
 fi
 systemctl reload nginx
 
+# ---- Scheduled work ------------------------------------------------------
+note "Installing the seat sweeper"
+# A seat hold lasts fifteen minutes and something has to be the thing that
+# notices. Nothing was: `seats:manage release` existed and no deploy ever ran
+# it, so on a live site every abandoned checkout would have left its seats
+# reserved for ever and the class would have sold out to nobody. The symptom is
+# slow and looks like demand.
+#
+# One file in /etc/cron.d per site, named for the slug, so this only ever adds
+# its own — the same rule the vhost and the database follow. Rewritten on every
+# deploy rather than appended to, so a redeploy cannot leave two.
+#
+# `reconcile` runs after `release` because releasing a hold is what makes the
+# cached counter wrong; hourly is enough for a counter that is only ever a
+# cache of a count the booking path takes under a lock.
+# An absolute path: cron's PATH is not a login shell's, and "php" resolving on
+# the deploying operator's terminal says nothing about whether it resolves at
+# 03:05 under www-data.
+PHP_ABS="$(command -v "$PHP_BIN" 2>/dev/null || printf '%s' "$PHP_BIN")"
+case "$PHP_ABS" in
+  /*) : ;;
+  *)  warn "Could not resolve '$PHP_BIN' to an absolute path; the seat sweeper may not run." ;;
+esac
+
+CRON_FILE="/etc/cron.d/${SLUG}-seats"
+if [ -d /etc/cron.d ]; then
+  cat > "$CRON_FILE" <<CRON
+# MyLearnPlus seat maintenance for ${DOMAIN}. Written by deploy/setup.sh.
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+# Expired holds go back on sale every five minutes.
+*/5 * * * * ${WEB_USER} cd ${APP_DIR} && ${PHP_ABS} spark seats:manage release >/dev/null 2>&1
+
+# The denormalised seat counters are re-derived hourly, at a minute nothing
+# else is using.
+17 * * * * ${WEB_USER} cd ${APP_DIR} && ${PHP_ABS} spark seats:manage reconcile >/dev/null 2>&1
+CRON
+  chmod 0644 "$CRON_FILE"
+  note "seat sweeper: $CRON_FILE (release every 5 min, reconcile hourly)"
+else
+  warn "No /etc/cron.d on this host — seat holds will NOT be released automatically."
+  warn "Run '${PHP_ABS} spark seats:manage release' from a scheduler, or expired holds keep their seats."
+fi
+
 # ---- Done ----------------------------------------------------------------
 note "Deploy complete"
 cat <<DONE

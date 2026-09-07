@@ -132,7 +132,28 @@ class CertificateService
             'issued_at'    => date('Y-m-d H:i:s'),
         ];
 
-        $id          = $certificates->insert($row, true);
+        // `eligible()` has already said no certificate exists, but that read and
+        // this write are not one operation: two administrators pressing Issue on
+        // the same row at the same moment both pass the check. The unique index
+        // on `enrolment_id` is what actually decides, and losing that race is
+        // not an error — the certificate the other request created is the
+        // answer, and it is the one whose serial the learner will be given.
+        try {
+            $id = $certificates->insert($row, true);
+        } catch (\Throwable $e) {
+            $existing = $certificates->forEnrolment($enrolmentId);
+            if ($existing !== null) {
+                log_message('info', 'Certificate for enrolment {id} was issued concurrently; returning {serial}.', [
+                    'id'     => $enrolmentId,
+                    'serial' => $existing['serial'],
+                ]);
+
+                return $existing;
+            }
+
+            throw $e;
+        }
+
         $certificate = $certificates->find($id);
 
         // The PDF is a rendering of the row, not the record itself. If writing

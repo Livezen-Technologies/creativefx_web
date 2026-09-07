@@ -132,7 +132,7 @@ class Enrolments extends BaseController
             ->select('enrolments.*, u.first_name, u.last_name, u.email, u.company')
             ->select('c.title AS course_title, c.slug AS course_slug')
             ->select('cs.start_date, cs.end_date, cs.status AS session_status, cs.mode AS session_mode')
-            ->select('cert.serial AS certificate_serial, cert.verify_code AS certificate_code, cert.issued_at AS certificate_issued_at, cert.revoked_at AS certificate_revoked_at')
+            ->select('cert.serial AS certificate_serial, cert.verify_code AS certificate_code, cert.issued_at AS certificate_issued_at, cert.revoked_at AS certificate_revoked_at, cert.revoke_reason AS certificate_revoke_reason')
             ->select('oi.unit_price_cents, oi.qty, o.id AS order_id, o.order_no, o.currency')
             ->join('users u', 'u.id = enrolments.user_id', 'left')
             ->join('courses c', 'c.id = enrolments.course_id', 'left')
@@ -298,6 +298,93 @@ class Enrolments extends BaseController
 
         return redirect()->back()->with('message', 'Certificate ' . $certificate['serial'] . ' issued'
             . ($force ? ', overriding the eligibility rule. The override is in the log.' : '.'));
+    }
+
+    /**
+     * Withdraw a certificate.
+     *
+     * `CertificateService::revoke()` has existed since the module was written
+     * with nothing routed to it, so a certificate issued in error — the wrong
+     * enrolment, an override that should not have been made, a place refunded
+     * afterwards — could be created and never withdrawn. For a school whose
+     * certificates carry a public verification page, that is the half of the
+     * lifecycle that matters most: the page keeps saying the credential is good.
+     *
+     * The certificate is not deleted. `/verify/{code}` must keep answering, and
+     * "this certificate was withdrawn on 3 March" is a true answer that a
+     * missing row cannot give — a 404 there reads as a broken link, not as a
+     * revocation, to exactly the employer who is checking.
+     *
+     * A reason is required. A revocation nobody wrote a reason for is one
+     * nobody can explain to the learner who asks.
+     */
+    public function revokeCertificate($id)
+    {
+        $id     = (int) $id;
+        $reason = trim((string) $this->request->getPost('reason'));
+
+        $certificate = (new CertificateModel())->forEnrolment($id);
+
+        if ($certificate === null) {
+            return redirect()->back()->with('error', 'There is no certificate against this place to withdraw.');
+        }
+
+        if (! empty($certificate['revoked_at'])) {
+            return redirect()->back()->with('error', 'Certificate ' . $certificate['serial']
+                . ' was already withdrawn on ' . date('j M Y', strtotime((string) $certificate['revoked_at'])) . '.');
+        }
+
+        if ($reason === '') {
+            return redirect()->back()->with('error', 'Say why this certificate is being withdrawn.');
+        }
+
+        (new CertificateService())->revoke((int) $certificate['id'], $reason);
+
+        $admin = session()->get('admin_user') ?? [];
+        log_message('notice', 'Certificate {serial} withdrawn by {who}: {reason}', [
+            'serial' => (string) $certificate['serial'],
+            'who'    => (string) ($admin['email'] ?? 'unknown'),
+            'reason' => mb_substr($reason, 0, 255),
+        ]);
+
+        return redirect()->back()->with('message', 'Certificate ' . $certificate['serial']
+            . ' withdrawn. Its verification page now says so.');
+    }
+
+    /**
+     * The certificate PDF, for an administrator.
+     *
+     * The learner can already download their own from their account; nobody in
+     * the office could, which made "send me a copy" a request only a developer
+     * could answer.
+     *
+     * Rendered from the row if the stored file has gone — the PDF is a
+     * rendering of the record, not the record itself.
+     */
+    public function downloadCertificate($id)
+    {
+        $id          = (int) $id;
+        $certificate = (new CertificateModel())->forEnrolment($id);
+
+        if ($certificate === null) {
+            return redirect()->back()->with('error', 'There is no certificate against this place.');
+        }
+
+        try {
+            $pdf = (new CertificateService())->pdf($certificate);
+        } catch (\Throwable $e) {
+            log_message('error', 'Certificate {serial} could not be rendered: {msg}', [
+                'serial' => (string) $certificate['serial'],
+                'msg'    => $e->getMessage(),
+            ]);
+
+            return redirect()->back()->with('error', 'That certificate could not be rendered. Tell a developer.');
+        }
+
+        return $this->response
+            ->setContentType('application/pdf')
+            ->setHeader('Content-Disposition', 'attachment; filename="' . $certificate['serial'] . '.pdf"')
+            ->setBody($pdf);
     }
 
     // ── Internals ───────────────────────────────────────────────────────────

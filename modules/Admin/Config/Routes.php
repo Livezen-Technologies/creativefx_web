@@ -74,6 +74,11 @@ $routes->group('admin', ['namespace' => 'Modules\Admin\Controllers'], static fun
         $routes->get('enrolments', 'Enrolments::index');
         $routes->post('enrolments/(:num)', 'Enrolments::update/$1');
         $routes->post('enrolments/(:num)/certificate', 'Enrolments::issueCertificate/$1');
+        // Withdrawing and downloading a certificate. CertificateService::revoke()
+        // had existed since the module was written with nothing routed to it, so
+        // a certificate issued in error could never be taken back.
+        $routes->post('enrolments/(:num)/certificate/revoke', 'Enrolments::revokeCertificate/$1');
+        $routes->get('enrolments/(:num)/certificate/download', 'Enrolments::downloadCertificate/$1');
 
         $routes->get('training-leads', 'TrainingLeads::index');
         $routes->get('training-leads/(:num)', 'TrainingLeads::show/$1');

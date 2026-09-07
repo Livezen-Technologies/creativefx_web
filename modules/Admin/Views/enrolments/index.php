@@ -233,9 +233,37 @@ $allTotal    = array_sum($counts);
                             <a href="<?= esc(rtrim(base_url(), '/') . '/verify/' . $r['certificate_code'], 'attr') ?>" target="_blank" rel="noopener"
                                class="font-mono text-xs hover:text-brand-red"><?= esc((string) $r['certificate_serial']) ?></a>
                             <?php if (! empty($r['certificate_revoked_at'])): ?>
-                                <div class="text-xs text-brand-red">Revoked</div>
+                                <div class="text-xs text-brand-red">
+                                    Withdrawn <?= esc(date('j M Y', strtotime((string) $r['certificate_revoked_at']))) ?>
+                                </div>
+                                <?php if (! empty($r['certificate_revoke_reason'])): ?>
+                                    <div class="mt-0.5 text-xs text-white/40"><?= esc((string) $r['certificate_revoke_reason']) ?></div>
+                                <?php endif; ?>
+                                <a href="<?= site_url('admin/enrolments/' . $id . '/certificate/download') ?>"
+                                   class="mt-1 inline-block text-xs text-white/50 underline underline-offset-4 hover:text-white">PDF</a>
                             <?php else: ?>
                                 <div class="text-xs text-white/40"><?= esc(date('j M Y', strtotime((string) $r['certificate_issued_at']))) ?></div>
+
+                                <a href="<?= site_url('admin/enrolments/' . $id . '/certificate/download') ?>"
+                                   class="mt-1 inline-block text-xs text-white/50 underline underline-offset-4 hover:text-white">PDF</a>
+
+                                <?php // Withdrawing is behind a disclosure and asks for a
+                                      // reason, because it is the one action here that
+                                      // changes what a public page says about somebody. ?>
+                                <details class="mt-1">
+                                    <summary class="cursor-pointer text-xs text-white/40 hover:text-brand-red">Withdraw</summary>
+                                    <form method="post" action="<?= site_url('admin/enrolments/' . $id . '/certificate/revoke') ?>"
+                                          class="mt-2 w-56 space-y-1.5 rounded-lg border border-brand-red/30 bg-brand-red/10 p-2">
+                                        <?= csrf_field() ?>
+                                        <label class="block text-xs text-white/60" for="revoke-<?= $id ?>">Why is it being withdrawn?</label>
+                                        <input id="revoke-<?= $id ?>" name="reason" type="text" maxlength="255"
+                                               class="w-full rounded border border-white/15 bg-black/40 px-2 py-1 text-xs">
+                                        <p class="text-xs text-white/40">
+                                            The certificate is kept and its verification page will say it was withdrawn.
+                                        </p>
+                                        <button class="rounded-lg border border-brand-red/50 px-2.5 py-1 text-xs font-semibold uppercase tracking-widest text-brand-red hover:border-brand-red">Withdraw</button>
+                                    </form>
+                                </details>
                             <?php endif; ?>
                         <?php elseif (! $certifiable): ?>
                             <span class="text-xs text-white/25">—</span>
