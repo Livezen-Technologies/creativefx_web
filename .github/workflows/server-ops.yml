@@ -240,6 +240,22 @@ jobs:
             done
             # An index of the per-section sitemaps, not a list of URLs.
             probe /sitemap.xml '<sitemapindex'
+
+            # A 200 is not enough for the membership page. MembershipPlanModel
+            # leaves out any plan that has no price in the visitor's currency —
+            # deliberately, because a missing price row must not sell a year of
+            # the library for nothing — so a seeder that half-ran gives a page
+            # that is 200, renders, and offers nothing to buy. Count the cards.
+            echo "===== membership plans actually on sale ====="
+            for P in /en/membership /si/membership; do
+              curl -s -k -m 10 -o /tmp/probe.out "${BASE}${P}" -H "Host: ${DOMAIN}"
+              N=$(grep -c 'name="item_type" value="membership"' /tmp/probe.out || true)
+              if [ "$N" = 4 ]; then
+                printf '  %-34s -> %s plans, priced\n' "$P" "$N"
+              else
+                printf '  %-34s -> *** %s plans, expected 4 (a plan with no price in this currency is left out) ***\n' "$P" "$N"
+              fi
+            done
             # Seat counts, from the live database. The one number on this site
             # that must never be guessed.
             echo "===== seat inventory consistency ====="
