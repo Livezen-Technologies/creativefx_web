@@ -12,6 +12,7 @@ use Modules\Catalog\Models\CourseSessionModel;
 use Modules\Catalog\Models\InstructorModel;
 use Modules\Catalog\Models\ReviewModel;
 use Modules\Commerce\Services\InventoryService;
+use Modules\Media\Models\MediaModel;
 
 /**
  * The home page.
@@ -93,6 +94,10 @@ class Home extends BaseController
             'reviews'         => (new ReviewModel())->latest(6),
             'posts'           => $this->latestPosts(3),
             'facts'           => $this->facts(),
+            // The hero shows one photograph, not a carousel: a picture that
+            // moves while somebody is reading the headline beside it is a
+            // picture competing with the thing it is meant to support.
+            'heroImage'       => (new MediaModel())->heroImages(1)[0] ?? null,
             'currency'        => $currency,
             'schema'          => Schema::render([Schema::organisation(), Schema::website()]),
             'title'           => setting('site_name', '') . ' — ' . lang('Site.home.tagline'),

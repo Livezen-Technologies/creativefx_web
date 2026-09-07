@@ -103,7 +103,15 @@ for (const [cls, where] of seen) {
 
 console.log(`Checked ${files.length} templates against the built stylesheet.`);
 if (problems.length === 0) {
-  console.log('Every Tailwind utility written is a utility that exists.');
+  // Named precisely, because the old wording — "every Tailwind utility written
+  // is a utility that exists" — claims the whole of Tailwind and checks two
+  // corners of it. I trusted that line while three arbitrary-value classes I
+  // had just written were genuinely absent from the built CSS (a stale build,
+  // as it turned out), and a summary that overstates its scope is how a stale
+  // build gets mistaken for a passing check.
+  console.log('Every opacity modifier is on the scale, and every brand-colour class');
+  console.log('has a rule in the built CSS. Other utilities are not checked here —');
+  console.log('rebuild before trusting this, since it reads the last build.');
   process.exit(0);
 }
 console.log(`${problems.length} problem(s):`);

@@ -34,9 +34,10 @@ helper(['norlanka', 'catalog', 'commerce', 'url']);
 <?= $this->section('content') ?>
 
 <?= view('Modules\Site\Views\home\_hero', [
-    'upcoming' => $upcoming,
-    'currency' => $currency,
-    'facts'    => $facts,
+    'upcoming'  => $upcoming,
+    'currency'  => $currency,
+    'facts'     => $facts,
+    'heroImage' => $heroImage ?? null,
 ], ['saveData' => false]) ?>
 
 <?php // ── The two pillars ───────────────────────────────────────────────── ?>

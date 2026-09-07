@@ -82,42 +82,54 @@ class HeroImages extends BaseCommand
         return $this->list($model);
     }
 
-    /** Everything the hero will actually render, in the order it will render it. */
+    /**
+     * Everything the hero will actually render, in the order it will render it.
+     *
+     * Asked of MediaModel::heroImages() rather than re-queried here. This
+     * command used to carry its own copy of that query while the home page read
+     * no media at all, so it reported an image as promoted and the front page
+     * never changed — the failure a command like this exists to prevent.
+     */
     private function list(MediaModel $model): int
     {
-        $rows = $model
-            ->groupStart()
-                ->where('folder', 'hero')
-                ->orLike('tags', 'hero')
-            ->groupEnd()
-            ->like('mime_type', 'image/', 'after')
-            ->orderBy('original_name', 'ASC')
-            ->findAll(50);
+        $rows = $model->heroImages(50);
 
-        $shown = [];
-        foreach ($rows as $row) {
-            if (($row['folder'] ?? '') !== 'hero'
-                && ! in_array('hero', $this->tags($row['tags'] ?? ''), true)) {
-                continue;
+        // heroImages() drops rows whose file has gone, because the page must
+        // not render a broken image. Here they are worth naming: "I promoted it
+        // and it is not listed" needs an answer better than silence.
+        $missing = 0;
+        foreach ($model->groupStart()->where('folder', 'hero')->orLike('tags', 'hero')->groupEnd()->findAll(50) as $row) {
+            $promoted = ($row['folder'] ?? '') === 'hero'
+                || in_array('hero', MediaModel::tagsOf($row['tags'] ?? null), true);
+
+            if ($promoted && ! is_file(FCPATH . ltrim((string) $row['path'], '/'))) {
+                $missing++;
             }
-            $onDisk = is_file(FCPATH . ltrim((string) $row['path'], '/'));
-            $shown[] = [
-                (string) $row['id'],
-                (string) $row['path'],
-                $onDisk ? 'on disk' : 'MISSING',
-                trim((string) ($row['tags'] ?? '')) ?: '—',
-            ];
         }
 
-        if ($shown === []) {
-            CLI::write('The hero has no photographs, so it is drawing its own hillside.', 'yellow');
+        if ($rows === []) {
+            CLI::write('No hero photograph, so the home page shows its words full width.', 'yellow');
             CLI::write('Add one with:  php spark hero:images add <id|path>', 'dark_gray');
+        } else {
+            CLI::table(array_map(static fn (array $r): array => [
+                (string) $r['id'],
+                (string) $r['path'],
+                trim((string) ($r['alt'] ?? '')) ?: 'NO ALT TEXT',
+                trim((string) ($r['tags'] ?? '')) ?: '—',
+            ], $rows), ['id', 'path', 'alt', 'tags']);
 
-            return 0;
+            CLI::write('The hero shows the first of these: ' . $rows[0]['path'], 'green');
+
+            if (trim((string) ($rows[0]['alt'] ?? '')) === '') {
+                CLI::write('It has no alt text. Set one in the admin media library — this is the', 'yellow');
+                CLI::write('largest image on the site and a screen reader will announce nothing.', 'yellow');
+            }
         }
 
-        CLI::table($shown, ['id', 'path', 'file', 'tags']);
-        CLI::write(count($shown) . ' image(s); the hero shows the first 6, in this order.', 'dark_gray');
+        if ($missing > 0) {
+            CLI::newLine();
+            CLI::write($missing . ' promoted row(s) point at a file that is not on disk, and are skipped.', 'red');
+        }
 
         return 0;
     }
@@ -147,9 +159,6 @@ class HeroImages extends BaseCommand
     /** @return list<string> */
     private function tags(?string $raw): array
     {
-        return array_values(array_filter(array_map(
-            static fn (string $t): string => strtolower(trim($t)),
-            explode(',', (string) $raw)
-        ), static fn (string $t): bool => $t !== ''));
+        return MediaModel::tagsOf($raw);
     }
 }
