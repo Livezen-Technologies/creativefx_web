@@ -37,15 +37,15 @@ on:
       media_path:
         description: "inspect-media only: site-absolute path of the file to trace"
         required: false
-        default: /media/tshda/tshda-logo.svg
+        default: /media/learnplus/emblem.svg
       domain:
         description: Domain to diagnose / issue a certificate for
         required: true
-        default: tshda.livezencloud.com
+        default: learnplus.livezencloud.com
       app_dir:
         description: Install directory of that site (diagnose-tls only)
         required: true
-        default: /var/www/tshda
+        default: /var/www/learnplus
       deploy_host:
         description: Server host/IP (overrides DEPLOY_HOST secret)
         required: false
@@ -152,7 +152,7 @@ jobs:
             # 404 on every run for files nobody ships teaches people to skim
             # past its output, which is the one thing it must not do.
             echo "===== static assets (served over :443) ====="
-            for f in /media/tshda/tshda-logo.svg /media/tshda/tshda-emblem.svg /favicon.ico; do
+            for f in /media/learnplus/emblem.svg /favicon.ico /robots.txt; do
               echo "--- $f ---"
               curl -s -I -k -m 10 "https://127.0.0.1${f}" -H "Host: ${DOMAIN}" 2>&1 | grep -iE 'HTTP/|content-type|content-length|accept-ranges'
             done
@@ -166,12 +166,24 @@ jobs:
             # locally on SQLite and runs on MySQL here, so "it passed on my
             # machine" is not evidence about this one.
             echo "===== assistant endpoint ====="
-            for L in en si ta; do
+            for L in en si; do
               printf '  /%s/assistant/ask -> ' "$L"
-              curl -s -k -m 10 "https://127.0.0.1/$L/assistant/ask?q=subsidy" -H "Host: ${DOMAIN}" \
+              curl -s -k -m 10 "https://127.0.0.1/$L/assistant/ask?q=photoshop" -H "Host: ${DOMAIN}" \
                 -o /tmp/asst.json -w '%{http_code} '
               head -c 90 /tmp/asst.json | tr -d '\n'; echo
             done
+            # The commercial spine. A 200 on the home page says nothing about
+            # whether anybody can actually buy anything, and these are the four
+            # addresses that decide that.
+            echo "===== the pages that take money ====="
+            for P in /en/courses /en/course/photoshop-level-1 /en/schedule /en/cart /sitemap.xml; do
+              printf '  %-34s -> ' "$P"
+              curl -s -o /dev/null -w '%{http_code}\n' -k -m 10 "https://127.0.0.1${P}" -H "Host: ${DOMAIN}"
+            done
+            # Seat counts, from the live database. The one number on this site
+            # that must never be guessed.
+            echo "===== seat inventory consistency ====="
+            (cd "$APP_DIR" && sudo -u www-data php spark seats:manage reconcile 2>&1 | tail -2)
             echo "--- media on disk ---"
             ls -la "$APP_DIR"/public/media/*/ 2>/dev/null
             echo

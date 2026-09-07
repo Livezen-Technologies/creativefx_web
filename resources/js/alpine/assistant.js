@@ -1,4 +1,4 @@
-const STORE_KEY = 'tshda_assistant';
+const STORE_KEY = 'mlp_assistant';
 const MAX_TURNS = 24;
 
 /**

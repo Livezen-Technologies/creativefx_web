@@ -14,51 +14,51 @@ use CodeIgniter\Database\Seeder;
  *
  * Labels are stored as the language key, resolved at render time rather than
  * frozen here, so an item nobody has renamed still follows the translation
- * files — which is how the same menu reads in Sinhala and Tamil without an
- * editor retyping it three times.
+ * files — which is how the same menu reads in Sinhala without an editor
+ * retyping it.
+ *
+ * Every key below has to actually resolve. A key that does not is rendered
+ * literally, so a menu reading "Site.nav.downloads" appears in the header of
+ * every page on the site — which is exactly what happened after the last
+ * rebrand, because the seeder still named the previous site's sections.
  */
 class MenuSeeder extends Seeder
 {
-    /** [slug, language key, children[]] */
+    /** [path, language key, children[]] */
     private const HEADER = [
-        ['about-us', 'Site.nav.about', [
-            ['about-us',                 'Site.nav.overview'],
-            ['vision-mission',           'Site.nav.vision_mission'],
-            ['strategic-plan',           'Site.nav.strategic_plan'],
-            ['senior-management',        'Site.nav.senior_management'],
-            ['divisions',                'Site.nav.divisions'],
-            ['organisational-structure', 'Site.nav.org_structure'],
+        ['courses', 'Site.nav.courses', [
+            ['courses',             'Catalog.courses.all'],
+            ['adobe',               'Catalog.pillar.adobe'],
+            ['ai',                  'Catalog.pillar.ai'],
+            ['on-demand',           'Catalog.ondemand.title'],
+            ['certificates',        'Catalog.bundles.certificates_title'],
+            ['bootcamps',           'Catalog.bundles.bootcamps_title'],
+            ['adobe/certification', 'Catalog.pillars.cert_title'],
         ]],
-        ['services', 'Site.nav.services', [
-            ['services',         'Site.nav.all_services'],
-            ['land-development', 'Site.nav.land_development'],
-            ['societies',        'Site.nav.societies'],
-            ['hantana',          'Site.nav.hantana'],
+        ['schedule', 'Site.nav.schedule', []],
+        ['corporate', 'Site.home.corporate_heading', []],
+        ['resources', 'Catalog.resources.title', [
+            ['resources', 'Catalog.resources.title'],
+            ['webinars',  'Catalog.webinars.title'],
+            ['blog',      'Site.news.title'],
         ]],
-        ['media-centre', 'Site.nav.media_centre', [
-            ['news',          'Site.nav.news'],
-            ['announcements', 'Site.nav.announcements'],
-            ['gallery',       'Site.nav.photo_gallery'],
-            ['videos',        'Site.nav.video_gallery'],
-        ]],
-        ['statistics', 'Site.nav.statistics', []],
-        ['downloads',  'Site.nav.downloads',  []],
-        ['vacancies',  'Site.nav.vacancies',  []],
-        ['directory',  'Site.nav.directory',  []],
-        ['contact',    'Site.nav.contact',    []],
+        ['locations', 'Catalog.locations.title', []],
+        ['contact', 'Site.nav.contact', []],
     ];
 
     private const FOOTER = [
-        ['about-us',        'Site.nav.about',         []],
-        ['services',        'Site.nav.services',      []],
-        ['downloads',       'Site.nav.downloads',     []],
-        ['statistics',      'Site.nav.statistics',    []],
-        ['vacancies',       'Site.nav.vacancies',     []],
-        ['directory',       'Site.nav.directory',     []],
-        ['faqs',            'Site.nav.faqs',          []],
-        ['sitemap',         'Site.nav.sitemap',       []],
-        ['feedback',        'Site.nav.feedback',      []],
-        ['field-officer',   'Site.nav.field_officer', []],
+        ['courses',       'Catalog.courses.all',                []],
+        ['schedule',      'Catalog.schedule.title',             []],
+        ['certificates',  'Catalog.bundles.certificates_title', []],
+        ['on-demand',     'Catalog.ondemand.title',             []],
+        ['corporate',     'Site.home.corporate_heading',        []],
+        ['instructors',   'Catalog.instructors.title',          []],
+        ['reviews',       'Catalog.reviews.title',              []],
+        ['blog',          'Site.news.title',                    []],
+        ['about',         'Site.nav.about',                     []],
+        ['careers',       'Site.careers.title',                 []],
+        ['faq',           'Site.nav.faq',                       []],
+        ['sitemap',       'Site.sitemap.title',                 []],
     ];
 
     public function run(): void

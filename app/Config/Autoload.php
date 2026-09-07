@@ -57,7 +57,10 @@ class Autoload extends AutoloadConfig
         'Modules\Crm'         => ROOTPATH . 'modules/Crm',
         'Modules\Analytics'   => ROOTPATH . 'modules/Analytics',
         'Modules\Admin'       => ROOTPATH . 'modules/Admin',
-        'Modules\Tshda'       => ROOTPATH . 'modules/Tshda',
+        'Modules\Catalog'     => ROOTPATH . 'modules/Catalog',
+        'Modules\Commerce'    => ROOTPATH . 'modules/Commerce',
+        'Modules\Learning'    => ROOTPATH . 'modules/Learning',
+        'Modules\Account'     => ROOTPATH . 'modules/Account',
     ];
 
     /**

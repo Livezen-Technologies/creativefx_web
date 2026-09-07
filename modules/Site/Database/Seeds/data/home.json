@@ -1,0 +1,145 @@
+{
+  "hero": {
+    "eyebrow": "Adobe and AI training from Livezen Technologies",
+    "heading": "Learn the software you are expected to use at work",
+    "subheading": "Instructor-led classes in Adobe Creative Cloud and generative AI, live online or in Colombo, plus a self-paced library. Taught on real files by working practitioners, in small groups.",
+    "cta_adobe": "Browse Adobe courses",
+    "cta_ai": "Browse AI courses",
+    "note": "Priced in LKR for learners in Sri Lanka and in USD everywhere else. Teams can be invoiced."
+  },
+  "credibility": {
+    "heading": "What you are booking",
+    "items": [
+      {
+        "label": "Courses in the catalogue",
+        "value": "{course_count}",
+        "note": "Pull this from the live catalogue count. Do not hard-code a number that will drift out of date."
+      },
+      {
+        "label": "Courses mapped to Adobe Certified Professional objectives",
+        "value": "{acp_mapped_count}",
+        "note": "Count of published courses that carry a certification_alignment value. Generated, not typed."
+      },
+      {
+        "label": "Maximum seats per live class",
+        "value": "{max_class_size}",
+        "note": "Your published cap for live online and classroom sessions. It must match what the booking system actually enforces."
+      },
+      {
+        "label": "Class recording access",
+        "value": "{recording_months} months",
+        "note": "Must match the term stated in the course includes and in the terms of sale."
+      },
+      {
+        "label": "Delivery",
+        "value": "{delivery_summary}",
+        "note": "A factual one-liner, for example 'Live online, Colombo classroom, self-paced'. Do not add adjectives."
+      },
+      {
+        "label": "Learners trained",
+        "value": "{learners_trained}",
+        "note": "Leave this item out of the published page until the figure can be evidenced from booking records. Do not estimate it."
+      }
+    ]
+  },
+  "pillars": {
+    "heading": "Two things we teach, properly",
+    "intro": "We teach Adobe Creative Cloud and generative AI, plus the design and digital skills that sit alongside them. Every course is built around work you will hand to somebody else: a print-ready file, an edited cut, a working automation.",
+    "adobe": {
+      "title": "Adobe Creative Cloud",
+      "text": "Photoshop, Illustrator, InDesign, Premiere Pro, After Effects, Lightroom, Acrobat Pro, Adobe Express and Adobe Firefly, at introductory and advanced level. You work on live files from the first hour: retouching a portrait, drawing a logo that survives being scaled, laying out a long document with an automatic contents page, cutting and grading a short film. Courses are mapped to the published objectives of the relevant Adobe Certified Professional exam, so preparation and practice are part of the class rather than an afterthought."
+    },
+    "ai": {
+      "title": "AI and generative AI",
+      "text": "Foundations for people with no technical background, prompt engineering, AI assistants at work, generative AI for designers, AI video and audio, marketing, automation and agents, building with LLM APIs, and governance. The emphasis is on judgement as much as technique: what these tools do well, where they fail, what must never be generated, and how to check output before it reaches a client. You leave with prompts, workflows and policies written against your own work."
+    }
+  },
+  "upcoming": {
+    "heading": "Upcoming dates",
+    "intro": "Live online sessions run in Sri Lanka Standard Time and are scheduled to suit learners across South Asia, the Gulf and the UK. Classroom dates run in Colombo. Every live booking includes the class recording.",
+    "empty": "No public dates are open for booking yet. Tell us which course you want and the weeks that suit you, and we will contact you as soon as a date is scheduled. Private and team sessions can be arranged on your own dates now."
+  },
+  "modes": {
+    "heading": "Four ways to take a course",
+    "intro": "The same syllabus, the same exercise files and the same instructor standard across every mode. Pick the one that fits your week.",
+    "items": [
+      {
+        "code": "LIVE_ONLINE",
+        "title": "Live online",
+        "text": "A scheduled class with a live instructor, taught in small groups so you can ask a question and get an answer in the moment. You work in your own copy of the software while the instructor works in theirs, and you can share your screen when something goes wrong. Sessions are recorded and the recording is yours for the period stated on the booking page."
+      },
+      {
+        "code": "CLASSROOM",
+        "title": "Classroom in Colombo",
+        "text": "In-person teaching for people who work better away from their desk and their inbox. Machines and software are provided, or bring your own laptop if you prefer to leave with everything set up the way you use it. Class sizes are capped so the instructor can sit beside you when a step does not go to plan."
+      },
+      {
+        "code": "SELF_PACED",
+        "title": "Self-paced",
+        "text": "The same material recorded and structured into short modules, with the exercise files, the workbook and the practice questions. Progress is tracked in your dashboard so you can stop mid-module and pick up where you left off. Suited to shift workers, people in other time zones and anyone revising before an exam."
+      },
+      {
+        "code": "PRIVATE",
+        "title": "Private and on-site",
+        "text": "The course run for one organisation, online or at your premises, on dates you choose. The syllabus can be adjusted to your files, your brand templates and your own workflow, and the exercises can use your material instead of ours. Invoiced to the company, with attendance records for your training team."
+      }
+    ]
+  },
+  "certificates": {
+    "heading": "Certificates and Adobe certification",
+    "intro": "Finish a course and you receive a MyLearnPlus certificate of completion, which records the course, the hours and the date. That is our certificate and it is a record of the work you did with us. Adobe Certified Professional is a separate credential: it is awarded by Adobe and the exams are delivered through Certiport at authorised test centres. Our Adobe courses prepare you for those exams and finish with timed practice in the same shape as the real thing, but we do not award the Adobe credential and no honest training provider can guarantee a pass. Completing two related professional certifications earns an Adobe Specialty Credential such as Visual Design or Video Design."
+  },
+  "why": {
+    "heading": "Why learners choose MyLearnPlus",
+    "items": [
+      {
+        "title": "You build something in every session",
+        "text": "Each class produces a finished artefact: a layered retouch, a logo in the formats a printer and a developer will each accept, a report with an automatic contents page, a working automation. Every outcome listed on a course page has a module behind it where you build the thing."
+      },
+      {
+        "title": "Taught by people who do the work",
+        "text": "Instructors are practitioners who still produce client work, so the answer to 'what do you actually do on a real job' is a real answer rather than a slide. Classes are small enough for the instructor to look at your screen."
+      },
+      {
+        "title": "Mapped to the published exam objectives",
+        "text": "Adobe courses are built against the current Adobe Certified Professional objectives for that application. You finish knowing which objectives you are solid on and which need more practice before you book a seat at a test centre."
+      },
+      {
+        "title": "Dual pricing, no currency games",
+        "text": "Prices are shown in LKR for learners in Sri Lanka and in USD for everyone else, on the course page, before you reach the checkout. Companies can be invoiced and can book multiple seats on one purchase order."
+      },
+      {
+        "title": "The material stays with you",
+        "text": "Exercise files, the finished sample projects, the workbook and the class recording remain available for the period stated on the booking page, so a step you half-followed on the day is there to watch again."
+      },
+      {
+        "title": "Honest about AI",
+        "text": "We teach generative tools as part of a professional workflow, including the cases where they do not work and the material that must never be generated. That is more useful than a demonstration reel, and it is what clients will ask you about."
+      }
+    ]
+  },
+  "instructors": {
+    "heading": "Who teaches",
+    "intro": "Courses are taught by working practitioners: designers, editors, developers and consultants who use these tools on client work and bring current files into the room. Each instructor profile lists the applications they teach, the kind of work they do and the certifications they hold, so you can see who will be in front of you before you book."
+  },
+  "corporate": {
+    "heading": "Training for teams",
+    "text": "Run any course privately for your organisation, online or at your premises in Sri Lanka, on dates that suit your schedule. We can rebuild the exercises around your own brand templates, your document standards and the files your team actually works on, and combine courses into a programme across several weeks. You get attendance records, certificates of completion for each participant and a single invoice with a purchase order reference.",
+    "cta": "Request a team quote"
+  },
+  "reviews": {
+    "heading": "What learners say",
+    "intro": "We publish reviews only from people who have completed a course with us, with the course and the month shown against each one.",
+    "empty": "MyLearnPlus is new, and we have not run enough public classes to publish reviews yet. Rather than borrow quotes from elsewhere or write them ourselves, we will leave this section empty until real learners have filled it. If you would like to speak to a past participant before booking a team programme, ask us and we will arrange an introduction once we have their permission."
+  },
+  "blog": {
+    "heading": "Guides and articles",
+    "intro": "Practical writing on the same subjects we teach: choosing between Photoshop and Illustrator, what Adobe Certified Professional is actually worth, where generative tools help and where they do not, prompting patterns that survive real work, and getting into design work in Sri Lanka."
+  },
+  "newsletter": {
+    "heading": "New dates and new courses",
+    "text": "One email a month: newly scheduled class dates, courses added to the catalogue, and a short practical guide or cheat sheet. No sales sequences and no sharing your address with anyone else.",
+    "cta": "Subscribe",
+    "consent": "By subscribing you agree to receive email from MyLearnPlus. You can unsubscribe from any email, and you can ask us to delete your details at any time. See our privacy policy for how we handle your data."
+  }
+}

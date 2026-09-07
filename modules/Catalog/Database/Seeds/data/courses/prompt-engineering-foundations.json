@@ -1,0 +1,194 @@
+{
+  "slug": "prompt-engineering-foundations",
+  "pillar": "ai",
+  "category": "prompt-engineering",
+  "title": "Prompt Engineering Foundations",
+  "subtitle": "A working day on writing prompts that give the same good answer every time you run them",
+  "summary": "One day of prompt technique: structure, examples, output formats, grounding in your own sources, diagnosing failures and building tested, reusable templates.",
+  "description_html": "<p>Prompting looks like it needs no training until you have to do the same task fifty times. A prompt you improvised on a Tuesday produced something excellent, you cannot reproduce it on Wednesday, and a colleague running the same words gets a different answer again. This day is about turning that luck into something repeatable: prompts written deliberately, tested against real examples, and saved as templates the rest of your team can run.</p><p>You begin with anatomy. Every reliable prompt states the task, the context the model needs, the constraints it must respect and the exact shape of the output. You practise separating your instructions from the material being worked on, so a document containing the word 'summarise' does not quietly become an instruction, and you learn why positive constraints outperform a list of things not to do. From there you add examples: one or two demonstrations of a correct answer usually do more than another paragraph of description, and you see exactly how much difference that makes on the same input.</p><p>The middle of the day covers output and grounding, which is where most business use stands or falls. You specify a format the receiving system can rely on, whether that is a table with fixed columns, a JSON object with named fields or a five-line reply with no preamble. You then give the model your own source material and require it to answer only from that, to quote the passage it used and to say plainly when the source does not contain the answer. That single habit converts an assistant from a plausible writer into something you can check.</p><p>The afternoon is diagnosis and reuse. You take prompts that fail and work out why, distinguishing ambiguous instructions from missing context, conflicting requirements, a task too large to do in one pass and the drift that sets in over a long conversation. You break big jobs into chained steps, each verifiable on its own. Then you build templates with placeholders for the parts that change, assemble a small test set of five awkward inputs, and run each template against them so you know it works before anyone else depends on it. Prompts that are only checked on the easy example are the ones that embarrass you later.</p><p>Techniques are taught to transfer between assistants rather than tied to one product, because the tools move faster than any syllabus. Text is the focus; image prompting is covered in <strong>Adobe Firefly: Generative AI for Creatives</strong> and <strong>Photoshop AI and Generative Fill</strong>. You leave with a personal prompt library of at least five tested templates. The class runs live online in your own timezone or in the classroom in Colombo, priced in <strong>LKR</strong> for learners in Sri Lanka and <strong>USD</strong> internationally, with the recording available for twelve months.</p>",
+  "level": 1,
+  "duration_hours": 6,
+  "duration_days": 1,
+  "software_version": "",
+  "certification_alignment": "",
+  "delivery_modes": [
+    "LIVE_ONLINE",
+    "CLASSROOM",
+    "SELF_PACED",
+    "PRIVATE"
+  ],
+  "default_mode": "LIVE_ONLINE",
+  "price_band": "1day",
+  "outcomes": [
+    "Write a prompt that separately states the task, the context, the constraints and the required output format.",
+    "Keep instructions and source material apart with clear delimiters so the content cannot be read as a command.",
+    "Add worked examples to a prompt and measure the difference they make on the same input.",
+    "Specify an output contract, including a table with fixed columns or a JSON object with named fields, that a downstream system can rely on.",
+    "Ground an answer in your own document, require a quoted source passage, and force the model to say when the answer is not there.",
+    "Break a task that is too large for one prompt into a chain of steps that can each be checked.",
+    "Diagnose a failing prompt as ambiguity, missing context, conflicting instructions, overload or conversation drift, and fix the right one.",
+    "Rewrite a vague prompt into a specific one and compare the two outputs side by side.",
+    "Build reusable templates with placeholders for the parts that change between runs.",
+    "Assemble a five-case test set of awkward inputs and check a template against it before putting it into use."
+  ],
+  "prerequisites": [
+    "You should have used an AI assistant at least once. AI Foundations: AI for Everyone covers that ground if you have not.",
+    "No coding or technical background is required, though the JSON output exercise will feel familiar if you have seen structured data before.",
+    "Bring two or three tasks from your own work that you repeat regularly, since the templates you build are for those."
+  ],
+  "audiences": [
+    "Marketing, content and communications staff producing the same kinds of copy every week",
+    "Analysts and researchers who extract and summarise information from long documents",
+    "Customer support and operations staff drafting replies against fixed policies and tone rules",
+    "Designers and creative staff briefing AI tools and writing prompts for their teams to reuse",
+    "Anyone building an internal prompt library who needs the prompts to be tested rather than collected"
+  ],
+  "includes": [
+    {
+      "text": "Class recording, available for 12 months",
+      "icon": "video"
+    },
+    {
+      "text": "Exercise pack: source documents, awkward inputs and failing prompts to repair",
+      "icon": "download"
+    },
+    {
+      "text": "Course workbook with every prompt pattern and its worked before-and-after example",
+      "icon": "book"
+    },
+    {
+      "text": "Prompt template library and a test-set worksheet, in editable form",
+      "icon": "clipboard"
+    },
+    {
+      "text": "MyLearnPlus certificate of completion",
+      "icon": "certificate"
+    },
+    {
+      "text": "Instructor email support after the class for questions on your own templates",
+      "icon": "support"
+    },
+    {
+      "text": "One free repeat of the same live class, terms shown on the booking page",
+      "icon": "refresh"
+    }
+  ],
+  "curriculum": [
+    {
+      "title": "Module 1 — The anatomy of a prompt",
+      "summary": "The parts every dependable prompt contains, and why leaving one out produces the answers people complain about.",
+      "topics": [
+        {
+          "title": "Task, context, constraints and format, built up on one example from scratch",
+          "duration_min": 30
+        },
+        {
+          "title": "Separating instructions from source material with delimiters, and why it matters",
+          "duration_min": 30
+        },
+        {
+          "title": "Role and tone, positive constraints instead of prohibitions, and controlling length",
+          "duration_min": 30
+        }
+      ]
+    },
+    {
+      "title": "Module 2 — Examples, output shape and grounding",
+      "summary": "Showing the model what good looks like, fixing the shape of the answer and tying it to your own facts.",
+      "topics": [
+        {
+          "title": "Zero, one and few-shot: adding worked examples and measuring the change",
+          "duration_min": 30
+        },
+        {
+          "title": "Output contracts: fixed-column tables, JSON with named fields and replies with no preamble",
+          "duration_min": 25
+        },
+        {
+          "title": "Grounding in supplied documents, requiring quoted passages and handling 'not in the source'",
+          "duration_min": 25
+        },
+        {
+          "title": "Asking for reasoning steps on multi-step tasks, and when it is not worth the tokens",
+          "duration_min": 25
+        }
+      ]
+    },
+    {
+      "title": "Module 3 — Diagnosing prompts that fail",
+      "summary": "Working out which of five common causes is behind a bad answer, then fixing that one.",
+      "topics": [
+        {
+          "title": "Ambiguity, missing context, conflicting instructions, overload and conversation drift",
+          "duration_min": 30
+        },
+        {
+          "title": "Repair clinic: fixing supplied broken prompts and comparing before and after",
+          "duration_min": 30
+        },
+        {
+          "title": "Chaining: splitting a large task into verifiable steps, and checking each one",
+          "duration_min": 30
+        }
+      ]
+    },
+    {
+      "title": "Module 4 — Templates, testing and a prompt library",
+      "summary": "Turning today's good prompts into assets other people can run tomorrow without you.",
+      "topics": [
+        {
+          "title": "Building templates with placeholders, defaults and notes on intended use",
+          "duration_min": 25
+        },
+        {
+          "title": "Assembling a five-case test set of awkward inputs and running a template against it",
+          "duration_min": 25
+        },
+        {
+          "title": "Versioning, documenting and sharing a team prompt library as models change",
+          "duration_min": 25
+        }
+      ]
+    }
+  ],
+  "faqs": [
+    {
+      "question": "Do I need to be able to code?",
+      "answer": "No. Everything is written in plain language in a normal chat interface. The JSON exercise asks you to specify field names and structure, which is reading and writing text rather than programming, and the workbook walks through it. If you want to call models from code instead, that is a different course."
+    },
+    {
+      "question": "Do I need a paid AI subscription?",
+      "answer": "No. The exercises are designed to run on a free account, and the joining note explains which assistants work and how to set one up before the day. If your employer provides a paid or enterprise tool, use that instead so the templates you build are usable at your desk on Monday."
+    },
+    {
+      "question": "Is this tied to one particular AI model?",
+      "answer": "No. The patterns are taught so they transfer, and you will run the same prompt in more than one assistant during the day to see how the output differs. Demonstrations use mainstream assistants; a private run for a team that has standardised on one tool can be taught entirely in that tool."
+    },
+    {
+      "question": "Will these techniques still work when the models change?",
+      "answer": "The structural habits hold up well, because clear task definition, supplied context, explicit output formats and grounded sources are not tricks tied to a release. Specific phrasings do go stale. That is precisely why Module 4 covers versioning and a test set, so when a model updates you can re-run your templates and see what moved rather than guessing."
+    },
+    {
+      "question": "Does this cover prompting for images or video?",
+      "answer": "Only briefly, as a contrast. This day is about text: drafting, extraction, summarising, classification and structured output. Image prompting is taught in Adobe Firefly: Generative AI for Creatives and Photoshop AI and Generative Fill, where you work inside the tools and cover rights and Content Credentials properly."
+    },
+    {
+      "question": "Do I need my own laptop, and what if I miss the day?",
+      "answer": "You need your own machine, whether you join live online or come to the classroom in Colombo, so the prompt library you build stays with you. The session is recorded and available for twelve months, and every live booking includes one free repeat of the same class, with the terms shown on the booking page for each date."
+    },
+    {
+      "question": "Do you issue a certificate, and can my employer be invoiced?",
+      "answer": "You receive a MyLearnPlus certificate of completion recording the course title, hours and date. It is a record of training; there is no recognised industry certification in prompt engineering and we do not claim to award one. We invoice organisations against a purchase order, in LKR for Sri Lankan companies and in USD internationally, and groups of five or more are usually better served by a private run built around your own recurring tasks."
+    }
+  ],
+  "related": [
+    "ai-for-everyone",
+    "ai-for-managers",
+    "photoshop-generative-ai"
+  ],
+  "seo": {
+    "title": "Prompt Engineering Foundations Course | MyLearnPlus",
+    "description": "One-day prompt engineering training, live online or in Colombo. Prompt structure, examples, JSON output, grounding, fixing failures and tested templates.",
+    "keywords": "prompt engineering course, prompt engineering training, ai prompting class, llm prompt techniques, prompt engineering sri lanka, ai training colombo, prompt templates"
+  }
+}

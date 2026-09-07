@@ -1,0 +1,96 @@
+{
+  "slug": "graphic-design-certificate",
+  "type": "certificate",
+  "title": "Graphic Design Certificate",
+  "subtitle": "Photoshop, Illustrator and InDesign taught as one job, finishing with a portfolio project",
+  "summary": "Four courses over eight days plus a reviewed portfolio project: retouch, draw, lay out and hand over a complete brand set that is ready for print.",
+  "description_html": "<p>A working graphic designer is expected to retouch a photograph, draw a logo and lay out a twelve-page booklet, then send all three to a printer without a phone call the next morning. Most people learn those three jobs separately, months apart, and never quite join them up. This programme puts them in one sequence: Photoshop for pixels, Illustrator for vectors, InDesign for pages, and a portfolio project at the end that forces all three to meet on a single brief.</p><p>The through-line is one brand. On your first day you are given a written brief for a fictional Colombo coffee roastery: a name, a rough positioning statement, a folder of unedited photographs and a hand-drawn logo sketch. Every course then does its part of that job. In <strong>Photoshop Level 1</strong> and <strong>Photoshop Level 2</strong> you correct and retouch the photography, cut products out and build a composite that holds up at full size. In <strong>Illustrator Level 1</strong> you redraw the sketch as a clean wordmark and build the icon set that goes with it. In <strong>InDesign Level 1</strong> you set the type, place your own images and build the printed piece. Nothing is a stock exercise carried in from another course.</p><p>The programme closes with the portfolio project. You take the brief the rest of the way on your own: a retouched hero photograph, a finished logo with an icon set, a twelve-page product booklet, a press-ready PDF/X-4, a packaged folder for a printer and a matching set of screen exports. You submit it, and you get a one-to-one review session with an instructor who marks it the way an art director would, against the brief rather than against a mark scheme. The corrected version is the piece you put in front of an employer.</p><p>The four courses run to forty-eight hours over eight days and can be taken in any order that suits your calendar, live online in your own timezone or in the classroom in Colombo, within twelve months of your first class. Photoshop Level 1, Illustrator Level 1 and InDesign Level 1 are each built against the published domains of the matching <strong>Adobe Certified Professional</strong> exam, which is sat separately through Certiport at an authorised test centre. MyLearnPlus does not award Adobe credentials and no course can guarantee a pass. Pricing is shown in LKR for learners in Sri Lanka and in USD elsewhere, and employers can be invoiced against a purchase order.</p>",
+  "courses": [
+    "photoshop-level-1",
+    "photoshop-level-2",
+    "illustrator-level-1",
+    "indesign-level-1"
+  ],
+  "required": [
+    "photoshop-level-1",
+    "illustrator-level-1",
+    "indesign-level-1"
+  ],
+  "outcomes": [
+    "Take one written brand brief from unedited photographs and a pencil sketch through to press-ready artwork, without leaving the brief behind on the way.",
+    "Choose the right application for each part of a job, and defend the choice of Photoshop over Illustrator, or Illustrator over InDesign, to a client or a manager.",
+    "Move a single asset between all three applications without losing colour accuracy, resolution or the ability to edit it later.",
+    "Work non-destructively as a habit across the whole programme: smart objects, layer masks, adjustment layers, global swatches, parent pages and paragraph styles.",
+    "Build a portfolio project of five pieces from one brief: a retouched hero image, a wordmark, a six-icon set, a twelve-page booklet and a matched set of screen exports.",
+    "Produce output that a printer accepts first time, including bleed, trim, pre-flight, a PDF/X-4 and a packaged folder with fonts and links collected.",
+    "Explain your own file to somebody else, because every deliverable you hand in has to open and stay editable on the instructor's machine.",
+    "Prepare for the Adobe Certified Professional exams in Photoshop, Illustrator and InDesign, and know from the practice tasks which objectives still need work before you book."
+  ],
+  "includes": [
+    {
+      "text": "All four courses, 48 hours of instructor-led training over eight days",
+      "icon": "calendar"
+    },
+    {
+      "text": "The portfolio brief, with source photography, the logo sketch and the client positioning note",
+      "icon": "briefcase"
+    },
+    {
+      "text": "A one-to-one portfolio review session with an instructor, with written feedback you can act on",
+      "icon": "chat"
+    },
+    {
+      "text": "Recordings of every class in the programme, available for 12 months",
+      "icon": "video"
+    },
+    {
+      "text": "Exercise files, finished sample projects and the workbook for each course",
+      "icon": "download"
+    },
+    {
+      "text": "Practice questions written against the Adobe Certified Professional exam domains for Photoshop, Illustrator and InDesign",
+      "icon": "clipboard"
+    },
+    {
+      "text": "MyLearnPlus Graphic Design Certificate on completion of all four courses and the portfolio project",
+      "icon": "certificate"
+    }
+  ],
+  "faqs": [
+    {
+      "question": "What order should I take the courses in?",
+      "answer": "Photoshop Level 1 first, then Illustrator Level 1, then InDesign Level 1, then Photoshop Level 2. That order follows the brief: photographs are corrected before the logo is drawn, and both are finished before the booklet is laid out. If your dates do not line up you can take them in any order, with the single exception that Photoshop Level 2 assumes Level 1. Start the portfolio project once you have finished at least three of the four."
+    },
+    {
+      "question": "Can I swap one of the courses for something else?",
+      "answer": "Photoshop Level 1, Illustrator Level 1 and InDesign Level 1 are fixed, because the portfolio project depends on all three. The fourth place is flexible: Photoshop Level 2 is the default, and you can put Photoshop Retouching and Compositing, Photoshop AI and Generative Fill, or Logo and Brand Systems in Illustrator in its place at the same price. Tell us when you book so your certificate records what you actually took."
+    },
+    {
+      "question": "How long do I have to finish the programme?",
+      "answer": "Twelve months from your first class. Within that window you can spread the eight days out however your work allows, mix live online and classroom dates, and submit the portfolio project whenever it is ready. If something happens and you need longer, contact us before the twelve months are up and we will extend rather than expire it."
+    },
+    {
+      "question": "Do I need my own laptop, and is the Adobe software included?",
+      "answer": "You work on your own machine so that your files, fonts and presets stay with you after the programme, and we recommend bringing it to classroom sessions in Colombo too. Adobe licences are not included in the fee. You need Photoshop, Illustrator and InDesign running before your first class, through your own or your employer's Creative Cloud subscription or an Adobe trial. Setup instructions come with your booking and there is a pre-class check if you want help."
+    },
+    {
+      "question": "Does the certificate mean I am Adobe certified?",
+      "answer": "No. On completion you receive a MyLearnPlus Graphic Design Certificate, which records the four courses, the hours and the portfolio project. It is a record of training we delivered. The Adobe Certified Professional certification is awarded by Adobe through Certiport when you pass the relevant exam at an authorised test centre, and the exam voucher is bought separately. Three of the four courses prepare you for those exams, but no course can guarantee a pass."
+    },
+    {
+      "question": "What happens if I miss a day?",
+      "answer": "Every session is recorded and the recordings are yours for twelve months, so you can catch up on what you missed. If you would rather sit the day again live, each live course in the programme includes one free repeat of the same class; the booking window and terms are on the booking page for each date."
+    },
+    {
+      "question": "Can my employer be invoiced, and can a team take this together?",
+      "answer": "Yes to both. We invoice organisations against a purchase order, in LKR for Sri Lankan companies and in USD internationally, and we will hold seats while the invoice is processed. For five or more people the same four courses and the portfolio project can be run privately for your organisation, scheduled around your workload and using your own brand brief instead of the coffee roastery."
+    }
+  ],
+  "price_band": "certificate",
+  "saving_note": "Booked as a programme, the Graphic Design Certificate costs {saving} less than buying Photoshop Level 1, Photoshop Level 2, Illustrator Level 1 and InDesign Level 1 separately, and the portfolio project and review are included rather than charged for.",
+  "seo": {
+    "title": "Graphic Design Certificate Course | MyLearnPlus",
+    "description": "Photoshop, Illustrator and InDesign in one programme, live online or in Colombo. Eight days, a reviewed portfolio project and Adobe exam preparation.",
+    "keywords": "graphic design certificate, graphic design course, adobe training programme, photoshop illustrator indesign course, graphic design course sri lanka, design course colombo, adobe certified professional preparation"
+  }
+}

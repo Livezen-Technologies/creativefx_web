@@ -12,6 +12,8 @@
     "require": {
         "php": "^8.2",
         "codeigniter4/framework": "^4.7",
+        "dompdf/dompdf": "^3.0",
+        "endroid/qr-code": "^6.0",
         "firebase/php-jwt": "^7.1",
         "predis/predis": "^3.5"
     },

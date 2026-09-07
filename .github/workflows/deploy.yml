@@ -13,16 +13,16 @@ name: Deploy
 # for a one-off deploy before secrets are configured). Inputs are recorded in
 # the run, so rotate any password passed this way afterwards.
 #
-# Deploying a SECOND site: set domain, app_dir and db_name together. They
-# default to the norlankamfg production values, and leaving one at its default
-# would point the new site at the existing install's directory or database.
+# Deploying ANOTHER site: set domain, app_dir and db_name together. They default
+# to this branch's own site, and leaving one at its default would point the new
+# site at this install's directory or database.
 
 on:
   workflow_dispatch:
     inputs:
       branch:
         description: Branch to deploy
-        default: tshda
+        default: learnplus
         required: true
       deploy_host:
         description: Server host/IP (overrides DEPLOY_HOST secret)
@@ -39,15 +39,15 @@ on:
       domain:
         description: Site domain (vhost server_name and app.baseURL)
         required: true
-        default: tshda.livezencloud.com
+        default: learnplus.livezencloud.com
       app_dir:
         description: Install directory on the server
         required: true
-        default: /var/www/tshda
+        default: /var/www/learnplus
       db_name:
         description: MySQL database and user name
         required: true
-        default: tshda_prod
+        default: learnplus_prod
 
 # Per-domain, so deploying one site never queues behind another.
 concurrency:
@@ -70,7 +70,16 @@ jobs:
             echo "::error::No DEPLOY_HOST — set the DEPLOY_HOST secret or pass deploy_host input."; exit 1
           fi
 
+      # Explicitly the branch being deployed. Without a ref this checks out
+      # whatever ref the workflow was dispatched from, so dispatching from main
+      # with branch=learnplus would copy main's setup.sh to the server and run
+      # it against the learnplus checkout — two different versions of the deploy
+      # in one run, and the failure looks like a code bug rather than a
+      # workflow one.
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.branch }}
+
 
       - name: Copy bootstrap script to server
         uses: appleboy/scp-action@v0.1.7
@@ -80,7 +89,7 @@ jobs:
           password: ${{ env.DEPLOY_PASSWORD }}
           key: ${{ env.DEPLOY_SSH_KEY }}
           source: deploy/setup.sh
-          target: /tmp/norlanka-bootstrap
+          target: /tmp/deploy-${{ github.event.inputs.domain }}
 
       - name: Run setup.sh on server
         uses: appleboy/ssh-action@v1.2.0
@@ -94,7 +103,10 @@ jobs:
           # github.token clones the (private) repo from the server during the run.
           script: |
             set -e
-            BOOT=/tmp/norlanka-bootstrap/deploy/setup.sh
+            # Per-domain, because concurrency is grouped per domain: two
+            # deploys for two sites are allowed to run at once, and a shared
+            # path means each one reads and then deletes the other's script.
+            BOOT=/tmp/deploy-${{ github.event.inputs.domain }}/deploy/setup.sh
             REPO_URL="https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git"
             BRANCH="${{ github.event.inputs.branch }}"
             DOMAIN="${{ github.event.inputs.domain }}"
@@ -113,4 +125,4 @@ jobs:
               # sudo wants a password and there is no TTY — feed it on stdin.
               printf '%s\n' "$DEPLOY_PASSWORD" | sudo -S -p '' $VARS bash "$BOOT"
             fi
-            rm -f "$BOOT"
+            rm -rf "$(dirname "$(dirname "$BOOT")")"

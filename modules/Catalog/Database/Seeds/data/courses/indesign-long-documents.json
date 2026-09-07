@@ -1,0 +1,222 @@
+{
+  "slug": "indesign-long-documents",
+  "pillar": "adobe",
+  "category": "indesign",
+  "title": "InDesign Level 2: Long Documents and Interactive Publishing",
+  "subtitle": "For InDesign users building manuals and reports. Leave with a book file and an EPUB.",
+  "summary": "Two days on InDesign book files, tables of contents, indexes and cross-references, then interactive PDF and reflowable EPUB from the same layout.",
+  "description_html": "<p>A four-page leaflet and a two-hundred-page manual are different jobs. The leaflet is a layout problem. The manual is a structure problem: chapters that have to renumber when one is inserted, a contents page that has to regenerate rather than be retyped, cross-references that still point at the right figure after the text reflows, and an index somebody will actually use. This course is about that second job, and about getting more than one deliverable out of the file once it is built.</p><p>You work on a supplied technical manual of roughly sixty pages, split into chapters. Day one assembles it as a book file, with synchronised styles, running heads driven by text variables rather than typed by hand, and continuous page numbering across chapters. The afternoon builds the apparatus that makes a long document navigable: a generated table of contents, index entries and a compiled index, cross-references, footnotes and endnotes, and figure numbering that renumbers itself.</p><p>Day two is production speed and output. You use GREP styles and GREP find and change to fix in one pass the typographic problems that would otherwise take an afternoon, run a data merge from a CSV, and set up conditional text so that one file produces both the customer version and the internal version. The final session takes the same layout out three ways: a reflowable EPUB with sensible export order and metadata, an interactive PDF with hyperlinks, bookmarks, buttons and a fillable form, and a tagged accessible PDF with alt text, table headers and a reading order a screen reader can follow.</p><p>This course goes past the published objectives of the <strong>Adobe Certified Professional in Adobe InDesign</strong> exam rather than mapping to them. If the certification is your goal, <em>InDesign Level 1</em> is the course built against those objectives, and this one is what you take afterwards to work faster on real documents. As always, we prepare you for the exam, we do not award the certification, and no course can guarantee a pass.</p><p>Bring a document of your own that is fighting you. There is time on the second afternoon to look at real files, and long-document problems are usually structural, which means they are usually fixable.</p>",
+  "level": 2,
+  "duration_hours": 12,
+  "duration_days": 2,
+  "software_version": "Creative Cloud 2026",
+  "certification_alignment": "",
+  "delivery_modes": [
+    "LIVE_ONLINE",
+    "CLASSROOM",
+    "SELF_PACED",
+    "PRIVATE"
+  ],
+  "default_mode": "LIVE_ONLINE",
+  "price_band": "2day",
+  "outcomes": [
+    "Assemble a multi-chapter manual as an InDesign book file with continuous page numbering and section markers",
+    "Synchronise styles, swatches and parent pages across every chapter from a single source document",
+    "Build running heads that update themselves from the current heading using text variables",
+    "Generate and update a table of contents across a whole book from paragraph styles",
+    "Create index entries and topics, then compile and format a usable index",
+    "Insert cross-references, footnotes and endnotes that stay correct after the text reflows",
+    "Clean up typographic problems across a long document with GREP styles and GREP find and change",
+    "Produce two versions of the same manual from one file using conditional text, and generate certificates from a CSV with data merge",
+    "Export a reflowable EPUB with a controlled export order, style mapping and metadata",
+    "Build an interactive PDF with bookmarks, buttons and fillable form fields, and a tagged accessible PDF with alt text and a correct reading order"
+  ],
+  "prerequisites": [
+    "You should have completed InDesign Level 1 or be able to set up a document, use parent pages, thread text and work with paragraph and character styles without help.",
+    "InDesign 2024 or later installed on the machine you will work on.",
+    "Bring one long document of your own, ideally one that is giving you trouble, for the working session on the second afternoon."
+  ],
+  "audiences": [
+    "Designers and production staff who produce annual reports, manuals or catalogues",
+    "In-house publishing teams moving from single documents to book files",
+    "Technical writers and documentation teams who need indexes, cross-references and versioned output",
+    "Marketing teams asked for a print PDF, an accessible PDF and an EPUB from the same layout",
+    "Freelancers taking on longer editorial and educational work"
+  ],
+  "includes": [
+    {
+      "text": "Class recording, available for 12 months",
+      "icon": "video"
+    },
+    {
+      "text": "Exercise files: the chaptered manual, the merge CSV and the finished book file, yours to keep",
+      "icon": "download"
+    },
+    {
+      "text": "Course workbook and a GREP pattern sheet covering every technique demonstrated",
+      "icon": "book"
+    },
+    {
+      "text": "Working time on a long document of your own during the second afternoon",
+      "icon": "users"
+    },
+    {
+      "text": "MyLearnPlus certificate of completion",
+      "icon": "certificate"
+    },
+    {
+      "text": "Instructor email support after the class for questions on the exercises",
+      "icon": "support"
+    },
+    {
+      "text": "One free repeat of the same live class, terms shown on the booking page",
+      "icon": "refresh"
+    }
+  ],
+  "curriculum": [
+    {
+      "title": "Day 1, Morning — Structure: the book file",
+      "summary": "Turn a pile of chapters into one book with consistent styles, numbering and running heads.",
+      "topics": [
+        {
+          "title": "When a book file beats one very long document",
+          "duration_min": 25
+        },
+        {
+          "title": "Building a book: chapter order, continuous page numbering and section markers",
+          "duration_min": 45
+        },
+        {
+          "title": "Synchronising styles, swatches and parent pages from a source document",
+          "duration_min": 40
+        },
+        {
+          "title": "Nested styles and next-style for chapter openers and run-in headings",
+          "duration_min": 45
+        },
+        {
+          "title": "Text variables: running heads that follow the current heading",
+          "duration_min": 25
+        }
+      ]
+    },
+    {
+      "title": "Day 1, Afternoon — Contents, index and cross-references",
+      "summary": "Build the apparatus that makes a long document navigable, and make all of it regenerate.",
+      "topics": [
+        {
+          "title": "Paragraph styles as the source of a generated table of contents",
+          "duration_min": 40
+        },
+        {
+          "title": "Generating, formatting and updating the contents across a whole book",
+          "duration_min": 35
+        },
+        {
+          "title": "Index entries, topics, page ranges and a compiled index",
+          "duration_min": 45
+        },
+        {
+          "title": "Cross-references that survive reflow, plus footnotes and endnotes",
+          "duration_min": 40
+        },
+        {
+          "title": "Numbered lists, figure numbering and captions generated from metadata",
+          "duration_min": 20
+        }
+      ]
+    },
+    {
+      "title": "Day 2, Morning — Production speed and versioning",
+      "summary": "Fix a whole document in one pass, and get two deliverables out of one file.",
+      "topics": [
+        {
+          "title": "GREP find and change for the typographic clean-up jobs that eat afternoons",
+          "duration_min": 45
+        },
+        {
+          "title": "GREP styles: formatting that applies itself as the text is edited",
+          "duration_min": 30
+        },
+        {
+          "title": "Conditional text: a customer version and an internal version from one file",
+          "duration_min": 30
+        },
+        {
+          "title": "Data merge from a CSV for certificates, price lists and mailers",
+          "duration_min": 45
+        },
+        {
+          "title": "Preflight profiles, and packaging a book rather than a document",
+          "duration_min": 30
+        }
+      ]
+    },
+    {
+      "title": "Day 2, Afternoon — Interactive, accessible and digital output",
+      "summary": "Take the same layout out as an EPUB, an interactive PDF and a tagged accessible PDF.",
+      "topics": [
+        {
+          "title": "Hyperlinks, bookmarks and buttons in the Buttons and Forms panel",
+          "duration_min": 35
+        },
+        {
+          "title": "A fillable PDF form: fields, tab order, validation and a submit button",
+          "duration_min": 45
+        },
+        {
+          "title": "Reflowable EPUB: articles panel, export order, style mapping and metadata",
+          "duration_min": 45
+        },
+        {
+          "title": "Accessibility: tags, alt text, table headers and reading order",
+          "duration_min": 30
+        },
+        {
+          "title": "Your own document: structural problems and how to unpick them",
+          "duration_min": 25
+        }
+      ]
+    }
+  ],
+  "faqs": [
+    {
+      "question": "How do I know whether this is the right level for me?",
+      "answer": "If you can set up a document, build parent pages, thread text and apply paragraph styles without needing to be talked through it, you are ready. If any of that is unfamiliar, take InDesign Level 1 first, because day one moves straight into book files and text variables and assumes the basics are automatic. If you are not sure, send us a description of the last document you built and we will tell you honestly which course to book."
+    },
+    {
+      "question": "Can I bring my own document and work on it?",
+      "answer": "Yes, and it makes the two days considerably more useful. The last session of the second afternoon is set aside for real files. Long-document problems are usually structural rather than cosmetic, so bring the packaged folder with fonts and links if you can, and tell your instructor at the start of day one what is going wrong."
+    },
+    {
+      "question": "Do I need my own laptop, and is the software included?",
+      "answer": "For live online classes you work on your own machine with InDesign 2024 or later installed, and you keep every file you build. For classroom sessions in Colombo a workstation with InDesign is provided. The Adobe subscription is not included in the fee and we do not resell licences, although Adobe offers a free trial that covers the two days and your employer may already hold licences you can be added to."
+    },
+    {
+      "question": "Does this course prepare me for an Adobe certification?",
+      "answer": "Not directly. The Adobe Certified Professional in Adobe InDesign exam is aligned to InDesign Level 1, which is the course built against the published objectives. This course deliberately goes past them into book files, indexing, EPUB and forms. The exam is booked and sat through a Certiport testing centre. If you go on to complete a second related professional certification, Adobe awards a Specialty Credential."
+    },
+    {
+      "question": "What happens if I miss a day?",
+      "answer": "Every live session is recorded and the recording stays available for 12 months, so you can catch up in your own time. If you would rather sit the session again live you can join that half day with a later cohort at no cost, subject to seats, and your free repeat of the full course still stands."
+    },
+    {
+      "question": "Will the EPUB I export be good enough to sell?",
+      "answer": "For a text-led book, yes: the session covers export order, style mapping, metadata and cover, which is what retailers check. For a heavily designed layout, a reflowable EPUB will never look like the print page, and we spend time on that trade-off so you can advise a client rather than promise something the format cannot do. Fixed-layout EPUB is demonstrated and its limitations explained."
+    },
+    {
+      "question": "Can my employer be invoiced, and can we run this privately?",
+      "answer": "Yes. Organisations in Sri Lanka are invoiced in LKR and organisations elsewhere in USD, and we can issue a pro forma invoice against your purchase order before the class. For a team of four or more, private delivery is usually better value and lets us rebuild the exercises around your own manual, your house styles and your own output requirements."
+    }
+  ],
+  "related": [
+    "indesign-level-1",
+    "illustrator-level-2",
+    "logo-and-brand-systems"
+  ],
+  "seo": {
+    "title": "InDesign Long Documents & EPUB Training | MyLearnPlus",
+    "description": "Two-day InDesign Level 2 course on book files, contents pages, indexes, GREP, data merge, interactive PDF and reflowable EPUB. Live online or Colombo.",
+    "keywords": "indesign long documents training, indesign book file course, indesign epub export, indesign level 2, interactive pdf training, grep styles indesign, indesign course colombo, accessible pdf indesign"
+  }
+}

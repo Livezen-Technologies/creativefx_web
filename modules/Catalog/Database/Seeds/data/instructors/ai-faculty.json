@@ -1,0 +1,15 @@
+{
+  "slug": "ai-faculty",
+  "name": "MyLearnPlus AI Faculty",
+  "headline": "Working practitioners teaching the AI and generative AI track",
+  "bio_html": "<p>The AI track is taught by people who use these tools in paid work every week: prompt and workflow design, assistants deployed inside real teams, automation built and maintained, generative imagery taken to a finished deliverable, and the governance conversations that follow. We are deliberate about credentials here. There is no independent, universally recognised certification for generative AI practice in the way there is for Adobe software, so we do not display one. What we require instead is evidence: work that shipped, tools used in production rather than demonstrated once, and the ability to say clearly where a model is unreliable. An instructor who cannot show you a failure case is not ready to teach this material.</p><p>Because the tools change between cohorts, the AI faculty carry an obligation the Adobe faculty do not: every course is re-checked against the current versions of the products it teaches before each scheduled run, and anything that has moved is corrected in the slides, the exercise files and the workbook. Classes are staffed one instructor per cohort, named in your joining instructions, with a second instructor assisting on large private groups and on hands-on build sessions where people need help at their own screen. A new instructor teaches the syllabus under observation before running it alone, and a substitute teaches the same syllabus from the same materials.</p>",
+  "credentials": [
+    "Delivered generative AI work in production, not only in demonstrations",
+    "Uses the assistants, models and automation tools taught on the course in current paid work",
+    "Able to demonstrate failure cases and limits, not only successful outputs",
+    "Re-verifies course material against current tool versions before each scheduled run",
+    "Grounded in the responsible use, data handling and disclosure issues covered by the governance course"
+  ],
+  "placeholder": true,
+  "note_for_client": "Replace this entry with your named AI instructors, each with a photograph, a short biography and a line on the AI work they actually deliver, and keep the statement that no vendor certification is claimed unless one is genuinely held."
+}

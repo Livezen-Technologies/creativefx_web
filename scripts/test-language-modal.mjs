@@ -53,7 +53,7 @@ const stored = (page) => page.evaluate(() => {
     (await page.$$('.lang-option')).length === 3);
   check('each option is tagged with its own language',
     await page.$$eval('.lang-option', (els) =>
-      ['en', 'si', 'ta'].every((c) => els.some((e) => e.getAttribute('lang') === c))));
+      ['en', 'si'].every((c) => els.some((e) => e.getAttribute('lang') === c))));
   check('the current language is marked',
     (await page.$$eval('.lang-option[aria-current="true"]', (els) => els.length)) === 1);
   check('it is a labelled modal dialog',
@@ -90,16 +90,16 @@ const stored = (page) => page.evaluate(() => {
   await page.goto(`${base}/en/services?q=tea#top`, { waitUntil: 'networkidle' });
   await page.waitForSelector('.lang-modal', { state: 'visible', timeout: 8000 });
 
-  await page.click('.lang-option[lang="ta"]');
+  await page.click('.lang-option[lang="si"]');
   await page.waitForLoadState('networkidle');
 
   check('choosing switches the locale in place', page.url().includes('/ta/services'),
     page.url());
   check('the query string and fragment survive',
     page.url().includes('q=tea') && page.url().includes('#top'), page.url());
-  check('the choice is stored', (await stored(page)) === 'ta');
+  check('the choice is stored', (await stored(page)) === 'si');
   check('the page is served in that language',
-    (await page.getAttribute('html', 'lang')) === 'ta');
+    (await page.getAttribute('html', 'lang')) === 'si');
 
   await page.waitForTimeout(3000);
   check('it does not ask again after choosing', !(await page.isVisible('.lang-modal')));

@@ -6,7 +6,7 @@ namespace Modules\Core\Libraries;
  * The site's scheduled housekeeping.
  *
  * The registry is code and the schedule is data: what a task *does* belongs in
- * version control, while whether it runs and how often is the hotel's to change
+ * version control, while whether it runs and how often is the school's to change
  * without a deploy. Adding a task is a method here plus an entry in TASKS; the
  * row appears on its own the first time the scheduler is asked about it.
  *
@@ -36,6 +36,21 @@ final class Scheduler
             'label'       => 'Tell search engines the sitemap changed',
             'description' => 'Pings Google and Bing with the sitemap address. Harmless if it fails — they will find it anyway.',
             'frequency'   => 'daily',
+        ],
+        'release_seat_holds' => [
+            'label'       => 'Release expired seat holds',
+            'description' => 'Deletes seat holds whose fifteen minutes have run out and refreshes the reserved count. Nothing depends on this having run — availability already ignores an expired hold — so a late cron shows a class as fuller than it is rather than overselling it.',
+            'frequency'   => 'hourly',
+        ],
+        'reconcile_seats' => [
+            'label'       => 'Reconcile seat counts',
+            'description' => 'Recomputes seats_reserved from the holds that exist and seats_sold from the order items that were actually paid for. The cached counts should never be wrong; one day they will be, because somebody will fix something with an UPDATE at two in the morning.',
+            'frequency'   => 'daily',
+        ],
+        'confirm_sessions' => [
+            'label'       => 'Confirm classes that have reached their minimum',
+            'description' => 'Moves an open session to "confirmed to run" once enough seats are sold, and to "full" when there are none left. "This class is confirmed" removes the biggest hesitation in booking a dated course, so it should not wait for somebody to notice.',
+            'frequency'   => 'hourly',
         ],
     ];
 
@@ -151,6 +166,67 @@ final class Scheduler
     }
 
     // ---- The tasks themselves ----------------------------------------------
+
+    /**
+     * Give back the seats of carts that were abandoned.
+     *
+     * Tidy-up, not correctness: every query that computes availability already
+     * ignores a hold whose `expires_at` has passed, precisely so that a cron
+     * that is late — or off — cannot oversell a class. What this fixes is the
+     * cached `seats_reserved` count, which would otherwise keep a class looking
+     * fuller than it is.
+     */
+    private function taskReleaseSeatHolds(): string
+    {
+        $released = (new \Modules\Commerce\Services\InventoryService())->releaseExpired();
+
+        return $released . ' expired hold(s) released.';
+    }
+
+    /** Recompute the cached seat counts from the rows that are actually there. */
+    private function taskReconcileSeats(): string
+    {
+        $fixed = (new \Modules\Commerce\Services\InventoryService())->reconcile();
+
+        return $fixed === 0
+            ? 'Seat counts were already correct.'
+            : $fixed . ' session(s) corrected.';
+    }
+
+    /**
+     * Move classes to "confirmed" and "full" as their numbers change.
+     *
+     * Only sessions that are still on sale and still ahead: a completed or
+     * cancelled class is a decision somebody made, and a housekeeping job must
+     * not undo it.
+     */
+    private function taskConfirmSessions(): string
+    {
+        $db        = db_connect();
+        $inventory = new \Modules\Commerce\Services\InventoryService();
+
+        $sessions = $db->table('course_sessions')
+            ->select('id')
+            ->whereIn('status', ['open', 'confirmed', 'full'])
+            ->groupStart()
+                ->where('start_date IS NULL')
+                ->orWhere('start_date >=', date('Y-m-d'))
+            ->groupEnd()
+            ->get()->getResultArray();
+
+        $changed = 0;
+        foreach ($sessions as $session) {
+            $before = $db->table('course_sessions')->select('status')
+                ->where('id', (int) $session['id'])->get()->getRowArray()['status'] ?? '';
+            if ($inventory->refreshStatus((int) $session['id']) !== $before) {
+                $changed++;
+            }
+        }
+
+        return $changed === 0
+            ? 'No class changed status.'
+            : $changed . ' class(es) changed status.';
+    }
 
     private function taskPruneAnalytics(): string
     {

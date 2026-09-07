@@ -36,22 +36,24 @@ $locales = supported_locales();
 
 // The Authority's name in each language: recognition, not translation. Somebody
 // who reads only Sinhala should see the organisation they were looking for.
+// The school's own name, in each language it is offered in. Hard-coded rather
+// than read from a language file on purpose: this dialog is shown before a
+// locale has been chosen, so it has to speak all of them at once — a translated
+// string would render only in whichever language the browser happened to
+// negotiate, which is the very question the dialog is asking.
 $names = [
-    'en' => 'Tea Small Holdings Development Authority',
-    'si' => 'කුඩා තේ වතු සංවර්ධන අධිකාරිය',
-    'ta' => 'தேயிலை சிறு தோட்ட அபிவிருத்தி அதிகார சபை',
+    'en' => 'MyLearnPlus',
+    'si' => 'MyLearnPlus',
 ];
 $ask = [
     'en' => 'Choose your language',
     'si' => 'ඔබේ භාෂාව තෝරන්න',
-    'ta' => 'உங்கள் மொழியைத் தேர்ந்தெடுங்கள்',
 ];
 $note = [
     'en' => 'You can change this at any time from the globe in the header.',
     'si' => 'ශීර්ෂකයේ ඇති ගෝලය ඔස්සේ ඔබට මෙය ඕනෑම විටෙක වෙනස් කළ හැක.',
-    'ta' => 'தலைப்புப் பகுதியிலுள்ள உருண்டை வழியாக இதை எப்போது வேண்டுமானாலும் மாற்றலாம்.',
 ];
-$dismiss = ['en' => 'Close', 'si' => 'වසන්න', 'ta' => 'மூடு'];
+$dismiss = ['en' => 'Close', 'si' => 'වසන්න'];
 ?>
 <div x-data="languageModal(<?= esc(json_encode([
         'current' => current_locale(),
@@ -64,13 +66,13 @@ $dismiss = ['en' => 'Close', 'si' => 'වසන්න', 'ta' => 'மூடு'];
     <div class="lang-modal-backdrop" @click="dismiss()" aria-hidden="true"></div>
 
     <div class="lang-modal-card" x-ref="card" @keydown.tab="trap($event)">
-        <img src="/media/tshda/tshda-emblem.svg" alt="" width="56" height="56" class="lang-modal-mark">
+        <img src="/media/learnplus/emblem.svg" alt="" width="56" height="56" class="lang-modal-mark">
 
         <?php // The heading carries all three languages. A screen reader will
               // read them in sequence, which is the right outcome: the reader
               // does not yet know which language this site is going to use. ?>
         <h2 id="lang-modal-title" class="lang-modal-title">
-            <?php foreach (['en', 'si', 'ta'] as $i => $code): ?>
+            <?php foreach (supported_locales_codes() as $i => $code): ?>
                 <span lang="<?= $code ?>"><?= esc($ask[$code]) ?></span><?= $i < 2 ? '<span class="lang-modal-dot" aria-hidden="true">·</span>' : '' ?>
             <?php endforeach; ?>
         </h2>
@@ -98,7 +100,7 @@ $dismiss = ['en' => 'Close', 'si' => 'වසන්න', 'ta' => 'மூடு'];
         </ul>
 
         <p class="lang-modal-note">
-            <?php foreach (['en', 'si', 'ta'] as $code): ?>
+            <?php foreach (supported_locales_codes() as $code): ?>
                 <span lang="<?= $code ?>"><?= esc($note[$code]) ?></span>
             <?php endforeach; ?>
         </p>

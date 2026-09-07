@@ -1,0 +1,215 @@
+{
+  "slug": "indesign-level-1",
+  "pillar": "adobe",
+  "category": "indesign",
+  "title": "InDesign Level 1",
+  "subtitle": "For anyone laying out multi-page documents. Leave with a print-ready booklet you built.",
+  "summary": "Two days of InDesign for beginners. Build a twelve-page booklet with parent pages, styles and tables, then export and package it for print.",
+  "description_html": "<p>InDesign is for documents that have pages: reports, brochures, booklets, catalogues, leaflets, books. It is not a better Illustrator and it is not a tidier Word. It is a layout tool built around three ideas, frames, parent pages and styles, and once those make sense the rest of the application follows quickly.</p><p>Over two days you build a twelve-page booklet from a supplied text file and image set. Day one covers document setup with facing pages and bleed, the difference between the two selection tools that trips up everyone arriving from Illustrator, parent pages carrying running heads and automatic page numbers, and then type. You thread a long story through the booklet and control it with paragraph and character styles, so that changing every subheading in the document is one edit rather than forty.</p><p>Day two brings in pictures, colour and tables, including a formatted table built from a supplied spreadsheet using table and cell styles. You then assemble a two-fold A4 leaflet with correct folds, bleed and trim, run pre-flight to catch missing links, overset text and low-resolution images, and export both a press-ready PDF/X-4 and a tagged PDF with alt text and a sensible reading order. The final session packages the job so that a printer receives the fonts and links along with the file.</p><p>The syllabus maps to the published exam objectives for the <strong>Adobe Certified Professional in Adobe InDesign</strong>, which is delivered through Certiport. We prepare you for the exam. We do not award the certification, and no course can guarantee a pass.</p><p>Most print jobs pass through more than one application, so people who take this alongside <em>Illustrator Level 1</em> tend to find the two reinforce each other: the logo and the diagrams are drawn in one, the pages are built in the other.</p>",
+  "level": 1,
+  "duration_hours": 12,
+  "duration_days": 2,
+  "software_version": "Creative Cloud 2026",
+  "certification_alignment": "Prepares for the Adobe Certified Professional in Adobe InDesign exam",
+  "delivery_modes": [
+    "LIVE_ONLINE",
+    "CLASSROOM",
+    "SELF_PACED",
+    "PRIVATE"
+  ],
+  "default_mode": "LIVE_ONLINE",
+  "price_band": "2day",
+  "outcomes": [
+    "Set up a multi-page document with facing pages, margins, columns, bleed and slug",
+    "Build parent pages carrying a running head, automatic page numbers and a repeating grid",
+    "Flow a long text file through threaded frames across a twelve-page booklet",
+    "Create and apply paragraph and character styles, then restyle the whole document by editing one style",
+    "Control text wrap, anchored objects and object styles so that images and captions travel with the text",
+    "Place, crop and fit images using frame fitting options, and manage them through the Links panel",
+    "Build a formatted table from a supplied spreadsheet using table and cell styles",
+    "Assemble a two-fold A4 leaflet with correct folds, bleed and trim",
+    "Run pre-flight, fix missing links, overset text and low-resolution images, and export a press-ready PDF/X-4",
+    "Export a tagged PDF with alt text and a reading order a screen reader can follow, then package the job for a printer"
+  ],
+  "prerequisites": [
+    "No prior experience with Adobe InDesign is needed.",
+    "You should be comfortable with your own computer and with typing and editing text in any word processor.",
+    "Some Photoshop or Illustrator experience is useful, but nothing in the class assumes it."
+  ],
+  "audiences": [
+    "Marketing and communications staff producing brochures, reports and leaflets in-house",
+    "Administrators and finance teams who have to build an annual report every year",
+    "Designers moving to InDesign from Word, Publisher or Canva",
+    "Print and prepress operators who receive InDesign packages and have to open and correct them",
+    "Students and career changers who need a layout skill alongside image and vector work"
+  ],
+  "includes": [
+    {
+      "text": "Class recording, available for 12 months",
+      "icon": "video"
+    },
+    {
+      "text": "Exercise files: booklet text, image set, spreadsheet and finished layouts, yours to keep",
+      "icon": "download"
+    },
+    {
+      "text": "Course workbook covering every step demonstrated in class",
+      "icon": "book"
+    },
+    {
+      "text": "Practice questions written against the Adobe Certified Professional exam domains",
+      "icon": "clipboard"
+    },
+    {
+      "text": "MyLearnPlus certificate of completion",
+      "icon": "certificate"
+    },
+    {
+      "text": "Instructor email support after the class for questions on the exercises",
+      "icon": "support"
+    },
+    {
+      "text": "One free repeat of the same live class, terms shown on the booking page",
+      "icon": "refresh"
+    }
+  ],
+  "curriculum": [
+    {
+      "title": "Day 1, Morning — Documents, frames and the InDesign way of working",
+      "summary": "Set the booklet up properly and learn the three ideas the whole application rests on.",
+      "topics": [
+        {
+          "title": "Where InDesign sits alongside Photoshop, Illustrator and Word",
+          "duration_min": 20
+        },
+        {
+          "title": "New document setup: facing pages, margins, columns, bleed and slug",
+          "duration_min": 35
+        },
+        {
+          "title": "Frames, and the difference between the two selection tools that trips everyone up",
+          "duration_min": 35
+        },
+        {
+          "title": "Parent pages: grids, running heads and automatic page numbers",
+          "duration_min": 50
+        },
+        {
+          "title": "Layers, and the Pages panel for a twelve-page booklet",
+          "duration_min": 40
+        }
+      ]
+    },
+    {
+      "title": "Day 1, Afternoon — Type and styles",
+      "summary": "Thread a long story through the booklet and bring it under the control of styles.",
+      "topics": [
+        {
+          "title": "Placing and threading a long text file through the booklet",
+          "duration_min": 35
+        },
+        {
+          "title": "Character formatting, and the typographic controls that matter in print",
+          "duration_min": 35
+        },
+        {
+          "title": "Paragraph and character styles: restyling a whole document from one place",
+          "duration_min": 55
+        },
+        {
+          "title": "Object styles, text wrap and anchored objects",
+          "duration_min": 55
+        }
+      ]
+    },
+    {
+      "title": "Day 2, Morning — Images, colour and tables",
+      "summary": "Bring in artwork from the rest of Creative Cloud, then build a table people can read.",
+      "topics": [
+        {
+          "title": "Placing images, frame fitting options and the Links panel",
+          "duration_min": 45
+        },
+        {
+          "title": "Working with Photoshop and Illustrator files, including transparency",
+          "duration_min": 35
+        },
+        {
+          "title": "Swatches, tints and keeping a consistent CMYK palette across a document",
+          "duration_min": 30
+        },
+        {
+          "title": "Building a table from a supplied spreadsheet with table and cell styles",
+          "duration_min": 70
+        }
+      ]
+    },
+    {
+      "title": "Day 2, Afternoon — Finishing, output and handover",
+      "summary": "Build a folded leaflet, check the job, and produce files for press, for email and for a screen reader.",
+      "topics": [
+        {
+          "title": "Assembling a two-fold A4 leaflet with folds, bleed and trim",
+          "duration_min": 50
+        },
+        {
+          "title": "Pre-flight: missing links, overset text, low-resolution images and stray RGB",
+          "duration_min": 35
+        },
+        {
+          "title": "Exporting press-ready PDF/X-4, and a lighter interactive PDF for email",
+          "duration_min": 35
+        },
+        {
+          "title": "Tagged PDF: alt text, article order and a reading order a screen reader can follow",
+          "duration_min": 30
+        },
+        {
+          "title": "Packaging for a printer, and a handover checklist",
+          "duration_min": 30
+        }
+      ]
+    }
+  ],
+  "faqs": [
+    {
+      "question": "Do I need my own laptop?",
+      "answer": "For live online classes, yes. You work on your own machine with InDesign already installed and you keep every file you build, including the finished booklet. For classroom sessions in Colombo a workstation with InDesign is provided, although you may bring your own laptop if you would rather work on the setup you use at your desk. We send system requirements and a setup check about a week before the class."
+    },
+    {
+      "question": "Is the Adobe software included in the price?",
+      "answer": "No. InDesign is a subscription from Adobe and we do not resell licences. If you do not have one, Adobe offers a free trial that covers the two days, and your employer may already hold licences you can be added to. Classroom seats in Colombo come with the software installed."
+    },
+    {
+      "question": "Should I use InDesign instead of Word for long reports?",
+      "answer": "For anything that will be printed, folded, or has to look consistent across dozens of pages, yes. InDesign gives you real control over bleed, image resolution, colour and typography, and its styles are stricter than Word's. For a document that is still being written and edited by several people, keep writing in Word and flow the final text into InDesign, which is exactly the workflow taught on day one."
+    },
+    {
+      "question": "What happens if I miss a day?",
+      "answer": "Every live session is recorded and the recording stays available for 12 months, so you can catch up in your own time. If you would rather sit the session again live, you can join that half day with a later cohort at no cost, subject to seats, and your free repeat of the full course still stands."
+    },
+    {
+      "question": "Do you issue a certificate?",
+      "answer": "Yes. You receive a MyLearnPlus certificate of completion, issued by Livezen Technologies, naming the course, the version of InDesign taught and the hours completed. That is a record of training rather than an Adobe qualification. The Adobe Certified Professional certification is a separate exam sat through Certiport."
+    },
+    {
+      "question": "Does this course prepare me for the Adobe Certified Professional exam?",
+      "answer": "It covers a large part of the published objectives for the Adobe Certified Professional in Adobe InDesign exam, and your instructor will point out which sessions map to them. The exam is booked and sat through a Certiport testing centre and is not included in the course fee, and we cannot guarantee a pass. If you go on to complete a second related professional certification, Adobe awards a Specialty Credential."
+    },
+    {
+      "question": "Can my employer be invoiced, and can we pay in rupees?",
+      "answer": "Yes. Organisations in Sri Lanka are invoiced in LKR and organisations elsewhere in USD, and we can issue a pro forma invoice against your purchase order before the class. Send your company details and the delegate names and we will raise it. For a team of four or more, private delivery is usually better value and lets us rebuild the booklet exercise around your own reports and press specifications."
+    }
+  ],
+  "related": [
+    "illustrator-level-1",
+    "photoshop-level-1",
+    "illustrator-level-2",
+    "logo-and-brand-systems"
+  ],
+  "seo": {
+    "title": "Adobe InDesign Level 1 Training Course | MyLearnPlus",
+    "description": "Two-day InDesign training for beginners. Build a twelve-page booklet with parent pages, styles and tables, then export a press-ready PDF.",
+    "keywords": "adobe indesign training, indesign course sri lanka, indesign level 1, page layout training, adobe certified professional indesign, indesign training colombo, beginner indesign class"
+  }
+}

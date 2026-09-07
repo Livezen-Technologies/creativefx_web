@@ -18,10 +18,11 @@ export default {
   theme: {
     extend: {
       colors: {
-        // The Authority's palette, driven by CSS variables so a page scope
-        // (e.g. .theme-notice on the priority-notice band) can recolour every
-        // brand utility without touching a template. The names are historical —
-        // `brand-red` is the accent, whatever colour the accent currently is.
+        // The palette, driven by CSS variables so a page scope can recolour
+        // every brand utility without touching a template. The names are
+        // historical — `brand-red` is the accent, whatever colour the accent
+        // currently is, and renaming it across four hundred templates would be
+        // a large diff that changes nothing.
         brand: {
           DEFAULT: 'rgb(var(--accent) / <alpha-value>)',
           red: 'rgb(var(--accent) / <alpha-value>)',
@@ -32,7 +33,7 @@ export default {
         // Themeable foreground: ink on light ground, near-white inside .on-dark.
         // (No solid `bg-white` exists in the app, so this override is safe.)
         white: 'rgb(var(--fg) / <alpha-value>)',
-        // The secondary palette. `gold` is the Authority's second colour;
+        // The secondary palette. `gold` is the warm second colour;
         // `surface` is a card sitting a step above the ground; `line` is every
         // hairline and table rule. All three flip with the scope, so a card on
         // a dark band needs no dark: variant.
@@ -41,15 +42,14 @@ export default {
         line: 'rgb(var(--line) / <alpha-value>)',
       },
       fontFamily: {
-        // One family across all three languages: Noto Sans for Latin, with the
-        // Sinhala and Tamil companions listed after it. A browser picks the
-        // first family that has a glyph for the character, so Sinhala text
-        // falls through to Noto Sans Sinhala automatically and nothing has to
-        // switch fonts by locale.
+        // One family across both languages: Noto Sans for Latin, with the
+        // Sinhala companion listed after it. A browser picks the first family
+        // that has a glyph for the character, so Sinhala text falls through to
+        // Noto Sans Sinhala automatically and nothing has to switch font by
+        // locale.
         sans: [
           'Noto Sans',
           'Noto Sans Sinhala',
-          'Noto Sans Tamil',
           'ui-sans-serif',
           'system-ui',
           'sans-serif',
@@ -57,7 +57,6 @@ export default {
         display: [
           'Noto Sans',
           'Noto Sans Sinhala',
-          'Noto Sans Tamil',
           'ui-sans-serif',
           'system-ui',
           'sans-serif',

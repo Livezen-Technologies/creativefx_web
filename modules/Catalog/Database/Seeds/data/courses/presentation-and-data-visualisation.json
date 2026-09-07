@@ -1,0 +1,206 @@
+{
+  "slug": "presentation-and-data-visualisation",
+  "pillar": "design",
+  "category": "presentation-dataviz",
+  "title": "Presentation and Data Visualisation",
+  "subtitle": "For anyone who presents numbers. Leave with a rebuilt deck and charts that read alone",
+  "summary": "One day rebuilding a deck: headlines that state the finding, a reusable slide master, the right chart for the question and colour that survives a projector.",
+  "description_html": "<p>The problem with most decks is not that they are ugly. It is that the slide titled Q3 Performance does not say what the third quarter did, the chart has eleven colours and no point, and the person presenting has to explain in speech what the slide should have said on its own. This is a working day on fixing that: the argument first, then the slide, then the chart.</p><p>You work on two things throughout. The first is a supplied deck, a quarterly report of the kind circulated in most organisations, which you take apart and rebuild. The second is your own deck, if you bring one, which you apply the same treatment to in the exercises. You start by writing the point of the deck in one sentence and rebuilding the slide order to support it, then rewrite every headline so it states the finding rather than naming the topic. Slides that carry four ideas get cut down to one, and you decide where the rest goes: the appendix, the notes, or nowhere.</p><p>The afternoon is charts. You choose the chart from the question being asked rather than from the icon row, build it in Excel or Google Sheets, and then strip it: gridlines out, legend replaced with direct labels, bars sorted, axis starting where it honestly should. You apply a colour rule that survives a projector and a colour-blind reader, which mostly means one accent colour for the point and grey for everything else, and you learn when a table or a single large number beats a chart entirely. Every chart you finish is annotated so that a colleague who was not in the room can read it and reach the same conclusion.</p><p>You also build the thing that saves the most time afterwards: a slide master and theme with a type scale, a colour palette and a grid, so the next deck starts consistent instead of being made consistent. The day ends with the delivery mechanics that decide how a deck lands: speaker notes, timing, the difference between the version you present and the version you send, and exporting a PDF that still looks right on someone else's machine.</p><p>The class is taught in PowerPoint and Google Slides, with charts built in Excel or Google Sheets. Work in whichever pair you use at your desk; everything demonstrated exists in both. Sessions run live online in your own timezone or in the classroom in Colombo, with the recording available for twelve months. Pricing is shown in <strong>LKR</strong> for learners in Sri Lanka and in <strong>USD</strong> for everyone else, organisations can be invoiced, and a private run can be taught entirely on your own reporting deck and brand template.</p>",
+  "level": 1,
+  "duration_hours": 6,
+  "duration_days": 1,
+  "software_version": "PowerPoint and Excel for Microsoft 365, or Google Slides and Google Sheets",
+  "certification_alignment": "",
+  "delivery_modes": [
+    "LIVE_ONLINE",
+    "CLASSROOM",
+    "SELF_PACED",
+    "PRIVATE"
+  ],
+  "default_mode": "LIVE_ONLINE",
+  "price_band": "1day",
+  "outcomes": [
+    "State the point of a deck in one sentence and build the slide order that supports it.",
+    "Rewrite every headline so it states the finding rather than naming the topic.",
+    "Cut a crowded slide down to a single idea and decide deliberately where the detail goes.",
+    "Set up a slide master and theme with a type scale, colour palette and grid that the next deck can reuse.",
+    "Choose the right chart for the question being asked: comparison, composition, change over time, distribution or relationship.",
+    "Build a chart in Excel or Google Sheets, including getting the data into the shape the chart needs.",
+    "Strip a chart down: remove gridlines and borders, replace the legend with direct labels, sort the bars and set an honest axis.",
+    "Apply a colour rule of one accent for the point and grey for the rest, and check it against projection and colour vision deficiency.",
+    "Lay out a table that can be read: alignment, decimal places, banding and totals, and recognise when a table beats a chart.",
+    "Annotate a chart so it delivers the finding without you speaking, and export a handout version alongside the presented one."
+  ],
+  "prerequisites": [
+    "No design experience is needed, and no knowledge of chart theory is assumed.",
+    "You should be able to use PowerPoint or Google Slides at a basic level: adding a slide, typing on it and inserting a picture.",
+    "Bring a deck of your own to work on if you have one. A quarterly report deck and a spreadsheet of sample data are supplied if you do not."
+  ],
+  "audiences": [
+    "Analysts, finance and operations staff who present figures to people who do not work with figures",
+    "Managers preparing board packs, monthly reviews and project updates",
+    "Marketing and sales staff building pitch decks and campaign reports",
+    "Consultants and agency staff whose recommendations live or die on a deck",
+    "Researchers, lecturers and students presenting results to a non-specialist audience"
+  ],
+  "includes": [
+    {
+      "text": "Class recording, available for 12 months",
+      "icon": "video"
+    },
+    {
+      "text": "Exercise pack: the quarterly report deck to rebuild and a spreadsheet of sample data",
+      "icon": "download"
+    },
+    {
+      "text": "Course workbook covering every step demonstrated in class",
+      "icon": "book"
+    },
+    {
+      "text": "Chart selection guide and a slide review checklist you can use on the next deck",
+      "icon": "clipboard"
+    },
+    {
+      "text": "Slide master template with a type scale and an accessible colour palette, for PowerPoint and Google Slides",
+      "icon": "download"
+    },
+    {
+      "text": "MyLearnPlus certificate of completion",
+      "icon": "certificate"
+    },
+    {
+      "text": "Instructor email support after the class for questions on the exercises",
+      "icon": "support"
+    }
+  ],
+  "curriculum": [
+    {
+      "title": "Module 1 — The argument before the slides",
+      "summary": "Deciding what the deck is for, then ordering and titling it so the argument is visible without you.",
+      "topics": [
+        {
+          "title": "The one-sentence point, the audience, and what you want them to do afterwards",
+          "duration_min": 25
+        },
+        {
+          "title": "Structure: situation, complication, resolution, and where the ask belongs",
+          "duration_min": 25
+        },
+        {
+          "title": "Headlines that state the finding instead of naming the topic",
+          "duration_min": 25
+        },
+        {
+          "title": "Exercise: re-outline the supplied quarterly report as headlines only",
+          "duration_min": 15
+        }
+      ]
+    },
+    {
+      "title": "Module 2 — The slide as a designed object",
+      "summary": "One idea per slide, type and layout that survive the back row, and a master you can reuse.",
+      "topics": [
+        {
+          "title": "One idea per slide, and where the material you cut should go",
+          "duration_min": 20
+        },
+        {
+          "title": "Type: a scale that reads from the back of the room, and why two typefaces are enough",
+          "duration_min": 25
+        },
+        {
+          "title": "Layout: grid, alignment, white space and visual hierarchy",
+          "duration_min": 25
+        },
+        {
+          "title": "Slide masters, layouts and building a theme file you can start from next time",
+          "duration_min": 20
+        }
+      ]
+    },
+    {
+      "title": "Module 3 — Charts that answer a question",
+      "summary": "Picking the chart from the question, building it, and taking out everything that is not the point.",
+      "topics": [
+        {
+          "title": "Choosing the chart: comparison, composition, change over time, distribution, relationship",
+          "duration_min": 25
+        },
+        {
+          "title": "Building it in Excel or Google Sheets, and getting the data into the right shape first",
+          "duration_min": 25
+        },
+        {
+          "title": "Stripping a chart: gridlines, legends, direct labels, sorted bars and honest axes",
+          "duration_min": 25
+        },
+        {
+          "title": "Tables, big single numbers, and when not to draw a chart at all",
+          "duration_min": 15
+        }
+      ]
+    },
+    {
+      "title": "Module 4 — Colour, annotation and delivery",
+      "summary": "Making the finding unmissable, rebuilding the worst slides in the pack, and presenting it.",
+      "topics": [
+        {
+          "title": "Colour: one accent, grey for the rest, contrast, and not relying on red against green",
+          "duration_min": 25
+        },
+        {
+          "title": "Annotation: titles that state the finding, callouts, and a chart that reads on its own",
+          "duration_min": 20
+        },
+        {
+          "title": "Rebuild exercise: the three worst slides in the supplied deck, reviewed by the room",
+          "duration_min": 25
+        },
+        {
+          "title": "Delivery: speaker notes, timing, handout against presented version, and exporting a PDF that holds up",
+          "duration_min": 20
+        }
+      ]
+    }
+  ],
+  "faqs": [
+    {
+      "question": "Which software is the course taught in?",
+      "answer": "PowerPoint with Excel, and Google Slides with Google Sheets, side by side. Work in whichever pair you use at your desk, because everything demonstrated exists in both and the workbook lists the steps for each. Keynote users are welcome and the design and chart material applies unchanged, though the slide master exercise is shown in PowerPoint and Slides only."
+    },
+    {
+      "question": "Is the software included in the price?",
+      "answer": "No. The fee covers the training, not a Microsoft licence. If you do not have PowerPoint and Excel, Google Slides and Google Sheets are free with a Google account and every exercise can be completed in them. We send setup instructions when you book so you can be ready before the class starts."
+    },
+    {
+      "question": "Do I need to know Excel formulas?",
+      "answer": "No. You need to be able to open a spreadsheet, select a range and insert a chart. The data work in the course is about shape rather than calculation: getting your figures into rows and columns a chart can read, sorting them, and rounding sensibly. No formulas beyond simple totals and percentages are used, and the sample data is supplied ready to work with."
+    },
+    {
+      "question": "Should I bring my own deck?",
+      "answer": "Yes if you can, ideally one you have to present again soon, because the exercises then produce something you will actually use. Bring it in editable form rather than as a PDF. If you cannot, or the material is confidential, a quarterly report deck and matching data are supplied and every exercise works on those."
+    },
+    {
+      "question": "Is this a public speaking course?",
+      "answer": "No, and it would be unfair to sell it as one. The final module covers the delivery mechanics attached to the file: speaker notes, timing, the difference between the version you present and the version you send, and exporting a PDF that survives another machine. Voice, nerves and stagecraft are a separate discipline and are not taught here."
+    },
+    {
+      "question": "Do you issue a certificate, and what if I miss the day?",
+      "answer": "You receive a MyLearnPlus certificate of completion recording the course title, the hours and the date. It is a record of training rather than an industry credential, since none exists for this subject. The session is recorded and available to you for twelve months, and every live booking includes one free repeat of the same class, with the terms shown on the booking page for each date."
+    },
+    {
+      "question": "Can my employer be invoiced, and can you run this for our team?",
+      "answer": "Yes to both. We invoice organisations against a purchase order, in LKR for Sri Lankan companies and in USD internationally. Send the billing details and the names of the people attending and we will hold the seats. For a team of five or more, a private run is usually the better option: it is taught on your own reporting deck and brand template, and everyone leaves working from the same slide master."
+    }
+  ],
+  "related": [
+    "digital-marketing-analytics",
+    "figma-ui-ux-essentials",
+    "adobe-express-teams"
+  ],
+  "seo": {
+    "title": "Presentation and Data Visualisation Course | MyLearnPlus",
+    "description": "One-day course, live online or in Colombo. Structure a deck, headlines that state the finding, choose the right chart and build a reusable slide master.",
+    "keywords": "presentation skills course, data visualisation training, powerpoint course colombo, chart design training, slide design course, google slides training, data storytelling course"
+  }
+}

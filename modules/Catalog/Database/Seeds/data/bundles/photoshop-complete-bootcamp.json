@@ -1,0 +1,93 @@
+{
+  "slug": "photoshop-complete-bootcamp",
+  "type": "bootcamp",
+  "title": "Photoshop Complete Bootcamp",
+  "subtitle": "Four consecutive days taking you from your first layer to channel masks and batch output",
+  "summary": "Photoshop Levels 1 and 2 run back to back over four days: layers and masking on to compositing, colour grading, actions and press-ready output.",
+  "description_html": "<p>Photoshop Level 1 and Level 2 are usually taken weeks apart, and the gap costs people something. You learn masks on a Tuesday, go back to work, and by the time you reach channel masking and Blend If a month later you are relearning half of the first course. This bootcamp runs the two back to back over four consecutive days. Monday's habits are still in your hands on Thursday, which is exactly when they become permanent.</p><p>The first two days are the whole of <strong>Photoshop Level 1</strong>: document setup and resolution, layers, groups and smart objects, selections and the Select and Mask workspace, layer masks, Levels and Curves, healing and Content-Aware Fill, Camera Raw as a smart filter, type, and export for both print and screen. The second two days are the whole of <strong>Photoshop Level 2</strong>: channel-based masking that holds flyaway hair, Blend If and blending options, per-channel Curves and Selective Colour, matching two photographs shot in different light, painting contact and cast shadows, layer comps, actions and batch processing, artboards, soft proofing and press-ready output.</p><p>Running it as a block changes what can be taught. The composite you cut out on day two is the file you grade and shadow on day three. The action you record on day four batches the images you corrected on day one. By the end you have one project that has been through every stage rather than eight unrelated exercises, and a set of exported files at print and screen sizes from the same master.</p><p>Four days is intense and it is meant to be. Come with the software installed and working, and expect to be tired. The pace suits people who have taken a week off to learn properly, teams being brought up to a standard together, and career changers who need to be usable quickly. Both courses are built against the published domains of the <strong>Adobe Certified Professional in Adobe Photoshop</strong> exam, which is sat separately through Certiport at an authorised test centre; MyLearnPlus does not award Adobe credentials and no course can guarantee a pass. Live online in your own timezone or in the classroom in Colombo, priced in LKR for Sri Lanka and USD elsewhere, with invoicing available for employers.</p>",
+  "courses": [
+    "photoshop-level-1",
+    "photoshop-level-2"
+  ],
+  "required": [
+    "photoshop-level-1",
+    "photoshop-level-2"
+  ],
+  "outcomes": [
+    "Set up documents correctly for print and for screen, and work non-destructively with smart objects, adjustment layers and masks from the first hour to the last.",
+    "Cut a product from a cluttered background, build a channel-based mask that holds flyaway hair against a busier scene, and composite the subject in with Blend If so there is no halo and the light direction matches.",
+    "Correct exposure and colour with Levels and Curves, then grade the same image to a written brief with per-channel Curves, Selective Colour and a gradient map.",
+    "Retouch with the Healing Brush, Clone Stamp, Content-Aware Fill and the Remove tool, and paint contact and cast shadows so a placed object sits on a surface.",
+    "Present three versions of one layout to a client with layer comps, record an action to batch process a folder to a fixed size and colour space, and export a set of artboards at several sizes in one operation.",
+    "Soft proof against a supplied printer profile and produce both a press-ready PDF and a web JPEG from the same master file.",
+    "Finish the week with one project taken through every stage, from raw photograph to graded composite to exported print and screen deliverables.",
+    "Sit two timed practice tasks written against the domains of the Adobe Certified Professional in Adobe Photoshop exam, and know which objectives still need work."
+  ],
+  "includes": [
+    {
+      "text": "Both courses, 24 hours of instructor-led training over four consecutive days",
+      "icon": "calendar"
+    },
+    {
+      "text": "One continuous project brief carried across all four days, plus the exercise files for both courses",
+      "icon": "briefcase"
+    },
+    {
+      "text": "Recordings of all four days, available for 12 months",
+      "icon": "video"
+    },
+    {
+      "text": "Workbooks for both courses, with Mac and Windows shortcuts listed side by side",
+      "icon": "book"
+    },
+    {
+      "text": "Timed practice tasks and practice questions written against the Adobe Certified Professional in Adobe Photoshop exam domains",
+      "icon": "clipboard"
+    },
+    {
+      "text": "Instructor email support after the bootcamp for questions on the exercises",
+      "icon": "support"
+    },
+    {
+      "text": "MyLearnPlus certificate of completion recording both courses and the 24 hours",
+      "icon": "certificate"
+    }
+  ],
+  "faqs": [
+    {
+      "question": "Is four days in a row too much for a complete beginner?",
+      "answer": "It is demanding but it works, and beginners are the group the format helps most, because nothing is forgotten between the two halves. Days one and two assume no Photoshop experience at all. Days three and four move faster and go deeper, which is manageable precisely because you spent the previous two days building the habits they rely on. Expect to be tired by Thursday afternoon."
+    },
+    {
+      "question": "I already know Photoshop basics. Can I join on day three?",
+      "answer": "Yes. If you are already comfortable with layers, layer masks, selections and adjustment layers, book Photoshop Level 2 on its own rather than the bootcamp and join for those two days. The bootcamp price only makes sense if you are taking all four days. Tell us what you can already do and we will give you a straight answer about which is right."
+    },
+    {
+      "question": "Do I need my own laptop, and is the software included?",
+      "answer": "You work on your own machine so that your presets, fonts and files stay with you afterwards, and we recommend bringing it to the classroom in Colombo too. Adobe licences are not included. Photoshop needs to be installed and running before day one, through your own or your employer's Creative Cloud subscription or an Adobe trial, and we run a setup check before the bootcamp starts so nobody loses the first morning to an installer."
+    },
+    {
+      "question": "What happens if I miss a day in the middle?",
+      "answer": "All four days are recorded and the recordings are yours for twelve months, so you can catch up on the evening or afterwards. Because the days build on one another, tell the instructor as soon as you know, and they will make sure you have the day's finished project file so you can start the next morning from the right place. Each course in the bootcamp also includes one free repeat of that class on a later date."
+    },
+    {
+      "question": "Does this prepare me for the Adobe certification?",
+      "answer": "It prepares you for the Adobe Certified Professional in Adobe Photoshop exam, and you sit two timed practice tasks written against the published domains. The exam itself is administered by Certiport at an authorised testing centre, the voucher is bought separately, and the credential is awarded by Adobe. What we issue is a certificate of completion. No course can guarantee a pass."
+    },
+    {
+      "question": "Is it taught on Mac or Windows?",
+      "answer": "Both. Photoshop is effectively identical across the two platforms, the instructor calls out the shortcut for each as they go, and the workbook lists Mac and Windows keys side by side. Work on the machine you use every day rather than borrowing an unfamiliar one for the week."
+    },
+    {
+      "question": "Can my employer be invoiced, or can we run this in-house?",
+      "answer": "Yes. We invoice organisations against a purchase order, in LKR for Sri Lankan companies and in USD internationally, and will hold seats while the invoice is processed. For five or more people the same four days can be run privately, on your own product photography and your own brand, either as a block or split across two weeks if taking the whole team out for four consecutive days is impossible."
+    }
+  ],
+  "price_band": "bootcamp",
+  "saving_note": "Booked as a bootcamp, the four days cost {saving} less than buying Photoshop Level 1 and Photoshop Level 2 as separate courses.",
+  "seo": {
+    "title": "Photoshop Bootcamp: 4-Day Complete Course | MyLearnPlus",
+    "description": "Photoshop Levels 1 and 2 over four consecutive days, live online or in Colombo. Layers to channel masking, compositing, actions and press-ready output.",
+    "keywords": "photoshop bootcamp, 4 day photoshop course, intensive photoshop training, photoshop level 1 and 2, photoshop bootcamp sri lanka, photoshop course colombo, learn photoshop fast"
+  }
+}

@@ -19,7 +19,7 @@ $favicon = (string) setting('favicon', '', 'brand');
     <link rel="icon" href="<?= esc(media_src($favicon), 'attr') ?>">
     <link rel="apple-touch-icon" href="<?= esc(media_src($favicon), 'attr') ?>">
 <?php else: ?>
-    <link rel="icon" href="<?= esc(media_src('/media/tshda/tshda-emblem.svg'), 'attr') ?>" type="image/svg+xml">
+    <link rel="icon" href="<?= esc(media_src('/media/learnplus/emblem.svg'), 'attr') ?>" type="image/svg+xml">
     <link rel="icon" type="image/png" sizes="32x32" href="<?= esc(media_src('/favicon-32.png'), 'attr') ?>">
     <link rel="icon" type="image/png" sizes="48x48" href="<?= esc(media_src('/favicon-48.png'), 'attr') ?>">
     <link rel="icon" type="image/png" sizes="192x192" href="<?= esc(media_src('/favicon-192.png'), 'attr') ?>">

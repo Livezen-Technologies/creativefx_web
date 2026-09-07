@@ -31,9 +31,14 @@ final class Mailer
     }
 
     /**
+     * @param list<array{name:string, content:string, mime:string}> $attachments
+     *        Files built in memory rather than read from disk — a calendar
+     *        invitation for a booked class, an invoice. Last argument, so every
+     *        existing caller is untouched.
+     *
      * @return array{sent:bool, error:string, detail:string}
      */
-    public static function send(string $to, string $subject, string $body, ?string $replyTo = null): array
+    public static function send(string $to, string $subject, string $body, ?string $replyTo = null, array $attachments = []): array
     {
         if (! self::isConfigured()) {
             return ['sent' => false, 'error' => 'No SMTP host is configured, so nothing was sent.', 'detail' => ''];
@@ -73,6 +78,23 @@ final class Mailer
             }
             $email->setSubject($subject);
             $email->setMessage($body);
+
+            foreach ($attachments as $attachment) {
+                // CodeIgniter's attach() takes a path *or* a buffer, and the
+                // only thing that distinguishes them is whether a mime type was
+                // given: with one, the first argument is treated as content.
+                // These files are built in memory — a calendar invitation, an
+                // invoice — and writing each to a temporary file first would
+                // leave a learner's details on the disk for whoever finds them.
+                // A blank mime would silently make it look for a file named
+                // after the entire PDF.
+                $email->attach(
+                    $attachment['content'],
+                    'attachment',
+                    $attachment['name'] ?? 'attachment',
+                    $attachment['mime'] ?? 'application/octet-stream'
+                );
+            }
 
             if ($email->send(false)) {
                 return ['sent' => true, 'error' => '', 'detail' => ''];

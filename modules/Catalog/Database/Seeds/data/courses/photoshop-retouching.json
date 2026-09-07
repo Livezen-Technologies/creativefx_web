@@ -1,0 +1,124 @@
+{
+  "slug": "photoshop-retouching",
+  "pillar": "adobe",
+  "category": "photoshop",
+  "title": "Photoshop Retouching and Compositing",
+  "subtitle": "One day on portrait and product retouching that holds up at full print resolution",
+  "summary": "A one-day retouching and compositing intensive: frequency separation, dodge and burn, colour grading and placing a subject into a new scene.",
+  "description_html": "<p>Retouching goes wrong in a predictable way. The blemishes disappear, the skin turns to plastic, the eyes get whitened past belief, and at full print resolution the whole face reads as a mask. This course teaches the opposite approach: work that survives a 100 per cent zoom because texture was never destroyed in the first place.</p><p>The day starts with reading the image. Before any tool is picked up you learn to decide what to fix, what to leave and what belongs in the raw processing stage rather than the retouch. You then build a proper retouching stack: cleanup on its own layer, frequency separation for tone and texture, dodge and burn on a neutral grey layer for shaping, and grading on top. Each stage stays separate, so a client asking for less can be given less without starting again.</p><p>The second half moves to compositing. You cut a subject out using channels and Select and Mask, then do the work that actually sells the result: matching light direction and colour, adding grain so the two sources share the same noise, treating the edge so it does not glow, and painting shadows that put the subject on the ground. You finish with sharpening for a named output, a client-ready export and a layered file tidy enough to hand to someone else.</p><p>This is a practical day with two full projects: a portrait taken through to a finished, believable retouch, and a subject composited into a new scene. Both files are yours to keep, along with the class recording for twelve months. It runs live online or in the classroom in Colombo, with pricing in <strong>LKR</strong> for Sri Lanka and <strong>USD</strong> internationally.</p><p>The class assumes real fluency in Photoshop. If channels, curves and smart objects are not yet second nature, take <em>Photoshop Level 2</em> first.</p>",
+  "level": 3,
+  "duration_hours": 6,
+  "duration_days": 1,
+  "software_version": "Creative Cloud 2026",
+  "certification_alignment": "",
+  "delivery_modes": ["LIVE_ONLINE", "CLASSROOM", "SELF_PACED", "PRIVATE"],
+  "default_mode": "LIVE_ONLINE",
+  "price_band": "1day",
+  "outcomes": [
+    "Assess a portrait and write a short retouching plan that separates raw processing from pixel work.",
+    "Build a non-destructive retouching stack that keeps cleanup, texture, shaping and grading on separate layers.",
+    "Remove blemishes and stray hairs with the Healing Brush, Patch and Clone Stamp without smearing skin texture.",
+    "Apply frequency separation to correct blotchy tone while leaving pores and detail intact.",
+    "Shape a face with dodge and burn on a neutral grey layer rather than on the pixels themselves.",
+    "Grade a portrait with Curves and Selective Colour to a set brief, and treat eyes, teeth and lips believably.",
+    "Cut a subject out using channels and Select and Mask, then place it into a new scene.",
+    "Match light direction, colour, contrast and grain between a subject and its new background.",
+    "Paint contact and cast shadows, and treat the cut-out edge so the composite does not fringe or glow.",
+    "Sharpen for a named output and export a client-ready file alongside a tidy, labelled layered master."
+  ],
+  "prerequisites": [
+    "Photoshop Level 2 or equivalent working experience.",
+    "You should already be confident with layer masks, Curves, channels and smart objects.",
+    "Bring two of your own images if you want to apply the techniques to your own work in the final exercise."
+  ],
+  "audiences": [
+    "Retouchers and designers producing portrait or product images for print and campaigns",
+    "Portrait, wedding and editorial photographers who deliver finished files to clients",
+    "E-commerce and catalogue teams who need product shots placed on consistent backgrounds",
+    "Studio artworkers asked to fix supplied photography to a fixed brand standard",
+    "Advanced Photoshop users whose retouching currently looks over-processed at full size"
+  ],
+  "includes": [
+    {"text": "Class recording, available for 12 months", "icon": "video"},
+    {"text": "Full-resolution practice images and both finished layered projects", "icon": "download"},
+    {"text": "Retouching workbook with the layer stack used in class", "icon": "book"},
+    {"text": "Dodge and burn, frequency separation and grading actions to keep", "icon": "settings"},
+    {"text": "MyLearnPlus certificate of completion", "icon": "certificate"},
+    {"text": "Instructor email support after the class for questions on the exercises", "icon": "support"}
+  ],
+  "curriculum": [
+    {
+      "title": "Module 1 — Reading the image and setting up",
+      "summary": "Deciding what the retouch is for, and building a layer stack that keeps every stage reversible.",
+      "topics": [
+        {"title": "Assessing a portrait: what to fix, what to leave, what the client will notice", "duration_min": 20},
+        {"title": "Building a non-destructive retouching stack and naming convention", "duration_min": 25},
+        {"title": "Raw processing decisions that belong before the retouch", "duration_min": 30}
+      ]
+    },
+    {
+      "title": "Module 2 — Skin, hair and detail",
+      "summary": "Cleaning and shaping skin at full resolution without losing the texture that makes it read as skin.",
+      "topics": [
+        {"title": "Healing, patching and cloning without smearing texture", "duration_min": 30},
+        {"title": "Frequency separation: correcting tone and texture separately", "duration_min": 40},
+        {"title": "Dodge and burn on a neutral layer for shaping and volume", "duration_min": 35}
+      ]
+    },
+    {
+      "title": "Module 3 — Colour, tone and finishing the portrait",
+      "summary": "Grading the image, handling the features that are easiest to overdo, and sharpening for output.",
+      "topics": [
+        {"title": "Colour grading with Curves, Selective Colour and gradient maps", "duration_min": 30},
+        {"title": "Eyes, teeth and lips: subtle work that still reads as a photograph", "duration_min": 20},
+        {"title": "Output sharpening for print and for screen", "duration_min": 25}
+      ]
+    },
+    {
+      "title": "Module 4 — Compositing a subject into a new scene",
+      "summary": "Taking a cut-out from an accurate mask to a composite that does not announce itself.",
+      "topics": [
+        {"title": "Cutting out with channels and the Select and Mask workspace", "duration_min": 30},
+        {"title": "Matching light direction, colour, contrast and grain", "duration_min": 35},
+        {"title": "Shadows, reflections and edge treatment", "duration_min": 25},
+        {"title": "Final checks, client-ready export and layered file handover", "duration_min": 15}
+      ]
+    }
+  ],
+  "faqs": [
+    {
+      "question": "Is one day long enough for retouching?",
+      "answer": "It is long enough to learn the method and complete two projects, because the day assumes you already know Photoshop and spends no time on the interface. What you take away is a repeatable stack and a set of decisions. Speed comes from repeating it on your own files afterwards, which is what the practice images and the recording are for."
+    },
+    {
+      "question": "Can I work on my own images in class?",
+      "answer": "Yes, and you are encouraged to. Bring one portrait and one image you want to composite, at full resolution. The taught exercises use supplied files so that everyone follows the same steps, and the final exercise in each half is open for you to apply the technique to your own work with the instructor looking over it."
+    },
+    {
+      "question": "Do I need my own laptop, and is the software included?",
+      "answer": "You work on your own machine, online or in the Colombo classroom, so the actions and presets you build stay with you. Photoshop itself is not included in the fee: you need a working Creative Cloud subscription or an Adobe trial before the first session. A graphics tablet is useful for dodge and burn but is not required."
+    },
+    {
+      "question": "What if I miss the class?",
+      "answer": "The session is recorded and available to you for twelve months, so you can work through it in your own time. If you would rather sit the day live again, live bookings include one free repeat of the same class; the terms are shown on the booking page for each date."
+    },
+    {
+      "question": "Do you issue a certificate?",
+      "answer": "Yes, a MyLearnPlus certificate of completion recording the course, the hours and the date. There is no Adobe Certified Professional exam specific to retouching; the Photoshop certification covers the application as a whole and is prepared for in Photoshop Level 1."
+    },
+    {
+      "question": "Does the course cover AI retouching tools?",
+      "answer": "It covers the Remove tool and Content-Aware Fill where they are the fastest correct choice, and the whole day is about knowing when a generated patch will not hold up at print size. Generative Fill, Generative Expand and prompt-based work are taught in depth in Photoshop AI and Generative Fill, which pairs well with this class."
+    },
+    {
+      "question": "Can my employer be invoiced?",
+      "answer": "Yes. We invoice organisations against a purchase order, in LKR for Sri Lankan companies and in USD internationally, and we hold seats while the invoice is processed. Studios booking several people usually prefer a private run of the day using their own photography."
+    }
+  ],
+  "related": ["photoshop-level-2", "photoshop-generative-ai", "photoshop-level-1"],
+  "seo": {
+    "title": "Photoshop Retouching & Compositing Course | MyLearnPlus",
+    "description": "One-day advanced Photoshop retouching class: frequency separation, dodge and burn, skin, hair, grading and compositing. Live online or in Colombo.",
+    "keywords": "photoshop retouching course, portrait retouching training, frequency separation course, photoshop compositing class, dodge and burn photoshop, retouching training sri lanka, photoshop course colombo"
+  }
+}

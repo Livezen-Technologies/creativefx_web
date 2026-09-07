@@ -1,0 +1,330 @@
+{
+  "slug": "motion-graphics-bootcamp",
+  "pillar": "adobe",
+  "category": "after-effects",
+  "title": "Motion Graphics Bootcamp",
+  "subtitle": "Four intensive days in After Effects, from first keyframe to a finished showreel piece",
+  "summary": "Four days of After Effects: shape animation, kinetic type, tracking, rotoscoping, Essential Graphics templates and delivery, with ACP exam practice.",
+  "description_html": "<p>Motion work rarely fails because of effects. It fails on timing. The logo lands a beat late, the lower third slides in at a constant speed and reads as amateur, the text is legible on the edit suite monitor and unreadable on a phone. This bootcamp spends four days on the craft that fixes those things: keyframe interpolation, the graph editor, hierarchy and, above all, restraint.</p><p>You animate from the first afternoon. Across the four days you build a shape-layer logo sting, a kinetic typography piece cut to a voice track, a lower third that sits over moving footage without wobbling, a rotoscoped subject lifted from a busy background, and a short explainer sequence assembled from precomps. You track text onto a filmed surface, key a green screen clip, and finish with a colour and audio pass. The last day turns your lower third into an Essential Graphics template exported as a <strong>.mogrt</strong> file, so an editor can restyle it in Premiere Pro without opening After Effects at all.</p><p>The pace is deliberate on the fundamentals and fast afterwards. Each module is a short demonstration followed by you building the same thing, and the exercises stack: the shape work on day one becomes the sting you render on day four. You keep every project file, the footage, the audio and the class recording for twelve months, which matters on a bootcamp because nobody absorbs twenty-four hours of software in one week.</p><p>Content is mapped to the domains of the <strong>Adobe Certified Professional in Adobe After Effects</strong> exam, delivered by Certiport at authorised test centres. The course prepares you for that exam and closes with a timed practice task in the same shape as the real one. MyLearnPlus does not award the Adobe credential and no course can guarantee a pass, but you will finish knowing which objectives are solid and which need more time in the application.</p><p>The bootcamp runs live online in your own timezone or in the classroom in Colombo. Pricing is shown in <strong>LKR</strong> for learners in Sri Lanka and in <strong>USD</strong> for everyone else. Teams can be invoiced, and the same four days can be run privately for a single organisation on your own brand assets.</p>",
+  "level": 2,
+  "duration_hours": 24,
+  "duration_days": 4,
+  "software_version": "Creative Cloud 2026",
+  "certification_alignment": "Prepares for the Adobe Certified Professional in Adobe After Effects exam",
+  "delivery_modes": [
+    "LIVE_ONLINE",
+    "CLASSROOM",
+    "SELF_PACED",
+    "PRIVATE"
+  ],
+  "default_mode": "LIVE_ONLINE",
+  "price_band": "bootcamp",
+  "outcomes": [
+    "Set up a composition with the correct frame size, frame rate and duration for a named delivery spec, and organise the project so a colleague can open it.",
+    "Animate transform properties with keyframes, then control the feel of the move with easing and the graph editor rather than by adding more keyframes.",
+    "Build an animated logo sting from shape layers using path animation, trim paths and repeaters.",
+    "Produce a kinetic typography piece cut to a voice track using text animators and range selectors.",
+    "Structure a longer sequence with precomps, parenting and null objects, and reuse a single element at three different scales.",
+    "Animate a lower third over moving footage using masks, track mattes and a two-point track so it stays locked to the shot.",
+    "Separate a subject from a busy background with the Roto Brush, and key a green screen clip with Keylight.",
+    "Apply a colour grade and mix a soundtrack, voice and effects to a consistent level across the sequence.",
+    "Convert a lower third into an Essential Graphics template and export it as a .mogrt file an editor can restyle in Premiere Pro.",
+    "Render and deliver the same sequence three ways through the render queue and Adobe Media Encoder: a master file, a web H.264 and a vertical social cut."
+  ],
+  "prerequisites": [
+    "Previous work in at least one Adobe application, such as Photoshop, Illustrator or Premiere Pro, so that layers, panels and file handling are already familiar. Previous After Effects experience is useful but not assumed.",
+    "A machine that runs After Effects comfortably: a dedicated graphics card, 16 GB of RAM or more, and free disk space for previews and renders.",
+    "Comfort with your own computer, including managing folders, linked footage and large files."
+  ],
+  "audiences": [
+    "Graphic designers who are being asked for animated versions of work they already produce as stills",
+    "Video editors who want to build their own titles, lower thirds and transitions instead of buying templates",
+    "Social media and content producers making short promotional and explainer videos in house",
+    "Marketing and agency staff who commission motion work and need to brief and review it properly",
+    "Design graduates and career changers building a motion reel for a first job"
+  ],
+  "includes": [
+    {
+      "text": "Recording of all four days, available for 12 months",
+      "icon": "video"
+    },
+    {
+      "text": "Project files, footage, voice track and music used in class, yours to keep",
+      "icon": "download"
+    },
+    {
+      "text": "Course workbook covering every build demonstrated across the four days",
+      "icon": "book"
+    },
+    {
+      "text": "Practice questions written against the Adobe Certified Professional exam domains",
+      "icon": "clipboard"
+    },
+    {
+      "text": "MyLearnPlus certificate of completion",
+      "icon": "certificate"
+    },
+    {
+      "text": "Instructor email support after the bootcamp for questions on your own projects",
+      "icon": "support"
+    },
+    {
+      "text": "One free repeat of the same live bootcamp, terms shown on the booking page",
+      "icon": "refresh"
+    }
+  ],
+  "curriculum": [
+    {
+      "title": "Day 1, Morning — Compositions, layers and the first keyframes",
+      "summary": "How an After Effects project is put together, and the transform properties every animation is built from.",
+      "topics": [
+        {
+          "title": "The workspace, panels and a saved layout you can work in",
+          "duration_min": 30
+        },
+        {
+          "title": "Project setup: frame size, frame rate, duration and folder discipline",
+          "duration_min": 35
+        },
+        {
+          "title": "Importing footage, Photoshop and Illustrator files with layers intact",
+          "duration_min": 35
+        },
+        {
+          "title": "Position, Scale, Rotation, Opacity and Anchor Point, and why the anchor point decides the move",
+          "duration_min": 45
+        },
+        {
+          "title": "First animation: keyframes, the timeline, previews and RAM playback",
+          "duration_min": 35
+        }
+      ]
+    },
+    {
+      "title": "Day 1, Afternoon — Shape layers and an animated logo sting",
+      "summary": "Building artwork inside After Effects and animating it into a five second logo sting.",
+      "topics": [
+        {
+          "title": "Shape layers, paths, strokes and fills, and shape groups",
+          "duration_min": 40
+        },
+        {
+          "title": "Trim Paths for lines that draw themselves",
+          "duration_min": 35
+        },
+        {
+          "title": "Repeaters, offsets and building pattern from one shape",
+          "duration_min": 35
+        },
+        {
+          "title": "Bringing an Illustrator logo in and converting it to editable shapes",
+          "duration_min": 30
+        },
+        {
+          "title": "Build: a five second logo sting from shapes and the supplied logo",
+          "duration_min": 40
+        }
+      ]
+    },
+    {
+      "title": "Day 2, Morning — Type in motion",
+      "summary": "Text layers, animators and range selectors, applied to a kinetic typography piece cut to a voice track.",
+      "topics": [
+        {
+          "title": "Text layers, character and paragraph settings, and legibility on small screens",
+          "duration_min": 30
+        },
+        {
+          "title": "Text animators and range selectors: animating by character, word and line",
+          "duration_min": 45
+        },
+        {
+          "title": "Reading a voice track: waveform, markers and cutting animation to speech",
+          "duration_min": 35
+        },
+        {
+          "title": "Type on a path, and masks that reveal words rather than fade them",
+          "duration_min": 30
+        },
+        {
+          "title": "Build: a twenty second kinetic typography piece to the supplied voice track",
+          "duration_min": 40
+        }
+      ]
+    },
+    {
+      "title": "Day 2, Afternoon — Timing, easing and hierarchy",
+      "summary": "The graph editor, parenting and a first set of expressions, which is where amateur motion becomes professional motion.",
+      "topics": [
+        {
+          "title": "Easy Ease, speed graphs and value graphs in the graph editor",
+          "duration_min": 45
+        },
+        {
+          "title": "Overshoot, anticipation and follow through applied to your logo sting",
+          "duration_min": 35
+        },
+        {
+          "title": "Parenting, null objects and rigging a group of layers to one control",
+          "duration_min": 35
+        },
+        {
+          "title": "Precomposing: nesting, timing inside precomps and reusing one element three times",
+          "duration_min": 35
+        },
+        {
+          "title": "Three expressions worth knowing: wiggle, loopOut and time",
+          "duration_min": 30
+        }
+      ]
+    },
+    {
+      "title": "Day 3, Morning — Working over footage",
+      "summary": "Masks, track mattes, blending modes and 3D space, used to place graphics into a filmed shot.",
+      "topics": [
+        {
+          "title": "Masks, feathering and animated mask paths",
+          "duration_min": 35
+        },
+        {
+          "title": "Track mattes and blending modes for reveals and knock-outs",
+          "duration_min": 35
+        },
+        {
+          "title": "Switching layers to 3D, cameras, depth of field and a simple lighting setup",
+          "duration_min": 45
+        },
+        {
+          "title": "Adjustment layers and effect stacks that stay editable",
+          "duration_min": 25
+        },
+        {
+          "title": "Build: a lower third designed to sit over the supplied interview footage",
+          "duration_min": 40
+        }
+      ]
+    },
+    {
+      "title": "Day 3, Afternoon — Tracking, rotoscoping and keying",
+      "summary": "Getting graphics to stick to a moving shot, and getting a subject out of a background.",
+      "topics": [
+        {
+          "title": "Stabilising a handheld shot and one and two point motion tracking",
+          "duration_min": 40
+        },
+        {
+          "title": "The 3D Camera Tracker: placing text on a surface in a moving shot",
+          "duration_min": 40
+        },
+        {
+          "title": "Roto Brush and refining the matte frame by frame",
+          "duration_min": 45
+        },
+        {
+          "title": "Keylight on green screen: spill suppression, edges and a believable composite",
+          "duration_min": 35
+        },
+        {
+          "title": "Time remapping, speed ramps and frame blending",
+          "duration_min": 20
+        }
+      ]
+    },
+    {
+      "title": "Day 4, Morning — Finish, colour, audio and templates",
+      "summary": "Grading, sound and turning your graphic into a template an editor can use without After Effects.",
+      "topics": [
+        {
+          "title": "Colour correction and grading with Lumetri on an adjustment layer",
+          "duration_min": 40
+        },
+        {
+          "title": "Audio: levels for voice, music and effects, and keyframing a duck under dialogue",
+          "duration_min": 30
+        },
+        {
+          "title": "Essential Graphics: exposing colour, text and position as editable controls",
+          "duration_min": 45
+        },
+        {
+          "title": "Exporting a .mogrt file and restyling it in Premiere Pro",
+          "duration_min": 35
+        },
+        {
+          "title": "Dynamic Link between After Effects and Premiere Pro, and when not to use it",
+          "duration_min": 30
+        }
+      ]
+    },
+    {
+      "title": "Day 4, Afternoon — Render, deliver and review",
+      "summary": "Getting the work out at the right specification, three ways, then a critique and the exam practice task.",
+      "topics": [
+        {
+          "title": "Render queue, output modules and a lossless master file",
+          "duration_min": 35
+        },
+        {
+          "title": "Adobe Media Encoder: H.264 for web, bitrates and file size",
+          "duration_min": 35
+        },
+        {
+          "title": "Reframing one sequence for 16:9, 1:1 and 9:16 without redoing the animation",
+          "duration_min": 35
+        },
+        {
+          "title": "Collecting files, proxies and archiving a finished project",
+          "duration_min": 25
+        },
+        {
+          "title": "Group review of the pieces built during the week",
+          "duration_min": 25
+        },
+        {
+          "title": "Exam objectives review and a timed practice task",
+          "duration_min": 25
+        }
+      ]
+    }
+  ],
+  "faqs": [
+    {
+      "question": "Do I need my own laptop, and what specification does it need?",
+      "answer": "You work on your own machine so that your projects, fonts and presets stay with you after the week. After Effects is demanding: plan on a dedicated graphics card, 16 GB of RAM or more, and enough free disk space for previews and renders. We send the current Adobe system requirements with your joining instructions, and there is a setup check before day one where we can look at your machine together."
+    },
+    {
+      "question": "Is the After Effects software included in the price?",
+      "answer": "No. The fee covers the training, not an Adobe licence. You need After Effects and Adobe Media Encoder installed and signed in before the first morning, either through your own or your employer's Creative Cloud subscription or through Adobe's free trial. Note that a trial started early may expire before day four, so time it with care."
+    },
+    {
+      "question": "Do I need previous After Effects experience?",
+      "answer": "No, but you should already work in at least one Adobe application. Day one starts with compositions and keyframes and assumes nothing about After Effects itself. From day two onward the pace is fast, and people who have never used a layer-based application before tend to struggle. If you would rather take the same ground more slowly, After Effects Level 1 covers days one and two over two days; the bootcamp goes further, into tracking, rotoscoping, keying, templates and delivery."
+    },
+    {
+      "question": "What happens if I miss a day?",
+      "answer": "Each day is recorded and available to you for twelve months, and the exercise files for every day are supplied, so you can rebuild the missed work and rejoin the following morning. If you miss more than one day, sit the missing days again on a later run: every live booking includes one free repeat of the same bootcamp, with the terms shown on the booking page for each date."
+    },
+    {
+      "question": "Do you issue a certificate, and is the Adobe exam included?",
+      "answer": "You receive a MyLearnPlus certificate of completion recording the course title, the hours and the date. That is a record of training, not an Adobe credential. The Adobe Certified Professional in Adobe After Effects exam is delivered separately through Certiport at authorised test centres and the voucher is bought separately. This bootcamp is built against the published exam domains and ends with a timed practice task, but no course can guarantee a pass."
+    },
+    {
+      "question": "Will I leave with something I can put in a reel?",
+      "answer": "Yes. The logo sting, the kinetic typography piece and the tracked lower third are finished, rendered pieces built on supplied footage and audio that you are free to show as coursework. They are exercises rather than client work, so present them as such. The final afternoon includes a group review where the instructor comments on each person's pieces."
+    },
+    {
+      "question": "Can my employer be invoiced?",
+      "answer": "Yes. We invoice organisations against a purchase order, in LKR for Sri Lankan companies and in USD internationally. Send the billing details and the names of the people attending and we will hold the seats while the invoice is processed. Groups of five or more are usually better served by a private bootcamp run on your own brand assets and delivery specifications."
+    }
+  ],
+  "related": [
+    "after-effects-level-1",
+    "premiere-pro-level-1",
+    "adobe-firefly-creatives"
+  ],
+  "seo": {
+    "title": "After Effects Motion Graphics Bootcamp | MyLearnPlus",
+    "description": "Four-day After Effects motion graphics bootcamp, live online or in Colombo. Animation, type, tracking, templates and render, with ACP exam practice.",
+    "keywords": "after effects course, motion graphics bootcamp, after effects training, motion graphics course sri lanka, adobe certified professional after effects, animation training colombo, kinetic typography course"
+  }
+}

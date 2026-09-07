@@ -1,11 +1,8 @@
-// Self-hosted brand fonts — Playfair Display (display) + Poppins (body)
-// Bundled by Vite, so no external font CDN request.
-// Trilingual type. Noto Sans carries Latin; the Sinhala and Tamil companions
-// carry their own scripts and are named after it in the font stack, so a page
-// in Sinhala renders in Sinhala without the template knowing which language it
-// is in. All three are self-hosted — Clause 3.15 asks for local web fonts, and
-// a government site should not need fonts.googleapis.com to be reachable to be
-// legible.
+// Bilingual type, self-hosted. Noto Sans carries Latin; the Sinhala companion
+// carries its own script and is named after it in the font stack, so a page in
+// Sinhala renders in Sinhala without the template knowing which language it is
+// in. Bundled by Vite rather than fetched from a CDN: a font request to a third
+// party is a request that can be slow, blocked, or logged.
 import '@fontsource/noto-sans/latin-400.css';
 import '@fontsource/noto-sans/latin-500.css';
 import '@fontsource/noto-sans/latin-600.css';
@@ -13,9 +10,6 @@ import '@fontsource/noto-sans/latin-700.css';
 import '@fontsource/noto-sans-sinhala/sinhala-400.css';
 import '@fontsource/noto-sans-sinhala/sinhala-500.css';
 import '@fontsource/noto-sans-sinhala/sinhala-700.css';
-import '@fontsource/noto-sans-tamil/tamil-400.css';
-import '@fontsource/noto-sans-tamil/tamil-500.css';
-import '@fontsource/noto-sans-tamil/tamil-700.css';
 
 import '../css/app.css';
 

@@ -1,0 +1,228 @@
+{
+  "slug": "adobe-firefly-creatives",
+  "pillar": "adobe",
+  "category": "firefly",
+  "title": "Adobe Firefly: Generative AI for Creatives",
+  "subtitle": "One day on Adobe Firefly for designers and marketers who have to produce on-brand work",
+  "summary": "One day on Adobe Firefly: prompting, structure and style reference, text effects, vector generation, Content Credentials and licensing, with ACP exam practice.",
+  "description_html": "<p>Firefly makes a convincing image in fifteen seconds and a usable one in about forty minutes. The gap between the two is the point of this course. A generated hero image that is close but not on-brand, at the wrong aspect ratio, with a hand that will not survive a print check, costs more time than it saves. You spend the day learning to steer the model instead of rolling the dice.</p><p>The morning is prompting as a discipline. You write for subject, lighting, lens, material and composition rather than typing a noun, control aspect ratio and negative space so the art director has room for a headline, generate variations in a structured sheet a client can choose from, and keep an iteration log so a good result can be reproduced next week. You then move to reference-driven work: matching the structure of an existing layout, matching the style of a supplied brand image, and holding one look across a set of six images that have to sit together in a campaign.</p><p>The afternoon covers the rest of the Firefly toolset and the work around it. You produce a text effect for a campaign headline, generate vector artwork and finish it as editable paths in Illustrator, recolour an existing vector set into three brand palettes in seconds, and fill and expand an existing photograph to a new crop. You also learn to recognise the failure modes early, so you stop regenerating and start correcting in Photoshop, which is usually faster.</p><p>The last module is the part clients and legal teams ask about. You inspect the <strong>Content Credentials</strong> attached to Firefly output, see what provenance travels with a file, and draft a short internal position on disclosure and sign-off. Adobe states that its Firefly models are trained on Adobe Stock and openly licensed or public domain content, and offers indemnification on some business plans. The course shows you where to verify that for your own subscription rather than taking it on trust, and where generative credits are consumed so you are not stopped mid-project.</p><p>Content is mapped to the domains of the <strong>Adobe Certified Professional in Adobe Firefly</strong> exam, delivered by Certiport at authorised test centres, and the day closes with a timed practice task. MyLearnPlus does not award the Adobe credential and no course can guarantee a pass. The class runs live online or in the classroom in Colombo, priced in <strong>LKR</strong> for Sri Lanka and <strong>USD</strong> internationally, and can be run privately on your own brand material.</p>",
+  "level": 1,
+  "duration_hours": 6,
+  "duration_days": 1,
+  "software_version": "Creative Cloud 2026",
+  "certification_alignment": "Prepares for the Adobe Certified Professional in Adobe Firefly exam",
+  "delivery_modes": [
+    "LIVE_ONLINE",
+    "CLASSROOM",
+    "SELF_PACED",
+    "PRIVATE"
+  ],
+  "default_mode": "LIVE_ONLINE",
+  "price_band": "1day",
+  "outcomes": [
+    "Navigate the Firefly web application, tell the current models apart by what each is built for, and check how generative credits are consumed on your own plan.",
+    "Write a prompt that specifies subject, lighting, lens, material and composition, and improve a weak result by changing one variable at a time.",
+    "Control aspect ratio, negative space and crop so a generated image leaves room for a headline and a logo.",
+    "Produce a variation sheet of a single concept for client selection, with an iteration log that lets you reproduce the chosen result later.",
+    "Use structure reference and style reference to match a supplied layout and a supplied brand look.",
+    "Hold one consistent visual style across a set of six images intended to run together as a campaign.",
+    "Generate a text effect for a campaign headline and place it into a layout.",
+    "Generate vector artwork, open it in Illustrator and clean up the paths so it is genuinely editable.",
+    "Recolour an existing vector artwork into three brand palettes using generative recolour.",
+    "Inspect the Content Credentials on a generated file and draft a one-page internal position on disclosure, client sign-off and licence checking."
+  ],
+  "prerequisites": [
+    "No prior experience with Firefly or generative AI is needed.",
+    "You should be comfortable with your own computer and with working in a browser.",
+    "For the Illustrator exercises it helps to have used a vector application before, but the steps are demonstrated from the start."
+  ],
+  "audiences": [
+    "Graphic designers producing concepts, mood boards and campaign visuals under deadline",
+    "Marketing and social media staff who need image and headline treatments without a design studio",
+    "Art directors and creative leads deciding where generative work is and is not acceptable",
+    "Small business owners and online sellers producing their own product and campaign imagery",
+    "Agency account and production staff who brief, review and sign off creative work"
+  ],
+  "includes": [
+    {
+      "text": "Class recording, available for 12 months",
+      "icon": "video"
+    },
+    {
+      "text": "Exercise files, reference images and the brand kit used in class, yours to keep",
+      "icon": "download"
+    },
+    {
+      "text": "Prompt library built during the day, with the iteration log template",
+      "icon": "book"
+    },
+    {
+      "text": "Practice questions written against the Adobe Certified Professional exam domains",
+      "icon": "clipboard"
+    },
+    {
+      "text": "One-page disclosure and sign-off template you can adapt for your team",
+      "icon": "settings"
+    },
+    {
+      "text": "MyLearnPlus certificate of completion",
+      "icon": "certificate"
+    },
+    {
+      "text": "Instructor email support after the class for questions on the exercises",
+      "icon": "support"
+    }
+  ],
+  "curriculum": [
+    {
+      "title": "Morning, part 1 — What Firefly is, and what it costs you",
+      "summary": "The Firefly web application, the current models, plan differences and generative credits, with your first controlled generations.",
+      "topics": [
+        {
+          "title": "The Firefly web application: workspace, history and saved work",
+          "duration_min": 25
+        },
+        {
+          "title": "The current model list, what each model is built for, and how output differs between them",
+          "duration_min": 20
+        },
+        {
+          "title": "Generative credits: how they are consumed, what your plan includes and how to check the balance",
+          "duration_min": 15
+        },
+        {
+          "title": "First generations: reading a result critically instead of accepting the first one",
+          "duration_min": 15
+        }
+      ]
+    },
+    {
+      "title": "Morning, part 2 — Prompting as a discipline",
+      "summary": "Writing prompts that describe subject, lighting, lens, material and composition, and iterating on purpose rather than at random.",
+      "topics": [
+        {
+          "title": "Prompt structure: subject, action, setting, lighting, lens, material, mood",
+          "duration_min": 30
+        },
+        {
+          "title": "Composition control: aspect ratio, negative space for a headline, camera angle and crop",
+          "duration_min": 20
+        },
+        {
+          "title": "Changing one variable at a time, and keeping an iteration log you can reproduce from",
+          "duration_min": 15
+        },
+        {
+          "title": "Building a variation sheet a client can choose from",
+          "duration_min": 20
+        }
+      ]
+    },
+    {
+      "title": "Afternoon, part 1 — Reference-driven and consistent work",
+      "summary": "Structure and style reference, and holding a single look across a campaign set of six images.",
+      "topics": [
+        {
+          "title": "Structure reference: matching the layout and geometry of an existing image",
+          "duration_min": 20
+        },
+        {
+          "title": "Style reference: matching a supplied brand image, and mixing reference strength",
+          "duration_min": 25
+        },
+        {
+          "title": "Exercise: six images that hold one look across a campaign set",
+          "duration_min": 25
+        },
+        {
+          "title": "Generative fill and expand in Firefly: recropping a supplied photograph",
+          "duration_min": 15
+        }
+      ]
+    },
+    {
+      "title": "Afternoon, part 2 — Type, vector and brand assets",
+      "summary": "Text effects, generated vectors and generative recolour, then finishing the work properly in Illustrator.",
+      "topics": [
+        {
+          "title": "Text effects for a campaign headline, and placing the result in a layout",
+          "duration_min": 20
+        },
+        {
+          "title": "Generating vector artwork and opening it as editable paths in Illustrator",
+          "duration_min": 15
+        },
+        {
+          "title": "Generative recolour: one icon set into three brand palettes",
+          "duration_min": 15
+        }
+      ]
+    },
+    {
+      "title": "Afternoon, part 3 — Failure modes, rights and sign-off",
+      "summary": "Recognising when to stop generating and start correcting, and the disclosure question clients ask.",
+      "topics": [
+        {
+          "title": "Common failure modes: hands, text in image, perspective, repeated texture, print-size softness",
+          "duration_min": 15
+        },
+        {
+          "title": "Knowing when to finish the job by hand in Photoshop instead of regenerating",
+          "duration_min": 10
+        },
+        {
+          "title": "Content Credentials: what provenance travels with the file and how to inspect it",
+          "duration_min": 15
+        },
+        {
+          "title": "Licensing and indemnification: checking your own subscription, and drafting a one-page position on disclosure and sign-off",
+          "duration_min": 10
+        },
+        {
+          "title": "Exam objectives review and a timed practice task",
+          "duration_min": 15
+        }
+      ]
+    }
+  ],
+  "faqs": [
+    {
+      "question": "Do I need my own laptop?",
+      "answer": "Yes, for live online and for the classroom in Colombo, so the prompt library and the files you build stay with you. Firefly runs in a browser, so the machine does not need to be powerful, but you do need a stable connection because every generation is a round trip to Adobe's servers. Illustrator is used for two short afternoon exercises."
+    },
+    {
+      "question": "Is the software included, and do I need to buy generative credits?",
+      "answer": "The fee covers the training, not an Adobe subscription. You need an Adobe account signed in before the class. Firefly has a free tier with a limited monthly credit allowance, and paid Creative Cloud and Firefly plans include more. We send a setup note with the joining instructions telling you what to check, because a class of exercises will use credits and you do not want to run out at midday."
+    },
+    {
+      "question": "Do I need Photoshop or Illustrator as well?",
+      "answer": "Firefly itself runs in the browser and most of the day needs nothing else. Two afternoon exercises open generated vector artwork in Illustrator and one shows finishing a generated image in Photoshop. If you do not have those applications, you can watch those segments and complete the rest, or use Adobe's free trial for the day."
+    },
+    {
+      "question": "Can I use images generated in this class in commercial work?",
+      "answer": "That depends on your licence and your client's terms, and the final module shows you where to check both rather than giving a blanket answer. Adobe states that Firefly models are trained on Adobe Stock and openly licensed or public domain content, and offers indemnification on some business plans. Your own subscription tier, your client contract and any advertising or broadcast rules still apply. This is training, not legal advice."
+    },
+    {
+      "question": "Is there really an Adobe certification for Firefly?",
+      "answer": "Yes. Adobe Certified Professional certifications are delivered through Certiport at authorised test centres, and the current list includes an Adobe Firefly exam alongside Photoshop, Illustrator, InDesign, Premiere Pro, After Effects, Animate, Dreamweaver, Acrobat Pro and Adobe Express. This course is built against the published domains for the Firefly exam and closes with a timed practice task. The exam voucher is bought separately and we cannot guarantee a pass."
+    },
+    {
+      "question": "The tools change every few months. Will this be out of date?",
+      "answer": "The specific buttons will move and the model list will grow. The prompting method, the reference workflow, the failure modes and the rights questions do not change at that pace, and that is most of the day. The class is taught on what is live on the date you attend, and your recording is the version you sat, so check the current release notes before relying on a detail from an older recording."
+    },
+    {
+      "question": "Do you issue a certificate, and can my employer be invoiced?",
+      "answer": "You receive a MyLearnPlus certificate of completion recording the title, the hours and the date; it is a record of training rather than an Adobe credential. We invoice organisations against a purchase order, in LKR for Sri Lankan companies and in USD internationally. Groups of five or more are usually better served by a private class run on your own brand material."
+    }
+  ],
+  "related": [
+    "photoshop-generative-ai",
+    "adobe-express-teams",
+    "illustrator-level-1"
+  ],
+  "seo": {
+    "title": "Adobe Firefly Course for Creatives | MyLearnPlus",
+    "description": "One-day Adobe Firefly training, live online or in Colombo. Prompting, style reference, vector and text effects, rights and ACP Firefly exam practice.",
+    "keywords": "adobe firefly course, firefly training, generative ai for designers, adobe certified professional firefly, ai image generation course, firefly course sri lanka, prompt writing for designers"
+  }
+}

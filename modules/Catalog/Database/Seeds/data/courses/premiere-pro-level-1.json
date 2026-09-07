@@ -1,0 +1,222 @@
+{
+  "slug": "premiere-pro-level-1",
+  "pillar": "adobe",
+  "category": "premiere-pro",
+  "title": "Premiere Pro Level 1",
+  "subtitle": "For newcomers to editing. Leave with a finished two-minute film you cut yourself.",
+  "summary": "Two days of Premiere Pro for beginners. Cut a two-minute film from supplied rushes, add titles and captions, mix the sound and export for the web.",
+  "description_html": "<p>Most people who open Premiere Pro for the first time can get two clips onto a timeline within ten minutes and then spend three months never getting any faster. The difference between that and a working editor is not talent. It is a small number of habits: organising media before you touch the timeline, trimming with the keyboard rather than the mouse, cutting on sound rather than on picture, and knowing which export setting to use without guessing.</p><p>Over two days you cut a two-minute corporate film from a supplied set of rushes: interview footage, cutaways, a music bed and a logo. Day one is structure and the edit itself. You set up a project that will still make sense in a year, ingest footage and create proxies so that large files behave on a laptop, then build a rough assembly and refine it with the four trim tools. The afternoon is spent on the part that actually makes an edit feel professional, which is pacing an interview with J cuts and L cuts and cutting away at the right moment.</p><p>Day two adds everything around the picture. You bring dialogue to a consistent level with the Essential Sound panel, lay music under it and duck it properly, build lower thirds in the Essential Graphics panel, and generate captions with Speech to Text before editing them by hand. The final session covers colour with Lumetri, matching two cameras using the scopes, and export: which codec, which preset, and how to queue jobs in Media Encoder rather than tying up your machine.</p><p>The syllabus maps to the published exam objectives for the <strong>Adobe Certified Professional in Adobe Premiere Pro</strong>, which is delivered through Certiport. We prepare you for the exam. We do not award the certification, and no course can guarantee a pass. If you go on to add the After Effects certification, Adobe awards the Video Design Specialty Credential for the pair.</p><p>Editing and motion graphics are separate crafts that share a timeline, so people often take this alongside <em>After Effects Level 1</em>: one course teaches you to assemble a film, the other teaches you to build the things that move on top of it.</p>",
+  "level": 1,
+  "duration_hours": 12,
+  "duration_days": 2,
+  "software_version": "Creative Cloud 2026",
+  "certification_alignment": "Prepares for the Adobe Certified Professional in Adobe Premiere Pro exam",
+  "delivery_modes": [
+    "LIVE_ONLINE",
+    "CLASSROOM",
+    "SELF_PACED",
+    "PRIVATE"
+  ],
+  "default_mode": "LIVE_ONLINE",
+  "price_band": "2day",
+  "outcomes": [
+    "Set up a Premiere Pro project with bins, scratch disks and a naming convention that still makes sense months later",
+    "Ingest footage and create proxies so that large files edit smoothly on a laptop",
+    "Choose sequence settings that match your footage, and understand frame rate and resolution well enough to explain them",
+    "Build a rough assembly from rushes using the source monitor and three-point editing",
+    "Trim with ripple, roll, slip and slide, and know which of the four each situation needs",
+    "Pace an interview using J cuts and L cuts, markers and sub-clips",
+    "Level dialogue with the Essential Sound panel, then lay a music bed under it and duck it against speech",
+    "Build titles and lower thirds in the Essential Graphics panel using a motion graphics template",
+    "Generate captions with Speech to Text, correct them, and export either burnt in or as a sidecar file",
+    "Correct and match shots with Lumetri and the scopes, then export a finished two-minute film through Media Encoder"
+  ],
+  "prerequisites": [
+    "No prior experience with Premiere Pro or with video editing is needed.",
+    "You should be comfortable with your own computer: saving files, finding folders and managing an external drive.",
+    "A machine that can handle video editing matters more here than in other courses, and we send Adobe's published system requirements and a setup check about a week before the class."
+  ],
+  "audiences": [
+    "Marketing and communications staff producing video in-house rather than through an agency",
+    "Social media and content producers who are editing on a phone app and have hit its limits",
+    "Journalists, trainers and NGO communications officers cutting interview-led films",
+    "Photographers and designers adding video to what they already offer clients",
+    "Students and career changers who want a first professional editing skill"
+  ],
+  "includes": [
+    {
+      "text": "Class recording, available for 12 months",
+      "icon": "video"
+    },
+    {
+      "text": "Exercise media: interview rushes, cutaways, a music bed and the finished sequence, yours to keep",
+      "icon": "download"
+    },
+    {
+      "text": "Course workbook covering every step demonstrated in class",
+      "icon": "book"
+    },
+    {
+      "text": "Practice questions written against the Adobe Certified Professional exam domains",
+      "icon": "clipboard"
+    },
+    {
+      "text": "MyLearnPlus certificate of completion",
+      "icon": "certificate"
+    },
+    {
+      "text": "Instructor email support after the class for questions on the exercises",
+      "icon": "support"
+    },
+    {
+      "text": "One free repeat of the same live class, terms shown on the booking page",
+      "icon": "refresh"
+    }
+  ],
+  "curriculum": [
+    {
+      "title": "Day 1, Morning — Projects, media and the first assembly",
+      "summary": "Get the media under control, then put the first version of the film on a timeline.",
+      "topics": [
+        {
+          "title": "How an edit is organised, and where Premiere sits next to After Effects and Audition",
+          "duration_min": 20
+        },
+        {
+          "title": "Starting a project: scratch disks, bins and a naming convention that survives a year",
+          "duration_min": 35
+        },
+        {
+          "title": "Ingesting footage and creating proxies, and why 4K on a laptop needs them",
+          "duration_min": 35
+        },
+        {
+          "title": "Sequence settings, frame rate and resolution, and matching them to your footage",
+          "duration_min": 30
+        },
+        {
+          "title": "Source monitor, in and out points, and a first rough assembly of the interview",
+          "duration_min": 60
+        }
+      ]
+    },
+    {
+      "title": "Day 1, Afternoon — Trimming and telling the story",
+      "summary": "Turn a rough assembly into an edit that holds attention, using the keyboard.",
+      "topics": [
+        {
+          "title": "The four trim tools: ripple, roll, slip and slide, and when each one is right",
+          "duration_min": 50
+        },
+        {
+          "title": "Three-point editing, insert and overwrite, and keyboard-driven editing",
+          "duration_min": 40
+        },
+        {
+          "title": "Cutting to dialogue: J cuts, L cuts and pacing an interview",
+          "duration_min": 50
+        },
+        {
+          "title": "Markers, sub-clips and organising a long day of rushes",
+          "duration_min": 20
+        },
+        {
+          "title": "Transitions used sparingly, and why most cuts should stay straight",
+          "duration_min": 20
+        }
+      ]
+    },
+    {
+      "title": "Day 2, Morning — Sound, titles and captions",
+      "summary": "Make the film audible and readable, which is most of what an audience notices.",
+      "topics": [
+        {
+          "title": "Audio levels and the Essential Sound panel: getting dialogue consistent",
+          "duration_min": 45
+        },
+        {
+          "title": "Music beds, fades and ducking music under speech",
+          "duration_min": 30
+        },
+        {
+          "title": "Titles and lower thirds in the Essential Graphics panel",
+          "duration_min": 45
+        },
+        {
+          "title": "Motion graphics templates and responsive design for text",
+          "duration_min": 30
+        },
+        {
+          "title": "Speech to Text captions: generating, correcting, styling and exporting them",
+          "duration_min": 30
+        }
+      ]
+    },
+    {
+      "title": "Day 2, Afternoon — Colour, finishing and delivery",
+      "summary": "Correct the picture, reframe for other platforms, and export the finished film properly.",
+      "topics": [
+        {
+          "title": "Lumetri basics: exposure, white balance and contrast on a single shot",
+          "duration_min": 40
+        },
+        {
+          "title": "Matching two cameras in the same scene, reading the waveform and vectorscope",
+          "duration_min": 35
+        },
+        {
+          "title": "Speed changes, freeze frames and reframing a landscape edit for vertical",
+          "duration_min": 30
+        },
+        {
+          "title": "Export: H.264 for the web, presets, Media Encoder and queueing overnight",
+          "duration_min": 45
+        },
+        {
+          "title": "Archiving a finished job and what to hand over to a client",
+          "duration_min": 30
+        }
+      ]
+    }
+  ],
+  "faqs": [
+    {
+      "question": "What kind of computer do I need for a video course?",
+      "answer": "More than for a Photoshop class. Video editing is limited by memory, disk speed and the graphics card, and a machine with 8GB of memory and a full hard drive will make the two days frustrating. We send Adobe's published system requirements and a setup check about a week before the class, and we teach proxy workflows on day one precisely because they let a modest laptop cut 4K footage comfortably. Leave around 40GB of free disk space for the exercise media and cache files."
+    },
+    {
+      "question": "Is the Premiere Pro software included in the price?",
+      "answer": "No. Premiere Pro is a subscription from Adobe and we do not resell licences. If you do not have one, Adobe offers a free trial that covers the two days, and your employer may already hold licences you can be added to. Classroom seats in Colombo come with the software installed on a machine built for editing."
+    },
+    {
+      "question": "Do I need to bring my own footage?",
+      "answer": "No. A full set of rushes is supplied and is yours to keep: interview footage, cutaways, a music bed and a logo, all cleared for use in class and in your portfolio. Every exercise is built around that material so nobody is held up by a card that will not import. If you have footage of your own you are welcome to try the export and captioning exercises on it once you have finished the supplied edit."
+    },
+    {
+      "question": "What happens if I miss a day?",
+      "answer": "Every live session is recorded and the recording stays available for 12 months, so you can catch up in your own time. If you would rather sit the session again live you can join that half day with a later cohort at no cost, subject to seats, and your free repeat of the full course still stands."
+    },
+    {
+      "question": "Do you issue a certificate?",
+      "answer": "Yes. You receive a MyLearnPlus certificate of completion, issued by Livezen Technologies, naming the course, the version of Premiere Pro taught and the hours completed. That is a record of training rather than an Adobe qualification, which is a separate exam."
+    },
+    {
+      "question": "Does this course include the Adobe Certified Professional exam?",
+      "answer": "The exam fee is not included. The syllabus covers the published objectives for the Adobe Certified Professional in Adobe Premiere Pro exam and you receive practice questions written against those domains, but the exam itself is booked and sat through a Certiport testing centre, and we cannot guarantee a pass. Completing both the Premiere Pro and the After Effects professional certifications earns the Adobe Video Design Specialty Credential."
+    },
+    {
+      "question": "Can my employer be invoiced, and can we pay in rupees?",
+      "answer": "Yes. Organisations in Sri Lanka are invoiced in LKR and organisations elsewhere in USD, and we can issue a pro forma invoice against your purchase order before the class. For a team of four or more, private delivery is usually better value and lets us rebuild the exercise around your own footage, your brand template and the platforms you actually publish to."
+    }
+  ],
+  "related": [
+    "premiere-pro-finishing",
+    "after-effects-level-1",
+    "photoshop-level-1"
+  ],
+  "seo": {
+    "title": "Adobe Premiere Pro Level 1 Training Course | MyLearnPlus",
+    "description": "Two-day Premiere Pro training for beginners. Cut a two-minute film from supplied rushes, add titles, captions and colour, then export. Online or Colombo.",
+    "keywords": "premiere pro training, premiere pro course sri lanka, video editing course colombo, premiere pro level 1, adobe certified professional premiere pro, learn video editing, premiere pro beginners class"
+  }
+}

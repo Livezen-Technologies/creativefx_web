@@ -1,0 +1,96 @@
+{
+  "slug": "ai-for-business-certificate",
+  "type": "certificate",
+  "title": "AI for Business Certificate",
+  "subtitle": "From first prompt to a working automation and a governance register your board can read",
+  "summary": "Four courses over five days: understand the tools, use them on real work, automate a process end to end, and write the rules your organisation runs on.",
+  "description_html": "<p>Organisations tend to arrive at AI in the wrong order. Somebody runs a demonstration, a few teams start pasting company documents into whatever assistant they signed up for, and eighteen months later there is no register of what is being used, no agreed rule on what may be typed in, and one automation that nobody can maintain because the person who built it has left. This programme runs the sequence properly: understand, use, automate, govern.</p><p><strong>AI Foundations: AI for Everyone</strong> starts with what these tools actually are and why fluent text is not the same as correct text, and finishes with a personal playbook of five prompts for your own recurring tasks. <strong>AI Assistants at Work</strong> puts that to work across ChatGPT, Claude, Gemini and Microsoft 365 Copilot on real documents, spreadsheets and email from your own week, including which assistant to reach for and what each one can and cannot see. <strong>AI Automation and Agents</strong> takes a process you brought with you, maps it, and builds it in Zapier, Make and n8n, with model steps that return validated structured output, retrieval over your own documents, error branches, a cost model and a runbook. <strong>AI Governance and Responsible Use</strong> closes the loop with the register, the risk tiers, the human oversight step, the vendor due diligence pack and the incident procedure.</p><p>The programme is built to be taken by a group from the same organisation. When it is, the deliverables line up: the playbooks come from real tasks, the automation is a process you actually run, and the governance register at the end lists the tools your own people are already using rather than a worked example. That register, the runbook and the disclosure standard are the artefacts you keep.</p><p>Thirty hours over five days, live online in your own timezone or in the classroom in Colombo, taken in any order within twelve months of your first class, although the sequence above is strongly recommended. No coding is required at any point; two optional steps in the automation course use a short JavaScript snippet that is supplied and explained. The governance day covers the NIST AI Risk Management Framework, ISO/IEC 42001, the EU AI Act risk tiers and Sri Lanka's Personal Data Protection Act, and nothing in it is legal advice. Pricing is in LKR for learners in Sri Lanka and USD elsewhere, and employers can be invoiced against a purchase order.</p>",
+  "courses": [
+    "ai-for-everyone",
+    "ai-assistants-at-work",
+    "ai-automation-and-agents",
+    "ai-governance-responsible-use"
+  ],
+  "required": [
+    "ai-assistants-at-work",
+    "ai-automation-and-agents",
+    "ai-governance-responsible-use"
+  ],
+  "outcomes": [
+    "Explain in plain language what an AI assistant does, why it can state something untrue with complete confidence, and where the four common failure modes show up in your own work.",
+    "Choose between ChatGPT, Claude, Gemini and Microsoft 365 Copilot for a given task, and say what each one can reach inside your organisation.",
+    "Ground answers in your own documents and require a quoted source, so output can be checked rather than trusted.",
+    "Map a real process from your organisation, decide what to automate, what to keep manual and what to stop doing, and cost the result in platform operations and model tokens.",
+    "Build and hand over one working automation with error branches, retries, alerting and a runbook a colleague can maintain it from.",
+    "Build a register of the AI systems your organisation uses, with an owner, a purpose, the data involved and an approval status for each.",
+    "Classify each use by risk and data sensitivity, set a proportionate control level, and design a human oversight step the reviewer can genuinely perform.",
+    "Write the documents the organisation runs on: an acceptable use rule, a disclosure standard, a vendor due diligence pack and an incident procedure."
+  ],
+  "includes": [
+    {
+      "text": "All four courses, 30 hours of instructor-led training over five days",
+      "icon": "calendar"
+    },
+    {
+      "text": "Prompt playbook, automation runbook and AI register templates, in editable form",
+      "icon": "download"
+    },
+    {
+      "text": "The governance pack: risk tiering table, acceptable use rule, disclosure standard, vendor questionnaire and incident procedure",
+      "icon": "shield"
+    },
+    {
+      "text": "Recordings of every class in the programme, available for 12 months",
+      "icon": "video"
+    },
+    {
+      "text": "Course workbooks and worked example workflows for Zapier, Make and n8n",
+      "icon": "book"
+    },
+    {
+      "text": "Instructor email support after the classes for questions on your own automation",
+      "icon": "support"
+    },
+    {
+      "text": "MyLearnPlus AI for Business Certificate on completion of all four courses",
+      "icon": "certificate"
+    }
+  ],
+  "faqs": [
+    {
+      "question": "Do I need a technical background or any coding?",
+      "answer": "No. Nothing in the programme requires programming. The automation course is built in Zapier, Make and n8n, which are visual tools, and the two optional steps that use a short JavaScript snippet are supplied and explained line by line. You do need to be a confident user of business software: spreadsheets, a CRM or database, and web applications with logins."
+    },
+    {
+      "question": "Can I swap one of the courses?",
+      "answer": "AI Assistants at Work, AI Automation and Agents and AI Governance and Responsible Use are fixed. The first place is AI Foundations: AI for Everyone by default and can be swapped for AI for Managers at the same price if you are buying for people who will approve and fund AI work rather than do it, or for AI for Marketing at a price difference if the team is a marketing team."
+    },
+    {
+      "question": "Should we send a mixed group or one team?",
+      "answer": "One organisation, mixed roles, is the best combination: somebody who does the work, somebody who runs the process and somebody who has to sign it off. The register, the runbook and the acceptable use rule are all documents an individual cannot finish alone. For five or more people we can run the whole programme privately on your own processes and your own tool list."
+    },
+    {
+      "question": "What do we need to bring, and will we use our real company data?",
+      "answer": "Bring two or three tasks you repeat every week, one real process for the automation course, and a list of the AI tools your organisation currently uses. Use redacted or sample data rather than live customer records, especially in the automation exercises, and the courses cover exactly how to make that judgement for yourself afterwards."
+    },
+    {
+      "question": "Do we need paid subscriptions to the AI tools?",
+      "answer": "The fee covers the training, not the tools. Most of the assistant work can be done on free tiers, and we say so where a paid tier changes what you see. The automation course uses free plans of Zapier, Make and n8n, which are enough for everything built in class, and the model steps need an API key with a small amount of credit. Setup instructions and a cost estimate come with your booking."
+    },
+    {
+      "question": "Is the governance day legal advice, and does it cover Sri Lankan law?",
+      "answer": "It is not legal advice. The day covers the NIST AI Risk Management Framework, ISO/IEC 42001, where the EU AI Act risk tiers apply to what you do, and lawful basis, retention and cross-border transfer under Sri Lanka's Personal Data Protection Act. You leave with a register and a control set to take to your own counsel or compliance function, not a legal opinion."
+    },
+    {
+      "question": "Do you issue a certificate, and can we be invoiced?",
+      "answer": "You receive a MyLearnPlus AI for Business Certificate recording the four courses, the hours and the date. It is a record of training we delivered, not an industry accreditation. We invoice organisations against a purchase order, in LKR for Sri Lankan companies and in USD internationally, and will hold seats while the invoice is processed."
+    }
+  ],
+  "price_band": "certificate",
+  "saving_note": "Booked as a programme, the AI for Business Certificate costs {saving} less than buying AI for Everyone, AI Assistants at Work, AI Automation and Agents and AI Governance and Responsible Use separately.",
+  "seo": {
+    "title": "AI for Business Certificate Course | MyLearnPlus",
+    "description": "Five days of practical AI training for organisations, live online or in Colombo: assistants, automation with n8n and Make, and governance you can defend.",
+    "keywords": "ai for business, ai training for companies, ai automation course, ai governance training, corporate ai training sri lanka, ai course colombo, chatgpt copilot training"
+  }
+}

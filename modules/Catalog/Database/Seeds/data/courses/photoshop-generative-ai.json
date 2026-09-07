@@ -1,0 +1,125 @@
+{
+  "slug": "photoshop-generative-ai",
+  "pillar": "adobe",
+  "category": "photoshop",
+  "title": "Photoshop AI and Generative Fill",
+  "subtitle": "A working day on Generative Fill and Firefly features for people who ship real artwork",
+  "summary": "One day on Photoshop's generative tools: prompting, expanding, removing, background work, fixing artefacts, and the rights and disclosure questions.",
+  "description_html": "<p>Generative Fill demonstrates beautifully and then disappoints on the job. The first result looks convincing on screen, and at print size the texture is soft, the perspective is slightly wrong and the client asks why the shadow falls the other way. This course is about the difference between a generated result and a delivered one.</p><p>You start with what the tools actually do. Generative Fill, Generative Expand, Generate Background, Generate Similar and the Remove tool each behave differently, and each fails differently. You learn to recognise the failure modes early, so you stop regenerating and start correcting. From there the day is mostly prompting practice: describing subject, lighting, lens and material rather than typing a noun, using the shape of your selection as part of the instruction, working through variations, and conditioning a generation on a reference image so the result matches the rest of a campaign.</p><p>The afternoon is production work. You extend a photograph to a new aspect ratio so one shoot covers a print advert and a vertical social post, remove cables, reflections and bystanders from a location shot, build a background for a product photographed on a messy desk, and then repair what the model got wrong by hand: matching grain, rebuilding texture and cleaning up edges with the ordinary Photoshop skills that still decide whether the file passes.</p><p>The last module covers the part clients ask about. You inspect the <strong>Content Credentials</strong> Adobe attaches to generative output, see what provenance information travels with a file, and work through a simple internal position on disclosure, client sign-off and what to check in your own licence before generative work goes into paid advertising. Adobe states that its Firefly models are trained on Adobe Stock and openly licensed or public domain content, and offers indemnification on some business plans; the course shows you where to verify that for your own subscription rather than taking it on trust.</p><p>The class runs live online or in the classroom in Colombo, with pricing in <strong>LKR</strong> for Sri Lanka and <strong>USD</strong> internationally. You keep the exercise files, the prompt library built during the day and the class recording for twelve months.</p>",
+  "level": 2,
+  "duration_hours": 6,
+  "duration_days": 1,
+  "software_version": "Creative Cloud 2026",
+  "certification_alignment": "",
+  "delivery_modes": ["LIVE_ONLINE", "CLASSROOM", "SELF_PACED", "PRIVATE"],
+  "default_mode": "LIVE_ONLINE",
+  "price_band": "1day",
+  "outcomes": [
+    "Choose correctly between Generative Fill, Generative Expand, Generate Background and the Remove tool for a given job.",
+    "Write prompts that specify subject, lighting, lens, material and framing instead of a single noun.",
+    "Shape a selection deliberately so the marquee itself guides what the model generates.",
+    "Generate, compare and manage variations, keeping the generative layer stack tidy and editable.",
+    "Condition a generation on a reference image so the result matches an existing campaign style.",
+    "Extend a photograph to a new aspect ratio for both a print advert and a vertical social post.",
+    "Remove cables, reflections and unwanted people from a location shot without leaving a smeared patch.",
+    "Build a clean product background and correct the generated result for grain, texture and edge quality.",
+    "Inspect the Content Credentials attached to a generated file and explain what provenance data it carries.",
+    "Draft a short internal position on disclosure, client sign-off and licence checks for AI-assisted images."
+  ],
+  "prerequisites": [
+    "Photoshop Level 1 or equivalent: you should be comfortable with layers, selections and layer masks.",
+    "Photoshop must be a recent release, since the generative features are updated frequently.",
+    "No experience with AI image tools is needed."
+  ],
+  "audiences": [
+    "Designers and artworkers asked to produce more sizes and variants from the same photography",
+    "Marketing and social media staff who resize and adapt campaign images every week",
+    "Photographers and retouchers deciding where generative tools fit in a paid workflow",
+    "E-commerce teams producing consistent product backgrounds at volume",
+    "Studio leads who need a defensible internal policy on AI-assisted imagery"
+  ],
+  "includes": [
+    {"text": "Class recording, available for 12 months", "icon": "video"},
+    {"text": "Exercise images, including the awkward files used for artefact repair", "icon": "download"},
+    {"text": "Prompt library built during the day, structured by job type", "icon": "book"},
+    {"text": "Checklist for reviewing generative work before it goes to a client", "icon": "clipboard"},
+    {"text": "MyLearnPlus certificate of completion", "icon": "certificate"},
+    {"text": "Instructor email support after the class for questions on the exercises", "icon": "support"}
+  ],
+  "curriculum": [
+    {
+      "title": "Module 1 — What the generative tools actually do",
+      "summary": "The feature set in the current release, the model behind it, and how each tool fails.",
+      "topics": [
+        {"title": "Generative Fill, Generative Expand, Generate Background and the Remove tool", "duration_min": 25},
+        {"title": "How Adobe describes Firefly training data, and what that means for commercial work", "duration_min": 25},
+        {"title": "Recognising a bad generation early: perspective, texture, hands, type and repetition", "duration_min": 25}
+      ]
+    },
+    {
+      "title": "Module 2 — Prompting inside Photoshop",
+      "summary": "Getting a usable result in two or three attempts rather than twenty.",
+      "topics": [
+        {"title": "Prompt structure: subject, lighting, lens, material and framing", "duration_min": 35},
+        {"title": "Selection shape as instruction: how the marquee changes the result", "duration_min": 25},
+        {"title": "Variations, ratings and keeping the generative layer stack editable", "duration_min": 25},
+        {"title": "Reference images and matching an existing campaign style", "duration_min": 20}
+      ]
+    },
+    {
+      "title": "Module 3 — Production work with generative tools",
+      "summary": "Four jobs that come up weekly, taken from prompt to a file that would pass review.",
+      "topics": [
+        {"title": "Extending a photograph to print and vertical social aspect ratios", "duration_min": 30},
+        {"title": "Removing cables, reflections and bystanders from a location shot", "duration_min": 25},
+        {"title": "Backgrounds and set extensions for product photography", "duration_min": 30},
+        {"title": "Repairing artefacts by hand: grain, texture, edges and colour match", "duration_min": 20}
+      ]
+    },
+    {
+      "title": "Module 4 — Rights, disclosure and handover",
+      "summary": "The questions a client or a legal team will ask, and how to answer them with the file in front of you.",
+      "topics": [
+        {"title": "Content Credentials: inspecting what provenance data travels with the file", "duration_min": 25},
+        {"title": "Disclosure, client sign-off and checking your own licence terms", "duration_min": 25},
+        {"title": "File naming, versioning and handing generative work to a print or web team", "duration_min": 25}
+      ]
+    }
+  ],
+  "faqs": [
+    {
+      "question": "Do I need my own laptop, and is Photoshop included?",
+      "answer": "You work on your own machine, whether you join live online or come to the classroom in Colombo, so the prompt library and presets you build stay with you. Photoshop is not included in the fee. You need a recent release installed and signed in before the first session, since the generative features change with each update."
+    },
+    {
+      "question": "Do the generative features cost extra to use?",
+      "answer": "Generative features on Creative Cloud plans draw on Adobe's generative credit allowance, and what you get depends on your plan. Check your subscription before the class so you are not stopped mid-exercise. We send a setup note with the joining instructions explaining what to look for and how to check your remaining allowance."
+    },
+    {
+      "question": "Can I use generated images in commercial work?",
+      "answer": "That depends on your licence and your client's terms, and the course shows you where to check both rather than giving a blanket answer. Adobe states that Firefly models are trained on Adobe Stock and openly licensed or public domain content and offers indemnification on some business plans. Your own subscription, your client contract and any broadcast or publishing rules still apply, which is what the final module works through."
+    },
+    {
+      "question": "Will this replace learning to retouch properly?",
+      "answer": "No, and the day is explicit about it. Generative results usually need manual repair for grain, texture and edges before they hold up at full size, which is ordinary Photoshop work. If your manual retouching is the weak point, take Photoshop Retouching and Compositing alongside this class."
+    },
+    {
+      "question": "Is there an Adobe certification for generative AI?",
+      "answer": "Adobe Certified Professional certifications are delivered through Certiport and include an Adobe Firefly exam, which is focused on Firefly itself rather than on Photoshop. This course is not exam preparation for it. You receive a MyLearnPlus certificate of completion, which is a record of training rather than an Adobe credential."
+    },
+    {
+      "question": "What if I miss the class?",
+      "answer": "The session is recorded and available to you for twelve months. If you would rather sit it live again, live bookings include one free repeat of the same class; the terms are shown on the booking page for each date. Because the tools change often, sitting a later run is a reasonable way to catch up with new features."
+    },
+    {
+      "question": "Can my employer be invoiced, and can you run this in-house?",
+      "answer": "Yes to both. We invoice organisations against a purchase order, in LKR for Sri Lankan companies and in USD internationally. Private runs use your own product shots and campaign formats, and the final module can be adapted to produce a draft AI usage policy for your team."
+    }
+  ],
+  "related": ["photoshop-level-1", "photoshop-retouching", "photoshop-level-2"],
+  "seo": {
+    "title": "Photoshop AI & Generative Fill Course | MyLearnPlus",
+    "description": "One-day Photoshop AI course: Generative Fill, Expand and Remove, prompt technique, background work, artefact repair and Content Credentials.",
+    "keywords": "photoshop generative fill course, photoshop ai training, generative expand, adobe firefly photoshop, ai image editing course, photoshop ai course sri lanka, photoshop training colombo"
+  }
+}

@@ -19,7 +19,7 @@ import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
-const src  = join(root, 'public/media/tshda/tshda-emblem.svg');
+const src  = join(root, 'public/media/learnplus/emblem.svg');
 const out  = join(root, 'public');
 
 // 32 and 48 for the browser tab, 180 for the Apple touch icon, 192 and 512 for

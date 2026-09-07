@@ -126,7 +126,16 @@ if (! function_exists('rich_text')) {
      */
     function rich_text($value, ?string $locale = null): string
     {
-        $text = is_array($value) ? t_field($value, $locale) : (string) $value;
+        // Always through t_field(), not only when the value is already an array.
+        //
+        // A translatable column arrives from the database as the JSON *string*
+        // `{"en":"<p>…"}`, not as a decoded array. Treating a string as
+        // finished text meant that JSON fell straight past the markup test
+        // below and came out through esc() — so a course description rendered
+        // as a visible wall of `{"en":"<p>Most people meet Photoshop…` on the
+        // page. t_field() resolves both shapes, and passes plain prose through
+        // untouched, so there is no case where this is the wrong thing to do.
+        $text = t_field($value, $locale);
         if (trim($text) === '') {
             return '';
         }
@@ -193,6 +202,24 @@ if (! function_exists('translatable_locales')) {
         $default = config('App')->defaultLocale;
 
         return array_values(array_filter($all, static fn ($l) => $l !== $default));
+    }
+}
+
+if (! function_exists('supported_locales_codes')) {
+    /**
+     * Just the codes, in configured order.
+     *
+     * supported_locales() returns rich rows for the switcher; a template that
+     * only needs to iterate the languages was writing ['en','si','ta'] by hand,
+     * which is a second list to forget when a language is added or dropped —
+     * and it was forgotten, leaving a dialog offering a language the router
+     * would 404.
+     *
+     * @return list<string>
+     */
+    function supported_locales_codes(): array
+    {
+        return config('App')->supportedLocales;
     }
 }
 
@@ -289,22 +316,22 @@ if (! defined('DEFAULT_NAV')) {
      * The menu the site falls back to when the database cannot answer.
      *
      * Not a second copy of the seeded rows so much as the floor beneath them: a
-     * failed query, a checkout before migrations have run, or a database that is
+     * failed query, a request before migrations have run, or a database that is
      * briefly unreachable should cost a visitor a stale menu, not a header with
-     * nothing in it. It was two copies once — the header carried the hotel's
-     * pages while the footer carried the manufacturer's, so the footer rendered
-     * five links reading "Site.nav.about" and pointing at 404s — and that is
-     * exactly what this constant exists to stop happening again.
+     * nothing in it.
+     *
+     * Every entry has to be a route that actually exists and a language key
+     * that actually resolves. It has been wrong on both counts before: after a
+     * rebrand it still listed the previous site's sections, so the fallback
+     * rendered five links reading "Site.nav.about" and pointing at 404s — on
+     * precisely the occasions when something was already going wrong.
      */
     define('DEFAULT_NAV', [
-        ['url' => 'about-us',     'label' => 'Site.nav.about'],
-        ['url' => 'services',     'label' => 'Site.nav.services'],
-        ['url' => 'media-centre', 'label' => 'Site.nav.media_centre'],
-        ['url' => 'statistics',   'label' => 'Site.nav.statistics'],
-        ['url' => 'downloads',    'label' => 'Site.nav.downloads'],
-        ['url' => 'vacancies',    'label' => 'Site.nav.vacancies'],
-        ['url' => 'directory',    'label' => 'Site.nav.directory'],
-        ['url' => 'contact',      'label' => 'Site.nav.contact'],
+        ['url' => 'courses',   'label' => 'Site.nav.courses'],
+        ['url' => 'schedule',  'label' => 'Site.nav.schedule'],
+        ['url' => 'corporate', 'label' => 'Site.home.corporate_heading'],
+        ['url' => 'blog',      'label' => 'Site.news.title'],
+        ['url' => 'contact',   'label' => 'Site.nav.contact'],
     ]);
 }
 

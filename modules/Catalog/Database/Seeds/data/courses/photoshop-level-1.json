@@ -1,0 +1,225 @@
+{
+  "slug": "photoshop-level-1",
+  "pillar": "adobe",
+  "category": "photoshop",
+  "title": "Photoshop Level 1",
+  "subtitle": "A hands-on start in Photoshop for people who need to edit and export images properly",
+  "summary": "Two days of hands-on Photoshop for beginners: layers, masks, retouching, type and export, with practice mapped to the Adobe Certified Professional exam.",
+  "description_html": "<p>Most people meet Photoshop by clicking around until something looks right, then rebuilding the same file three times because the first version was flattened. This course replaces that with a method. Over two days you learn the small set of habits professionals actually use: layers that stay editable, masks instead of the eraser, adjustment layers instead of baked-in changes, and an export step that produces the right file for the right destination the first time.</p><p>You work on real material throughout. You will cut a product out of a cluttered background and place it on a new backdrop, correct an under-exposed photograph with Levels and Curves, remove a distracting object from a street scene, set headline and body type for a simple poster, and export that poster twice: once as a print-ready file and once sized for social media. Every exercise file is yours to keep, so you can repeat the work after the class on your own images.</p><p>The course is taught by demonstration and practice in short cycles. The instructor builds a step, you build the same step, and the class moves on only when the room has it. Sessions run live online in your own timezone, or in the classroom in Colombo. Every booking includes the class recording for twelve months, so a step you half-followed on the day is there to watch again.</p><p>Content is mapped to the domains of the <strong>Adobe Certified Professional in Adobe Photoshop</strong> exam, which is delivered by Certiport at authorised test centres. The course prepares you for that exam and finishes with a timed practice task in the same shape as the real thing. MyLearnPlus does not award the Adobe credential and no course can guarantee a pass, but you will leave knowing which objectives you are solid on and which need another evening of practice.</p><p>Pricing is shown in <strong>LKR</strong> for learners in Sri Lanka and in <strong>USD</strong> for everyone else. Teams can be invoiced, and the same syllabus can be run privately for a single organisation.</p>",
+  "level": 1,
+  "duration_hours": 12,
+  "duration_days": 2,
+  "software_version": "Creative Cloud 2026",
+  "certification_alignment": "Prepares for the Adobe Certified Professional in Adobe Photoshop exam",
+  "delivery_modes": [
+    "LIVE_ONLINE",
+    "CLASSROOM",
+    "SELF_PACED",
+    "PRIVATE"
+  ],
+  "default_mode": "LIVE_ONLINE",
+  "price_band": "2day",
+  "outcomes": [
+    "Set up a Photoshop document with the correct resolution, colour mode and canvas size for either print or screen.",
+    "Build a layered file using groups, smart objects and adjustment layers so the original pixels are never overwritten.",
+    "Cut a product out of a cluttered background with Object Selection and the Select and Mask workspace, then place it on a new backdrop.",
+    "Paint and refine layer masks to blend two photographs together without deleting a single pixel.",
+    "Correct exposure, contrast and colour cast on an under-exposed photograph using Levels, Curves and Hue/Saturation.",
+    "Remove blemishes, cables and unwanted objects using the Healing Brush, Clone Stamp, Content-Aware Fill and the Remove tool.",
+    "Recover highlight and shadow detail in a raw file by applying Camera Raw as an editable smart filter.",
+    "Set headline and body type with proper character and paragraph settings for a single-page poster.",
+    "Export the same artwork twice: a print-ready file at full resolution and a web-sized JPEG or PNG at set pixel dimensions.",
+    "Complete a timed practice task written against the domains of the Adobe Certified Professional in Adobe Photoshop exam."
+  ],
+  "prerequisites": [
+    "No prior experience with Photoshop is needed.",
+    "You should be comfortable with your own computer: saving files, finding folders and switching between applications."
+  ],
+  "audiences": [
+    "Marketing and communications staff who are asked to prepare images for campaigns, social posts and presentations",
+    "Graphic design students and career changers building their first portfolio pieces",
+    "Small business owners and online sellers who photograph and edit their own products",
+    "Photographers moving from phone apps to a full desktop editor",
+    "Print and production staff who receive supplied artwork and need to check, correct and re-export it"
+  ],
+  "includes": [
+    {
+      "text": "Class recording, available for 12 months",
+      "icon": "video"
+    },
+    {
+      "text": "Exercise files and finished sample projects, yours to keep",
+      "icon": "download"
+    },
+    {
+      "text": "Course workbook covering every step demonstrated in class",
+      "icon": "book"
+    },
+    {
+      "text": "Practice questions written against the Adobe Certified Professional exam domains",
+      "icon": "clipboard"
+    },
+    {
+      "text": "MyLearnPlus certificate of completion",
+      "icon": "certificate"
+    },
+    {
+      "text": "Instructor email support after the class for questions on the exercises",
+      "icon": "support"
+    },
+    {
+      "text": "One free repeat of the same live class, terms shown on the booking page",
+      "icon": "refresh"
+    }
+  ],
+  "curriculum": [
+    {
+      "title": "Day 1, Morning — Getting around Photoshop",
+      "summary": "The interface, document setup and the layer habits that keep a file editable to the end of the job.",
+      "topics": [
+        {
+          "title": "Workspaces, panels, tool presets and saving your own layout",
+          "duration_min": 30
+        },
+        {
+          "title": "Opening files, new document setup, resolution and colour mode",
+          "duration_min": 40
+        },
+        {
+          "title": "Navigating, zooming and stepping back through the History panel",
+          "duration_min": 25
+        },
+        {
+          "title": "Layers: creating, reordering, grouping, naming and locking",
+          "duration_min": 45
+        },
+        {
+          "title": "Non-destructive habits: smart objects and adjustment layers",
+          "duration_min": 40
+        }
+      ]
+    },
+    {
+      "title": "Day 1, Afternoon — Selections and masks",
+      "summary": "Making accurate selections, turning them into masks, and cutting a product onto a new background.",
+      "topics": [
+        {
+          "title": "Marquee, Lasso, Quick Selection, Object Selection and Select Subject",
+          "duration_min": 40
+        },
+        {
+          "title": "Refining difficult edges in the Select and Mask workspace",
+          "duration_min": 40
+        },
+        {
+          "title": "Layer masks: painting in, painting out and checking your work",
+          "duration_min": 40
+        },
+        {
+          "title": "Pen tool basics and vector paths for hard-edged cut-outs",
+          "duration_min": 35
+        },
+        {
+          "title": "Exercise: cut a product from its background and place it on a new backdrop",
+          "duration_min": 25
+        }
+      ]
+    },
+    {
+      "title": "Day 2, Morning — Tone, colour and retouching",
+      "summary": "Fixing exposure and colour, then removing the things that should not be in the frame.",
+      "topics": [
+        {
+          "title": "Levels and Curves for exposure, contrast and black point",
+          "duration_min": 45
+        },
+        {
+          "title": "Hue/Saturation, Vibrance and correcting a colour cast",
+          "duration_min": 35
+        },
+        {
+          "title": "Spot Healing Brush, Healing Brush, Patch and Clone Stamp",
+          "duration_min": 40
+        },
+        {
+          "title": "Content-Aware Fill and the Remove tool on a street scene",
+          "duration_min": 30
+        },
+        {
+          "title": "Camera Raw as a smart filter: highlights, shadows and lens corrections",
+          "duration_min": 30
+        }
+      ]
+    },
+    {
+      "title": "Day 2, Afternoon — Type, layout and output",
+      "summary": "Setting type, finishing a poster and exporting the correct file for print and for screen.",
+      "topics": [
+        {
+          "title": "Type layers, character and paragraph settings, and readable headlines",
+          "duration_min": 35
+        },
+        {
+          "title": "Shapes, layer styles and assembling a simple poster layout",
+          "duration_min": 35
+        },
+        {
+          "title": "Cropping, straightening and canvas size for a set deliverable",
+          "duration_min": 25
+        },
+        {
+          "title": "Export As, Save for Web, and choosing between JPEG, PNG, TIFF and PDF",
+          "duration_min": 40
+        },
+        {
+          "title": "Colour settings, soft proofing and packaging files for a printer",
+          "duration_min": 25
+        },
+        {
+          "title": "Exam objectives review and a timed practice task",
+          "duration_min": 20
+        }
+      ]
+    }
+  ],
+  "faqs": [
+    {
+      "question": "Do I need my own laptop?",
+      "answer": "For live online classes, yes: you work on your own machine so that your presets, fonts and files stay with you after the course. For classroom sessions in Colombo we also recommend bringing your own laptop for the same reason. If you cannot bring one, tell us when you book and we will confirm what is available for your date."
+    },
+    {
+      "question": "Is the Photoshop software included in the price?",
+      "answer": "No. The course fee covers the training, not an Adobe licence. You need Photoshop running on your machine before day one, either through your own or your employer's Creative Cloud subscription or through Adobe's free trial. We send setup instructions when you book, and you can join the pre-class check if you would like help getting it installed."
+    },
+    {
+      "question": "What happens if I miss a day?",
+      "answer": "The recording of every session is available to you for twelve months, so you can catch up on the material you missed. If you would rather sit the day again live, every live booking includes one free repeat of the same class; the terms and the booking window are shown on the booking page for each date."
+    },
+    {
+      "question": "Do you issue a certificate?",
+      "answer": "Yes. You receive a MyLearnPlus certificate of completion, which records the course title, the hours and the date. This is a record of training, not an Adobe credential. The Adobe Certified Professional certification is a separate exam sat with Certiport."
+    },
+    {
+      "question": "Does this course include the Adobe Certified Professional exam?",
+      "answer": "No. Adobe Certified Professional exams for Photoshop are delivered through Certiport at authorised testing centres, and the exam voucher is bought separately. This course is built against the published exam domains and finishes with a timed practice task, so you go in knowing the interface and the vocabulary the exam uses. We cannot guarantee a pass."
+    },
+    {
+      "question": "Can my employer be invoiced?",
+      "answer": "Yes. We invoice organisations against a purchase order, in LKR for Sri Lankan companies and in USD internationally. Send us the billing details and the names of the people attending and we will hold the seats while the invoice is processed. Groups of five or more are usually better served by a private class on the same syllabus."
+    },
+    {
+      "question": "Is the course taught on Mac or Windows?",
+      "answer": "Both. Photoshop is effectively identical on the two platforms, the instructor calls out shortcuts for each, and the workbook lists Mac and Windows keys side by side. Work on the machine you use every day rather than switching for the class."
+    }
+  ],
+  "related": [
+    "photoshop-level-2",
+    "photoshop-generative-ai",
+    "photoshop-retouching"
+  ],
+  "seo": {
+    "title": "Photoshop Level 1 Training Course | MyLearnPlus",
+    "description": "Two-day beginner Photoshop course, live online or in Colombo. Layers, masking, retouching and export, with Adobe Certified Professional exam practice.",
+    "keywords": "photoshop course, photoshop training, photoshop level 1, beginner photoshop class, adobe certified professional photoshop, photoshop training sri lanka, photoshop course colombo"
+  }
+}

@@ -1,0 +1,132 @@
+{
+  "slug": "generative-ai-for-designers",
+  "pillar": "ai",
+  "category": "generative-ai-design",
+  "title": "Generative AI for Designers",
+  "subtitle": "Two days taking generated images all the way to artwork a client can sign off",
+  "summary": "Two days on generative image tools for working designers: art direction through prompts, repair and finishing, brand consistency, licensing and provenance.",
+  "description_html": "<p>A generated image is a starting point that looks like a finished one. It reads well on a phone, and then it goes into a layout at 300dpi and the texture falls apart, the hand has four knuckles, the logotype is nonsense and the perspective disagrees with the rest of the campaign. This course is about the distance between that first result and a file that survives a client review, a printer and a legal check.</p><p>Day one is direction. You start with enough of how image models behave in practice to work deliberately: what a prompt, a seed and a reference image each control, and why two runs of the same prompt differ. You compare Adobe Firefly, the generative features inside Photoshop, Midjourney and open models that run on your own machine, judging each on what it is actually good at rather than on which is fashionable. Licensing is treated as a design constraint, not a footnote: you go through what each vendor states about its training data and its indemnification, and you learn what to check in your own subscription and your client contract before generative work goes near paid advertising. The afternoon is art direction through language: describing subject, composition, lens, lighting and material rather than naming a style, controlling what stays out of the frame, using reference images for style and structure, and reading your own results critically enough to tell a fixable flaw from a dead end.</p><p>Day two is production, which is where most of the value is. You bring generations into Photoshop as an editable layered file, then repair what the model got wrong: hands, type, perspective, texture and grain, using ordinary retouching skills that still decide whether the file passes. You look at what upscaling really recovers and what it only smooths, vectorise a generated mark in Illustrator by redrawing rather than tracing, and bring a generated image into a brand palette and into CMYK without the colour shifting under your hands.</p><p>The final afternoon builds a system rather than a picture. You generate variants that hold together across a campaign, decide where generative work belongs in a studio process and where it quietly costs more time than it saves, and inspect the <strong>Content Credentials</strong> that travel with a file under the C2PA standard. You work through client disclosure, likeness and model releases, and the briefs a designer should decline. The two days close with a campaign set produced end to end and handed over with a written provenance note.</p><p>The class runs live online or in the classroom in Colombo, priced in <strong>LKR</strong> for Sri Lanka and in <strong>USD</strong> internationally. You keep the exercise files, the prompt log built across both days and the class recording for twelve months.</p>",
+  "level": 2,
+  "duration_hours": 12,
+  "duration_days": 2,
+  "software_version": "",
+  "certification_alignment": "",
+  "delivery_modes": ["LIVE_ONLINE", "CLASSROOM", "SELF_PACED", "PRIVATE"],
+  "default_mode": "LIVE_ONLINE",
+  "price_band": "2day",
+  "outcomes": [
+    "Explain what a prompt, a seed and a reference image each control, and why two runs differ.",
+    "Choose between Firefly, Photoshop generative features, Midjourney and open models for a given brief.",
+    "State what each vendor claims about training data and indemnity, and check it against your own licence.",
+    "Write art direction as a prompt: subject, composition, lens, lighting and material rather than a style name.",
+    "Control a result with negative prompts, weighting, reference images and structure guidance.",
+    "Bring a generation into Photoshop as an editable layered file rather than a flat JPEG.",
+    "Repair generated artefacts by hand: hands, type, perspective, texture, grain and edges.",
+    "Redraw a generated mark as clean vectors in Illustrator and explain why tracing is not enough.",
+    "Bring a generated image into a brand palette and into CMYK without an unmanaged colour shift.",
+    "Deliver a campaign set of a print advert, a vertical social post and a banner with a written provenance note."
+  ],
+  "prerequisites": [
+    "You should be a working designer or a confident Photoshop user: layers, selections, masks and basic colour correction.",
+    "Illustrator experience is helpful for the vectorising module but is not required, as the steps are demonstrated in full.",
+    "No experience with generative image tools is needed."
+  ],
+  "audiences": [
+    "Graphic designers and artworkers asked to produce more concepts in less time",
+    "Art directors deciding where generative work fits into a studio process",
+    "Brand and in-house design teams keeping a campaign consistent across many formats",
+    "Illustrators and retouchers judging what these tools do to their own craft",
+    "Agency producers who have to price and defend AI-assisted work to a client"
+  ],
+  "includes": [
+    {"text": "Class recording, available for 12 months", "icon": "video"},
+    {"text": "Exercise files, including the deliberately awkward generations used for repair work", "icon": "download"},
+    {"text": "Prompt log from both days, structured by brief type rather than by tool", "icon": "book"},
+    {"text": "Pre-delivery checklist for reviewing generative artwork before it reaches a client", "icon": "clipboard"},
+    {"text": "Provenance and disclosure note template you can adapt for your studio", "icon": "users"},
+    {"text": "MyLearnPlus certificate of completion", "icon": "certificate"},
+    {"text": "One free repeat of the same live class within 12 months, on the terms shown on the booking page", "icon": "refresh"}
+  ],
+  "curriculum": [
+    {
+      "title": "Day 1, Morning — The landscape, and what you are allowed to sell",
+      "summary": "How the models behave, which one suits which brief, and the licensing questions to settle first.",
+      "topics": [
+        {"title": "How image models work in practice: prompt, seed, reference and run-to-run variation", "duration_min": 35},
+        {"title": "Firefly, Photoshop generative features, Midjourney and open models: strengths of each", "duration_min": 45},
+        {"title": "Training data, licensing and indemnity: what each vendor states and what to verify", "duration_min": 45},
+        {"title": "A working folder, naming scheme and prompt log you will still understand in six months", "duration_min": 25},
+        {"title": "First brief: a concept set generated against a written creative direction", "duration_min": 30}
+      ]
+    },
+    {
+      "title": "Day 1, Afternoon — Art direction through prompting",
+      "summary": "Getting the image you specified rather than the image the model prefers.",
+      "topics": [
+        {"title": "Describing subject, composition, lens, lighting and material instead of naming a style", "duration_min": 40},
+        {"title": "Negative prompts, weighting and keeping unwanted elements out of frame", "duration_min": 30},
+        {"title": "Reference images: style matching and structure control", "duration_min": 40},
+        {"title": "Building a moodboard and a concept set for a live brief", "duration_min": 40},
+        {"title": "Reading results critically: a fixable flaw against a dead end", "duration_min": 30}
+      ]
+    },
+    {
+      "title": "Day 2, Morning — From generation to artwork",
+      "summary": "The finishing work that turns a convincing preview into a usable production file.",
+      "topics": [
+        {"title": "Bringing generations into Photoshop as an editable layered file", "duration_min": 35},
+        {"title": "Repairing what the model got wrong: hands, type, perspective, texture and grain", "duration_min": 45},
+        {"title": "Upscaling and resolution: what survives at print size and what does not", "duration_min": 30},
+        {"title": "Redrawing a generated mark as vectors in Illustrator", "duration_min": 40},
+        {"title": "Brand palette and CMYK: colour management for generated imagery", "duration_min": 30}
+      ]
+    },
+    {
+      "title": "Day 2, Afternoon — Systems, ethics and handover",
+      "summary": "Consistency across a campaign, the ethical limits, and a delivery a client can act on.",
+      "topics": [
+        {"title": "Generating variants that stay on brand across a campaign", "duration_min": 40},
+        {"title": "Where generative work belongs in a studio process, and where it costs you time", "duration_min": 30},
+        {"title": "Content Credentials and C2PA: what provenance travels with the file", "duration_min": 30},
+        {"title": "Client disclosure, likeness, model releases and the briefs to decline", "duration_min": 35},
+        {"title": "Final exercise: a print advert, a vertical social post and a banner, with a provenance note", "duration_min": 45}
+      ]
+    }
+  ],
+  "faqs": [
+    {
+      "question": "Do I need my own laptop, and is any software included?",
+      "answer": "You work on your own machine whether you join live online or come to the classroom in Colombo, so the prompt log and presets you build stay with you. No subscription is included in the fee. You need Photoshop and, ideally, Illustrator installed and signed in, plus an account for at least one generative tool. A setup note goes out with your joining instructions."
+    },
+    {
+      "question": "Which generative tools do I need accounts for?",
+      "answer": "Photoshop generative features and Firefly are covered by a Creative Cloud subscription and are used throughout. Midjourney requires its own paid subscription; if you do not have one, the instructor demonstrates those exercises and you complete the equivalent brief in Firefly. Open models that run locally are demonstrated rather than installed on your machine, since they need particular hardware."
+    },
+    {
+      "question": "Do the generative features cost extra to use?",
+      "answer": "Generative features on Creative Cloud plans draw on Adobe's generative credit allowance, and what you receive depends on your plan. Check your subscription before the class so you are not halted in the middle of an exercise. The setup note explains where to look and how to see what allowance remains."
+    },
+    {
+      "question": "Can I use generated images in commercial client work?",
+      "answer": "That depends on your licence and your client's terms, and the course shows you how to check both rather than issuing a blanket answer. Adobe states that Firefly models are trained on Adobe Stock and openly licensed or public domain content, and offers indemnification on some business plans. Other tools state different things. Your own subscription, the client contract and any advertising or broadcast rules still apply, which is what the first morning and the final afternoon work through."
+    },
+    {
+      "question": "Is this an Adobe certification course?",
+      "answer": "No. Adobe Certified Professional certifications are delivered through Certiport and include an Adobe Firefly exam, but this course is broader than one application and is not exam preparation. You receive a MyLearnPlus certificate of completion. If you want the Firefly exam specifically, ask us and we will point you to the right preparation."
+    },
+    {
+      "question": "What if I miss a day?",
+      "answer": "Both days are recorded and available to you for twelve months, and you keep the exercise files so you can work through the module you missed. Live bookings also include one free repeat of the same class, on the terms shown on the booking page for each date. Because these tools change often, sitting a later run is a sensible way to pick up new features."
+    },
+    {
+      "question": "Can my employer be invoiced, and can you run this in-house?",
+      "answer": "Yes to both. We invoice organisations against a purchase order, in LKR for Sri Lankan companies and in USD internationally. A private run uses your own brand guidelines, campaign formats and live briefs, and the final module can be adapted to produce a draft studio policy on generative work and client disclosure."
+    }
+  ],
+  "related": ["photoshop-generative-ai", "adobe-firefly-creatives", "ai-video-and-audio"],
+  "seo": {
+    "title": "Generative AI for Designers Course | MyLearnPlus",
+    "description": "Two-day generative AI course for designers: art direction by prompt, Firefly and Midjourney, artefact repair, brand consistency, licensing and provenance.",
+    "keywords": "generative ai for designers, ai image generation course, firefly training, midjourney for designers, ai design training sri lanka, ai art direction course, design training colombo"
+  }
+}

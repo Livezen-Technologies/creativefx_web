@@ -1,0 +1,226 @@
+{
+  "slug": "ai-automation-and-agents",
+  "pillar": "ai",
+  "category": "ai-automation",
+  "title": "AI Automation and Agents with n8n, Make and Zapier",
+  "subtitle": "For operations and marketing people who want a working automation, not another demo",
+  "summary": "Two days building automations that survive real data: triggers, app connections, AI steps, retrieval, agents, error handling and a cost you can defend.",
+  "description_html": "<p>Every automation platform demos well. A form submission lands in a spreadsheet, a message posts to a channel, the audience nods. The workflow that goes into production is a different object: in its first week it meets an empty field, a renamed column, a rate limit and a duplicate record. This course spends most of its time on the parts that decide whether an automation survives contact with real data.</p><p>You build the same job three times, in <strong>Zapier</strong>, <strong>Make</strong> and <strong>n8n</strong>, so the choice between them stops being a matter of which one you saw first. The differences that matter are practical: how each platform charges for work, how each handles arrays and loops, what happens when a step fails at three in the morning, and whether you can run the thing on your own server. Before any of that you map the process you actually have, including the exceptions people handle by hand and never mention, because automating a broken process only makes it fail faster.</p><p>Day one is the foundation. Triggers by webhook, schedule and polling, and why the choice changes the design. Connecting apps with stored credentials and least-privilege access rather than a key pasted into a step. Mapping fields between systems that disagree about dates, names and empty values. Filters, routers and branching so one workflow handles several cases, and looping over a list without starting a runaway execution. You finish the day with an end-to-end workflow running in your own account.</p><p>Day two adds the model. You classify inbound enquiries, extract structured fields from invoices and PDFs, and draft replies that a person approves before they are sent. The skill that decides whether any of it works is making a model step return output the next node can rely on: a schema, validation, and a defined path for the times it does not parse. You then add retrieval so a workflow answers from your own documents instead of guessing, build a tool-using agent in n8n, and work out honestly which jobs an agent should not be given.</p><p>The last session is reliability and cost, which is where most automations are actually won: retries and error branches, idempotency so a retry does not send the same invoice twice, alerting when something stops, logging that tells you what ran, a human approval step with an audit trail, and an estimate covering both platform operations and model tokens before you switch anything on. You leave with three working automations and a runbook that lets a colleague maintain them. Runs live online, in the classroom in Colombo or privately, priced in <strong>LKR</strong> for Sri Lanka and <strong>USD</strong> internationally.</p>",
+  "level": 2,
+  "duration_hours": 12,
+  "duration_days": 2,
+  "software_version": "",
+  "certification_alignment": "",
+  "delivery_modes": [
+    "LIVE_ONLINE",
+    "CLASSROOM",
+    "SELF_PACED",
+    "PRIVATE"
+  ],
+  "default_mode": "LIVE_ONLINE",
+  "price_band": "2day",
+  "outcomes": [
+    "Map an existing process step by step and decide what to automate, what to keep manual and what to remove entirely.",
+    "Build the same multi-step workflow in Zapier, Make and n8n, and justify which one you would use for a given job.",
+    "Connect applications using stored credentials and least-privilege access rather than keys pasted into a step.",
+    "Map and reshape data between systems, handling empty fields, mismatched date formats and duplicate records.",
+    "Route work with filters, branches and routers so a single workflow handles several cases.",
+    "Add a model step that returns validated structured output, with a defined path for responses that do not parse.",
+    "Build a retrieval step over your own documents so a workflow answers from your material and cites where it came from.",
+    "Assemble a tool-using agent in n8n and state plainly which tasks it should not be trusted with.",
+    "Handle failure with retries, error branches, idempotency, alerting and a log of what ran.",
+    "Cost an automation in platform operations and model tokens, and write a runbook a colleague can maintain it from."
+  ],
+  "prerequisites": [
+    "You should be a confident user of business software: spreadsheets, a CRM or a database, and web applications with logins.",
+    "No programming is required. Two optional steps use a short JavaScript snippet, and the snippets are supplied and explained.",
+    "Bring one real process from your own work, with a rough idea of how often it runs and who currently does it."
+  ],
+  "audiences": [
+    "Operations and business process managers replacing manual handoffs between systems",
+    "Marketing and revenue operations staff wiring forms, CRM and email together",
+    "Finance, HR and administration teams handling repetitive document and approval work",
+    "Agency and small business owners with no in-house development team",
+    "IT generalists and solo developers asked to make several systems talk to each other"
+  ],
+  "includes": [
+    {
+      "text": "Class recording, available for 12 months",
+      "icon": "video"
+    },
+    {
+      "text": "Exportable starter workflows for Zapier, Make and n8n, plus the commented code snippets",
+      "icon": "download"
+    },
+    {
+      "text": "Course workbook with every workflow built step by step",
+      "icon": "book"
+    },
+    {
+      "text": "Process mapping worksheet and an automation runbook template",
+      "icon": "clipboard"
+    },
+    {
+      "text": "MyLearnPlus certificate of completion",
+      "icon": "certificate"
+    },
+    {
+      "text": "Instructor email support after the class for questions on your own workflows",
+      "icon": "support"
+    },
+    {
+      "text": "One free repeat of the same live class, terms shown on the booking page",
+      "icon": "refresh"
+    }
+  ],
+  "curriculum": [
+    {
+      "title": "Day 1, Morning — The process before the platform",
+      "summary": "Mapping what actually happens, then building one job three times to see where the platforms differ.",
+      "topics": [
+        {
+          "title": "What automation is genuinely good at, and the processes that should be fixed before they are automated",
+          "duration_min": 30
+        },
+        {
+          "title": "Mapping a process: triggers, steps, decisions, exceptions and who owns each",
+          "duration_min": 40
+        },
+        {
+          "title": "Zapier, Make and n8n side by side: the same task built three times",
+          "duration_min": 45
+        },
+        {
+          "title": "Connecting applications safely: OAuth, API keys, stored credentials and least privilege",
+          "duration_min": 35
+        },
+        {
+          "title": "Exercise: mapping the process you brought with you",
+          "duration_min": 30
+        }
+      ]
+    },
+    {
+      "title": "Day 1, Afternoon — Data, logic and the first real workflow",
+      "summary": "The unglamorous middle of every automation: triggers, field mapping, branching and loops.",
+      "topics": [
+        {
+          "title": "Triggers: webhooks, schedules and polling, and how the choice changes the design",
+          "duration_min": 35
+        },
+        {
+          "title": "Mapping fields between systems, and handling empty, malformed and duplicate data",
+          "duration_min": 40
+        },
+        {
+          "title": "Filters, routers and branching: one workflow covering several cases",
+          "duration_min": 35
+        },
+        {
+          "title": "Loops, arrays and pagination without a runaway execution",
+          "duration_min": 35
+        },
+        {
+          "title": "Build: an end-to-end workflow from form to database to notification",
+          "duration_min": 35
+        }
+      ]
+    },
+    {
+      "title": "Day 2, Morning — Model steps inside a workflow",
+      "summary": "Putting a model where it helps, and making its output safe for the next node to use.",
+      "topics": [
+        {
+          "title": "Where a model belongs in an automation, and where a rule is cheaper and safer",
+          "duration_min": 30
+        },
+        {
+          "title": "Classifying and routing inbound email and enquiries",
+          "duration_min": 35
+        },
+        {
+          "title": "Extracting structured fields from PDFs, invoices and scanned documents",
+          "duration_min": 40
+        },
+        {
+          "title": "Forcing valid JSON out of a model step, validating it and failing safely",
+          "duration_min": 35
+        },
+        {
+          "title": "Retrieval over your own documents: embeddings, a vector store node and citations",
+          "duration_min": 40
+        }
+      ]
+    },
+    {
+      "title": "Day 2, Afternoon — Agents, reliability and cost",
+      "summary": "Agents with tools, approval steps, failure handling and the number you take to your manager.",
+      "topics": [
+        {
+          "title": "Agents in n8n: giving a model tools, and the jobs an agent should not be given",
+          "duration_min": 40
+        },
+        {
+          "title": "Human in the loop: approval steps, escalation and an audit trail",
+          "duration_min": 30
+        },
+        {
+          "title": "Failure handling: retries, error branches, idempotency and alerts",
+          "duration_min": 35
+        },
+        {
+          "title": "Testing and monitoring a workflow before it touches live data",
+          "duration_min": 30
+        },
+        {
+          "title": "Cost and quotas: platform operations, model tokens and self-hosting n8n",
+          "duration_min": 25
+        },
+        {
+          "title": "Handover: documenting a workflow so someone else can maintain it",
+          "duration_min": 20
+        }
+      ]
+    }
+  ],
+  "faqs": [
+    {
+      "question": "Do I need my own laptop, and what has to be set up beforehand?",
+      "answer": "Yes, a laptop with a browser and the ability to sign in to your own accounts. You need an account on each of the three platforms, and the joining instructions include the sign-up links and a short setup check to run a day or two before. If your organisation blocks new sign-ups, tell us in advance and we will provide shared demonstration workspaces for the exercises."
+    },
+    {
+      "question": "Do the automation platforms cost anything?",
+      "answer": "Make and n8n both have free tiers that carry the class exercises, and n8n can also be run on your own server at no licence cost. Zapier's free plan is more limited, so the Zapier build is done in a trial workspace, in your organisation's existing account, or in a shared workspace we supply. Plan limits change regularly, so check them before the day. Paying for production use is a separate decision, and costing it is one of the last sessions on day two."
+    },
+    {
+      "question": "Do I need to be able to code?",
+      "answer": "No. Everything built across the two days can be assembled in the visual editors, and no exercise requires you to write a program. Two optional steps use a short JavaScript snippet for reshaping data, and those snippets are supplied and explained line by line. Developers who want to build against the APIs directly should look at Building with LLM APIs instead."
+    },
+    {
+      "question": "Which platform should we standardise on?",
+      "answer": "We do not sell or resell any of them and we make no recommendation. The course gives you the criteria that should decide it: where your data may be processed, whether you need to self-host, how each platform prices the volume you expect, how well it handles your particular systems, and who in your organisation will maintain it after the person who built it moves on."
+    },
+    {
+      "question": "Can we build workflows against our live systems in class?",
+      "answer": "In a public class you build against test accounts and sample data, because a mistake during an exercise in a live system is a real mistake. In a private run for your organisation we work in your own environment, and the second day is usually spent building the workflows you actually need, with your credentials, your approval steps and your data handling rules."
+    },
+    {
+      "question": "What if I miss a day, and do you issue a certificate?",
+      "answer": "Both days are recorded and available to you for twelve months, and every live booking includes one free repeat of the same class, with the terms shown on the booking page for each date. You receive a MyLearnPlus certificate of completion recording the course title, hours and date, which is a record of training rather than an industry credential."
+    },
+    {
+      "question": "Can my employer be invoiced?",
+      "answer": "Yes. We invoice organisations against a purchase order, in LKR for Sri Lankan companies and in USD internationally, and we can supply a quotation for a team booking before you raise the order. Private runs for a single organisation are quoted per group rather than per seat."
+    }
+  ],
+  "related": [
+    "ai-assistants-at-work",
+    "building-with-llm-apis",
+    "ai-for-marketing"
+  ],
+  "seo": {
+    "title": "n8n, Make and Zapier AI Automation Course | MyLearnPlus",
+    "description": "Two-day AI automation course, live online or in Colombo. Build workflows in n8n, Make and Zapier with AI steps, retrieval, agents and error handling.",
+    "keywords": "ai automation training, n8n course, make.com training, zapier course, ai agents workshop, workflow automation training sri lanka, no-code automation colombo"
+  }
+}

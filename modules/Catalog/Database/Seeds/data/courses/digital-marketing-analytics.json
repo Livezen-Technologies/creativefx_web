@@ -1,0 +1,230 @@
+{
+  "slug": "digital-marketing-analytics",
+  "pillar": "design",
+  "category": "digital-marketing",
+  "title": "Digital Marketing and Analytics",
+  "subtitle": "For people running marketing alone. Leave with a plan, GA4 tracking and a dashboard",
+  "summary": "Two days on search, paid social, email and measurement: a one-page plan, GA4 and Search Console set up, UTM tagging and a dashboard a manager can read.",
+  "description_html": "<p>Most small marketing operations are busy rather than measured. Posts go out, an advertisement runs for a fortnight, an email is sent, and at the end of the quarter nobody can say which of those brought in the enquiries. This course is two days of fixing that: choosing channels for a real budget, running them properly, and setting up the measurement that tells you afterwards which one paid for itself.</p><p>Day one is the plan and the search work. You write a one-page marketing plan for a real business, yours or a supplied one, and then do the arithmetic that most plans skip: how much traffic you need, at what conversion rate, at what cost per acquisition, before a channel is worth running at all. You then work through search from both sides, doing keyword research and mapping terms to pages, fixing titles and meta descriptions on pages that are already getting impressions, and building a Google Search campaign with a sensible account structure, negative keywords, ad copy and a landing page that matches what the advertisement promised.</p><p>Day two covers paid social, email and landing pages in the morning, then measurement all afternoon. You install GA4 on a practice site, configure key events for form submissions and clicks, build a UTM tagging convention your whole team can follow, and assemble a one-page Looker Studio dashboard that answers what a manager actually asks: where did the enquiries come from, what did they cost, and is that better or worse than last month. You finish with attribution explained in plain language, including why the numbers in three different platforms will never agree, and with the consent and personal data rules that apply when you are tracking people, covering Sri Lanka's <strong>Personal Data Protection Act</strong> and, for anyone marketing into Europe or the UK, GDPR in outline.</p><p>Nothing in the course requires you to spend money on advertising. Campaigns are built to the point of launch and then paused, so you learn the setup, the targeting and the budgeting without a live spend. If you do want to run a campaign for real during the class, bring your own account and budget and the instructor will review it with you before you press publish.</p><p>Classes run live online in your own timezone or in the classroom in Colombo, and the recording is available to you for twelve months. Pricing is shown in <strong>LKR</strong> for learners in Sri Lanka and in <strong>USD</strong> for everyone else. Organisations can be invoiced against a purchase order, and a private run can be built entirely around your own website, accounts and figures.</p>",
+  "level": 1,
+  "duration_hours": 12,
+  "duration_days": 2,
+  "software_version": "Google Analytics 4, Google Search Console and Looker Studio, current releases",
+  "certification_alignment": "",
+  "delivery_modes": [
+    "LIVE_ONLINE",
+    "CLASSROOM",
+    "SELF_PACED",
+    "PRIVATE"
+  ],
+  "default_mode": "LIVE_ONLINE",
+  "price_band": "2day",
+  "outcomes": [
+    "Write a one-page marketing plan for a real business stating the audience, the offer, the channels, the budget and the numbers it has to hit.",
+    "Calculate conversion rate, cost per acquisition and return on ad spend from your own figures, and work out what a channel must deliver to be worth running.",
+    "Do keyword research and map search terms to the pages that should answer them.",
+    "Rewrite titles, meta descriptions and headings on pages that already receive impressions, using Search Console data rather than guesswork.",
+    "Build a Google Search campaign with a clear account structure, match types, negative keywords, ad copy and a matching landing page.",
+    "Build a paid social campaign in Meta Ads Manager with an objective, audience, placements, creative and a daily budget, saved as a draft.",
+    "Write an email campaign with a segment, a subject line test and a measurable goal, and explain the consent rules that apply to the list.",
+    "Install GA4 on a site and configure key events for form submissions and outbound clicks.",
+    "Apply a UTM tagging convention across campaigns so that traffic sources stay readable months later.",
+    "Build a one-page Looker Studio dashboard showing enquiries, sources and cost, and present what it says in two minutes."
+  ],
+  "prerequisites": [
+    "No prior marketing or analytics experience is needed, and no coding is involved.",
+    "You should be comfortable with a spreadsheet: entering figures and using simple formulas such as a percentage and a division.",
+    "Bring a business to plan for if you have one, along with access to its website and any advertising accounts. A practice business and website are supplied if you do not."
+  ],
+  "audiences": [
+    "Marketing executives and coordinators who run several channels without a specialist for any of them",
+    "Small business owners and founders spending their own money on advertising",
+    "Sales staff asked to generate their own leads online",
+    "Agency and freelance staff who need to report results to a client rather than list activity",
+    "Managers who commission marketing and want to read a report critically"
+  ],
+  "includes": [
+    {
+      "text": "Class recording, available for 12 months",
+      "icon": "video"
+    },
+    {
+      "text": "Practice business pack: website, sample data and ad accounts to work in",
+      "icon": "download"
+    },
+    {
+      "text": "Course workbook covering every step demonstrated in class",
+      "icon": "book"
+    },
+    {
+      "text": "Editable templates: one-page plan, campaign budget calculator, UTM naming sheet and reporting dashboard",
+      "icon": "clipboard"
+    },
+    {
+      "text": "MyLearnPlus certificate of completion",
+      "icon": "certificate"
+    },
+    {
+      "text": "Instructor email support after the class for questions on the exercises",
+      "icon": "support"
+    },
+    {
+      "text": "One free repeat of the same live class, terms shown on the booking page",
+      "icon": "refresh"
+    }
+  ],
+  "curriculum": [
+    {
+      "title": "Day 1, Morning — The plan and the arithmetic",
+      "summary": "Audience, offer, channel choice and the numbers that decide whether a campaign is worth running.",
+      "topics": [
+        {
+          "title": "Audience, offer and positioning, written down on one page",
+          "duration_min": 35
+        },
+        {
+          "title": "The funnel in practice: awareness, consideration, conversion and retention",
+          "duration_min": 30
+        },
+        {
+          "title": "Choosing channels for a real budget, and what each one is genuinely good at",
+          "duration_min": 35
+        },
+        {
+          "title": "The arithmetic: traffic, conversion rate, cost per acquisition, lifetime value and return on ad spend",
+          "duration_min": 45
+        },
+        {
+          "title": "Exercise: set one objective for your business and the measures that will prove it",
+          "duration_min": 35
+        }
+      ]
+    },
+    {
+      "title": "Day 1, Afternoon — Search, organic and paid",
+      "summary": "Being found without paying, and buying the clicks you cannot earn.",
+      "topics": [
+        {
+          "title": "How a results page is assembled, and which parts of it you can influence",
+          "duration_min": 25
+        },
+        {
+          "title": "Keyword research and mapping terms to pages",
+          "duration_min": 35
+        },
+        {
+          "title": "On-page SEO: titles, meta descriptions, headings, internal links and page speed",
+          "duration_min": 35
+        },
+        {
+          "title": "Google Search Console: queries, pages, indexing and fixing what is broken",
+          "duration_min": 30
+        },
+        {
+          "title": "Google Ads: account structure, match types and negative keywords",
+          "duration_min": 30
+        },
+        {
+          "title": "Writing search ads and matching them to the landing page they promised",
+          "duration_min": 25
+        }
+      ]
+    },
+    {
+      "title": "Day 2, Morning — Social, email and landing pages",
+      "summary": "Running the paid and owned channels, and giving the traffic somewhere worth arriving.",
+      "topics": [
+        {
+          "title": "Organic social: what suits each platform and a posting rhythm you can sustain",
+          "duration_min": 30
+        },
+        {
+          "title": "Paid social in Meta Ads Manager: objective, audience, placements and budget",
+          "duration_min": 40
+        },
+        {
+          "title": "Creative that works in a feed: the hook, the format and testing two versions properly",
+          "duration_min": 35
+        },
+        {
+          "title": "Email: list building, consent, segments, subject lines and send timing",
+          "duration_min": 40
+        },
+        {
+          "title": "Landing pages: one message, one action, and the reasons people leave",
+          "duration_min": 35
+        }
+      ]
+    },
+    {
+      "title": "Day 2, Afternoon — Measurement, reporting and the rules",
+      "summary": "Setting up GA4 and tagging properly, then building the one page a manager will actually read.",
+      "topics": [
+        {
+          "title": "GA4: the event model, key events, and the handful of reports worth opening",
+          "duration_min": 45
+        },
+        {
+          "title": "Installing GA4 on the practice site and configuring key events for forms and clicks",
+          "duration_min": 35
+        },
+        {
+          "title": "UTM tagging: a naming convention the whole team can follow",
+          "duration_min": 25
+        },
+        {
+          "title": "Attribution in plain language, and why three platforms never agree on the same sale",
+          "duration_min": 25
+        },
+        {
+          "title": "Building a one-page Looker Studio dashboard and presenting what it says",
+          "duration_min": 35
+        },
+        {
+          "title": "Consent, cookie banners and personal data: PDPA and GDPR in outline",
+          "duration_min": 15
+        }
+      ]
+    }
+  ],
+  "faqs": [
+    {
+      "question": "Do I have to spend money on advertising during the course?",
+      "answer": "No. Google and Meta campaigns are built to the point of launch and then left paused or saved as drafts, so you learn the structure, targeting, creative and budgeting without any spend. If you would rather run something live because you have a real campaign due, bring your own account and budget and the instructor will review the setup with you before it goes out."
+    },
+    {
+      "question": "Do I need my own website and advertising accounts?",
+      "answer": "It is better if you do, because the work is more useful when it is your own. Bring access to your website, your Google account and any ad accounts, and you will leave with real tracking installed rather than a rehearsal. If you have none of that, a practice business with a website, sample data and accounts is supplied and every exercise works on it."
+    },
+    {
+      "question": "Which platforms does the course cover?",
+      "answer": "Google Search and Google Ads, Meta advertising through Ads Manager, email, and measurement in GA4, Search Console and Looker Studio. LinkedIn, TikTok and the rest are not covered separately because the decisions transfer: objective, audience, creative, budget and measurement work the same way, and the interfaces change too often for platform-by-platform tuition to be worth your two days."
+    },
+    {
+      "question": "Will this get my business to the top of Google?",
+      "answer": "No one can promise that and we will not. Rankings depend on competition, your site and Google's own changes, none of which a training company controls. What the course gives you is the work that makes ranking possible and the measurement that tells you whether it is happening: keyword mapping, on-page fixes, Search Console data and a report that shows the trend honestly."
+    },
+    {
+      "question": "Do you issue a certificate, and is this a Google certification?",
+      "answer": "You receive a MyLearnPlus certificate of completion recording the course title, the hours and the date. It is a record of training, not a Google credential. Google runs its own free certifications for Google Ads and Google Analytics through Skillshop; much of what you learn here overlaps with them, and we point you to the right ones at the end of day two, but those exams are Google's and are sat separately."
+    },
+    {
+      "question": "What happens if I miss a day?",
+      "answer": "Every session is recorded and available to you for twelve months, and the practice pack means you can rebuild any missed exercise from the same files the class used. Each live booking also includes one free repeat of the same class, with the terms and the booking window shown on the booking page for each date."
+    },
+    {
+      "question": "Can my employer be invoiced?",
+      "answer": "Yes. We invoice organisations against a purchase order, in LKR for Sri Lankan companies and in USD internationally. Send the billing details and the names of the people attending and we will hold the seats while the invoice is processed. Groups of five or more are usually better served by a private run built around your own website, accounts and actual figures."
+    }
+  ],
+  "related": [
+    "web-design-wordpress",
+    "presentation-and-data-visualisation",
+    "adobe-express-teams"
+  ],
+  "seo": {
+    "title": "Digital Marketing and Analytics Course | MyLearnPlus",
+    "description": "Two-day digital marketing course, live online or in Colombo. SEO, Google Ads, Meta ads, email, GA4 setup, UTM tagging and a Looker Studio dashboard.",
+    "keywords": "digital marketing course, google analytics 4 training, seo course colombo, google ads training sri lanka, ga4 course, meta ads training, marketing analytics course"
+  }
+}

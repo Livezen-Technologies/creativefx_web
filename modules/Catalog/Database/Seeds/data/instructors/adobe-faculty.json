@@ -1,0 +1,15 @@
+{
+  "slug": "adobe-faculty",
+  "name": "MyLearnPlus Adobe Faculty",
+  "headline": "Adobe Certified Professionals teaching the Creative Cloud track",
+  "bio_html": "<p>The Creative Cloud track is taught by a small pool of practising designers, retouchers, editors and production artists rather than by one trainer with a broad brochure. Everyone who teaches on this track has to meet the same standard before they take a class: a current <strong>Adobe Certified Professional</strong> credential in the application they teach, obtained through Certiport in the same way we tell learners to obtain theirs, and recent production experience in a studio, agency or in-house team. Teaching Photoshop here means you still retouch files for clients. Teaching InDesign means you still send documents to print and deal with what comes back. Instructors work on the current Creative Cloud release, and they are expected to know the published exam objectives for the courses that prepare learners for an Adobe exam.</p><p>Classes are staffed one instructor per cohort, and the instructor for your date is named in your joining instructions before the course starts. A new instructor teaches the MyLearnPlus syllabus under observation before running it alone, so the exercise files, the workbook and the sequence of a day are the same whoever is in front of you. Large private cohorts are staffed with a second assisting instructor so that nobody waits with a hand up, and hybrid sessions with remote joiners are run with someone watching the online room. If an instructor has to be replaced at short notice the substitute teaches the same syllabus from the same materials, and we tell you before the day rather than on it.</p>",
+  "credentials": [
+    "Adobe Certified Professional in the application they teach, sat through Certiport",
+    "Current production experience in a studio, agency or in-house creative team",
+    "Working on the current Creative Cloud release taught on the course",
+    "Familiar with the published Adobe Certified Professional exam objectives for the relevant exam",
+    "Taught the MyLearnPlus syllabus under observation before teaching a cohort alone"
+  ],
+  "placeholder": true,
+  "note_for_client": "Replace this entry with your named Adobe instructors, each with a photograph, a short biography, their Certiport credential and the courses they teach, keeping this profile only as the fallback shown when a date has no named instructor yet."
+}

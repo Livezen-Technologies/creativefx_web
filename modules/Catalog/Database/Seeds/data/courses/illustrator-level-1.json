@@ -1,0 +1,215 @@
+{
+  "slug": "illustrator-level-1",
+  "pillar": "adobe",
+  "category": "illustrator",
+  "title": "Illustrator Level 1",
+  "subtitle": "For newcomers to vector drawing. Leave able to build logos, icons and print-ready art.",
+  "summary": "A two-day introduction to Adobe Illustrator: draw with the Pen tool, build a logo and an icon set, and export artwork a printer will accept.",
+  "description_html": "<p>Illustrator is the tool you reach for when artwork has to stay sharp at any size: a logo that goes on a business card and on a hoarding, an icon set that has to read at 24 pixels, a map, a label, a diagram. This two-day course teaches the drawing, colour and type skills that sit underneath all of that, in the order a working designer needs them.</p><p>Day one begins with document setup, because most of the problems that reach a printer start with a badly set up file. You then spend a long session on the Pen tool. It is the part of Illustrator people avoid, and the part that decides whether artwork looks drawn or looks assembled. By the end of the first day you will have traced a supplied sketch into a finished icon and built a six-icon set that aligns on a shared grid.</p><p>Day two moves to colour, type and output. You will construct a wordmark, learn why global swatches let you recolour an entire design by editing one chip, place and trace images, and assemble a one-page A4 flyer with bleed and trim marks. The final session is the one clients care about: exporting SVG, PDF/X-4 and PNG, knowing which to send where, and packaging a job so the printer receives the fonts and links along with the artwork.</p><p>The syllabus maps to the published exam objectives for the <strong>Adobe Certified Professional in Adobe Illustrator</strong>, which is delivered through Certiport. We prepare you for that exam. We do not award the certification, and no course can guarantee a pass. If certification is your reason for attending, say so on day one and your instructor will flag which sessions sit directly on the exam objectives.</p><p>You work on the same practice brief throughout, so the icon set, the wordmark and the flyer belong to one fictional client rather than to three unrelated exercises. You keep every file you produce.</p>",
+  "level": 1,
+  "duration_hours": 12,
+  "duration_days": 2,
+  "software_version": "Creative Cloud 2026",
+  "certification_alignment": "Prepares for the Adobe Certified Professional in Adobe Illustrator exam",
+  "delivery_modes": [
+    "LIVE_ONLINE",
+    "CLASSROOM",
+    "SELF_PACED",
+    "PRIVATE"
+  ],
+  "default_mode": "LIVE_ONLINE",
+  "price_band": "2day",
+  "outcomes": [
+    "Set up a document with the right artboards, colour mode, bleed and units for print and for screen",
+    "Draw accurate paths with the Pen tool by tracing a supplied sketch through to a finished icon",
+    "Build a six-icon set on a shared 24 px grid so the icons hold together at small size and at poster size",
+    "Construct a wordmark using Shape Builder and Pathfinder, then keep both an outlined and an editable master",
+    "Apply global swatches and colour groups so that recolouring a whole design is a single edit",
+    "Set point type, area type and type on a path, and control it with character and paragraph styles",
+    "Place, link and embed images, and trace a hand-drawn logo with Image Trace before cleaning up its anchor points",
+    "Assemble a one-page A4 flyer with correct bleed, margins and trim marks",
+    "Export the same artwork as SVG, PDF/X-4 and PNG, and explain which file goes to which recipient",
+    "Package a job for a printer with the fonts and linked images collected alongside the artwork"
+  ],
+  "prerequisites": [
+    "No prior experience with Adobe Illustrator is needed.",
+    "You should be comfortable with your own computer: saving files, finding folders and installing an application.",
+    "Some Photoshop experience is useful but the class does not assume it."
+  ],
+  "audiences": [
+    "Designers moving from Photoshop or Canva into proper vector work",
+    "Marketing and communications staff who produce artwork in-house",
+    "Print and prepress operators who receive Illustrator files and have to fix them",
+    "Students and career changers building a first design portfolio",
+    "Small business owners who want to control their own brand artwork"
+  ],
+  "includes": [
+    {
+      "text": "Class recording, available for 12 months",
+      "icon": "video"
+    },
+    {
+      "text": "Exercise files, source sketches and finished project files, yours to keep",
+      "icon": "download"
+    },
+    {
+      "text": "Course workbook covering every step demonstrated in class",
+      "icon": "book"
+    },
+    {
+      "text": "Practice questions written against the Adobe Certified Professional exam domains",
+      "icon": "clipboard"
+    },
+    {
+      "text": "MyLearnPlus certificate of completion",
+      "icon": "certificate"
+    },
+    {
+      "text": "Instructor email support after the class for questions on the exercises",
+      "icon": "support"
+    },
+    {
+      "text": "One free repeat of the same live class, terms shown on the booking page",
+      "icon": "refresh"
+    }
+  ],
+  "curriculum": [
+    {
+      "title": "Day 1, Morning — Documents, shapes and the Illustrator way of working",
+      "summary": "Set files up correctly, then build accurate artwork out of primitive shapes.",
+      "topics": [
+        {
+          "title": "Vector against raster, and when Illustrator is the wrong tool for the job",
+          "duration_min": 25
+        },
+        {
+          "title": "New document setup: artboards, units, bleed, RGB and CMYK",
+          "duration_min": 35
+        },
+        {
+          "title": "Panels, workspaces and the tools you will actually use",
+          "duration_min": 25
+        },
+        {
+          "title": "Drawing with primitives: rectangles, ellipses, polygons and live corners",
+          "duration_min": 45
+        },
+        {
+          "title": "Selection, grouping, isolation mode and the Layers panel",
+          "duration_min": 50
+        }
+      ]
+    },
+    {
+      "title": "Day 1, Afternoon — The Pen tool and the icon set",
+      "summary": "Learn the Pen tool properly, then draw a six-icon set on a shared grid.",
+      "topics": [
+        {
+          "title": "Anchor points, handles and the four moves the Pen tool actually makes",
+          "duration_min": 40
+        },
+        {
+          "title": "Tracing a supplied sketch through to a finished icon",
+          "duration_min": 45
+        },
+        {
+          "title": "Shape Builder and Pathfinder for fast, clean construction",
+          "duration_min": 40
+        },
+        {
+          "title": "Building a six-icon set on a 24 px grid with pixel-accurate alignment",
+          "duration_min": 55
+        }
+      ]
+    },
+    {
+      "title": "Day 2, Morning — Colour, type and the wordmark",
+      "summary": "Work with global colour and type, and construct a wordmark you could hand over.",
+      "topics": [
+        {
+          "title": "Fills, strokes, gradients and the Appearance panel",
+          "duration_min": 40
+        },
+        {
+          "title": "Global swatches and colour groups: recolouring a design from one chip",
+          "duration_min": 40
+        },
+        {
+          "title": "Point type, area type, type on a path, character and paragraph styles",
+          "duration_min": 45
+        },
+        {
+          "title": "Constructing a wordmark, outlining it and keeping an editable master",
+          "duration_min": 55
+        }
+      ]
+    },
+    {
+      "title": "Day 2, Afternoon — Images, layout and handing work over",
+      "summary": "Bring images in, build a flyer, and produce files other people can use.",
+      "topics": [
+        {
+          "title": "Placing, linking and embedding images, and Image Trace on a hand-drawn logo",
+          "duration_min": 40
+        },
+        {
+          "title": "Clipping masks, opacity masks and simple effects",
+          "duration_min": 35
+        },
+        {
+          "title": "Assembling a one-page A4 flyer with bleed, margins and trim marks",
+          "duration_min": 45
+        },
+        {
+          "title": "Exporting SVG, PDF/X-4 and PNG, and choosing between them",
+          "duration_min": 30
+        },
+        {
+          "title": "Packaging a job for a printer: fonts, links and a handover checklist",
+          "duration_min": 30
+        }
+      ]
+    }
+  ],
+  "faqs": [
+    {
+      "question": "Do I need my own laptop?",
+      "answer": "For live online classes, yes. You work on your own machine with Illustrator already installed, and you keep every file you make. For classroom sessions in Colombo a workstation with Illustrator is provided, although you are welcome to bring your own laptop if you would rather work on the setup you use at your desk. We send system requirements and a setup check about a week before the class."
+    },
+    {
+      "question": "Is the Adobe software included in the price?",
+      "answer": "No. Illustrator is a subscription from Adobe and we do not resell licences. If you do not have one, Adobe offers a free trial that is long enough to cover the two days, and your employer may already hold licences you can be added to. Classroom seats in Colombo come with the software installed on the machine."
+    },
+    {
+      "question": "What happens if I miss a day?",
+      "answer": "Every live session is recorded and the recording stays available to you for 12 months, so you can catch up in your own time. If you would rather sit the session again live, you can join the same half day in a later cohort at no cost, subject to seats being available."
+    },
+    {
+      "question": "Do you issue a certificate?",
+      "answer": "Yes. You receive a MyLearnPlus certificate of completion, issued by Livezen Technologies, naming the course, the version of Illustrator taught and the hours completed. That is a record of training, not an Adobe qualification. The Adobe Certified Professional certification is a separate exam sat through Certiport."
+    },
+    {
+      "question": "Does this course prepare me for the Adobe Certified Professional exam?",
+      "answer": "It covers a large part of the published objectives for the Adobe Certified Professional in Adobe Illustrator exam, and your instructor will point out which sessions map to them. The exam itself is booked and sat through a Certiport testing centre and is not included in the course fee. We cannot guarantee a pass. If you go on to complete a second related professional certification, Adobe awards a Specialty Credential such as Visual Design."
+    },
+    {
+      "question": "Is there a free retake?",
+      "answer": "Yes. You may repeat the same class once within 12 months at no charge, in whichever delivery mode suits you at the time, subject to available seats. People usually use it six to eight weeks later, once they have hit real work and know which parts they want to sit through again."
+    },
+    {
+      "question": "Can my employer be invoiced, and can we pay in rupees?",
+      "answer": "Yes. You may repeat the same live class once at no charge, in whichever delivery mode suits you at the time and subject to seats being available; the terms are shown on the booking page. People usually take it up six to eight weeks later, once they have hit real work and know which sessions they want to sit through again."
+    }
+  ],
+  "related": [
+    "illustrator-level-2",
+    "logo-and-brand-systems",
+    "indesign-level-1",
+    "photoshop-level-1"
+  ],
+  "seo": {
+    "title": "Adobe Illustrator Level 1 Training Course | MyLearnPlus",
+    "description": "Two-day Adobe Illustrator training for beginners. Draw with the Pen tool, build a logo and icon set, and export print-ready files. Live online or Colombo.",
+    "keywords": "adobe illustrator training, illustrator course sri lanka, illustrator level 1, vector design course, adobe certified professional illustrator, illustrator training colombo, beginner illustrator class"
+  }
+}

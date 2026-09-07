@@ -39,7 +39,7 @@ class Filters extends BaseFilters
         'pagecache'     => PageCache::class,
         'performance'   => PerformanceMetrics::class,
 
-        // Norlanka modules.
+        // Site modules.
         // NB: 'applocale' (not 'locale') — CI4's enableFilter prefers an existing
         // class via class_exists(), and PHP's built-in \Locale would shadow a
         // 'locale' alias because class names are case-insensitive.
@@ -47,7 +47,10 @@ class Filters extends BaseFilters
         'applocale'     => LocaleFilter::class,
         'adminauth'     => AdminAuthFilter::class,
         'trackview'     => TrackPageView::class,
-        'officerauth'   => \Modules\Tshda\Filters\OfficerAuthFilter::class,
+        // The learner's session, kept separate from the administrator's. They
+        // are different populations with different powers, and one session key
+        // for both is how a bug in the shop becomes a way into the console.
+        'learner'       => \Modules\Account\Filters\LearnerFilter::class,
     ];
 
     /**
@@ -86,8 +89,34 @@ class Filters extends BaseFilters
      */
     public array $globals = [
         'before' => [
+            // CSRF on every state-changing request, not only the admin's.
+            //
+            // The console was the only thing protected while the public side
+            // was a contact form: a forged POST could send the office an email,
+            // which is annoying rather than dangerous. That stopped being true
+            // the moment this site grew a cart, a checkout, a profile and a
+            // review form — a cross-site POST can now put items in somebody's
+            // basket, place an order in their name, or change the address a
+            // certificate is issued to. So the rule is inverted: everything is
+            // protected, and the two things that genuinely cannot carry a token
+            // are named.
+            //
+            // It lives in $globals rather than $filters because only $globals
+            // honours `except` — processFilters() reads nothing but `before`
+            // and `after`, so an exception declared there is silently ignored
+            // and the webhook endpoints start rejecting every gateway that
+            // calls them.
+            //
+            // Security::verify() ignores GET, HEAD and OPTIONS outright, so
+            // this costs nothing on the pages people read.
+            //
+            //   webhooks/* — a payment gateway has no session and no token, and
+            //                each handler verifies a cryptographic signature
+            //                instead, which is the stronger check.
+            //   api/*      — the JSON API authenticates with a bearer token,
+            //                which a browser cannot attach cross-site anyway.
+            'csrf' => ['except' => ['webhooks/*', 'api/*']],
             // 'honeypot',
-            // 'csrf',
             // 'invalidchars',
         ],
         'after' => [
@@ -126,8 +155,9 @@ class Filters extends BaseFilters
      * @var array<string, array<string, list<string>>>
      */
     public array $filters = [
-        // CSRF protection for admin form submissions (POSTs). GET is unaffected,
-        // and the public /api/* endpoints are intentionally excluded.
-        'csrf' => ['before' => ['admin', 'admin/*']],
+        // CSRF is declared in $globals above, not here: this array's handler
+        // reads only `before` and `after`, so an `except` written here would be
+        // ignored without a word and the payment webhooks would start refusing
+        // every gateway that called them.
     ];
 }

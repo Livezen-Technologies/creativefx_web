@@ -1,0 +1,214 @@
+{
+  "slug": "illustrator-level-2",
+  "pillar": "adobe",
+  "category": "illustrator",
+  "title": "Illustrator Level 2",
+  "subtitle": "For designers who already use Illustrator. Leave with faster, cleaner production artwork.",
+  "summary": "Two days of intermediate Illustrator: brushes, patterns, gradient mesh, isometric drawing, dielines, spot colour and files that survive handover.",
+  "description_html": "<p>Most people who use Illustrator every day learned it in fragments, on deadline, from whoever happened to be sitting next to them. Level 2 fills those gaps in a deliberate order and replaces slow habits with production methods: fewer anchor points, fewer duplicated objects, fewer files that fall apart when a client changes one colour.</p><p>Day one is about making artwork that would be tedious to draw by hand. You build custom art, scatter and pattern brushes, use blends to construct a decorative border, work with freeform gradients and gradient mesh, and make a repeating pattern with no visible seam, then apply it to a packaging panel. Appearance attributes and graphic styles run through the whole day, because they are what turns a revision into a two-second edit rather than an afternoon of redrawing.</p><p>Day two is production. You draw an isometric product illustration using precision transforms and the 3D and Materials effect, build a dieline on its own layer and place artwork against the cut and fold lines, use symbols and Global Edit to change a repeated element across several artboards at once, and set up a two-colour spot job with overprint checked in Separations Preview. There is a session on rescuing an inherited file, which is the job most designers actually inherit: unused swatches, thirty layers called Layer 1, and a path carrying four hundred anchor points where twelve would do.</p><p>Bring a live file you are stuck with. The last session of the second afternoon is a clinic, and real work from the room is usually the part people remember. If identity work is your goal in particular, the one-day <em>Logo and Brand Systems in Illustrator</em> workshop follows on directly from this course.</p>",
+  "level": 2,
+  "duration_hours": 12,
+  "duration_days": 2,
+  "software_version": "Creative Cloud 2026",
+  "certification_alignment": "",
+  "delivery_modes": [
+    "LIVE_ONLINE",
+    "CLASSROOM",
+    "SELF_PACED",
+    "PRIVATE"
+  ],
+  "default_mode": "LIVE_ONLINE",
+  "price_band": "2day",
+  "outcomes": [
+    "Build custom art, scatter and pattern brushes and apply them to a decorative border",
+    "Construct a repeating pattern swatch with no visible seam and apply it to a packaging panel",
+    "Paint with freeform gradients and gradient mesh to model soft shading on a flat vector shape",
+    "Stack multiple fills and strokes in the Appearance panel and save the result as a reusable graphic style",
+    "Draw an isometric product illustration using precision transforms and the 3D and Materials effect",
+    "Build a packaging dieline on its own layer and place artwork accurately against cut and fold lines",
+    "Change a repeated element across several artboards at once using symbols and Global Edit",
+    "Set up a two-colour spot job with correct overprint and confirm it in Separations Preview",
+    "Rework an inherited file: purge unused swatches and brushes, rename layers and simplify heavy paths",
+    "Export a UI icon set at several scales and formats with Asset Export, and produce a checked print PDF"
+  ],
+  "prerequisites": [
+    "You should have completed Illustrator Level 1 or be able to draw with the Pen tool, work in layers, use swatches and set type without help.",
+    "Illustrator 2024 or later installed on the machine you will work on.",
+    "Bring one live file you are stuck with for the clinic session on the second afternoon."
+  ],
+  "audiences": [
+    "Designers who learned Illustrator on the job and know they have gaps",
+    "In-house brand and marketing designers producing packaging, labels and print",
+    "Illustrators moving from raster drawing into vector production",
+    "Prepress and print production staff who repair supplied artwork",
+    "Illustrator Level 1 graduates now using the software daily"
+  ],
+  "includes": [
+    {
+      "text": "Class recording, available for 12 months",
+      "icon": "video"
+    },
+    {
+      "text": "Exercise files, including the packaging template and the untidy file used for the clean-up session",
+      "icon": "download"
+    },
+    {
+      "text": "Course workbook covering every step demonstrated in class",
+      "icon": "book"
+    },
+    {
+      "text": "Clinic time on a file of your own during the second afternoon",
+      "icon": "users"
+    },
+    {
+      "text": "MyLearnPlus certificate of completion",
+      "icon": "certificate"
+    },
+    {
+      "text": "Instructor email support after the class for questions on the exercises",
+      "icon": "support"
+    },
+    {
+      "text": "One free repeat of the same live class, terms shown on the booking page",
+      "icon": "refresh"
+    }
+  ],
+  "curriculum": [
+    {
+      "title": "Day 1, Morning — Drawing beyond the basics",
+      "summary": "Sharpen the drawing tools, then build brushes and blends that do the repetitive work for you.",
+      "topics": [
+        {
+          "title": "The Pen tool at speed, plus the Curvature and Pencil tools",
+          "duration_min": 30
+        },
+        {
+          "title": "Variable-width strokes, stroke profiles and dashed line control",
+          "duration_min": 35
+        },
+        {
+          "title": "Custom brushes: art, scatter, bristle and pattern",
+          "duration_min": 55
+        },
+        {
+          "title": "Blends, and using a blend to build a decorative border",
+          "duration_min": 60
+        }
+      ]
+    },
+    {
+      "title": "Day 1, Afternoon — Colour, patterns and appearance",
+      "summary": "Model colour properly and make a seamless pattern, then apply it to real packaging artwork.",
+      "topics": [
+        {
+          "title": "Gradients on strokes, freeform gradients and gradient mesh",
+          "duration_min": 45
+        },
+        {
+          "title": "Pattern Options: tiles, offsets, overlaps and invisible seams",
+          "duration_min": 50
+        },
+        {
+          "title": "Layered appearances, graphic styles and non-destructive effects",
+          "duration_min": 45
+        },
+        {
+          "title": "Applying a pattern and a graphic style to a packaging panel",
+          "duration_min": 40
+        }
+      ]
+    },
+    {
+      "title": "Day 2, Morning — Production drawing",
+      "summary": "Precision work: isometric illustration, symbols across artboards and a dieline that a converter can cut.",
+      "topics": [
+        {
+          "title": "Precision transforms: Rotate, Scale, Shear and Transform Again",
+          "duration_min": 35
+        },
+        {
+          "title": "Isometric drawing, and the 3D and Materials effect for a product illustration",
+          "duration_min": 60
+        },
+        {
+          "title": "Symbols, Global Edit and working across multiple artboards",
+          "duration_min": 45
+        },
+        {
+          "title": "Building a packaging dieline layer and placing artwork to the fold lines",
+          "duration_min": 40
+        }
+      ]
+    },
+    {
+      "title": "Day 2, Afternoon — Data, clean-up and output",
+      "summary": "Charts and infographics, repairing inherited files, spot colour and getting artwork out cleanly.",
+      "topics": [
+        {
+          "title": "Charts, blends and gradient meshes in an infographic",
+          "duration_min": 40
+        },
+        {
+          "title": "Cleaning up an inherited file: swatches, brushes, layers and anchor points",
+          "duration_min": 35
+        },
+        {
+          "title": "Spot colours, overprint and the Separations Preview panel",
+          "duration_min": 35
+        },
+        {
+          "title": "Asset Export for a UI icon set at multiple scales and formats",
+          "duration_min": 25
+        },
+        {
+          "title": "Print PDF export, transparency handling and a pre-flight checklist",
+          "duration_min": 25
+        },
+        {
+          "title": "Clinic: bring a live file and work through it with the group",
+          "duration_min": 20
+        }
+      ]
+    }
+  ],
+  "faqs": [
+    {
+      "question": "How do I know whether Level 2 is the right level for me?",
+      "answer": "If you can draw a curve with the Pen tool without fighting it, build artwork in layers, apply swatches and set type, you are ready. If any of that is unfamiliar, take Illustrator Level 1 first, because Level 2 moves quickly through the drawing tools in the first half hour and does not stop to teach them again. Send us a sample of your work if you are unsure and we will tell you honestly which class to book."
+    },
+    {
+      "question": "Can I bring my own files and work on them?",
+      "answer": "Yes, and we would rather you did. The last session on the second afternoon is a clinic set aside for files people bring: a packaging layout that will not separate correctly, artwork inherited from a previous designer, a pattern with a seam. Bring the file itself, not a screenshot, and mention it to your instructor at the start of day two so there is time to look at it properly."
+    },
+    {
+      "question": "Do I need my own laptop, and is the software included?",
+      "answer": "For live online classes you work on your own machine with Illustrator 2024 or later installed. Adobe subscriptions are not included in the course fee and we do not resell licences. Classroom seats in Colombo come with a workstation and the software ready to go, though you may bring your own laptop if you prefer to work on your usual setup."
+    },
+    {
+      "question": "What happens if I miss a day?",
+      "answer": "Every session is recorded and stays available for 12 months. You can also sit the missed half day again with a later cohort at no cost, subject to seats, and you keep your free repeat of the full course on top of that."
+    },
+    {
+      "question": "Do you issue a certificate, and does this course lead to an Adobe certification?",
+      "answer": "You receive a MyLearnPlus certificate of completion naming the course, the software version and the hours completed. This course is not built around the Adobe Certified Professional exam objectives, which sit closer to Illustrator Level 1. Adobe Certified Professional exams are sat through Certiport, and no training provider, including us, can award that certification or promise a pass."
+    },
+    {
+      "question": "Should I take this or the Logo and Brand Systems workshop?",
+      "answer": "They answer different questions. Level 2 is about production craft across packaging, illustration and print. The one-day Logo and Brand Systems workshop is about turning a single mark into a delivered identity system with variants, rules and a file pack. Most people take Level 2 first, because the workshop assumes you can already build and clean artwork at speed."
+    },
+    {
+      "question": "Can my employer be invoiced, and can we run this privately for a team?",
+      "answer": "Yes to both. Organisations in Sri Lanka are invoiced in LKR and organisations elsewhere in USD, and we can issue a pro forma invoice against a purchase order. For a team of four or more, private delivery usually works out better value and lets us rebuild the exercises around your own brand, packaging and press specifications."
+    }
+  ],
+  "related": [
+    "illustrator-level-1",
+    "logo-and-brand-systems",
+    "indesign-level-1"
+  ],
+  "seo": {
+    "title": "Adobe Illustrator Level 2 Training Course | MyLearnPlus",
+    "description": "Two-day advanced Illustrator training: brushes, patterns, gradient mesh, dielines, spot colour and print-ready output. Live online or in Colombo.",
+    "keywords": "advanced illustrator training, illustrator level 2, illustrator patterns and brushes, packaging dieline illustrator, gradient mesh course, illustrator training colombo, intermediate illustrator course"
+  }
+}

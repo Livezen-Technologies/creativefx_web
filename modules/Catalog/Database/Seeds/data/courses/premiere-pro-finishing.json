@@ -1,0 +1,222 @@
+{
+  "slug": "premiere-pro-finishing",
+  "pillar": "adobe",
+  "category": "premiere-pro",
+  "title": "Premiere Pro Level 2: Colour and Audio Finishing",
+  "subtitle": "For editors who can already cut. Leave able to grade a sequence and mix it to a target.",
+  "summary": "Two days on Lumetri grading, scopes, dialogue repair and loudness. Take a supplied rough cut to a graded, mixed, QC-checked master file.",
+  "description_html": "<p>A rough cut is a film that works. A finished cut is a film that looks and sounds like it was made on purpose. The gap between the two is colour and sound, and both are ordinary technical crafts with a right order of operations, not matters of taste. This course is about that order: correct before you grade, repair before you mix, and measure before you deliver.</p><p>You work on a supplied rough cut shot on two cameras in changing light, with dialogue recorded on both a lapel microphone and a camera microphone, which is to say a realistic mess. Day one is colour. You start with what a grade is actually for and how colour management and log footage work, learn to read the waveform, RGB parade and vectorscope rather than trusting a laptop screen, and do primary correction in Lumetri with curves. The afternoon covers the harder half: matching shots across two cameras and a changing sun, isolating skin, sky and a brand colour with HSL secondaries, tracked masks and vignettes, and then exporting the look as a LUT so the rest of the series matches.</p><p>Day two is sound, which is where an audience notices problems first. You organise tracks and submixes, tag clips in the Essential Sound panel, then repair the material: noise reduction, DeReverb, hum and clicks, and matching two microphones with EQ and compression so an interview cut between them does not jump. A round trip to Adobe Audition covers the jobs Premiere cannot do. The final session is the mix and the delivery: ducking that survives phone speakers, loudness measured in LUFS against a stated target rather than a guess, master and mezzanine files, and a QC checklist you run before anything leaves the building.</p><p>This is a finishing course, not a certification course. If the Adobe Certified Professional exam is your goal, <em>Premiere Pro Level 1</em> is the course built against its published objectives, and this one is what you take after it. We prepare people for exams; we do not award Adobe certifications and no course can guarantee a pass.</p><p>Bring headphones you trust. Two days of audio work on laptop speakers teaches you very little, and a decent pair of closed-back headphones will do more for your mixes than any plugin discussed in the room.</p>",
+  "level": 2,
+  "duration_hours": 12,
+  "duration_days": 2,
+  "software_version": "Creative Cloud 2026",
+  "certification_alignment": "",
+  "delivery_modes": [
+    "LIVE_ONLINE",
+    "CLASSROOM",
+    "SELF_PACED",
+    "PRIVATE"
+  ],
+  "default_mode": "LIVE_ONLINE",
+  "price_band": "2day",
+  "outcomes": [
+    "Work through a grade in the right order, separating correction from the creative look",
+    "Set up colour management for log footage and understand what a LUT does and does not do",
+    "Read the waveform, RGB parade and vectorscope and correct a shot from what they show rather than from a laptop screen",
+    "Balance exposure, white balance and contrast in Lumetri using curves on an adjustment layer",
+    "Match shots across two cameras and across a day of changing light",
+    "Isolate skin, sky and a brand colour with HSL secondaries, tracked masks and vignettes",
+    "Build a reusable look and export it as a LUT for the rest of a series",
+    "Repair dialogue with noise reduction, DeReverb, hum removal and click repair, and round trip to Adobe Audition",
+    "Match a lapel and a camera microphone with EQ and compression so cuts between them do not jump",
+    "Measure loudness in LUFS and true peak, deliver a master to a stated target, and run a QC checklist before handover"
+  ],
+  "prerequisites": [
+    "You should have completed Premiere Pro Level 1 or be editing regularly: timelines, trimming, keyframes and export should already be second nature.",
+    "Premiere Pro 2024 or later installed on a machine that can play back the supplied footage, with about 40GB of free disk space.",
+    "Bring closed-back headphones. Laptop speakers are not usable for the audio half of the course and the classroom cannot supply headphones for everyone."
+  ],
+  "audiences": [
+    "Editors who can cut a film but hand colour and sound to someone else",
+    "In-house video producers responsible for a finished file rather than a rough cut",
+    "Freelancers who want to charge for finishing as a separate service",
+    "Documentary and corporate editors working with mixed cameras and imperfect location sound",
+    "Content teams whose videos are rejected or auto-adjusted for loudness on delivery"
+  ],
+  "includes": [
+    {
+      "text": "Class recording, available for 12 months",
+      "icon": "video"
+    },
+    {
+      "text": "Exercise media: two-camera log footage, the noisy dialogue tracks and the rough cut used in class",
+      "icon": "download"
+    },
+    {
+      "text": "Course workbook covering every technique demonstrated in class",
+      "icon": "book"
+    },
+    {
+      "text": "Lumetri look presets, the LUT you export in class and a delivery QC checklist",
+      "icon": "settings"
+    },
+    {
+      "text": "MyLearnPlus certificate of completion",
+      "icon": "certificate"
+    },
+    {
+      "text": "Instructor email support after the class for questions on the exercises",
+      "icon": "support"
+    },
+    {
+      "text": "One free repeat of the same live class, terms shown on the booking page",
+      "icon": "refresh"
+    }
+  ],
+  "curriculum": [
+    {
+      "title": "Day 1, Morning — Colour management and primary correction",
+      "summary": "Learn what the scopes are telling you, then get every shot to a neutral, correct starting point.",
+      "topics": [
+        {
+          "title": "What a grade is for, and the order of operations from correction to look",
+          "duration_min": 25
+        },
+        {
+          "title": "Colour management, log footage, and what a LUT actually does",
+          "duration_min": 45
+        },
+        {
+          "title": "Reading the scopes: waveform, RGB parade and vectorscope",
+          "duration_min": 45
+        },
+        {
+          "title": "Primary correction in Lumetri: exposure, white balance and contrast in curves",
+          "duration_min": 45
+        },
+        {
+          "title": "Adjustment layers: grading a sequence rather than one clip at a time",
+          "duration_min": 20
+        }
+      ]
+    },
+    {
+      "title": "Day 1, Afternoon — Matching shots and secondary grading",
+      "summary": "Make two cameras look like one film, then build a look you can reuse across a series.",
+      "topics": [
+        {
+          "title": "Matching shots across two cameras and across changing daylight",
+          "duration_min": 45
+        },
+        {
+          "title": "HSL secondaries: isolating skin tones, sky and a brand colour",
+          "duration_min": 50
+        },
+        {
+          "title": "Masks, tracking and vignettes that do not announce themselves",
+          "duration_min": 40
+        },
+        {
+          "title": "Building a look and exporting it as a LUT for the rest of the series",
+          "duration_min": 25
+        },
+        {
+          "title": "Broadcast legal levels, and what breaks between your screen and delivery",
+          "duration_min": 20
+        }
+      ]
+    },
+    {
+      "title": "Day 2, Morning — Dialogue repair and clean sound",
+      "summary": "Fix the recording you were given before you try to mix it.",
+      "topics": [
+        {
+          "title": "Track organisation, submixes and the Audio Track Mixer",
+          "duration_min": 35
+        },
+        {
+          "title": "Essential Sound: tagging dialogue, music, effects and ambience",
+          "duration_min": 35
+        },
+        {
+          "title": "Repair: noise reduction, DeReverb, hum removal and click repair",
+          "duration_min": 45
+        },
+        {
+          "title": "EQ and compression on dialogue, and matching a lapel to a camera microphone",
+          "duration_min": 45
+        },
+        {
+          "title": "Round trip to Adobe Audition and back, and when it is worth it",
+          "duration_min": 20
+        }
+      ]
+    },
+    {
+      "title": "Day 2, Afternoon — Mix, loudness and delivery",
+      "summary": "Balance the mix, measure it against a real target, and produce master files that pass QC.",
+      "topics": [
+        {
+          "title": "Music beds, ducking and a mix that still works on phone speakers",
+          "duration_min": 40
+        },
+        {
+          "title": "Loudness: LUFS, true peak, and the different targets for broadcast and for streaming",
+          "duration_min": 45
+        },
+        {
+          "title": "Keyframed automation and a final pass across the whole sequence",
+          "duration_min": 30
+        },
+        {
+          "title": "Master files, mezzanine codecs and versions for each platform",
+          "duration_min": 35
+        },
+        {
+          "title": "QC checklist: levels, captions, black handles, colour legality and metadata",
+          "duration_min": 30
+        }
+      ]
+    }
+  ],
+  "faqs": [
+    {
+      "question": "How do I know whether this is the right level for me?",
+      "answer": "If you can cut a sequence, trim confidently and export a file without looking anything up, you are ready. Day one starts at colour management and assumes the timeline itself holds no mysteries. If you are still learning to trim, take Premiere Pro Level 1 first, since finishing a cut you cannot yet make is the wrong order. Send us a link to something you have edited and we will tell you honestly which course to book."
+    },
+    {
+      "question": "Do I need a calibrated monitor and proper headphones?",
+      "answer": "Headphones yes, and closed-back ones you already know the sound of. Bring them. A calibrated monitor is genuinely better but is not required: the whole point of the scopes session on day one is that you can grade correctly on an uncalibrated screen by trusting the measurements instead of your eyes. We cover what calibration costs and when it is worth buying, so you can make that decision afterwards rather than before."
+    },
+    {
+      "question": "Do I need my own laptop, and is the software included?",
+      "answer": "For live online classes you work on your own machine with Premiere Pro 2024 or later installed and about 40GB free for the exercise media and cache. For classroom sessions in Colombo a workstation is provided. The Adobe subscription is not included in the fee and we do not resell licences, although Adobe offers a free trial that covers the two days."
+    },
+    {
+      "question": "Does this teach grading in DaVinci Resolve as well?",
+      "answer": "No. Every exercise is done in Premiere Pro and Lumetri, and Audition for the audio round trip. That said, the parts of the course that take the longest to learn are the transferable ones: reading scopes, the order of operations, matching shots and hitting a loudness target work the same way in any application. If your studio has standardised on Resolve, tell us before booking and we will say plainly how much of the two days will carry across."
+    },
+    {
+      "question": "What happens if I miss a day?",
+      "answer": "Every live session is recorded and the recording stays available for 12 months. The two days are fairly independent, colour on the first and sound on the second, so missing one does not undermine the other. If you would rather sit the session again live you can join that half day with a later cohort at no cost, subject to seats, and your free repeat of the full course still stands."
+    },
+    {
+      "question": "Do you issue a certificate, and does this lead to an Adobe certification?",
+      "answer": "You receive a MyLearnPlus certificate of completion, issued by Livezen Technologies, naming the course and the hours completed. It is a record of training rather than an Adobe qualification. This course is not built against the Adobe Certified Professional exam objectives; Premiere Pro Level 1 is the course aligned to them, and the exam itself is booked and sat through a Certiport testing centre."
+    },
+    {
+      "question": "Can my employer be invoiced, and can we run this in-house?",
+      "answer": "Yes. Organisations in Sri Lanka are invoiced in LKR and organisations elsewhere in USD, and we can issue a pro forma invoice against your purchase order before the class. Private delivery works particularly well for this course, because we can grade and mix your own footage against your own delivery specifications and leave your team with presets and a QC checklist that match how you actually publish."
+    }
+  ],
+  "related": [
+    "premiere-pro-level-1",
+    "after-effects-level-1",
+    "photoshop-retouching"
+  ],
+  "seo": {
+    "title": "Premiere Pro Colour & Audio Finishing Course | MyLearnPlus",
+    "description": "Two-day Premiere Pro Level 2 course on Lumetri grading, scopes, shot matching, dialogue repair and loudness for delivery. Live online or Colombo.",
+    "keywords": "premiere pro colour grading course, lumetri training, video finishing course, audio mixing premiere pro, premiere pro level 2, loudness lufs delivery, colour grading training colombo"
+  }
+}

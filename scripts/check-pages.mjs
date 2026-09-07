@@ -1,6 +1,6 @@
 /**
- * Load every public page at four widths, in all three languages, and report
- * anything that went wrong on the way.
+ * Load every public page at four widths, in every language, and report anything
+ * that went wrong on the way.
  *
  * A status-code sweep cannot see a page that returns 200 and renders a blank
  * column, a script that threw before the menu could open, or a table that made
@@ -15,15 +15,23 @@ import { chromium } from 'playwright';
 
 const BASE = process.argv[2] || 'http://127.0.0.1:8083';
 const WIDTHS = [390, 768, 1280, 1920];
-const LOCALES = ['en', 'si', 'ta'];
+const LOCALES = ['en', 'si'];
 const PATHS = [
-  '', '/about-us', '/vision-mission', '/strategic-plan', '/divisions',
-  '/organisational-structure', '/land-development', '/societies',
-  '/services', '/services/replanting-subsidy', '/directory', '/statistics',
-  '/statistics/extension-structure', '/downloads', '/hantana',
-  '/hantana/good-agricultural-practice', '/faqs', '/feedback', '/contact',
-  '/sitemap', '/gallery', '/videos', '/vacancies', '/news', '/announcements',
-  '/discussion', '/search?q=subsidy', '/privacy', '/terms', '/accessibility',
+  // The commercial spine first, because these are the pages a sweep is really
+  // protecting: a 500 on /courses costs money in a way a 500 on /about does not.
+  '', '/courses', '/courses/photoshop', '/course/photoshop-level-1',
+  '/schedule', '/on-demand', '/on-demand/photoshop-level-1',
+  '/certificates', '/certificates/graphic-design-certificate',
+  '/bootcamps', '/adobe', '/ai', '/adobe/certification',
+  '/corporate', '/corporate/request-quote',
+  '/locations', '/locations/colombo', '/instructors', '/reviews',
+  '/resources', '/resources/photoshop-shortcut-cheat-sheet', '/webinars',
+  '/blog', '/blog/photoshop-vs-illustrator',
+  '/cart', '/account/login', '/account/register', '/account/forgot',
+  '/search?q=photoshop', '/sitemap', '/contact', '/faq', '/about',
+  '/why-mylearnplus', '/policies-terms', '/policies-privacy',
+  '/policies-refund', '/policies-reschedule', '/policies-accessibility',
+  '/careers',
 ];
 
 const chrome = process.env.PLAYWRIGHT_CHROMIUM ?? '/opt/pw-browsers/chromium';
@@ -45,9 +53,11 @@ for (const width of WIDTHS) {
   const page = await ctx.newPage();
 
   for (const locale of LOCALES) {
-    // One language per width is enough for the long tail; every language for
-    // the pages whose layout the language actually changes.
-    const paths = locale === 'en' ? PATHS : PATHS.slice(0, 12);
+    // Every path in every language. The previous version swept only the first
+    // twelve paths in the non-default languages, so a layout that broke in
+    // Sinhala anywhere past the twelfth entry passed clean — which is most of
+    // the site, and exactly where a longer script is likely to break it.
+    const paths = PATHS;
 
     for (const path of paths) {
       const url = `${BASE}/${locale}${path}`;

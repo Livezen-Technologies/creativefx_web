@@ -6,44 +6,52 @@
 @tailwind utilities;
 
 /* Theme tokens (RGB channels).
-   TSHDA's colours are the tea sector's own: the deep leaf green of the
-   Authority's mark, and a dry gold for the secondary accent. Ground and
-   foreground are token-driven so a page scope, the dark preference and the
-   `.on-dark` sections (hero bands, footer) all re-colour from one place.
 
-   Contrast is measured, not eyeballed, because this is a government portal and
-   Clause 3.15 commits to WCAG 2.1 AA:
-     --accent      #0F6B45 on the light ground — 6.4:1 as text.
-     --accent-fill the same green as a filled surface, with --accent-ink
-                   (white) as its label — 6.4:1.
-     --gold        #8A6A18 — 4.9:1 on the light ground; used for rules,
-                   markers and the notice band, never for small body text. */
+   MyLearnPlus teaches two things that look nothing alike — Adobe Creative Cloud
+   and AI — so the palette has to hold both without belonging to either. A deep
+   indigo carries the brand; a warm amber is the second colour, for rules,
+   markers and the things that need to be noticed rather than clicked.
+   Deliberately not Adobe's red: borrowing a vendor's colour on a training site
+   implies an endorsement that does not exist.
+
+   Ground and foreground are tokens, so the dark preference, the `.on-dark`
+   bands and any page scope all re-colour from one place and no component ever
+   needs a `dark:` variant.
+
+   Contrast is measured, not eyeballed. The blueprint commits to WCAG 2.2 AA,
+   and every pairing below was checked:
+     --accent      #3F35C7 on the light ground — 7.89:1 as text (AAA).
+     --accent-fill the same indigo as a filled surface, with --accent-ink
+                   (white) as its label — 8.25:1.
+     --gold        #92400E — 6.78:1 on the light ground.
+   On the dark ground the accent flips to a light tint of the same hue, because
+   #3F35C7 on #0E1222 is 1.6:1 and cannot carry text or a button edge. */
 :root {
-  --bg: 248 250 248;          /* #F8FAF8 near-white, a hint of green */
-  --fg: 23 35 29;             /* #17231D deep leaf ink — 15.1:1 */
-  --accent: 15 107 69;        /* #0F6B45 the Authority green — 6.4:1 as text */
-  --accent-dark: 11 82 53;    /* #0B5235 */
-  --accent-fill: 15 107 69;   /* buttons carry the green itself */
-  --forest: 15 107 69;        /* the panel green, fixed — never flipped by scope */
-  --accent-ink: 255 255 255;  /* white label on that fill — 6.4:1 */
-  --gold: 138 106 24;         /* #8A6A18 — 4.9:1; rules, markers, notices */
+  --bg: 248 250 252;          /* #F8FAFC near-white, faintly cool */
+  --fg: 20 26 46;             /* #141A2E deep navy ink — 16.5:1 */
+  --accent: 63 53 199;        /* #3F35C7 the brand indigo — 7.89:1 as text */
+  --accent-dark: 55 47 168;   /* #372FA8 — 9.4:1, for hovers and rules */
+  --accent-fill: 63 53 199;   /* buttons carry the indigo itself */
+  --brand-fixed: 63 53 199;   /* the panel indigo, never flipped by a scope */
+  --accent-ink: 255 255 255;  /* white label on that fill — 8.25:1 */
+  --gold: 146 64 14;          /* #92400E — 6.78:1; rules, markers, highlights */
   --surface: 255 255 255;     /* cards and panels, a step above the ground */
-  --line: 214 224 218;        /* hairlines and table rules */
+  --line: 219 224 235;        /* hairlines and table rules */
 }
 .on-dark {
-  --bg: 12 44 31;             /* #0C2C1F deep tea-leaf ground */
-  --fg: 240 246 242;          /* #F0F6F2 near-white — 14.0:1 */
-  /* #0F6B45 is 1.9:1 on this ground, so it cannot carry text or a button edge
-     here. The dark scope uses a lighter tint of the same hue. */
-  --accent: 106 200 152;      /* #6AC898 — 7.3:1 */
-  --accent-dark: 78 168 122;
-  --accent-fill: 106 200 152; /* a #0F6B45 button would vanish into the ground */
-  --accent-ink: 6 30 20;      /* dark label on the light-green fill */
-  --gold: 214 178 92;         /* #D6B25C — 8.1:1 on the dark ground */
-  --surface: 18 58 41;
-  --line: 44 88 66;
+  --bg: 14 18 34;             /* #0E1222 deep navy ground */
+  --fg: 238 241 250;          /* #EEF1FA near-white — 16.5:1 */
+  /* #3F35C7 is 1.6:1 on this ground, so it cannot carry text or a button edge
+     here. The dark scope uses a light tint of the same hue. */
+  --accent: 165 180 252;      /* #A5B4FC — 9.34:1 */
+  --accent-dark: 139 147 248; /* #8B93F8 */
+  --accent-fill: 165 180 252; /* a #3F35C7 button would vanish into the ground */
+  --accent-ink: 20 26 46;     /* dark label on the light-indigo fill — 8.66:1 */
+  --gold: 252 211 77;         /* #FCD34D — 12.9:1 on the dark ground */
+  --surface: 23 29 51;        /* #171D33 */
+  --line: 45 55 88;
   /* Re-declare color: redefining --fg alone doesn't change *inherited* color,
-     so headings/text without an explicit colour class would keep the light
+     so headings and text without an explicit colour class would keep the light
      theme's ink. This makes the whole dark subtree inherit near-white. */
   color: rgb(var(--fg));
 }
@@ -64,15 +72,17 @@
    the layout. Because the whole site reads from these tokens, flipping them
    here re-themes every surface at once. */
 html.dark {
-  --bg: 12 44 31;
-  --fg: 240 246 242;
-  --accent: 106 200 152;
-  --accent-dark: 78 168 122;
-  --accent-fill: 106 200 152;
-  --accent-ink: 6 30 20;
-  --gold: 214 178 92;
-  --surface: 18 58 41;
-  --line: 44 88 66;
+  --bg: 14 18 34;             /* #0E1222 deep navy ground */
+  --fg: 238 241 250;          /* #EEF1FA near-white — 16.5:1 */
+  /* #3F35C7 is 1.6:1 on this ground, so it cannot carry text or a button edge
+     here. The dark scope uses a light tint of the same hue. */
+  --accent: 165 180 252;      /* #A5B4FC — 9.34:1 */
+  --accent-dark: 139 147 248; /* #8B93F8 */
+  --accent-fill: 165 180 252; /* a #3F35C7 button would vanish into the ground */
+  --accent-ink: 20 26 46;     /* dark label on the light-indigo fill — 8.66:1 */
+  --gold: 252 211 77;         /* #FCD34D — 12.9:1 on the dark ground */
+  --surface: 23 29 51;        /* #171D33 */
+  --line: 45 55 88;
 }
 html.dark .theme-notice {
   --bg: 46 33 12;
@@ -147,10 +157,10 @@ html.dark .theme-notice {
      Our Facilities and People Say. It reads as a card laid over the photograph
      beside it.
 
-     The green comes from --forest rather than --accent-fill because the panel
+     The indigo comes from --brand-fixed rather than --accent-fill because the panel
      redefines the tokens for its own subtree, and a background reading a token
      the same element overwrites would resolve to the new value and paint itself
-     white. --forest is declared once, at :root, and never flipped by a scope.
+     white. --brand-fixed is declared once, at :root, and never flipped by a scope.
 
      White on #346142 is 7.16:1, so the panel carries body copy safely; a button
      inside it inverts to white-on-ink rather than staying green-on-green. */
@@ -269,7 +279,7 @@ html.dark .theme-notice {
   }
 
   .panel-forest {
-    background: rgb(var(--forest));
+    background: rgb(var(--brand-fixed));
     --fg: 255 255 255;
     --accent: 255 255 255;
     --accent-fill: 255 255 255;
@@ -288,6 +298,40 @@ html.dark .theme-notice {
     @apply bg-brand-red;
     color: #fff;
   }
+
+  /* -- Catalogue ---------------------------------------------------------
+     A course page carries a lot of small labelled facts -- level, duration,
+     software version, delivery mode, seats left -- and the same labels appear
+     on the cards, the schedule and the account area. Declared once so the four
+     places cannot drift.
+
+     Every colour here is a token, so the whole catalogue re-themes with the
+     rest of the site and needs no dark: variant anywhere. */
+  .chip {
+    @apply inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium;
+    background: rgb(var(--fg) / 0.06);
+    color: rgb(var(--fg) / 0.75);
+  }
+  .chip-accent {
+    background: rgb(var(--accent) / 0.12);
+    color: rgb(var(--accent));
+  }
+  .section-title {
+    @apply text-xl font-bold sm:text-2xl;
+  }
+  /* Editorial HTML from the CMS or a seed file. Tailwind's typography plugin
+     is loaded, but its defaults are tuned for a light ground and pin their
+     colours, so a course description would stay dark-on-dark after a theme
+     switch. Scoping it to the tokens is what fixes that. */
+  .prose-site {
+    @apply prose max-w-none;
+    color: rgb(var(--fg) / 0.78);
+  }
+  .prose-site :where(h2, h3, h4, strong) { color: rgb(var(--fg)); }
+  .prose-site :where(a) { color: rgb(var(--accent)); text-decoration-color: rgb(var(--line)); }
+  .prose-site :where(blockquote) { border-inline-start-color: rgb(var(--accent)); color: rgb(var(--fg) / 0.7); }
+  .prose-site :where(code) { color: rgb(var(--fg)); background: rgb(var(--fg) / 0.06); }
+  .prose-site :where(li)::marker { color: rgb(var(--accent)); }
 }
 
 @layer components {
@@ -506,29 +550,29 @@ html.dark .theme-notice {
 :root { --hero-dim: 0.65; }
 
 /* The wash colour is deliberately NOT the page ground. The ground is a surface
-   the reader looks at; the wash is a filter laid over photography so type
-   stays legible on it. Lifting the dark ground to #302B21 dragged the scrims
-   up with it and cost three page/viewport pairs their contrast — home fell to
-   3.17 — so the wash keeps the near-black it was tuned against. Light theme
-   has no such split: there the wash IS the cream ground. */
+   the reader looks at; the wash is a filter laid over photography so type stays
+   legible on it. The two drift apart on the dark theme: lifting the ground to
+   make cards readable also lifts every scrim, and the hero headline goes below
+   AA without anything visibly changing. So the wash keeps its own near-black.
+   Light has no such split — there the wash IS the ground. */
 :root { --hero-wash: var(--bg); }
-html.dark, .on-dark { --hero-wash: 8 34 24; }   /* deep tea leaf, not brown */
+html.dark, .on-dark { --hero-wash: 10 13 26; }  /* a step below the dark ground */
 
-/* The light theme is the exception: there `--bg` is the cream ground, so the
-   scrim is not a shadow over the photo — it *is* the pale surface that keeps
-   the dark headline legible. Thinning it would put ink straight onto bare
+/* The light theme is the exception: there `--bg` is the pale ground, so the
+   scrim is not a shadow over the photo — it *is* the surface that keeps the
+   dark headline legible. Thinning it would put ink straight onto bare
    photography, so light keeps the full wash. */
 html:not(.dark) { --hero-dim: 1; }
 
 /* ...but a section that has declared itself dark opts out of that, whatever the
-   page around it is doing. The home hero is a photograph with white type on it,
-   and once light became the default theme it inherited the full cream wash and
-   came back as a pale rectangle with the hotel barely visible through it. An
-   .on-dark surface wants the wash it was tuned with. */
+   page around it is doing. The home hero is a photograph with light type on it,
+   and once light became the default theme it inherited the full pale wash and
+   came back as a near-white rectangle with the picture barely visible through
+   it. An .on-dark surface wants the wash it was tuned with. */
 .on-dark { --hero-dim: 0.65; }
 
-/* Dark source frames (the home hero is a near-black studio shot) stay dark no
-   matter how far the scrim is pulled back, so the media itself is lifted. */
+/* A dark source frame stays dark no matter how far the scrim is pulled back,
+   so the media itself is lifted rather than the wash thinned. */
 .hero-media { filter: brightness(var(--hero-lift, 1)); }
 
 /* The home hero carries 8% less light than the photograph itself. It goes on
@@ -1677,7 +1721,7 @@ html.fp-active body {
   }
   .hero-full--bare::after {
     content: '';
-    background: url('/media/tshda/tshda-emblem.svg') no-repeat center / contain;
+    background: url('/media/learnplus/emblem.svg') no-repeat center / contain;
     /* Placed over the terraces rather than centred behind the copy, where the
        card would cover most of it. Low enough to read as a watermark. */
     @apply pointer-events-none absolute right-[6%] top-[14%] -z-10 hidden h-40 w-40
@@ -1866,22 +1910,36 @@ html.fp-active body {
    nothing here traps focus. */
 @layer components {
   .assistant-launcher {
-    --a-green: 20 60 43;
-    --a-gold: 201 168 90;
-    --a-ink: 247 245 238;
+    /* Its own three values rather than the page tokens, and deliberately so:
+       this button floats over whatever section it happens to be above, in
+       either theme, and a launcher that changes colour as the reader scrolls
+       past a dark band reads as a rendering fault. Fixed, and checked against
+       both grounds. */
+    --a-ground: 88 80 236;   /* #5850EC */
+    --a-gold: 252 211 77;    /* #FCD34D */
+    --a-ink: 255 255 255;
+
+    /* Measured against both grounds, which is the constraint a floating button
+       has and a normal one does not:
+         white label on the pill        5.56:1  (AA text)
+         pill against the light ground  5.32:1
+         pill against the dark ground   3.34:1  (AA non-text, 1.4.11)
+       A deeper indigo scores better on light and disappears on dark — 1.89:1 —
+       so the button that is easiest to read is the one that cannot be seen half
+       the time. This is the value that clears both. */
 
     @apply inline-flex items-center gap-3 rounded-full py-2.5 pl-2.5 pr-6 text-base font-bold
            shadow-xl transition focus:outline-none focus-visible:ring-4;
-    background: rgb(var(--a-green));
+    background: rgb(var(--a-ground));
     color: rgb(var(--a-ink));
     --tw-ring-color: rgb(var(--a-gold) / 0.65);
   }
-  .assistant-launcher:hover { background: rgb(var(--a-green) / 0.9); }
+  .assistant-launcher:hover { background: rgb(var(--a-ground) / 0.9); }
 
   .assistant-spark {
     @apply inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full;
     background: rgb(var(--a-gold));
-    color: rgb(20 60 43);
+    color: rgb(var(--a-ground));
   }
   .assistant-spark svg { @apply h-5 w-5; }
 
@@ -1903,7 +1961,7 @@ html.fp-active body {
 
   .assistant-head {
     @apply flex items-center gap-3 px-4 py-3.5;
-    background: rgb(var(--a-green));
+    background: rgb(var(--a-ground));
     color: rgb(var(--a-ink));
   }
   .assistant-status {
@@ -1924,7 +1982,7 @@ html.fp-active body {
     @apply inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full
            text-lg font-bold;
     background: rgb(var(--a-gold));
-    color: rgb(20 60 43);
+    color: rgb(var(--a-ground));
   }
   .assistant-avatar--sm { @apply h-8 w-8 text-sm; }
 
@@ -1954,7 +2012,7 @@ html.fp-active body {
     border: 1px solid rgb(var(--a-body) / 0.10);
   }
   .assistant-bubble--you {
-    background: rgb(var(--a-green));
+    background: rgb(var(--a-ground));
     color: rgb(var(--a-ink));
     border-color: transparent;
   }
@@ -2006,7 +2064,7 @@ html.fp-active body {
     @apply inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition
            focus:outline-none focus-visible:ring-2;
     background: rgb(var(--a-gold));
-    color: rgb(20 60 43);
+    color: rgb(var(--a-ground));
     --tw-ring-color: rgb(var(--a-green));
   }
   .assistant-send:hover:not(:disabled) { background: rgb(var(--a-gold) / 0.88); }

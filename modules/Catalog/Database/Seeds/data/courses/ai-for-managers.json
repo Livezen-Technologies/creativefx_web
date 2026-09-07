@@ -1,0 +1,197 @@
+{
+  "slug": "ai-for-managers",
+  "pillar": "ai",
+  "category": "ai-foundations",
+  "title": "AI for Managers",
+  "subtitle": "For team leads deciding where AI belongs, what it costs and what the rules will be",
+  "summary": "One day for managers: score AI use cases against your own workload, draft an acceptable use policy, question vendors properly and plan a pilot you can measure.",
+  "description_html": "<p>Managers are being asked two questions at once. From above: what are we doing about AI. From the team: am I allowed to use this. Answering either one badly is expensive, and most of the material available to help is either a vendor pitch or a warning. This day is neither. It is six hours of decision work, and you leave with documents rather than opinions.</p><p>The morning is about matching the technology to your actual workload. You look at where these tools are genuinely reliable, where they need a human check to be usable, and where they should not be near the process at all, using the same failure modes any hands-on user meets. Then you map your own team's work: which tasks are high volume and low risk, which are high stakes and low volume, and which are simply someone's least favourite job. You score a shortlist against effort, risk, data sensitivity and the size of the prize, and you finish the morning with three candidate use cases ranked, and a written reason for the ones you rejected.</p><p>The middle of the day is the part that most organisations skip and then regret. You draft a one-page acceptable use policy for your team: what is approved, what needs a second pair of eyes, what is off limits, and what a person must disclose when AI helped produce the work. You classify your own data into what can go into a public assistant, what needs an enterprise or contracted tool, and what should never leave your systems. Sri Lankan organisations work through this alongside <strong>Sri Lanka's Personal Data Protection Act</strong>; teams handling EU or UK personal data alongside GDPR, and those selling into the EU alongside the EU AI Act. The course shows you what to establish and which questions to put to your legal or compliance contact. It is not legal advice and does not replace them.</p><p>You then build the list of questions procurement should be asking a vendor before anything is signed: whether your inputs are used to train their models, how long data is retained, where it is processed, who the sub-processors are, what the audit and logging story is, what happens to your data on exit, and which indemnities are actually on offer for your tier rather than for the enterprise plan in the brochure. You practise it against real product documentation, which is usually where the honest answer is buried.</p><p>The afternoon closes on execution. You plan a pilot with a defined scope, a named owner, a baseline measured before anything starts, success measures that are not vanity numbers, a stop rule, and a budget shape that accounts for licences, the time to redesign the process and the review effort that does not disappear. You leave with a scored use-case shortlist, a draft policy, a vendor question set and a pilot plan on one page. Runs live online or in the classroom in Colombo, priced in <strong>LKR</strong> for Sri Lanka and <strong>USD</strong> internationally.</p>",
+  "level": 2,
+  "duration_hours": 6,
+  "duration_days": 1,
+  "software_version": "",
+  "certification_alignment": "",
+  "delivery_modes": [
+    "LIVE_ONLINE",
+    "CLASSROOM",
+    "SELF_PACED",
+    "PRIVATE"
+  ],
+  "default_mode": "LIVE_ONLINE",
+  "price_band": "1day",
+  "outcomes": [
+    "Explain to a sceptical team, in non-technical language, what current AI assistants do reliably and where they fail.",
+    "Map your team's work into tasks that suit automation, tasks that need a human check and tasks that should stay entirely manual.",
+    "Score a shortlist of use cases against effort, risk, data sensitivity and expected benefit, and defend the ones you rejected.",
+    "Draft a one-page acceptable use policy covering approved tools, review requirements, prohibited uses and disclosure.",
+    "Classify your team's data into what may go into a public assistant, what requires a contracted tool and what must never leave your systems.",
+    "Put a structured set of questions to a vendor on training data, retention, processing location, sub-processors, logging and exit.",
+    "Build a cost picture that includes licences, process redesign time and the ongoing human review a workflow still needs.",
+    "Plan a pilot with a named owner, a measured baseline, success measures, a review date and a stop rule.",
+    "Recognise shadow AI use in a team and respond with a workable route to approval rather than a ban nobody follows.",
+    "Brief your own manager or board on an AI proposal in one page, with the risks stated rather than buried."
+  ],
+  "prerequisites": [
+    "You should have used an AI assistant yourself for real work, even briefly. AI Foundations: AI for Everyone covers this if you have not.",
+    "You should manage, coordinate or budget for a team, since the exercises use your own workload and headcount.",
+    "No technical background is required and there is no coding in this course."
+  ],
+  "audiences": [
+    "Team leads and department managers asked to produce an AI plan for their function",
+    "Operations, HR and finance managers evaluating tools that touch employee or customer data",
+    "Marketing and creative directors setting rules for AI-assisted work and client disclosure",
+    "Business owners and general managers in small and mid-sized firms with no in-house IT function",
+    "Project managers running a first AI pilot who need a baseline and success measures before it starts"
+  ],
+  "includes": [
+    {
+      "text": "Class recording, available for 12 months",
+      "icon": "video"
+    },
+    {
+      "text": "Editable templates: use-case scorecard, acceptable use policy, vendor question set and pilot plan",
+      "icon": "download"
+    },
+    {
+      "text": "Course workbook with the decision frameworks used in each exercise",
+      "icon": "book"
+    },
+    {
+      "text": "Data classification worksheet for sorting your own material into risk tiers",
+      "icon": "clipboard"
+    },
+    {
+      "text": "MyLearnPlus certificate of completion",
+      "icon": "certificate"
+    },
+    {
+      "text": "Instructor email support after the class for questions on your draft documents",
+      "icon": "support"
+    },
+    {
+      "text": "One free repeat of the same live class, terms shown on the booking page",
+      "icon": "refresh"
+    }
+  ],
+  "curriculum": [
+    {
+      "title": "Module 1 — What the technology can and cannot carry",
+      "summary": "A manager's working model of the tools, without the marketing and without the doom.",
+      "topics": [
+        {
+          "title": "How assistants produce answers, and the failure modes that decide where they can be trusted",
+          "duration_min": 25
+        },
+        {
+          "title": "Assistants, retrieval over your own documents, and automated workflows: three different commitments",
+          "duration_min": 25
+        },
+        {
+          "title": "Reading a vendor claim: demo conditions, benchmark language and what is not being said",
+          "duration_min": 25
+        }
+      ]
+    },
+    {
+      "title": "Module 2 — Finding and scoring use cases",
+      "summary": "Turning a vague mandate into three ranked candidates with reasons attached.",
+      "topics": [
+        {
+          "title": "Mapping your team's work by volume, risk, repeatability and data sensitivity",
+          "duration_min": 30
+        },
+        {
+          "title": "Scoring a shortlist: effort, benefit, failure cost and who checks the output",
+          "duration_min": 25
+        },
+        {
+          "title": "Redesigning the process, not just inserting a tool into the old one",
+          "duration_min": 25
+        },
+        {
+          "title": "Exercise: three candidate use cases from your own team, scored and ranked",
+          "duration_min": 25
+        }
+      ]
+    },
+    {
+      "title": "Module 3 — Policy, data and vendor questions",
+      "summary": "The documents that let you say yes to your team without saying yes to everything.",
+      "topics": [
+        {
+          "title": "Drafting a one-page acceptable use policy: approved, review required, prohibited, disclose",
+          "duration_min": 30
+        },
+        {
+          "title": "Classifying your data, and where Sri Lanka's Personal Data Protection Act, GDPR and the EU AI Act come into it",
+          "duration_min": 25
+        },
+        {
+          "title": "Vendor questions: training on your inputs, retention, processing location, sub-processors, logging and exit",
+          "duration_min": 25
+        },
+        {
+          "title": "Shadow AI: finding out what your team is already using, and giving it a route to approval",
+          "duration_min": 25
+        }
+      ]
+    },
+    {
+      "title": "Module 4 — Piloting, measuring and rolling out",
+      "summary": "Running a first project so that the result is evidence rather than an anecdote.",
+      "topics": [
+        {
+          "title": "Scope, owner, baseline measurement, success measures, review date and stop rule",
+          "duration_min": 25
+        },
+        {
+          "title": "The real cost picture: licences, process redesign, training and continuing human review",
+          "duration_min": 25
+        },
+        {
+          "title": "Bringing the team with you, and briefing upwards in a single page",
+          "duration_min": 25
+        }
+      ]
+    }
+  ],
+  "faqs": [
+    {
+      "question": "Is this a technical course?",
+      "answer": "No. There is no coding, no model architecture and no mathematics. Every exercise is a management exercise: scoring, drafting, questioning and planning. If your team needs the hands-on skill of writing prompts that work, send them to Prompt Engineering Foundations and keep this day for the decisions."
+    },
+    {
+      "question": "Do we need to have chosen a tool before attending?",
+      "answer": "No, and it is often better if you have not. If you have already standardised on something, bring its product and security documentation and you will use it in the vendor questions exercise. If you have not chosen, you leave with the question set that should decide it."
+    },
+    {
+      "question": "Will you tell us which vendor to buy?",
+      "answer": "We do not sell or resell AI products and we make no vendor recommendation. The course teaches you what to ask and how to read the answers, because the market changes faster than any course can track and the right answer depends on your data, your budget and your regulator, not on ours."
+    },
+    {
+      "question": "Is the policy template legal advice?",
+      "answer": "No. It is a practical starting draft that has the right sections in it, written so your legal or compliance contact can review something concrete rather than a blank page. Data protection obligations under Sri Lanka's Personal Data Protection Act, GDPR and the EU AI Act are covered as orientation for a manager. Sign-off remains with your own advisers."
+    },
+    {
+      "question": "Can you run this privately for our leadership team?",
+      "answer": "Yes, and it is the most common way this course is booked. A private run uses your own workload, your own data categories and your own vendor documentation, and the day is arranged so you finish with a scored shortlist and a draft policy your team can actually take forward. We invoice organisations against a purchase order, in LKR for Sri Lankan companies and in USD internationally."
+    },
+    {
+      "question": "What if I miss the day, and do you issue a certificate?",
+      "answer": "The session is recorded and available to you for twelve months, and every live booking includes one free repeat of the same class, with the terms shown on the booking page for each date. You receive a MyLearnPlus certificate of completion recording the course title, hours and date, which is a record of training rather than an industry credential."
+    },
+    {
+      "question": "Do I need my own laptop?",
+      "answer": "Yes. The exercises are document work, so you need a machine you can type and save on, whether you join live online or come to the classroom in Colombo. The templates are supplied in editable form, and what you draft during the day is yours to take back to the office."
+    }
+  ],
+  "related": [
+    "ai-for-everyone",
+    "prompt-engineering-foundations"
+  ],
+  "seo": {
+    "title": "AI for Managers Training Course | MyLearnPlus",
+    "description": "One-day AI course for team leads, live online or in Colombo. Score use cases, draft an AI use policy, question vendors and plan a measurable pilot.",
+    "keywords": "ai for managers, ai training for business leaders, ai policy workshop, ai use case assessment, ai governance training sri lanka, ai course colombo, ai pilot planning"
+  }
+}

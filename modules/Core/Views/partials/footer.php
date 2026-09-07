@@ -8,17 +8,29 @@ $lastUpdated = $lastUpdated ?? null;
 // looks exactly as it always has.
 $showNav     = setting('show_nav', '1', 'footer') !== '0';
 $showContact = setting('show_contact', '1', 'footer') !== '0';
-// Clause 3.10 requires persistent links to the Sri Lanka Government web portal
-// and the local languages website in the footer of every page. They are rows in
-// org_links rather than markup, so the Authority can add the ones it is asked
-// to add without a deploy — but the column is on by default, because the clause
-// is not optional.
-$showGovLinks = setting('show_gov_links', '1', 'footer') !== '0';
+// The third column: the catalogue's own top level, which is the internal
+// linking the whole SEO plan rests on. Every page of the site carries a link to
+// every subject, which is what makes a new course page discoverable the day it
+// is published rather than whenever a crawler happens back to /courses.
+//
+// Read straight from the taxonomy rather than from a menu, because a category
+// added in the console should appear here without anybody remembering to add a
+// second row somewhere else.
+$showGovLinks = setting('show_categories', '1', 'footer') !== '0';
 $govLinks     = [];
 if ($showGovLinks) {
     try {
-        $govLinks = model('Modules\Tshda\Models\OrgLinkModel')->live('government');
+        $govLinks = array_map(
+            static fn (array $c): array => [
+                'url'   => 'courses/' . $c['slug'],
+                'label' => t_field($c['name']),
+            ],
+            model('Modules\Catalog\Models\CourseCategoryModel')->live()
+                ->where('parent_id IS NULL')->findAll(6)
+        );
     } catch (\Throwable $e) {
+        // Before migrations have run there is no taxonomy. A footer with three
+        // columns instead of four is not worth an exception on every page.
         $govLinks = [];
     }
 }
@@ -36,8 +48,7 @@ $cols    = ['1' => 'xl:grid-cols-1', '2' => 'xl:grid-cols-2', '3' => 'xl:grid-co
 ?>
 <?php // Always the dark scope, in both themes: the footer is the page's base,
       // and a dark base under a light page is what tells the reader the content
-      // has ended. It is also where the government links live, so it carries
-      // the same weight on every page regardless of the theme. ?>
+      // has ended. ?>
 <footer class="on-dark border-t border-white/10 bg-brand-black">
     <?php // Four content columns now, and the brand block gives up the double
       // width it had. The single row waits for xl rather than lg: a rating
@@ -133,12 +144,15 @@ $cols    = ['1' => 'xl:grid-cols-1', '2' => 'xl:grid-cols-2', '3' => 'xl:grid-co
 
         <?php if ($showGovLinks): ?>
         <div>
-            <h4 class="text-xs font-semibold uppercase tracking-widest text-white/70"><?= esc(lang('Site.footer.gov_links')) ?></h4>
+            <h4 class="text-xs font-semibold uppercase tracking-widest text-white/70"><?= esc(lang('Site.footer.subjects')) ?></h4>
             <ul class="mt-4 space-y-2 text-sm text-white/70">
                 <?php foreach ($govLinks as $link): ?>
                     <li>
-                        <a href="<?= esc($link['url'], 'attr') ?>" target="_blank" rel="noopener noreferrer" class="hover:text-white">
-                            <?= esc(t_field($link['name'])) ?>
+                        <?php // Same-site links now, not outbound ones, so no
+                              // target and no rel: opening an internal page in a
+                              // new tab is a decision the reader should make. ?>
+                        <a href="<?= esc(locale_url($link['url']), 'attr') ?>" class="hover:text-white">
+                            <?= esc($link['label']) ?>
                         </a>
                     </li>
                 <?php endforeach; ?>

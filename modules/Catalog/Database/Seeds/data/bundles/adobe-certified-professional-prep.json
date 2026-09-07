@@ -1,0 +1,99 @@
+{
+  "slug": "adobe-certified-professional-prep",
+  "type": "certificate",
+  "title": "Adobe Certified Professional Prep Track",
+  "subtitle": "Four exam-aligned courses, timed practice tasks and a readiness review before you book",
+  "summary": "Choose four courses mapped to the published Adobe Certified Professional exam domains, with timed practice tasks and a readiness review before you book.",
+  "description_html": "<p>Adobe Certified Professional is Adobe's certification for its applications, and it is delivered through <strong>Certiport</strong>. Adobe sets the exam objectives, Certiport administers the exam at authorised testing centres, and the credential is awarded by Adobe when you pass. MyLearnPlus is a training provider: we teach the objectives, we set practice tasks in the same shape as the exam, and we tell you honestly whether you look ready. We do not award the credential, we do not administer the exam, and no course anywhere can guarantee a pass.</p><p>The certification currently covers <strong>Photoshop, Illustrator, InDesign, Premiere Pro, After Effects, Animate, Dreamweaver, Acrobat Pro, Adobe Express and Adobe Firefly</strong>. This track covers eight of those ten. We do not currently run courses for Animate or Dreamweaver, and we would rather say so than sell you something adjacent. Above the individual exams sit the <strong>Specialty Credentials</strong>, in Visual Design, Video Design, Web Design and Marketing Design, which Adobe awards when you hold two related professional certifications. Adobe sets and updates which pairings count, so check the current combinations on Adobe's certification pages before you spend money on vouchers.</p><p>You choose four courses. Every one of them is built against the published domains for its exam, and every one ends with a timed practice task written in the same shape as the real thing: a brief, a set of files and a clock. Alongside the classes you get an objective checklist that maps each published domain to the session where it was taught, so revision is a matter of working down a list rather than rereading a workbook. Before you book an exam you can take a readiness review with an instructor, who goes through your practice tasks and the checklist and tells you which domains are still soft. Some people are told to sit next week and some are told to spend another fortnight on export settings and colour management, which is the point of asking.</p><p>The track runs to between thirty and forty-eight hours over five to eight days, depending on which four courses you choose, live online in your own timezone or in the classroom in Colombo, within twelve months of your first class. Exam vouchers are bought separately from Certiport or an authorised reseller and are not included in the fee; retake rules and any exam discounts are set by Adobe and Certiport, not by us, and are published on their site. Pricing is shown in LKR for learners in Sri Lanka and in USD elsewhere, and employers, schools and universities can be invoiced against a purchase order.</p>",
+  "courses": [
+    "photoshop-level-1",
+    "photoshop-level-2",
+    "illustrator-level-1",
+    "indesign-level-1",
+    "premiere-pro-level-1",
+    "after-effects-level-1",
+    "adobe-firefly-creatives",
+    "adobe-express-teams",
+    "acrobat-pro-workflows"
+  ],
+  "required": [
+    "photoshop-level-1"
+  ],
+  "outcomes": [
+    "Work through the published Adobe exam objectives for four applications, with a checklist mapping every domain to the session in which it was taught.",
+    "Sit a timed practice task in each course, built in the same shape as the exam: a written brief, a set of supplied files and a clock.",
+    "Read an exam brief the way the marker does, and identify what is actually being tested before touching the file.",
+    "Use the vocabulary the exam uses, so that a question about resolution, colour mode, output intent or a specific panel does not cost you marks you can afford.",
+    "Set up documents, manage assets and export to a stated specification, which is where most candidates lose marks regardless of application.",
+    "Identify from your own practice results which domains are solid and which need more work, in a readiness review with an instructor before you book anything.",
+    "Plan a route towards an Adobe Specialty Credential by choosing two related professional certifications, having checked the current pairings Adobe publishes.",
+    "Book and prepare for the exam itself: where authorised test centres are, what the voucher covers, and what to have set up on the day."
+  ],
+  "includes": [
+    {
+      "text": "Four exam-aligned courses of your choice, 30 to 48 hours of instructor-led training",
+      "icon": "calendar"
+    },
+    {
+      "text": "An objective checklist for each exam, mapping every published domain to the session that covers it",
+      "icon": "clipboard"
+    },
+    {
+      "text": "Timed practice tasks and practice questions written against the published exam domains",
+      "icon": "book"
+    },
+    {
+      "text": "A readiness review with an instructor before you book your first exam",
+      "icon": "chat"
+    },
+    {
+      "text": "Recordings of every class in the track, available for 12 months",
+      "icon": "video"
+    },
+    {
+      "text": "Exercise files and workbooks for all four courses, yours to keep",
+      "icon": "download"
+    },
+    {
+      "text": "MyLearnPlus certificate of completion for the track, recording the courses and hours taken",
+      "icon": "certificate"
+    }
+  ],
+  "faqs": [
+    {
+      "question": "Does this track give me an Adobe certification?",
+      "answer": "No, and be careful of anyone who says their course does. Adobe Certified Professional is awarded by Adobe when you pass an exam administered by Certiport at an authorised testing centre. This track prepares you for those exams and finishes with a readiness review. What we issue is a MyLearnPlus certificate of completion, which records the courses and hours you took with us and is not an Adobe credential."
+    },
+    {
+      "question": "Is the exam voucher included in the price?",
+      "answer": "No. Vouchers are sold by Certiport and its authorised resellers, and the price varies by country and by whether you are an individual, a student or an institution. We can point you to where to buy one and how to find your nearest test centre. Retake rules and any waiting period between attempts are set by Adobe and Certiport and are published on their site, so check them before you book rather than after a failed attempt."
+    },
+    {
+      "question": "Which four courses should I choose?",
+      "answer": "Choose them around the credential you want. A print and brand route is usually Photoshop Level 1, Illustrator Level 1, InDesign Level 1 and Acrobat Pro. A video route is Premiere Pro Level 1, After Effects Level 1 and two others. A content and marketing route often pairs Adobe Express and Adobe Firefly with Photoshop. If you are aiming at a Specialty Credential, check on Adobe's certification pages which two professional certifications it currently requires, then build the four around those."
+    },
+    {
+      "question": "Why is Photoshop Level 1 fixed?",
+      "answer": "It is included by default because the Photoshop exam is the one most candidates sit first, and because the ground it covers, resolution, colour mode, selections, masking and export to a specification, is the ground candidates most often lose marks on across the other exams too. If you are going straight for the video exams and genuinely have no use for Photoshop, tell us when you book and we will anchor your track on Premiere Pro Level 1 instead."
+    },
+    {
+      "question": "Can you tell me whether I will pass?",
+      "answer": "No, and we will not pretend otherwise. What the readiness review can tell you is how you performed on timed practice tasks written against the published domains, and which domains are still soft. Some people leave that review being told to book for next week and some are told to spend another fortnight on colour management and export settings. That is a more useful answer than a guarantee."
+    },
+    {
+      "question": "What if I fail an exam I have prepared for with you?",
+      "answer": "Contact us. You keep your recordings for twelve months and every live course in the track includes one free repeat of the same class, so you can sit the relevant day again with an instructor and work through the domains that caught you out. The exam retake itself is a matter between you and Certiport, under their published retake policy, and a second voucher is bought separately."
+    },
+    {
+      "question": "Do you run this for schools, universities and employers?",
+      "answer": "Yes. We invoice organisations against a purchase order, in LKR for Sri Lankan institutions and in USD internationally. For a group of five or more the track can be run privately, scheduled around a term or a project deadline, with the four courses chosen for the credential your cohort is working towards. Institutions usually buy exam vouchers through Certiport's own academic channels, and we are happy to work alongside that."
+    }
+  ],
+  "price_band": "certificate",
+  "saving_note": "Booked as a track, four exam-aligned courses cost {saving} less than buying the same four separately, and the objective checklists, timed practice tasks and readiness review are included rather than charged for.",
+  "seo": {
+    "title": "Adobe Certified Professional Exam Prep | MyLearnPlus",
+    "description": "Prepare for Adobe Certified Professional exams sat with Certiport. Four exam-aligned courses, timed practice and a readiness review, online or in Colombo.",
+    "keywords": "adobe certified professional, adobe certification training, certiport adobe exam, adobe exam preparation, adobe certification sri lanka, adobe certified professional colombo, photoshop certification course"
+  }
+}

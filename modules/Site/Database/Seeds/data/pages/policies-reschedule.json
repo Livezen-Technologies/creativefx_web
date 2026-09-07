@@ -1,0 +1,42 @@
+{
+  "slug": "policies-reschedule",
+  "title": "Transfer and cancellation policy",
+  "summary": "Free transfers at ten or more business days' notice, a fee inside that, free substitutions, and one free retake within six months.",
+  "blocks": [
+    {
+      "type": "pagehero",
+      "eyebrow": "Policies",
+      "heading": "Transfer and cancellation policy",
+      "subtitle": "Plans change. Here is exactly what it costs to move a booking, what happens if we cancel a date, and how the free retake works."
+    },
+    {
+      "type": "richtext",
+      "body": "<p>This policy applies to every booking with MyLearnPlus, operated by <strong>Livezen Technologies</strong>, and takes effect on {effective date}. It sits alongside our refund policy, which covers money coming back rather than dates moving. <strong>Business days</strong> means Monday to Friday excluding Sri Lankan public holidays. Notice runs from the day we receive your written request at <strong>hello@mylearnplus.com</strong> to the day before the course starts, and a request only counts once it is in writing.</p><p><strong>Transferring to another date</strong></p><ul><li><strong>Ten or more business days' notice:</strong> one transfer, free of charge, to any scheduled date of the same course within the following six months.</li><li><strong>Fewer than ten business days' notice:</strong> one transfer on payment of a transfer fee of twenty per cent of the fee paid, to a date within the following six months.</li><li><strong>Second and subsequent transfers:</strong> treated as a new booking. The original fee is applied as credit only where we have agreed it in writing.</li><li><strong>Moving to a different course:</strong> allowed on the same notice rules. If the new course costs more you pay the difference; if it costs less we hold the balance as credit for twelve months.</li><li><strong>Changing delivery mode:</strong> moving between live online and classroom on the same course is free where a seat is available, at any notice, subject to the classroom having space.</li></ul><p><strong>Substituting another person</strong></p><p>Free of charge, at any time before the class starts, on any live booking. Send the replacement learner's name and email and we will move the joining instructions and the certificate to them. Substitution is often the cheapest answer when someone cannot attend at short notice, and it is the option we will suggest first.</p>"
+    },
+    {
+      "type": "richtext",
+      "body": "<p><strong>Cancelling a booking</strong></p><ul><li><strong>Ten or more business days' notice:</strong> full refund, less any payment processing charge we have actually incurred.</li><li><strong>Fewer than ten business days' notice:</strong> the fee is not refundable. You may still transfer once on payment of the transfer fee, or substitute another person free of charge.</li><li><strong>Not attending without notice:</strong> the fee is not refundable and no transfer is available. You keep the recording and the materials for twelve months.</li></ul><p><strong>When we cancel or move a date</strong></p><p>Public dates confirm once they reach the minimum enrolment for that course. If a date will not reach it, or we have to cancel or reschedule for any other reason, we contact you at least five business days before the start date where the reason is known that far ahead, and you choose one of two things: a <strong>full refund</strong> of everything you have paid, or a <strong>free transfer</strong> to another date of your choosing, with no fee whatever the notice period. There is no third option in which we keep your money and give you a voucher.</p><p>Where a classroom session in Colombo cannot go ahead as planned, we may offer to run it live online on the same dates. You are free to decline and take the refund or the transfer instead.</p><p>We do not reimburse travel, accommodation, visas, equipment or lost working time, in any circumstances. Book flexible travel for classroom dates.</p>"
+    },
+    {
+      "type": "statement",
+      "heading": "The free retake, and what it is for",
+      "text": "Every live booking includes one free retake of the same course within six months of the class you attended. It exists because a two-day class is a lot to absorb at once, and a second pass with real work behind you is worth more than the first. Book it by email at least five business days before the date you want; it is subject to a free seat on that date, is personal to the learner who attended, and cannot be transferred to a colleague or exchanged for a refund or a discount. The retake is for people who attended. If you cannot attend the class at all, use the transfer and substitution rules above rather than the retake."
+    },
+    {
+      "type": "richtext",
+      "body": "<p><strong>Self-paced courses</strong></p><p>Self-paced enrolments do not need transfers, since access runs for twelve months from purchase. If illness or another serious reason means you cannot use that window, write to us and we will extend it once by three months at no charge.</p><p><strong>Private and corporate cohorts</strong></p><p>Dates for a private cohort are agreed in the proposal. Moving them twenty or more business days before the first day is free. Inside twenty business days, one move is available on payment of a fee stated in the proposal, which covers the instructor time we have already committed. Cancellation terms for cohorts are in the refund policy and in your signed proposal.</p><p><strong>Illness, bereavement and emergencies</strong></p><p>Tell us as soon as you can and send anything you have that supports it. We look at these case by case, and in practice we usually waive the transfer fee. We would rather have you in a later class than hold a fee for a day you could not attend.</p><p><strong>How to make a request</strong></p><p>Email <strong>hello@mylearnplus.com</strong> with the learner name, course title, the date booked, the order or invoice number and the date you would like to move to. We confirm in writing within two business days.</p>"
+    },
+    {
+      "type": "cta",
+      "heading": "Move a booking",
+      "text": "Send the order number and the date you would prefer. If a substitution or the free retake is a better answer than a transfer, we will tell you.",
+      "button_label": "Contact us",
+      "button_url": "/contact"
+    }
+  ],
+  "seo": {
+    "title": "Transfer and Cancellation Policy | MyLearnPlus",
+    "description": "Free transfers with ten or more business days' notice, a fee inside that, free substitutions, a full refund if we cancel, and a free retake in six months.",
+    "keywords": "MyLearnPlus transfer policy, course reschedule, cancellation notice period, free retake, substitute attendee, minimum enrolment"
+  }
+}

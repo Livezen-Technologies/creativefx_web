@@ -1,0 +1,132 @@
+{
+  "slug": "ai-video-and-audio",
+  "pillar": "ai",
+  "category": "ai-video-audio",
+  "title": "AI Video and Audio Production",
+  "subtitle": "Two days for editors and content teams putting AI tools into a real video workflow",
+  "summary": "Two days on AI in video and audio: transcript editing, captions, speech repair, synthetic voice, generated shots and cutting them in with filmed footage.",
+  "description_html": "<p>The demonstrations are five seconds long and beautifully lit. The job is a forty minute interview recorded in a room with an air conditioner, a corporate cut that needs two shots nobody filmed, captions in three languages and a delivery deadline. This course puts AI tools where they earn their place in that job, and is equally clear about where they still waste your afternoon.</p><p>Day one is speech, which is where the reliable gains are. You transcribe difficult audio and assess the result honestly, including how these systems handle accents and Sri Lankan English, then cut a rough assembly straight from the transcript using text-based editing in Premiere Pro. You strip filler words and dead air without destroying the rhythm of someone's speech, and you generate, correct, style and burn in captions properly rather than accepting whatever the platform produces. The afternoon is audio repair and voice: recovering a badly recorded interview with speech enhancement and noise reduction, hitting loudness targets for broadcast, YouTube and social, generating a synthetic voice-over and working through the consent and disclosure rules that go with one. You test dubbing into Sinhala and Tamil and judge for yourself whether the current output is usable, since coverage of these languages lags well behind the major European ones.</p><p>Day two is generative video. You learn what a current model can and cannot hold steady across a shot, prompt for a specific frame by describing subject, camera move, lens, lighting and duration, extend a shot that is two seconds short using Generative Extend in Premiere Pro, and drive a shot from a still you art-directed yourself rather than from a text prompt alone. Cost and render time are treated as production facts: you budget a generated sequence with real numbers from the tools in front of you, because credits and render queues decide what is possible on a deadline.</p><p>The final afternoon is the hard part, which is making generated material sit next to filmed material without announcing itself. You match grain, colour, frame rate and motion, use AI-assisted rotoscoping, masking and object removal, and then cut a finished piece of sixty to ninety seconds that mixes filmed and generated shots. You finish with the <strong>Content Credentials</strong> attached to generated media, the disclosure rules the major platforms now apply to synthetic video and voice, and an export, archive and handover the client can act on.</p><p>Tools in this field change month to month, so the course teaches the judgement rather than a fixed button sequence: what to test, what to check before delivery and what to refuse. The class runs live online or in the classroom in Colombo, priced in <strong>LKR</strong> for Sri Lanka and in <strong>USD</strong> internationally.</p>",
+  "level": 2,
+  "duration_hours": 12,
+  "duration_days": 2,
+  "software_version": "",
+  "certification_alignment": "",
+  "delivery_modes": ["LIVE_ONLINE", "CLASSROOM", "SELF_PACED", "PRIVATE"],
+  "default_mode": "LIVE_ONLINE",
+  "price_band": "2day",
+  "outcomes": [
+    "Judge the accuracy of an automatic transcript, including with accented and Sri Lankan English speech.",
+    "Cut a rough assembly from a transcript using text-based editing in Premiere Pro.",
+    "Remove filler words and dead air without breaking the natural rhythm of a speaker.",
+    "Produce captions and subtitles that are corrected, styled and burnt in to a set specification.",
+    "Recover a badly recorded interview using speech enhancement and noise reduction.",
+    "Meet loudness and level targets for broadcast, YouTube and vertical social delivery.",
+    "Generate a synthetic voice-over and apply the consent and disclosure rules that go with it.",
+    "Prompt a generated shot by subject, camera move, lens, lighting and duration, and budget its cost.",
+    "Match generated shots to filmed footage for grain, colour, frame rate and motion.",
+    "Deliver a finished 60 to 90 second cut mixing filmed and generated shots, with a handover note."
+  ],
+  "prerequisites": [
+    "You should be comfortable editing already: importing media, cutting on a timeline and exporting. Premiere Pro Level 1 or equivalent experience in another editor is enough.",
+    "No experience with AI video or audio tools is needed.",
+    "Bring headphones and, if you have one, a piece of your own difficult audio or footage to work on."
+  ],
+  "audiences": [
+    "Video editors and content producers under pressure to deliver more cuts from the same shoot",
+    "Corporate communications and internal video teams handling interviews and long-form talks",
+    "Social media and marketing staff cutting vertical video and captioned clips every week",
+    "Podcast and audio producers dealing with imperfect recordings and multiple languages",
+    "Agency and production staff pricing AI-assisted video work and explaining it to clients"
+  ],
+  "includes": [
+    {"text": "Class recording, available for 12 months", "icon": "video"},
+    {"text": "Media pack: interview footage, deliberately poor audio and stills for image-to-video work", "icon": "download"},
+    {"text": "Prompt log for generated shots, organised by shot type and camera move", "icon": "book"},
+    {"text": "Delivery checklist covering captions, loudness, disclosure and archive", "icon": "clipboard"},
+    {"text": "MyLearnPlus certificate of completion", "icon": "certificate"},
+    {"text": "Instructor email support after the class for questions on your own edits", "icon": "support"},
+    {"text": "One free repeat of the same live class within 12 months, on the terms shown on the booking page", "icon": "refresh"}
+  ],
+  "curriculum": [
+    {
+      "title": "Day 1, Morning — Transcription, text-based editing and captions",
+      "summary": "The parts of an AI video workflow that already save hours on every interview.",
+      "topics": [
+        {"title": "Where AI genuinely helps in a video workflow, and where it still fails", "duration_min": 25},
+        {"title": "Transcription accuracy: speaker labels, accents and Sri Lankan English", "duration_min": 35},
+        {"title": "Text-based editing in Premiere Pro: a rough assembly cut from the transcript", "duration_min": 45},
+        {"title": "Removing filler words and dead air without breaking the rhythm", "duration_min": 35},
+        {"title": "Captions and subtitles: generating, correcting, styling and burning in", "duration_min": 40}
+      ]
+    },
+    {
+      "title": "Day 1, Afternoon — Audio repair, voice and music",
+      "summary": "Rescuing bad recordings, generating voice responsibly and clearing your soundtrack.",
+      "topics": [
+        {"title": "Speech enhancement and noise reduction on a badly recorded interview", "duration_min": 40},
+        {"title": "Loudness, levels and delivery targets for broadcast, YouTube and social", "duration_min": 30},
+        {"title": "Synthetic voice-over: producing one, and the consent and disclosure rules", "duration_min": 40},
+        {"title": "Dubbing and translation: testing a Sinhala and a Tamil version of a short piece", "duration_min": 40},
+        {"title": "Generated and licensed music: what you can actually use in a paid deliverable", "duration_min": 30}
+      ]
+    },
+    {
+      "title": "Day 2, Morning — Generated shots",
+      "summary": "Directing a text-to-video or image-to-video model, and budgeting what it costs.",
+      "topics": [
+        {"title": "Text-to-video and image-to-video: what a current model can hold steady", "duration_min": 35},
+        {"title": "Prompting a shot: subject, camera move, lens, lighting and duration", "duration_min": 40},
+        {"title": "Generative Extend in Premiere Pro: fixing a shot that is two seconds short", "duration_min": 35},
+        {"title": "Image-to-video from a still you art-directed yourself", "duration_min": 35},
+        {"title": "Credits, cost and render time: budgeting a generated sequence honestly", "duration_min": 35}
+      ]
+    },
+    {
+      "title": "Day 2, Afternoon — Cutting it together and delivering",
+      "summary": "Making generated material sit beside filmed material, then handing the job over.",
+      "topics": [
+        {"title": "Matching generated shots to filmed footage: grain, colour, frame rate and motion", "duration_min": 45},
+        {"title": "AI-assisted rotoscoping, masking and object removal", "duration_min": 35},
+        {"title": "Building the final piece: a 60 to 90 second cut mixing filmed and generated shots", "duration_min": 45},
+        {"title": "Content Credentials, disclosure and platform rules on synthetic video and voice", "duration_min": 30},
+        {"title": "Export, archive and a handover note the client can act on", "duration_min": 25}
+      ]
+    }
+  ],
+  "faqs": [
+    {
+      "question": "Do I need my own laptop, and is any software included?",
+      "answer": "You work on your own machine whether you join live online or come to the classroom in Colombo, so the project, presets and prompt log stay with you. No subscription is included in the fee. You need Premiere Pro installed and signed in, headphones, and enough free disk space for the media pack, which we send with the joining instructions along with a setup note."
+    },
+    {
+      "question": "Which AI tools do I need accounts for, and do they cost extra?",
+      "answer": "The Adobe features used on day one and Generative Extend are covered by a Creative Cloud subscription, though generative features draw on Adobe's generative credit allowance and what you get depends on your plan. Some generated-shot and synthetic-voice exercises use third-party tools on free or trial tiers; where a paid tier is needed, the instructor demonstrates and you complete the equivalent task in a tool you do have. We do not resell tool access."
+    },
+    {
+      "question": "How good is the Sinhala and Tamil output really?",
+      "answer": "Honestly, weaker than English, and the class tests it rather than assuming. Transcription of Sri Lankan English is usually workable with correction; Sinhala and Tamil transcription, subtitling and dubbing vary considerably by tool and by speaker. You will run the same clip through more than one tool and judge whether the result is deliverable, needs a human pass, or should not be attempted for that client."
+    },
+    {
+      "question": "Do I need to be a Premiere Pro editor already?",
+      "answer": "You need to be comfortable editing somewhere: importing media, cutting on a timeline and exporting. The Adobe modules are taught in Premiere Pro, so an editor from Final Cut or DaVinci Resolve will follow the concepts but should expect to spend some time on unfamiliar menus. If you have never edited at all, take Premiere Pro Level 1 first."
+    },
+    {
+      "question": "Do you issue a certificate, and is this an Adobe certification?",
+      "answer": "You receive a MyLearnPlus certificate of completion, which records the training you attended. It is not an Adobe credential. Adobe Certified Professional exams are delivered through Certiport and include Premiere Pro and After Effects; if you want that exam, our Premiere Pro courses are the ones that prepare you for it."
+    },
+    {
+      "question": "What if I miss a day?",
+      "answer": "Both days are recorded and available to you for twelve months, and you keep the media pack so you can work through the module you missed. Live bookings also include one free repeat of the same class, on the terms shown on the booking page for each date. These tools change quickly, so a later run is usually worth sitting anyway."
+    },
+    {
+      "question": "Can my employer be invoiced, and can you run this in-house?",
+      "answer": "Yes to both. We invoice organisations against a purchase order, in LKR for Sri Lankan companies and in USD internationally. A private run uses your own footage, brand and delivery specifications, and the final module can be adapted to produce a draft disclosure policy for AI-assisted video and synthetic voice."
+    }
+  ],
+  "related": ["premiere-pro-level-1", "premiere-pro-finishing", "generative-ai-for-designers"],
+  "seo": {
+    "title": "AI Video & Audio Production Course | MyLearnPlus",
+    "description": "Two-day AI video and audio course: transcript editing, captions, speech repair, synthetic voice, generated shots and matching them to filmed footage.",
+    "keywords": "ai video course, ai audio production training, text based editing premiere pro, generative video training, ai captions and subtitles, ai video course sri lanka, video training colombo"
+  }
+}

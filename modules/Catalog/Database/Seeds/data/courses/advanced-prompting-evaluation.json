@@ -1,0 +1,132 @@
+{
+  "slug": "advanced-prompting-evaluation",
+  "pillar": "ai",
+  "category": "prompt-engineering",
+  "title": "Advanced Prompting and Evaluation",
+  "subtitle": "For people who own an AI feature and must prove a prompt change made it better",
+  "summary": "Two days on prompt architecture and measurement: decomposition, structured output, grounding, golden sets, model-graded scoring and regression testing.",
+  "description_html": "<p>Most prompts are written once, tested on three examples that happen to work, and then defended in meetings on the strength of a feeling. When the assistant starts producing the wrong thing, nobody can say when it began, which edit caused it, or whether the fix helped. This course treats a prompt as something you build, version and measure, not something you phrase well.</p><p>The first day is prompt architecture. You take an overloaded prompt apart into a chain of small steps that can be tested separately, then separate the instruction from the context and the data so each can change without rewriting the others. You choose few-shot examples that correct a specific failure rather than padding the window, and you learn when step-by-step reasoning earns its cost and when it just adds tokens and noise. The afternoon moves to the parts that touch other systems: forcing output against a JSON schema and validating it before anything downstream sees it, repairing malformed responses instead of retrying blindly, writing a tool description the model calls with the right arguments, and grounding an answer on your own documents so it cites its source and refuses honestly when the answer is not there.</p><p>The second day is evaluation, which is the part most teams skip. You build a golden set out of real failures from your own task, write a rubric that a second person would score the same way, and separate the checks a machine can do reliably from the judgements that need a model or a human. You run a model-graded evaluation and then examine where the judge is unreliable, including position bias, a preference for longer answers and a tendency to favour output from its own family. You measure how far the judge agrees with a human rater, because a judge nobody has checked is just another unverified opinion.</p><p>The last module is what makes the work survive contact with production. You compare two prompt versions with a pairwise test, run a regression suite before a change ships, track cost, latency and token use next to quality so a quality gain is not paid for twice, and harden the prompt against injection from untrusted content such as a web page, a pasted email or a user-uploaded file. You leave with a versioning and logging scheme that lets you trace any bad answer back to the prompt that produced it.</p><p>Every exercise can be completed in a spreadsheet and an assistant's ordinary interface, so no programming is required. A Python notebook is provided for anyone who would rather script the harness. Bring a real task from your own work with a few good outputs and a few bad ones, and you will leave with an evaluation set for it. The class runs live online or in the classroom in Colombo, priced in <strong>LKR</strong> for Sri Lanka and in <strong>USD</strong> internationally.</p>",
+  "level": 3,
+  "duration_hours": 12,
+  "duration_days": 2,
+  "software_version": "",
+  "certification_alignment": "",
+  "delivery_modes": ["LIVE_ONLINE", "CLASSROOM", "SELF_PACED", "PRIVATE"],
+  "default_mode": "LIVE_ONLINE",
+  "price_band": "2day",
+  "outcomes": [
+    "Decompose an overloaded prompt into a chain of small steps you can test one at a time.",
+    "Separate instruction, context and data so a prompt can be edited without being rewritten.",
+    "Select few-shot examples that correct a specific observed failure rather than padding the context.",
+    "Force output against a JSON schema and validate it before anything downstream receives it.",
+    "Write a tool description precise enough that the model calls it with the right arguments.",
+    "Ground an answer on your own documents, with citations and an honest refusal when the source is silent.",
+    "Build a golden set of test cases drawn from real failures on a task you brought with you.",
+    "Write a scoring rubric two people apply the same way, and measure the agreement between them.",
+    "Run a model-graded evaluation and identify position, length and self-preference bias in the judge.",
+    "Compare two prompt versions with a pairwise test and a regression suite before either one ships."
+  ],
+  "prerequisites": [
+    "You should already use an AI assistant regularly and have written prompts that worked as well as prompts that did not.",
+    "No programming is required. Every exercise runs in a spreadsheet and an assistant interface, and a Python notebook is supplied for anyone who prefers to script it.",
+    "Bring one real task from your own work, with a few examples of the output you want and a few of the failures you have seen."
+  ],
+  "audiences": [
+    "AI leads and prompt engineers responsible for a feature that has to behave the same way twice",
+    "Developers integrating an assistant into a product who need evidence that a change helped",
+    "Content, support and operations managers running assistant workflows at volume",
+    "Analysts and data staff asked to judge whether an AI output can be relied on",
+    "Consultants and agency staff who have to defend an AI deliverable to a client"
+  ],
+  "includes": [
+    {"text": "Class recording, available for 12 months", "icon": "video"},
+    {"text": "Evaluation harness: spreadsheet template and an optional Python notebook", "icon": "download"},
+    {"text": "Prompt pattern library built across the two days, organised by failure type", "icon": "book"},
+    {"text": "Rubric, golden-set and regression-log templates you can reuse on the next task", "icon": "clipboard"},
+    {"text": "MyLearnPlus certificate of completion", "icon": "certificate"},
+    {"text": "Instructor email support after the class for questions on your own evaluation set", "icon": "support"},
+    {"text": "One free repeat of the same live class within 12 months, on the terms shown on the booking page", "icon": "refresh"}
+  ],
+  "curriculum": [
+    {
+      "title": "Day 1, Morning — Taking a prompt apart",
+      "summary": "Prompt architecture: decomposition, separation of concerns, examples and reasoning.",
+      "topics": [
+        {"title": "Why a prompt that demonstrates well fails in production", "duration_min": 30},
+        {"title": "Decomposition: splitting one prompt into a chain of small, testable steps", "duration_min": 40},
+        {"title": "Separating instruction, context and data so each can change independently", "duration_min": 35},
+        {"title": "Choosing few-shot examples that fix the failure you actually have", "duration_min": 40},
+        {"title": "Reasoning prompts: when step by step helps and when it only adds cost", "duration_min": 35}
+      ]
+    },
+    {
+      "title": "Day 1, Afternoon — Structured output, tools and grounding",
+      "summary": "Making a prompt safe to connect to other systems and to your own documents.",
+      "topics": [
+        {"title": "Forcing structured output: JSON schemas, enumerated fields and validation", "duration_min": 45},
+        {"title": "Handling malformed output: repair prompts, retries and fallbacks", "duration_min": 30},
+        {"title": "Tool and function calling: describing a tool so it is called correctly", "duration_min": 40},
+        {"title": "Grounding on your own documents: chunking, citation and refusing to answer", "duration_min": 40},
+        {"title": "First working version of the prompt for the task you brought", "duration_min": 25}
+      ]
+    },
+    {
+      "title": "Day 2, Morning — Building an evaluation set that means something",
+      "summary": "Golden sets, rubrics, deterministic checks and model-graded scoring.",
+      "topics": [
+        {"title": "Collecting real failures into a golden set of test cases", "duration_min": 40},
+        {"title": "Writing a rubric a second person would score the same way", "duration_min": 35},
+        {"title": "Deterministic checks: schema, pattern match, constraints and exact answers", "duration_min": 35},
+        {"title": "Model-graded evaluation, and where an LLM judge is biased", "duration_min": 40},
+        {"title": "Measuring agreement between your judge and a human rater", "duration_min": 30}
+      ]
+    },
+    {
+      "title": "Day 2, Afternoon — Regression, hardening and rollout",
+      "summary": "Proving a change is an improvement, then shipping it without opening a hole.",
+      "topics": [
+        {"title": "Pairwise comparison and A/B testing two prompt versions", "duration_min": 35},
+        {"title": "Running a regression suite before every prompt change", "duration_min": 35},
+        {"title": "Tracking cost, latency and token use alongside quality", "duration_min": 25},
+        {"title": "Prompt injection, jailbreaks and untrusted content in the context window", "duration_min": 45},
+        {"title": "Versioning prompts, logging outputs and a rollout plan you can defend", "duration_min": 40}
+      ]
+    }
+  ],
+  "faqs": [
+    {
+      "question": "Do I need my own laptop, and is any software included?",
+      "answer": "You work on your own machine whether you join live online or come to the classroom in Colombo, so the prompt library and evaluation harness you build stay with you. No software licence is included in the fee. You need a browser, a spreadsheet application and an account with at least one assistant, and we send a short setup note with your joining instructions."
+    },
+    {
+      "question": "Do I need API keys, and will the exercises cost me anything in usage?",
+      "answer": "API keys are optional. The whole course can be completed in the ordinary chat interface of an assistant you already pay for. If you want to run the evaluation harness as a script, you will need your own API key, and the usage cost of the exercises is small because the test sets are deliberately kept to a few dozen cases. We do not resell model access, so any usage is billed to you by your provider."
+    },
+    {
+      "question": "Which model or assistant is the course taught on?",
+      "answer": "The techniques are model agnostic and the exercises are demonstrated on more than one assistant so you can see where behaviour differs. Bring whichever tool your organisation has standardised on. If you have not standardised yet, the evaluation method taught on day two is exactly how you would make that decision on evidence rather than on preference."
+    },
+    {
+      "question": "Do I need to be able to code?",
+      "answer": "No. Every exercise, including the evaluation runs and the regression suite, can be completed in a spreadsheet. A Python notebook is provided for people who prefer to script it, and the instructor will help you with it if you want to go that way, but nothing in the assessment depends on it."
+    },
+    {
+      "question": "Is this preparation for an AI certification?",
+      "answer": "No. This is not vendor certification training, and there is no widely recognised independent certification in prompt engineering that we would send you to. You receive a MyLearnPlus certificate of completion, which is a record of the training you attended. Adobe Certified Professional exams, which we do prepare people for, cover Adobe applications and are a separate matter."
+    },
+    {
+      "question": "What if I miss a day?",
+      "answer": "Both days are recorded and available to you for twelve months, and the exercise files let you catch up on the module you missed. Live bookings also include one free repeat of the same class, on the terms shown on the booking page for each date, so you can sit the day you missed on a later run."
+    },
+    {
+      "question": "Can my employer be invoiced, and can you run this in-house?",
+      "answer": "Yes to both. We invoice organisations against a purchase order, in LKR for Sri Lankan companies and in USD internationally. For a private run we build the golden set and the rubric around one of your own live tasks, and the team leaves with an evaluation suite for that task rather than a worked example."
+    }
+  ],
+  "related": ["ai-assistants-at-work", "generative-ai-for-designers", "ai-video-and-audio"],
+  "seo": {
+    "title": "Advanced Prompting & Evaluation Course | MyLearnPlus",
+    "description": "Two-day advanced prompt engineering course: prompt decomposition, structured output, grounding, golden sets, LLM-as-judge and regression testing.",
+    "keywords": "advanced prompt engineering course, llm evaluation training, prompt engineering sri lanka, llm as a judge, golden set evaluation, prompt injection training, ai training colombo"
+  }
+}

@@ -1,0 +1,205 @@
+{
+  "slug": "lightroom-photo-workflow",
+  "pillar": "adobe",
+  "category": "lightroom",
+  "title": "Lightroom: Photo Workflow and Editing",
+  "subtitle": "One day to get a whole shoot from card to delivered files without losing anything",
+  "summary": "One day in Lightroom Classic: import and catalogue a shoot, edit tone and colour, mask and retouch, then batch export for print, web and client proofs.",
+  "description_html": "<p>Most people do not have a Lightroom problem. They have a four-hundred-photograph problem: images spread across a desktop, a phone, two memory cards and a folder called New Folder (2), edited one at a time in whatever software opened first. Lightroom exists to make that manageable, and this course teaches it as one continuous workflow rather than a tour of panels.</p><p>You take a full shoot from card to delivered files in a single day. You import a set of raw images and decide, before anything else, where the originals live and how they are backed up. You flag and rate to cut the set down to the frames worth working on, add keywords so you can find them again in a year, then move into the Develop module and correct exposure, white balance, contrast and colour on one image properly before syncing those settings across the rest of the shoot. You mask a subject and a sky separately, clean up sensor dust and distractions, straighten and crop to the sizes you actually need, and finish by exporting the same edit three ways: full-resolution files for print, sized JPEGs for the web, and a watermarked proof set for a client to choose from.</p><p>The day is taught in <strong>Lightroom Classic</strong>, the catalogue-based desktop version, because that is what most working photographers and studios run. A dedicated section covers how the cloud-based Lightroom differs, what syncs between them and when the cloud version is the better choice, so you can decide which one belongs in your own setup rather than guessing. Editing in both is parametric: your original file is never altered, and the catalogue holds the instructions. That is a strength until the catalogue is lost, so backing it up is treated as part of the workflow, not an appendix.</p><p>There is currently no Adobe Certified Professional exam for Lightroom. The Adobe Certified Professional programme is delivered through Certiport and covers Photoshop, Illustrator, InDesign, Premiere Pro, After Effects, Animate, Dreamweaver, Acrobat Pro, Adobe Express and Adobe Firefly. If certification is your goal, this course pairs naturally with <strong>Photoshop Level 1</strong>, which is written against the Photoshop exam domains. You receive a MyLearnPlus certificate of completion for this day, which is a record of training rather than an Adobe credential.</p><p>The class runs live online in your own timezone or in the classroom in Colombo, with pricing in <strong>LKR</strong> for learners in Sri Lanka and <strong>USD</strong> internationally. You keep the raw exercise files, the export presets built during the day and the class recording for twelve months.</p>",
+  "level": 1,
+  "duration_hours": 6,
+  "duration_days": 1,
+  "software_version": "Creative Cloud 2026",
+  "certification_alignment": "",
+  "delivery_modes": [
+    "LIVE_ONLINE",
+    "CLASSROOM",
+    "SELF_PACED",
+    "PRIVATE"
+  ],
+  "default_mode": "LIVE_ONLINE",
+  "price_band": "1day",
+  "outcomes": [
+    "Import a card of raw images into a catalogue with a folder structure, file renaming and a second copy written to a backup drive.",
+    "Cut a shoot down to a working selection using flags, star ratings, colour labels and the compare view.",
+    "Add keywords, captions and copyright metadata so images can be found and credited a year later.",
+    "Correct exposure, white balance, contrast and colour on a raw file using the Basic, Tone Curve and Colour Mixer panels.",
+    "Sync a finished set of develop settings across an entire shoot and then adjust the frames that do not match.",
+    "Mask a subject, a sky and a brushed area separately, and adjust each one without affecting the rest of the frame.",
+    "Remove sensor dust, blemishes and distracting objects with the Healing and Content-Aware Remove tools.",
+    "Straighten, crop and apply lens and perspective corrections to a set of architectural and portrait frames.",
+    "Build and save export presets that produce print-resolution files, web-sized JPEGs and a watermarked client proof set from one edit.",
+    "Back up a catalogue and explain what would be lost if the catalogue disappeared but the original files remained."
+  ],
+  "prerequisites": [
+    "No prior experience with Lightroom is needed.",
+    "You should be comfortable with your own computer: copying files from a memory card, finding folders and connecting an external drive."
+  ],
+  "audiences": [
+    "Photographers moving from phone apps or single-image editors to a full shoot workflow",
+    "Wedding, event and portrait photographers who deliver hundreds of images per job",
+    "Marketing and communications staff who manage a growing library of company photography",
+    "Small business owners and online sellers editing their own product photography in batches",
+    "Design and studio staff who receive raw files from a photographer and have to select, correct and export them"
+  ],
+  "includes": [
+    {
+      "text": "Class recording, available for 12 months",
+      "icon": "video"
+    },
+    {
+      "text": "Raw exercise files from a full sample shoot, yours to keep",
+      "icon": "download"
+    },
+    {
+      "text": "Course workbook covering every step demonstrated in class",
+      "icon": "book"
+    },
+    {
+      "text": "Export and import presets built during the day, ready to load into your own catalogue",
+      "icon": "clipboard"
+    },
+    {
+      "text": "MyLearnPlus certificate of completion",
+      "icon": "certificate"
+    },
+    {
+      "text": "Instructor email support after the class for questions on the exercises",
+      "icon": "support"
+    },
+    {
+      "text": "One free repeat of the same live class, terms shown on the booking page",
+      "icon": "refresh"
+    }
+  ],
+  "curriculum": [
+    {
+      "title": "Module 1 — Import, catalogue and selection",
+      "summary": "Where your originals live, how they get into Lightroom, and how a shoot is cut down to the frames worth editing.",
+      "topics": [
+        {
+          "title": "Lightroom Classic and cloud-based Lightroom: what each one is for and what syncs",
+          "duration_min": 20
+        },
+        {
+          "title": "Importing from a card: folder structure, file renaming, presets and a second backup copy",
+          "duration_min": 25
+        },
+        {
+          "title": "Flags, star ratings, colour labels, the survey and compare views",
+          "duration_min": 25
+        },
+        {
+          "title": "Collections, smart collections and keywords, captions and copyright metadata",
+          "duration_min": 20
+        }
+      ]
+    },
+    {
+      "title": "Module 2 — The Develop module: tone and colour",
+      "summary": "Editing one raw file properly, then carrying that edit across the rest of the shoot.",
+      "topics": [
+        {
+          "title": "Parametric editing, the history panel, snapshots and virtual copies",
+          "duration_min": 30
+        },
+        {
+          "title": "White balance, exposure, highlights, shadows, whites and blacks on a raw file",
+          "duration_min": 30
+        },
+        {
+          "title": "Tone Curve, Colour Mixer, HSL and black and white conversion",
+          "duration_min": 25
+        },
+        {
+          "title": "Copy, paste, Sync and Auto Sync across a shoot, then fixing the frames that drift",
+          "duration_min": 20
+        }
+      ]
+    },
+    {
+      "title": "Module 3 — Masking, retouching and geometry",
+      "summary": "Local work: adjusting part of a frame, cleaning it up and getting the lines straight.",
+      "topics": [
+        {
+          "title": "Masking with Select Subject, Select Sky, brush, linear and radial gradients",
+          "duration_min": 25
+        },
+        {
+          "title": "Combining and subtracting masks, and adjusting each mask independently",
+          "duration_min": 25
+        },
+        {
+          "title": "Healing, Cloning and Content-Aware Remove for dust, blemishes and distractions",
+          "duration_min": 20
+        },
+        {
+          "title": "Cropping, straightening, lens profile corrections and perspective with Upright",
+          "duration_min": 20
+        }
+      ]
+    },
+    {
+      "title": "Module 4 — Presets, output and looking after the catalogue",
+      "summary": "Turning a finished edit into the three sets of files a job usually needs, and protecting the work.",
+      "topics": [
+        {
+          "title": "Building develop presets and applying them on import",
+          "duration_min": 20
+        },
+        {
+          "title": "Export presets: print resolution, web JPEG at set pixel dimensions and sharpening for output",
+          "duration_min": 20
+        },
+        {
+          "title": "Watermarked client proofs, contact sheets and PDF or web galleries",
+          "duration_min": 20
+        },
+        {
+          "title": "Catalogue backups, moving a catalogue between machines and reconnecting missing files",
+          "duration_min": 15
+        }
+      ]
+    }
+  ],
+  "faqs": [
+    {
+      "question": "Do I need my own laptop?",
+      "answer": "For live online classes, yes: you work on your own machine so the catalogue, presets and exported files stay with you afterwards. For classroom sessions in Colombo we also recommend bringing your own laptop, ideally with an external drive or a memory card reader. If you cannot bring one, tell us when you book and we will confirm what is available for your date."
+    },
+    {
+      "question": "Is the Lightroom software included in the price?",
+      "answer": "No. The fee covers the training, not an Adobe licence. You need Lightroom Classic installed and signed in before the class, either on your own or your employer's Creative Cloud plan or through Adobe's free trial. We send setup instructions when you book, and there is a pre-class check if you would like help installing it."
+    },
+    {
+      "question": "Is this taught in Lightroom Classic or the newer cloud version?",
+      "answer": "The day is taught in Lightroom Classic, because the catalogue, folder control and export options are what most studios and working photographers rely on. Module 1 covers how cloud-based Lightroom differs, what syncs between the two and when the cloud version suits you better, so you leave able to choose rather than guessing."
+    },
+    {
+      "question": "Can I bring my own photographs?",
+      "answer": "Yes, and it usually makes the day more useful. Bring a folder of raw files on a drive or card, ideally from one shoot rather than a mixture. We also supply a full sample shoot in raw so nobody is stuck if their files will not load, and the timed exercises use the supplied set so the whole room works on the same frames."
+    },
+    {
+      "question": "Do you issue a certificate, and is there an Adobe certification for Lightroom?",
+      "answer": "You receive a MyLearnPlus certificate of completion recording the course title, hours and date. There is currently no Adobe Certified Professional exam for Lightroom. The Adobe programme, delivered through Certiport, covers Photoshop, Illustrator, InDesign, Premiere Pro, After Effects, Animate, Dreamweaver, Acrobat Pro, Adobe Express and Adobe Firefly, so if certification matters to you, Photoshop Level 1 is the course to look at next."
+    },
+    {
+      "question": "What happens if I miss the class?",
+      "answer": "The session is recorded and available to you for twelve months, so you can work through the material you missed with the same exercise files. If you would rather sit it live again, live bookings include one free repeat of the same class; the terms and the booking window are shown on the booking page for each date."
+    },
+    {
+      "question": "Can my employer be invoiced, and can you run this in-house?",
+      "answer": "Yes to both. We invoice organisations against a purchase order, in LKR for Sri Lankan companies and in USD internationally. Send the billing details and the names of the attendees and we will hold the seats while the invoice is processed. A private run can be built around your own image library, your naming conventions and the export sizes your team actually delivers."
+    }
+  ],
+  "related": [
+    "photoshop-level-1",
+    "photoshop-retouching",
+    "photoshop-generative-ai"
+  ],
+  "seo": {
+    "title": "Lightroom Photo Workflow Course | MyLearnPlus",
+    "description": "One-day Lightroom Classic training, live online or in Colombo. Import, catalogue, raw editing, masking, retouching and batch export for print and web.",
+    "keywords": "lightroom course, lightroom classic training, photo editing course, raw workflow training, lightroom training sri lanka, photography course colombo, adobe lightroom class"
+  }
+}

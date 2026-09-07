@@ -1,0 +1,230 @@
+{
+  "slug": "building-with-llm-apis",
+  "pillar": "ai",
+  "category": "llm-apis",
+  "title": "Building with LLM APIs",
+  "subtitle": "For developers shipping a first AI feature: tool use, retrieval, evaluation and cost",
+  "summary": "Two days of Python against the OpenAI and Anthropic APIs: streaming, tool use, structured output, retrieval, evaluation and a bill you can predict.",
+  "description_html": "<p>The first call to a language model API takes about ten minutes. Everything after that is the actual work: output that will not parse, a tool called with the wrong argument, a request that hangs, a bill nobody forecast, and a user who has discovered that pasting instructions into a support ticket makes interesting things happen. This course is two days on that second part, written for developers who have to put an AI feature in front of real users and then keep it running.</p><p>You work in Python against both the <strong>OpenAI</strong> and <strong>Anthropic</strong> APIs, close enough together to see where the two differ and where the pattern is identical. Day one covers the request and the response in detail: system prompts and message history, token limits and stop conditions, streaming into a user interface, reading usage back so a request can be costed, and a thin client wrapper that keeps keys out of the codebase. Then structured output against a JSON schema, validated before anything downstream is allowed to see it, and the tool-use loop: writing a tool definition the model calls with the right arguments, executing the call, returning the result, and constraining what a tool may do when its side effects cannot be undone.</p><p>Day two opens on retrieval, treated as an engineering problem rather than an architecture diagram. You chunk documents so an answer is not cut in half at a page break, index them with an embedding model, query a vector store, and add reranking for the cases where pure vector search confidently returns the wrong passage. You add citations and a grounded refusal, so the feature says it does not know rather than filling the gap. The session also covers the <strong>Model Context Protocol</strong> as a standard way of exposing tools and data to a client that supports it.</p><p>The final half day is what separates a demonstration from a service. You build an evaluation suite from real failures, with deterministic assertions where the answer is checkable and a model-graded rubric where it is not, and wire it into CI so a prompt change cannot regress in silence. You reduce cost and latency with prompt caching, batch requests, tiered model choice and a shorter context, and you measure the difference rather than assuming it. You handle rate limits, timeouts and provider outages with backoff, fallback and idempotent retries, and you defend the endpoint against instructions hidden in untrusted content.</p><p>You leave with a repository you built during the two days: an endpoint that streams, calls tools, retrieves from a document set, is covered by an evaluation suite and reports its cost per request. Bring your own API keys, since the exercises use a small amount of credit on your own account. Runs live online, in the classroom in Colombo or privately for a development team, priced in <strong>LKR</strong> for Sri Lanka and <strong>USD</strong> internationally.</p>",
+  "level": 3,
+  "duration_hours": 12,
+  "duration_days": 2,
+  "software_version": "",
+  "certification_alignment": "",
+  "delivery_modes": [
+    "LIVE_ONLINE",
+    "CLASSROOM",
+    "SELF_PACED",
+    "PRIVATE"
+  ],
+  "default_mode": "LIVE_ONLINE",
+  "price_band": "2day",
+  "outcomes": [
+    "Call the OpenAI and Anthropic APIs from Python and stream a response into a user interface as it arrives.",
+    "Read a response properly: content, stop reason, token usage and error types, and log what billing and debugging need.",
+    "Return output against a JSON schema, validate it, and repair or reject what fails instead of passing it downstream.",
+    "Implement a tool-use loop that defines tools, executes calls, returns results and copes with the wrong tool being chosen.",
+    "Build a retrieval pipeline over a document set with chunking, an embedding model, a vector store, reranking and citations.",
+    "Write an evaluation suite from real failures, combining deterministic assertions with a model-graded rubric, and run it in CI.",
+    "Reduce cost and latency with prompt caching, batch requests, tiered model choice and a shorter context, and measure the effect.",
+    "Handle rate limits, timeouts and provider outages with exponential backoff, provider fallback and idempotent retries.",
+    "Defend an endpoint against prompt injection in untrusted content, and constrain what a tool call is permitted to do.",
+    "Deploy the service with secrets managed outside the codebase, request logging that respects personal data, and cost tracked per request."
+  ],
+  "prerequisites": [
+    "You should write Python comfortably, use a virtual environment and git, and have called an HTTP API before. TypeScript examples are supplied for teams working in Node.",
+    "You need your own API key for at least one of OpenAI and Anthropic, ideally both. A few US dollars of credit covers the exercises.",
+    "Experience of prompting is useful but not required. Advanced Prompting and Evaluation is the companion course for people who do not write code."
+  ],
+  "audiences": [
+    "Backend and full-stack developers adding an AI feature to an existing product",
+    "Data engineers and analysts moving from a notebook to a service other people call",
+    "Technical founders building the first version of an AI product",
+    "Team leads who have to review AI code and estimate what it will cost to run",
+    "Integration developers replacing a brittle rules engine with a model and a schema"
+  ],
+  "includes": [
+    {
+      "text": "Class recording, available for 12 months",
+      "icon": "video"
+    },
+    {
+      "text": "Course repository: Python and TypeScript examples, a retrieval pipeline and an evaluation harness",
+      "icon": "download"
+    },
+    {
+      "text": "Course workbook with each API pattern and the failure case that motivates it",
+      "icon": "book"
+    },
+    {
+      "text": "Evaluation set template and a cost and latency tracking sheet",
+      "icon": "clipboard"
+    },
+    {
+      "text": "MyLearnPlus certificate of completion",
+      "icon": "certificate"
+    },
+    {
+      "text": "Instructor email support after the class for questions on your own implementation",
+      "icon": "support"
+    },
+    {
+      "text": "One free repeat of the same live class, terms shown on the booking page",
+      "icon": "refresh"
+    }
+  ],
+  "curriculum": [
+    {
+      "title": "Day 1, Morning — The API surface, properly",
+      "summary": "Both SDKs, the full request and response, streaming, and a client wrapper worth keeping.",
+      "topics": [
+        {
+          "title": "OpenAI and Anthropic side by side: authentication, request shape, response object and error types",
+          "duration_min": 35
+        },
+        {
+          "title": "System prompts, message history, temperature, token limits and stop conditions",
+          "duration_min": 35
+        },
+        {
+          "title": "Streaming: server-sent events, partial output, cancellation and what the user sees",
+          "duration_min": 40
+        },
+        {
+          "title": "Token accounting: estimating before you send, reading usage back and costing a request",
+          "duration_min": 35
+        },
+        {
+          "title": "Project setup: keys out of the codebase, a thin client wrapper and typed responses",
+          "duration_min": 35
+        }
+      ]
+    },
+    {
+      "title": "Day 1, Afternoon — Structured output and tool use",
+      "summary": "Making the model return something a program can trust, and letting it act without letting it loose.",
+      "topics": [
+        {
+          "title": "Structured output against a JSON schema, validated before anything downstream sees it",
+          "duration_min": 40
+        },
+        {
+          "title": "Repair, retry or reject: handling output that does not parse",
+          "duration_min": 30
+        },
+        {
+          "title": "Tool definitions the model calls with the right arguments, and the ones it ignores",
+          "duration_min": 40
+        },
+        {
+          "title": "The tool loop: executing calls, returning results, multiple and parallel calls",
+          "duration_min": 40
+        },
+        {
+          "title": "Constraining tools: allow lists, dry runs, confirmation and side effects you cannot undo",
+          "duration_min": 30
+        }
+      ]
+    },
+    {
+      "title": "Day 2, Morning — Retrieval over your own data",
+      "summary": "Building a retrieval pipeline that cites its source and refuses when it should.",
+      "topics": [
+        {
+          "title": "When retrieval is the answer, and when a longer prompt or a database query is",
+          "duration_min": 25
+        },
+        {
+          "title": "Chunking documents so an answer is not cut in half",
+          "duration_min": 35
+        },
+        {
+          "title": "Embeddings and a vector store: choosing a provider, indexing and keeping the index fresh",
+          "duration_min": 40
+        },
+        {
+          "title": "Hybrid search and reranking for the queries pure vector search gets confidently wrong",
+          "duration_min": 35
+        },
+        {
+          "title": "Citations, grounding checks and an honest refusal",
+          "duration_min": 25
+        },
+        {
+          "title": "Exposing tools and data over the Model Context Protocol",
+          "duration_min": 20
+        }
+      ]
+    },
+    {
+      "title": "Day 2, Afternoon — Evaluation, cost and going live",
+      "summary": "The work that turns a working prototype into something you are willing to be on call for.",
+      "topics": [
+        {
+          "title": "An evaluation set built from real failures, with deterministic assertions where possible",
+          "duration_min": 35
+        },
+        {
+          "title": "Model-graded evaluation, judge bias, and running the suite in CI on every change",
+          "duration_min": 35
+        },
+        {
+          "title": "Cost control: prompt caching, batch requests, tiered model choice and a shorter context",
+          "duration_min": 35
+        },
+        {
+          "title": "Latency: streaming, parallel calls, timeouts and what users actually notice",
+          "duration_min": 25
+        },
+        {
+          "title": "Rate limits, exponential backoff, provider fallback and idempotent retries",
+          "duration_min": 25
+        },
+        {
+          "title": "Prompt injection, untrusted content, output handling and logging without leaking personal data",
+          "duration_min": 25
+        }
+      ]
+    }
+  ],
+  "faqs": [
+    {
+      "question": "What do I need to bring?",
+      "answer": "A laptop you can install software on, with Python 3, a working virtual environment, git and an editor you know. You also need your own API key for at least one of OpenAI and Anthropic, and ideally both so you can compare them. The exercises are sized to use a few US dollars of credit across the two days, charged to your own account, and whatever you do not spend stays there."
+    },
+    {
+      "question": "Which language are the examples written in?",
+      "answer": "Python, using each provider's official SDK. A parallel set of TypeScript and Node examples is included in the course repository for teams working in that stack, and the patterns transfer directly. You do not need to know both languages to take the course."
+    },
+    {
+      "question": "Do you cover fine-tuning or training a model?",
+      "answer": "Not as a hands-on exercise. The course covers where fine-tuning sits against prompting and retrieval, what it costs to maintain as models change, and the questions to answer before choosing it. Most features people expect to need fine-tuning for are better served by a clearer prompt, structured output and retrieval, and the course is honest about the cases where that stops being true."
+    },
+    {
+      "question": "How is this different from Advanced Prompting and Evaluation?",
+      "answer": "That course works at the level of the prompt itself, in a spreadsheet and an assistant interface, and requires no programming. This one is a development course: SDKs, tool loops, retrieval infrastructure, CI, deployment, rate limits and cost per request. They overlap on evaluation by design, and teams often send the same engineer to both."
+    },
+    {
+      "question": "Will what I learn work with other providers or open models?",
+      "answer": "The patterns are provider-independent, and many other services, including local runtimes for open-weight models, expose an interface compatible with the OpenAI SDK that the same client code can call with a different base URL. The course teaches OpenAI and Anthropic because that is where most teams start, and it covers what to check before swapping a provider in: tool-calling behaviour, context limits, structured output support and how your evaluation suite scores the replacement."
+    },
+    {
+      "question": "What if I miss a day, and do you issue a certificate?",
+      "answer": "Both days are recorded and available to you for twelve months, and every live booking includes one free repeat of the same class, with the terms shown on the booking page for each date. You receive a MyLearnPlus certificate of completion recording the course title, hours and date, which is a record of training rather than an industry credential."
+    },
+    {
+      "question": "Can my employer be invoiced, and can you run this for our development team?",
+      "answer": "Yes to both. We invoice organisations against a purchase order, in LKR for Sri Lankan companies and in USD internationally. A private run can be built around your own codebase, so the retrieval exercises index your documents and the evaluation suite is written against the failures your users have actually reported."
+    }
+  ],
+  "related": [
+    "advanced-prompting-evaluation",
+    "ai-automation-and-agents",
+    "ai-governance-responsible-use"
+  ],
+  "seo": {
+    "title": "Building with LLM APIs Training Course | MyLearnPlus",
+    "description": "Two-day developer course on the OpenAI and Anthropic APIs, live online or in Colombo. Tool use, structured output, retrieval, evaluation and cost control.",
+    "keywords": "llm api training, openai api course, anthropic api course, rag training, tool use function calling, llm evaluation course, ai developer training sri lanka"
+  }
+}

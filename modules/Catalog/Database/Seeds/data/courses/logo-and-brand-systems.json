@@ -1,0 +1,193 @@
+{
+  "slug": "logo-and-brand-systems",
+  "pillar": "adobe",
+  "category": "illustrator",
+  "title": "Logo and Brand Systems in Illustrator",
+  "subtitle": "For designers building brand identities. Leave with a logo suite and a working brand file.",
+  "summary": "A one-day workshop that turns a single mark into a working logo system: variants, rules, a delivery pack and a one-page brand sheet.",
+  "description_html": "<p>A logo is not a picture. It is a set of files and rules that other people will use without you in the room. This one-day workshop is about building that system in Illustrator: constructing a mark that holds together geometrically, deriving the variants a real brand needs, and delivering it so that a printer, a sign maker and a web developer can each work from the same pack.</p><p>The morning is construction. You build a primary mark on a geometric grid, then correct it optically, because a circle drawn to the same measurement as a square looks smaller, and a horizontal stroke matched to a vertical one looks heavier. You then choose and kern a wordmark by eye, outline it, and keep an editable master alongside the outlined version, which is the file most designers forget to keep and later have to rebuild.</p><p>The afternoon is where a mark either survives or does not. You produce full-colour, one-colour, reversed and mono variants, define the palette in CMYK, RGB and HEX against a client-supplied Pantone reference, and then run the stress tests: sixteen pixels as a favicon, a single-colour stamp, and signage read from three metres. Anything that fails gets simplified until it works. Clear space and minimum size are drawn as artwork rather than written as a note, because a note gets ignored.</p><p>You finish by exporting a delivery pack in AI, EPS, SVG, PDF and PNG under a naming scheme that will still make sense in a year, and by assembling a one-page brand sheet that goes out with it. The day closes with a group critique: you review someone else's mark against the same tests and receive the same in return.</p><p>Bring a logo concept or a rough sketch you want to develop. If you have nothing in progress, a written brief and a concept sketch are supplied so that you spend the day building rather than deciding.</p>",
+  "level": 3,
+  "duration_hours": 6,
+  "duration_days": 1,
+  "software_version": "Creative Cloud 2026",
+  "certification_alignment": "",
+  "delivery_modes": [
+    "LIVE_ONLINE",
+    "CLASSROOM",
+    "PRIVATE"
+  ],
+  "default_mode": "LIVE_ONLINE",
+  "price_band": "1day",
+  "outcomes": [
+    "Construct a primary mark on a geometric grid and correct it optically where the measurements look wrong",
+    "Kern a wordmark by eye, outline it, and keep an editable master alongside the outlined artwork",
+    "Derive a secondary lockup, a monogram and a horizontal variant from a single primary mark",
+    "Produce full-colour, one-colour, reversed and mono versions that stay recognisable in each form",
+    "Define a brand palette in CMYK, RGB and HEX against a client-supplied Pantone reference",
+    "Test a mark at 16 px, as a single-colour stamp and at three metres, and simplify whichever version fails",
+    "Draw clear space and minimum size as artwork rather than describing them in a note",
+    "Structure and name the working files so that another designer can open them in a year and understand them",
+    "Export a delivery pack in AI, EPS, SVG, PDF and PNG to a consistent naming scheme",
+    "Assemble a one-page brand sheet and critique another delegate's mark against the same tests"
+  ],
+  "prerequisites": [
+    "You should be comfortable in Illustrator already: Pen tool, layers, swatches, type and export. Illustrator Level 2 or equivalent daily experience is the right starting point.",
+    "Bring a logo concept or rough sketch you want to develop. A brief and a concept sketch are supplied if you have nothing in progress.",
+    "This is a working day rather than a lecture, and it ends with a group critique, so be prepared to show work to the room."
+  ],
+  "audiences": [
+    "Designers taking on their first full identity project",
+    "In-house designers rebuilding a brand's logo files from whatever was inherited",
+    "Freelancers who deliver logos and want a handover pack they can defend",
+    "Agency juniors moving from artworking into identity design",
+    "Marketing managers who commission logos and keep receiving files they cannot use"
+  ],
+  "includes": [
+    {
+      "text": "Class recording, available for 12 months",
+      "icon": "video"
+    },
+    {
+      "text": "A written brief and concept sketch to work from if you have no project in progress",
+      "icon": "download"
+    },
+    {
+      "text": "Brand sheet template and file naming checklist as editable Illustrator files",
+      "icon": "book"
+    },
+    {
+      "text": "Group critique of your mark on the day, with written notes to take away",
+      "icon": "users"
+    },
+    {
+      "text": "MyLearnPlus certificate of completion",
+      "icon": "certificate"
+    },
+    {
+      "text": "Instructor email support after the class for questions on the exercises",
+      "icon": "support"
+    },
+    {
+      "text": "One free repeat of the same live workshop, terms shown on the booking page",
+      "icon": "refresh"
+    }
+  ],
+  "curriculum": [
+    {
+      "title": "Morning — Constructing the mark",
+      "summary": "Build the primary mark on a grid, then fix the places where geometry lies to the eye.",
+      "topics": [
+        {
+          "title": "Grid construction: circles, squares and the maths under a mark",
+          "duration_min": 30
+        },
+        {
+          "title": "Optical correction: overshoot, stroke weight compensation and counters",
+          "duration_min": 30
+        },
+        {
+          "title": "Building the primary mark from your own sketch or the supplied concept",
+          "duration_min": 30
+        }
+      ]
+    },
+    {
+      "title": "Morning — The wordmark and the system",
+      "summary": "Set and kern the wordmark, then derive the variants the brand will actually need.",
+      "topics": [
+        {
+          "title": "Choosing a typeface for a wordmark, and what its licence does and does not allow",
+          "duration_min": 20
+        },
+        {
+          "title": "Kerning by eye, then outlining and keeping an editable master",
+          "duration_min": 35
+        },
+        {
+          "title": "Deriving the secondary lockup, the monogram and the horizontal variant",
+          "duration_min": 35
+        }
+      ]
+    },
+    {
+      "title": "Afternoon — Colour, contrast and the stress tests",
+      "summary": "Build the colour variants and palette, then try hard to break the mark.",
+      "topics": [
+        {
+          "title": "Full-colour, one-colour, reversed and mono variants",
+          "duration_min": 30
+        },
+        {
+          "title": "Palette definition in CMYK, RGB and HEX against a client-supplied Pantone reference",
+          "duration_min": 25
+        },
+        {
+          "title": "Stress tests: 16 px favicon, single-colour stamp, and signage read at three metres",
+          "duration_min": 35
+        }
+      ]
+    },
+    {
+      "title": "Afternoon — Rules, files and handover",
+      "summary": "Turn the mark into a delivered system, then put it in front of the room.",
+      "topics": [
+        {
+          "title": "Clear space and minimum size drawn as artwork",
+          "duration_min": 20
+        },
+        {
+          "title": "File architecture and a naming scheme that survives a year of client edits",
+          "duration_min": 20
+        },
+        {
+          "title": "Exporting the delivery pack: AI, EPS, SVG, PDF and PNG",
+          "duration_min": 25
+        },
+        {
+          "title": "Building the one-page brand sheet, and group critique of the day's marks",
+          "duration_min": 25
+        }
+      ]
+    }
+  ],
+  "faqs": [
+    {
+      "question": "Do I need to bring a logo project of my own?",
+      "answer": "It is better if you do, because you leave with something you can actually use. Bring a concept, a rough sketch or an existing mark you have been asked to rebuild. If you have nothing in progress, we supply a written brief and a concept sketch so that you spend the day constructing and testing rather than deciding what to draw."
+    },
+    {
+      "question": "Is one day really enough to design a logo?",
+      "answer": "One day is not enough to invent a concept from nothing, and we do not pretend otherwise. It is enough to take a concept that already exists and turn it into a constructed mark, a full set of variants, tested files and a brand sheet. The work we cut is the exploration phase, not the craft."
+    },
+    {
+      "question": "Do I need a Pantone subscription for the colour session?",
+      "answer": "No. Pantone colour books are no longer included with a Creative Cloud subscription and now require a separate Pantone Connect subscription, so we teach the session the way most studios work: you specify CMYK, RGB and HEX yourself and record the Pantone number your client or printer has supplied as a reference. If you do hold Pantone Connect, you can follow along in it."
+    },
+    {
+      "question": "Is this workshop available self-paced?",
+      "answer": "No. The day is built around live construction and a group critique, and neither works as a recorded lesson, so we run it live online, in the Colombo classroom, or privately for a team. You do receive the recording of your own session afterwards for 12 months, along with the templates and checklists."
+    },
+    {
+      "question": "Do you issue a certificate?",
+      "answer": "Yes. You receive a MyLearnPlus certificate of completion naming the workshop, the software version and the hours completed. It is a record of training rather than an Adobe qualification. Adobe Certified Professional certifications are separate exams sat through Certiport."
+    },
+    {
+      "question": "What if I have to miss the workshop after booking?",
+      "answer": "Tell us before the day and we will move you to a later date at no charge. If you miss it without notice you can use your free repeat instead, subject to seats and to the terms shown on the booking page, and the recording is available to you either way."
+    },
+    {
+      "question": "Can my employer be invoiced, and can you run this for our team?",
+      "answer": "Yes. Organisations in Sri Lanka are invoiced in LKR and organisations elsewhere in USD, and we can issue a pro forma invoice against a purchase order. Run privately for a design team, the day can be rebuilt around your own brand: your marks, your press specifications and your existing guidelines."
+    }
+  ],
+  "related": [
+    "illustrator-level-2",
+    "illustrator-level-1",
+    "indesign-level-1"
+  ],
+  "seo": {
+    "title": "Logo and Brand Systems in Illustrator | MyLearnPlus",
+    "description": "One-day Illustrator workshop on building a logo system: grid construction, variants, clear space rules and a delivery pack a client can actually use.",
+    "keywords": "logo design course, brand identity training, illustrator logo workshop, brand guidelines training, logo design colombo, vector logo course, identity design training"
+  }
+}

@@ -2,18 +2,17 @@
 
 /**
  * The help assistant: a floating button that opens a panel answering questions
- * out of this site's own FAQ and pages.
+ * out of this site's own course FAQs and pages.
  *
  * What it deliberately is not: a live chat. Nobody is on the other end, so it
  * does not say "Online" or "replies instantly" — it says it is automated and
  * where its answers come from, and when it cannot answer it hands over the ways
- * to reach a person rather than improvising. A government portal that implies a
- * duty officer is reading, at eleven at night, has made a promise the Authority
- * did not make.
+ * to reach a person rather than improvising. A shop that implies somebody is
+ * reading, at eleven at night, has made a promise the school did not make.
  *
  * Nothing third-party loads and nothing leaves the server: the lookup is this
- * site's own search endpoint. Somebody asking about their subsidy application
- * is not thereby telling a chat vendor about it.
+ * site's own search endpoint. Somebody asking whether a course covers something
+ * they are embarrassed not to know is not thereby telling a chat vendor.
  */
 
 if (setting('enabled', '1', 'assistant') === '0') { return; }
@@ -38,12 +37,12 @@ $clash = $whatsappNumber !== ''
 $bottom = $clash ? 'bottom-24' : 'bottom-5';
 
 // The three things most people arrive wanting. Real destinations, not canned
-// replies — the fastest useful answer to "how do I apply" is the page that
-// tells you, so the topic buttons are links and behave like links.
+// replies — the fastest useful answer to "when is the next Photoshop class" is
+// the schedule, so the topic buttons are links and behave like links.
 $topics = [
-    ['label' => lang('Site.assistant.topic_subsidy'),      'url' => locale_url('services/replanting-subsidy')],
-    ['label' => lang('Site.assistant.topic_office'),       'url' => locale_url('directory')],
-    ['label' => lang('Site.assistant.topic_registration'), 'url' => locale_url('services/smallholder-registration')],
+    ['label' => lang('Site.assistant.topic_courses'),   'url' => locale_url('courses')],
+    ['label' => lang('Site.assistant.topic_dates'),     'url' => locale_url('schedule')],
+    ['label' => lang('Site.assistant.topic_corporate'), 'url' => locale_url('corporate')],
 ];
 ?>
 <div x-data="assistant(<?= esc(json_encode([

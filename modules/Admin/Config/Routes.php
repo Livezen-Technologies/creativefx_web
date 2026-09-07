@@ -25,19 +25,17 @@ $routes->group('admin', ['namespace' => 'Modules\Admin\Controllers'], static fun
             'contacts'            => 'Contacts',
             'leads'               => 'Leads',
 
-            // The Authority's own subject matter.
-            'notices'             => 'Notices',
-            'services'            => 'Services',
-            'documents'           => 'Documents',
-            'document-categories' => 'DocumentCategories',
-            'faqs'                => 'Faqs',
-            'offices'             => 'Offices',
-            'staff'               => 'Staff',
-            'statistics'          => 'Statistics',
-            'programmes'          => 'Programmes',
-            'societies'           => 'Societies',
-            'discussion-topics'   => 'DiscussionTopics',
-            'org-links'           => 'OrgLinks',
+            // The catalogue.
+            'course-categories'   => 'CourseCategories',
+            'courses'             => 'Courses',
+            'instructors'         => 'Instructors',
+            'venues'              => 'Venues',
+            'bundles'             => 'Bundles',
+            'resources'           => 'Resources',
+            'webinars'            => 'Webinars',
+
+            // Commerce.
+            'coupons'             => 'Coupons',
         ];
         foreach ($resources as $seg => $ctrl) {
             $routes->get($seg, $ctrl . '::index');
@@ -56,28 +54,34 @@ $routes->group('admin', ['namespace' => 'Modules\Admin\Controllers'], static fun
         $routes->post('applications/(:num)', 'Applications::update/$1');
         $routes->get('applications/(:num)/cv', 'Applications::download/$1');
 
-        // Queues rather than CRUD: each of these is a decision an officer
-        // makes about something a member of the public sent in, not a record
-        // they author, so they get their own screens.
-        $routes->get('bookings', 'Bookings::index');
-        $routes->post('bookings/(:num)', 'Bookings::update/$1');
+        // Queues rather than CRUD: each of these is a decision somebody makes
+        // about something that arrived, not a record they author, so they get
+        // their own screens. Sessions are here rather than in $resources
+        // because seat counts are inventory and must never be a text input.
+        $routes->get('course-sessions', 'CourseSessions::index');
+        $routes->get('course-sessions/new', 'CourseSessions::create');
+        $routes->post('course-sessions', 'CourseSessions::store');
+        $routes->get('course-sessions/(:num)', 'CourseSessions::show/$1');
+        $routes->post('course-sessions/(:num)', 'CourseSessions::update/$1');
+        $routes->post('course-sessions/(:num)/cancel', 'CourseSessions::cancel/$1');
+        $routes->post('course-sessions/(:num)/attendance', 'CourseSessions::attendance/$1');
 
-        $routes->get('comments', 'Comments::index');
-        $routes->post('comments/(:num)', 'Comments::update/$1');
-        $routes->post('comments/(:num)/delete', 'Comments::delete/$1');
+        $routes->get('orders', 'Orders::index');
+        $routes->get('orders/(:num)', 'Orders::show/$1');
+        $routes->post('orders/(:num)/mark-paid', 'Orders::markPaid/$1');
+        $routes->post('orders/(:num)/refund', 'Orders::refund/$1');
 
-        $routes->get('feedback', 'Feedback::index');
-        $routes->get('feedback/(:num)', 'Feedback::show/$1');
-        $routes->post('feedback/(:num)', 'Feedback::update/$1');
-        $routes->get('feedback/(:num)/attachment', 'Feedback::attachment/$1');
+        $routes->get('enrolments', 'Enrolments::index');
+        $routes->post('enrolments/(:num)', 'Enrolments::update/$1');
+        $routes->post('enrolments/(:num)/certificate', 'Enrolments::issueCertificate/$1');
 
-        $routes->get('officer-submissions', 'OfficerSubmissions::index');
-        $routes->post('officer-submissions/(:num)', 'OfficerSubmissions::update/$1');
-        $routes->get('officer-submissions/(:num)/attachment', 'OfficerSubmissions::attachment/$1');
+        $routes->get('training-leads', 'TrainingLeads::index');
+        $routes->get('training-leads/(:num)', 'TrainingLeads::show/$1');
+        $routes->post('training-leads/(:num)', 'TrainingLeads::update/$1');
 
-        $routes->get('subscribers', 'Subscribers::index');
-        $routes->get('subscribers/export', 'Subscribers::export');
-        $routes->post('subscribers/(:num)/delete', 'Subscribers::delete/$1');
+        $routes->get('reviews', 'Reviews::index');
+        $routes->post('reviews/(:num)', 'Reviews::update/$1');
+        $routes->post('reviews/(:num)/delete', 'Reviews::delete/$1');
 
         // Page builder (block-content editor + structure operations).
         $routes->get('pages/(:num)/content', 'Content::edit/$1');

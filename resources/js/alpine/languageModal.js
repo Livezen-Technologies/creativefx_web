@@ -1,6 +1,23 @@
 const STORE_KEY = 'nl_locale';
 
 /**
+ * Both stores, for the reason set out in langSwitcher.js: localStorage answers
+ * "has this reader chosen?" on the client, and the cookie is the only way the
+ * server can honour that choice at the bare root before any script runs.
+ */
+function remember(code) {
+    try {
+        localStorage.setItem(STORE_KEY, code);
+    } catch (e) { /* private window */ }
+
+    try {
+        const secure = location.protocol === 'https:' ? '; Secure' : '';
+        document.cookie = `${STORE_KEY}=${encodeURIComponent(code)}; Path=/; Max-Age=31536000; SameSite=Lax${secure}`;
+    } catch (e) { /* nothing sensible to do */ }
+}
+
+
+/**
  * The first-visit language chooser.
  *
  * It reads the same key the header switcher writes and the welcome page reads,
@@ -92,7 +109,7 @@ export default function languageModal(config = {}) {
 
     remember(code) {
       try {
-        localStorage.setItem(STORE_KEY, code);
+        remember(code);
       } catch (e) { /* a private window; the choice still applies to this page */ }
     },
 

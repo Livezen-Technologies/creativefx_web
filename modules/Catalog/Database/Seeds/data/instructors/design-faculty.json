@@ -1,0 +1,15 @@
+{
+  "slug": "design-faculty",
+  "name": "MyLearnPlus Design and Digital Faculty",
+  "headline": "Designers and digital practitioners teaching Figma, web, marketing and data visualisation",
+  "bio_html": "<p>The design and digital track covers Figma and UI/UX, web design with WordPress, digital marketing analytics, and presentation and data visualisation. These are craft subjects with live consequences, so the standard for teaching them is current practice rather than a qualification. Whoever teaches the Figma course ships interface work that developers build from. Whoever teaches WordPress maintains sites that real visitors use and real clients complain about. Whoever teaches analytics reads the reports for a business that spends money on the basis of them, and whoever teaches data visualisation has had to defend a chart to someone who disagreed with it. Instructors bring their own worked examples into class alongside the standard exercise files, which is why two cohorts of the same course are never quite identical in the anecdotes, only in the syllabus.</p><p>Staffing works the same way across the whole school. One instructor is assigned per cohort and named in your joining instructions before the course starts. New instructors teach the MyLearnPlus syllabus under observation before running a cohort alone, so the exercise files, the workbook and the structure of a day do not depend on who turns up. Private and in-company groups can be staffed with a second assisting instructor, and any substitution is notified in advance and taught from the same materials.</p>",
+  "credentials": [
+    "Current professional practice in the subject taught, whether interface design, web build, analytics or data visualisation",
+    "Portfolio of shipped work that learners can be shown in class",
+    "Comfortable teaching the handover to developers, clients or stakeholders, not only the software",
+    "Taught the MyLearnPlus syllabus under observation before teaching a cohort alone",
+    "Keeps course material current with the tools and platforms as they change"
+  ],
+  "placeholder": true,
+  "note_for_client": "Replace this entry with your named design and digital instructors, each with a photograph, a short biography, a portfolio link and the courses they teach."
+}

@@ -1,0 +1,118 @@
+{
+  "slug": "corporate",
+  "title": "Corporate and team training",
+  "summary": "Private Adobe and AI training for teams, delivered on-site in Colombo, virtually or as a hybrid cohort, taught on your own files.",
+  "blocks": [
+    {
+      "type": "pagehero",
+      "eyebrow": "For organisations",
+      "heading": "Train the team on the work they are already behind on",
+      "subtitle": "Private cohorts in Adobe Creative Cloud and generative AI, built around your files, your brand and the output you are trying to produce."
+    },
+    {
+      "type": "richtext",
+      "body": "<p>A private cohort is not a public class with your logo on it. Before we quote, we ask what the team has to produce and what is currently slowing that down. The syllabus is then assembled from our catalogue and adjusted to your files: your brand palette in the Illustrator module, your report template in InDesign, your product photography in the retouching module, your own documents in the AI assistants module.</p><p>We teach marketing and communications teams, in-house design and studio teams, publishing and print production teams, video and content teams, and operations teams adopting AI assistants. Groups of five or more are usually better served by a private cohort than by five public seats, because the exercises can use your material and the dates can fit around your deadlines.</p><p>Cohorts are priced per group, not per seat, and quoted in <strong>LKR</strong> for Sri Lankan organisations or <strong>USD</strong> internationally. We invoice against a purchase order.</p>"
+    },
+    {
+      "type": "feature_cards",
+      "heading": "Outcomes teams book us for",
+      "cards": [
+        {
+          "title": "Bring artwork production in-house",
+          "text": "The team stops sending routine resizes, retouching and layout amends to an agency, because they can open the layered file, change it correctly and export to the right specification.",
+          "icon": "layers"
+        },
+        {
+          "title": "Ship long documents without panic",
+          "text": "Annual reports, tender documents and manuals built on styles, master pages, automatic contents and a repeatable export, so next year's edition takes days rather than weeks.",
+          "icon": "book"
+        },
+        {
+          "title": "Produce video in the marketing team",
+          "text": "Social cuts, subtitles, brand-consistent titles and a clean export for each platform, produced by the people who own the campaign rather than queued behind a supplier.",
+          "icon": "video"
+        },
+        {
+          "title": "Adopt AI without the mess",
+          "text": "The team uses assistants on real tasks with agreed prompts, review steps and a written line on what must never be pasted into a public tool.",
+          "icon": "sparkles"
+        },
+        {
+          "title": "Prepare a group for certification",
+          "text": "A cohort taught against the Adobe Certified Professional objectives for one application, with practice questions, so people sit their Certiport exam prepared rather than hopeful.",
+          "icon": "target"
+        },
+        {
+          "title": "Onboard new hires to one standard",
+          "text": "A repeatable induction on the tools your studio uses, so everyone names layers, files, colour settings and exports the same way.",
+          "icon": "users"
+        }
+      ]
+    },
+    {
+      "type": "values_grid",
+      "heading": "Delivery options",
+      "items": [
+        {
+          "title": "On-site in Colombo",
+          "text": "We come to your office and teach in your meeting room on your machines. Best for teams that need to work on internal files that cannot leave the network. We confirm the room, power, screen and internet requirements in advance."
+        },
+        {
+          "title": "Virtual",
+          "text": "The same cohort taught live online for teams spread across offices, time zones or home working. Sessions can be split into half days so the team is not out of action for a full week."
+        },
+        {
+          "title": "Hybrid",
+          "text": "A room in Colombo plus remote joiners, run with a second screen and an assisting instructor when the group is large enough to need one, so remote learners are not second-class participants."
+        },
+        {
+          "title": "Blended with self-paced",
+          "text": "Self-paced modules for the fundamentals, then live sessions for the work that needs an instructor. Useful when the group is at mixed levels or cannot all be released on the same days."
+        }
+      ]
+    },
+    {
+      "type": "process_steps",
+      "heading": "How the quote works",
+      "steps": [
+        {
+          "title": "1. Tell us the outcome",
+          "text": "Send the quote request form with the team size, the software, the deadline you are working towards and the output you need people to produce. A sentence about the work is more useful to us than a course title."
+        },
+        {
+          "title": "2. Scoping call and skills check",
+          "text": "A short call with whoever owns the work, plus an optional online skills check for the group. This is what stops a class being pitched over the heads of half the room."
+        },
+        {
+          "title": "3. Written proposal",
+          "text": "You receive the syllabus module by module, the hours, the delivery mode, proposed dates, what each learner receives, and a fixed price in LKR or USD with taxes shown separately."
+        },
+        {
+          "title": "4. Confirm and prepare",
+          "text": "We invoice against your purchase order and confirm dates. You send the files, brand assets or templates you want used, and we check software versions and licences before day one."
+        },
+        {
+          "title": "5. Delivery and handover",
+          "text": "The cohort runs. Afterwards you receive the attendance record, the recordings, the workbooks and exercise files, and a short summary of what was covered and what the group found hardest."
+        }
+      ]
+    },
+    {
+      "type": "statement",
+      "heading": "What a private cohort includes",
+      "text": "Dates chosen with you rather than published in advance. A syllabus adjusted to your files and brand. A workbook and exercise files for every learner. The session recordings, available to the cohort for twelve months. A MyLearnPlus certificate of completion for each learner who attends. Post-course email support on the exercises. A follow-up question session with the instructor once the team has taken the skills back to real work. Anything else you need is agreed in writing in the proposal, so there are no assumptions on either side."
+    },
+    {
+      "type": "cta",
+      "heading": "Request a quote",
+      "text": "Tell us the team, the software and the deadline. We reply with a syllabus, dates and a fixed price in LKR or USD, and we will say plainly if a public class or a self-paced course would serve you better.",
+      "button_label": "Request a corporate quote",
+      "button_url": "/corporate/quote"
+    }
+  ],
+  "seo": {
+    "title": "Corporate Adobe and AI Training | MyLearnPlus",
+    "description": "Private Adobe Creative Cloud and AI cohorts for teams, on-site in Colombo, virtual or hybrid, taught on your own files and quoted in LKR or USD.",
+    "keywords": "corporate training Sri Lanka, team Adobe training Colombo, on-site Creative Cloud training, private AI workshop, group training quote, in-house design training"
+  }
+}

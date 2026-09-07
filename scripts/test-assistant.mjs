@@ -143,7 +143,7 @@ const lastBubble = (page) =>
 }
 
 // ── Trilingual ──────────────────────────────────────────────────────────────
-for (const locale of ['si', 'ta']) {
+for (const locale of ['si']) {
   const page = await (await returningVisitor()).newPage();
   await page.goto(`${base}/${locale}`, { waitUntil: 'networkidle' });
   await page.waitForTimeout(600);

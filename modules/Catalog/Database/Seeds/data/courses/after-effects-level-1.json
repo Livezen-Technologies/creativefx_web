@@ -1,0 +1,218 @@
+{
+  "slug": "after-effects-level-1",
+  "pillar": "adobe",
+  "category": "after-effects",
+  "title": "After Effects Level 1",
+  "subtitle": "For designers and editors new to motion. Leave with a logo sting and a title pack.",
+  "summary": "Two days of After Effects for beginners. Animate a logo sting, build an editable lower-third pack and a short explainer, then render for handover.",
+  "description_html": "<p>After Effects is not a video editor and it is not Photoshop with a timeline. It is a compositing and animation tool, and almost everything that frustrates a beginner comes from three things nobody explains on day one: the anchor point is not where you think it is, keyframes are worthless until you shape them in the graph editor, and precomposing is the difference between a project you can change and a project you have to rebuild.</p><p>Over two days you build three deliverables from supplied brand artwork. Day one covers compositions, layers and transform properties, then keyframes, easing and the graph editor, which is where flat mechanical movement turns into movement with weight. You learn parenting and null objects, then spend the afternoon on shape layers, trim paths, Illustrator artwork brought in and converted to shapes, and text animators, finishing with a five-second logo sting you animate yourself.</p><p>Day two widens the toolkit. Masks, track mattes and the difference between alpha and luma, precomposing done properly, adjustment layers, and the handful of effects worth knowing before all the others. You set up a basic 3D scene with a camera for a parallax move, and track a shot so a label stays attached to something moving. The afternoon assembles a lower-third pack with editable text, publishes it as a motion graphics template that an editor can retype in Premiere Pro without opening After Effects, and cuts a thirty-second explainer from the elements you have built. The last session is output: the render queue, Media Encoder, alpha channels, codecs for handover and Dynamic Link back to Premiere.</p><p>The syllabus maps to the published exam objectives for the <strong>Adobe Certified Professional in Adobe After Effects</strong>, which is delivered through Certiport. We prepare you for the exam. We do not award the certification, and no course can guarantee a pass. Completing both the After Effects and the Premiere Pro professional certifications earns Adobe's Video Design Specialty Credential.</p><p>Much of what you animate in After Effects is drawn somewhere else first, so this course pairs naturally with <em>Illustrator Level 1</em> for the artwork and with <em>Premiere Pro Level 1</em> for the edit those graphics eventually sit in.</p>",
+  "level": 1,
+  "duration_hours": 12,
+  "duration_days": 2,
+  "software_version": "Creative Cloud 2026",
+  "certification_alignment": "Prepares for the Adobe Certified Professional in Adobe After Effects exam",
+  "delivery_modes": [
+    "LIVE_ONLINE",
+    "CLASSROOM",
+    "SELF_PACED",
+    "PRIVATE"
+  ],
+  "default_mode": "LIVE_ONLINE",
+  "price_band": "2day",
+  "outcomes": [
+    "Set up compositions with the right frame rate, resolution and duration for a given delivery",
+    "Animate transform properties with keyframes, and shape their timing and easing in the graph editor",
+    "Fix the anchor point problem so layers rotate and scale around the point you intended",
+    "Use parenting and null objects to animate a group of layers together",
+    "Build shape layers with trim paths and animated strokes, and convert Illustrator artwork into editable shapes",
+    "Animate typography with text animators and range selectors",
+    "Animate a five-second logo sting from supplied brand artwork",
+    "Combine masks, track mattes and precomposing to build a composite another person can open and edit",
+    "Create a simple 3D parallax move with a camera, and track a shot so a label follows a moving subject",
+    "Publish a lower-third pack as a motion graphics template for Premiere Pro, and render final files with the correct codec and alpha channel"
+  ],
+  "prerequisites": [
+    "No prior experience with After Effects is needed.",
+    "You should be comfortable with your own computer, and some experience of Photoshop, Illustrator or Premiere Pro will make the first morning easier without being assumed.",
+    "After Effects runs hard on memory and disk, so we send Adobe's published system requirements and a setup check about a week before the class."
+  ],
+  "audiences": [
+    "Graphic designers asked to make their static work move for social media",
+    "Video editors who currently outsource titles and animated graphics",
+    "Marketing and content teams producing explainers and animated adverts in-house",
+    "Web and UI designers who need short animations and product demonstrations",
+    "Students and career changers building a motion graphics portfolio"
+  ],
+  "includes": [
+    {
+      "text": "Class recording, available for 12 months",
+      "icon": "video"
+    },
+    {
+      "text": "Exercise files: brand artwork, the tracking shot and the finished After Effects projects, yours to keep",
+      "icon": "download"
+    },
+    {
+      "text": "Course workbook covering every step demonstrated in class",
+      "icon": "book"
+    },
+    {
+      "text": "Practice questions written against the Adobe Certified Professional exam domains",
+      "icon": "clipboard"
+    },
+    {
+      "text": "MyLearnPlus certificate of completion",
+      "icon": "certificate"
+    },
+    {
+      "text": "Instructor email support after the class for questions on the exercises",
+      "icon": "support"
+    },
+    {
+      "text": "One free repeat of the same live class, terms shown on the booking page",
+      "icon": "refresh"
+    }
+  ],
+  "curriculum": [
+    {
+      "title": "Day 1, Morning — Compositions, layers and keyframes",
+      "summary": "Learn how After Effects thinks, then make something move with weight rather than in a straight line.",
+      "topics": [
+        {
+          "title": "Where After Effects sits next to Premiere Pro, and what it should not be used for",
+          "duration_min": 20
+        },
+        {
+          "title": "Compositions, frame rate, resolution and the project panel",
+          "duration_min": 30
+        },
+        {
+          "title": "Layers, transform properties and the anchor point problem",
+          "duration_min": 40
+        },
+        {
+          "title": "Keyframes, easing and the graph editor",
+          "duration_min": 55
+        },
+        {
+          "title": "Parenting and null objects: animating a group of layers together",
+          "duration_min": 35
+        }
+      ]
+    },
+    {
+      "title": "Day 1, Afternoon — Shapes, type and the logo sting",
+      "summary": "Build vector artwork that animates, then finish a five-second sting you can show a client.",
+      "topics": [
+        {
+          "title": "Shape layers, path operations, trim paths and animated strokes",
+          "duration_min": 50
+        },
+        {
+          "title": "Importing Illustrator artwork and converting it to editable shapes",
+          "duration_min": 30
+        },
+        {
+          "title": "Text animators, range selectors and animated typography",
+          "duration_min": 45
+        },
+        {
+          "title": "Building a five-second logo sting from the supplied brand files",
+          "duration_min": 55
+        }
+      ]
+    },
+    {
+      "title": "Day 2, Morning — Masks, mattes, effects and 3D",
+      "summary": "Composite properly, keep the project maintainable, and add depth and tracking.",
+      "topics": [
+        {
+          "title": "Masks and track mattes, and the difference between alpha and luma",
+          "duration_min": 45
+        },
+        {
+          "title": "Precomposing, and keeping a project a colleague can open and change",
+          "duration_min": 25
+        },
+        {
+          "title": "Effects and adjustment layers: the ones worth learning first",
+          "duration_min": 40
+        },
+        {
+          "title": "3D layers, a camera and a simple parallax move",
+          "duration_min": 45
+        },
+        {
+          "title": "Motion tracking: attaching a label to a moving subject",
+          "duration_min": 25
+        }
+      ]
+    },
+    {
+      "title": "Day 2, Afternoon — Templates, the explainer and output",
+      "summary": "Make graphics an editor can reuse, assemble the explainer, and render files for handover.",
+      "topics": [
+        {
+          "title": "Building a lower-third pack with editable text",
+          "duration_min": 45
+        },
+        {
+          "title": "Essential Graphics: publishing a motion graphics template for Premiere Pro",
+          "duration_min": 35
+        },
+        {
+          "title": "Assembling a thirty-second explainer from the elements you have built",
+          "duration_min": 45
+        },
+        {
+          "title": "Render queue, Media Encoder, alpha channels and codecs for handover",
+          "duration_min": 35
+        },
+        {
+          "title": "Dynamic Link with Premiere Pro, and collecting files for a colleague",
+          "duration_min": 20
+        }
+      ]
+    }
+  ],
+  "faqs": [
+    {
+      "question": "Do I need to learn Premiere Pro first?",
+      "answer": "No. This course assumes nothing about editing and the two applications solve different problems: Premiere assembles a film, After Effects builds the things that move inside it. That said, most motion graphics end up in an edit, and the last session covers motion graphics templates and Dynamic Link, so people who take both find each course makes more sense of the other. If you only ever animate for social media, this course on its own is enough."
+    },
+    {
+      "question": "What kind of computer do I need?",
+      "answer": "After Effects is the most demanding application in Creative Cloud. Memory and disk speed matter most, and a machine with 8GB of memory will struggle with previews on day two. We send Adobe's published system requirements and a setup check about a week before the class, and we cover cache settings and preview resolution in the first morning so you can work comfortably on a modest laptop. Leave about 30GB free for the exercise files and disk cache."
+    },
+    {
+      "question": "Is the After Effects software included in the price?",
+      "answer": "No. After Effects is a subscription from Adobe and we do not resell licences. Adobe offers a free trial that covers the two days if you do not have a licence, and your employer may already hold licences you can be added to. Classroom seats in Colombo come with the software installed."
+    },
+    {
+      "question": "Will I learn visual effects, green screen and 3D?",
+      "answer": "Partly, and it is worth being clear about the boundary. You will do basic 3D with a camera, one-point motion tracking and compositing with masks and mattes. Green screen keying, rotoscoping, camera tracking and particle work are the substance of a Level 2 course rather than something to skim in an afternoon. Two days spent properly on keyframes, the graph editor and precomposing will make those later skills much easier to learn."
+    },
+    {
+      "question": "What happens if I miss a day?",
+      "answer": "Every live session is recorded and the recording stays available for 12 months, so you can catch up in your own time. Day two builds directly on day one, so if you miss the first day we would rather you rejoined a later cohort than pressed on. Repeating a half day with a later group costs nothing, subject to seats, and your free repeat of the full course still stands."
+    },
+    {
+      "question": "Do you issue a certificate, and does this prepare me for the Adobe exam?",
+      "answer": "You receive a MyLearnPlus certificate of completion from Livezen Technologies, naming the course, the version taught and the hours completed. That is a record of training, not an Adobe qualification. The syllabus does cover the published objectives for the Adobe Certified Professional in Adobe After Effects exam and you get practice questions written against those domains, but the exam is booked and sat through a Certiport testing centre, the fee is not included, and we cannot guarantee a pass. Adding the Premiere Pro certification earns the Video Design Specialty Credential."
+    },
+    {
+      "question": "Can my employer be invoiced, and can you run this for our team?",
+      "answer": "Yes. Organisations in Sri Lanka are invoiced in LKR and organisations elsewhere in USD, and we can issue a pro forma invoice against your purchase order before the class. For a team of four or more, private delivery is usually better value, and it lets us animate your own logo and build the lower-third pack as a template your editors will actually use."
+    }
+  ],
+  "related": [
+    "premiere-pro-level-1",
+    "premiere-pro-finishing",
+    "illustrator-level-1"
+  ],
+  "seo": {
+    "title": "Adobe After Effects Level 1 Training Course | MyLearnPlus",
+    "description": "Two-day After Effects training for beginners. Animate a logo sting, build a lower-third pack and a short explainer, then render. Online or Colombo.",
+    "keywords": "after effects training, after effects course sri lanka, motion graphics course colombo, after effects level 1, adobe certified professional after effects, logo animation training, motion graphics templates"
+  }
+}

@@ -1,0 +1,197 @@
+{
+  "slug": "ai-for-everyone",
+  "pillar": "ai",
+  "category": "ai-foundations",
+  "title": "AI Foundations: AI for Everyone",
+  "subtitle": "A practical first day with AI assistants for people with no technical background",
+  "summary": "One day on how AI assistants work, how to get a useful answer, where they get things wrong, and what is safe to type into one at work.",
+  "description_html": "<p>Almost everyone has now opened an AI assistant, typed a question, received a fluent paragraph and quietly wondered whether any of it was true. That gap between a confident answer and a usable one is what this day is about. No mathematics, no coding, no predictions about the future of work: six hours on what these tools do, how to get something out of them you would be willing to put your name to, and how to tell when they are wrong.</p><p>You start with a plain explanation of the machinery. A large language model produces text by predicting what should come next, learned from an enormous amount of writing. That single fact explains most of the behaviour that confuses people: why it is fluent about subjects it knows nothing about, why it invents a citation that looks perfectly formatted, why it agrees with you too readily, and why it cannot tell you what happened this morning unless the tool you are using has search or a document attached. You see each of these fail in front of you rather than being told about them.</p><p>The rest of the day is practice on your own work. You bring three tasks from a normal week, and by the end you have made each of them work: a first draft written from a rough brief, a long document or thread summarised into something a colleague can act on, a set of survey comments or messy notes sorted into themes, an email rewritten for a different reader, and a meeting turned into decisions and actions. You learn to attach your own source material so the assistant works from your facts instead of its memory, and to ask for the output in the shape you need, whether that is a table, a checklist or a five-line reply.</p><p>The last part of the day is the part that keeps people out of trouble. You practise a verification habit for anything that leaves your desk: which claims to check, how to make the assistant show where an answer came from, and when to stop and do the task yourself. You work through what should not be typed into a public assistant at all, including customer records, identifiable personal data, unpublished financial figures and anything covered by a confidentiality agreement, and you draw up a short personal rule for your own role. Sri Lankan learners cover this alongside <strong>Sri Lanka's Personal Data Protection Act</strong>, and teams handling EU or UK personal data alongside GDPR. This is orientation, not legal advice; your own obligations should be confirmed with your legal or compliance contact.</p><p>You leave with a personal AI playbook: your own tasks written up as prompts that worked, with the checking step attached to each. The class runs live online in your own timezone or in the classroom in Colombo, with pricing in <strong>LKR</strong> for learners in Sri Lanka and <strong>USD</strong> internationally, and the recording available to you for twelve months.</p>",
+  "level": 1,
+  "duration_hours": 6,
+  "duration_days": 1,
+  "software_version": "",
+  "certification_alignment": "",
+  "delivery_modes": [
+    "LIVE_ONLINE",
+    "CLASSROOM",
+    "SELF_PACED",
+    "PRIVATE"
+  ],
+  "default_mode": "LIVE_ONLINE",
+  "price_band": "1day",
+  "outcomes": [
+    "Explain in plain language what a large language model does and why fluent text is not the same as correct text.",
+    "Describe the difference between an assistant answering from training and one answering from a document or a web search you gave it.",
+    "Write a prompt that states the task, the reader, the constraints and the format you want back, instead of a one-line question.",
+    "Turn a rough brief into a usable first draft and then edit it into your own voice rather than sending the machine's.",
+    "Summarise a long document, email thread or transcript into decisions, actions and open questions.",
+    "Sort a set of messy notes or free-text comments into themes and produce a short written summary of what they say.",
+    "Attach your own source material so the assistant answers from your facts, and ask it to point to the passage it used.",
+    "Apply a verification routine to any output before it leaves your desk, and recognise the four failure modes demonstrated in class.",
+    "Decide what may and may not be typed into a public AI assistant at work, and write a short personal rule for your own role.",
+    "Assemble a personal playbook of five prompts for your own recurring tasks, each with its checking step."
+  ],
+  "prerequisites": [
+    "No prior experience with AI tools is needed, and no technical or coding background is assumed.",
+    "You should be comfortable using a web browser and working with your own documents and email."
+  ],
+  "audiences": [
+    "Administrators, coordinators and operations staff who write, summarise and chase things all day",
+    "Marketing, sales and customer support staff drafting copy, replies and reports",
+    "Teachers, trainers and HR staff preparing material and handling written feedback",
+    "Small business owners doing their own admin, quotes and correspondence",
+    "Anyone whose workplace has just been given AI tools with no explanation of how to use them"
+  ],
+  "includes": [
+    {
+      "text": "Class recording, available for 12 months",
+      "icon": "video"
+    },
+    {
+      "text": "Exercise pack: sample briefs, documents, transcripts and comment sets to practise on",
+      "icon": "download"
+    },
+    {
+      "text": "Course workbook with every prompt pattern demonstrated in class",
+      "icon": "book"
+    },
+    {
+      "text": "Verification checklist and a one-page template for your own AI ground rules",
+      "icon": "clipboard"
+    },
+    {
+      "text": "MyLearnPlus certificate of completion",
+      "icon": "certificate"
+    },
+    {
+      "text": "Instructor email support after the class for questions on the exercises",
+      "icon": "support"
+    },
+    {
+      "text": "One free repeat of the same live class, terms shown on the booking page",
+      "icon": "refresh"
+    }
+  ],
+  "curriculum": [
+    {
+      "title": "Module 1 — What these tools actually are",
+      "summary": "How an AI assistant produces an answer, and why that explains nearly everything odd about it.",
+      "topics": [
+        {
+          "title": "Prediction, training data and why the answer sounds certain either way",
+          "duration_min": 25
+        },
+        {
+          "title": "The current landscape: assistants, chat interfaces, and what free and paid tiers differ on",
+          "duration_min": 25
+        },
+        {
+          "title": "Four failure modes, demonstrated live: invention, agreeableness, stale knowledge and lost instructions",
+          "duration_min": 25
+        }
+      ]
+    },
+    {
+      "title": "Module 2 — Getting a useful answer",
+      "summary": "The difference between a one-line question and a prompt that produces something you can send.",
+      "topics": [
+        {
+          "title": "Task, reader, constraints and format: the four things a prompt should always say",
+          "duration_min": 30
+        },
+        {
+          "title": "Giving examples of what good looks like, and asking for a specific output shape",
+          "duration_min": 25
+        },
+        {
+          "title": "Working in a conversation: correcting, narrowing and asking for alternatives",
+          "duration_min": 25
+        },
+        {
+          "title": "Attaching your own documents so the answer comes from your material",
+          "duration_min": 25
+        }
+      ]
+    },
+    {
+      "title": "Module 3 — Everyday work",
+      "summary": "Five jobs that come up every week, done end to end on real material.",
+      "topics": [
+        {
+          "title": "From rough brief to first draft, then editing it back into your own voice",
+          "duration_min": 30
+        },
+        {
+          "title": "Summarising a long document or email thread into decisions, actions and open questions",
+          "duration_min": 25
+        },
+        {
+          "title": "Sorting messy notes and free-text comments into themes",
+          "duration_min": 25
+        },
+        {
+          "title": "Rewriting for a different reader, and turning a meeting transcript into a follow-up",
+          "duration_min": 25
+        }
+      ]
+    },
+    {
+      "title": "Module 4 — Checking, privacy and limits",
+      "summary": "The habits that stop a confident wrong answer from reaching a customer, and the rules for what you type in.",
+      "topics": [
+        {
+          "title": "A verification routine: which claims to check, and asking the assistant to show its source",
+          "duration_min": 25
+        },
+        {
+          "title": "What not to paste: customer records, personal data, unpublished figures and confidential material",
+          "duration_min": 25
+        },
+        {
+          "title": "Building your personal playbook and deciding which tasks stay human",
+          "duration_min": 25
+        }
+      ]
+    }
+  ],
+  "faqs": [
+    {
+      "question": "Do I need a paid AI subscription to attend?",
+      "answer": "No. Every exercise is designed to work on a free account, and we send a joining note explaining which assistants are available and how to set one up before the class. If your employer has already given you a paid or enterprise tool, use that instead, since the day is more useful when you practise in the software you will actually be working in."
+    },
+    {
+      "question": "Which AI tool do you teach?",
+      "answer": "The techniques are taught so they transfer between assistants, because the tools change constantly and most organisations end up with more than one. Demonstrations are given in the mainstream assistants, and you follow along in whichever one you have access to. If your team has standardised on a single tool, a private run can be taught entirely in that one."
+    },
+    {
+      "question": "Do I need a technical background, and will there be any coding?",
+      "answer": "No to both. There is no mathematics, no programming and no jargon left unexplained. If you can write an email and use a browser, you can do everything in this course. Learners who later want to build with AI move on to Prompt Engineering Foundations, and managers introducing AI across a team take AI for Managers."
+    },
+    {
+      "question": "Is it safe to put my work documents into an AI assistant?",
+      "answer": "It depends entirely on the tool and on your organisation's rules, which is why Module 4 covers it properly rather than in passing. You work through what consumer and enterprise tools typically do with what you type, what should never be pasted into a public assistant, and how to check your own employer's position. We cover this alongside Sri Lanka's Personal Data Protection Act and, for teams handling EU or UK personal data, GDPR. This is orientation rather than legal advice, and your compliance contact has the final word."
+    },
+    {
+      "question": "Do I need my own laptop?",
+      "answer": "Yes for live online, and we recommend it for the classroom in Colombo too, so the accounts, prompts and playbook you build during the day stay with you. Tell us when you book if you cannot bring one and we will confirm what is available for your date."
+    },
+    {
+      "question": "Do you issue a certificate?",
+      "answer": "Yes. You receive a MyLearnPlus certificate of completion recording the course title, the hours and the date. It is a record of training. There is no general industry certification for using AI assistants, and we do not claim to award one."
+    },
+    {
+      "question": "What if I miss the class, and can my employer be invoiced?",
+      "answer": "The session is recorded and available to you for twelve months, and every live booking includes one free repeat of the same class, with the terms shown on the booking page for each date. We invoice organisations against a purchase order, in LKR for Sri Lankan companies and in USD internationally. Groups of five or more are usually better served by a private run using your own documents and templates."
+    }
+  ],
+  "related": [
+    "prompt-engineering-foundations",
+    "ai-for-managers",
+    "adobe-firefly-creatives"
+  ],
+  "seo": {
+    "title": "AI for Everyone: AI Foundations Course | MyLearnPlus",
+    "description": "One-day beginner AI course, live online or in Colombo. How AI assistants work, prompting that works, everyday tasks, checking answers and data safety.",
+    "keywords": "ai course for beginners, ai foundations training, chatgpt course, ai for everyone, generative ai training sri lanka, ai course colombo, ai assistant training"
+  }
+}

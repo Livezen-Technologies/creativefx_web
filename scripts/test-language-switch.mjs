@@ -55,23 +55,23 @@ async function switchTo(code) {
 }
 
 console.log('== Switching keeps you on the page ==');
-await page.goto(B + '/en/services/replanting-subsidy', { waitUntil: 'networkidle' });
+await page.goto(B + '/en/course/photoshop-level-1', { waitUntil: 'networkidle' });
 await switchTo('සිංහල');
 const p1 = new URL(page.url()).pathname;
-p1 === '/si/services/replanting-subsidy'
-  ? ok('/en/services/replanting-subsidy -> ' + p1)
+p1 === '/si/course/photoshop-level-1'
+  ? ok('/en/course/photoshop-level-1 -> ' + p1)
   : bad('landed on ' + p1);
 
 console.log('== Switching keeps the query string ==');
-await page.goto(B + '/si/directory?district=Galle', { waitUntil: 'networkidle' });
-await switchTo('தமிழ்');
+await page.goto(B + '/si/courses?pillar=adobe', { waitUntil: 'networkidle' });
+await switchTo('English');
 const u2 = new URL(page.url());
-(u2.pathname === '/ta/directory' && u2.search === '?district=Galle')
+(u2.pathname === '/en/courses' && u2.search === '?pillar=adobe')
   ? ok('filters survive: ' + u2.pathname + u2.search)
   : bad('landed on ' + u2.pathname + u2.search);
 
 console.log('== Switching keeps the scroll position ==');
-await page.goto(B + '/en/about-us', { waitUntil: 'networkidle' });
+await page.goto(B + '/en/schedule', { waitUntil: 'networkidle' });
 await page.waitForTimeout(500);
 await page.evaluate(() => window.scrollTo(0, 1400));
 // Lenis animates the scroll, so the position 300ms later is wherever the
@@ -93,19 +93,39 @@ Math.abs(y - before) < 400
   ? ok(`scroll restored to ${Math.round(y)}px (left at ${before}px)`)
   : bad(`scroll fell back to ${Math.round(y)}px from ${before}px`);
 
-console.log('== The choice is remembered at the welcome page ==');
+console.log('== The choice is remembered at the root ==');
+// Choose Sinhala explicitly first. The previous section deliberately switched
+// the other way, and asserting on whatever the last click happened to leave
+// behind is how a test starts depending on the order of the sections above it.
+await page.goto(B + '/en/courses', { waitUntil: 'networkidle' });
+await switchTo('සිංහල');
+
+// Both stores, because they answer different questions. localStorage is what
+// the first-visit chooser reads to decide whether to ask at all; the cookie is
+// the only one the SERVER can read, and the bare root has to pick a language
+// before any script has run. A site that remembers the choice in the browser
+// alone sends a returning Sinhala reader to the English home page.
 const stored = await page.evaluate(() => localStorage.getItem('nl_locale'));
-stored === 'si' ? ok('preference stored as ' + stored) : bad('preference stored as ' + stored);
+stored === 'si' ? ok('stored in localStorage as ' + stored) : bad('localStorage holds ' + stored);
+
+const cookie = (await page.context().cookies()).find((c) => c.name === 'nl_locale');
+cookie && cookie.value === 'si'
+  ? ok('mirrored into the nl_locale cookie, which the server can read')
+  : bad('cookie holds ' + (cookie ? cookie.value : 'nothing'));
+
 await page.goto(B + '/', { waitUntil: 'networkidle' });
-await page.waitForTimeout(800);
+await page.waitForTimeout(400);
 new URL(page.url()).pathname === '/si'
-  ? ok('welcome page sends a returning reader straight through')
-  : bad('welcome page landed on ' + new URL(page.url()).pathname);
+  ? ok('the root sends a returning reader to their own language')
+  : bad('the root landed on ' + new URL(page.url()).pathname);
 
 console.log('== The page declares its own language ==');
-await page.goto(B + '/ta/faqs', { waitUntil: 'networkidle' });
+// Read from the URL, not from the preference: a page served at /si must say so
+// whatever the reader chose last, or a screen reader pronounces Sinhala as
+// English and a search engine files the page under the wrong language.
+await page.goto(B + '/si/schedule', { waitUntil: 'networkidle' });
 const lang = await page.evaluate(() => document.documentElement.lang);
-lang === 'ta' ? ok('html lang="ta"') : bad('html lang="' + lang + '"');
+lang === 'si' ? ok('html lang="si"') : bad('html lang="' + lang + '"');
 
 console.log(`\n${pass} passed, ${fail} failed`);
 await browser.close();

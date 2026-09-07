@@ -1,0 +1,198 @@
+{
+  "slug": "ai-governance-responsible-use",
+  "pillar": "ai",
+  "category": "ai-governance",
+  "title": "AI Governance and Responsible Use",
+  "subtitle": "One day for the people who sign off AI use and have to answer for it afterwards",
+  "summary": "Build an AI register, classify risk, design human oversight and disclosure, run a fairness check and prepare for an audit or a client questionnaire.",
+  "description_html": "<p>AI governance fails in two recognisable ways. The first is a policy document that circulates once and is never opened again. The second is a blanket ban, which moves the same activity onto personal accounts where nobody can see it. This day is designed to produce neither. It is six hours of assembly work, and you leave with documents that an auditor, a client or a regulator can actually be shown.</p><p>The morning begins with the register, because nothing can be governed until it has been listed. You build an inventory of the AI systems your organisation genuinely uses, each with an owner, a purpose, the data it touches and its approval status, and you work out how to surface the tools bought quietly on a personal card without pushing them further out of sight. Every entry is then classified by risk, by data sensitivity and by what a wrong output would cost, so that each tier gets a proportionate control rather than one rule stretched across everything.</p><p>You then map those controls onto work that has already been done for you. The <strong>NIST AI Risk Management Framework</strong> and <strong>ISO/IEC 42001</strong> give you a structure to borrow from without committing to a full management system in one quarter, and the <strong>EU AI Act</strong> risk tiers tell you which uses are prohibited, which count as high risk and which carry transparency obligations. The Act applies in phases and its timetable has been amended since it entered into force, so the session works from the position current on the day you attend. Data protection runs alongside: <strong>Sri Lanka's Personal Data Protection Act No. 9 of 2022</strong>, and GDPR or UK GDPR where your customers and clients bring them into scope, with the practical questions of lawful basis, purpose, retention, cross-border transfer, and what a data subject request means when part of the answer is sitting in a chat log. This is orientation for the people who run the process. It is not legal advice and it does not replace your own advisers.</p><p>The afternoon is about controls that hold. Human oversight only counts if the reviewer has the time, the information and the authority to overturn an output, so you design a review step that meets that test rather than one that produces a signature. You write a disclosure standard covering what is labelled as AI-assisted, what clients are told, and where provenance is attached using <strong>Content Credentials</strong> and the underlying C2PA standard. You run a simple fairness check on a real decision your organisation makes and record what you found, comfortable or otherwise. And you assemble the documentation an audit will ask for before it asks.</p><p>The day closes on vendors and incidents: the due diligence questions that decide whether a tool is usable at all, the contract terms worth arguing over, and a procedure for the day an AI system produces something harmful, covering who is told, how it is contained, what is recorded and who reviews it afterwards. You finish with a twelve-week plan naming the first three things to do and who owns each. Runs live online, in the classroom in Colombo, or privately for a leadership, compliance or risk team, priced in <strong>LKR</strong> for Sri Lanka and <strong>USD</strong> internationally.</p>",
+  "level": 2,
+  "duration_hours": 6,
+  "duration_days": 1,
+  "software_version": "",
+  "certification_alignment": "",
+  "delivery_modes": [
+    "LIVE_ONLINE",
+    "CLASSROOM",
+    "SELF_PACED",
+    "PRIVATE"
+  ],
+  "default_mode": "LIVE_ONLINE",
+  "price_band": "1day",
+  "outcomes": [
+    "Build a register of the AI systems and assistants your organisation uses, with an owner, a purpose, the data involved and an approval status for each.",
+    "Surface unapproved AI use in a way that brings it into the register rather than driving it further underground.",
+    "Classify each use by risk, data sensitivity and the cost of a wrong output, and set a proportionate control level for each tier.",
+    "Map your controls to the NIST AI Risk Management Framework and ISO/IEC 42001 without adopting an entire management system at once.",
+    "Identify where the EU AI Act risk tiers apply to what you do, and what evidence each tier expects you to hold.",
+    "Work out lawful basis, purpose, retention and cross-border transfer for personal data entering an AI system under Sri Lanka's Personal Data Protection Act and, where relevant, GDPR.",
+    "Design a human oversight step the reviewer can genuinely perform, with the time, the information and the authority to overturn the output.",
+    "Write a disclosure standard covering AI-assisted work, client notification and provenance with Content Credentials.",
+    "Run a fairness check on a real decision your organisation makes, and record the method and the result.",
+    "Assemble a vendor due diligence pack and an incident procedure covering reporting, containment, record and review."
+  ],
+  "prerequisites": [
+    "You should have some responsibility for approving, buying, auditing or setting the rules for AI use in your organisation.",
+    "No technical or legal background is required, and nothing in the day is legal advice.",
+    "Bring a list of the AI tools your organisation currently uses, and any client questionnaire you have been asked to complete."
+  ],
+  "audiences": [
+    "Compliance, risk and data protection officers writing an organisation's first AI standard",
+    "IT and information security managers approving AI tools and handling access",
+    "Heads of HR, finance and operations where AI touches decisions about people or money",
+    "Agency and consultancy owners answering client due diligence questions about AI use",
+    "Directors and company secretaries accountable for AI at board level"
+  ],
+  "includes": [
+    {
+      "text": "Class recording, available for 12 months",
+      "icon": "video"
+    },
+    {
+      "text": "Editable templates: AI register, risk classification, disclosure standard, vendor due diligence pack and incident procedure",
+      "icon": "download"
+    },
+    {
+      "text": "Course workbook with the frameworks and the mapping tables used in each exercise",
+      "icon": "book"
+    },
+    {
+      "text": "Control checklist mapped to the NIST AI Risk Management Framework and ISO/IEC 42001",
+      "icon": "clipboard"
+    },
+    {
+      "text": "MyLearnPlus certificate of completion",
+      "icon": "certificate"
+    },
+    {
+      "text": "Instructor email support after the class for questions on your draft documents",
+      "icon": "support"
+    },
+    {
+      "text": "One free repeat of the same live class, terms shown on the booking page",
+      "icon": "refresh"
+    }
+  ],
+  "curriculum": [
+    {
+      "title": "Module 1 — Knowing what you have",
+      "summary": "The register, the owners and the tools nobody declared.",
+      "topics": [
+        {
+          "title": "What AI governance is for, and the two ways it usually fails",
+          "duration_min": 20
+        },
+        {
+          "title": "Building the register: system, owner, purpose, data, approval status",
+          "duration_min": 30
+        },
+        {
+          "title": "Finding unapproved AI use without driving it further underground",
+          "duration_min": 25
+        }
+      ]
+    },
+    {
+      "title": "Module 2 — Risk, frameworks and the law",
+      "summary": "Classifying each use, then borrowing structure from frameworks instead of inventing your own.",
+      "topics": [
+        {
+          "title": "Classifying use by risk, data sensitivity and the cost of being wrong",
+          "duration_min": 30
+        },
+        {
+          "title": "Mapping controls to the NIST AI Risk Management Framework and ISO/IEC 42001",
+          "duration_min": 25
+        },
+        {
+          "title": "EU AI Act risk tiers: prohibited uses, high risk, transparency duties and general-purpose models",
+          "duration_min": 25
+        },
+        {
+          "title": "Sri Lanka's Personal Data Protection Act, GDPR and personal data inside AI systems",
+          "duration_min": 25
+        }
+      ]
+    },
+    {
+      "title": "Module 3 — Controls that hold",
+      "summary": "Oversight, disclosure, fairness testing and the documentation an audit asks for.",
+      "topics": [
+        {
+          "title": "Human oversight that is real: time, information, authority and a record of the decision",
+          "duration_min": 30
+        },
+        {
+          "title": "Disclosure and labelling, and provenance with Content Credentials and the C2PA standard",
+          "duration_min": 25
+        },
+        {
+          "title": "Fairness: testing a real decision your organisation makes and writing down what you found",
+          "duration_min": 30
+        },
+        {
+          "title": "Documentation: system records, data descriptions and what you keep for an audit",
+          "duration_min": 20
+        }
+      ]
+    },
+    {
+      "title": "Module 4 — Vendors, incidents and the first twelve weeks",
+      "summary": "Due diligence, what to do when something goes wrong, and a plan with named owners.",
+      "topics": [
+        {
+          "title": "Third-party due diligence: training on your data, retention, processing location, logging and exit",
+          "duration_min": 25
+        },
+        {
+          "title": "Incidents: reporting a bad output, containment, the record and the review",
+          "duration_min": 25
+        },
+        {
+          "title": "A twelve-week plan: the first three actions, who owns them and what goes to the board",
+          "duration_min": 25
+        }
+      ]
+    }
+  ],
+  "faqs": [
+    {
+      "question": "Is any of this legal advice?",
+      "answer": "No. The course is orientation and process design for the people who run AI governance day to day. It tells you what to establish, what to record and which questions to put to your legal or compliance contact. Obligations under Sri Lanka's Personal Data Protection Act, GDPR and the EU AI Act are covered so that you know what is in scope and what evidence is expected. Sign-off stays with your own advisers."
+    },
+    {
+      "question": "How is this different from AI for Managers?",
+      "answer": "AI for Managers is a decision day: which use cases are worth doing, what a pilot costs and how to brief upwards. This is the day after that decision has been taken. It covers the register, risk classification, oversight design, disclosure, fairness testing, vendor due diligence and incident handling, in the detail an audit or a client questionnaire asks for. The two overlap only on vendor questions, which are taken considerably further here."
+    },
+    {
+      "question": "We only use ChatGPT and Microsoft Copilot. Is a governance day not excessive?",
+      "answer": "That is the most common starting position, and it is exactly what the register is for. The questions do not change with scale: which staff use what, on which data, with whose approval, who checks the output before it is relied on, and what happens when it is wrong. A small organisation can answer all of that in a day and end up better governed than a large one with a policy nobody reads."
+    },
+    {
+      "question": "We do not sell into the EU. Why does the EU AI Act matter to us?",
+      "answer": "Because it usually reaches you through a customer before it reaches you directly. Sri Lankan agencies, outsourcing providers and software firms are increasingly asked AI questions in client due diligence, and those questionnaires are written against the Act and against ISO/IEC 42001. The session covers where the Act applies, where it does not, and how to answer a questionnaire honestly when the true answer is that a control is not in place yet."
+    },
+    {
+      "question": "Do I need my own laptop?",
+      "answer": "Yes. The whole day is document work: a register, a risk classification, a disclosure standard, a due diligence pack and an incident procedure, all in editable templates you take away. Bring your list of tools in use and any client questionnaire you have been asked to complete, since those make the best material for the afternoon exercises."
+    },
+    {
+      "question": "What if I miss the day, and do you issue a certificate?",
+      "answer": "The session is recorded and available to you for twelve months, and every live booking includes one free repeat of the same class, with the terms shown on the booking page for each date. You receive a MyLearnPlus certificate of completion recording the course title, hours and date, which is a record of training rather than an industry credential or a compliance certification."
+    },
+    {
+      "question": "Can you run this privately, and can my employer be invoiced?",
+      "answer": "Yes to both, and a private run is the most common way this course is booked. It uses your own tool inventory, your own data categories and your own client questionnaires, so the register and the control set you finish with are real rather than illustrative. We invoice organisations against a purchase order, in LKR for Sri Lankan companies and in USD internationally."
+    }
+  ],
+  "related": [
+    "ai-for-managers",
+    "ai-assistants-at-work",
+    "building-with-llm-apis"
+  ],
+  "seo": {
+    "title": "AI Governance and Responsible Use Course | MyLearnPlus",
+    "description": "One-day AI governance course, live online or in Colombo. Build an AI register, classify risk, design oversight and disclosure, and prepare for audit.",
+    "keywords": "ai governance training, responsible ai course, eu ai act training, iso 42001 course, nist ai rmf, ai policy sri lanka, personal data protection act ai"
+  }
+}

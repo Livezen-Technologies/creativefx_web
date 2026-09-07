@@ -1,0 +1,226 @@
+{
+  "slug": "figma-ui-ux-essentials",
+  "pillar": "design",
+  "category": "figma-uiux",
+  "title": "Figma and UI/UX Essentials",
+  "subtitle": "For people new to product design. Leave with a clickable prototype and a design system",
+  "summary": "Two days in Figma for beginners: wireframes, a component library, five high-fidelity screens and a clickable prototype you test on your own phone.",
+  "description_html": "<p>Most first Figma files look the same: forty loose layers named Rectangle 43, three shades of nearly the same blue, and a button that has to be redrawn on every screen. This course is about the other way of working, where a screen is assembled from components you built once, a colour change happens in one place, and the file can be handed to a developer without a translation call. Two days, beginner level, no prior Figma and no design school behind you.</p><p>You work on one project from the first hour to the last: a five-screen appointment booking flow for a small clinic, supplied as a written brief with real copy and photographs. You wireframe the flow, build a small design system of colour and text styles, make a button component with default, hover, pressed and disabled variants, then assemble the sign-in, list, detail, booking and confirmation screens from that library. By the end of day two the flow is wired into a prototype you open on your own phone, walk a classmate through, and change based on what they did rather than what you assumed.</p><p>Two things separate this from a tour of the toolbar. The first is auto layout, taught properly rather than as a menu item, because it is what makes a card grow with its content and a screen survive being resized. The second is the finishing work most beginner courses skip: checking contrast against the WCAG 2.2 AA ratios of 4.5:1 for body text and 3:1 for large text and interface components, sizing touch targets so a thumb can hit them, naming layers so Dev Mode is readable, and exporting assets at 1x, 2x and 3x. That is the difference between a pretty file and one a development team can build from.</p><p>The class is taught in short demonstrate-and-do cycles. The instructor builds a step, you build the same step on your own file, and nobody is left behind on a screen they cannot see. Sessions run live online in your own timezone or in the classroom in Colombo, and every booking includes the recording for twelve months so a step you half-followed on the day can be watched again. Everything in the class works on a free Figma account.</p><p>Pricing is shown in <strong>LKR</strong> for learners in Sri Lanka and in <strong>USD</strong> for everyone else. Organisations can be invoiced against a purchase order, and the same syllabus can be run privately for one team, using your own product and brand as the project.</p>",
+  "level": 1,
+  "duration_hours": 12,
+  "duration_days": 2,
+  "software_version": "Figma, current web release",
+  "certification_alignment": "",
+  "delivery_modes": [
+    "LIVE_ONLINE",
+    "CLASSROOM",
+    "SELF_PACED",
+    "PRIVATE"
+  ],
+  "default_mode": "LIVE_ONLINE",
+  "price_band": "2day",
+  "outcomes": [
+    "Set up a Figma file that stays tidy: pages, named frames at standard device sizes, layout grids and an 8-point spacing scale.",
+    "Turn a written brief into a task flow and a set of low-fidelity wireframes for five screens.",
+    "Build a small design system: a colour palette and a type scale saved as styles and variables you can change in one place.",
+    "Build components with variants and properties, including a button with default, hover, pressed and disabled states.",
+    "Use auto layout and constraints so a card grows with its content and a screen resizes without breaking.",
+    "Assemble five high-fidelity screens from your own component library rather than redrawing elements on each one.",
+    "Adapt the same components into a desktop-width layout instead of starting a second design from scratch.",
+    "Wire the screens into a clickable prototype with triggers, overlays and smart animate, and open it on your own phone.",
+    "Run a structured walkthrough with a classmate using a supplied test script, and write down the changes their behaviour justifies.",
+    "Prepare the file for handoff: layer naming, Dev Mode inspection, asset export at 1x, 2x and 3x, and a share link with the correct permissions."
+  ],
+  "prerequisites": [
+    "No prior experience with Figma or any design software is needed.",
+    "You should be comfortable with your own computer: browsers, saving files and switching between applications.",
+    "A free Figma account is enough for everything in the class, and a mouse is easier than a trackpad for a long day of drawing."
+  ],
+  "audiences": [
+    "Graphic designers moving from print and social work into apps and websites",
+    "Marketing and web staff who brief agencies and want to specify screens rather than describe them",
+    "Front-end developers who receive designs and want to read, inspect and amend a Figma file",
+    "Founders and product owners sketching a product before paying anyone to build it",
+    "Students and career changers building the first product piece in a portfolio"
+  ],
+  "includes": [
+    {
+      "text": "Class recording, available for 12 months",
+      "icon": "video"
+    },
+    {
+      "text": "Project pack: the clinic brief, written copy, photographs and icons, yours to keep",
+      "icon": "download"
+    },
+    {
+      "text": "Course workbook covering every step demonstrated in class",
+      "icon": "book"
+    },
+    {
+      "text": "Usability walkthrough script and an accessibility checklist as reusable templates",
+      "icon": "clipboard"
+    },
+    {
+      "text": "MyLearnPlus certificate of completion",
+      "icon": "certificate"
+    },
+    {
+      "text": "Instructor email support after the class for questions on the exercises",
+      "icon": "support"
+    },
+    {
+      "text": "One free repeat of the same live class, terms shown on the booking page",
+      "icon": "refresh"
+    }
+  ],
+  "curriculum": [
+    {
+      "title": "Day 1, Morning — Getting around Figma and framing the problem",
+      "summary": "The file structure, the brief behind the screens, and low-fidelity wireframes for the whole flow.",
+      "topics": [
+        {
+          "title": "Pages, frames, layers and how a design file becomes unusable",
+          "duration_min": 30
+        },
+        {
+          "title": "Reading the brief: user, task and what counts as done",
+          "duration_min": 35
+        },
+        {
+          "title": "Device frames, layout grids and an 8-point spacing scale",
+          "duration_min": 35
+        },
+        {
+          "title": "Shapes, text, images, boolean operations and the tools you use every day",
+          "duration_min": 40
+        },
+        {
+          "title": "Exercise: wireframe the five screens of the booking flow",
+          "duration_min": 40
+        }
+      ]
+    },
+    {
+      "title": "Day 1, Afternoon — Building a small design system",
+      "summary": "Colour, type, components and auto layout, so the screens on day two assemble instead of being drawn.",
+      "topics": [
+        {
+          "title": "Colour styles and variables, and a palette that still works on a dark background",
+          "duration_min": 35
+        },
+        {
+          "title": "A type scale: sizes, line height, weight and saving them as text styles",
+          "duration_min": 35
+        },
+        {
+          "title": "Components, instances and overrides: what changes locally and what changes everywhere",
+          "duration_min": 40
+        },
+        {
+          "title": "Variants and component properties: a button with default, hover, pressed and disabled states",
+          "duration_min": 40
+        },
+        {
+          "title": "Auto layout: padding, gap, resizing and a card that grows with its content",
+          "duration_min": 30
+        }
+      ]
+    },
+    {
+      "title": "Day 2, Morning — High-fidelity screens",
+      "summary": "Assembling the five screens from your own library, then adapting the same parts to desktop width.",
+      "topics": [
+        {
+          "title": "Building the sign-in and list screens from your component library",
+          "duration_min": 40
+        },
+        {
+          "title": "Detail and booking form screens: input states, validation and error text",
+          "duration_min": 40
+        },
+        {
+          "title": "Nested auto layout and constraints for a screen that resizes",
+          "duration_min": 35
+        },
+        {
+          "title": "Adapting the same components to a desktop-width layout",
+          "duration_min": 35
+        },
+        {
+          "title": "Icons, images, masks and preparing assets for export",
+          "duration_min": 30
+        }
+      ]
+    },
+    {
+      "title": "Day 2, Afternoon — Prototype, test and hand off",
+      "summary": "Wiring the flow, testing it on a phone with a real person, then making the file safe to hand to a developer.",
+      "topics": [
+        {
+          "title": "Prototyping: connections, triggers, overlays and smart animate",
+          "duration_min": 40
+        },
+        {
+          "title": "Testing on a real phone with the Figma mirror app, and fixing what breaks",
+          "duration_min": 25
+        },
+        {
+          "title": "A structured walkthrough with a classmate: script, tasks, notes and what to change",
+          "duration_min": 40
+        },
+        {
+          "title": "Accessibility check: contrast ratios, text size, touch targets and reading order",
+          "duration_min": 35
+        },
+        {
+          "title": "Handoff: layer naming, Dev Mode inspection and exporting assets at 1x, 2x and 3x",
+          "duration_min": 25
+        },
+        {
+          "title": "Sharing, permissions, version history and leaving comments on a file",
+          "duration_min": 15
+        }
+      ]
+    }
+  ],
+  "faqs": [
+    {
+      "question": "Do I need my own laptop?",
+      "answer": "For live online classes, yes: you work on your own machine so the file, the component library and the prototype stay with you after the course. For classroom sessions in Colombo we also recommend bringing your own laptop for the same reason. Bring a mouse if you have one, since a full day of drawing on a trackpad is harder work than it needs to be. If you cannot bring a laptop, tell us when you book and we will confirm what is available for your date."
+    },
+    {
+      "question": "Is Figma included in the price, and do I need a paid plan?",
+      "answer": "The course fee covers the training, not a software subscription, but you do not need to pay for anything. Every exercise in the class is built to work on a free Figma account, in the browser or in the desktop app. If your employer already has a paid team plan, use that instead so the file lives where your colleagues can see it. We send account setup instructions when you book."
+    },
+    {
+      "question": "Do I need design experience, or to be able to draw?",
+      "answer": "No to both. This is a level 1 course written for people who have never opened a design tool. Nothing in the two days requires you to draw by hand: the screens are built from rectangles, text, components and supplied photographs. What the course does ask is that you can read a brief and make a decision, because that is the part software cannot do for you."
+    },
+    {
+      "question": "Does the course cover user research and usability testing?",
+      "answer": "In outline, honestly rather than fully. You work from a supplied brief rather than running your own research, and the testing on day two is a structured walkthrough with one classmate using a script we provide, not a formal usability study. That is enough to show you how differently someone else reads your screens. Full research methods, interviewing and recruitment are a separate subject and are not covered here."
+    },
+    {
+      "question": "What happens if I miss a day?",
+      "answer": "The recording of every session is available to you for twelve months, so you can catch up on the material you missed, and the project pack means you can rebuild the missed exercise from the same files the class used. If you would rather sit the day again live, every live booking includes one free repeat of the same class, with the terms and booking window shown on the booking page for each date."
+    },
+    {
+      "question": "Do you issue a certificate?",
+      "answer": "Yes. You receive a MyLearnPlus certificate of completion recording the course title, the hours and the date. It is a record of training. There is no Adobe or industry certification for Figma, and we do not claim to award one. What tends to matter more in an interview is the prototype you leave with, which is why the class is built around producing one."
+    },
+    {
+      "question": "Can my employer be invoiced?",
+      "answer": "Yes. We invoice organisations against a purchase order, in LKR for Sri Lankan companies and in USD internationally. Send the billing details and the names of the people attending and we will hold the seats while the invoice is processed. Groups of five or more are usually better served by a private class on the same syllabus, run against your own product and brand instead of the clinic project."
+    }
+  ],
+  "related": [
+    "web-design-wordpress",
+    "generative-ai-for-designers",
+    "illustrator-level-1"
+  ],
+  "seo": {
+    "title": "Figma and UI/UX Essentials Training Course | MyLearnPlus",
+    "description": "Two-day beginner Figma course, live online or in Colombo. Wireframes, components, auto layout, prototyping, accessibility checks and developer handoff.",
+    "keywords": "figma course, ui ux training, figma training sri lanka, ux design course colombo, prototyping course, ui design class, figma for beginners"
+  }
+}

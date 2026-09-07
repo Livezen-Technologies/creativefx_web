@@ -1,0 +1,93 @@
+{
+  "slug": "motion-graphics-intensive",
+  "type": "bootcamp",
+  "title": "Motion Graphics Intensive",
+  "subtitle": "Six days in After Effects: taught fundamentals first, then four intensive days to a showreel",
+  "summary": "After Effects Level 1 followed by the four-day Motion Graphics Bootcamp. Six days from first keyframe to tracking, keying, templates and a showreel piece.",
+  "description_html": "<p>After Effects punishes people who learn it in a hurry. The fundamentals are small and unglamorous, anchor points, easing, parenting, precomps, and skipping them is why so many self-taught projects become unopenable by anyone else, including the person who built them. This programme puts the fundamentals in first at a pace you can absorb, then spends four intensive days building on them.</p><p><strong>After Effects Level 1</strong> takes two days over compositions and keyframes, the anchor point problem, parenting and nulls, shape layers and trim paths, text animators, masks and track mattes, a simple 3D camera move, a five-second logo sting and a lower-third pack published as a motion graphics template for Premiere Pro. The <strong>Motion Graphics Bootcamp</strong> then runs four consecutive days that go considerably further: kinetic typography cut to a voice track, repeaters and path animation, working over live footage, two-point tracking, rotoscoping with the Roto Brush, keying a green screen clip with Keylight, colour grading and an audio mix, and three deliveries of the same sequence through the render queue and Media Encoder as a master, a web H.264 and a vertical social cut.</p><p>There is deliberate overlap at the join. The bootcamp opens by covering compositions, layers and keyframes at speed, and if you have come from Level 1 that morning is a warm-up rather than new material. That repetition is the point: the second pass at a fast tempo is where the fundamentals stop being something you look up. If you already work in After Effects regularly, buy the four-day bootcamp on its own instead and keep your money.</p><p>Thirty-six hours over six days. After Effects works the hardware hard, so a machine with a dedicated graphics card, 16GB of RAM or more and free disk space for previews matters here more than in any other course; we send Adobe's published system requirements and run a setup check about a week beforehand. Both courses are built against the published domains of the <strong>Adobe Certified Professional in Adobe After Effects</strong> exam, which is sat separately through Certiport at an authorised test centre. MyLearnPlus does not award Adobe credentials and no course can guarantee a pass. Live online in your own timezone or in the classroom in Colombo, priced in LKR for Sri Lanka and USD elsewhere, with invoicing available for employers.</p>",
+  "courses": [
+    "after-effects-level-1",
+    "motion-graphics-bootcamp"
+  ],
+  "required": [
+    "after-effects-level-1",
+    "motion-graphics-bootcamp"
+  ],
+  "outcomes": [
+    "Set up compositions to a named delivery specification and structure a longer sequence with precomps, parenting and nulls, so another animator can open the project and reuse a single element at three scales.",
+    "Control the feel of a move with easing and the graph editor rather than by adding more keyframes, and fix the anchor point problem for good.",
+    "Build a logo sting from shape layers with trim paths, path animation and repeaters, from supplied brand artwork.",
+    "Produce a kinetic typography piece cut to a voice track with text animators and range selectors.",
+    "Work over live footage: track a shot in two points so a lower third stays locked to a moving subject, separate a subject from a busy background with the Roto Brush, and key a green screen clip with Keylight.",
+    "Grade the sequence and mix voice, music and effects to a consistent level across the whole piece.",
+    "Publish a lower third as an Essential Graphics template and export it as a .mogrt file an editor can restyle in Premiere Pro without opening After Effects.",
+    "Deliver the same finished sequence three ways through the render queue and Adobe Media Encoder: a master, a web H.264 and a vertical social cut, as a showreel piece you can use."
+  ],
+  "includes": [
+    {
+      "text": "Both courses, 36 hours of instructor-led training over six days",
+      "icon": "calendar"
+    },
+    {
+      "text": "Project files, brand artwork, footage, a green screen clip, a voice track and music for the exercises",
+      "icon": "download"
+    },
+    {
+      "text": "Recordings of all six days, available for 12 months",
+      "icon": "video"
+    },
+    {
+      "text": "Workbooks for both courses and finished reference projects you can open and pull apart",
+      "icon": "book"
+    },
+    {
+      "text": "Practice questions written against the Adobe Certified Professional in Adobe After Effects exam domains",
+      "icon": "clipboard"
+    },
+    {
+      "text": "Pre-class hardware and setup check before your first session",
+      "icon": "support"
+    },
+    {
+      "text": "MyLearnPlus certificate of completion recording both courses and the 36 hours",
+      "icon": "certificate"
+    }
+  ],
+  "faqs": [
+    {
+      "question": "The bootcamp starts with keyframes again. Am I paying twice for the same material?",
+      "answer": "The bootcamp's first morning does cover compositions, layers and keyframes, and if you have just finished Level 1 it will be familiar. It is included deliberately, at a much faster tempo, as a second pass that turns the fundamentals into muscle memory before the harder days. If you would rather not repeat it, or if you already animate regularly, book the four-day Motion Graphics Bootcamp on its own. We would rather tell you that than sell you six days you do not need."
+    },
+    {
+      "question": "Do the six days have to run consecutively?",
+      "answer": "No, and most people do not run them that way. After Effects Level 1 is two days and the bootcamp is four consecutive days. Taking the two-day course first and leaving a week or two before the bootcamp gives you time to practise, which usually produces a better final piece. Both must be completed within twelve months of your first class."
+    },
+    {
+      "question": "What machine do I need?",
+      "answer": "More than for the other Adobe courses. After Effects wants a dedicated graphics card, 16GB of RAM or more, and free disk space for previews and renders; a low-specification laptop will make the four bootcamp days frustrating. We send Adobe's published system requirements and run a setup check about a week before your first class, and we would rather move your booking than have you sit through six days on a machine that cannot preview."
+    },
+    {
+      "question": "Is the Adobe software included, and do I need Premiere Pro too?",
+      "answer": "The fee covers the training, not an Adobe licence. You need After Effects installed and running before day one, through your own or your employer's Creative Cloud subscription or an Adobe trial. Premiere Pro is useful for the motion graphics template exercises, where you restyle a .mogrt file in an editor, but the steps are demonstrated and you can follow them without it installed."
+    },
+    {
+      "question": "Do I need previous experience?",
+      "answer": "You should have worked in at least one Adobe application, such as Photoshop, Illustrator or Premiere Pro, so that layers, panels and file handling are already familiar. Previous After Effects experience is not assumed, which is exactly what the two-day Level 1 at the start is for. Comfort with managing folders, linked footage and large files matters more here than in other courses."
+    },
+    {
+      "question": "What if I miss a day of the bootcamp?",
+      "answer": "Every day is recorded and the recordings are yours for twelve months. The bootcamp days build on one another, so tell the instructor as soon as you know and they will make sure you have the finished project file from the day you missed, which lets you start the next morning in the right place. Each course also includes one free repeat of that class on a later date."
+    },
+    {
+      "question": "Do you issue a certificate, and can my employer be invoiced?",
+      "answer": "You receive a MyLearnPlus certificate of completion recording both courses, the 36 hours and the date. It is a record of training, not an Adobe credential; the Adobe Certified Professional in Adobe After Effects is awarded by Adobe when you pass the exam with Certiport at an authorised test centre, and the voucher is bought separately. We invoice organisations against a purchase order in LKR or USD, and for five or more people the six days can be run privately on your own brand and footage."
+    }
+  ],
+  "price_band": "bootcamp",
+  "saving_note": "Booked together, the six days cost {saving} less than buying After Effects Level 1 and the Motion Graphics Bootcamp as separate courses.",
+  "seo": {
+    "title": "Motion Graphics Intensive: After Effects | MyLearnPlus",
+    "description": "Six days of After Effects, live online or in Colombo. Fundamentals, kinetic type, tracking, keying, motion graphics templates and a showreel piece.",
+    "keywords": "motion graphics course, after effects bootcamp, after effects intensive, motion graphics training sri lanka, after effects course colombo, kinetic typography course, mogrt template training"
+  }
+}

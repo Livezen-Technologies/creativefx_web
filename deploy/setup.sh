@@ -194,10 +194,25 @@ cp -n deploy/.env.production.example "$APP_DIR/.env" 2>/dev/null || true
 # encrypted with the old one — SMTP passwords, API secrets — permanently
 # unreadable. Read what is there; generate only what is missing.
 read_env() { grep "^$1" "$APP_DIR/.env" 2>/dev/null | head -1 | sed "s/.*= *'\?\([^']*\)'\?.*/\1/"; }
+
+# The template ships placeholders, not blanks — jwt.secret and the database
+# password are both the literal string __GENERATED_ON_SERVER__ so that a
+# half-configured .env is obvious rather than silently empty. That makes
+# `read_env` return a non-empty value on a fresh install, and a plain
+# `${VAR:-$(openssl rand …)}` therefore keeps the placeholder: the site would
+# deploy with a JWT signing secret that is committed to the repository and
+# identical on every install, which is to say no secret at all. Anything
+# matching the placeholder counts as absent.
+unset_or_placeholder() { [ -z "$1" ] || [ "$1" = "__GENERATED_ON_SERVER__" ]; }
+
 JWT_SECRET="$(read_env 'jwt.secret')"
-JWT_SECRET="${JWT_SECRET:-$(openssl rand -hex 32)}"
+if unset_or_placeholder "$JWT_SECRET"; then
+  JWT_SECRET="$(openssl rand -hex 32)"
+  note "Generated a JWT secret (stored only in $APP_DIR/.env)"
+fi
+
 ENCRYPTION_KEY="$(read_env 'encryption.key')"
-if [ -z "$ENCRYPTION_KEY" ]; then
+if unset_or_placeholder "$ENCRYPTION_KEY"; then
   # CodeIgniter expects the key prefixed with hex2bin: so it is decoded rather
   # than used as literal text.
   ENCRYPTION_KEY="hex2bin:$(openssl rand -hex 32)"
@@ -278,7 +293,7 @@ systemctl reload nginx
 note "Deploy complete"
 cat <<DONE
 
-Site:   ${SITE_SCHEME}://${DOMAIN}/   (the welcome page; each language hangs off it)
+Site:   ${SITE_SCHEME}://${DOMAIN}/
 Admin:  ${SITE_SCHEME}://${DOMAIN}/admin/login
 
 NEXT STEPS:

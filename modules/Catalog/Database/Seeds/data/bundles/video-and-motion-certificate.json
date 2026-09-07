@@ -1,0 +1,94 @@
+{
+  "slug": "video-and-motion-certificate",
+  "type": "certificate",
+  "title": "Video and Motion Certificate",
+  "subtitle": "Cut it, grade it, mix it, then put motion on top: three courses that finish one film",
+  "summary": "Premiere Pro Levels 1 and 2 plus After Effects Level 1. Six days that take one shoot from rushes to a graded, mixed, titled and delivered film.",
+  "description_html": "<p>Most people who learn video learn the cutting and stop there. The edit gets locked, and then the film sits at ninety per cent because the dialogue is uneven, the two cameras do not match, and the titles were dropped in from a preset that does not belong to the brand. This programme covers the whole job: the cut, the finish, and the motion graphics that sit on top of it.</p><p>The three courses run on the same material. <strong>Premiere Pro Level 1</strong> gives you the craft of the cut, from ingest and proxies through three-point editing, ripple and roll trims, J and L cuts, captions and a first export. <strong>Premiere Pro Level 2</strong> takes the same sequence into finishing: colour management for log footage, primary correction read from the scopes rather than from your laptop screen, shot matching across two cameras, HSL secondaries, dialogue repair, a mix measured in LUFS and a delivery that meets a stated loudness target. <strong>After Effects Level 1</strong> then builds what Premiere cannot: a logo sting, animated typography, a tracked label that stays on a moving subject, and a lower-third pack published as a motion graphics template that goes back into the Premiere timeline.</p><p>That last handover is the point of the programme. By the end you have a finished film and, alongside it, a reusable title pack in your own brand that you can restyle in Premiere Pro without opening After Effects again. Editors who can do this stop being the person who cuts and start being the person who delivers.</p><p>Thirty-six hours over six days, live online in your own timezone or in the classroom in Colombo, taken in any order within twelve months of your first class. Premiere Pro Level 1 and After Effects Level 1 are each mapped to the published domains of the matching <strong>Adobe Certified Professional</strong> exam, which is sat separately through Certiport at an authorised test centre; MyLearnPlus does not award Adobe credentials and no course can guarantee a pass. Video and motion work the hardware hard, so we send Adobe's published system requirements and run a setup check about a week before your first class. Pricing is in LKR for learners in Sri Lanka and USD elsewhere, and employers can be invoiced.</p>",
+  "courses": [
+    "premiere-pro-level-1",
+    "premiere-pro-finishing",
+    "after-effects-level-1"
+  ],
+  "required": [
+    "premiere-pro-level-1",
+    "after-effects-level-1"
+  ],
+  "outcomes": [
+    "Take one shoot from card to delivery: ingest, assembly, trim, sound, titles, grade, mix and export, with nothing handed off to somebody else.",
+    "Decide what belongs in Premiere Pro and what belongs in After Effects, instead of fighting one application to do the other one's job.",
+    "Correct and match shots from what the waveform, parade and vectorscope show, so your grade holds up on a screen you have never seen.",
+    "Deliver a mix that meets a stated loudness target in LUFS and true peak, with dialogue repaired and levelled across two microphones.",
+    "Build a title and lower-third pack in After Effects, publish it as a motion graphics template, and restyle it inside Premiere Pro without reopening After Effects.",
+    "Animate a logo sting and a typographic title with text animators and range selectors, with the timing shaped in the graph editor rather than by adding more keyframes.",
+    "Run a QC checklist and export a master, a web H.264 and a captioned version of the same film from one project.",
+    "Prepare for the Adobe Certified Professional exams in Premiere Pro and After Effects, and know from the practice tasks which objectives still need work."
+  ],
+  "includes": [
+    {
+      "text": "All three courses, 36 hours of instructor-led training over six days",
+      "icon": "calendar"
+    },
+    {
+      "text": "Multi-camera rushes, log footage, an interview clip, a music bed and finished reference sequences, supplied for class and your own practice",
+      "icon": "download"
+    },
+    {
+      "text": "Recordings of every class in the programme, available for 12 months",
+      "icon": "video"
+    },
+    {
+      "text": "Course workbooks, project files and finished reference sequences for each course",
+      "icon": "book"
+    },
+    {
+      "text": "Practice questions written against the Adobe Certified Professional exam domains for Premiere Pro and After Effects",
+      "icon": "clipboard"
+    },
+    {
+      "text": "Pre-class hardware and setup check before your first session",
+      "icon": "support"
+    },
+    {
+      "text": "MyLearnPlus Video and Motion Certificate on completion of all three courses",
+      "icon": "certificate"
+    }
+  ],
+  "faqs": [
+    {
+      "question": "What order should I take the three courses in?",
+      "answer": "Premiere Pro Level 1, then After Effects Level 1, then Premiere Pro Level 2. That order lets you build the title pack in After Effects before you finish and grade the sequence in Premiere. Premiere Pro Level 2 assumes you can already cut confidently, so it should not be your first course unless you edit regularly already."
+    },
+    {
+      "question": "Can I swap one of the courses?",
+      "answer": "Premiere Pro Level 1 and After Effects Level 1 are fixed. The third place is Premiere Pro Level 2 by default and can be swapped for AI Video and Audio Production at the same price if generative video, voice and transcription matter more to you than grading and mixing. Tell us at the time of booking so the certificate records what you took."
+    },
+    {
+      "question": "What machine do I need, and do I need headphones?",
+      "answer": "You work on your own machine, which for video needs to be more capable than for the other courses: we send Adobe's published system requirements and run a setup check about a week before your first class, and you should keep around 40GB free for the supplied footage. Bring closed-back headphones for Premiere Pro Level 2. Laptop speakers cannot be used to judge a mix and the classroom cannot supply headphones for everyone."
+    },
+    {
+      "question": "Is the Adobe software included in the price?",
+      "answer": "No. The fee covers the training, not an Adobe licence. You need Premiere Pro and After Effects installed and running before your first class, through your own or your employer's Creative Cloud subscription or an Adobe trial. Setup instructions come with your booking, and the pre-class check is there if the installation gives you trouble."
+    },
+    {
+      "question": "What happens if I miss a day?",
+      "answer": "Every session is recorded and the recordings are yours for twelve months, so you can work through what you missed on the supplied footage. Each live course in the programme also includes one free repeat of the same class if you would rather sit the day again with an instructor; the terms and booking window are on the booking page for each date."
+    },
+    {
+      "question": "Do you issue a certificate, and is it an Adobe qualification?",
+      "answer": "You receive a MyLearnPlus Video and Motion Certificate recording the three courses, the hours and the completion date. It is a record of training, not an Adobe credential. Adobe Certified Professional certifications in Premiere Pro and After Effects are awarded by Adobe through Certiport when you pass the exam at an authorised test centre, and the voucher is bought separately."
+    },
+    {
+      "question": "Can my employer be invoiced, or run this for a whole team?",
+      "answer": "Yes. We invoice organisations against a purchase order, in LKR for Sri Lankan companies and in USD internationally, and hold seats while the invoice is processed. For an in-house video team of five or more, the same three courses can be delivered privately using your own rushes, your own brand and your own delivery specifications, which is usually the better option."
+    }
+  ],
+  "price_band": "certificate",
+  "saving_note": "Booked as a programme, the Video and Motion Certificate costs {saving} less than buying Premiere Pro Level 1, Premiere Pro Level 2 and After Effects Level 1 separately.",
+  "seo": {
+    "title": "Video and Motion Certificate Course | MyLearnPlus",
+    "description": "Premiere Pro and After Effects in one programme, live online or in Colombo. Six days from rushes to a graded, mixed and titled film, with Adobe exam prep.",
+    "keywords": "video editing certificate, premiere pro course, after effects course, motion graphics training, video editing course sri lanka, premiere pro training colombo, adobe certified professional premiere pro"
+  }
+}

@@ -3,177 +3,249 @@
 namespace Modules\Site\Controllers;
 
 use App\Controllers\BaseController;
-use Config\App;
-use Modules\Careers\Models\JobModel;
-use Modules\Cms\Models\PageModel;
-use Modules\News\Models\NewsPostModel;
-use Modules\Tshda\Models\DiscussionTopicModel;
-use Modules\Tshda\Models\ProgrammeModel;
-use Modules\Tshda\Models\ServiceModel;
-use Modules\Tshda\Models\StatisticModel;
+use CodeIgniter\Exceptions\PageNotFoundException;
 
 /**
- * The XML sitemap, built from the pages table rather than a hand-kept list.
+ * The sitemaps — the XML ones a crawler fetches, and the human one a reader
+ * uses when the menu has failed them.
  *
- * A file would go stale the first time somebody adds a page in the admin
- * console, which is the one thing this site is now meant to support. Reading
- * the same query the router honours means the sitemap cannot advertise a draft,
- * a scheduled page before its date, or a slug that has been deleted.
+ * Split by type, as the SEO plan requires. One sitemap containing courses,
+ * every scheduled date, every article and every page is a file that changes
+ * whenever anything changes, so a crawler that re-fetches it learns nothing
+ * about what actually moved. Split, a new class date changes only
+ * `sitemap-sessions.xml`, and the index's `lastmod` says so.
  *
- * Every page is listed once per language, and each entry names its siblings
- * through xhtml:link alternates. That is what tells a search engine these are
- * translations of one page rather than several thin pages saying similar
- * things — and it is why the file is not simply a list of URLs.
+ * `lastmod` is read from the row rather than stamped with today's date. A
+ * sitemap that claims every URL changed this morning is a sitemap a search
+ * engine stops believing, and it is the single most common way the file makes
+ * things worse rather than better.
  *
- * Most of this site is not in the pages table, though. The service catalogue,
- * the statistics, the training calendar, the newsroom and the vacancies are
- * their own records with their own addresses, and a sitemap listing only the
- * editorial pages would leave the majority of the Authority's content
- * undiscoverable. Each of those is added below, from the same query the public
- * controller uses — so a closed vacancy or a draft dataset is absent here for
- * the same reason it is absent from the site.
+ * Every URL is emitted once per locale with `xhtml:link` alternates, which is
+ * what tells a search engine that /en/course/x and /si/course/x are the same
+ * page in two languages rather than duplicates competing with each other.
  */
 class Sitemap extends BaseController
 {
+    /** The sections, in the order the index lists them. */
+    private const SECTIONS = ['pages', 'courses', 'sessions', 'bundles', 'posts', 'resources', 'people'];
+
+    /** A sitemap file may hold 50,000 URLs; this is the practical cap. */
+    private const MAX_URLS = 5000;
+
+    /** The index. */
     public function index()
     {
-        $locales = config(App::class)->supportedLocales;
-        $pages   = (new PageModel())->findAllPublished();
+        helper('url');
 
-        $entries = [];
-        foreach ($pages as $page) {
-            $isHome = (int) ($page['is_home'] ?? 0) === 1 || ($page['template'] ?? '') === 'home';
-            $slug   = $isHome ? '' : (string) $page['slug'];
-
-            // A home page is reachable at /{locale}; everything else hangs off
-            // it. Building both from the same rule keeps this in step with the
-            // routes rather than restating them.
-            $urls = [];
-            foreach ($locales as $locale) {
-                $urls[$locale] = rtrim(base_url($locale . ($slug === '' ? '' : '/' . $slug)), '/');
+        $sections = [];
+        foreach (self::SECTIONS as $section) {
+            $latest = $this->latestFor($section);
+            if ($latest === null) {
+                continue;   // nothing published in this section yet
             }
-
-            foreach ($locales as $locale) {
-                $entries[] = [
-                    'loc'        => $urls[$locale],
-                    'alternates' => $urls,
-                    'lastmod'    => $this->stamp($page),
-                    // The home page is the entry point and is updated most; the
-                    // rest sit a step below it. Priority is a hint and engines
-                    // mostly ignore it, so this stays simple rather than
-                    // inventing a scale nobody reads.
-                    'priority'   => $isHome ? '1.0' : '0.8',
-                    'changefreq' => $isHome ? 'weekly' : 'monthly',
-                ];
-            }
-        }
-
-        // The section indexes: real addresses, and the entry point to
-        // everything below them.
-        foreach ([
-            'services'    => '0.9',
-            'directory'   => '0.8',
-            'statistics'  => '0.8',
-            'downloads'   => '0.8',
-            'hantana'     => '0.8',
-            'vacancies'   => '0.8',
-            'news'        => '0.8',
-            'announcements' => '0.8',
-            'discussion'  => '0.6',
-            'faqs'        => '0.7',
-            'contact'     => '0.8',
-            'feedback'    => '0.7',
-            'gallery'     => '0.6',
-            'videos'      => '0.6',
-            'sitemap'     => '0.4',
-        ] as $slug => $priority) {
-            $entries = array_merge($entries, $this->localized($slug, $locales, null, $priority, 'weekly'));
-        }
-
-        // The records. Wrapped, because a sitemap is fetched by a crawler
-        // rather than a person: one unreachable table must not take the whole
-        // file down and cost the site its indexing.
-        foreach ([
-            ['services/',   fn () => (new ServiceModel())->live()->findAll(),        '0.7', 'monthly'],
-            ['statistics/', fn () => (new StatisticModel())->live(),                 '0.6', 'monthly'],
-            ['hantana/',    fn () => (new ProgrammeModel())->calendar(),             '0.6', 'weekly'],
-            ['news/',       fn () => (new NewsPostModel())->live()->findAll(200),    '0.6', 'monthly'],
-            ['vacancies/',  fn () => (new JobModel())->openJobs(),                   '0.6', 'weekly'],
-            ['discussion/', fn () => (new DiscussionTopicModel())->live(),           '0.5', 'weekly'],
-        ] as [$prefix, $fetch, $priority, $freq]) {
-            try {
-                foreach ($fetch() as $row) {
-                    $entries = array_merge($entries, $this->localized(
-                        $prefix . $row['slug'],
-                        $locales,
-                        $this->stamp($row),
-                        $priority,
-                        $freq
-                    ));
-                }
-            } catch (\Throwable $e) {
-                log_message('error', 'Sitemap section ' . $prefix . ' skipped: ' . $e->getMessage());
-            }
-        }
-
-        return $this->response
-            ->setHeader('Content-Type', 'application/xml; charset=UTF-8')
-            ->setBody($this->renderXml(['entries' => $entries]));
-    }
-
-    /**
-     * One address, in every language, each entry naming the others.
-     *
-     * @return list<array>
-     */
-    private function localized(string $path, array $locales, ?string $lastmod, string $priority, string $changefreq): array
-    {
-        $urls = [];
-        foreach ($locales as $locale) {
-            $urls[$locale] = rtrim(base_url($locale . '/' . ltrim($path, '/')), '/');
-        }
-
-        $out = [];
-        foreach ($locales as $locale) {
-            $out[] = [
-                'loc'        => $urls[$locale],
-                'alternates' => $urls,
-                'lastmod'    => $lastmod,
-                'priority'   => $priority,
-                'changefreq' => $changefreq,
+            $sections[] = [
+                'loc'     => rtrim(base_url(), '/') . '/sitemap-' . $section . '.xml',
+                'lastmod' => $latest,
             ];
         }
 
-        return $out;
+        return $this->xml(view('Modules\Site\Views\sitemap_index', ['sections' => $sections], ['saveData' => false]));
+    }
+
+    /** One section. */
+    public function section(?string $name = null)
+    {
+        helper(['url', 'norlanka']);
+
+        if (! in_array($name, self::SECTIONS, true)) {
+            throw PageNotFoundException::forPageNotFound();
+        }
+
+        return $this->xml(view('Modules\Site\Views\sitemap', [
+            'urls'    => $this->urlsFor((string) $name),
+            'locales' => config('App')->supportedLocales,
+        ], ['saveData' => false]));
     }
 
     /**
-     * Render the document with the view debugger switched off.
+     * The human sitemap: every section of the site, as a page.
      *
-     * view() wraps each rendered file in an HTML comment naming it whenever the
-     * app is in debug mode. In a web page that is invisible and useful; here it
-     * lands above the XML declaration, and content before the declaration is not
-     * a warning — it is a fatal parse error, so the sitemap would be rejected
-     * outright by every consumer on any host running in development.
+     * Worth keeping even in a site with good navigation. It is where somebody
+     * lands from a 404, it is the page a screen-reader user reaches for when a
+     * menu is fighting them, and it is a page of internal links a crawler can
+     * follow in one go.
      */
-    private function renderXml(array $data): string
+    public function page(?string $locale = null)
     {
-        // The view path is not optional: View's constructor rtrim()s it, so a
-        // null there is a TypeError rather than a default.
-        $view = new \CodeIgniter\View\View(config(\Config\View::class), APPPATH . 'Views/', null, false);
+        helper(['url', 'norlanka', 'catalog']);
 
-        return $view->setData($data, 'raw')->render('Modules\Site\Views\sitemap', null, false);
+        $db = db_connect();
+
+        $categories = $db->tableExists('course_categories')
+            ? $db->table('course_categories')->where('status', 'published')
+                ->orderBy('sort_order', 'ASC')->get()->getResultArray()
+            : [];
+
+        $pages = $db->tableExists('pages')
+            ? $db->table('pages')->select('slug, title')->where('status', 'published')
+                ->where('deleted_at IS NULL')->orderBy('sort_order', 'ASC')->get()->getResultArray()
+            : [];
+
+        return view('Modules\Site\Views\sitemap_page', [
+            'categories'      => $categories,
+            'pages'           => $pages,
+            'crumbs'          => [['label' => lang('Site.sitemap.title')]],
+            'title'           => lang('Site.sitemap.title') . ' — ' . setting('site_name', ''),
+            'metaDescription' => lang('Site.sitemap.meta'),
+        ]);
     }
 
-    /** W3C-datetime lastmod, or null when the row has no usable timestamp. */
-    private function stamp(array $page): ?string
+    // ── Internals ───────────────────────────────────────────────────────────
+
+    /**
+     * The URLs in one section, each with the date its own row last changed.
+     *
+     * @return list<array{path:string, lastmod:?string, priority:string}>
+     */
+    private function urlsFor(string $section): array
     {
-        $raw = $page['updated_at'] ?? $page['published_at'] ?? $page['created_at'] ?? null;
-        if (empty($raw)) {
+        $db = db_connect();
+
+        switch ($section) {
+            case 'pages':
+                $urls = [
+                    ['path' => '', 'lastmod' => null, 'priority' => '1.0'],
+                    ['path' => 'courses', 'lastmod' => null, 'priority' => '0.9'],
+                    ['path' => 'schedule', 'lastmod' => null, 'priority' => '0.9'],
+                    ['path' => 'adobe', 'lastmod' => null, 'priority' => '0.8'],
+                    ['path' => 'ai', 'lastmod' => null, 'priority' => '0.8'],
+                    ['path' => 'adobe/certification', 'lastmod' => null, 'priority' => '0.7'],
+                    ['path' => 'certificates', 'lastmod' => null, 'priority' => '0.7'],
+                    ['path' => 'bootcamps', 'lastmod' => null, 'priority' => '0.7'],
+                    ['path' => 'on-demand', 'lastmod' => null, 'priority' => '0.7'],
+                    ['path' => 'corporate', 'lastmod' => null, 'priority' => '0.7'],
+                    ['path' => 'locations', 'lastmod' => null, 'priority' => '0.6'],
+                    ['path' => 'instructors', 'lastmod' => null, 'priority' => '0.6'],
+                    ['path' => 'resources', 'lastmod' => null, 'priority' => '0.6'],
+                    ['path' => 'webinars', 'lastmod' => null, 'priority' => '0.5'],
+                    ['path' => 'reviews', 'lastmod' => null, 'priority' => '0.5'],
+                    ['path' => 'blog', 'lastmod' => null, 'priority' => '0.6'],
+                    ['path' => 'sitemap', 'lastmod' => null, 'priority' => '0.3'],
+                ];
+
+                foreach ($this->rows('pages', 'slug, updated_at', ['status' => 'published', 'deleted_at IS NULL' => null]) as $row) {
+                    $urls[] = ['path' => $row['slug'], 'lastmod' => $row['updated_at'], 'priority' => '0.6'];
+                }
+                foreach ($this->rows('course_categories', 'slug, updated_at', ['status' => 'published']) as $row) {
+                    $urls[] = ['path' => 'courses/' . $row['slug'], 'lastmod' => $row['updated_at'], 'priority' => '0.7'];
+                }
+
+                return $urls;
+
+            case 'courses':
+                return array_map(static fn (array $r): array => [
+                    'path' => 'course/' . $r['slug'], 'lastmod' => $r['updated_at'], 'priority' => '0.9',
+                ], $this->rows('courses', 'slug, updated_at', ['status' => 'published', 'deleted_at IS NULL' => null]));
+
+            case 'sessions':
+                // Only sessions that are still ahead. A sitemap full of dates
+                // that have already run is a sitemap of pages a crawler will
+                // find, index and then have to forget.
+                $rows = $db->tableExists('course_sessions')
+                    ? $db->table('course_sessions cs')
+                        ->select('cs.id, cs.updated_at, c.slug')
+                        ->join('courses c', 'c.id = cs.course_id')
+                        ->whereIn('cs.status', ['open', 'confirmed', 'waitlist'])
+                        ->where('cs.is_private', 0)
+                        ->where('cs.start_date >=', date('Y-m-d'))
+                        ->where('c.status', 'published')->where('c.deleted_at IS NULL')
+                        ->limit(self::MAX_URLS)->get()->getResultArray()
+                    : [];
+
+                return array_map(static fn (array $r): array => [
+                    'path' => 'schedule/' . $r['slug'] . '-' . (int) $r['id'],
+                    'lastmod' => $r['updated_at'], 'priority' => '0.6',
+                ], $rows);
+
+            case 'bundles':
+                return array_map(static fn (array $r): array => [
+                    'path' => ($r['type'] === 'bootcamp' ? 'bootcamps/' : 'certificates/') . $r['slug'],
+                    'lastmod' => $r['updated_at'], 'priority' => '0.8',
+                ], $this->rows('bundles', 'slug, type, updated_at', ['status' => 'published']));
+
+            case 'posts':
+                return array_map(static fn (array $r): array => [
+                    'path' => 'blog/' . $r['slug'], 'lastmod' => $r['updated_at'], 'priority' => '0.6',
+                ], $this->rows('news_posts', 'slug, updated_at', ['status' => 'published']));
+
+            case 'resources':
+                $out = array_map(static fn (array $r): array => [
+                    'path' => 'resources/' . $r['slug'], 'lastmod' => $r['updated_at'], 'priority' => '0.6',
+                ], $this->rows('resources', 'slug, updated_at', ['status' => 'published']));
+
+                foreach ($this->rows('webinars', 'slug, updated_at', ['status' => 'published']) as $row) {
+                    $out[] = ['path' => 'webinars/' . $row['slug'], 'lastmod' => $row['updated_at'], 'priority' => '0.5'];
+                }
+
+                return $out;
+
+            case 'people':
+                $out = array_map(static fn (array $r): array => [
+                    'path' => 'instructors/' . $r['slug'], 'lastmod' => $r['updated_at'], 'priority' => '0.5',
+                ], $this->rows('instructors', 'slug, updated_at', ['status' => 'published']));
+
+                foreach ($this->rows('venues', 'slug, updated_at', ['status' => 'published']) as $row) {
+                    $out[] = ['path' => 'locations/' . $row['slug'], 'lastmod' => $row['updated_at'], 'priority' => '0.6'];
+                }
+
+                return $out;
+        }
+
+        return [];
+    }
+
+    /**
+     * Rows from a table that may not exist yet.
+     *
+     * The sitemap is fetched by crawlers within minutes of a domain resolving,
+     * which can be before the first migration has run. A missing table should
+     * cost a section, not a 500 in a robot's log.
+     *
+     * @param array<string, mixed> $where a null value means the key is raw SQL
+     * @return list<array>
+     */
+    private function rows(string $table, string $select, array $where): array
+    {
+        $db = db_connect();
+        if (! $db->tableExists($table)) {
+            return [];
+        }
+
+        $builder = $db->table($table)->select($select);
+        foreach ($where as $key => $value) {
+            $value === null ? $builder->where($key) : $builder->where($key, $value);
+        }
+
+        return $builder->limit(self::MAX_URLS)->get()->getResultArray();
+    }
+
+    /** The most recent change in a section, for the index's lastmod. */
+    private function latestFor(string $section): ?string
+    {
+        $urls = $this->urlsFor($section);
+        if ($urls === []) {
             return null;
         }
-        $time = strtotime((string) $raw);
 
-        return $time === false ? null : date('c', $time);
+        $dates = array_filter(array_column($urls, 'lastmod'));
+
+        return $dates === [] ? date('Y-m-d') : substr((string) max($dates), 0, 10);
+    }
+
+    private function xml(string $body)
+    {
+        return $this->response
+            ->setContentType('application/xml')
+            ->setBody($body);
     }
 }

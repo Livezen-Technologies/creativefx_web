@@ -18,6 +18,34 @@
  *   reader who has chosen once is not asked again at the front door.
  */
 const STORE_KEY = 'nl_locale';
+
+/**
+ * Remember the choice in two places, for two different readers of it.
+ *
+ * localStorage is for the browser: the first-visit chooser asks whether a
+ * preference exists, and only this side of the wire can answer.
+ *
+ * The cookie is for the server. The bare root — `/` — has to redirect somebody
+ * to a language before any script has run, and a server cannot read
+ * localStorage. Without the cookie, a reader who chose Sinhala last week types
+ * the domain and lands on English, which is the one moment the whole feature
+ * exists for.
+ *
+ * SameSite=Lax so it survives arriving from a search result; a year, because a
+ * language preference does not go stale; not httpOnly, because the script that
+ * writes it is the one that needs to read it back.
+ */
+function remember(code) {
+    try {
+        localStorage.setItem(STORE_KEY, code);
+    } catch (e) { /* private window */ }
+
+    try {
+        const secure = location.protocol === 'https:' ? '; Secure' : '';
+        document.cookie = `${STORE_KEY}=${encodeURIComponent(code)}; Path=/; Max-Age=31536000; SameSite=Lax${secure}`;
+    } catch (e) { /* nothing sensible to do */ }
+}
+
 const SCROLL_KEY = 'nl_lang_scroll';
 
 /**
@@ -83,7 +111,7 @@ export default function langSwitcher(config = {}) {
 
       const target = this.href(code);
       try {
-        localStorage.setItem(STORE_KEY, code);
+        remember(code);
         sessionStorage.setItem(SCROLL_KEY, JSON.stringify({
           path: target.split('?')[0].split('#')[0],
           y: window.scrollY || 0,

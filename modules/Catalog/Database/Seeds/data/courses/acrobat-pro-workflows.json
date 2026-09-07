@@ -1,0 +1,260 @@
+{
+  "slug": "acrobat-pro-workflows",
+  "pillar": "adobe",
+  "category": "acrobat-pro",
+  "title": "Acrobat Pro: PDF Workflows, Forms and Accessibility",
+  "subtitle": "One day on Acrobat Pro for people who build, review, sign off and publish PDF documents",
+  "summary": "One day on Acrobat Pro: combining and editing, review and e-signature, interactive forms, redaction, accessibility and batch actions, with ACP exam practice.",
+  "description_html": "<p>Almost every organisation runs on PDFs and almost nobody is taught Acrobat. So a report is rebuilt in Word because nobody knows the text can be edited in place, a form is printed and scanned back in because nobody has built an interactive one, and a confidential name is hidden with a black rectangle that anyone can move. This course fixes the specific things that cost real time and, in the case of that black rectangle, real money.</p><p>The morning is documents. You combine a set of Word files, images and scans into a single ordered PDF with bookmarks, run text recognition on a scan so it becomes searchable, edit text and images in place, export to Word and Excel and see honestly what survives the trip, and compare two versions of a contract so the changes are listed rather than hunted for. You then run a review properly: collecting comments from several people into one file, summarising them, and sending a document for electronic signature and tracking who has signed.</p><p>The afternoon is the work that needs care. You build an interactive form from a flat layout with text fields, checkboxes, dropdowns and a calculated total, set the tab order so it can be completed with the keyboard, distribute it and collect the responses. You then redact properly and sanitise the file so removed content is genuinely gone, and set passwords and permissions understanding what they do and do not stop.</p><p>The final modules cover accessibility and repetition. You run the <strong>Accessibility Checker</strong> on a supplied report, fix the issues it lists, correct the tag structure and reading order, add alternative text and table headers, and set the document language and title. This is the technique used to work towards PDF/UA and WCAG criteria; whether a given document meets your organisation's obligations is a matter for your own testing and advisers, and this course is training rather than legal advice. You finish by turning the routine parts of all of this into a repeatable Action with the Action Wizard.</p><p>Content is mapped to the domains of the <strong>Adobe Certified Professional in Adobe Acrobat Pro</strong> exam, delivered by Certiport at authorised test centres, and the day ends with a timed practice task. MyLearnPlus does not award the Adobe credential and no course can guarantee a pass. The class runs live online or in the classroom in Colombo, priced in <strong>LKR</strong> for Sri Lanka and <strong>USD</strong> internationally.</p>",
+  "level": 1,
+  "duration_hours": 6,
+  "duration_days": 1,
+  "software_version": "Creative Cloud 2026",
+  "certification_alignment": "Prepares for the Adobe Certified Professional in Adobe Acrobat Pro exam",
+  "delivery_modes": [
+    "LIVE_ONLINE",
+    "CLASSROOM",
+    "SELF_PACED",
+    "PRIVATE"
+  ],
+  "default_mode": "LIVE_ONLINE",
+  "price_band": "1day",
+  "outcomes": [
+    "Combine Word files, images and scans into a single PDF with the pages in the right order and a working bookmark structure.",
+    "Run text recognition on a scanned document so it can be searched, selected and copied.",
+    "Edit text and images inside an existing PDF, export to Word or Excel knowing what survives the conversion, and compare two versions to list what actually changed.",
+    "Collect comments from several reviewers into one file, summarise them, and send a document for electronic signature and track its status.",
+    "Build an interactive form with text fields, checkboxes, dropdowns, a calculated total and a sensible tab order.",
+    "Distribute a form and collect the responses into a single response file you can export.",
+    "Redact confidential content and sanitise the file so the removed content is gone rather than covered, and remove hidden metadata.",
+    "Apply passwords and permissions to a document, and explain accurately what those settings do and do not prevent.",
+    "Run the Accessibility Checker on a report and fix the reported issues, including tags, reading order, alternative text, table headers, document language and title.",
+    "Record an Action in the Action Wizard that applies a repeated sequence of steps to a folder of files."
+  ],
+  "prerequisites": [
+    "No prior experience with Acrobat Pro is needed. Experience of Adobe Reader is not the same thing and is not assumed.",
+    "You should be comfortable with your own computer, including saving files, finding folders and switching between applications.",
+    "Everyday use of a word processor is helpful, since several exercises start from a Word document."
+  ],
+  "audiences": [
+    "Administrators, executive assistants and office managers who assemble and circulate documents daily",
+    "Legal, finance and HR staff handling contracts, invoices, policies and confidential records",
+    "Marketing and communications staff producing reports, brochures and downloadable documents for a website",
+    "Government and NGO staff whose published documents must meet accessibility requirements",
+    "Designers and print buyers who supply and check client PDFs"
+  ],
+  "includes": [
+    {
+      "text": "Class recording, available for 12 months",
+      "icon": "video"
+    },
+    {
+      "text": "Exercise files including a scanned document, a flat form and an untagged report, yours to keep",
+      "icon": "download"
+    },
+    {
+      "text": "Course workbook covering every step demonstrated in class",
+      "icon": "book"
+    },
+    {
+      "text": "Practice questions written against the Adobe Certified Professional exam domains",
+      "icon": "clipboard"
+    },
+    {
+      "text": "Accessibility checklist and a redaction procedure you can adopt as an office standard",
+      "icon": "settings"
+    },
+    {
+      "text": "MyLearnPlus certificate of completion",
+      "icon": "certificate"
+    },
+    {
+      "text": "Instructor email support after the class for questions on the exercises",
+      "icon": "support"
+    }
+  ],
+  "curriculum": [
+    {
+      "title": "Morning, part 1 — Creating, combining and organising",
+      "summary": "Getting documents into PDF properly and assembling them into one file a reader can navigate.",
+      "topics": [
+        {
+          "title": "Creating PDFs from Word, InDesign, images and a scanner, and why the source method matters",
+          "duration_min": 20
+        },
+        {
+          "title": "Combining files, reordering, rotating, extracting and deleting pages",
+          "duration_min": 20
+        },
+        {
+          "title": "Bookmarks, page labels and links for a document people have to navigate",
+          "duration_min": 15
+        }
+      ]
+    },
+    {
+      "title": "Morning, part 2 — Editing, exporting and comparing",
+      "summary": "Changing what is already in a PDF, getting the content back out, and finding what changed between versions.",
+      "topics": [
+        {
+          "title": "Editing text and images in place, and the font substitution problems to expect",
+          "duration_min": 20
+        },
+        {
+          "title": "Scan and OCR: making a scanned document searchable and selectable",
+          "duration_min": 15
+        },
+        {
+          "title": "Exporting to Word, Excel and image formats, and what survives the conversion",
+          "duration_min": 10
+        },
+        {
+          "title": "Comparing two versions of a contract and reading the change report",
+          "duration_min": 10
+        }
+      ]
+    },
+    {
+      "title": "Morning, part 3 — Review, comments and signatures",
+      "summary": "Running a review across several people, then getting the document signed.",
+      "topics": [
+        {
+          "title": "Comment tools: sticky notes, text mark-up, stamps and drawing",
+          "duration_min": 15
+        },
+        {
+          "title": "Sharing for review, collecting comments from several reviewers and summarising them",
+          "duration_min": 20
+        },
+        {
+          "title": "Fill and Sign, requesting electronic signatures, and tracking who has signed",
+          "duration_min": 20
+        }
+      ]
+    },
+    {
+      "title": "Afternoon, part 1 — Building a form that works",
+      "summary": "Turning a flat layout into an interactive form, then distributing it and collecting the answers.",
+      "topics": [
+        {
+          "title": "Prepare Form: automatic field detection and cleaning up what it gets wrong",
+          "duration_min": 20
+        },
+        {
+          "title": "Field types: text, checkbox, radio button, dropdown, list and date",
+          "duration_min": 20
+        },
+        {
+          "title": "Field properties, formatting, required fields and simple validation",
+          "duration_min": 15
+        },
+        {
+          "title": "Calculations: a total field that adds the line items",
+          "duration_min": 15
+        }
+      ]
+    },
+    {
+      "title": "Afternoon, part 2 — Security, redaction and distribution",
+      "summary": "Removing what must not be seen, protecting what must not be changed, and sending the form out.",
+      "topics": [
+        {
+          "title": "Tab order, keyboard completion and testing a form the way a recipient will use it",
+          "duration_min": 15
+        },
+        {
+          "title": "Distributing a form and collecting responses into a single response file",
+          "duration_min": 10
+        },
+        {
+          "title": "Redaction done properly, and sanitising the file to remove hidden information and metadata",
+          "duration_min": 15
+        },
+        {
+          "title": "Passwords, permissions and what document security does and does not prevent",
+          "duration_min": 10
+        }
+      ]
+    },
+    {
+      "title": "Afternoon, part 3 — Accessible PDFs",
+      "summary": "Running the Accessibility Checker on a real report and fixing every issue it lists.",
+      "topics": [
+        {
+          "title": "Why an untagged PDF is unusable with a screen reader, and what tags actually are",
+          "duration_min": 10
+        },
+        {
+          "title": "Running the Accessibility Checker and reading the report it produces",
+          "duration_min": 10
+        },
+        {
+          "title": "Fixing tags and reading order, and adding alternative text to images",
+          "duration_min": 15
+        },
+        {
+          "title": "Table headers, document language, document title and tagged form fields",
+          "duration_min": 10
+        }
+      ]
+    },
+    {
+      "title": "Afternoon, part 4 — Repeating the work and exam practice",
+      "summary": "Turning today's steps into a repeatable Action, then the practice task.",
+      "topics": [
+        {
+          "title": "Action Wizard: recording and running a sequence over a folder of files",
+          "duration_min": 15
+        },
+        {
+          "title": "Optimising and reducing file size for email and for a website",
+          "duration_min": 5
+        },
+        {
+          "title": "Exam objectives review and a timed practice task",
+          "duration_min": 10
+        }
+      ]
+    }
+  ],
+  "faqs": [
+    {
+      "question": "Do I need my own laptop, and is Adobe Reader enough?",
+      "answer": "You work on your own machine, live online or in the classroom in Colombo, so the forms and Actions you build stay with you. Adobe Acrobat Reader is not enough: editing, forms, redaction, accessibility repair and the Action Wizard are Acrobat Pro features. You need Acrobat Pro installed and signed in before the class."
+    },
+    {
+      "question": "Is the software included in the price?",
+      "answer": "No. The fee covers the training, not an Adobe licence. Acrobat Pro is available on its own subscription or as part of Creative Cloud, and Adobe offers a free trial. We send setup instructions when you book, and there is a short pre-class check where we can confirm you have the Pro version rather than Reader."
+    },
+    {
+      "question": "Will this make our documents legally compliant with accessibility rules?",
+      "answer": "No course can promise that, and this one does not. What you learn is the technique: running the Accessibility Checker, repairing tags and reading order, adding alternative text and table headers, and setting language and title, which is the work behind PDF/UA and WCAG criteria for PDFs. Whether a particular document meets your organisation's obligations depends on your own testing, the source file and your legal advisers."
+    },
+    {
+      "question": "We handle confidential records. Does redaction really remove the content?",
+      "answer": "Applied redaction in Acrobat Pro removes the underlying content rather than covering it, which a drawn black rectangle does not. The exercise proves the difference by searching the file afterwards. The course also covers Sanitise Document for hidden information such as metadata, comments and attachments, and gives you a written redaction procedure to adopt as an office standard."
+    },
+    {
+      "question": "Do you issue a certificate, and is the Adobe exam included?",
+      "answer": "You receive a MyLearnPlus certificate of completion recording the title, the hours and the date; it is a record of training rather than an Adobe credential. The Adobe Certified Professional in Adobe Acrobat Pro exam is delivered separately through Certiport at authorised test centres and the voucher is bought separately. This course is built against the published exam domains and closes with a timed practice task, but no course can guarantee a pass."
+    },
+    {
+      "question": "What happens if I miss the class?",
+      "answer": "The session is recorded and available to you for twelve months, and every exercise file is supplied, so you can work through anything you missed at your own pace. If you would rather sit it live again, every live booking includes one free repeat of the same class, with the terms shown on the booking page for each date."
+    },
+    {
+      "question": "Can my employer be invoiced, and can you run it for a department?",
+      "answer": "Yes to both. We invoice organisations against a purchase order, in LKR for Sri Lankan companies and in USD internationally. For a department, a private class is usually better value from about five people, and the exercises can use your own forms, report templates and document standards so the day produces work you keep."
+    }
+  ],
+  "related": [
+    "indesign-long-documents",
+    "indesign-level-1",
+    "adobe-express-teams"
+  ],
+  "seo": {
+    "title": "Acrobat Pro Training: Forms & Accessibility | MyLearnPlus",
+    "description": "One-day Acrobat Pro course, live online or in Colombo. Combine and edit PDFs, build forms, redact safely, fix accessibility, with ACP exam practice.",
+    "keywords": "acrobat pro course, acrobat training, pdf forms course, pdf accessibility training, adobe certified professional acrobat, redaction training, acrobat course sri lanka"
+  }
+}

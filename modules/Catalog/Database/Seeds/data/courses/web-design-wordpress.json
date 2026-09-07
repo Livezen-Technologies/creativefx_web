@@ -1,0 +1,234 @@
+{
+  "slug": "web-design-wordpress",
+  "pillar": "design",
+  "category": "web-wordpress",
+  "title": "Web Design with WordPress",
+  "subtitle": "For beginners building their first site. Leave with a five-page WordPress site you built",
+  "summary": "Two days building a real five-page WordPress site: block themes, global styles, templates, a working contact form, SEO basics, backups and a launch checklist.",
+  "description_html": "<p>Anyone can install WordPress in ten minutes. The difficulty starts afterwards, when the theme looks nothing like the demo, the header cannot be edited, the contact form quietly stops delivering mail, and nobody can remember which of the twenty-two installed plugins is the one breaking the layout. This course is two days of building a site properly, in the order a professional builds one, so that the site you end up with can be handed to its owner and left running.</p><p>You build one site across the two days: a five-page website for a small business, supplied as a brief with written copy and photographs. Home, services, about, contact and a blog. You work in the block editor and a block theme, setting colour, typography and spacing once in the Site Editor so the whole site follows, editing the header and footer as template parts rather than fighting a theme options panel, and building sections as patterns you can reuse on the next page instead of pasting them.</p><p>The second day is the part that decides whether a site survives contact with the real world. You install and configure a contact form and confirm that mail actually arrives, size and compress images so pages are not thirty megabytes of holiday photographs, write titles and meta descriptions, submit a sitemap to Google Search Console, set up scheduled backups and user roles, and then work through a written pre-launch checklist: DNS, HTTPS, search visibility, forms tested, broken links and redirects. You finish by writing the handover note the site owner needs in order to update their own site without breaking it.</p><p>No coding is required and none is assumed. A small amount of CSS is shown so you know where it goes and when it is the right answer, but every exercise can be completed without writing any. You do not need to buy hosting or a domain to attend: a practice environment is provided, and if you already have a site or a domain in hand you are welcome to work on that instead.</p><p>Classes run live online in your own timezone or in the classroom in Colombo, with the recording available for twelve months. Pricing is shown in <strong>LKR</strong> for learners in Sri Lanka and in <strong>USD</strong> for everyone else. Organisations can be invoiced against a purchase order, and the same syllabus can be run privately for a team, building your own site rather than the practice one.</p>",
+  "level": 1,
+  "duration_hours": 12,
+  "duration_days": 2,
+  "software_version": "WordPress 6.x with the block editor and a block theme",
+  "certification_alignment": "",
+  "delivery_modes": [
+    "LIVE_ONLINE",
+    "CLASSROOM",
+    "SELF_PACED",
+    "PRIVATE"
+  ],
+  "default_mode": "LIVE_ONLINE",
+  "price_band": "2day",
+  "outcomes": [
+    "Explain the difference between WordPress.com and self-hosted WordPress, and what a domain, hosting and the database each do.",
+    "Install WordPress on a local or staging environment and configure the settings that matter on day one, including permalinks.",
+    "Choose and install a block theme, then set the colour palette, typography and spacing in the Site Editor so the whole site changes from one place.",
+    "Edit templates and template parts, including the header, footer, page template and single post template.",
+    "Build the five pages of a supplied brief from blocks and patterns, reusing sections instead of rebuilding them.",
+    "Set up a blog with posts, categories, an archive and a single post layout.",
+    "Build a navigation menu and a contact form, and confirm that submissions are delivered to a real inbox.",
+    "Prepare images at the right size and format, add alt text, and measure the effect on page weight and load time.",
+    "Write page titles, meta descriptions and slugs, submit a sitemap to Google Search Console and check what has been indexed.",
+    "Configure scheduled backups, updates and user roles, then work through a written launch checklist and a handover note for the site owner."
+  ],
+  "prerequisites": [
+    "No prior experience with WordPress, web design or coding is needed.",
+    "You should be comfortable with your own computer: browsers, files and folders, and installing an application when asked to.",
+    "You do not need to buy hosting or a domain for this course, though you are welcome to work on your own if you already have one."
+  ],
+  "audiences": [
+    "Small business owners and freelancers who need a website and do not want to pay for every future edit",
+    "Marketing and communications staff who own a company site and currently email an agency for text changes",
+    "Graphic designers adding website build to what they can offer clients",
+    "Administrators and coordinators asked to look after an organisation's site alongside their real job",
+    "Students and career changers who want a live, working site in a portfolio"
+  ],
+  "includes": [
+    {
+      "text": "Class recording, available for 12 months",
+      "icon": "video"
+    },
+    {
+      "text": "Project pack and a practice environment, so no hosting purchase is required",
+      "icon": "download"
+    },
+    {
+      "text": "Course workbook covering every step demonstrated in class",
+      "icon": "book"
+    },
+    {
+      "text": "Pre-launch checklist and a client handover template you can reuse on real jobs",
+      "icon": "clipboard"
+    },
+    {
+      "text": "MyLearnPlus certificate of completion",
+      "icon": "certificate"
+    },
+    {
+      "text": "Instructor email support after the class for questions on the exercises",
+      "icon": "support"
+    },
+    {
+      "text": "One free repeat of the same live class, terms shown on the booking page",
+      "icon": "refresh"
+    }
+  ],
+  "curriculum": [
+    {
+      "title": "Day 1, Morning — How a WordPress site is actually put together",
+      "summary": "What lives where, getting an install running, and planning the site before touching a theme.",
+      "topics": [
+        {
+          "title": "WordPress.com against self-hosted WordPress, and what each one costs you in control",
+          "duration_min": 25
+        },
+        {
+          "title": "Domains, hosting, PHP and the database: what happens when a page loads",
+          "duration_min": 30
+        },
+        {
+          "title": "Installing WordPress locally or on a staging site, ready for the rest of the class",
+          "duration_min": 40
+        },
+        {
+          "title": "The dashboard: pages, posts, media, users, settings and permalinks",
+          "duration_min": 35
+        },
+        {
+          "title": "Block themes, classic themes and choosing one you will not regret in six months",
+          "duration_min": 30
+        },
+        {
+          "title": "Planning the site: page list, sitemap and the content you need before you start",
+          "duration_min": 20
+        }
+      ]
+    },
+    {
+      "title": "Day 1, Afternoon — Blocks, patterns and global styles",
+      "summary": "Building pages from blocks, controlling the look from one place, and editing the templates behind every page.",
+      "topics": [
+        {
+          "title": "The block editor: paragraphs, headings, images, columns, groups and spacing",
+          "duration_min": 40
+        },
+        {
+          "title": "Patterns and synced patterns for the sections you repeat across a site",
+          "duration_min": 30
+        },
+        {
+          "title": "Global styles in the Site Editor: colour palette, typography and spacing scale",
+          "duration_min": 40
+        },
+        {
+          "title": "Templates and template parts: header, footer, page and single post",
+          "duration_min": 40
+        },
+        {
+          "title": "Exercise: build the home page from the supplied brief",
+          "duration_min": 30
+        }
+      ]
+    },
+    {
+      "title": "Day 2, Morning — Building the rest of the site",
+      "summary": "The remaining pages, the blog, navigation and a contact form that delivers mail.",
+      "topics": [
+        {
+          "title": "Services and about pages, and keeping layout consistent from page to page",
+          "duration_min": 40
+        },
+        {
+          "title": "The blog: posts, categories, tags, the archive and the single post template",
+          "duration_min": 35
+        },
+        {
+          "title": "Navigation menus, footer, social links and a call to action that repeats",
+          "duration_min": 30
+        },
+        {
+          "title": "Contact page: a form plugin, spam control and making sure the mail actually arrives",
+          "duration_min": 40
+        },
+        {
+          "title": "Images: sizing, compression, modern formats, alt text and page weight",
+          "duration_min": 35
+        }
+      ]
+    },
+    {
+      "title": "Day 2, Afternoon — Plugins, search, security and launch",
+      "summary": "Choosing what to install, being findable, keeping the site safe, and taking it live.",
+      "topics": [
+        {
+          "title": "Choosing plugins: what to install, what to avoid, and how to judge one before it is on your site",
+          "duration_min": 30
+        },
+        {
+          "title": "On-page SEO: titles, meta descriptions, headings, slugs and internal links",
+          "duration_min": 35
+        },
+        {
+          "title": "Sitemaps, Google Search Console and checking what has been indexed",
+          "duration_min": 25
+        },
+        {
+          "title": "Speed: caching, image handling and measuring a page before and after",
+          "duration_min": 25
+        },
+        {
+          "title": "Backups, updates, user roles and basic hardening",
+          "duration_min": 30
+        },
+        {
+          "title": "Launch checklist: DNS, HTTPS, search visibility, forms tested, broken links and redirects",
+          "duration_min": 25
+        },
+        {
+          "title": "Handover: what the site owner needs from you in writing",
+          "duration_min": 10
+        }
+      ]
+    }
+  ],
+  "faqs": [
+    {
+      "question": "Do I need my own laptop?",
+      "answer": "For live online classes, yes: the site you build lives on your machine or your staging space, and you keep working on it after the course. For classroom sessions in Colombo we recommend bringing your own laptop for the same reason. Tell us when you book if you cannot, and we will confirm what is available for your date."
+    },
+    {
+      "question": "Do I have to buy hosting and a domain before the class?",
+      "answer": "No. A practice environment is provided so you can build the whole site without spending anything on hosting, and day one covers how to install WordPress locally on your own machine. If you already have hosting and a domain, or you are building a site for a real client, bring the details and work on that instead; the instructor will help you get the install ready during the first session."
+    },
+    {
+      "question": "Do I need to know how to code?",
+      "answer": "No. Everything in the two days can be completed without writing a line of HTML, CSS or PHP. A small amount of CSS is shown so you recognise it, know where it belongs and can tell when it is the right answer rather than a plugin, but no exercise depends on it. If you want to go further into code, that is a different course."
+    },
+    {
+      "question": "Do you teach Elementor, Divi or another page builder?",
+      "answer": "The course is taught in the built-in block editor with a block theme, because it is free, works on any host and does not tie a client's site to a licence they may stop paying for. The concepts you learn transfer directly: sections, columns, spacing, reusable patterns and templates all exist in the commercial builders under different names. If your team has already standardised on a particular builder, a private run can be taught in that instead."
+    },
+    {
+      "question": "Will my site rank on Google after this course?",
+      "answer": "No course can promise a ranking, and anyone who does is selling you something. What you will do is the work that makes ranking possible: readable titles and meta descriptions, sensible slugs and headings, a site that loads quickly on a phone, a submitted sitemap and a Search Console account showing what Google has actually indexed. Ongoing search and advertising work is covered in Digital Marketing and Analytics."
+    },
+    {
+      "question": "What happens if I miss a day, and do you issue a certificate?",
+      "answer": "Every session is recorded and available to you for twelve months, and each live booking includes one free repeat of the same class, with the terms shown on the booking page for the date. You receive a MyLearnPlus certificate of completion recording the course title, the hours and the date. It is a record of training rather than an industry credential; WordPress itself does not issue one."
+    },
+    {
+      "question": "Can my employer be invoiced?",
+      "answer": "Yes. We invoice organisations against a purchase order, in LKR for Sri Lankan companies and in USD internationally. Send the billing details and the names of the people attending and we will hold the seats while the invoice is processed. Groups of five or more are usually better served by a private class in which the team builds the organisation's own site rather than the practice project."
+    }
+  ],
+  "related": [
+    "figma-ui-ux-essentials",
+    "digital-marketing-analytics",
+    "photoshop-level-1"
+  ],
+  "seo": {
+    "title": "Web Design with WordPress Training Course | MyLearnPlus",
+    "description": "Two-day beginner WordPress course, live online or in Colombo. Build a five-page site with block themes, forms, SEO basics and a launch checklist.",
+    "keywords": "wordpress course, wordpress training sri lanka, web design course colombo, build a website course, block editor training, wordpress for beginners, website design class"
+  }
+}

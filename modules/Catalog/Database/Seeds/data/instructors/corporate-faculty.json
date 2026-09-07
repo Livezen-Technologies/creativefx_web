@@ -1,0 +1,15 @@
+{
+  "slug": "corporate-faculty",
+  "name": "MyLearnPlus Corporate Training Team",
+  "headline": "The people who scope, build and deliver private and in-company training",
+  "bio_html": "<p>A private course is a different job from a public one, and it is staffed accordingly. Before delivery, someone from this team runs the scoping conversation: what the group already knows, what they have to be able to produce afterwards, which files and templates they work in, and what the sponsor will judge success by. The syllabus is then adjusted and the exercise files are rebuilt around the client's own material, so a retail team retouches its own product photography, a bank's communications team lays out its own report, and a marketing team automates its own reporting rather than a sample one. This work is done under whatever confidentiality terms the client requires, and client files are handled as the client's property and returned or destroyed at the end of the engagement.</p><p>Delivery is by the same Adobe, AI and design faculty who teach the public schedule; this team is responsible for the scoping, the tailoring, the logistics and what the sponsor receives at the end. Sessions run at your premises, at our venue or live online, and a hybrid group with remote joiners is run with a second screen and an assisting instructor so remote learners are not second-class participants. Groups are kept to a size where every screen can be looked at. After delivery the sponsor receives an attendance record, certificates of completion for the learners, the class recordings where they were made, and an honest note on what the group found difficult and what training would sensibly come next.</p>",
+  "credentials": [
+    "Scoping and needs analysis before a private course is priced or written",
+    "Exercise files and templates rebuilt around the client's own brand, documents and photography",
+    "Delivery at the client's premises, at our venue or live online, including hybrid cohorts",
+    "Confidentiality terms and non-disclosure agreements handled before any client file is shared",
+    "Post-course reporting to the sponsor: attendance, certificates, recordings and a recommendation on next steps"
+  ],
+  "placeholder": true,
+  "note_for_client": "Replace this entry with your named corporate training lead and account contact, with a photograph, a direct email address and a telephone number, once those people are appointed."
+}

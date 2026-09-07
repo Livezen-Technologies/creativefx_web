@@ -1,0 +1,126 @@
+{
+  "slug": "ai-assistants-at-work",
+  "pillar": "ai",
+  "category": "ai-assistants",
+  "title": "AI Assistants at Work: ChatGPT, Claude, Gemini and Copilot",
+  "subtitle": "One day for office teams who want real work done, not another demonstration",
+  "summary": "A practical day on ChatGPT, Claude, Gemini and Microsoft Copilot: writing prompts that work, using your own documents, checking answers and keeping data safe.",
+  "description_html": "<p>Most people have opened an assistant, asked it something, received a plausible paragraph and quietly gone back to doing the work by hand. The gap is rarely the tool. It is that a one-line question produces a one-line answer, that nobody has shown you how to give the assistant your own material, and that nobody has told you which answers you must check before they leave the building. This day closes that gap using tasks from your own week.</p><p>The morning starts with a plain explanation of how these systems produce an answer, which is the only way to understand why a confident, well-written response can contain a rate, a date or a clause that does not exist. You then look at where ChatGPT, Claude, Gemini and Microsoft Copilot each sit in a working day, and what changes between a free account, a paid personal account and an account your organisation administers, particularly around what happens to the text you paste in.</p><p>From there it is practice. You learn the four parts of a prompt that works: the task, the context, the format you want back and the constraints that keep it usable. You give the assistant your own material by pasting, uploading and referencing documents, and you learn to correct an unsatisfactory answer through iteration instead of deleting it and starting again. By the end of the morning you have built a reusable prompt for something you do every week.</p><p>The afternoon is applied work. You draft and rewrite the ordinary things that eat a working day: an email that has to say no politely, a section of a proposal, a job advert, a policy note. You summarise a long document and a set of meeting notes in a way that keeps the decisions and the actions rather than producing a smooth paragraph that loses them. You clean up a messy list, get help writing a spreadsheet formula and read a chart. If your organisation licenses Microsoft 365 Copilot, you use it inside Word, Excel, Outlook and Teams, and you see what it can reach, which is the files and messages your existing permissions already allow.</p><p>The last module is the part your manager cares about. You learn how to verify an answer before it goes out, which tasks should not be delegated to an assistant at all, and what a sensible internal position looks like on confidential information and client data. You then set up custom instructions and a small library of saved prompts so the improvement lasts past Friday. The class runs live online or in the classroom in Colombo, priced in <strong>LKR</strong> for Sri Lanka and in <strong>USD</strong> internationally.</p>",
+  "level": 1,
+  "duration_hours": 6,
+  "duration_days": 1,
+  "software_version": "",
+  "certification_alignment": "",
+  "delivery_modes": ["LIVE_ONLINE", "CLASSROOM", "SELF_PACED", "PRIVATE"],
+  "default_mode": "LIVE_ONLINE",
+  "price_band": "1day",
+  "outcomes": [
+    "Explain in plain terms how an assistant produces an answer, and why it can state a fact that is not true.",
+    "Choose between ChatGPT, Claude, Gemini and Microsoft Copilot for a given piece of work.",
+    "Write a prompt with a clear task, context, output format and constraints instead of a one-line question.",
+    "Give an assistant your own document, notes or spreadsheet and get an answer grounded in it.",
+    "Correct a weak answer through iteration rather than starting the prompt again from nothing.",
+    "Draft and rewrite routine business writing: an email, a proposal section, a job advert, a policy note.",
+    "Summarise a long document or a set of meeting notes so the decisions and actions survive.",
+    "Clean a messy list, draft a spreadsheet formula and interpret a chart with an assistant.",
+    "Use Microsoft 365 Copilot inside Word, Excel, Outlook and Teams, and say what it can reach.",
+    "Verify an answer before sending it, and name the tasks you should not hand to an assistant."
+  ],
+  "prerequisites": [
+    "No prior experience with AI assistants is needed.",
+    "You should be comfortable with everyday office software: email, a word processor, a spreadsheet and a browser.",
+    "Bring two or three real tasks from your own week, along with any documents you would normally work from."
+  ],
+  "audiences": [
+    "Office, admin and operations staff who write, summarise and chase things all day",
+    "Managers and team leads deciding how their department should use assistants",
+    "Marketing, sales and HR staff producing routine written material at volume",
+    "Finance and accounts staff working with lists, reconciliations and long reports",
+    "Anyone whose organisation has just bought Microsoft 365 Copilot licences and left them unused"
+  ],
+  "includes": [
+    {"text": "Class recording, available for 12 months", "icon": "video"},
+    {"text": "Exercise pack: sample documents, meeting notes and messy data used in the day", "icon": "download"},
+    {"text": "Prompt library of ready-made prompts for common office tasks, grouped by job", "icon": "book"},
+    {"text": "Answer-checking checklist and a draft internal AI usage note you can adapt", "icon": "clipboard"},
+    {"text": "MyLearnPlus certificate of completion", "icon": "certificate"},
+    {"text": "Instructor email support after the class for questions on your own tasks", "icon": "support"},
+    {"text": "One free repeat of the same live class within 12 months, on the terms shown on the booking page", "icon": "refresh"}
+  ],
+  "curriculum": [
+    {
+      "title": "Morning — What these tools are and how they differ",
+      "summary": "Enough of how an assistant works to explain both its usefulness and its mistakes.",
+      "topics": [
+        {"title": "How an assistant produces an answer, and why it can be confidently wrong", "duration_min": 25},
+        {"title": "ChatGPT, Claude, Gemini and Microsoft Copilot: where each sits in a working day", "duration_min": 25},
+        {"title": "Free, paid and organisation accounts: what changes about features and your data", "duration_min": 25}
+      ]
+    },
+    {
+      "title": "Morning — Prompts that get usable work back",
+      "summary": "The habits that separate a useful answer from a plausible paragraph.",
+      "topics": [
+        {"title": "The four parts of a working prompt: task, context, format and constraints", "duration_min": 30},
+        {"title": "Giving the assistant your own material: pasting, uploading and referencing documents", "duration_min": 25},
+        {"title": "Iterating: correcting an answer instead of starting again", "duration_min": 25},
+        {"title": "Building a reusable prompt for a task you repeat every week", "duration_min": 25}
+      ]
+    },
+    {
+      "title": "Afternoon — Real tasks from a real week",
+      "summary": "Writing, summarising and data work on the material you brought with you.",
+      "topics": [
+        {"title": "Drafting and rewriting: emails, proposal sections, job adverts and policy notes", "duration_min": 30},
+        {"title": "Summarising long documents and meeting notes without losing the decisions", "duration_min": 25},
+        {"title": "Working with data: cleaning a list, drafting a formula, reading a chart", "duration_min": 25},
+        {"title": "Microsoft 365 Copilot in Word, Excel, Outlook and Teams, and what it can reach", "duration_min": 25}
+      ]
+    },
+    {
+      "title": "Afternoon — Checking, confidentiality and habits that stick",
+      "summary": "Making the output safe to send and the improvement last beyond the class.",
+      "topics": [
+        {"title": "Verifying an answer, and the tasks you should never delegate", "duration_min": 30},
+        {"title": "Confidential information, client data and what your internal policy should say", "duration_min": 25},
+        {"title": "Custom instructions, saved prompts and projects for the work you repeat", "duration_min": 20}
+      ]
+    }
+  ],
+  "faqs": [
+    {
+      "question": "Do I need my own laptop, and are the AI tools included in the fee?",
+      "answer": "You work on your own machine whether you join live online or come to the classroom in Colombo, so the saved prompts and custom instructions you set up stay with you. Subscriptions are not included in the fee. A free account is enough for most of the day, and we send a setup note with the joining instructions telling you exactly which accounts to create beforehand."
+    },
+    {
+      "question": "Do I need a paid subscription to keep up?",
+      "answer": "No. The morning and most of the afternoon work on free accounts. Some features, particularly document upload limits and the newer models, are restricted on free plans, and the instructor will point out where a paid plan changes what you saw. The Copilot module is the exception, since it needs a licence."
+    },
+    {
+      "question": "What if my organisation does not have Microsoft 365 Copilot?",
+      "answer": "That module is then run as a demonstration and you complete the same tasks in whichever assistant you do have. Nothing else in the day depends on it. If your organisation has bought licences and wants the full Copilot treatment across Word, Excel, Outlook and Teams, a private run is the better option because we can work inside your own tenancy and your own files."
+    },
+    {
+      "question": "Is it safe to paste our company documents into these tools?",
+      "answer": "It depends on which account you are using, and the day covers this directly rather than giving a blanket yes or no. Consumer, paid personal and organisation-administered accounts are treated differently by the providers, and you will learn what to look for in your own account settings. You leave with a draft internal note covering client data, personal data and the categories of document that should never be pasted anywhere."
+    },
+    {
+      "question": "Do you issue a certificate?",
+      "answer": "Yes, a MyLearnPlus certificate of completion, which records the training you attended. It is not a vendor certification, and there is no independent certification for general assistant use that we would send you to. Our Adobe courses are different: those prepare candidates for Adobe Certified Professional exams, which are delivered through Certiport."
+    },
+    {
+      "question": "What if I miss the class?",
+      "answer": "The session is recorded and available to you for twelve months, together with the exercise pack and the prompt library. Live bookings also include one free repeat of the same class, on the terms shown on the booking page for each date, which is worth using because these tools change quickly."
+    },
+    {
+      "question": "Can my employer be invoiced, and can you run this for a whole team?",
+      "answer": "Yes to both. We invoice organisations against a purchase order, in LKR for Sri Lankan companies and in USD internationally. For a private run we build the exercises around your own documents and processes, and the final module can be turned into a draft AI usage policy for your organisation to review."
+    }
+  ],
+  "related": ["advanced-prompting-evaluation", "generative-ai-for-designers", "adobe-express-teams"],
+  "seo": {
+    "title": "AI Assistants at Work Course | ChatGPT, Copilot, Claude",
+    "description": "One-day AI assistants training for office teams: prompting, working with your own documents, summarising, Microsoft 365 Copilot and data safety.",
+    "keywords": "ai assistants training, chatgpt course for business, microsoft copilot training, claude training, gemini for work, ai course sri lanka, ai training colombo"
+  }
+}

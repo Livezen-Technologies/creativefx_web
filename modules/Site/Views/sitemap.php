@@ -1,29 +1,39 @@
 <?php
+helper(['url', 'norlanka']);
+
 /**
- * The sitemap document.
+ * One section's URLs, each emitted once per locale with xhtml:link alternates.
  *
- * Written as a view rather than string-built in the controller so the XML is
- * readable as XML. Nothing here is user-facing copy, but every value is escaped
- * anyway: a slug reaches this file from the database, and an ampersand in one
- * would otherwise produce a document no parser will accept.
+ * The alternates are what stop /en/course/x and /si/course/x competing with
+ * each other as duplicates. Every URL in a set must list every alternate,
+ * including itself — a set where one member omits the others is ignored
+ * silently, which is the usual way hreflang fails.
  *
- * @var list<array{loc:string,alternates:array<string,string>,lastmod:?string,priority:string,changefreq:string}> $entries
+ * lastmod comes from the row. Where a row has none — the static pages — the
+ * element is omitted rather than filled with today's date: a sitemap that says
+ * everything changed this morning is one a crawler learns to disregard.
+ *
+ * @var list<array{path:string, lastmod:?string, priority:string}> $urls
+ * @var list<string> $locales
  */
 echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
+$base = rtrim(base_url(), '/');
 ?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
-<?php foreach ($entries as $e): ?>
+<?php foreach ($urls as $url):
+    $path = trim((string) $url['path'], '/');
+    foreach ($locales as $locale):
+        $loc = $base . '/' . $locale . ($path !== '' ? '/' . $path : ''); ?>
     <url>
-        <loc><?= htmlspecialchars($e['loc'], ENT_XML1 | ENT_QUOTES, 'UTF-8') ?></loc>
-<?php     foreach ($e['alternates'] as $locale => $href): ?>
-        <xhtml:link rel="alternate" hreflang="<?= htmlspecialchars($locale, ENT_XML1 | ENT_QUOTES, 'UTF-8') ?>" href="<?= htmlspecialchars($href, ENT_XML1 | ENT_QUOTES, 'UTF-8') ?>"/>
-<?php     endforeach; ?>
-<?php     if ($e['lastmod'] !== null): ?>
-        <lastmod><?= htmlspecialchars($e['lastmod'], ENT_XML1 | ENT_QUOTES, 'UTF-8') ?></lastmod>
-<?php     endif; ?>
-        <changefreq><?= htmlspecialchars($e['changefreq'], ENT_XML1 | ENT_QUOTES, 'UTF-8') ?></changefreq>
-        <priority><?= htmlspecialchars($e['priority'], ENT_XML1 | ENT_QUOTES, 'UTF-8') ?></priority>
+        <loc><?= esc($loc, 'url') ?></loc>
+<?php   if (! empty($url['lastmod'])): ?>
+        <lastmod><?= esc(substr((string) $url['lastmod'], 0, 10)) ?></lastmod>
+<?php   endif; ?>
+        <priority><?= esc($url['priority']) ?></priority>
+<?php   foreach ($locales as $alt): ?>
+        <xhtml:link rel="alternate" hreflang="<?= esc($alt, 'attr') ?>" href="<?= esc($base . '/' . $alt . ($path !== '' ? '/' . $path : ''), 'attr') ?>"/>
+<?php   endforeach; ?>
     </url>
-<?php endforeach; ?>
+<?php endforeach; endforeach; ?>
 </urlset>

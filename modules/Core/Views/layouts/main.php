@@ -16,6 +16,15 @@ $ogTitle         = $ogTitle         ?? null;
 $ogDescription   = $ogDescription   ?? null;
 $ogImage         = $ogImage         ?? null;
 $noIndex         = $noIndex         ?? false;
+// Whether the first band of this page is a dark one.
+//
+// The header floats over it, transparent, until the reader scrolls. On a light
+// page that is a light bar with dark links over a light hero, which is right;
+// over a dark hero it is dark links on a dark ground, which is unreadable — and
+// the wash behind the bar makes it worse by laying a near-white gradient over
+// the top of the picture. A page that opens dark says so, and the header adopts
+// the dark scope until it goes solid.
+$heroDark        = $heroDark        ?? false;
 
 // Clause 3.10: the date of last update is displayed on every page, derived from
 // the record the page was rendered from rather than typed. A CMS page brings
@@ -132,7 +141,7 @@ $lastUpdated = $lastUpdated ?? ($page['updated_at'] ?? null);
           // siteHeader.js for why that is not a scroll listener. ?>
     <div id="header-sentinel" aria-hidden="true" style="position:absolute;top:0;left:0;height:30px;width:1px;pointer-events:none"></div>
 
-    <?= view('Modules\Core\Views\partials\header', [], ['saveData' => false]) ?>
+    <?= view('Modules\Core\Views\partials\header', ['heroDark' => $heroDark], ['saveData' => false]) ?>
 
     <main id="main">
         <?= $this->renderSection('content') ?>

@@ -1,0 +1,94 @@
+{
+  "slug": "ai-for-creatives-certificate",
+  "type": "certificate",
+  "title": "AI for Creatives Certificate",
+  "subtitle": "For designers who have to make generated work survive a client, a printer and a lawyer",
+  "summary": "Firefly, prompt engineering and generative AI for designers. Four days taking generated images all the way to artwork you can sign off and sell.",
+  "description_html": "<p>Generating an image that looks good on a screen takes an afternoon to learn. Turning that image into artwork a client will pay for is a different skill: the hands are wrong, the type is nonsense, the file is a flat JPEG at the wrong resolution, the colour falls apart in CMYK, and nobody in the room can say what licence it was made under. This programme is about the second half of that problem.</p><p>It runs in three stages. <strong>Prompt Engineering Foundations</strong> teaches the discipline underneath every generative tool: stating the task, the constraints and the output you want, changing one variable at a time, keeping a record so a result can be reproduced next month. <strong>Adobe Firefly: Generative AI for Creatives</strong> puts that to work inside a commercial toolset, with structure and style references, consistent style across a set of six campaign images, generative recolour into brand palettes, editable vector output and Content Credentials on every file. <strong>Generative AI for Designers</strong> then takes the results into production: bringing a generation into Photoshop as an editable layered file, repairing artefacts by hand, redrawing a generated mark as clean vectors in Illustrator, managing colour into CMYK, and delivering a campaign set with a written provenance note.</p><p>The programme is honest about the parts of this that are unresolved. You compare what Firefly, Photoshop, Midjourney and open models each claim about training data and indemnity, check those claims against your own licence, and write a one-page internal position on disclosure and client sign-off that your studio can actually use. That document is a deliverable, not a discussion.</p><p>Twenty-four hours over four days, live online in your own timezone or in the classroom in Colombo, taken in any order within twelve months of your first class. The Firefly course is built against the published domains of the <strong>Adobe Certified Professional in Adobe Firefly</strong> exam, which is sat separately through Certiport at an authorised test centre. MyLearnPlus does not award Adobe credentials and no course can guarantee a pass. Generative AI for Designers assumes you are already comfortable in Photoshop. Pricing is in LKR for learners in Sri Lanka and USD elsewhere, and employers can be invoiced against a purchase order.</p>",
+  "courses": [
+    "prompt-engineering-foundations",
+    "adobe-firefly-creatives",
+    "generative-ai-for-designers"
+  ],
+  "required": [
+    "adobe-firefly-creatives",
+    "generative-ai-for-designers"
+  ],
+  "outcomes": [
+    "Write art direction as a prompt, specifying subject, composition, lens, lighting and material rather than naming a style, and keep an iteration log detailed enough to reproduce a chosen result weeks later.",
+    "Hold one consistent visual style across a set of six images intended to run together as a campaign, using structure and style references rather than luck.",
+    "Take a generation out of the browser and into Photoshop as an editable layered file, then repair the artefacts that give generated work away: hands, type, perspective, texture and edges.",
+    "Redraw a generated mark as clean vectors in Illustrator, and explain to a client why an auto-trace is not a logo.",
+    "Move generated imagery into a brand palette and into CMYK without an unmanaged colour shift, and produce print and screen files from the same artwork.",
+    "State what each vendor claims about training data and indemnity, check it against the licence you are actually on, and inspect the Content Credentials attached to a file.",
+    "Write and defend a one-page studio position on disclosure, client sign-off and licence checking for AI-assisted work.",
+    "Deliver a finished campaign set of a print advert, a vertical social post and a banner, with a written provenance note attached."
+  ],
+  "includes": [
+    {
+      "text": "All three courses, 24 hours of instructor-led training over four days",
+      "icon": "calendar"
+    },
+    {
+      "text": "A prompt library and iteration log template you keep using after the class",
+      "icon": "download"
+    },
+    {
+      "text": "The one-page disclosure and sign-off template for AI-assisted client work",
+      "icon": "shield"
+    },
+    {
+      "text": "Recordings of every class in the programme, available for 12 months",
+      "icon": "video"
+    },
+    {
+      "text": "Course workbooks, exercise files and finished sample campaign artwork",
+      "icon": "book"
+    },
+    {
+      "text": "Practice questions written against the Adobe Certified Professional in Adobe Firefly exam domains",
+      "icon": "clipboard"
+    },
+    {
+      "text": "MyLearnPlus AI for Creatives Certificate on completion of all three courses",
+      "icon": "certificate"
+    }
+  ],
+  "faqs": [
+    {
+      "question": "What order should I take the courses in?",
+      "answer": "Prompt Engineering Foundations first, then Adobe Firefly, then Generative AI for Designers. The prompting day gives you the method, Firefly gives you a commercial toolset to apply it in, and the two-day designers course assumes you can already get a usable generation and concentrates on turning it into artwork. If you already prompt confidently every day, start at Firefly."
+    },
+    {
+      "question": "Do I need to be a designer to take this?",
+      "answer": "Generative AI for Designers assumes you are a working designer or a confident Photoshop user: layers, selections, masks and basic colour correction. The prompting and Firefly days do not. If you are new to Photoshop, take Photoshop Level 1 first or ask us about the AI for Marketing course instead, which covers generative work without the production and print side."
+    },
+    {
+      "question": "Can I swap one of the courses?",
+      "answer": "Adobe Firefly and Generative AI for Designers are fixed. The first place is Prompt Engineering Foundations by default and can be swapped for Photoshop AI and Generative Fill at the same price if your work is mostly retouching and compositing rather than image generation from scratch. AI Video and Audio Production can also replace it, at a price difference, if you need moving image."
+    },
+    {
+      "question": "Do I need a paid Adobe subscription, and what about generative credits?",
+      "answer": "The fee covers training, not software. You need Photoshop and Illustrator running before the production days, through your own or your employer's Creative Cloud subscription or an Adobe trial, and a Firefly account. Generative features consume generative credits, and how many you get depends on your plan. We show you where to check your own allowance and how quickly different operations use it, because that is a real cost on a live job."
+    },
+    {
+      "question": "Will this tell me whether I can legally sell AI-generated work to a client?",
+      "answer": "It will tell you what to check and who has to answer. Nothing in the programme is legal advice. You compare the published positions of the main vendors on training data and indemnity, learn to read your own licence terms, inspect Content Credentials, and write an internal disclosure and sign-off standard. For a specific contract or a specific jurisdiction, take that document to your own lawyer."
+    },
+    {
+      "question": "These tools change every few months. How current is the material?",
+      "answer": "The exercise files and screenshots are revised on a rolling basis and the class always runs on the current release of Firefly and Creative Cloud. More usefully, the method is built to survive version changes: you are taught to control results with structure, reference and iteration, which has outlasted several generations of model, rather than a list of prompt phrases that expire."
+    },
+    {
+      "question": "Do you issue a certificate, and can my employer be invoiced?",
+      "answer": "You receive a MyLearnPlus AI for Creatives Certificate recording the three courses, the hours and the date. It is a record of training, not an Adobe credential; the Adobe Certified Professional in Adobe Firefly is awarded by Adobe through Certiport when you pass that exam at an authorised test centre. We invoice organisations against a purchase order, in LKR for Sri Lankan companies and USD internationally, and studios of five or more are usually better served by a private run on their own brand material."
+    }
+  ],
+  "price_band": "certificate",
+  "saving_note": "Booked as a programme, the AI for Creatives Certificate costs {saving} less than buying Prompt Engineering Foundations, Adobe Firefly and Generative AI for Designers separately.",
+  "seo": {
+    "title": "AI for Creatives Certificate | MyLearnPlus",
+    "description": "Adobe Firefly, prompt engineering and generative AI for designers. Four days, live online or in Colombo, taking generated images to sellable artwork.",
+    "keywords": "ai for creatives, adobe firefly course, generative ai for designers, prompt engineering for design, ai design training sri lanka, firefly training colombo, generative ai certificate"
+  }
+}

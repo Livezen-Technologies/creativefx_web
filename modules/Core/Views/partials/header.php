@@ -38,9 +38,22 @@ $isCurrent = static function (array $item) use ($currentSlug): bool {
     <?php // Not sticky means the bar scrolls away with the page. absolute rather
           // than static so it still sits over the hero rather than pushing it
           // down — the hero is built to have the header on top of it. ?>
-    <?php // Follows the page theme, as it did before: a light bar on a light
-          // page, dark on dark. Only the footer is pinned to the dark scope. ?>
-    class="site-header <?= $sticky ? 'fixed' : 'absolute' ?> inset-x-0 top-0 z-50"
+    <?php // Follows the page theme: a light bar on a light page, dark on dark.
+          // Only the footer is pinned to the dark scope.
+          //
+          // The exception is a page that opens with a dark band. There the bar
+          // is floating over dark ground while it is transparent, so it takes
+          // the dark scope for exactly that state and drops it the moment it
+          // goes solid — at which point it is sitting on the page's own ground
+          // again and the page's own tokens are correct.
+          $heroDark = $heroDark ?? false; ?>
+    class="site-header <?= $sticky ? 'fixed' : 'absolute' ?> inset-x-0 top-0 z-50<?= $heroDark ? ' on-dark' : '' ?>"
+    <?php // Object syntax, not a ternary. A ternary binding makes Alpine own
+          // every class it evaluates, so it would strip the `on-dark` that is
+          // already in the static attribute above and the bar would be light
+          // over the hero for the first frame after hydration. The object form
+          // toggles exactly the one class it names. ?>
+    <?php if ($heroDark): ?>:class="{ 'on-dark': ! scrolled }"<?php endif; ?>
 >
     <?php // The normal state's ground: a soft wash so the bar reads over hero
           // media at the top of the page, fading out as the solid sticky state

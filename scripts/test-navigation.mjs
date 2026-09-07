@@ -22,10 +22,12 @@ import { chromium } from 'playwright';
 const base = (process.argv[2] || 'http://127.0.0.1:8083').replace(/\/$/, '');
 
 // The awkward widths on purpose: 1024 and 1280 are where a breakpoint and a
-// measurement disagreed, 1440 is where English starts fitting, 1920 is where
-// Tamil does. 390 and 768 are the phone and the tablet.
+// measurement once disagreed, and 1440 upwards is where a longer nav starts
+// fitting inline. 390 and 768 are the phone and the tablet. Sinhala is kept in
+// the list because its words are wider than the English ones and the header
+// decides between inline and drawer by measuring, not by breakpoint.
 const WIDTHS = [390, 768, 1024, 1280, 1440, 1600, 1920];
-const LOCALES = ['en', 'si', 'ta'];
+const LOCALES = ['en', 'si'];
 
 const browser = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium' });
 let pass = 0;

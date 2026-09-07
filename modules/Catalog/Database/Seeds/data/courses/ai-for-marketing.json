@@ -1,0 +1,222 @@
+{
+  "slug": "ai-for-marketing",
+  "pillar": "ai",
+  "category": "ai-marketing",
+  "title": "AI for Marketing",
+  "subtitle": "For marketing teams who publish every week and need AI output that stays on brand",
+  "summary": "Two days turning AI into marketing you can publish: brand voice, campaign assets, on-brand images, tests that read properly and honest reporting.",
+  "description_html": "<p>Marketing was the first department where AI arrived at scale, and it shows. The volume of published material has gone up and the amount of it worth reading has not. This course is about the difference. It assumes you already have a brand, a budget and a deadline, and that what you need is work you can put your name on, produced faster than you produce it now.</p><p>Day one starts with voice, because every other exercise depends on it. You take your own best published work and build a brand voice prompt from it: the vocabulary, the sentence length, the claims you are permitted to make, the words your organisation never uses. Then you use it. One campaign message becomes a landing page, three advert variants that differ in one deliberate way, an email sequence and a set of social posts, all in the same voice. Alongside that you learn to research an audience with an assistant and then verify what comes back, because a confident invented statistic in a client deck costs far more than the hour it saved.</p><p>Day two is production and channels. You generate on-brand images in <strong>Adobe Firefly</strong>, using style references so the third image still looks like the first, and resize one design for every placement in <strong>Adobe Express</strong> with a brand kit doing the repetitive work. You cut a long asset into a month of social posts shaped for each platform. Campaigns running in Sri Lanka get their own session on Sinhala and Tamil copy, where you test what a model produces, decide what needs a human translator, and work out how to keep a bilingual campaign consistent across channels.</p><p>The last half day is the part that protects the budget. You set up an A/B test with one variable, a metric that matters and a sample size you can realistically reach, so the result means something when it arrives. You summarise campaign and analytics data into a report that says what happened and what you changed, without letting an assistant invent a trend that is not in the numbers. Then you finish on the rules: what has to be disclosed, what a paid advert may not contain, and which customer data must never be pasted into a public assistant.</p><p>You leave with a brand voice prompt, a campaign plan, a complete set of assets for one campaign, a social calendar and a test plan, all built on your own brand rather than a sample one. The course runs live online, in the classroom in Colombo, or privately for a marketing team, and is priced in <strong>LKR</strong> for Sri Lanka and <strong>USD</strong> internationally.</p>",
+  "level": 2,
+  "duration_hours": 12,
+  "duration_days": 2,
+  "software_version": "",
+  "certification_alignment": "",
+  "delivery_modes": [
+    "LIVE_ONLINE",
+    "CLASSROOM",
+    "SELF_PACED",
+    "PRIVATE"
+  ],
+  "default_mode": "LIVE_ONLINE",
+  "price_band": "2day",
+  "outcomes": [
+    "Build a reusable brand voice prompt from your own published work, with the vocabulary, claims and prohibitions written into it.",
+    "Turn a campaign brief into a content plan covering message, channels, formats, owners and dates.",
+    "Research an audience and a competitor with an assistant, and verify every figure before it reaches a deck.",
+    "Produce a landing page, three advert variants and an email sequence from a single campaign message, in your own voice.",
+    "Write an SEO content brief covering search intent, headings and internal links, and draft against it without keyword stuffing.",
+    "Generate on-brand campaign images in Adobe Firefly using style references, and resize one design for every placement in Adobe Express.",
+    "Cut one long asset into a month of social posts shaped for each platform's format and length.",
+    "Localise a campaign for Sri Lanka in Sinhala and Tamil, and judge which parts need a human translator.",
+    "Set up an A/B test with one variable, a metric that matters and a sample size you can actually reach.",
+    "Report campaign results to a client or a board, and apply disclosure, brand safety and customer data rules to AI-assisted work."
+  ],
+  "prerequisites": [
+    "You should work in marketing or communications already, with a brand and a campaign you can bring to the exercises.",
+    "You should have used an AI assistant for a few real tasks. AI Assistants at Work covers that ground if you have not.",
+    "No design or coding background is needed. Adobe Firefly and Adobe Express are taught from the beginning in this course."
+  ],
+  "audiences": [
+    "Marketing executives and managers running campaigns with a small team",
+    "Content and social media managers publishing to a weekly schedule",
+    "Agency account and creative staff producing work for several clients at once",
+    "Founders and business owners writing their own marketing",
+    "Communications and PR staff who have to write for several audiences from one message"
+  ],
+  "includes": [
+    {
+      "text": "Class recording, available for 12 months",
+      "icon": "video"
+    },
+    {
+      "text": "Editable templates: brand voice prompt, campaign brief, SEO content brief and test plan",
+      "icon": "download"
+    },
+    {
+      "text": "Course workbook containing every prompt used in the exercises",
+      "icon": "book"
+    },
+    {
+      "text": "Channel checklist for adapting one asset to each platform's format",
+      "icon": "clipboard"
+    },
+    {
+      "text": "MyLearnPlus certificate of completion",
+      "icon": "certificate"
+    },
+    {
+      "text": "Instructor email support after the class for questions on your own campaign",
+      "icon": "support"
+    },
+    {
+      "text": "One free repeat of the same live class, terms shown on the booking page",
+      "icon": "refresh"
+    }
+  ],
+  "curriculum": [
+    {
+      "title": "Day 1, Morning — Brand voice and the campaign plan",
+      "summary": "Getting the assistant to sound like your organisation before you ask it to write anything.",
+      "topics": [
+        {
+          "title": "Where AI earns its place in a marketing team, and where it produces expensive filler",
+          "duration_min": 25
+        },
+        {
+          "title": "Building a brand voice prompt from your own best published work",
+          "duration_min": 45
+        },
+        {
+          "title": "Audience and competitor research, and verifying what comes back",
+          "duration_min": 40
+        },
+        {
+          "title": "Turning a brief into a content plan with channels, formats, owners and dates",
+          "duration_min": 40
+        },
+        {
+          "title": "Exercise: a voice prompt and a one-page plan for a campaign you are actually running",
+          "duration_min": 30
+        }
+      ]
+    },
+    {
+      "title": "Day 1, Afternoon — Producing the campaign",
+      "summary": "One message becoming a landing page, adverts, an email sequence and social copy that still sounds like you.",
+      "topics": [
+        {
+          "title": "One message, many formats: landing page, advert, email and social from a single source",
+          "duration_min": 40
+        },
+        {
+          "title": "Writing advert variants that differ in the one way you intend to test",
+          "duration_min": 35
+        },
+        {
+          "title": "Email sequences: welcome, nurture and re-engagement with a structure that works",
+          "duration_min": 35
+        },
+        {
+          "title": "SEO content briefs: intent, headings, internal links and the parts that still need a person",
+          "duration_min": 40
+        },
+        {
+          "title": "Editing an AI draft down: cutting the tells, the padding and the false specifics",
+          "duration_min": 30
+        }
+      ]
+    },
+    {
+      "title": "Day 2, Morning — Images, video and channel production",
+      "summary": "Making the visual half of the campaign at the same speed as the copy, on brand.",
+      "topics": [
+        {
+          "title": "On-brand images in Adobe Firefly: prompts, style references and generative editing",
+          "duration_min": 45
+        },
+        {
+          "title": "Adobe Express: brand kit, templates and resizing one design for every placement",
+          "duration_min": 40
+        },
+        {
+          "title": "Short-form video and captions for social, and where the effort actually pays",
+          "duration_min": 35
+        },
+        {
+          "title": "Localising for Sri Lanka: testing Sinhala and Tamil copy and deciding what needs a translator",
+          "duration_min": 30
+        },
+        {
+          "title": "Rights, licensing and what may not go into a paid advert",
+          "duration_min": 30
+        }
+      ]
+    },
+    {
+      "title": "Day 2, Afternoon — Calendar, testing and reporting",
+      "summary": "Turning output into a schedule, a test that reads properly and a report nobody has to reverse engineer.",
+      "topics": [
+        {
+          "title": "Building a month of social posts from one long asset",
+          "duration_min": 35
+        },
+        {
+          "title": "A/B tests you can read: one variable, a real metric, a sample size you will reach",
+          "duration_min": 40
+        },
+        {
+          "title": "Summarising campaign and analytics data without inventing the trend",
+          "duration_min": 35
+        },
+        {
+          "title": "Reporting to a client or a board: what happened, what you changed, what is next",
+          "duration_min": 30
+        },
+        {
+          "title": "Disclosure, brand safety and the customer data that stays out of a public assistant",
+          "duration_min": 40
+        }
+      ]
+    }
+  ],
+  "faqs": [
+    {
+      "question": "Do I need my own laptop?",
+      "answer": "Yes, and it does not need anything installed. Everything runs in a browser: the AI assistants, Adobe Express, Adobe Firefly and the templates. Bring your own brand material as well, because the voice exercise uses your published work rather than a sample brand. The same applies whether you join live online or come to the classroom in Colombo."
+    },
+    {
+      "question": "Is the software included in the price?",
+      "answer": "No, and you do not need a paid subscription to take part. Adobe Express and Adobe Firefly both have free plans that cover the class exercises, and the assistant work can be done on a free account, although paid tiers are faster and have longer limits. If your organisation already has Creative Cloud, use that. Plan allowances change, so check them on Adobe's site before the day."
+    },
+    {
+      "question": "Which AI tools do you use in class?",
+      "answer": "The prompting exercises are written to work on any of the mainstream assistants, so you use whichever one your organisation has approved. Image work is done in Adobe Firefly and Adobe Express. We do not sell or resell any of these products and we make no recommendation about which to buy."
+    },
+    {
+      "question": "Will the copy still sound like it was written by AI?",
+      "answer": "That is the problem the course is built around. The voice prompt, the editing session on cutting the tells and the false specifics, and the verification exercise all exist because unedited output is recognisable and reads as cheap. You are taught to use the tool for the draft and the variants, and to keep the judgement about what ships."
+    },
+    {
+      "question": "Does this replace a copywriter or an agency?",
+      "answer": "No, and the course does not claim it will. What changes is where the human effort goes: less of it on first drafts and resizing, more on the offer, the audience and the edit. Teams generally find they produce and test more variants, not that they need fewer people who can write."
+    },
+    {
+      "question": "What if I miss a day, and do you issue a certificate?",
+      "answer": "Both days are recorded and available to you for twelve months, and every live booking includes one free repeat of the same class, with the terms shown on the booking page for each date. You receive a MyLearnPlus certificate of completion recording the course title, hours and date, which is a record of training rather than an industry credential."
+    },
+    {
+      "question": "Can my employer be invoiced, and can you run this for our team?",
+      "answer": "Yes to both. We invoice organisations against a purchase order, in LKR for Sri Lankan companies and in USD internationally. A private run uses your own brand, your own channel mix and a campaign you are about to launch, so the assets built during the two days are ones you can actually use."
+    }
+  ],
+  "related": [
+    "ai-assistants-at-work",
+    "adobe-firefly-creatives",
+    "ai-automation-and-agents"
+  ],
+  "seo": {
+    "title": "AI for Marketing Training Course | MyLearnPlus",
+    "description": "Two-day AI marketing course, live online or in Colombo. Build a brand voice prompt, produce a full campaign, generate on-brand images and test properly.",
+    "keywords": "ai for marketing, ai marketing course, ai content marketing training, adobe firefly for marketers, ai copywriting course, marketing training colombo, ai campaign workflow"
+  }
+}

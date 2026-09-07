@@ -1,0 +1,70 @@
+{
+  "slug": "contact",
+  "title": "Contact MyLearnPlus",
+  "summary": "Email hello@mylearnplus.com for course advice, corporate quotes, invoices, bookings and accessibility. Phone and address details below.",
+  "blocks": [
+    {
+      "type": "pagehero",
+      "eyebrow": "Contact",
+      "heading": "Talk to us before you book",
+      "subtitle": "Tell us the work you need to produce and we will tell you which course covers it, including when the answer is that you do not need one."
+    },
+    {
+      "type": "richtext",
+      "body": "<p>The quickest route to a useful answer is <strong>hello@mylearnplus.com</strong>. Include the course you are looking at, the date, and a sentence about the work you need to do afterwards. That last part is what lets us tell you whether Level 1 or Level 2 is the right buy, or whether a private cohort would cost your team less than five public seats.</p><ul><li><strong>Email:</strong> hello@mylearnplus.com</li><li><strong>Telephone:</strong> {to be confirmed}</li><li><strong>WhatsApp:</strong> {to be confirmed}</li><li><strong>Office:</strong> {to be confirmed}, Colombo, Sri Lanka</li><li><strong>Office hours:</strong> {to be confirmed}</li></ul><p>MyLearnPlus is a training business operated by <strong>Livezen Technologies</strong>. Registered office and company registration number: {to be confirmed}.</p>"
+    },
+    {
+      "type": "feature_cards",
+      "heading": "Where to send what",
+      "cards": [
+        {
+          "title": "Which course should I take",
+          "text": "Email hello@mylearnplus.com with a description of the work, your current level and your deadline. We reply with a recommendation and the next dates, in LKR or USD depending on where you are billed.",
+          "icon": "compass"
+        },
+        {
+          "title": "Corporate and team training",
+          "text": "Use the quote request form with your team size, software, timing and preferred delivery mode. You receive a syllabus, dates and a fixed price rather than a rate card.",
+          "icon": "team"
+        },
+        {
+          "title": "Bookings, invoices and purchase orders",
+          "text": "Email us with the learner names, the course, the date and your billing entity. We hold the seats while the invoice is processed and send joining instructions to each learner.",
+          "icon": "invoice"
+        },
+        {
+          "title": "Transfers and cancellations",
+          "text": "Written requests only, to hello@mylearnplus.com, with the order number and the date you would prefer. Notice periods run from the day we receive your email.",
+          "icon": "calendar"
+        },
+        {
+          "title": "Access requirements",
+          "text": "Tell us at least five business days before your class and we will arrange materials in advance, captions, extra breaks or room adjustments. No diagnosis or evidence is required.",
+          "icon": "accessibility"
+        },
+        {
+          "title": "Data, privacy and complaints",
+          "text": "Email hello@mylearnplus.com marked for the data protection contact for access, correction or erasure requests. Complaints are acknowledged within two business days.",
+          "icon": "shield"
+        }
+      ]
+    },
+    {
+      "type": "statement",
+      "heading": "What we will not do",
+      "text": "We will not put you on a mailing list because you asked a question, we will not chase you with sales calls after a quote, and we will not sell you a course you do not need. If a self-paced module, a free Adobe tutorial or simply a different piece of software is the better answer to your problem, that is what we will tell you."
+    },
+    {
+      "type": "cta",
+      "heading": "Ready to look at dates",
+      "text": "Browse the catalogue by software or by outcome, or send us the brief and we will come back with the shortest route to it.",
+      "button_label": "Browse all courses",
+      "button_url": "/courses"
+    }
+  ],
+  "seo": {
+    "title": "Contact MyLearnPlus | Adobe and AI Training, Colombo",
+    "description": "Contact MyLearnPlus for course advice, corporate quotes, invoicing, transfers and access requirements. Email hello@mylearnplus.com or call Colombo.",
+    "keywords": "contact MyLearnPlus, Adobe training Colombo contact, corporate training enquiry, course booking help, hello@mylearnplus.com"
+  }
+}

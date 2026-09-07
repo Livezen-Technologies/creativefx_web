@@ -1,0 +1,216 @@
+{
+  "slug": "adobe-express-teams",
+  "pillar": "adobe",
+  "category": "adobe-express",
+  "title": "Adobe Express for Social and Marketing Teams",
+  "subtitle": "One day on Adobe Express for teams who have to publish something every week, on brand",
+  "summary": "One day on Adobe Express: brand kits, locked templates, a resized campaign set, animation and short video, review and export, with ACP exam practice.",
+  "description_html": "<p>Most marketing teams do not have a design bottleneck. They have a consistency problem. Five people make posts in five tools, the logo is a slightly different blue in each one, and the designer spends Friday afternoon fixing captions in files she did not make. Adobe Express is built for exactly that situation, and this course is about setting it up so the team can move quickly without the brand drifting.</p><p>You start by drawing the line: what belongs in Express, and what still belongs in Photoshop or InDesign. Then you build the thing that makes everything else work, a <strong>brand kit</strong> holding your logos, colours and fonts, and apply it to a template so a colleague gets the right blue without being asked. You build a locked template where the headline and image can be changed but the logo, margins and colours cannot, which is the single change that saves most teams the most time.</p><p>The afternoon is production. You take one campaign design and produce it as a feed post, a story and a web banner without rebuilding it, use quick actions to remove a background and clean up a supplied photograph, add a generated image and a text treatment through the Firefly features built into Express, animate a static post, and cut a twenty second vertical video with trimmed clips, music at a sensible level and captions that are readable with the sound off. You finish with the team workflow: shared libraries, comments and approval, the scheduling tools where your plan includes them, and a print-ready PDF export for a flyer going to a printer in Colombo.</p><p>Content is mapped to the domains of the <strong>Adobe Certified Professional in Adobe Express</strong> exam, delivered by Certiport at authorised test centres, and the day ends with a timed practice task in the same shape. MyLearnPlus does not award the Adobe credential and no course can guarantee a pass.</p><p>The class runs live online in your own timezone or in the classroom in Colombo, priced in <strong>LKR</strong> for learners in Sri Lanka and <strong>USD</strong> for everyone else. Teams can be invoiced, and the same day can be run privately using your own brand assets, so you leave with your real brand kit and templates built rather than a practice set.</p>",
+  "level": 1,
+  "duration_hours": 6,
+  "duration_days": 1,
+  "software_version": "Creative Cloud 2026",
+  "certification_alignment": "Prepares for the Adobe Certified Professional in Adobe Express exam",
+  "delivery_modes": [
+    "LIVE_ONLINE",
+    "CLASSROOM",
+    "SELF_PACED",
+    "PRIVATE"
+  ],
+  "default_mode": "LIVE_ONLINE",
+  "price_band": "1day",
+  "outcomes": [
+    "Set up a brand kit holding your logos, colour palette and fonts, and apply it to a template in one step.",
+    "Judge which jobs belong in Express and which still need Photoshop, Illustrator or InDesign, and move a file between them.",
+    "Build a locked template where colleagues can change the headline and image but not the logo, margins or colours.",
+    "Produce one campaign design as a feed post, a story and a web banner using resize, without rebuilding the layout.",
+    "Clean up a supplied photograph with quick actions, including removing a background and cropping to a required shape.",
+    "Generate an image and a text treatment with the Firefly features built into Express, and check the Content Credentials on the result.",
+    "Animate a static post and export it as a short looping file suited to a social feed.",
+    "Cut a twenty second vertical video with trimmed clips, a music bed at a sensible level and readable captions.",
+    "Run a review cycle using shared libraries, comments and approval so a post is signed off before it is published.",
+    "Export the right file for each destination, including a print-ready PDF for a flyer and correctly sized files for each social platform."
+  ],
+  "prerequisites": [
+    "No prior design experience is needed, and no previous Adobe software experience is assumed.",
+    "You should be comfortable with your own computer and with working in a browser.",
+    "Bring your logo files, brand colours and fonts if you have them, so the exercises use your own material."
+  ],
+  "audiences": [
+    "Social media managers and content coordinators publishing several posts a week",
+    "Marketing executives in small teams with no in-house designer",
+    "Internal communications and HR staff producing announcements, posters and slide graphics",
+    "Small business owners and online sellers running their own social channels",
+    "Designers who need to hand safe, locked templates to non-designer colleagues"
+  ],
+  "includes": [
+    {
+      "text": "Class recording, available for 12 months",
+      "icon": "video"
+    },
+    {
+      "text": "Exercise files, sample brand assets and video clips used in class, yours to keep",
+      "icon": "download"
+    },
+    {
+      "text": "Course workbook covering every step demonstrated in class",
+      "icon": "book"
+    },
+    {
+      "text": "Practice questions written against the Adobe Certified Professional exam domains",
+      "icon": "clipboard"
+    },
+    {
+      "text": "Social sizing reference sheet and a template checklist for team handover",
+      "icon": "settings"
+    },
+    {
+      "text": "MyLearnPlus certificate of completion",
+      "icon": "certificate"
+    },
+    {
+      "text": "Instructor email support after the class for questions on the exercises",
+      "icon": "support"
+    }
+  ],
+  "curriculum": [
+    {
+      "title": "Morning, part 1 — Express, and where it fits",
+      "summary": "The workspace, plan differences, and an honest line between what Express should do and what it should not.",
+      "topics": [
+        {
+          "title": "The Express workspace, home, projects and file management",
+          "duration_min": 25
+        },
+        {
+          "title": "What Express is good at, and what still belongs in Photoshop, Illustrator or InDesign",
+          "duration_min": 20
+        },
+        {
+          "title": "Starting from a template and from a blank canvas at a set size",
+          "duration_min": 30
+        }
+      ]
+    },
+    {
+      "title": "Morning, part 2 — Brand kits and templates that hold",
+      "summary": "Building the brand kit, applying it, and locking a template so colleagues cannot break it.",
+      "topics": [
+        {
+          "title": "Brand kit setup: logos, colour palette, fonts and how they appear to the team",
+          "duration_min": 30
+        },
+        {
+          "title": "Applying the brand to an existing template and fixing what does not translate",
+          "duration_min": 25
+        },
+        {
+          "title": "Building a locked template: editable headline and image, fixed logo, margins and colours",
+          "duration_min": 30
+        }
+      ]
+    },
+    {
+      "title": "Afternoon, part 1 — A campaign set in three sizes",
+      "summary": "One design produced at feed, story and banner sizes, with image clean-up and generative help.",
+      "topics": [
+        {
+          "title": "Layout basics that keep a post readable: hierarchy, spacing, contrast and safe areas",
+          "duration_min": 25
+        },
+        {
+          "title": "Resize: feed post, story and web banner from one design",
+          "duration_min": 25
+        },
+        {
+          "title": "Quick actions on a supplied photograph: remove background, crop, convert and compress",
+          "duration_min": 20
+        },
+        {
+          "title": "Firefly features inside Express: generating an image and a text treatment, and checking Content Credentials",
+          "duration_min": 15
+        }
+      ]
+    },
+    {
+      "title": "Afternoon, part 2 — Motion and short video",
+      "summary": "Animating a post and cutting a short vertical video that works with the sound off.",
+      "topics": [
+        {
+          "title": "Animating a static post: element animation, timing and export as a looping file",
+          "duration_min": 25
+        },
+        {
+          "title": "Video timeline: trimming clips, ordering scenes and adding a music bed at a sensible level",
+          "duration_min": 25
+        },
+        {
+          "title": "Captions and on-screen text that stay readable on a phone with the sound off",
+          "duration_min": 20
+        }
+      ]
+    },
+    {
+      "title": "Afternoon, part 3 — Team workflow, publishing and output",
+      "summary": "Sharing, review and approval, then getting the right file out for each destination.",
+      "topics": [
+        {
+          "title": "Shared libraries, comments, versions and an approval step before anything is published",
+          "duration_min": 10
+        },
+        {
+          "title": "Scheduling and publishing to connected channels, where your plan includes it",
+          "duration_min": 10
+        },
+        {
+          "title": "Export: platform sizes, file types and a print-ready PDF for a flyer",
+          "duration_min": 10
+        },
+        {
+          "title": "Exam objectives review and a timed practice task",
+          "duration_min": 15
+        }
+      ]
+    }
+  ],
+  "faqs": [
+    {
+      "question": "Do I need my own laptop?",
+      "answer": "Yes, for live online and for the classroom in Colombo, so the brand kit and templates you build stay in your own account and are usable on Monday. Express runs in a browser, so the machine does not need to be powerful, but a stable connection matters because the files live in the cloud. Bring your logo, fonts and brand colours if you have them."
+    },
+    {
+      "question": "Is Adobe Express free, or do I need to pay for it?",
+      "answer": "The course fee covers the training, not a subscription. Express has a free tier that covers a good deal of the day, and paid plans add brand kits with more control, template locking, scheduling, larger generative credit allowances and premium assets. We send a note with the joining instructions explaining which exercises need a paid plan so you can decide before the class rather than during it."
+    },
+    {
+      "question": "I already use Canva. Is there a reason to switch?",
+      "answer": "This course does not argue the case for you. The practical differences worth knowing are that Express is inside the Adobe account and Creative Cloud Libraries you may already pay for, it opens Photoshop and Illustrator files with layers intact, it uses Firefly for generative work with Content Credentials attached, and it has an Adobe Certified Professional exam behind it. If your designers work in Creative Cloud and your marketers do not, that handover is where Express earns its place."
+    },
+    {
+      "question": "Do you issue a certificate?",
+      "answer": "Yes. You receive a MyLearnPlus certificate of completion recording the course title, the hours and the date. It is a record of training, not an Adobe credential. The Adobe Certified Professional in Adobe Express certification is a separate exam sat with Certiport, and the voucher is bought separately."
+    },
+    {
+      "question": "What happens if I miss the class?",
+      "answer": "The session is recorded and available to you for twelve months, and the exercise files are supplied, so you can work through the parts you missed. If you would rather sit it live again, every live booking includes one free repeat of the same class, with the terms shown on the booking page for each date."
+    },
+    {
+      "question": "Can you run this for our whole team on our own brand?",
+      "answer": "Yes, and it is the better option for most teams. In a private class the exercises use your logos, colours, fonts and real campaign material, so you finish the day with your actual brand kit and locked templates built and shared, rather than a practice set. We run private classes live online or at your office, and can split a large team across two dates."
+    },
+    {
+      "question": "Can my employer be invoiced?",
+      "answer": "Yes. We invoice organisations against a purchase order, in LKR for Sri Lankan companies and in USD internationally. Send the billing details and the names of the people attending and we will hold the seats while the invoice is processed."
+    }
+  ],
+  "related": [
+    "adobe-firefly-creatives",
+    "acrobat-pro-workflows",
+    "photoshop-level-1"
+  ],
+  "seo": {
+    "title": "Adobe Express Training for Marketing Teams | MyLearnPlus",
+    "description": "One-day Adobe Express course, live online or in Colombo. Brand kits, locked templates, resizing, short video and team review, with ACP exam practice.",
+    "keywords": "adobe express course, adobe express training, social media design course, brand kit templates, adobe certified professional express, marketing team training sri lanka, adobe express colombo"
+  }
+}

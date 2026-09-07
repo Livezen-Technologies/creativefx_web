@@ -1,0 +1,15 @@
+import { chromium } from 'playwright';
+const [url, out, w = 1440, h = 900, full = ''] = process.argv.slice(2);
+const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium' });
+const ctx = await b.newContext({ viewport: { width: +w, height: +h } });
+await ctx.addInitScript(() => { try { localStorage.setItem('nl_locale','en'); localStorage.setItem('nl_preloaded','1'); sessionStorage.setItem('nl_preloaded','1'); } catch(e){} });
+const p = await ctx.newPage();
+const errs = [];
+p.on('pageerror', e => errs.push(String(e).slice(0,160)));
+p.on('console', m => { if (m.type() === 'error') errs.push(m.text().slice(0,160)); });
+await p.goto(url, { waitUntil: 'domcontentloaded' });
+await p.waitForTimeout(1800);
+await p.screenshot({ path: out, fullPage: full === 'full' });
+if (errs.length) console.log('JS errors:', [...new Set(errs)].join(' | '));
+else console.log('no JS errors');
+await b.close();

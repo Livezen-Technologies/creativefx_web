@@ -1,0 +1,132 @@
+{
+  "slug": "photoshop-level-2",
+  "pillar": "adobe",
+  "category": "photoshop",
+  "title": "Photoshop Level 2",
+  "subtitle": "For Photoshop users who need advanced masking, composites and repeatable production work",
+  "summary": "Two days on advanced masking, smart objects, colour grading, composite work and actions, for people who already use Photoshop most weeks.",
+  "description_html": "<p>Level 2 is for the point where the basics stop being enough. You can already build a layered file and paint a mask, but hair against a busy background still leaves a fringe, composited elements still look pasted on, and a folder of two hundred product shots still gets resized one at a time. This course fixes those three problems in that order.</p><p>The first day is about control. You build masks from channels rather than by brushing at the edge, use Blend If to drop a subject into a scene without a halo, and move your whole file onto smart objects so that a Camera Raw setting, a filter or a resize stays editable a week later. You also build layer comps, so one document can show a client three versions of the same layout instead of three separate files.</p><p>The second day is about making composites believable and making production fast. You match colour, contrast and light direction between two photographs shot on different days, then paint the contact shadow and cast shadow that make an object sit on a surface rather than float above it. After that the class moves to automation: recording an action, running it across a folder with the Image Processor, exporting artboards at several sizes in one pass, and soft proofing a file against a printer profile before it leaves the studio.</p><p>Everything is taught on working files rather than clean stock: a portrait with flyaway hair, a product shot with the wrong background, a set of images that arrive in mixed sizes and have to go out as a consistent set. You keep the exercise files, the workbook and the class recording for twelve months. Classes run live online or in the classroom in Colombo, with pricing in <strong>LKR</strong> for Sri Lanka and <strong>USD</strong> elsewhere.</p><p>The techniques here extend the Adobe Certified Professional exam objectives introduced in <em>Photoshop Level 1</em>. If your goal is the exam itself, take Level 1 first, since that is the course built directly against the published domains.</p>",
+  "level": 2,
+  "duration_hours": 12,
+  "duration_days": 2,
+  "software_version": "Creative Cloud 2026",
+  "certification_alignment": "Extends the Adobe Certified Professional in Adobe Photoshop exam objectives introduced in Photoshop Level 1",
+  "delivery_modes": ["LIVE_ONLINE", "CLASSROOM", "SELF_PACED", "PRIVATE"],
+  "default_mode": "LIVE_ONLINE",
+  "price_band": "2day",
+  "outcomes": [
+    "Build a channel-based mask that holds flyaway hair against a new, busier background.",
+    "Use Blend If and layer blending options to composite a subject into a scene without a visible halo.",
+    "Convert a working file to smart objects and apply Camera Raw and sharpening as editable smart filters.",
+    "Grade an image to a written brief using per-channel Curves, Selective Colour and a gradient map.",
+    "Match the colour, contrast and light direction of two photographs shot in different conditions.",
+    "Paint a contact shadow and a cast shadow so a placed object sits believably on a surface.",
+    "Build layer comps that present three versions of one layout to a client from a single document.",
+    "Record an action and batch process a folder of images to a fixed size, colour space and file format.",
+    "Set up an artboard document and export every artboard at several sizes in a single operation.",
+    "Soft proof a file against a supplied printer profile and export both a press-ready PDF and a web JPEG."
+  ],
+  "prerequisites": [
+    "Photoshop Level 1 or equivalent experience: you should already be comfortable with layers, layer masks, selections and adjustment layers.",
+    "You should be able to open, save and export files in Photoshop without step-by-step help."
+  ],
+  "audiences": [
+    "Graphic designers and artworkers producing composited images for print and campaign work",
+    "In-house design and marketing staff who handle large batches of product or event photography",
+    "Photographers who deliver retouched files to clients and want a faster, non-destructive workflow",
+    "Studio and prepress staff responsible for colour, output and file handover",
+    "Self-taught Photoshop users who want to replace guesswork with a repeatable method"
+  ],
+  "includes": [
+    {"text": "Class recording, available for 12 months", "icon": "video"},
+    {"text": "Exercise files, including the layered composites built in class", "icon": "download"},
+    {"text": "Course workbook covering every technique demonstrated", "icon": "book"},
+    {"text": "Starter action set and export presets used in the automation module", "icon": "settings"},
+    {"text": "MyLearnPlus certificate of completion", "icon": "certificate"},
+    {"text": "Instructor email support after the class for questions on the exercises", "icon": "support"},
+    {"text": "One free repeat of the same live class, terms shown on the booking page", "icon": "refresh"}
+  ],
+  "curriculum": [
+    {
+      "title": "Day 1, Morning — Advanced selections and masking",
+      "summary": "Building masks that survive a difficult edge, from channels and luminosity rather than brushwork alone.",
+      "topics": [
+        {"title": "Channel-based masks for hair, fur and fine detail", "duration_min": 45},
+        {"title": "Blend If and blending options for awkward composites", "duration_min": 35},
+        {"title": "Luminosity masks and targeting adjustments by tonal range", "duration_min": 40},
+        {"title": "Vector masks, clipping masks and shape layers", "duration_min": 35},
+        {"title": "Exercise: mask a portrait with flyaway hair onto a new background", "duration_min": 25}
+      ]
+    },
+    {
+      "title": "Day 1, Afternoon — Smart objects and non-destructive workflows",
+      "summary": "Restructuring a file so that filters, raw settings and client versions all stay editable.",
+      "topics": [
+        {"title": "Smart objects, linked smart objects and nested documents", "duration_min": 40},
+        {"title": "Smart filters, filter masks and filter blending options", "duration_min": 35},
+        {"title": "Camera Raw and lens corrections applied to smart objects", "duration_min": 35},
+        {"title": "Layer comps for presenting versions to a client from one file", "duration_min": 30},
+        {"title": "Templates, artboards and reusable document structures", "duration_min": 40}
+      ]
+    },
+    {
+      "title": "Day 2, Morning — Colour, light and believable composites",
+      "summary": "Making two images from different shoots look as though they were photographed together.",
+      "topics": [
+        {"title": "Per-channel Curves and Selective Colour for grading", "duration_min": 40},
+        {"title": "Colour Lookup, gradient maps and split toning", "duration_min": 30},
+        {"title": "Matching colour, contrast and light direction between elements", "duration_min": 40},
+        {"title": "Contact shadows, cast shadows and reflections", "duration_min": 40},
+        {"title": "Free Transform, Warp, Perspective Warp and Puppet Warp", "duration_min": 30}
+      ]
+    },
+    {
+      "title": "Day 2, Afternoon — Automation, colour management and handover",
+      "summary": "Turning the day's techniques into repeatable production work and a clean file handover.",
+      "topics": [
+        {"title": "Recording actions, batch processing and the Image Processor", "duration_min": 45},
+        {"title": "Droplets and scripts for jobs that repeat every week", "duration_min": 25},
+        {"title": "Colour management: profiles, soft proofing and printer output", "duration_min": 35},
+        {"title": "Export presets, artboard export and generating assets at multiple sizes", "duration_min": 35},
+        {"title": "Round trips with Illustrator, InDesign and Premiere Pro", "duration_min": 25},
+        {"title": "File naming, versioning and handing off to a print supplier", "duration_min": 15}
+      ]
+    }
+  ],
+  "faqs": [
+    {
+      "question": "How do I know whether Level 2 is the right level for me?",
+      "answer": "If you can build a layered file, make a selection, use a layer mask and add an adjustment layer without needing instructions, you are ready. If any of those are unfamiliar, start with Photoshop Level 1 and take Level 2 afterwards. Send us a sample of your recent work if you would like a straight answer before booking."
+    },
+    {
+      "question": "Do I need my own laptop?",
+      "answer": "For live online classes you work on your own machine. For classroom sessions in Colombo we recommend bringing your own laptop so that the actions, presets and templates you build stay on the computer you use for work. If you cannot bring one, tell us at booking and we will confirm what is available for your date."
+    },
+    {
+      "question": "Is the Photoshop software included?",
+      "answer": "No. You need Photoshop installed and working before the first session, through your own or your employer's Creative Cloud subscription or Adobe's free trial. Because this course uses Camera Raw, artboards and current smart object behaviour, run a recent release rather than an old installed version."
+    },
+    {
+      "question": "What if I miss a day?",
+      "answer": "Every session is recorded and available to you for twelve months, so you can pick up the material you missed. If you prefer to sit the day live again, each live booking includes one free repeat of the same class; the terms are shown on the booking page for each date."
+    },
+    {
+      "question": "Does this course prepare me for an Adobe certification?",
+      "answer": "It extends the ground covered by the Adobe Certified Professional in Adobe Photoshop exam, but Level 1 is the course written directly against the published exam domains and it is the better preparation if the exam is your goal. The exam itself is sat with Certiport at an authorised testing centre and is not included in either course fee."
+    },
+    {
+      "question": "Can we run this in-house for our team?",
+      "answer": "Yes. Private classes run on this syllabus for a single organisation, online or at your office, and the exercises can be swapped for your own product shots, brand colours and output specifications. Tell us the files your team actually struggles with and we will build the practical work around them."
+    },
+    {
+      "question": "Can my employer be invoiced?",
+      "answer": "Yes. We invoice organisations against a purchase order, in LKR for Sri Lankan companies and in USD internationally. Seats are held while the invoice is processed. Send the billing details and the attendee names when you book."
+    }
+  ],
+  "related": ["photoshop-level-1", "photoshop-retouching", "photoshop-generative-ai"],
+  "seo": {
+    "title": "Photoshop Level 2 Advanced Course | MyLearnPlus",
+    "description": "Two-day advanced Photoshop course: channel masking, smart objects, colour grading, composites, actions and print output. Live online or in Colombo.",
+    "keywords": "advanced photoshop course, photoshop level 2, photoshop compositing course, photoshop masking training, photoshop actions batch processing, photoshop training sri lanka, photoshop course colombo"
+  }
+}
