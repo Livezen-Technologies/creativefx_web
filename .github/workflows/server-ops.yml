@@ -354,6 +354,19 @@ jobs:
               || echo "  (could not read translations)"
 
             echo
+            echo "===== media library (every row, including deleted) ====="
+            # Every row and the columns that decide whether the hero can use
+            # one: `hero:images` reported "no images in the media library at
+            # all", which is what its query returns for a soft-deleted row and
+            # for a row whose mime_type is not image/* just as much as for an
+            # empty table. Those are three different faults with three different
+            # fixes, so print the rows rather than infer which it was.
+            mysql -u"$DU" -p"$DP" "$DB" -e \
+              "SELECT id, original_name, folder, tags, mime_type, deleted_at, path
+               FROM media_library ORDER BY id;" 2>/dev/null \
+              || echo "  (could not read media_library)"
+
+            echo
             echo "===== DONE (read-only) ====="
 
       - name: Hero images (promote an uploaded image to the home page hero)
