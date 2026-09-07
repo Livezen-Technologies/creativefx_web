@@ -106,6 +106,26 @@ class CartModel extends Model
             unset($item);
         }
 
+        // The same again for a membership line, which has neither a session nor
+        // a bundle behind it. Without this the basket showed an amount with no
+        // name against it — the one line in an order somebody is least likely
+        // to recognise from the figure alone.
+        $planIds = array_column(array_filter($items, static fn ($i) => $i['item_type'] === 'membership'), 'item_id');
+        if ($planIds !== []) {
+            $plans = array_column(
+                $this->db->table('membership_plans')->whereIn('id', $planIds)->get()->getResultArray(),
+                null,
+                'id'
+            );
+            foreach ($items as &$item) {
+                if ($item['item_type'] === 'membership' && isset($plans[$item['item_id']])) {
+                    $item['course_title'] = $plans[$item['item_id']]['name'];
+                    $item['months']       = (int) $plans[$item['item_id']]['months'];
+                }
+            }
+            unset($item);
+        }
+
         $subtotal = 0;
         $discount = 0;
         $count    = 0;

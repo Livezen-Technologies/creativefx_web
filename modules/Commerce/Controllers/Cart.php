@@ -134,7 +134,7 @@ class Cart extends BaseController
         $type = (string) $this->request->getPost('item_type');
         $id   = (int) $this->request->getPost('item_id');
 
-        if (! in_array($type, ['session', 'bundle'], true) || $id <= 0) {
+        if (! in_array($type, ['session', 'bundle', 'membership'], true) || $id <= 0) {
             return redirect()->back()->with('error', lang('Commerce.cart.fail.bad_request'));
         }
 
@@ -147,9 +147,14 @@ class Cart extends BaseController
         $cart     = CartContext::current();
         $checkout = new CheckoutService();
 
-        $result = $type === 'bundle'
-            ? $checkout->addBundle($cart, $id, $qty)
-            : $checkout->addSession($cart, $id, $qty);
+        $result = match ($type) {
+            // The cart's currency, not the visitor's current one. It is frozen
+            // on the cart at creation precisely so a price cannot change
+            // between the page and the basket — see PricingService.
+            'membership' => $checkout->addMembership($cart, $id, (string) $cart['currency']),
+            'bundle'     => $checkout->addBundle($cart, $id, $qty),
+            default      => $checkout->addSession($cart, $id, $qty),
+        };
 
         if (! $result['ok']) {
             // Back rather than on to the basket: the buyer is standing on the

@@ -39,6 +39,11 @@ class DatabaseSeeder extends Seeder
         // per currency for every session it creates, and a price in a currency
         // that does not exist is a row nothing will ever read.
         $this->call('Modules\Commerce\Database\Seeds\CommerceSeeder');
+        // After CommerceSeeder, and it upserts by code rather than guarding on
+        // an empty table: the currencies and price books it adds land in
+        // databases that already have USD and LKR, where a whole-table guard
+        // would skip them and say nothing.
+        $this->call('Modules\Commerce\Database\Seeds\MembershipSeeder');
 
         // ── The catalogue ───────────────────────────────────────────────────
         // Categories, courses and everything under them, the faculty, the

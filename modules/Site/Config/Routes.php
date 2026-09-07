@@ -109,6 +109,13 @@ $routes->post('(:locale)/waitlist', 'Schedule::waitlist/$1', $catalogOptions);
 
 // ── Commerce ────────────────────────────────────────────────────────────────
 
+// Public. A visitor has to see what a pass costs before deciding to make an
+// account; the sign-in happens at checkout, where a pass needs somebody to
+// belong to. Declared here rather than left to the catch-all page route at the
+// bottom of this file, which would send /membership to a CMS page that has
+// never existed and answer 404.
+$routes->get('(:locale)/membership', 'Membership::index/$1', $commerceOptions);
+
 $routes->get('(:locale)/cart', 'Cart::index/$1', $commerceOptions);
 $routes->post('(:locale)/cart/add', 'Cart::add/$1', $commerceOptions);
 $routes->post('(:locale)/cart/update', 'Cart::update/$1', $commerceOptions);

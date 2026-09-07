@@ -64,6 +64,33 @@ return [
 
     // ── The basket ──────────────────────────────────────────────────────────
 
+    'membership' => [
+        'title'        => 'Membership',
+        'meta'         => 'One pass, the whole self-paced library. Monthly, quarterly, half-yearly or annual, priced in your own currency.',
+        'eyebrow'      => 'Learn at your own pace',
+        'heading'      => 'One pass, the whole library',
+        'intro'        => 'Every self-paced course, for as long as your membership runs. Start anything, finish in your own time, and take the assessments and certificates that come with them.',
+        'library'      => '{0} courses, about {1} hours of material',
+        'library_bare' => '{0} courses',
+        'per_month'    => '{0} a month',
+        'save'         => 'Save {0}',
+        'choose'       => 'Choose {0}',
+        'billed_once'  => 'Paid once, runs {0} months. Nothing renews automatically.',
+        'billed_one'   => 'Paid once, runs one month. Nothing renews automatically.',
+        'current'      => 'Your membership runs until {0}.',
+        'current_add'  => 'Buying another plan adds its term to the end of that date — you lose nothing by renewing early.',
+        'includes'     => 'What a membership includes',
+        'inc_library'  => 'Every self-paced course in the catalogue, including ones added while your membership runs.',
+        'inc_pace'     => 'Start and stop whenever you like. Your progress is kept.',
+        'inc_assess'   => 'The assessments, and a certificate for each course you complete.',
+        'inc_nothing'  => 'No automatic renewal and no card kept on file. When the term ends, it ends.',
+        'excludes'     => 'What it does not include',
+        'exc_taught'   => 'Instructor-led classes — live online and in person — are booked and paid for separately. A membership is the self-paced library.',
+        'in_cart'      => '{0} membership',
+        'in_cart_term' => '{0} months of the self-paced library',
+        'in_cart_one'  => 'One month of the self-paced library',
+    ],
+
     'cart' => [
         'title'         => 'Basket',
         'eyebrow'       => 'Your booking',

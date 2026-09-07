@@ -14,6 +14,7 @@ use Modules\Learning\Models\LessonModel;
 use Modules\Learning\Models\ProgressModel;
 use Modules\Learning\Models\QuizModel;
 use Modules\Learning\Services\CertificateService;
+use Modules\Learning\Services\MembershipService;
 
 /**
  * The self-paced player: the outline, one lesson, the progress the lesson
@@ -568,9 +569,16 @@ class Player extends BaseController
         $price    = (new PricingService())->courseFromPrices($courseId, $currency)['SELF_PACED'] ?? null;
 
         // Somebody who already owns this sees a way into the real player rather
-        // than a buy button for something they have paid for.
+        // than a buy button for something they have paid for. A member counts
+        // as owning it: they have not got an enrolment until they first open
+        // the course, so asking hasAccess() alone would sell a live member the
+        // thing their pass already covers.
         $userId = (int) (LearnerAuth::id() ?? 0);
-        $owned  = $userId > 0 && (new EnrolmentModel())->hasAccess($userId, $courseId);
+        $owned  = $userId > 0 && (
+            (new EnrolmentModel())->hasAccess($userId, $courseId)
+            || ((new MembershipService())->isMember($userId)
+                && (new MembershipService())->selfPacedSession($courseId) !== null)
+        );
 
         $crumbs = [
             ['label' => lang('Catalog.ondemand.title'), 'url' => locale_url('on-demand')],
@@ -625,7 +633,15 @@ class Player extends BaseController
         }
 
         if (! (new EnrolmentModel())->hasAccess($userId, (int) $course['id'])) {
-            throw PageNotFoundException::forPageNotFound();
+            // A member has not got an enrolment on this course until the first
+            // time they open it. admit() writes one, and returns 0 when they
+            // hold no live pass or when the course is taught only — so the
+            // refusal below is still the answer for everybody who is not
+            // entitled. See MembershipService for why a pass writes an
+            // enrolment rather than becoming a second kind of access.
+            if ((new MembershipService())->admit($userId, (int) $course['id']) === 0) {
+                throw PageNotFoundException::forPageNotFound();
+            }
         }
 
         return $course;

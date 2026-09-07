@@ -93,6 +93,17 @@ class EnrolmentService
         $notify       = [];
 
         foreach ($items as $item) {
+            // A membership is a term on the buyer's own account — not a seat,
+            // and not an attendee list. It records a pass and stops there: no
+            // enrolment is written here, because a pass admits somebody to a
+            // course the first time they open it rather than to all thirty-one
+            // at once. See MembershipService for that argument in full.
+            if (($item['item_type'] ?? '') === 'membership') {
+                $this->recordMembership($order, $item);
+
+                continue;
+            }
+
             // One enrolment per seat, and a seat is one attendee. A four-seat
             // line is four people, four accounts and four sets of joining
             // instructions — not one enrolment with a quantity, which is the
@@ -460,6 +471,56 @@ class EnrolmentService
             ->orderBy('sort_order', 'ASC')->get()->getRowArray();
 
         return (int) ($row['course_id'] ?? 0);
+    }
+
+    /**
+     * Turn a paid membership line into a pass.
+     *
+     * The buyer, not an attendee: `attendeesFor()` exists because a seat can be
+     * bought for somebody else, and a membership cannot — it is a term on one
+     * account, and there is no second name on the line to give it to.
+     *
+     * The term comes from the order line's own snapshot, falling back to the
+     * plan. A plan re-priced or shortened between the order being placed and
+     * its webhook arriving must not change what was sold, and a webhook can
+     * arrive days later when a bank transfer is reconciled by hand.
+     */
+    private function recordMembership(array $order, array $item): void
+    {
+        $userId = (int) ($order['user_id'] ?? 0);
+        if ($userId === 0) {
+            // A membership bought without an account cannot be delivered to
+            // one. Checkout requires a learner to be signed in for exactly this
+            // reason; logged rather than swallowed, because reaching here means
+            // that rule has a hole in it.
+            log_message('error', 'Paid membership on order {id} has no user to give it to.', [
+                'id' => $order['id'] ?? '?',
+            ]);
+
+            return;
+        }
+
+        $plan = $this->db->table('membership_plans')
+            ->where('id', (int) $item['item_id'])->get()->getRowArray();
+
+        $months = (int) (json_decode((string) $item['meta_snapshot_json'], true)['months'] ?? 0);
+        if ($months <= 0) {
+            $months = (int) ($plan['months'] ?? 0);
+        }
+
+        if ($months <= 0) {
+            log_message('error', 'Paid membership line {line} has no term; no pass written.', [
+                'line' => $item['id'] ?? '?',
+            ]);
+
+            return;
+        }
+
+        (new MembershipService($this->db))->record(
+            $userId,
+            ['id' => (int) $item['item_id'], 'months' => $months],
+            (int) $item['id']
+        );
     }
 
     private function cartIdFor(array $order): int

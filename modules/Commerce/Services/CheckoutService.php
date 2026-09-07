@@ -5,6 +5,7 @@ namespace Modules\Commerce\Services;
 use CodeIgniter\Database\BaseConnection;
 use Modules\Commerce\Models\CartItemModel;
 use Modules\Commerce\Models\CartModel;
+use Modules\Commerce\Models\MembershipPlanModel;
 use Modules\Commerce\Models\OrderItemModel;
 use Modules\Commerce\Models\OrderModel;
 
@@ -126,6 +127,53 @@ class CheckoutService
         ];
 
         $existing !== null ? $items->update((int) $existing['id'], $row) : $items->insert($row);
+
+        $this->reprice($cart);
+
+        return ['ok' => true, 'reason' => 'ok'];
+    }
+
+    /**
+     * Put a membership plan in the basket.
+     *
+     * Quantity is always one. A membership is a term on one person's account:
+     * two of them is not two passes, it is the same pass with the money taken
+     * twice — and `MembershipService::record()` writes one row per order line
+     * on purpose, so a quantity of two would charge twice and deliver once.
+     * Somebody who wants longer buys a longer plan, which is cheaper anyway.
+     *
+     * A basket holds one plan at a time for the same reason. Choosing the
+     * annual after the monthly is changing your mind, not adding to an order.
+     *
+     * @return array{ok:bool, reason:string}
+     */
+    public function addMembership(array $cart, int $planId, string $currency): array
+    {
+        $plan = (new MembershipPlanModel())->priced($planId, $currency);
+        if ($plan === null) {
+            // Unpublished, or not priced in this currency — never a zero line.
+            return ['ok' => false, 'reason' => 'unpriced'];
+        }
+
+        $items = new CartItemModel();
+
+        foreach ($items->where('cart_id', (int) $cart['id'])->where('item_type', 'membership')->findAll() as $old) {
+            $items->delete((int) $old['id']);
+        }
+
+        $items->insert([
+            'cart_id'          => (int) $cart['id'],
+            'item_type'        => 'membership',
+            'item_id'          => (int) $plan['id'],
+            'qty'              => 1,
+            'unit_price_cents' => (int) $plan['price_cents'],
+            'discount_cents'   => 0,
+            'meta_json'        => json_encode([
+                'compare_at_cents' => $plan['compare_at_cents'],
+                'months'           => (int) $plan['months'],
+                'code'             => $plan['code'],
+            ]),
+        ]);
 
         $this->reprice($cart);
 
@@ -319,6 +367,12 @@ class CheckoutService
                     'timezone'   => $item['timezone'] ?? null,
                     'venue'      => $item['venue_name'] ?? null,
                     'city'       => $item['venue_city'] ?? null,
+                    // Frozen with the rest of the line, and for the same
+                    // reason: fulfilment reads the term from here rather than
+                    // from the plan, so re-pricing a plan or changing its
+                    // length can never alter a pass somebody has already paid
+                    // for — including one whose webhook arrives afterwards.
+                    'months'     => $item['item_type'] === 'membership' ? (int) ($item['months'] ?? 0) : null,
                 ], JSON_UNESCAPED_UNICODE),
                 'unit_price_cents'   => (int) $item['unit_price_cents'],
                 'discount_cents'     => (int) $item['discount_cents'],
