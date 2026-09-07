@@ -143,12 +143,51 @@ if (! function_exists('duration_label')) {
         $hours = (int) ($course['duration_hours'] ?? 0);
 
         if ($days > 0) {
-            $parts[] = lang('Catalog.duration.days', [rtrim(rtrim(number_format($days, 1), '0'), '.')]);
+            $shown   = rtrim(rtrim(number_format($days, 1), '0'), '.');
+            $parts[] = $shown === '1'
+                ? lang('Catalog.duration.day')
+                : lang('Catalog.duration.days', [$shown]);
         }
         if ($hours > 0) {
-            $parts[] = lang('Catalog.duration.hours', [$hours]);
+            $parts[] = $hours === 1
+                ? lang('Catalog.duration.hour')
+                : lang('Catalog.duration.hours', [$hours]);
         }
 
         return implode(' · ', $parts);
+    }
+}
+
+if (! function_exists('count_label')) {
+    /**
+     * A counted noun, in the right form for the number.
+     *
+     * `lang()` does no pluralisation, so a single '{0} lessons' renders
+     * "1 lessons" — which had already shipped three times in this codebase
+     * ("1 days", "1 lessons", "Teaches 1 published courses") before anybody
+     * noticed, because it only shows up on the one case nobody tests with.
+     *
+     * Two keys, by convention: `Catalog.ondemand.lessons` for the general form
+     * and `Catalog.ondemand.lesson` for exactly one. A missing singular falls
+     * back to the plural rather than printing a key, so adding a count to a
+     * page cannot break it — it can only read slightly wrong until the second
+     * key is written.
+     *
+     * ICU message syntax would do this in one key, but CodeIgniter only applies
+     * it when the string parses as ICU and silently prints the raw pattern when
+     * it does not, which is a worse failure than "1 lessons".
+     */
+    function count_label(string $pluralKey, int $count, ?string $singularKey = null): string
+    {
+        if ($count === 1) {
+            $singularKey ??= preg_replace('/s$/', '', $pluralKey);
+            $line = lang($singularKey, [$count]);
+
+            if ($line !== $singularKey) {
+                return $line;
+            }
+        }
+
+        return lang($pluralKey, [$count]);
     }
 }

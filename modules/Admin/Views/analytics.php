@@ -84,7 +84,7 @@ $delta = static function (?float $change): string {
         </div>
     </div>
     <?php $max = $bar($days); ?>
-    <div class="flex h-48 items-end gap-[2px] overflow-x-auto sm:gap-1">
+    <div class="relative flex h-48 items-end gap-[2px] overflow-x-auto sm:gap-1">
         <?php foreach ($days as $d): ?>
             <div class="group flex h-full min-w-[6px] flex-1 items-end justify-center gap-[2px]"
                  title="<?= esc($d['label'] . ': ' . $d['views'] . ' page views, ' . $d['visitors'] . ' visitors', 'attr') ?>">

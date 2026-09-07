@@ -107,42 +107,37 @@ export default function assistant(config = {}) {
       }
     },
 
-    /** Turn the endpoint's answer into one bubble and its list of links. */
+    /**
+     * Turn the endpoint's answer into one bubble and its list of links.
+     *
+     * The shape is the server's: `answer`, `linksLabel`, `links`. This used to
+     * read `data.results` and `data.source`, which the endpoint has never sent
+     * — so `links` was always empty and every answer arrived stripped of the
+     * pages it came from. The "this might help" reply was the worst of it: a
+     * bubble offering help, with the list of what might help thrown away.
+     *
+     * The endpoint also writes the not-found copy itself, so there is no
+     * fallback to reinvent here; the only case this has to handle on its own is
+     * a reply with no answer and no links at all, which means the request did
+     * not arrive.
+     */
     reply(data) {
-      const links = (data.results || []).map((r) => ({ title: r.title, url: r.url }));
+      const links = (data.links || []).map((l) => ({ title: l.title, url: l.url }));
 
-      // An answer, with the page it came from first: the bubble is a summary
-      // and somebody who wants the detail should not have to search for it.
       if (data.answer) {
-        if (data.source) links.unshift({ title: this.strings.source, url: data.source });
         return {
           from: 'bot',
           text: data.answer,
-          linksLabel: this.strings.related,
+          linksLabel: data.linksLabel || '',
           links: links.slice(0, 5),
         };
       }
 
-      // No single answer, but pages that match. The bubble carries the label,
-      // so the list does not repeat it.
-      if (links.length) {
-        if (data.searchUrl) links.push({ title: this.strings.searchAll, url: data.searchUrl });
-        return {
-          from: 'bot',
-          text: this.strings.related,
-          linksLabel: '',
-          links: links.slice(0, 5),
-        };
-      }
-
-      // Nothing found. Say so plainly and offer the people, rather than
-      // inventing an answer or leaving a dead end.
       return {
         from: 'bot',
         text: `${this.strings.none} ${this.strings.noneHelp}`,
         linksLabel: '',
         links: [
-          data.searchUrl ? { title: this.strings.searchAll, url: data.searchUrl } : null,
           this.strings.contact ? { title: this.strings.contactLabel, url: this.strings.contact } : null,
         ].filter(Boolean),
       };

@@ -5,6 +5,7 @@ namespace Modules\Catalog\Controllers;
 use App\Controllers\BaseController;
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Exceptions\PageNotFoundException;
+use Modules\Catalog\Libraries\CardPricer;
 use Modules\Catalog\Libraries\Schema;
 use Modules\Catalog\Models\CourseSessionModel;
 use Modules\Catalog\Models\VenueModel;
@@ -368,49 +369,15 @@ class Locations extends BaseController
             return [];
         }
 
-        $ids = array_map('intval', array_column($rows, 'id'));
-
-        // The "from" price and the next date, both scoped to this venue: a card
-        // on the Kandy page quoting a Colombo-only date would be a lie about
-        // where that class runs.
-        $priceQuery = $db->table('course_sessions cs')
-            ->select('cs.course_id, MIN(sp.price_cents) AS from_cents', false)
-            ->join('session_prices sp', 'sp.session_id = cs.id');
-
-        $prices = array_column(
-            $this->atVenue($priceQuery, $venueId, $adopts)
-                ->whereIn('cs.course_id', $ids)
-                ->where('sp.currency', $currency)
-                ->where('cs.is_private', 0)
-                ->whereIn('cs.status', CourseSessionModel::BOOKABLE)
-                ->groupBy('cs.course_id')
-                ->get()->getResultArray(),
-            'from_cents',
-            'course_id'
+        // Scoped to this venue: a card on the Kandy page quoting a Colombo-only
+        // date would be a lie about where that class runs. The self-paced price
+        // is the one figure CardPricer deliberately asks unscoped — a recording
+        // belongs to no room.
+        return (new CardPricer())->decorate(
+            $rows,
+            $currency,
+            fn (BaseBuilder $q): BaseBuilder => $this->atVenue($q, $venueId, $adopts)
         );
-
-        $dateQuery = $db->table('course_sessions cs')
-            ->select('cs.course_id, MIN(cs.start_date) AS next_date', false);
-
-        $dates = array_column(
-            $this->atVenue($dateQuery, $venueId, $adopts)
-                ->whereIn('cs.course_id', $ids)
-                ->where('cs.is_private', 0)
-                ->whereIn('cs.status', CourseSessionModel::BOOKABLE)
-                ->where('cs.start_date >=', date('Y-m-d'))
-                ->groupBy('cs.course_id')
-                ->get()->getResultArray(),
-            'next_date',
-            'course_id'
-        );
-
-        foreach ($rows as &$row) {
-            $row['from_cents'] = isset($prices[$row['id']]) ? (int) $prices[$row['id']] : null;
-            $row['next_date']  = $dates[$row['id']] ?? null;
-            $row['currency']   = $currency;
-        }
-
-        return $rows;
     }
 
     /**
@@ -429,13 +396,9 @@ class Locations extends BaseController
      */
     private function publishableAddress(array $venue): ?string
     {
-        $address = trim(t_field($venue['address'] ?? ''));
-
-        if ($address === '' || preg_match('/\{[^}]*\}/', $address) === 1) {
-            return null;
-        }
-
-        return $address;
+        // The rule itself lives in the norlanka helper, because the session
+        // page prints this same column and needs the same answer.
+        return publishable(t_field($venue['address'] ?? ''));
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace Modules\Site\Controllers;
 
 use App\Controllers\BaseController;
+use Modules\Catalog\Libraries\CardPricer;
 use Modules\Catalog\Libraries\Schema;
 use Modules\Catalog\Models\BundleModel;
 use Modules\Catalog\Models\CourseCategoryModel;
@@ -93,7 +94,7 @@ class Home extends BaseController
             'posts'           => $this->latestPosts(3),
             'facts'           => $this->facts(),
             'currency'        => $currency,
-            'schema'          => Schema::render([Schema::organisation()]),
+            'schema'          => Schema::render([Schema::organisation(), Schema::website()]),
             'title'           => setting('site_name', '') . ' — ' . lang('Site.home.tagline'),
             'metaDescription' => lang('Site.home.meta'),
             'canonical'       => locale_url(''),
@@ -149,42 +150,7 @@ class Home extends BaseController
      */
     private function withCardData(array $rows, string $currency): array
     {
-        if ($rows === []) {
-            return [];
-        }
-
-        $ids = array_map('intval', array_column($rows, 'id'));
-        $db  = db_connect();
-
-        $from = array_column(
-            $db->table('course_sessions cs')
-                ->select('cs.course_id, MIN(sp.price_cents) AS from_cents', false)
-                ->join('session_prices sp', 'sp.session_id = cs.id')
-                ->whereIn('cs.course_id', $ids)->where('sp.currency', $currency)
-                ->where('cs.is_private', 0)->whereIn('cs.status', CourseSessionModel::BOOKABLE)
-                ->groupBy('cs.course_id')->get()->getResultArray(),
-            'from_cents',
-            'course_id'
-        );
-
-        $next = array_column(
-            $db->table('course_sessions')
-                ->select('course_id, MIN(start_date) AS next_date', false)
-                ->whereIn('course_id', $ids)->where('is_private', 0)
-                ->whereIn('status', CourseSessionModel::BOOKABLE)
-                ->where('start_date >=', date('Y-m-d'))
-                ->groupBy('course_id')->get()->getResultArray(),
-            'next_date',
-            'course_id'
-        );
-
-        foreach ($rows as &$row) {
-            $row['from_cents'] = isset($from[$row['id']]) ? (int) $from[$row['id']] : null;
-            $row['next_date']  = $next[$row['id']] ?? null;
-            $row['currency']   = $currency;
-        }
-
-        return $rows;
+        return (new CardPricer())->decorate($rows, $currency);
     }
 
     /**

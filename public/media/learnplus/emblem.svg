@@ -5,9 +5,15 @@
   Used where the badge has to stand alone and cannot be drawn from the theme
   tokens: the favicon set, the loading screen of the standalone pages, and the
   Open Graph fallback. Everywhere inside the app the mark is inlined from
-  --accent, --gold and --fg instead (see partials/logo.php), so this file
-  carries the light-theme colours as literals and is deliberately the only
-  place they appear twice.
+  the theme's own accent, gold and foreground custom properties instead (see
+  partials/logo.php), so this file carries the light-theme colours as literals
+  and is deliberately the only place they appear twice.
+
+  Those property names are written out in words on purpose: a double hyphen is
+  illegal inside an XML comment, and naming them the obvious way made this file
+  malformed. It still served 200 as image/svg+xml and still decoded to nothing,
+  so the favicon, the loading screen and the Open Graph card were all quietly
+  blank.
 
   A plus, because the name is "learn plus", with four rays that turn it into a
   spark — the nod to the AI half of the catalogue without drawing a robot.

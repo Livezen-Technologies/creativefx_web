@@ -266,10 +266,14 @@ foreach ($detail['modules'] as $module) {
                     <?php foreach ($reviews as $review): ?>
                         <blockquote class="rounded-2xl border border-line bg-surface p-5">
                             <p class="text-gold" aria-label="<?= esc(lang('Catalog.course.rating_of', [(int) $review['rating']]), 'attr') ?>">
-                                <?= str_repeat('★', (int) $review['rating']) ?><span class="text-white/20"><?= str_repeat('★', 5 - (int) $review['rating']) ?></span>
+                                <?= stars((int) $review['rating']) ?>
                             </p>
                             <?php if ($review['title']): ?><p class="mt-2 font-semibold"><?= esc($review['title']) ?></p><?php endif; ?>
-                            <p class="mt-2 text-sm leading-relaxed text-white/75"><?= esc($review['body']) ?></p>
+                            <?php // nl2br over esc, never the other way round: escaping the <br> the
+                              // other order produces is how a "fix" for line breaks turns into
+                              // markup printed at the reader. A learner writes in paragraphs and
+                              // esc() alone ran them into one block. ?>
+                        <p class="mt-2 text-sm leading-relaxed text-white/75"><?= nl2br(esc($review['body'])) ?></p>
                             <footer class="mt-3 text-xs text-white/50">
                                 <?= esc($review['author_name'] ?: lang('Catalog.course.review_anon')) ?><?php if ($review['author_role']): ?>, <?= esc($review['author_role']) ?><?php endif; ?>
                             </footer>

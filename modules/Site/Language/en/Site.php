@@ -188,6 +188,13 @@ return [
     ],
 
     // ── 404 ─────────────────────────────────────────────────────────────────
+    // ── Policy and legal pages ──────────────────────────────────────────────
+    'policies' => [
+        // Rendered from the page record rather than typed into the copy: a
+        // hand-written date is wrong the first time a policy is revised.
+        'in_effect' => 'This version has been in effect since {0}.',
+    ],
+
     'notfound' => [
         'meta_title' => 'Page not found',
         'meta'       => 'That address does not exist on this site.',
@@ -196,6 +203,7 @@ return [
         'body'       => 'The address may have changed, or it may never have existed. The catalogue and the schedule are the two places most links point at.',
         'try'        => 'Try one of these',
         'home'       => 'Home',
+        'browse'     => 'Browse the catalogue',
     ],
 
     // ── The human sitemap ───────────────────────────────────────────────────

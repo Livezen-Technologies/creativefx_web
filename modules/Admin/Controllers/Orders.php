@@ -171,8 +171,7 @@ class Orders extends BaseController
      */
     public function markPaid($id)
     {
-        $orders = new OrderModel();
-        $order  = $orders->find((int) $id);
+        $order = (new OrderModel())->find((int) $id);
         if ($order === null) {
             return redirect()->to(site_url('admin/orders'))->with('error', 'Order not found.');
         }
@@ -286,8 +285,12 @@ class Orders extends BaseController
             'count' => count($outcome['enrolments']),
         ]);
 
+        // Deliberately says nothing about email. Joining instructions are sent
+        // only if SMTP is configured, and a message that promises them when it
+        // is not is the kind of small lie that ends with a learner arriving at
+        // the wrong address. EnrolmentMail logs either way.
         return redirect()->to($back)->with('message', sprintf(
-            'Payment recorded and the order fulfilled. %d enrolment%s created; joining instructions have been sent.',
+            'Payment recorded and the order fulfilled. %d enrolment%s created.',
             count($outcome['enrolments']),
             count($outcome['enrolments']) === 1 ? '' : 's'
         ));

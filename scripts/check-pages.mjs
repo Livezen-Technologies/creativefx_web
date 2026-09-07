@@ -10,7 +10,7 @@
  *
  *     node scripts/check-pages.mjs [baseUrl]
  */
-import { existsSync } from 'node:fs';
+import { existsSync, readdirSync } from 'node:fs';
 import { chromium } from 'playwright';
 
 const BASE = process.argv[2] || 'http://127.0.0.1:8083';
@@ -33,6 +33,29 @@ const PATHS = [
   '/policies-refund', '/policies-reschedule', '/policies-accessibility',
   '/careers',
 ];
+
+// Which prefixes count as an unresolved language key.
+//
+// This was a hand-written list, and a hand-written list goes stale the day
+// somebody adds a bundle: `Reviews.php` was added and the sweep stopped being
+// able to see a missing Reviews key at all — a check that silently narrows is
+// worse than no check, because it still reports "clean". The names come from
+// the language files on disk instead, so a new bundle is covered the moment it
+// exists.
+const NAMESPACES = [...new Set(
+  ['app/Language/en', ...readdirSync('modules', { withFileTypes: true })
+    .filter((d) => d.isDirectory())
+    .map((d) => `modules/${d.name}/Language/en`)]
+    .filter((dir) => existsSync(dir))
+    .flatMap((dir) => readdirSync(dir))
+    .filter((f) => f.endsWith('.php'))
+    .map((f) => f.replace(/\.php$/, '')),
+)].sort();
+
+if (NAMESPACES.length === 0) {
+  console.error('No language bundles found — the unresolved-key check would pass vacuously.');
+  process.exit(2);
+}
 
 const chrome = process.env.PLAYWRIGHT_CHROMIUM ?? '/opt/pw-browsers/chromium';
 const browser = await chromium.launch(existsSync(chrome) ? { executablePath: chrome } : {});
@@ -85,7 +108,28 @@ for (const width of WIDTHS) {
       // once, rather than waited for on every one of two hundred loads.
       await page.waitForTimeout(1200);
 
-      const report = await page.evaluate(() => {
+      // Whether the PAGE scrolls sideways, asked by trying to scroll it.
+      //
+      // The obvious measure — documentElement.scrollWidth - clientWidth —
+      // reports a wide table as page overflow even when that table is sealed
+      // inside its own overflow-x-auto box and the document cannot move a
+      // pixel. It flagged five pages that were fine.
+      //
+      // But asking in the other direction has its own trap, and it is worse:
+      // the site runs Lenis, so a scroll is animated and reading window.scrollX
+      // in the same turn reports 0 on a page that pans perfectly well a moment
+      // later. A check that answers "no problem" while the page slides under
+      // the reader's thumb is more dangerous than the one that cried wolf.
+      //
+      // So: scroll, wait for the animation, then read. This is the reading that
+      // caught the course page panning 204px behind an invisible sr-only span.
+      await page.evaluate(() => window.scrollTo(9999, window.scrollY));
+      await page.waitForTimeout(700);
+      const sidewaysPan = await page.evaluate(() => window.scrollX);
+      await page.evaluate(() => window.scrollTo(0, window.scrollY));
+      await page.waitForTimeout(400);
+
+      const report = await page.evaluate(([namespaces, sidewaysPan]) => {
         const doc = document.documentElement;
         const invisible = [...document.querySelectorAll('[data-gsap="reveal"]')]
           .filter((el) => {
@@ -94,7 +138,7 @@ for (const width of WIDTHS) {
             return onScreen && parseFloat(getComputedStyle(el).opacity) < 0.99;
           }).length;
         return {
-          overflow: doc.scrollWidth - doc.clientWidth,
+          overflow: sidewaysPan,
           invisible,
           // CodeIgniter's debug toolbar injects its own <h1> (the framework
           // version) in development. It is not part of the page and is not
@@ -102,16 +146,27 @@ for (const width of WIDTHS) {
           // rule this is checking.
           h1: [...document.querySelectorAll('h1')]
             .filter((h) => ! h.closest('#debug-bar, #toolbar, .toolbar')).length,
-          untranslated: (document.body.innerText.match(/Site\.[a-z_]+\.[a-z_0-9]+/g) || []).length,
+          // Every module's namespace, not just Site's. The pattern used to
+          // read /Site\./ only, so a view asking for a Catalog key that had
+          // never been written printed "Catalog.instructors.teaches_count" at
+          // a visitor and swept clean. The keys themselves are reported, not
+          // just a count: a number tells you a page is broken, the key tells
+          // you which line to write.
+          untranslated: [...new Set(document.body.innerText.match(
+            new RegExp(`\\b(?:${namespaces.join('|')})\\.[A-Za-z_]+(?:\\.[A-Za-z_0-9]+)+`, 'g'),
+          ) || [])],
         };
-      });
+      }, [NAMESPACES, sidewaysPan]);
 
       if (report.overflow > 1) problems.push(`${width}px ${url} — page scrolls ${report.overflow}px sideways`);
+
       // Reveals animate on entry, so blocks below the fold are legitimately
       // transparent at this moment. Only the ones on screen are checked.
       if (report.invisible > 0) problems.push(`${width}px ${url} — ${report.invisible} on-screen block(s) invisible`);
       if (report.h1 !== 1) problems.push(`${width}px ${url} — ${report.h1} <h1> elements`);
-      if (report.untranslated > 0) problems.push(`${width}px ${url} — ${report.untranslated} unresolved language key(s)`);
+      if (report.untranslated.length) {
+        problems.push(`${width}px ${url} — unresolved language key(s): ${report.untranslated.join(', ')}`);
+      }
       if (errors.length) problems.push(`${width}px ${url} — JS: ${errors[0]}`);
     }
   }

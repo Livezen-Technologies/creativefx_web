@@ -490,3 +490,82 @@ if (! function_exists('booking_open')) {
             : '';
     }
 }
+
+if (! function_exists('stars')) {
+    /**
+     * A five-star rating, as filled stars followed by unfilled ones.
+     *
+     * The clamp is the whole point. `str_repeat('★', 5 - $rating)` throws a
+     * ValueError in PHP 8 the moment `$rating` exceeds five, and that is not a
+     * theoretical input: `reviews.rating` is a TINYINT, the migration that
+     * created it explicitly anticipates reviews imported from elsewhere, and
+     * half the review platforms in the world are marked out of ten. One
+     * imported row would have taken down the course page, the reviews index and
+     * the home page — every page that shows a review — with a 500.
+     *
+     * It was written out seven times across four modules. Once here means the
+     * eighth cannot get it wrong.
+     *
+     * Returns markup, so callers echo it unescaped; everything in it is static
+     * text and a class name the caller chose.
+     */
+    function stars(int $rating, string $dimClass = 'text-white/20'): string
+    {
+        $filled = max(0, min(5, $rating));
+
+        return str_repeat('★', $filled)
+            . ($filled < 5
+                ? '<span class="' . esc($dimClass, 'attr') . '">' . str_repeat('★', 5 - $filled) . '</span>'
+                : '');
+    }
+}
+
+if (! function_exists('publishable')) {
+    /**
+     * Text fit to print, or null.
+     *
+     * Editorial fields arrive from a seed file or from somebody typing into the
+     * admin, and both routes have produced copy with the gap still in it —
+     * "{to be confirmed}" where a street address belongs. A page that prints
+     * that has not merely failed to say something, it has said something
+     * obviously broken, which costs more trust than the blank would have.
+     *
+     * So a value carrying a curly-braced token is treated as absent, and the
+     * caller falls through to whatever it says when there is nothing: usually a
+     * sentence explaining when the detail will be known, which is a real answer.
+     *
+     * `spark check:placeholders` catches these before a deploy. This is the
+     * second line: the check reads what is in the repository and the database
+     * today, and cannot see what an editor types tomorrow.
+     */
+    function publishable(?string $text): ?string
+    {
+        $text = trim((string) $text);
+
+        if ($text === '' || preg_match('/\{[^}]*\}/', $text) === 1) {
+            return null;
+        }
+
+        return $text;
+    }
+}
+
+if (! function_exists('post_url')) {
+    /**
+     * The address of a blog post.
+     *
+     * The section is served at /blog. It used to be /news, and the rebrand
+     * changed the routes without changing the two views that build the links —
+     * so the blog index listed six articles and every one of them 404'd, while
+     * the sitemap advertised the correct /blog addresses to crawlers. The
+     * section was reachable and unreadable at the same time, which is why
+     * nobody clicking around the navigation would have found it.
+     *
+     * Four places were assembling this string. One is enough, and it is the
+     * same shape as `course_url()` and `session_url()` beside it.
+     */
+    function post_url(string $slug): string
+    {
+        return locale_url('blog/' . $slug);
+    }
+}

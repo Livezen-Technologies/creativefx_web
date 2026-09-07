@@ -4,10 +4,17 @@ import { chromium } from 'playwright';
  * The first-visit language chooser, asserted in a real browser.
  *
  * The behaviour that matters is all about *not* appearing: once a reader has
- * answered — by choosing or by closing — it must never ask again, and it must
- * never appear on the welcome page, whose whole job is the same question. A
- * chooser that reappears is the single thing that would make this worse than
- * not having it, and it is invisible in a screenshot.
+ * answered — by choosing or by closing — it must never ask again. A chooser
+ * that reappears is the single thing that would make this worse than not
+ * having it, and it is invisible in a screenshot.
+ *
+ * There is no welcome page to exempt any more. The site this was forked from
+ * opened on a language chooser, because a government portal serving three
+ * languages owes its readers a front door that presumes none of them; a
+ * commercial site does not, so `Home::root()` redirects to a negotiated locale
+ * and this modal is the only place the question is asked. The old
+ * "never on the welcome page" case is therefore replaced by one asserting the
+ * redirect still happens and still does not ask twice.
  *
  * Usage: node scripts/test-language-modal.mjs [base-url]
  */
@@ -39,7 +46,7 @@ const stored = (page) => page.evaluate(() => {
   page.on('console', (m) => m.type() === 'error' && errors.push(m.text()));
   page.on('pageerror', (e) => errors.push(String(e)));
 
-  await page.goto(`${base}/en/services`, { waitUntil: 'domcontentloaded' });
+  await page.goto(`${base}/en/courses`, { waitUntil: 'domcontentloaded' });
 
   check('not shown during the first paint', !(await page.isVisible('.lang-modal')));
   // It deliberately waits for the loading screen to clear before asking, so
@@ -49,8 +56,11 @@ const stored = (page) => page.evaluate(() => {
   check('the loading screen has gone by then',
     (await page.$('#preloader')) === null);
 
-  check('offers all three languages',
-    (await page.$$('.lang-option')).length === 3);
+  // Two, not three. Tamil went with the fork: this site publishes in English
+  // and Sinhala, and an option that leads to untranslated pages is worse than
+  // no option.
+  check('offers both languages',
+    (await page.$$('.lang-option')).length === 2);
   check('each option is tagged with its own language',
     await page.$$eval('.lang-option', (els) =>
       ['en', 'si'].every((c) => els.some((e) => e.getAttribute('lang') === c))));
@@ -87,16 +97,16 @@ const stored = (page) => page.evaluate(() => {
 // ── Choosing a language moves the reader and is remembered ──────────────────
 {
   const { context, page } = await visitor();
-  await page.goto(`${base}/en/services?q=tea#top`, { waitUntil: 'networkidle' });
+  await page.goto(`${base}/en/courses?level=1#top`, { waitUntil: 'networkidle' });
   await page.waitForSelector('.lang-modal', { state: 'visible', timeout: 8000 });
 
   await page.click('.lang-option[lang="si"]');
   await page.waitForLoadState('networkidle');
 
-  check('choosing switches the locale in place', page.url().includes('/ta/services'),
+  check('choosing switches the locale in place', page.url().includes('/si/courses'),
     page.url());
   check('the query string and fragment survive',
-    page.url().includes('q=tea') && page.url().includes('#top'), page.url());
+    page.url().includes('level=1') && page.url().includes('#top'), page.url());
   check('the choice is stored', (await stored(page)) === 'si');
   check('the page is served in that language',
     (await page.getAttribute('html', 'lang')) === 'si');
@@ -136,12 +146,18 @@ const stored = (page) => page.evaluate(() => {
   await context.close();
 }
 
-// ── Never on the welcome page ───────────────────────────────────────────────
+// ── The bare root negotiates rather than asking ─────────────────────────────
 {
   const { context, page } = await visitor();
-  await page.goto(`${base}/?choose=1`, { waitUntil: 'networkidle' });
-  await page.waitForTimeout(3000);
-  check('not shown on the welcome page', (await page.$('.lang-modal')) === null);
+  await page.goto(`${base}/`, { waitUntil: 'networkidle' });
+  await page.waitForTimeout(1500);
+
+  // A commercial site does not put an interstitial between a search result and
+  // the page somebody clicked, so / redirects rather than asking. The modal is
+  // still allowed to appear on the page it lands on — that is its whole job —
+  // but the reader must never have been stopped on the way there.
+  check('the bare root redirects into a locale',
+    /\/(en|si)(\/|$)/.test(new URL(page.url()).pathname), page.url());
   await context.close();
 }
 

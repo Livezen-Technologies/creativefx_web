@@ -84,7 +84,7 @@ $otherModes = array_values(array_filter(
                           // zero beside a price is a page that looks broken, and
                           // silence is the honest alternative. ?>
                     <?php if ($lessonCount > 0): ?>
-                        <span class="chip"><?= esc(lang('Catalog.ondemand.lessons', [$lessonCount])) ?></span>
+                        <span class="chip"><?= esc(count_label('Catalog.ondemand.lessons', (int) ($lessonCount))) ?></span>
                     <?php endif; ?>
                     <?php if ($course['software_version']): ?>
                         <?php // The commonest objection to a software course is
@@ -140,7 +140,7 @@ $otherModes = array_values(array_filter(
 
                         <?php if ($runtime !== '' || $lessonCount > 0): ?>
                             <p class="mt-3 text-sm text-white/55">
-                                <?php if ($lessonCount > 0): ?><?= esc(lang('Catalog.ondemand.lessons', [$lessonCount])) ?><?php endif; ?>
+                                <?php if ($lessonCount > 0): ?><?= esc(count_label('Catalog.ondemand.lessons', (int) ($lessonCount))) ?><?php endif; ?>
                                 <?php if ($lessonCount > 0 && $runtime !== ''): ?><span aria-hidden="true"> · </span><?php endif; ?>
                                 <?php if ($runtime !== ''): ?><?= esc($runtime) ?><?php endif; ?>
                             </p>
@@ -253,7 +253,7 @@ $otherModes = array_values(array_filter(
                                       // bucket with no title of its own. ?>
                                 <span><?= esc(t_field($module['title'] ?? '') ?: lang('Catalog.course.curriculum')) ?></span>
                                 <span class="flex shrink-0 items-center gap-3">
-                                    <span class="text-xs font-normal text-white/45"><?= esc(lang('Catalog.ondemand.lessons', [count($module['lessons'])])) ?></span>
+                                    <span class="text-xs font-normal text-white/45"><?= esc(count_label('Catalog.ondemand.lessons', count($module['lessons']))) ?></span>
                                     <svg class="h-4 w-4 text-white/40 transition group-open:rotate-180" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                                 </span>
                             </summary>

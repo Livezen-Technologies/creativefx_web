@@ -4,6 +4,7 @@ namespace Modules\Catalog\Controllers;
 
 use App\Controllers\BaseController;
 use CodeIgniter\Exceptions\PageNotFoundException;
+use Modules\Catalog\Libraries\CardPricer;
 use Modules\Catalog\Libraries\Schema;
 use Modules\Catalog\Models\CourseCategoryModel;
 use Modules\Catalog\Models\CourseModel;
@@ -47,10 +48,12 @@ class Courses extends BaseController
         $filters = $this->readFilters();
         $page    = max(1, (int) $this->request->getGet('page'));
 
-        $result = $courses->catalogue($filters, self::PER_PAGE, $page);
+        $result    = $courses->catalogue($filters, self::PER_PAGE, $page);
+        $decorated = $this->decorate($result['rows'], $pricing, $currency);
+        $crumbs    = [['label' => lang('Catalog.courses.title')]];
 
         return view('Modules\Catalog\Views\courses\index', [
-            'courses'         => $this->decorate($result['rows'], $pricing, $currency),
+            'courses'         => $decorated,
             'total'           => $result['total'],
             'page'            => $page,
             'perPage'         => self::PER_PAGE,
@@ -58,7 +61,13 @@ class Courses extends BaseController
             'filters'         => $filters,
             'currency'        => $currency,
             'category'        => null,
-            'crumbs'          => [['label' => lang('Catalog.courses.title')]],
+            'crumbs'          => $crumbs,
+            'canonical'       => locale_url('courses') . $this->queryString($filters, $page),
+            'schema'          => Schema::render([
+                Schema::organisation(),
+                Schema::courseList($decorated, ($page - 1) * self::PER_PAGE + 1),
+                Schema::breadcrumbs($crumbs),
+            ]),
             'title'           => lang('Catalog.courses.title') . ' — ' . setting('site_name', ''),
             'metaDescription' => lang('Catalog.courses.meta'),
         ]);
@@ -102,8 +111,10 @@ class Courses extends BaseController
             ];
         }
 
+        $decorated = $this->decorate($result['rows'], $pricing, $currency);
+
         return view('Modules\Catalog\Views\courses\index', [
-            'courses'         => $this->decorate($result['rows'], $pricing, $currency),
+            'courses'         => $decorated,
             'total'           => $result['total'],
             'page'            => $page,
             'perPage'         => self::PER_PAGE,
@@ -113,7 +124,12 @@ class Courses extends BaseController
             'category'        => $category,
             'children'        => $categories->live()->where('parent_id', (int) $category['id'])->findAll(),
             'crumbs'          => $crumbs,
-            'schema'          => Schema::render([Schema::organisation(), Schema::breadcrumbs($crumbs)]),
+            'canonical'       => locale_url('courses/' . $category['slug']) . $this->queryString($filters, $page),
+            'schema'          => Schema::render([
+                Schema::organisation(),
+                Schema::courseList($decorated, ($page - 1) * self::PER_PAGE + 1),
+                Schema::breadcrumbs($crumbs),
+            ]),
             'title'           => t_field($category['seo_title']) ?: (t_field($category['name']) . ' ' . lang('Catalog.courses.training') . ' — ' . setting('site_name', '')),
             'metaDescription' => t_field($category['seo_description']) ?: t_field($category['summary']),
             'metaKeywords'    => (string) $category['seo_keywords'],
@@ -221,6 +237,33 @@ class Courses extends BaseController
      * /courses?level=nonsense returning the whole catalogue looks exactly like
      * a working filter that matched everything.
      */
+    /**
+     * The facets and the page, back as a query string.
+     *
+     * This exists because the layout defaults `$canonical` to `current_url()`,
+     * and CodeIgniter's `current_url()` drops the query string — so
+     * /courses?pillar=ai&page=3 was telling every crawler it was a duplicate of
+     * /courses. Page three of the AI catalogue declared itself page one of the
+     * whole catalogue, which is the one thing a canonical must never say: a
+     * paginated set canonicalised to its first page is how the rest of it stops
+     * being indexed at all.
+     *
+     * `category_ids` is deliberately absent — it is derived from the route, and
+     * an internal primary key has no business in a shareable address.
+     */
+    private function queryString(array $filters, int $page): string
+    {
+        $query = array_filter([
+            'pillar' => $filters['pillar'] ?? null,
+            'level'  => $filters['level'] ?? null,
+            'mode'   => $filters['mode'] ?? null,
+            'q'      => $filters['q'] ?? null,
+            'page'   => $page > 1 ? $page : null,
+        ], static fn ($v): bool => $v !== null && $v !== '');
+
+        return $query === [] ? '' : '?' . http_build_query($query);
+    }
+
     private function readFilters(): array
     {
         $filters = [];
@@ -258,53 +301,13 @@ class Courses extends BaseController
     }
 
     /**
-     * Add the "from" price and the next date to each card.
-     *
-     * Done here rather than in the view so a catalogue of twelve cards is a
-     * handful of queries rather than twenty-four — the classic listing-page
-     * problem, and the reason a category page gets slower as the school grows.
+     * Attach the "from" price, the self-paced price and the next date.
      *
      * @param list<array> $rows
      * @return list<array>
      */
     private function decorate(array $rows, PricingService $pricing, string $currency): array
     {
-        if ($rows === []) {
-            return [];
-        }
-
-        $ids = array_map('intval', array_column($rows, 'id'));
-        $db  = db_connect();
-
-        // Cheapest published price per course, in one query.
-        $priceRows = $db->table('course_sessions cs')
-            ->select('cs.course_id, MIN(sp.price_cents) AS from_cents', false)
-            ->join('session_prices sp', 'sp.session_id = cs.id')
-            ->whereIn('cs.course_id', $ids)
-            ->where('sp.currency', $currency)
-            ->where('cs.is_private', 0)
-            ->whereIn('cs.status', CourseSessionModel::BOOKABLE)
-            ->groupBy('cs.course_id')
-            ->get()->getResultArray();
-        $from = array_column($priceRows, 'from_cents', 'course_id');
-
-        // Next date per course, in another.
-        $dateRows = $db->table('course_sessions')
-            ->select('course_id, MIN(start_date) AS next_date', false)
-            ->whereIn('course_id', $ids)
-            ->where('is_private', 0)
-            ->whereIn('status', CourseSessionModel::BOOKABLE)
-            ->where('start_date >=', date('Y-m-d'))
-            ->groupBy('course_id')
-            ->get()->getResultArray();
-        $next = array_column($dateRows, 'next_date', 'course_id');
-
-        foreach ($rows as &$row) {
-            $row['from_cents'] = isset($from[$row['id']]) ? (int) $from[$row['id']] : null;
-            $row['next_date']  = $next[$row['id']] ?? null;
-            $row['currency']   = $currency;
-        }
-
-        return $rows;
+        return (new CardPricer())->decorate($rows, $currency);
     }
 }

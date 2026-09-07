@@ -23,7 +23,7 @@ $strip = array_slice(array_values(array_filter(
     static fn (array $s): bool => ! empty($s['start_date'])
 )), 0, 3);
 ?>
-<section class="on-dark relative overflow-hidden bg-brand-black pb-16 pt-32 sm:pt-40">
+<section class="site-hero on-dark relative overflow-hidden bg-brand-black pb-16 pt-32 sm:pt-40">
     <?php // The aurora is a CSS gradient, not an image: no request, no layout
           // shift, and it recolours with the theme tokens rather than needing a
           // second file for dark. ?>

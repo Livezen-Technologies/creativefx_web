@@ -28,24 +28,6 @@
  */
 helper(['norlanka', 'catalog', 'commerce', 'url']);
 
-// lang() answers a key it cannot find with the key itself, which would print
-// "Catalog.locations.finding" at a visitor. The catalogue language file is
-// owned elsewhere in this pass, so the strings this page needs and that file
-// does not yet carry are asked for by key with the English below as a fallback:
-// the page reads correctly today and picks up the real translation the moment
-// the key lands, with no second edit here.
-$str = static function (string $key, string $fallback, array $args = []): string {
-    $line = lang($key, $args);
-    if ($line !== $key) {
-        return (string) $line;
-    }
-    // Placeholders substituted by position, which is all these strings use.
-    foreach ($args as $i => $arg) {
-        $fallback = str_replace('{' . $i . '}', (string) $arg, $fallback);
-    }
-
-    return $fallback;
-};
 
 // The class's own clock, named and offset, because "09:00" means nothing to
 // somebody reading this from another country and a schedule that assumes
@@ -108,7 +90,7 @@ try {
                   // the document: six columns cannot fit a phone, and a page
                   // body that scrolls sideways loses the reader's place in the
                   // prose above it. ?>
-            <div class="mt-5 overflow-x-auto rounded-2xl border border-line">
+            <div class="relative mt-5 overflow-x-auto rounded-2xl border border-line">
                 <table class="w-full min-w-[46rem] border-collapse text-sm">
                     <caption class="sr-only"><?= esc(lang('Catalog.dates.caption')) ?></caption>
                     <thead>
@@ -216,10 +198,7 @@ try {
 
                 <?php if ($isOnlineRoom || $venue['type'] === 'virtual'): ?>
                     <p class="mt-2 text-white/70">
-                        <?= esc($str(
-                            'Catalog.locations.online_note',
-                            'There is nowhere to travel to. You join from your own desk, and the link, the exercise files and a short setup list go out before the first session.'
-                        )) ?>
+                        <?= esc(lang('Catalog.locations.online_note')) ?>
                     </p>
                 <?php elseif ($address !== null): ?>
                     <?php // The address is the map link rather than sitting
@@ -244,15 +223,12 @@ try {
                           // parking and the building access go out with the
                           // joining instructions for each date. ?>
                     <p class="mt-2 text-white/70">
-                        <?= esc($str(
-                            'Catalog.locations.address_note',
-                            'The room, parking and building access details go out with your joining instructions for each date.'
-                        )) ?>
+                        <?= esc(lang('Catalog.locations.address_note')) ?>
                     </p>
                     <?php if (! empty($venue['map_url'])): ?>
                         <a href="<?= esc($venue['map_url'], 'attr') ?>" target="_blank" rel="noopener noreferrer"
                            class="mt-3 inline-block text-sm text-brand-red underline decoration-line underline-offset-4">
-                            <?= esc($str('Catalog.locations.map', 'Open the map')) ?>
+                            <?= esc(lang('Catalog.locations.map')) ?>
                         </a>
                     <?php endif; ?>
                 <?php endif; ?>
@@ -266,13 +242,13 @@ try {
                   // so they are stated once rather than repeated in every row
                   // of the table above. ?>
             <dl class="rounded-2xl border border-line bg-surface p-6 text-sm">
-                <dt class="text-white/50"><?= esc($str('Catalog.locations.timezone', 'Local time here')) ?></dt>
+                <dt class="text-white/50"><?= esc(lang('Catalog.locations.timezone')) ?></dt>
                 <dd class="mt-1 font-medium text-white/80"><?= esc($zoneLabel) ?></dd>
 
                 <?php if (! $isOnlineRoom && $venue['type'] === 'classroom' && (int) $venue['capacity'] > 0): ?>
-                    <dt class="mt-4 text-white/50"><?= esc($str('Catalog.locations.capacity', 'Class size')) ?></dt>
+                    <dt class="mt-4 text-white/50"><?= esc(lang('Catalog.locations.capacity')) ?></dt>
                     <dd class="mt-1 font-medium text-white/80">
-                        <?= esc($str('Catalog.locations.capacity_note', 'Up to {0} people in the room', [(int) $venue['capacity']])) ?>
+                        <?= esc(lang('Catalog.locations.capacity_note', [(int) $venue['capacity']])) ?>
                     </dd>
                 <?php endif; ?>
             </dl>
@@ -282,7 +258,7 @@ try {
     <?php // ── What tends to be taught here ───────────────────────────────── ?>
     <?php if ($courses !== []): ?>
         <section aria-labelledby="courses-here">
-            <h2 id="courses-here" class="section-title"><?= esc($str('Catalog.locations.courses_here', 'Courses we run here')) ?></h2>
+            <h2 id="courses-here" class="section-title"><?= esc(lang('Catalog.locations.courses_here')) ?></h2>
 
             <div class="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                 <?php foreach ($courses as $course): ?>

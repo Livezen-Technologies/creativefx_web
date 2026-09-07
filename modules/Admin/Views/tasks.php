@@ -20,13 +20,13 @@ $ago = static function (?string $when): string {
         server's crontab again — which is the step that gets forgotten. Run <code class="rounded bg-black/30 px-1.5 py-0.5 text-xs">crontab -e</code>
         on the server and paste this:
     </p>
-    <pre class="mt-4 overflow-x-auto rounded-lg border border-white/10 bg-black/40 p-4 text-xs leading-relaxed text-white/80"><code><?= esc($command) ?></code></pre>
+    <pre class="relative mt-4 overflow-x-auto rounded-lg border border-white/10 bg-black/40 p-4 text-xs leading-relaxed text-white/80"><code><?= esc($command) ?></code></pre>
     <p class="mt-3 text-xs text-white/35">
         Until that is in place nothing below runs on its own — but every task can still be run by hand from this page.
     </p>
 </div>
 
-<div class="overflow-x-auto rounded-2xl border border-white/10">
+<div class="relative overflow-x-auto rounded-2xl border border-white/10">
     <table class="w-full text-sm">
         <thead class="bg-white/5 text-left text-xs uppercase tracking-widest text-white/50">
             <tr>

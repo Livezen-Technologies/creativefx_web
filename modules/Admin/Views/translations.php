@@ -22,7 +22,7 @@ $inputCls = 'w-full rounded-lg border border-white/15 bg-black/40 px-2.5 py-1.5 
     <?= csrf_field() ?>
     <input type="hidden" name="group" value="<?= esc($group, 'attr') ?>">
 
-    <div class="overflow-x-auto rounded-xl border border-white/10">
+    <div class="relative overflow-x-auto rounded-xl border border-white/10">
         <table class="w-full text-sm">
             <thead class="bg-white/5 text-left text-xs uppercase tracking-widest text-white/50">
                 <tr>

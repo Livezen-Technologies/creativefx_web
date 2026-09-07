@@ -22,7 +22,10 @@ $qs = static function (array $over = []) use ($filters): string {
         static fn ($v): bool => $v !== '' && $v !== 0 && $v !== null
     );
 
-    return $q === [] ? '' : '?' . http_build_query($q);
+    // Joined with &amp; rather than &, because these strings are concatenated
+    // straight into an href and a bare ampersand in an attribute is only
+    // accidentally safe.
+    return $q === [] ? '' : '?' . http_build_query($q, '', '&amp;');
 };
 
 $statusChip = static function (string $status): string {
@@ -106,7 +109,7 @@ $statusChip = static function (string $status): string {
     <a href="<?= site_url('admin/course-sessions') ?>" class="btn-ghost">Clear</a>
 </form>
 
-<div class="overflow-x-auto rounded-xl border border-white/10">
+<div class="relative overflow-x-auto rounded-xl border border-white/10">
     <table class="w-full text-sm">
         <thead class="bg-white/5 text-left text-xs uppercase tracking-widest text-white/50">
             <tr>

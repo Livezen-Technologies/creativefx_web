@@ -44,16 +44,35 @@ class BundleModel extends Model
         return $this->live()->where('type', $type)->findAll($limit ?: null);
     }
 
-    /** @return list<array> */
-    public function courses(int $bundleId): array
+    /**
+     * The courses in a bundle.
+     *
+     * Published only, by default, and that default is load-bearing in two
+     * places. A draft course has no public page, so listing one on a programme
+     * gives the reader a link that 404s; and `saving()` sums these prices to
+     * say what the courses cost bought separately, so counting a course nobody
+     * can buy inflates the saving into a number that is not true.
+     *
+     * A published bundle containing a draft course is a data problem for the
+     * administrator to fix, not something the shop page should paper over —
+     * hence `$publishedOnly = false`, for an admin screen that needs to show
+     * the whole bundle in order to point the problem out.
+     *
+     * @return list<array>
+     */
+    public function courses(int $bundleId, bool $publishedOnly = true): array
     {
-        return $this->db->table('bundle_items bi')
+        $builder = $this->db->table('bundle_items bi')
             ->select('c.*, bi.is_required, bi.sort_order AS bundle_sort')
             ->join('courses c', 'c.id = bi.course_id')
             ->where('bi.bundle_id', $bundleId)
-            ->where('c.deleted_at IS NULL')
-            ->orderBy('bi.sort_order', 'ASC')
-            ->get()->getResultArray();
+            ->where('c.deleted_at IS NULL');
+
+        if ($publishedOnly) {
+            $builder->where('c.status', 'published');
+        }
+
+        return $builder->orderBy('bi.sort_order', 'ASC')->get()->getResultArray();
     }
 
     /**

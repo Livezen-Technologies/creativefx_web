@@ -34,7 +34,8 @@ import { PNG } from 'pngjs';
  */
 
 const url = process.argv[2] || 'http://127.0.0.1:8083/en';
-const SELECTOR = process.argv[3] || '.hero-full';
+const SELECTOR = process.argv[3] || '.site-hero';
+let missing = 0;
 const widths = process.argv.slice(4).map(Number);
 const WIDTHS = widths.length ? widths : [390, 768, 1280, 1920];
 
@@ -67,7 +68,13 @@ for (const width of WIDTHS) {
 
   const box = await page.$(SELECTOR);
   if (!box) {
-    console.log(`  ${width}px — no ${SELECTOR} on the page`);
+    // Not a pass. This check used to look for `.hero-full`, a component the
+    // rebrand removed, and printed "no .hero-full on the page" followed by
+    // "All text clears WCAG 2.1 AA" — a clean bill of health for a panel it had
+    // never looked at. A check that cannot find its subject has failed to run,
+    // and must say so loudly enough to be fixed.
+    console.error(`  ${width}px — FAIL: no ${SELECTOR} on the page, so nothing was measured`);
+    missing++;
     await page.close();
     continue;
   }
@@ -202,5 +209,10 @@ for (const width of WIDTHS) {
 }
 
 await browser.close();
-console.log(failures === 0 ? `\nAll text in ${SELECTOR} clears WCAG 2.1 AA.` : `\n${failures} contrast failure(s).`);
-process.exit(failures === 0 ? 0 : 1);
+if (missing > 0) {
+  console.error(`\n${missing} viewport(s) had no ${SELECTOR} to measure — nothing was checked there.`);
+}
+console.log(failures === 0 && missing === 0
+  ? `\nAll text in ${SELECTOR} clears WCAG 2.1 AA.`
+  : `\n${failures} contrast failure(s).`);
+process.exit(failures === 0 && missing === 0 ? 0 : 1);

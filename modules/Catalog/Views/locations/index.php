@@ -22,17 +22,6 @@
  */
 helper(['norlanka', 'catalog', 'commerce', 'url']);
 
-// lang() answers a key it cannot find with the key itself, which would print
-// "Catalog.locations.eyebrow" at a visitor. The catalogue language file is
-// owned elsewhere in this pass, so the two strings this page needs and that
-// file does not yet carry are asked for by key with the English below as a
-// fallback: the page reads correctly today and picks up the real translation
-// the moment the key lands, with no second edit here.
-$str = static function (string $key, string $fallback): string {
-    $line = lang($key);
-
-    return $line === $key ? $fallback : (string) $line;
-};
 
 // Grouped rather than filtered twice in the markup, so the "is there anything
 // in this group" test and the loop cannot disagree with each other.
@@ -49,7 +38,7 @@ foreach ($venues as $venue) {
 <?= $this->section('content') ?>
 
 <?= view('Modules\Site\Views\partials\page_head', [
-    'eyebrow' => $str('Catalog.locations.eyebrow', 'Locations'),
+    'eyebrow' => lang('Catalog.locations.eyebrow'),
     'heading' => lang('Catalog.locations.title'),
     'intro'   => lang('Catalog.locations.intro'),
     'crumbs'  => $crumbs,
@@ -65,7 +54,7 @@ foreach ($venues as $venue) {
               // schedule, which is the question somebody asking "where" was
               // really asking. ?>
         <div class="rounded-2xl border border-line bg-surface p-6">
-            <p class="text-white/70"><?= esc($str('Catalog.locations.empty', 'No locations are published yet.')) ?></p>
+            <p class="text-white/70"><?= esc(lang('Catalog.locations.empty')) ?></p>
             <a href="<?= esc(locale_url('schedule')) ?>" class="btn-brand mt-5">
                 <?= esc(lang('Catalog.locations.all')) ?>
             </a>

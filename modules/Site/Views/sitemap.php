@@ -26,7 +26,7 @@ $base = rtrim(base_url(), '/');
     foreach ($locales as $locale):
         $loc = $base . '/' . $locale . ($path !== '' ? '/' . $path : ''); ?>
     <url>
-        <loc><?= esc($loc, 'url') ?></loc>
+        <loc><?= esc($loc) ?></loc>
 <?php   if (! empty($url['lastmod'])): ?>
         <lastmod><?= esc(substr((string) $url['lastmod'], 0, 10)) ?></lastmod>
 <?php   endif; ?>

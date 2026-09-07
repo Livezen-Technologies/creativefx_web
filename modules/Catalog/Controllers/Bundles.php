@@ -4,9 +4,9 @@ namespace Modules\Catalog\Controllers;
 
 use App\Controllers\BaseController;
 use CodeIgniter\Exceptions\PageNotFoundException;
+use Modules\Catalog\Libraries\CardPricer;
 use Modules\Catalog\Libraries\Schema;
 use Modules\Catalog\Models\BundleModel;
-use Modules\Catalog\Models\CourseSessionModel;
 use Modules\Commerce\Services\PricingService;
 
 /**
@@ -250,43 +250,14 @@ class Bundles extends BaseController
     }
 
     /**
-     * Add each course's cheapest published price to the programme's course list.
-     *
-     * The filter is deliberately identical to the one inside
-     * `BundleModel::saving()` — bookable statuses, no exclusion of private
-     * dates — because these are the numbers the saving is measured against. A
-     * page whose per-course prices do not add up to the "bought separately"
-     * figure beside them invites exactly the arithmetic a buyer should never be
-     * moved to do.
+     * Attach the "from" price, the self-paced price and the next date.
      *
      * @param list<array> $courses
      * @return list<array>
      */
     private function decorate(array $courses, string $currency): array
     {
-        if ($courses === []) {
-            return [];
-        }
-
-        $ids = array_map('intval', array_column($courses, 'id'));
-
-        $rows = db_connect()->table('course_sessions cs')
-            ->select('cs.course_id, MIN(sp.price_cents) AS from_cents', false)
-            ->join('session_prices sp', 'sp.session_id = cs.id')
-            ->whereIn('cs.course_id', $ids)
-            ->where('sp.currency', $currency)
-            ->whereIn('cs.status', CourseSessionModel::BOOKABLE)
-            ->groupBy('cs.course_id')
-            ->get()->getResultArray();
-
-        $from = array_column($rows, 'from_cents', 'course_id');
-
-        foreach ($courses as &$course) {
-            $course['from_cents'] = isset($from[$course['id']]) ? (int) $from[$course['id']] : null;
-            $course['currency']   = $currency;
-        }
-
-        return $courses;
+        return (new CardPricer())->decorate($courses, $currency);
     }
 
     /**

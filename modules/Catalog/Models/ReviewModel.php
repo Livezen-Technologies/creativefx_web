@@ -50,13 +50,60 @@ class ReviewModel extends Model
         return $this->approved()->where('course_reviews.course_id', $courseId)->findAll($limit ?: null);
     }
 
-    /** @return list<array> */
+    /**
+     * The most recent approved reviews, across the whole catalogue.
+     *
+     * Restricted to courses somebody can actually open. Every one of these is
+     * rendered as a link to its course, so a review left on a course that has
+     * since been unpublished or deleted was a link to a 404 — on the home page,
+     * where it is the first thing a visitor clicks.
+     *
+     * The window on `published_at` is the same one the reviews index applies:
+     * an approved review with a future publication date is scheduled, not live.
+     *
+     * @return list<array>
+     */
     public function latest(int $limit = 9): array
     {
-        return $this->approved()
+        return $this->liveScope()->findAll($limit);
+    }
+
+    /**
+     * Approved reviews on live courses.
+     *
+     * One definition, because the home page and the reviews index were each
+     * carrying their own and had already begun to differ: the index filtered on
+     * `courses.published_at` and the home page filtered on nothing, so a review
+     * could be live on one page and absent from the other with no rule saying
+     * which was right.
+     *
+     * Both dates are checked here, because they answer different questions. A
+     * course scheduled to publish next month should not be advertised by a
+     * review today; and a review scheduled for next month is not published yet
+     * whatever its course is doing.
+     *
+     * `countAllResults()` resets the builder, so calling this once for the
+     * count and once for the slice is safe and is how the index pages.
+     */
+    public function liveScope(): self
+    {
+        $now = date('Y-m-d H:i:s');
+
+        $this->approved()
             ->select('course_reviews.*, c.slug AS course_slug, c.title AS course_title')
             ->join('courses c', 'c.id = course_reviews.course_id')
-            ->findAll($limit);
+            ->where('c.status', 'published')
+            ->where('c.deleted_at IS NULL')
+            ->groupStart()
+                ->where('c.published_at IS NULL')
+                ->orWhere('c.published_at <=', $now)
+            ->groupEnd()
+            ->groupStart()
+                ->where('course_reviews.published_at IS NULL')
+                ->orWhere('course_reviews.published_at <=', $now)
+            ->groupEnd();
+
+        return $this;
     }
 
     /**

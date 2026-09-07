@@ -91,7 +91,9 @@ const lastBubble = (page) =>
   await page.click('.assistant-launcher');
   await page.waitForTimeout(300);
 
-  await page.fill('.assistant-input', 'How much is the replanting subsidy?');
+  // A question this school can actually answer, from a course FAQ. The old one
+  // asked about a tea replanting subsidy — the site this was forked from.
+  await page.fill('.assistant-input', 'Can my employer be invoiced?');
   await page.click('.assistant-send');
   await page.waitForTimeout(2500);
 
@@ -102,7 +104,7 @@ const lastBubble = (page) =>
     await page.$$eval('.assistant-links .assistant-topic', (els) => els.length > 0));
   check('the question is echoed back',
     await page.$$eval('.assistant-bubble--you', (els) =>
-      els.some((e) => e.textContent.includes('replanting subsidy'))));
+      els.some((e) => e.textContent.includes('employer be invoiced'))));
 
   // It survives a reload, in this tab.
   await page.reload({ waitUntil: 'networkidle' });
@@ -120,7 +122,12 @@ const lastBubble = (page) =>
   await page.click('.assistant-launcher');
   await page.waitForTimeout(300);
 
-  await page.fill('.assistant-input', 'qwzzx flurble nonsense');
+  // Nonsense has to be nonsense. "qwzzx flurble nonsense" was the old probe and
+  // it matched a course — because "nonsense" is an ordinary English word that
+  // appears in the Generative AI description, and the search matches substrings
+  // in body copy. The test was asserting the fallback while handing the search
+  // a real word to find.
+  await page.fill('.assistant-input', 'qwzzx flurble zzyxwv');
   await page.click('.assistant-send');
   await page.waitForTimeout(2500);
 

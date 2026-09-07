@@ -76,7 +76,7 @@ $allCount = array_sum(array_column($summary, 'count'));
     <?php endforeach; ?>
 </div>
 
-<div class="overflow-x-auto rounded-xl border border-white/10">
+<div class="relative overflow-x-auto rounded-xl border border-white/10">
     <table class="w-full text-sm">
         <thead class="bg-white/5 text-left text-xs uppercase tracking-widest text-white/50">
             <tr>

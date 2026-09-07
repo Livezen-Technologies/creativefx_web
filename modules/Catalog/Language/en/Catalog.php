@@ -25,7 +25,13 @@ return [
     ],
 
     'duration' => [
+        // Two forms each. CodeIgniter's lang() does no pluralisation, so a
+        // single '{0} days' renders "1 days" on every one-day course in the
+        // catalogue — which is small, and is exactly the kind of small thing
+        // that makes a page look machine-generated.
+        'day'   => '1 day',
         'days'  => '{0} days',
+        'hour'  => '1 hour',
         'hours' => '{0} hours',
     ],
 
@@ -54,7 +60,8 @@ return [
     ],
 
     'card' => [
-        'next' => 'Next date',
+        'next'        => 'Next date',
+        'or_ondemand' => 'or self-paced from {0}',
     ],
 
     'course' => [
@@ -127,6 +134,16 @@ return [
         'joining'            => 'Joining instructions',
         'add_to_calendar'    => 'Add to calendar',
         'timezone_note'      => 'Times shown in {0}. Your calendar file converts them to your own timezone.',
+
+        // A full class, a finished one and a withdrawn one are three different
+        // facts and the reader can act on each. Saying nothing and quietly
+        // showing a waitlist form leaves them to work out which they are
+        // looking at.
+        'not_bookable'       => 'This date is not open for booking.',
+        'is_full'            => 'This date is full. Leave your address and we will write the moment a seat frees up or the next date opens.',
+        'has_started'        => 'This date has already started. The next running of the same course is on the schedule.',
+        'cancelled'          => 'This date has been cancelled. The course still runs — the other dates are on the schedule.',
+        'withdrawn'          => 'This date has been withdrawn from sale. The other dates for this course are still open.',
     ],
 
     'schedule' => [
@@ -152,7 +169,13 @@ return [
         'optional'           => 'Optional',
         'saving'             => 'Save {0} against buying these separately',
         'buy'                => 'Buy the programme',
+        'no_seats'           => 'Buying a programme reserves your place on it, not a seat on a particular date. You choose your dates afterwards, from your account, and can take the courses in any order the sequence allows.',
         'none'               => 'No programmes are published yet.',
+        'overview'           => 'About this programme',
+        'view'               => 'See what is in it',
+        'people'             => 'How many people',
+        'separately'         => 'bought one course at a time',
+        'courses_count'      => '{0} courses',
     ],
 
     'ondemand' => [
@@ -160,6 +183,9 @@ return [
         'meta'    => 'The on-demand library: video courses in Adobe Creative Cloud and AI, with exercise files, quizzes and a certificate.',
         'intro'   => 'Video courses you start the moment you buy them. Exercise files, transcripts, and twelve months of access.',
         'preview' => 'Watch a free lesson',
+        // Two forms. lang() does no pluralisation, so a single '{0} lessons'
+        // renders "1 lessons" on every one-lesson module.
+        'lesson'  => '1 lesson',
         'lessons' => '{0} lessons',
         'none'    => 'The on-demand library is being recorded. Leave your email on any course and we will tell you when it lands.',
     ],
@@ -171,6 +197,15 @@ return [
         'upcoming' => 'Coming up here',
         'none'     => 'Nothing is scheduled here at the moment.',
         'all'      => 'See the whole schedule',
+        'eyebrow'  => 'Locations',
+        'empty'    => 'No locations are published yet.',
+        'courses_here'   => 'Courses we run here',
+        'capacity'       => 'Class size',
+        'capacity_note'  => 'Up to {0} people in the room',
+        'timezone'       => 'Local time here',
+        'map'            => 'Open the map',
+        'address_note'   => 'The room and building access go out with the joining instructions for each date.',
+        'online_note'    => 'There is no room to travel to. You get a joining link the day before, and the recording afterwards.',
     ],
 
     'instructors' => [
@@ -179,6 +214,19 @@ return [
         'intro'       => 'Practising designers, editors and engineers who teach a few days a month.',
         'teaches'     => 'Teaches',
         'placeholder' => 'This is a faculty profile rather than an individual. Named trainer profiles are published as each course is staffed.',
+        'eyebrow'             => 'Faculty',
+        'all'                 => 'See the whole faculty',
+        'badge'               => 'Faculty profile',
+        'credentials'         => 'Credentials',
+        'links'               => 'Find them elsewhere',
+        'none'                => 'No faculty profiles are published yet.',
+        'placeholder_heading' => 'About this profile',
+        'standard'            => 'What every instructor on this track must hold',
+        // No pluralisation in lang(), so one form each rather than "1 courses".
+        'teaches_count_one'   => 'Teaches 1 published course',
+        'teaches_count'       => 'Teaches {0} published courses',
+        'teaches_none'        => 'Not yet attached to a published course',
+        'teaches_empty'       => 'This profile is not attached to a published course yet.',
     ],
 
     'reviews' => [
@@ -218,6 +266,11 @@ return [
     'waitlist' => [
         'added'   => 'Thank you — we will email you the moment a date is set.',
         'invalid' => 'That email address does not look right.',
+        // Not Site.assistant.error, which is what this used to borrow. That
+        // string says something went wrong; being asked to wait a minute is not
+        // something going wrong, and telling somebody their request failed when
+        // it was merely too quick sends them to support over nothing.
+        'throttled' => 'That is a few requests in quick succession. Wait a minute and try once more — nothing was lost.',
     ],
 
     'pillars' => [
@@ -328,7 +381,7 @@ return [
         'cert_adobe_link'  => 'Adobe’s certification pages',
 
         'cert_programmes'  => 'Prepare with a programme',
-        'cert_programmes_intro' => 'Several exam-aligned courses taken as one block, with the practice tasks and the readiness review built in.',
+        'cert_programmes_intro' => 'Programmes that include one or more of the exam-aligned courses above, taken as a block rather than one at a time. The exam is still booked and sat through Certiport.',
 
         'cert_faq'         => 'Questions people ask about certification',
         'cert_faqs'        => [

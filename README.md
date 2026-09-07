@@ -205,7 +205,13 @@ node scripts/test-pricing.mjs           # country → price book → the price s
 node scripts/check-structured-data.mjs  # every JSON-LD block, and the two
                                         # claims that must never be fabricated
 node scripts/test-assistant.mjs         # the help assistant, including no-answer
-node scripts/test-hero-slider.mjs       # the hero, where one is used
+php   spark check:placeholders          # no draft "{to be confirmed}" reaches
+                                        # a reader, in the seeds or the database
+php   scripts/check-language-keys.php   # every lang() key resolves, and no
+                                        # bundle declares one key twice
+node scripts/check-hero-contrast.mjs    # hero text against its own background
+node scripts/test-seat-inventory.mjs    # eight processes, one seat
+                                        # (--prove shows the check bites)
 bash  scripts/check-media-paths.sh      # every /media/ reference has a file
 node scripts/screenshot.mjs <url> <out.png> [w] [h] [full]
 ```

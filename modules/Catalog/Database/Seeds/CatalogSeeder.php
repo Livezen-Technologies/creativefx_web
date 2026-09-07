@@ -73,6 +73,7 @@ class CatalogSeeder extends Seeder
         $this->venues($data);
         $this->courses($data);
         $this->bundles($data);
+        $this->resources($data);
         $this->schedule();
     }
 
@@ -458,6 +459,8 @@ class CatalogSeeder extends Seeder
                 $bundleId = (int) $this->db->insertID();
             }
 
+            $this->bundleChildren($bundleId, $row);
+
             $this->db->table('bundle_items')->where('bundle_id', $bundleId)->delete();
             $itemSort = 0;
             foreach ($row['courses'] ?? [] as $slug) {
@@ -485,6 +488,105 @@ class CatalogSeeder extends Seeder
                     'price_cents' => $cents,
                 ]);
             }
+        }
+    }
+
+    // ── Lead magnets ────────────────────────────────────────────────────────
+
+    /**
+     * The downloadable resources.
+     *
+     * Four of these have been sitting in `data/resources` since the catalogue
+     * was written and nothing read them, so /resources answered 404 and the
+     * widest part of the funnel did not exist.
+     *
+     * **No `file_path` is set, and that is deliberate.** There is no PDF on
+     * this server yet. `Resources::download()` already treats a resource with
+     * no file as one that must be asked for rather than handed over — the
+     * button says we will send it, the address is saved as a lead, and the
+     * download counter is left alone because nothing was downloaded. Pointing
+     * `file_path` at a file that is not there would turn that honest path into
+     * a broken one, and the fix when the artwork lands is to fill in one
+     * column rather than to change any code.
+     *
+     * Webinars are not seeded: `data/webinars` is empty, and the page's own
+     * empty state is a truer answer than an invented broadcast with a date.
+     */
+    private function resources(string $dataDir): void
+    {
+        if ($this->db->table('resources')->countAllResults() > 0) {
+            return;
+        }
+
+        $now = date('Y-m-d H:i:s');
+        foreach ($this->readJson($dataDir . '/resources') as $sort => $row) {
+            $this->db->table('resources')->insert([
+                'slug'            => $row['slug'],
+                'type'            => $row['type'] ?? 'guide',
+                'title'           => $this->map($row['title'] ?? ''),
+                'summary'         => $this->map($row['summary'] ?? ''),
+                'body'            => $this->map($row['body_html'] ?? ''),
+                'file_path'       => null,
+                'gated'           => (int) (bool) ($row['gated'] ?? false),
+                'seo_title'       => $this->map($row['seo']['title'] ?? ''),
+                'seo_description' => $this->map($row['seo']['description'] ?? ''),
+                'seo_keywords'    => $row['seo']['keywords'] ?? null,
+                'sort_order'      => $sort + 1,
+                'status'          => 'published',
+                'created_at'      => $now,
+                'updated_at'      => $now,
+            ]);
+        }
+    }
+
+    /**
+     * A programme's own outcomes, inclusions and FAQs.
+     *
+     * These sat unread in `data/bundles/*.json` while the seeder took seven of
+     * the file's fourteen keys, so a certificate programme — the most expensive
+     * thing on sale — had a thinner page than any single course inside it.
+     *
+     * Cleared and rewritten each run, like `bundle_items` above, so editing a
+     * JSON file and re-seeding is the whole workflow rather than editing a file
+     * and then wondering why the page has not changed.
+     */
+    private function bundleChildren(int $bundleId, array $row): void
+    {
+        foreach (['bundle_outcomes', 'bundle_includes', 'bundle_faqs'] as $table) {
+            $this->db->table($table)->where('bundle_id', $bundleId)->delete();
+        }
+
+        foreach (array_values($row['outcomes'] ?? []) as $i => $text) {
+            $this->db->table('bundle_outcomes')->insert([
+                'bundle_id'  => $bundleId,
+                'text'       => $this->map((string) $text),
+                'sort_order' => $i + 1,
+            ]);
+        }
+
+        foreach (array_values($row['includes'] ?? []) as $i => $item) {
+            // A bare string is accepted as well as {text, icon}: the icon is
+            // decoration, and a list that only renders when somebody remembered
+            // to name an icon is a list that loses content to a typo.
+            $text = is_array($item) ? ($item['text'] ?? '') : $item;
+            $this->db->table('bundle_includes')->insert([
+                'bundle_id'  => $bundleId,
+                'text'       => $this->map((string) $text),
+                'icon'       => is_array($item) ? ($item['icon'] ?? null) : null,
+                'sort_order' => $i + 1,
+            ]);
+        }
+
+        foreach (array_values($row['faqs'] ?? []) as $i => $faq) {
+            if (! is_array($faq) || trim((string) ($faq['question'] ?? '')) === '') {
+                continue;
+            }
+            $this->db->table('bundle_faqs')->insert([
+                'bundle_id'  => $bundleId,
+                'question'   => $this->map((string) $faq['question']),
+                'answer'     => $this->map((string) ($faq['answer'] ?? '')),
+                'sort_order' => $i + 1,
+            ]);
         }
     }
 

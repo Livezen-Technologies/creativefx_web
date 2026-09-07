@@ -31,11 +31,14 @@ $this->extend('Modules\Core\Views\layouts\main');
                 <svg class="ml-2 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" viewBox="0 0 24 24"
                      fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </a>
-            <?php // Same dialog as every other Book Now on the site; the href is
-                  // the contact page so it still goes somewhere without JS. ?>
-            <a href="<?= esc(locale_url('contact')) ?>"
+            <?php // The second door out. The body copy above has just said the
+                  // catalogue is where most links point, so this is the link
+                  // that sentence promises — it used to ask for a language key
+                  // that the fork left behind, and printed
+                  // "Site.home.hero.primary" at anybody who hit a bad URL. ?>
+            <a href="<?= esc(locale_url('courses')) ?>"
                class="inline-flex items-center gap-3 text-sm font-semibold uppercase tracking-widest text-white/85 transition hover:text-white">
-                <?= esc(lang('Site.home.hero.primary')) ?>
+                <?= esc(lang('Site.notfound.browse')) ?>
             </a>
         </div>
 

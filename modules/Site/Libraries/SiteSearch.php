@@ -189,7 +189,7 @@ class SiteSearch
         return array_map(static fn (array $r): array => [
             'type'    => lang('Site.news.title'),
             'title'   => t_field($r['title']),
-            'url'     => locale_url('blog/' . $r['slug']),
+            'url'     => post_url($r['slug']),
             'snippet' => mb_substr(strip_tags(t_field($r['excerpt'])), 0, 180),
         ], $rows);
     }

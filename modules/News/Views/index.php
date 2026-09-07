@@ -64,7 +64,7 @@ if ($currentPage === 1 && $activeCategory === null && $posts !== []) {
                 $lExcerpt = t_field(json_decode($lead['excerpt'] ?? '[]', true) ?: []);
                 $lDate    = ! empty($lead['published_at']) ? date('j M Y', strtotime($lead['published_at'])) : ''; ?>
                 <!-- Lead story -->
-                <a href="<?= esc(locale_url('news/' . $lead['slug'])) ?>" data-gsap="reveal"
+                <a href="<?= esc(post_url($lead['slug'])) ?>" data-gsap="reveal"
                    class="group isolate mt-8 grid overflow-hidden rounded-3xl border border-white/10 bg-white/[0.02] transition hover:border-brand-red/40 md:grid-cols-2">
                     <?php if (! empty($lead['image'])): ?>
                         <span class="relative block aspect-[16/10] overflow-hidden md:aspect-auto md:min-h-[20rem]">

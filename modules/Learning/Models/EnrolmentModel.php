@@ -20,6 +20,7 @@ class EnrolmentModel extends Model
     protected $allowedFields = [
         'user_id', 'order_item_id', 'course_id', 'session_id', 'bundle_id',
         'account_id', 'mode', 'status', 'source', 'enrolled_at', 'completed_at',
+        'expires_at',
     ];
 
     /**
@@ -75,6 +76,15 @@ class EnrolmentModel extends Model
         return $this->where('user_id', $userId)
             ->where('course_id', $courseId)
             ->whereIn('status', ['active', 'completed'])
+            // A self-paced licence runs for twelve months and the course page
+            // says so. A null expiry is a taught seat, which never lapses —
+            // written as two clauses rather than one because a plain
+            // `expires_at >= now` would silently take the LMS away from every
+            // classroom learner, whose expiry is null and always will be.
+            ->groupStart()
+                ->where('expires_at IS NULL')
+                ->orWhere('expires_at >=', date('Y-m-d H:i:s'))
+            ->groupEnd()
             ->countAllResults() > 0;
     }
 

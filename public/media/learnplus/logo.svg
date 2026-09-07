@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 120" role="img" aria-label="MyLearnPlus">
+  <title>MyLearnPlus</title>
+  <rect x="8" y="16" width="88" height="88" rx="26" fill="none" stroke="#4f46e5" stroke-width="5"/>
+  <g stroke="#4f46e5" stroke-width="9" stroke-linecap="round">
+    <path d="M52 40v40"/>
+    <path d="M32 60h40"/>
+  </g>
+  <g stroke="#d4a72c" stroke-width="5" stroke-linecap="round" opacity="0.9">
+    <path d="M36.5 44.5l-6-6"/>
+    <path d="M67.5 44.5l6-6"/>
+    <path d="M36.5 75.5l-6 6"/>
+    <path d="M67.5 75.5l6 6"/>
+  </g>
+  <g transform="translate(118 0)" font-family="'Noto Sans','Segoe UI',system-ui,sans-serif">
+    <text x="0" y="58" font-size="40" font-weight="700" letter-spacing="-0.4">
+      <tspan fill="#111827">MyLearn</tspan><tspan fill="#4f46e5">Plus</tspan>
+    </text>
+    <text x="2" y="84" font-size="12.5" font-weight="600" letter-spacing="1.6" fill="#111827" opacity="0.7">ADOBE &amp; AI TRAINING</text>
+  </g>
+</svg>

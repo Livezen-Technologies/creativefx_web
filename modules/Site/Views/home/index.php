@@ -87,7 +87,7 @@ helper(['norlanka', 'catalog', 'commerce', 'url']);
         <?php if ($upcoming === []): ?>
             <p class="mt-8 max-w-2xl text-white/60"><?= esc(lang('Site.home.upcoming_none')) ?></p>
         <?php else: ?>
-            <div class="mt-8 overflow-x-auto rounded-2xl border border-line bg-brand-black">
+            <div class="relative mt-8 overflow-x-auto rounded-2xl border border-line bg-brand-black">
                 <table class="w-full min-w-[46rem] border-collapse text-sm">
                     <caption class="sr-only"><?= esc(lang('Site.home.upcoming_caption')) ?></caption>
                     <thead>
@@ -249,9 +249,13 @@ helper(['norlanka', 'catalog', 'commerce', 'url']);
                 <?php foreach ($reviews as $review): ?>
                     <blockquote class="rounded-2xl border border-line bg-surface p-5">
                         <p class="text-gold" aria-label="<?= esc(lang('Catalog.course.rating_of', [(int) $review['rating']]), 'attr') ?>">
-                            <?= str_repeat('★', (int) $review['rating']) ?><span class="text-white/20"><?= str_repeat('★', 5 - (int) $review['rating']) ?></span>
+                            <?= stars((int) $review['rating']) ?>
                         </p>
-                        <p class="mt-2 text-sm leading-relaxed text-white/75"><?= esc($review['body']) ?></p>
+                        <?php // nl2br over esc, never the other way round: escaping the <br> the
+                              // other order produces is how a "fix" for line breaks turns into
+                              // markup printed at the reader. A learner writes in paragraphs and
+                              // esc() alone ran them into one block. ?>
+                        <p class="mt-2 text-sm leading-relaxed text-white/75"><?= nl2br(esc($review['body'])) ?></p>
                         <footer class="mt-3 text-xs text-white/50">
                             <?= esc($review['author_name'] ?: lang('Catalog.course.review_anon')) ?> ·
                             <a href="<?= esc(course_url($review['course_slug'])) ?>" class="underline decoration-line underline-offset-4"><?= esc(t_field($review['course_title'])) ?></a>
@@ -275,7 +279,7 @@ helper(['norlanka', 'catalog', 'commerce', 'url']);
                 <?php foreach ($posts as $post): ?>
                     <article class="relative flex flex-col rounded-2xl border border-line bg-brand-black p-6">
                         <h3 class="text-lg font-semibold leading-snug">
-                            <a href="<?= esc(locale_url('blog/' . $post['slug'])) ?>" class="after:absolute after:inset-0 hover:text-brand-red">
+                            <a href="<?= esc(post_url($post['slug'])) ?>" class="after:absolute after:inset-0 hover:text-brand-red">
                                 <?= esc(t_field($post['title'])) ?>
                             </a>
                         </h3>

@@ -130,6 +130,7 @@ class Sitemap extends BaseController
                     ['path' => 'webinars', 'lastmod' => null, 'priority' => '0.5'],
                     ['path' => 'reviews', 'lastmod' => null, 'priority' => '0.5'],
                     ['path' => 'blog', 'lastmod' => null, 'priority' => '0.6'],
+                    ['path' => 'careers', 'lastmod' => null, 'priority' => '0.3'],
                     ['path' => 'sitemap', 'lastmod' => null, 'priority' => '0.3'],
                 ];
 

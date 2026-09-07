@@ -226,7 +226,7 @@ $filteredCourse = (int) ($filters['course'] ?? 0);
                     <?= esc($month['label']) ?>
                 </h2>
 
-                <div class="overflow-x-auto rounded-2xl border border-line">
+                <div class="relative overflow-x-auto rounded-2xl border border-line">
                     <table class="w-full min-w-[58rem] border-collapse text-sm">
                         <caption class="sr-only"><?= esc(lang('Catalog.dates.caption')) ?></caption>
                         <thead>

@@ -14,6 +14,37 @@ use Modules\Careers\Models\JobModel;
  */
 class Careers extends BaseController
 {
+    /**
+     * The vacancy list.
+     *
+     * The route for this has existed since the fork and pointed at a method
+     * that did not, so /careers answered 404 while the site linked to it from
+     * the footer. It is a short page, but a dead link in the footer of every
+     * page is the kind of thing a reader reads as "nobody looks after this".
+     *
+     * When there is nothing open the page says so in one line rather than
+     * hiding itself. A careers page that 404s when hiring pauses loses the
+     * inbound links it spent a year earning, and "no vacancies at the moment"
+     * is a real answer to the question the visitor arrived with.
+     *
+     * No speculative listings: the grid renders what is in the table and
+     * nothing else. An invented vacancy is a person's afternoon.
+     */
+    public function index(?string $locale = null)
+    {
+        helper(['norlanka', 'url']);
+
+        return view('Modules\Careers\Views\index', [
+            'jobs'            => (new JobModel())->openJobs(),
+            'title'           => lang('Site.careers.title') . ' — ' . setting('site_name', ''),
+            'metaDescription' => lang('Site.careers.meta'),
+            'canonical'       => locale_url('careers'),
+            // Home is emitted by the breadcrumb partial itself; adding it here
+            // renders it twice.
+            'crumbs'          => [['label' => lang('Site.careers.title')]],
+        ]);
+    }
+
     public function show(?string $locale = null, ?string $slug = null)
     {
         $job = (new JobModel())->findOpenBySlug((string) $slug);

@@ -25,24 +25,6 @@
  */
 helper(['norlanka', 'catalog', 'commerce', 'url']);
 
-// lang() answers a key it cannot find with the key itself, which would print
-// "Catalog.bundles.view" at a buyer. The catalogue language file is owned
-// elsewhere in this pass, so the few strings this page needs and that file does
-// not yet carry are asked for by key and fall back to the English below: the
-// page reads correctly today and picks up the translation the moment the key
-// lands, with no second edit here.
-$str = static function (string $key, string $fallback, array $args = []): string {
-    $line = lang($key, $args);
-    if ($line !== $key) {
-        return (string) $line;
-    }
-    // Placeholders substituted by position, which is all these strings use.
-    foreach ($args as $i => $arg) {
-        $fallback = str_replace('{' . $i . '}', (string) $arg, $fallback);
-    }
-
-    return $fallback;
-};
 
 // The language keys are grouped by section rather than by type, and `$other`
 // is a URL segment, so both are resolved to a key once here instead of being
@@ -89,7 +71,7 @@ $otherKey = $other === 'bootcamps' ? 'bootcamps' : 'certificates';
 
                     <div class="flex flex-1 flex-col p-6">
                         <p class="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-white/50">
-                            <span class="chip"><?= esc($str('Catalog.bundles.courses_count', '{0} courses', [(int) $bundle['course_count']])) ?></span>
+                            <span class="chip"><?= esc(lang('Catalog.bundles.courses_count', [(int) $bundle['course_count']])) ?></span>
                             <?php if ((int) $bundle['hours'] > 0): ?>
                                 <span><?= esc(lang('Catalog.duration.hours', [(int) $bundle['hours']])) ?></span>
                             <?php endif; ?>
@@ -134,7 +116,7 @@ $otherKey = $other === 'bootcamps' ? 'bootcamps' : 'certificates';
                                   // and a second would put two tab stops on one
                                   // destination. ?>
                             <span class="text-sm font-medium text-brand-red underline decoration-line underline-offset-4" aria-hidden="true">
-                                <?= esc($str('Catalog.bundles.view', 'See what is in it')) ?>
+                                <?= esc(lang('Catalog.bundles.view')) ?>
                             </span>
                         </div>
                     </div>

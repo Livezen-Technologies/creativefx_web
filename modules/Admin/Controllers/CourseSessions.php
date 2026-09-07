@@ -524,6 +524,11 @@ class CourseSessions extends BaseController
      * figure produces Rs 47,382 on a page and loses margin control the day the
      * rate moves.
      *
+     * Only active currencies are walked, so a price left behind by a currency
+     * that has since been switched off is preserved rather than deleted — the
+     * currency may well be switched back on, and losing a price book because of
+     * a settings change is not a trade this screen is entitled to make.
+     *
      * @return bool whether the session ended up with no price at all
      */
     private function syncPrices(int $sessionId): bool

@@ -29,6 +29,16 @@ use Modules\Commerce\Services\InventoryService;
  */
 class EnrolmentService
 {
+    /**
+     * How long a self-paced enrolment lasts, in months.
+     *
+     * Named here rather than written into the date maths, because the same
+     * number appears in the sentence a buyer reads on the course page
+     * (`Catalog.ondemand.self_paced_note`). Two places is one too many, but a
+     * constant at least makes the second one findable.
+     */
+    public const SELF_PACED_MONTHS = 12;
+
     private BaseConnection $db;
     private InventoryService $inventory;
 
@@ -99,6 +109,8 @@ class EnrolmentService
                     continue;
                 }
 
+                $mode = json_decode((string) $item['meta_snapshot_json'], true)['mode'] ?? 'LIVE_ONLINE';
+
                 $this->db->table('enrolments')->insert([
                     'user_id'       => $userId,
                     'order_item_id' => (int) $item['id'],
@@ -106,10 +118,11 @@ class EnrolmentService
                     'session_id'    => $item['session_id'] ? (int) $item['session_id'] : null,
                     'bundle_id'     => $item['bundle_id'] ? (int) $item['bundle_id'] : null,
                     'account_id'    => $order['account_id'] ?? null,
-                    'mode'          => json_decode((string) $item['meta_snapshot_json'], true)['mode'] ?? 'LIVE_ONLINE',
+                    'mode'          => $mode,
                     'status'        => 'active',
                     'source'        => $order['account_id'] ? 'corporate' : 'purchase',
                     'enrolled_at'   => date('Y-m-d H:i:s'),
+                    'expires_at'    => $this->expiryFor($mode),
                     'created_at'    => date('Y-m-d H:i:s'),
                     'updated_at'    => date('Y-m-d H:i:s'),
                 ]);
@@ -292,6 +305,34 @@ class EnrolmentService
      * the first course in the programme and the bundle id carries the rest.
      * The account area walks `bundle_items` from there.
      */
+    /**
+     * When this enrolment stops granting access, or null for never.
+     *
+     * The catalogue sells the self-paced library on a twelve-month licence —
+     * "start the moment you buy it, work at your own pace, and keep access for
+     * twelve months" — and that sentence is the reason a recording costs a
+     * tenth of a taught seat. Until this existed nothing recorded the end of
+     * the term, so the promise and the software disagreed, quietly and in the
+     * buyer's favour, which is the kind of disagreement nobody reports.
+     *
+     * A taught seat gets no expiry. The class happens on a date, the
+     * certificate is issued, and the learner should still be able to open the
+     * record of it in three years; putting a clock on that would take away
+     * something nobody sold them.
+     *
+     * The term is dated from fulfilment rather than from the first lesson: the
+     * licence begins when the purchase completes, which is what the sentence
+     * on the course page says and what the buyer can point at.
+     */
+    private function expiryFor(string $mode): ?string
+    {
+        if ($mode !== 'SELF_PACED') {
+            return null;
+        }
+
+        return date('Y-m-d H:i:s', strtotime('+' . self::SELF_PACED_MONTHS . ' months'));
+    }
+
     private function courseIdForBundleItem(array $item): int
     {
         if (empty($item['bundle_id'])) {

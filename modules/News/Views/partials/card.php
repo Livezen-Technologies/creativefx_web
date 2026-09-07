@@ -7,7 +7,7 @@ $cTitle   = t_field(json_decode($post['title'] ?? '[]', true) ?: []);
 $cExcerpt = t_field(json_decode($post['excerpt'] ?? '[]', true) ?: []);
 $cDate    = ! empty($post['published_at']) ? date('j M Y', strtotime($post['published_at'])) : '';
 ?>
-<a href="<?= esc(locale_url('news/' . $post['slug'])) ?>"
+<a href="<?= esc(post_url($post['slug'])) ?>"
    class="group isolate flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] transition hover:border-brand-red/40 hover:bg-white/[0.05]">
     <?php if (! empty($post['image'])): ?>
         <span class="relative block aspect-[16/9] overflow-hidden">

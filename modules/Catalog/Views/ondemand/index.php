@@ -70,7 +70,7 @@ helper(['norlanka', 'catalog', 'commerce', 'url']);
                                   // genuinely for sale reads as a broken page,
                                   // and the honest answer is to say nothing. ?>
                             <?php if ($lessons > 0): ?>
-                                <span class="chip"><?= esc(lang('Catalog.ondemand.lessons', [$lessons])) ?></span>
+                                <span class="chip"><?= esc(count_label('Catalog.ondemand.lessons', (int) ($lessons))) ?></span>
                             <?php endif; ?>
                         </p>
 

@@ -5,7 +5,7 @@ name: Deploy
 #
 # Credentials resolve in this order:  repo secret  ->  dispatch input.
 # Preferred: set repository secrets (Settings → Secrets and variables → Actions)
-#   DEPLOY_HOST      = 178.105.165.144
+#   DEPLOY_HOST      = <server IP>
 #   DEPLOY_USER      = root            (or a sudo-capable user)
 #   DEPLOY_PASSWORD  = <server password>     (prefer DEPLOY_SSH_KEY instead)
 #   DEPLOY_SSH_KEY   = <private key>   (optional; used instead of the password)

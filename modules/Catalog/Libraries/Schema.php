@@ -323,6 +323,77 @@ class Schema
     }
 
     /**
+     * The site itself, with the search box a sitelinks result can use.
+     *
+     * Emitted only on the home page. `WebSite` on every page would repeat the
+     * same declaration a few hundred times and say nothing more than it says
+     * once; Google reads it from the home page and that is where it belongs.
+     *
+     * The locale is baked into the search URL because /search is a localised
+     * route: a query typed into a sitelinks box must land on a results page in
+     * the language the searcher found the site in, not in the default one.
+     */
+    public static function website(): array
+    {
+        helper(['norlanka', 'url']);
+
+        return [
+            '@type'    => 'WebSite',
+            '@id'      => rtrim(base_url(), '/') . '/#website',
+            'url'      => rtrim(base_url(), '/') . '/',
+            'name'     => setting('site_name', ''),
+            'publisher' => ['@id' => rtrim(base_url(), '/') . '/#organisation'],
+            'potentialAction' => [
+                '@type'       => 'SearchAction',
+                'target'      => [
+                    '@type'       => 'EntryPoint',
+                    'urlTemplate' => locale_url('search') . '?q={search_term_string}',
+                ],
+                'query-input' => 'required name=search_term_string',
+            ],
+        ];
+    }
+
+    /**
+     * The courses on a catalogue page, as an ordered list.
+     *
+     * An ItemList of URLs rather than a list of nested Course objects. The
+     * nested form would restate every course's description, provider and price
+     * on a page that is only a list of links to them, and search engines treat
+     * the course page as the authority for those facts anyway — so the list
+     * says what is on this page and in what order, and nothing it would then
+     * have to keep in step with somewhere else.
+     *
+     * `position` counts from the start of the catalogue, not the start of the
+     * page, so page 2 begins at 25 rather than at 1.
+     *
+     * @param list<array> $courses rows carrying at least a `slug`
+     */
+    public static function courseList(array $courses, int $startPosition = 1): array
+    {
+        helper(['norlanka', 'catalog', 'url']);
+
+        if ($courses === []) {
+            return [];
+        }
+
+        $items = [];
+        foreach (array_values($courses) as $i => $course) {
+            if (empty($course['slug'])) {
+                continue;
+            }
+            $items[] = [
+                '@type'    => 'ListItem',
+                'position' => $startPosition + $i,
+                'url'      => course_url($course['slug']),
+                'name'     => t_field($course['title'] ?? ''),
+            ];
+        }
+
+        return $items === [] ? [] : ['@type' => 'ItemList', 'itemListElement' => $items];
+    }
+
+    /**
      * Wrap a set of graphs into the single script the page emits.
      *
      * @param list<array> $graphs

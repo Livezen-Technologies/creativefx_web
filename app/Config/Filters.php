@@ -51,6 +51,7 @@ class Filters extends BaseFilters
         // are different populations with different powers, and one session key
         // for both is how a bug in the shop becomes a way into the console.
         'learner'       => \Modules\Account\Filters\LearnerFilter::class,
+        'carrycookies'  => \Modules\Core\Filters\CarryCookiesFilter::class,
     ];
 
     /**
@@ -72,6 +73,12 @@ class Filters extends BaseFilters
             'pagecache',  // Web Page Caching
         ],
         'after' => [
+            // First, before anything can replace the response: a redirect is a
+            // fresh object with an empty cookie store, so cookies set during
+            // the request have to be copied onto it or they are dropped. See
+            // CarryCookiesFilter — this is why the basket used to come back
+            // empty straight after "added to your basket".
+            'carrycookies',
             'pagecache',   // Web Page Caching
             'performance', // Performance Metrics
             'toolbar',     // Debug Toolbar

@@ -11,7 +11,7 @@
     },
     {
       "type": "richtext",
-      "body": "<p>MyLearnPlus, operated by <strong>Livezen Technologies</strong>, is working to meet <strong>WCAG 2.2 Level AA</strong> across mylearnplus.com, the course catalogue, the checkout and the learner dashboard. This statement takes effect on {effective date} and is reviewed when the site changes materially.</p><p>We are stating a commitment and a method here, not a certificate. Where a part of the site does not yet meet the standard we would rather say so and fix it than claim conformance we have not tested. If you find something that does not work for you, the reporting route below reaches a person who can change the code.</p>"
+      "body": "<p>MyLearnPlus, operated by <strong>Livezen Technologies</strong>, is working to meet <strong>WCAG 2.2 Level AA</strong> across mylearnplus.com, the course catalogue, the checkout and the learner dashboard. The date this version took effect is shown at the foot of this page, and the statement is reviewed whenever the site changes materially.</p><p>We are stating a commitment and a method here, not a certificate. Where a part of the site does not yet meet the standard we would rather say so and fix it than claim conformance we have not tested. If you find something that does not work for you, the reporting route below reaches a person who can change the code.</p>"
     },
     {
       "type": "feature_cards",

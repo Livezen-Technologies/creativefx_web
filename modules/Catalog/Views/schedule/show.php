@@ -103,7 +103,7 @@ if (! empty($session['daily_start']) && ! empty($session['daily_end'])) {
                       // page body must never be what scrolls sideways, and a
                       // long venue name in a fourth language is exactly the
                       // thing that makes it. ?>
-                <div class="mt-5 overflow-x-auto rounded-2xl border border-line">
+                <div class="relative mt-5 overflow-x-auto rounded-2xl border border-line">
                     <table class="w-full border-collapse text-sm">
                         <caption class="sr-only"><?= esc(lang('Catalog.dates.caption')) ?></caption>
                         <thead>
@@ -152,7 +152,7 @@ if (! empty($session['daily_start']) && ! empty($session['daily_end'])) {
                           // where four identical "Map" links say nothing.
                           // rel="noopener" because the map opens in its own tab
                           // and would otherwise keep a handle on this one. ?>
-                    <?php if ($address = t_field($venue['address'] ?? '')): ?>
+                    <?php if ($address = publishable(t_field($venue['address'] ?? ''))): ?>
                         <?php if (! empty($venue['map_url'])): ?>
                             <a href="<?= esc($venue['map_url'], 'attr') ?>" target="_blank" rel="noopener noreferrer"
                                class="mt-2 block whitespace-pre-line text-white/70 underline decoration-line underline-offset-4 hover:text-brand-red">

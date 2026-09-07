@@ -91,7 +91,22 @@ $isCurrent = static function (array $item) use ($currentSlug): bool {
                   // where there is room for it; back to its old size the moment
                   // the compact bar takes over, which is sized in CSS so it
                   // still transitions without JavaScript deciding it. ?>
-            <?= view('Modules\\Core\\Views\\partials\\logo', ['class' => 'brand-mark w-auto']) ?>
+            <?php // Two crops, one shown at a time.
+                  //
+                  // The full lockup is 216px wide at its resting height. On a
+                  // 390px phone the controls beside it are 173px and the bar
+                  // has 48px of padding, which is 437px of content in 390px of
+                  // screen — and because both flanks are shrink-0 the overflow
+                  // landed on the hamburger, clipping the only way into the
+                  // navigation on the device that needs it most. The badge
+                  // alone is 47px and leaves room to spare. ?>
+            <?= view('Modules\\Core\\Views\\partials\\logo', [
+                'class'   => 'brand-mark w-auto sm:hidden',
+                'variant' => 'mark',
+            ], ['saveData' => false]) ?>
+            <?= view('Modules\\Core\\Views\\partials\\logo', [
+                'class' => 'brand-mark hidden w-auto sm:block',
+            ], ['saveData' => false]) ?>
         </a>
 
         <!-- Desktop nav -->
@@ -126,7 +141,18 @@ $isCurrent = static function (array $item) use ($currentSlug): bool {
                          @mouseenter="open = true" @mouseleave="open = false"
                          @focusout="if (! $el.contains($event.relatedTarget)) open = false"
                          @keydown.escape.stop="open = false; $refs.trigger.focus()">
-                        <button type="button" x-ref="trigger" @click="open = ! open" @keydown.space.prevent="open = ! open"
+                        <?php // @click opens; it does not toggle.
+                              //
+                              // mouseenter fires before click on any pointer
+                              // device, so by the time a mouse user's click
+                              // lands the panel is already open and a toggle
+                              // shut it again — the menu appeared on hover and
+                              // vanished the instant they clicked the thing
+                              // they were aiming at. Opening twice is harmless;
+                              // Escape, mouseleave and focusout all still close
+                              // it, and Space still toggles for the keyboard,
+                              // where there is no hover to collide with. ?>
+                        <button type="button" x-ref="trigger" @click="open = true" @keydown.space.prevent="open = ! open"
                                 :aria-expanded="open ? 'true' : 'false'" aria-haspopup="true"
                                 class="nav-link inline-flex items-center gap-1.5 <?= $active ? 'nav-link-active' : '' ?>">
                             <?= esc($item['label']) ?>

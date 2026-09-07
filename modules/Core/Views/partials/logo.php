@@ -24,10 +24,24 @@
  * A logo uploaded under Settings → Brand cannot be inlined — it may be a PNG,
  * and it is not ours to recolour — so that path still renders two images.
  *
- * @var string $class  utility classes for the sizing of this instance
+ * The mark comes in two crops. `full` is the badge and the wordmark; `mark` is
+ * the badge alone, for the places too narrow to carry a name — the header on a
+ * phone, where the full lockup is 216px wide beside 173px of controls on a
+ * 390px screen and pushed the menu button off the edge of the display.
+ *
+ * Both crops render the same drawing and differ only in the viewBox, so there
+ * is one set of paths to keep correct rather than two that can drift.
+ *
+ * @var string $class    utility classes for the sizing of this instance
+ * @var string $variant  'full' (default) or 'mark'
  */
-$class = $class ?? 'h-9 w-auto';
-$alt   = setting('site_name', '');
+$class   = $class ?? 'h-9 w-auto';
+$variant = ($variant ?? 'full') === 'mark' ? 'mark' : 'full';
+$alt     = setting('site_name', '');
+
+// 480×120 is the whole lockup. 104×120 is the badge with its own margin, which
+// is where the wordmark begins.
+$viewBox = $variant === 'mark' ? '0 0 104 120' : '0 0 480 120';
 
 $light = trim((string) setting('logo_color', '', 'brand'));
 $dark  = trim((string) setting('logo_white', '', 'brand'));
@@ -37,7 +51,7 @@ $dark  = trim((string) setting('logo_white', '', 'brand'));
 if ($light === '' && $dark === ''):
 ?>
 <svg class="brand-logo brand-logo--inline <?= esc($class, 'attr') ?>"
-     viewBox="0 0 480 120" role="img" aria-label="<?= esc($alt, 'attr') ?>"
+     viewBox="<?= esc($viewBox, 'attr') ?>" role="img" aria-label="<?= esc($alt, 'attr') ?>"
      xmlns="http://www.w3.org/2000/svg" focusable="false">
     <?php // The badge. A rounded square rather than a circle: it sits beside a
           // wordmark whose letterforms are square-ish, and a circle floats. ?>
@@ -62,6 +76,7 @@ if ($light === '' && $dark === ''):
     <?php // rgb(var(--fg)) rather than currentColor: the surrounding text is
           // often set at an alpha — the nav links are --fg at 0.9 — and the
           // wordmark would quietly inherit the transparency with it. ?>
+    <?php if ($variant === 'full'): ?>
     <g transform="translate(118 0)" font-family="'Noto Sans','Segoe UI',system-ui,sans-serif">
         <text x="0" y="58" font-size="40" font-weight="700" letter-spacing="-0.4">
             <tspan fill="rgb(var(--fg))">MyLearn</tspan><tspan fill="rgb(var(--accent))">Plus</tspan>
@@ -69,6 +84,7 @@ if ($light === '' && $dark === ''):
         <text x="2" y="84" font-size="12.5" font-weight="600" letter-spacing="1.6"
               fill="rgb(var(--fg))" opacity="0.7">ADOBE &amp; AI TRAINING</text>
     </g>
+    <?php endif; ?>
 </svg>
 <?php else:
     // A replaced mark. Both colourways are settings, so swapping the logo is an

@@ -69,6 +69,33 @@ foreach ($page['sections'] ?? [] as $section):
         }
     endforeach;
 endforeach;
+
+// ── When this policy took effect ────────────────────────────────────────────
+//
+// The five policy pages each carried the sentence "They take effect on
+// {effective date}" in their body copy, and nothing ever filled it in, so every
+// one of them told visitors it took effect on "{effective date}". A policy is
+// exactly the wrong document to have a visible gap in.
+//
+// The date is not written into the copy at all now. It is read from the page
+// record, which already knows when this version was published, so it is true by
+// construction and stays true when somebody edits the policy in the admin — a
+// hand-typed date in the prose would be wrong the first time it is revised and
+// nobody would notice. It also belongs in a labelled line rather than buried
+// mid-paragraph, where a reader looking for "which version am I bound by" has
+// to find it.
+if (in_array($page['template'] ?? '', ['policy', 'legal'], true) || str_starts_with((string) ($page['slug'] ?? ''), 'policies-')):
+    $effective = $page['publish_at'] ?: ($page['updated_at'] ?? null);
+    if ($effective): ?>
+        <section class="border-t border-line">
+            <div class="container-x py-8">
+                <p class="text-sm text-white/50">
+                    <?= esc(lang('Site.policies.in_effect', [date('j F Y', strtotime((string) $effective))])) ?>
+                </p>
+            </div>
+        </section>
+    <?php endif;
+endif;
 ?>
 </div>
 <?= $this->endSection() ?>

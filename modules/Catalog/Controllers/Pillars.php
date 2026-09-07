@@ -3,6 +3,7 @@
 namespace Modules\Catalog\Controllers;
 
 use App\Controllers\BaseController;
+use Modules\Catalog\Libraries\CardPricer;
 use Modules\Catalog\Libraries\Schema;
 use Modules\Catalog\Models\CourseCategoryModel;
 use Modules\Catalog\Models\CourseModel;
@@ -162,7 +163,7 @@ class Pillars extends BaseController
             'exams'           => $exams,
             'aligned'         => $aligned,
             'specialty'       => self::SPECIALTY,
-            'programmes'      => $this->programmes('adobe', $currency),
+            'programmes'      => $this->programmes('adobe', $currency, true),
             'faqs'            => $faqs,
             'adobeUrl'        => $adobeUrl,
             'catalogueUrl'    => locale_url('courses') . '?pillar=adobe',
@@ -290,6 +291,12 @@ class Pillars extends BaseController
      * courses in it — so membership is "contains at least one published course
      * in this pillar", expressed as a subquery.
      *
+     * `$examAligned` narrows that to courses that name an exam, which is the
+     * only rule under which the certification hub may print a programme: that
+     * page says the programmes listed on it include exam-aligned courses, and
+     * a programme that merely happens to be Adobe would make the sentence
+     * false.
+     *
      * The course count is then a **second** query rather than a COUNT in the
      * first one, and that is the trap worth naming: joining `bundle_items` to
      * filter by pillar and counting in the same statement counts only the
@@ -299,20 +306,32 @@ class Pillars extends BaseController
      *
      * @return list<array>
      */
-    private function programmes(string $pillar, string $currency): array
+    private function programmes(string $pillar, string $currency, bool $examAligned = false): array
     {
         $db = db_connect();
 
         $rows = $db->table('bundles b')
             ->select('b.*')
             ->where('b.status', 'published')
-            ->whereIn('b.id', static function ($sub) use ($pillar) {
-                return $sub->select('bi.bundle_id')
+            ->whereIn('b.id', static function ($sub) use ($pillar, $examAligned) {
+                $sub = $sub->select('bi.bundle_id')
                     ->from('bundle_items bi')
                     ->join('courses c', 'c.id = bi.course_id')
                     ->where('c.pillar', $pillar)
                     ->where('c.status', 'published')
                     ->where('c.deleted_at IS NULL');
+
+                // The same three "not empty" tests `examMap()` uses, for the
+                // same reason: an alignment nobody wrote can arrive as NULL, as
+                // an empty string, or as an empty JSON map.
+                if ($examAligned) {
+                    $sub->where('c.certification_alignment IS NOT NULL')
+                        ->where('c.certification_alignment !=', '')
+                        ->where('c.certification_alignment !=', '[]')
+                        ->where('c.certification_alignment !=', '{}');
+                }
+
+                return $sub;
             })
             ->orderBy('b.sort_order', 'ASC')
             ->orderBy('b.id', 'ASC')
@@ -361,55 +380,14 @@ class Pillars extends BaseController
     }
 
     /**
-     * Add the "from" price and the next date to each featured course.
-     *
-     * Two grouped queries for the whole row rather than two per card. This is
-     * the same shape as `Courses::decorate()` and is deliberately a second copy
-     * of it: that method is private to the catalogue controller, and the
-     * alternative — making it public, or moving it to the model — would put a
-     * currency-aware presentation concern somewhere every other caller then has
-     * to reason about.
+     * Attach the "from" price, the self-paced price and the next date.
      *
      * @param list<array> $rows
      * @return list<array>
      */
     private function decorateCourses(array $rows, string $currency): array
     {
-        if ($rows === []) {
-            return [];
-        }
-
-        $ids = array_map('intval', array_column($rows, 'id'));
-        $db  = db_connect();
-
-        $priceRows = $db->table('course_sessions cs')
-            ->select('cs.course_id, MIN(sp.price_cents) AS from_cents', false)
-            ->join('session_prices sp', 'sp.session_id = cs.id')
-            ->whereIn('cs.course_id', $ids)
-            ->where('sp.currency', $currency)
-            ->where('cs.is_private', 0)
-            ->whereIn('cs.status', CourseSessionModel::BOOKABLE)
-            ->groupBy('cs.course_id')
-            ->get()->getResultArray();
-        $from = array_column($priceRows, 'from_cents', 'course_id');
-
-        $dateRows = $db->table('course_sessions')
-            ->select('course_id, MIN(start_date) AS next_date', false)
-            ->whereIn('course_id', $ids)
-            ->where('is_private', 0)
-            ->whereIn('status', CourseSessionModel::BOOKABLE)
-            ->where('start_date >=', date('Y-m-d'))
-            ->groupBy('course_id')
-            ->get()->getResultArray();
-        $next = array_column($dateRows, 'next_date', 'course_id');
-
-        foreach ($rows as &$row) {
-            $row['from_cents'] = isset($from[$row['id']]) ? (int) $from[$row['id']] : null;
-            $row['next_date']  = $next[$row['id']] ?? null;
-            $row['currency']   = $currency;
-        }
-
-        return $rows;
+        return (new CardPricer())->decorate($rows, $currency);
     }
 
     /**

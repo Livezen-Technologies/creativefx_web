@@ -57,11 +57,31 @@ for (const locale of LOCALES) {
 
     const inlineLinks = await page.$$eval('.primary-nav a', (els) =>
       els.filter((e) => e.offsetParent !== null).length);
+
+    // A dropdown's own links are hidden until it is opened, so counting only
+    // what is visible in the bar undercounts a menu with dropdowns — this read
+    // 4 on a six-item header and called the menu empty. Each trigger is opened
+    // and its panel counted, which measures what a reader can actually get to
+    // AND proves the dropdowns open at all, which nothing else here checked.
+    let dropdownLinks = 0;
+    const triggers = await page.$$('.primary-nav [aria-haspopup="true"]');
+    for (const trigger of triggers) {
+      if (! await trigger.isVisible()) continue;
+      await trigger.click();
+      await page.waitForTimeout(250);
+      const opened = await page.$$eval('.primary-nav a', (els) =>
+        els.filter((e) => e.offsetParent !== null).length);
+      check(`${locale} ${width}px: a dropdown opens`, opened > inlineLinks,
+        `${opened} visible with it open, ${inlineLinks} without`);
+      dropdownLinks += Math.max(0, opened - inlineLinks);
+      await page.keyboard.press('Escape');
+      await page.waitForTimeout(200);
+    }
     const burger = await page.$('button[aria-label="Toggle menu"]');
     const burgerVisible = burger !== null && await burger.isVisible();
 
     let route = 'inline';
-    let reachable = inlineLinks;
+    let reachable = inlineLinks + dropdownLinks;
 
     if (inlineLinks === 0) {
       // No inline nav, so the drawer is the only way through. Open it.

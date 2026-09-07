@@ -44,6 +44,13 @@ $topics = [
     ['label' => lang('Site.assistant.topic_dates'),     'url' => locale_url('schedule')],
     ['label' => lang('Site.assistant.topic_corporate'), 'url' => locale_url('corporate')],
 ];
+
+// The avatar letter, from the site's own name.
+//
+// It was the literal "T", left over from the site this was forked from, on all
+// three avatars — so every answer the assistant gave was signed with the wrong
+// company's initial.
+$assistantInitial = mb_strtoupper(mb_substr(trim((string) setting('site_name', '')) ?: 'M', 0, 1));
 ?>
 <div x-data="assistant(<?= esc(json_encode([
         'endpoint' => locale_url('assistant/ask'),
@@ -75,7 +82,7 @@ $topics = [
          class="assistant-panel">
 
         <header class="assistant-head">
-            <span class="assistant-avatar" aria-hidden="true">T</span>
+            <span class="assistant-avatar" aria-hidden="true"><?= esc($assistantInitial) ?></span>
             <div class="min-w-0 flex-1">
                 <p id="assistant-title" class="truncate font-semibold"><?= esc(lang('Site.assistant.title')) ?></p>
                 <p class="assistant-status"><?= esc(lang('Site.assistant.status')) ?></p>
@@ -94,7 +101,7 @@ $topics = [
             <p class="assistant-day"><span><?= esc(lang('Site.assistant.today')) ?></span></p>
 
             <div class="assistant-turn">
-                <span class="assistant-avatar assistant-avatar--sm" aria-hidden="true">T</span>
+                <span class="assistant-avatar assistant-avatar--sm" aria-hidden="true"><?= esc($assistantInitial) ?></span>
                 <p class="assistant-bubble"><?= esc(lang('Site.assistant.greeting')) ?></p>
             </div>
 
@@ -115,7 +122,7 @@ $topics = [
             <template x-for="(m, i) in messages" :key="i">
                 <div>
                     <div class="assistant-turn" :class="m.from === 'you' ? 'assistant-turn--you' : ''">
-                        <span class="assistant-avatar assistant-avatar--sm" x-show="m.from !== 'you'" aria-hidden="true">T</span>
+                        <span class="assistant-avatar assistant-avatar--sm" x-show="m.from !== 'you'" aria-hidden="true"><?= esc($assistantInitial) ?></span>
                         <p class="assistant-bubble" :class="m.from === 'you' ? 'assistant-bubble--you' : ''" x-text="m.text"></p>
                     </div>
 

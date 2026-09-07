@@ -293,7 +293,7 @@ $aside = '<a href="' . esc($catalogueUrl, 'attr') . '" class="btn-brand">'
         <?php else: ?>
             <?php // The table is wider than a phone, so it scrolls inside its own
                   // box. The page body never scrolls sideways. ?>
-            <div class="mt-6 overflow-x-auto rounded-2xl border border-line">
+            <div class="relative mt-6 overflow-x-auto rounded-2xl border border-line">
                 <table class="w-full min-w-[52rem] border-collapse text-sm">
                     <caption class="sr-only"><?= esc(lang('Catalog.dates.caption')) ?></caption>
                     <thead>

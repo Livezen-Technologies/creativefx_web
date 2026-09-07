@@ -275,7 +275,7 @@ class Schedule extends BaseController
             && $throttle->check(md5('waitlist-ip-' . $this->request->getIPAddress()), self::WAITLIST_PER_IP, HOUR);
 
         if (! $allowed) {
-            return redirect()->to($back)->withInput()->with('waitlist_error', lang('Site.assistant.error'));
+            return redirect()->to($back)->withInput()->with('waitlist_error', lang('Catalog.waitlist.throttled'));
         }
 
         (new WaitlistModel())->register([

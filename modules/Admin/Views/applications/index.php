@@ -37,7 +37,7 @@
                     </td>
                     <td class="px-4 py-3 text-white/70"><?= esc(t_field(json_decode($r['job_title'] ?? '[]', true) ?: [])) ?></td>
                     <td class="hidden px-4 py-3 text-white/50 md:table-cell"><?= esc(date('j M Y', strtotime($r['created_at']))) ?></td>
-                    <td class="px-4 py-3 text-amber-400"><?= $r['rating'] ? str_repeat('★', (int) $r['rating']) : '<span class="text-white/25">—</span>' ?></td>
+                    <td class="px-4 py-3 text-amber-400"><?= $r['rating'] ? str_repeat('★', max(0, min(5, (int) $r['rating']))) : '<span class="text-white/25">—</span>' ?></td>
                     <td class="px-4 py-3"><span class="rounded-full bg-white/10 px-2.5 py-0.5 text-xs capitalize"><?= esc($r['status']) ?></span></td>
                 </tr>
             <?php endforeach; ?>

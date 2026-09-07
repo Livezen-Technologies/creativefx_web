@@ -29,24 +29,6 @@
  */
 helper(['norlanka', 'catalog', 'commerce', 'url']);
 
-// lang() answers a key it cannot find with the key itself, which would print
-// "Catalog.bundles.no_seats" at a buyer. The catalogue language file is owned
-// elsewhere in this pass, so the few strings this page needs and that file does
-// not yet carry are asked for by key and fall back to the English below: the
-// page reads correctly today and picks up the translation the moment the key
-// lands, with no second edit here.
-$str = static function (string $key, string $fallback, array $args = []): string {
-    $line = lang($key, $args);
-    if ($line !== $key) {
-        return (string) $line;
-    }
-    // Placeholders substituted by position, which is all these strings use.
-    foreach ($args as $i => $arg) {
-        $fallback = str_replace('{' . $i . '}', (string) $arg, $fallback);
-    }
-
-    return $fallback;
-};
 
 // What the same courses would have cost one at a time. Derived from the saving
 // rather than from `compare_at_cents` so that the two figures on the page
@@ -70,7 +52,7 @@ $separately = $price !== null && $saving !== null ? (int) $price['price_cents'] 
         <div class="mt-6 grid gap-10 lg:grid-cols-[minmax(0,1fr)_360px] lg:gap-14">
             <div class="min-w-0">
                 <div class="flex flex-wrap items-center gap-2">
-                    <span class="chip"><?= esc($str('Catalog.bundles.courses_count', '{0} courses', [count($courses)])) ?></span>
+                    <span class="chip"><?= esc(lang('Catalog.bundles.courses_count', [count($courses)])) ?></span>
                     <?php if ($hours > 0): ?>
                         <span class="chip"><?= esc(lang('Catalog.duration.hours', [$hours])) ?></span>
                     <?php endif; ?>
@@ -100,7 +82,7 @@ $separately = $price !== null && $saving !== null ? (int) $price['price_cents'] 
                                 <?php endif; ?>
                             </p>
                             <?php if ($separately !== null): ?>
-                                <p class="mt-1 text-xs text-white/45"><?= esc($str('Catalog.bundles.separately', 'bought one course at a time')) ?></p>
+                                <p class="mt-1 text-xs text-white/45"><?= esc(lang('Catalog.bundles.separately')) ?></p>
                             <?php endif; ?>
 
                             <?php if ($saving !== null): ?>
@@ -120,7 +102,7 @@ $separately = $price !== null && $saving !== null ? (int) $price['price_cents'] 
                                 <?= csrf_field() ?>
                                 <input type="hidden" name="item_type" value="bundle">
                                 <input type="hidden" name="item_id" value="<?= (int) $bundle['id'] ?>">
-                                <label class="sr-only" for="bundle-qty"><?= esc($str('Catalog.bundles.people', 'How many people')) ?></label>
+                                <label class="sr-only" for="bundle-qty"><?= esc(lang('Catalog.bundles.people')) ?></label>
                                 <div class="flex gap-2">
                                     <input id="bundle-qty" name="qty" type="number" min="1" max="20" value="1"
                                            class="field w-20 text-center" inputmode="numeric">
@@ -134,10 +116,7 @@ $separately = $price !== null && $saving !== null ? (int) $price['price_cents'] 
                                   // site and the worst moment to discover it is
                                   // after paying. ?>
                             <p class="mt-3 text-sm leading-relaxed text-white/60">
-                                <?= esc($str(
-                                    'Catalog.bundles.no_seats',
-                                    'This is a programme rather than a date. Buying it does not book a class: you choose the dates for each course afterwards from your account, one course at a time, as you are ready for them.'
-                                )) ?>
+                                <?= esc(lang('Catalog.bundles.no_seats')) ?>
                             </p>
                         <?php else: ?>
                             <?php // No published price in this currency. Said
@@ -173,7 +152,7 @@ $separately = $price !== null && $saving !== null ? (int) $price['price_cents'] 
         <?php // ── What it is ─────────────────────────────────────────────── ?>
         <?php if ($body = rich_text($bundle['description'])): ?>
             <section aria-labelledby="overview">
-                <h2 id="overview" class="section-title"><?= esc($str('Catalog.bundles.overview', 'About this programme')) ?></h2>
+                <h2 id="overview" class="section-title"><?= esc(lang('Catalog.bundles.overview')) ?></h2>
                 <div class="prose-site mt-5"><?= $body ?></div>
             </section>
         <?php endif; ?>

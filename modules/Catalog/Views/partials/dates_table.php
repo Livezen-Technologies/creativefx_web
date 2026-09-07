@@ -48,7 +48,7 @@ usort($rows, static function (array $a, array $b): int {
         </form>
     </div>
 <?php else: ?>
-    <div class="mt-5 overflow-x-auto rounded-2xl border border-line">
+    <div class="relative mt-5 overflow-x-auto rounded-2xl border border-line">
         <table class="w-full min-w-[42rem] border-collapse text-sm">
             <caption class="sr-only"><?= esc(lang('Catalog.dates.caption')) ?></caption>
             <thead>
@@ -90,12 +90,24 @@ usort($rows, static function (array $a, array $b): int {
                         <td class="px-4 py-3 text-right font-semibold tabular-nums"><?= esc(money((int) $session['price_cents'], $currency)) ?></td>
                         <td class="px-4 py-3 text-right">
                             <?php if ($full): ?>
-                                <form method="post" action="<?= esc(locale_url('waitlist')) ?>" class="inline">
-                                    <?= csrf_field() ?>
-                                    <input type="hidden" name="session_id" value="<?= (int) $session['id'] ?>">
-                                    <input type="hidden" name="course_id" value="<?= (int) $course['id'] ?>">
-                                    <button type="submit" class="btn-ghost text-xs"><?= esc(lang('Catalog.dates.waitlist')) ?></button>
-                                </form>
+                                <?php // A link to the session page, not a form.
+                                      //
+                                      // This used to POST straight to /waitlist
+                                      // with session_id and course_id and no
+                                      // email field at all, while
+                                      // `Schedule::waitlist()` requires a valid
+                                      // address — so every click on a full class
+                                      // bounced back with a validation error and
+                                      // joined nobody to anything. There is no
+                                      // room in a table cell for an email field
+                                      // that does not wreck the row, and the
+                                      // session page already carries the form,
+                                      // with the date and the price beside it so
+                                      // the reader can see what they are waiting
+                                      // for. ?>
+                                <a href="<?= esc(session_url($session)) ?>" class="btn-ghost inline-flex text-xs">
+                                    <?= esc(lang('Catalog.dates.waitlist')) ?>
+                                </a>
                             <?php else: ?>
                                 <form method="post" action="<?= esc(locale_url('cart/add')) ?>" class="inline">
                                     <?= csrf_field() ?>

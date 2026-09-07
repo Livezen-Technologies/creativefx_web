@@ -8,7 +8,7 @@ helper(['norlanka', 'catalog', 'commerce', 'url']);
  * what it is, what level, what it costs, and when the next one runs. A card
  * without a date is a card that cannot be compared with the one beside it.
  *
- * @var array $course   may carry from_cents, next_date, currency
+ * @var array $course   may carry from_cents, ondemand_cents, next_date, currency
  * @var bool  $compact
  */
 $compact  = $compact ?? false;
@@ -44,6 +44,14 @@ $currency = $course['currency'] ?? current_currency();
                 <?php if (! empty($course['from_cents'])): ?>
                     <p class="text-xs text-white/45"><?= esc(lang('Catalog.panel.from')) ?></p>
                     <p class="font-semibold"><?= esc(money((int) $course['from_cents'], $currency)) ?></p>
+                <?php endif; ?>
+                <?php if (! empty($course['ondemand_cents'])): ?>
+                    <?php // Named separately rather than folded into the "from" figure: a
+                          // self-paced recording and a taught seat are different products,
+                          // and one price standing for both misleads whichever way it leans. ?>
+                    <p class="mt-1 text-xs text-white/45">
+                        <?= esc(lang('Catalog.card.or_ondemand', [money((int) $course['ondemand_cents'], $currency)])) ?>
+                    </p>
                 <?php endif; ?>
             </div>
             <?php if (! empty($course['next_date'])): ?>
