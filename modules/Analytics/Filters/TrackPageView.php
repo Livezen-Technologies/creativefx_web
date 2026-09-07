@@ -94,10 +94,53 @@ class TrackPageView implements FilterInterface
         return ! $this->isBot((string) $request->getUserAgent());
     }
 
-    /** The path without its query string, capped so a long URL cannot fill the column. */
+    /**
+     * Paths whose last segment is a secret, not an identifier.
+     *
+     * Written as the route SHAPE, with an optional locale in front. Anything
+     * matching is recorded as the shape and the segment is dropped.
+     */
+    private const REDACT = [
+        '#^(?:/[a-z]{2})?/account/reset/.+$#i'  => '/account/reset',
+        '#^(?:/[a-z]{2})?/account/verify/.+$#i' => '/account/verify',
+        '#^(?:/[a-z]{2})?/verify/.+$#i'         => '/verify',
+    ];
+
+    /**
+     * The path without its query string, capped so a long URL cannot fill the
+     * column — and with any credential in it removed.
+     *
+     * A password-reset link is a GET that returns 200 text/html, which is
+     * exactly what this filter is built to record, so the live reset token was
+     * being written into `analytics.path` in plaintext. That is not a
+     * token-shaped string: sha256 of it matches `users.reset_token`, so the
+     * analytics table held a working reset token for every account that had
+     * asked for one. `LearnerAuth::issueToken()` stores only the hash precisely
+     * so that a copy of the database is not a password reset for everybody, and
+     * this handed the plaintext straight back to the same database — kept for
+     * the 400-day analytics retention, present in every dump, and displayed in
+     * the admin's "Most-viewed pages" panel and its CSV export.
+     *
+     * Certificate verification codes went the same way, re-exporting the
+     * unguessable identifiers the verification page depends on being unguessable.
+     *
+     * The shape is kept because it is what the measurement is for: how many
+     * people opened a reset page is a useful number, and which token they used
+     * is not.
+     */
     private function path(RequestInterface $request): string
     {
         $path = '/' . trim($request->getUri()->getPath(), '/');
+
+        foreach (self::REDACT as $pattern => $shape) {
+            if (preg_match($pattern, $path) === 1) {
+                // The locale is kept: /si/account/reset and /en/account/reset
+                // are worth telling apart, and neither says anything secret.
+                $locale = preg_match('#^/([a-z]{2})/#i', $path, $m) === 1 ? '/' . $m[1] : '';
+
+                return $locale . $shape;
+            }
+        }
 
         return substr($path === '/' ? '/' : $path, 0, 255);
     }

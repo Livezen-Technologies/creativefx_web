@@ -3,6 +3,7 @@
 namespace Modules\Catalog\Models;
 
 use CodeIgniter\Model;
+use Modules\Catalog\Libraries\CardPricer;
 
 /**
  * Bootcamps and certificate programmes: several courses sold together at a
@@ -99,23 +100,37 @@ class BundleModel extends Model
             return null;
         }
 
-        // The cheapest published price per course, so the saving is measured
-        // against what somebody would actually have paid buying them one at a
-        // time rather than against the dearest date in the calendar.
-        $sum = 0;
-        foreach ($courseIds as $courseId) {
-            $row = $this->db->table('course_sessions cs')
-                ->select('MIN(sp.price_cents) AS p', false)
-                ->join('session_prices sp', 'sp.session_id = cs.id')
-                ->where('cs.course_id', (int) $courseId)
-                ->where('sp.currency', $currency)
-                ->whereIn('cs.status', ['open', 'confirmed', 'waitlist'])
-                ->get()->getRowArray();
+        // The cheapest TAUGHT seat per course, from the one definition of that
+        // figure — the same `CardPricer` the programme page uses to print the
+        // course column beneath this number.
+        //
+        // This used to run its own MIN over every bookable session, self-paced
+        // and private included. Self-paced is a tenth of a taught seat, so the
+        // "bought separately" total came out below the programme price for
+        // every programme on the site, `max(0, …)` flattened it to zero, and
+        // the saving badge and the struck-through price the whole block exists
+        // to show never appeared. Worse, once the course column started
+        // excluding self-paced, the two numbers were computed from different
+        // sets of sessions: the panel said $2,995 while the column beneath it
+        // added up to $2,880, so a programme appeared to cost $115 MORE than
+        // its parts.
+        //
+        // Two definitions of "the price of this course" is one too many, and
+        // this was the sixth.
+        $rows = (new CardPricer())->decorate(
+            array_map(static fn (int $id): array => ['id' => $id], $courseIds),
+            $currency
+        );
 
-            if ($row === null || $row['p'] === null) {
+        $sum = 0;
+        foreach ($rows as $row) {
+            // A course with no taught price in this currency makes the total
+            // unknowable. Null, not a partial sum: "save something, we are not
+            // sure what" is worse than showing no saving at all.
+            if ($row['from_cents'] === null) {
                 return null;
             }
-            $sum += (int) $row['p'];
+            $sum += (int) $row['from_cents'];
         }
 
         return max(0, $sum - (int) $bundle['price_cents']);

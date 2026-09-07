@@ -15,7 +15,15 @@ class Applications extends BaseController
     public function index()
     {
         $model  = new JobApplicationModel();
+        // Narrowed here, not at the echo. The allow-list already existed but
+        // only gated the ->where(), so the raw value still reached the view and
+        // went into an href unescaped — a reflected XSS running in an
+        // authenticated console session. Rejecting it at the door means the
+        // view cannot be handed something it has to remember to escape.
         $status = (string) $this->request->getGet('status');
+        if (! in_array($status, JobApplicationModel::STATUSES, true)) {
+            $status = '';
+        }
 
         $builder = $model->select('job_applications.*, jobs.title AS job_title, jobs.slug AS job_slug')
             ->join('jobs', 'jobs.id = job_applications.job_id', 'left')

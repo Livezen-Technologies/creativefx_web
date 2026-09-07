@@ -61,8 +61,21 @@ class CatalogSeeder extends Seeder
     /** A classroom seat costs more than an online one: a room, and lunch. */
     private const CLASSROOM_UPLIFT = 1.2;
 
-    private const CERTIFICATE_PRICE = ['USD' => 299500, 'LKR' => 22500000];
-    private const BOOTCAMP_BUNDLE_PRICE = ['USD' => 149500, 'LKR' => 11000000];
+    /**
+     * What a programme saves against buying its courses one at a time.
+     *
+     * Every certificate used to be seeded at a flat $2,995 and every bootcamp
+     * at a flat $1,495, whatever they contained — so a four-course certificate
+     * and a two-course one cost the same, and five of the seven programmes cost
+     * MORE than their own parts. The pages say "cheaper than buying them one at
+     * a time" and carry a struck-through price and a "Save …" badge, none of
+     * which could ever appear, because `saving()` floors at zero.
+     *
+     * A programme is now priced from its own contents, so the sentence is true
+     * by construction rather than by somebody remembering to re-check it after
+     * a course price changes.
+     */
+    private const BUNDLE_DISCOUNT = 0.15;
 
     public function run(): void
     {
@@ -475,9 +488,7 @@ class CatalogSeeder extends Seeder
                 ]);
             }
 
-            $price = ($row['type'] ?? 'certificate') === 'bootcamp'
-                ? self::BOOTCAMP_BUNDLE_PRICE
-                : self::CERTIFICATE_PRICE;
+            $price = $this->bundlePriceFor($bundleId, $row);
 
             foreach ($price as $currency => $cents) {
                 $this->db->table('bundle_prices')
@@ -700,6 +711,52 @@ class CatalogSeeder extends Seeder
                 'price_cents' => $cents,
             ]);
         }
+    }
+
+    /**
+     * A programme's price: its taught courses, less the programme discount,
+     * rounded to something a price list can print.
+     *
+     * Uses `CardPricer` so the sum is the same figure the programme page shows
+     * in its course column — the number a buyer can add up themselves. Anything
+     * else is a saving that does not survive arithmetic.
+     *
+     * @return array<string,int>
+     */
+    private function bundlePriceFor(int $bundleId, array $row): array
+    {
+        $courseIds = array_map(
+            'intval',
+            array_column(
+                $this->db->table('bundle_items')->select('course_id')
+                    ->where('bundle_id', $bundleId)->get()->getResultArray(),
+                'course_id'
+            )
+        );
+
+        $out = [];
+        foreach (['USD', 'LKR'] as $currency) {
+            $rows = (new \Modules\Catalog\Libraries\CardPricer())->decorate(
+                array_map(static fn (int $id): array => ['id' => $id], $courseIds),
+                $currency
+            );
+
+            $sum = 0;
+            foreach ($rows as $r) {
+                $sum += (int) ($r['from_cents'] ?? 0);
+            }
+
+            if ($sum === 0) {
+                continue;
+            }
+
+            // Rounded to the currency's own step, down, so the discount is
+            // never quietly smaller than advertised: $5 and Rs 1,000.
+            $step  = $currency === 'LKR' ? 100000 : 500;
+            $out[$currency] = (int) (floor($sum * (1 - self::BUNDLE_DISCOUNT) / $step) * $step);
+        }
+
+        return $out;
     }
 
     /** @return array<string,int> */

@@ -8,12 +8,12 @@
         All (<?= array_sum($counts) ?>)
     </a>
     <?php foreach ($statuses as $s): ?>
-        <a href="<?= site_url('admin/applications') . '?status=' . $s ?>"
+        <a href="<?= esc(site_url('admin/applications') . '?status=' . $s, 'attr') ?>"
            class="rounded-full px-4 py-1.5 text-xs font-semibold uppercase tracking-widest transition <?= $current === $s ? 'bg-brand-red text-white' : 'bg-white/5 text-white/60 hover:text-white' ?>">
             <?= esc(ucfirst($s)) ?> (<?= $counts[$s] ?>)
         </a>
     <?php endforeach; ?>
-    <a href="<?= site_url('admin/applications/export') . ($current !== '' ? '?status=' . $current : '') ?>"
+    <a href="<?= esc(site_url('admin/applications/export') . ($current !== '' ? '?status=' . $current : ''), 'attr') ?>"
        class="ml-auto rounded-lg border border-white/15 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest hover:border-white">Export CSV</a>
 </div>
 

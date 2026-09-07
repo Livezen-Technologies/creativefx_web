@@ -174,14 +174,20 @@ php spark db:seed "Modules\Core\Database\Seeds\DatabaseSeeder"
 
 npm install
 npm run build                  # assets into public/build
-php spark serve --port 8083    # must match app.baseURL in .env
+# Workers matter. `php -S` is single-process by default, so a page requesting
+# its own assets can deadlock it: the browser holds the connection open waiting
+# for a stylesheet the server cannot begin serving until the page finishes. It
+# presents as every Playwright check timing out on navigation while curl still
+# answers 200 — which is a confusing hour if you have not seen it before.
+PHP_CLI_SERVER_WORKERS=6 php -S 127.0.0.1:8083 -t public/ \
+    vendor/codeigniter4/framework/system/rewrite.php
 # open http://localhost:8083/
 ```
 
 The seeder prints the first administrator's password once, on creation. No
 credentials ship in this repository.
 
-Front-end dev with hot reload: `npm run dev` alongside `php spark serve`.
+Front-end dev with hot reload: `npm run dev` alongside the server above.
 
 ---
 
