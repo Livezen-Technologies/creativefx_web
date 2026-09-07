@@ -24,6 +24,7 @@ on:
           - setup-tls-certbot
           - dump-content
           - hero-images
+          - admin-accounts
         default: diagnose-tls
         required: true
       le_email:
@@ -34,6 +35,10 @@ on:
         description: "setup-tls-certbot only: ACME account id to issue under. Leave empty to reuse the account that already holds a certificate in this zone."
         required: false
         default: ''
+      admin_args:
+        description: "admin-accounts only: `list`, or `reset someone@example.com` (a password set this way is printed into this run's log — change it at /admin/account straight after)"
+        required: false
+        default: list
       hero_args:
         description: "hero-images only: e.g. `list`, `add /media/uploads/x.jpg`, `remove 12`"
         required: false
@@ -351,6 +356,30 @@ jobs:
         env:
           APP_DIR: ${{ github.event.inputs.app_dir }}
           HERO_ARGS: ${{ github.event.inputs.hero_args }}
+
+      - name: Admin accounts (who can sign in; set a password)
+        if: ${{ github.event.inputs.action == 'admin-accounts' }}
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ env.DEPLOY_HOST }}
+          username: ${{ env.DEPLOY_USER }}
+          password: ${{ env.DEPLOY_PASSWORD }}
+          key: ${{ env.DEPLOY_SSH_KEY }}
+          port: 22
+          script_stop: true
+          command_timeout: 5m
+          envs: APP_DIR,ADMIN_ARGS
+          script: |
+            set -euo pipefail
+            cd "$APP_DIR"
+            # `list` names nothing secret; `reset` prints a password into this
+            # run's log, which is why the input says so and the command repeats
+            # it. There is no way to get a locked-out administrator back in
+            # without one of the two, and no route at all existed before this.
+            sudo -u www-data php spark admin:accounts $ADMIN_ARGS
+        env:
+          APP_DIR: ${{ github.event.inputs.app_dir }}
+          ADMIN_ARGS: ${{ github.event.inputs.admin_args }}
 
       - name: Setup TLS via certbot (scoped to our domain)
         if: ${{ github.event.inputs.action == 'setup-tls-certbot' }}
