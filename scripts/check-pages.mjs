@@ -28,7 +28,7 @@ const PATHS = [
   '/locations', '/locations/colombo', '/instructors', '/reviews',
   '/resources', '/resources/photoshop-shortcut-cheat-sheet', '/webinars',
   '/blog', '/blog/photoshop-vs-illustrator',
-  '/cart', '/account/login', '/account/register', '/account/forgot',
+  '/membership', '/cart', '/account/login', '/account/register', '/account/forgot',
   '/search?q=photoshop', '/sitemap', '/contact', '/faq', '/about',
   '/why-mylearnplus', '/policies-terms', '/policies-privacy',
   '/policies-refund', '/policies-reschedule', '/policies-accessibility',
