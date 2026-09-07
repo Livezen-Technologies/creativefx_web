@@ -719,7 +719,18 @@ class Dashboard extends BaseController
             ->join('courses c', 'c.id = e.course_id', 'left')
             ->join('course_sessions cs', 'cs.id = rr.from_session_id', 'left')
             ->where('e.user_id', $userId)
-            ->where('rr.status', 'requested')
+            // Not just the open ones. A declined request used to vanish from
+            // this page the moment an administrator touched it, leaving the
+            // learner who had been told "we will email you once it is settled"
+            // with no request, no answer and nothing to point at. A decision
+            // stays visible for a fortnight, which is long enough to be read.
+            ->groupStart()
+                ->where('rr.status', 'requested')
+                ->orGroupStart()
+                    ->whereIn('rr.status', ['completed', 'declined'])
+                    ->where('rr.decided_at >=', date('Y-m-d H:i:s', strtotime('-14 days')))
+                ->groupEnd()
+            ->groupEnd()
             ->orderBy('rr.requested_at', 'DESC')
             ->get()->getResultArray();
 

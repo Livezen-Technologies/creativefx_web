@@ -192,6 +192,122 @@ class EnrolmentService
         return ['cancelled' => count($enrolments), 'enrolments' => array_map('intval', array_column($enrolments, 'id'))];
     }
 
+    /**
+     * Move a learner from one date to another, and settle the request.
+     *
+     * A learner could ask to be moved and nobody could act on it: the request
+     * wrote a `reschedule_requests` row, `Dashboard::requestTransfer()`'s own
+     * docblock said "an administrator decides, and the move happens there", and
+     * no administrator screen read that table. Five separate strings told the
+     * learner "we are looking at it" and "we will email you once it is settled"
+     * while the row sat where nothing would ever see it.
+     *
+     * The move is an inventory operation, so it happens here rather than in a
+     * controller: a seat is taken on the destination under its lock, and only
+     * if that succeeds is the seat given back on the date being left. That
+     * order matters. Releasing first would put the learner briefly on no
+     * course at all, and if the destination turned out to be full it would
+     * leave them on neither — the seat they paid for sold to somebody else
+     * while they waited.
+     *
+     * The fee is not charged here. It was quoted when the request was made,
+     * from the notice given on the date being left, and taking money is the
+     * Orders screen's job — this records what was agreed and moves the seat.
+     *
+     * @return array{ok:bool, reason:string, left:int|null}
+     */
+    public function transfer(int $requestId, int $toSessionId, string $note = ''): array
+    {
+        $request = $this->db->table('reschedule_requests')->where('id', $requestId)->get()->getRowArray();
+
+        if ($request === null || $request['status'] !== 'requested') {
+            return ['ok' => false, 'reason' => 'not_open', 'left' => null];
+        }
+
+        $enrolment = $this->db->table('enrolments')
+            ->where('id', (int) $request['enrolment_id'])->get()->getRowArray();
+
+        if ($enrolment === null || $enrolment['status'] !== 'active') {
+            return ['ok' => false, 'reason' => 'not_active', 'left' => null];
+        }
+
+        $fromSessionId = (int) ($enrolment['session_id'] ?? 0);
+
+        if ($fromSessionId === $toSessionId) {
+            return ['ok' => false, 'reason' => 'same_date', 'left' => null];
+        }
+
+        // The destination first, and outside the enrolment transaction: it takes
+        // its own lock, and it is the step allowed to refuse.
+        $taken = $this->inventory->sellDirect($toSessionId);
+        if (! $taken['ok']) {
+            return $taken;
+        }
+
+        $destination = $this->db->table('course_sessions')
+            ->where('id', $toSessionId)->get()->getRowArray();
+
+        $this->db->transStart();
+
+        $this->db->table('enrolments')->where('id', (int) $enrolment['id'])->update([
+            'session_id' => $toSessionId,
+            'mode'       => (string) ($destination['mode'] ?? $enrolment['mode']),
+            'updated_at' => date('Y-m-d H:i:s'),
+        ]);
+
+        $this->db->table('reschedule_requests')->where('id', $requestId)->update([
+            'status'        => 'completed',
+            'to_session_id' => $toSessionId,
+            'decision_note' => mb_substr($note, 0, 255),
+            'decided_at'    => date('Y-m-d H:i:s'),
+        ]);
+
+        $this->db->transComplete();
+
+        // Only now is the old seat given back, and only if there was one: a
+        // self-paced enrolment has no session to leave.
+        if ($fromSessionId > 0) {
+            $this->inventory->unsell($fromSessionId);
+            $this->inventory->refreshStatus($fromSessionId);
+        }
+        $this->inventory->refreshStatus($toSessionId);
+
+        $this->tellLearner((int) $enrolment['user_id'], 'moved', $request, $destination, $note);
+
+        return ['ok' => true, 'reason' => 'moved', 'left' => $taken['left']];
+    }
+
+    /**
+     * Refuse a transfer request, with a reason the learner will be shown.
+     *
+     * Nothing moves and no seat changes hands; the enrolment is exactly where
+     * it was. Declining is recorded rather than deleted so the learner's page
+     * can say what happened instead of silently losing their request.
+     */
+    public function declineTransfer(int $requestId, string $note): array
+    {
+        $request = $this->db->table('reschedule_requests')->where('id', $requestId)->get()->getRowArray();
+
+        if ($request === null || $request['status'] !== 'requested') {
+            return ['ok' => false, 'reason' => 'not_open'];
+        }
+
+        $this->db->table('reschedule_requests')->where('id', $requestId)->update([
+            'status'        => 'declined',
+            'decision_note' => mb_substr($note, 0, 255),
+            'decided_at'    => date('Y-m-d H:i:s'),
+        ]);
+
+        $enrolment = $this->db->table('enrolments')
+            ->where('id', (int) $request['enrolment_id'])->get()->getRowArray();
+
+        if ($enrolment !== null) {
+            $this->tellLearner((int) $enrolment['user_id'], 'declined', $request, null, $note);
+        }
+
+        return ['ok' => true, 'reason' => 'declined'];
+    }
+
     // ── Internals ───────────────────────────────────────────────────────────
 
     private function lockOrder(int $orderId): ?array
@@ -390,6 +506,83 @@ class EnrolmentService
      *
      * @param list<array{enrolment_id:int, attendee:array, item:array}> $notify
      */
+    /**
+     * Tell the learner what was decided about their transfer.
+     *
+     * The account page told them "we will email you once it is settled" before
+     * anything could settle it and before anything could send that email. Now
+     * that an administrator can decide, the sentence has to become true.
+     *
+     * Sent after the write and outside the transaction, for the reason given at
+     * the top of this class: a slow mail server must not hold a database lock,
+     * and a failed one must not roll back a move that has already happened. A
+     * send that fails is logged and the decision stands — the account page
+     * shows the outcome either way, which is what makes the email a
+     * convenience rather than the only record.
+     */
+    private function tellLearner(int $userId, string $outcome, array $request, ?array $destination, string $note): void
+    {
+        try {
+            $user = $this->db->table('users')->select('email, first_name')
+                ->where('id', $userId)->get()->getRowArray();
+
+            if ($user === null || trim((string) $user['email']) === '') {
+                return;
+            }
+
+            $school = (string) setting('site_name', '');
+            $when   = $destination && ! empty($destination['start_date'])
+                ? date('j F Y', strtotime((string) $destination['start_date']))
+                : null;
+
+            $subject = $outcome === 'moved'
+                ? 'Your booking has been moved'
+                : 'About your request to move a booking';
+
+            $lines = [];
+            if ($outcome === 'moved') {
+                $lines[] = $when === null
+                    ? 'Your booking has been moved as you asked.'
+                    : 'Your booking has been moved to ' . $when . '.';
+                $lines[] = 'Your place is confirmed on the new date. Nothing else needs doing.';
+            } else {
+                $lines[] = 'We are not able to move this booking.';
+                $lines[] = 'Your original place is unchanged and still yours.';
+            }
+
+            if (trim($note) !== '') {
+                $lines[] = $note;
+            }
+
+            $body = '';
+            foreach ($lines as $line) {
+                $body .= '<p style="margin:0 0 16px;">' . esc($line) . '</p>';
+            }
+
+            $result = \Modules\Core\Libraries\Mailer::send(
+                (string) $user['email'],
+                $subject,
+                view('Modules\Learning\Views\emails\_layout', [
+                    'title'  => $subject,
+                    'body'   => $body,
+                    'school' => $school,
+                ], ['saveData' => false])
+            );
+
+            if (! ($result['sent'] ?? false)) {
+                log_message('error', 'Transfer decision email not sent for request {id}: {reason}', [
+                    'id'     => (int) $request['id'],
+                    'reason' => $result['error'] ?? '',
+                ]);
+            }
+        } catch (\Throwable $e) {
+            log_message('error', 'Transfer decision email failed for request {id}: {msg}', [
+                'id'  => (int) $request['id'],
+                'msg' => $e->getMessage(),
+            ]);
+        }
+    }
+
     private function sendConfirmations(array $order, array $notify): void
     {
         if ($notify === []) {

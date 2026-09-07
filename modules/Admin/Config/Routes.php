@@ -71,6 +71,12 @@ $routes->group('admin', ['namespace' => 'Modules\Admin\Controllers'], static fun
         $routes->post('orders/(:num)/mark-paid', 'Orders::markPaid/$1');
         $routes->post('orders/(:num)/refund', 'Orders::refund/$1');
 
+        // Transfer requests. A learner could ask to move a booking and nothing
+        // in the console read the table the request went into.
+        $routes->get('transfers', 'Transfers::index');
+        $routes->post('transfers/(:num)/approve', 'Transfers::approve/$1');
+        $routes->post('transfers/(:num)/decline', 'Transfers::decline/$1');
+
         $routes->get('enrolments', 'Enrolments::index');
         $routes->post('enrolments/(:num)', 'Enrolments::update/$1');
         $routes->post('enrolments/(:num)/certificate', 'Enrolments::issueCertificate/$1');

@@ -318,6 +318,65 @@ class InventoryService
     }
 
     /**
+     * Take a sold seat directly, with no cart and no hold in between.
+     *
+     * `commit()` is the checkout's path: it converts holds a cart already owns.
+     * A transfer has no cart — an administrator is moving somebody who has
+     * already paid from one date to another — so the seat has to be taken in
+     * one operation, under the same lock, refusing if the destination is full.
+     *
+     * Without this the move would have to be spelled out in the controller as a
+     * read of `seats_sold` and then a write, which is the exact race the lock
+     * exists to prevent: two administrators moving two learners onto the last
+     * seat of the same class both read "one left".
+     *
+     * @return array{ok:bool, reason:string, left:int|null}
+     */
+    public function sellDirect(int $sessionId, int $qty = 1): array
+    {
+        $qty = max(1, $qty);
+
+        $this->db->transStart();
+
+        $session = $this->lockSession($sessionId);
+        if ($session === null) {
+            $this->db->transComplete();
+
+            return ['ok' => false, 'reason' => 'missing', 'left' => 0];
+        }
+
+        if (! in_array($session['status'], ['open', 'confirmed', 'waitlist'], true)) {
+            $this->db->transComplete();
+
+            return ['ok' => false, 'reason' => 'closed', 'left' => 0];
+        }
+
+        $unlimited = (int) $session['seats_total'] === 0;
+        $left      = $unlimited
+            ? null
+            : $this->computeLeft(
+                (int) $session['seats_total'],
+                (int) $session['seats_sold'],
+                $this->heldBy($sessionId, 0)
+            );
+
+        if (! $unlimited && $left < $qty) {
+            $this->db->transComplete();
+
+            return ['ok' => false, 'reason' => $left === 0 ? 'gone' : 'short', 'left' => $left];
+        }
+
+        $this->db->query(
+            'UPDATE course_sessions SET seats_sold = seats_sold + ? WHERE id = ?',
+            [$qty, $sessionId]
+        );
+
+        $this->db->transComplete();
+
+        return ['ok' => true, 'reason' => 'ok', 'left' => $unlimited ? null : $left - $qty];
+    }
+
+    /**
      * Give a sold seat back — a refund, a cancellation, a transfer away.
      */
     public function unsell(int $sessionId, int $qty = 1): void

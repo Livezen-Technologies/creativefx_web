@@ -113,8 +113,21 @@ $needsWork = $attention['unverified']
                     <?php endforeach; ?>
 
                     <?php foreach ($attention['transfers'] as $transfer): ?>
+                        <?php // Three states, not one. A decision that removed the
+                              // line entirely left the learner with no answer to
+                              // point at, having been told one was coming. ?>
                         <li class="text-white/80">
-                            <?= esc(lang('Account.dashboard.transfer_pending', [t_field($transfer['course_title'])])) ?>
+                            <?php if ($transfer['status'] === 'requested'): ?>
+                                <?= esc(lang('Account.dashboard.transfer_pending', [t_field($transfer['course_title'])])) ?>
+                            <?php elseif ($transfer['status'] === 'completed'): ?>
+                                <?= esc(lang('Account.dashboard.transfer_moved', [t_field($transfer['course_title'])])) ?>
+                            <?php else: ?>
+                                <?= esc(lang('Account.dashboard.transfer_declined', [t_field($transfer['course_title'])])) ?>
+                            <?php endif; ?>
+
+                            <?php if ($transfer['status'] !== 'requested' && trim((string) ($transfer['decision_note'] ?? '')) !== ''): ?>
+                                <span class="block text-sm text-white/55"><?= esc((string) $transfer['decision_note']) ?></span>
+                            <?php endif; ?>
                         </li>
                     <?php endforeach; ?>
                 </ul>

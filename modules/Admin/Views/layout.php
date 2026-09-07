@@ -23,6 +23,8 @@ $icons = [
     'menu'      => 'M4 6h16M4 12h16M4 18h10',
     'chart'     => 'M3 3v18h18M7 15V9m5 6V5m5 10v-4',
     'clock'     => 'M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20Zm0-14v5l3 2',
+    // A calendar with an arrow through it: a booking moving to another date.
+    'calendar'  => 'M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Zm4 11h6m0 0-2-2m2 2-2 2',
     'bed'       => 'M2 20v-8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v8M2 16h20M6 10V7a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3M2 20v-2',
     'pin'       => 'M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Zm-8 3a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z',
     'alert'     => 'M12 9v4m0 4h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z',
@@ -52,6 +54,7 @@ $groups = [
     ['Selling', [
         ['orders', 'Orders', 'admin/orders', 'inbox'],
         ['enrolments', 'Enrolments', 'admin/enrolments', 'briefcase'],
+        ['transfers', 'Transfer requests', 'admin/transfers', 'calendar'],
         ['training-leads', 'Quote requests', 'admin/training-leads', 'target'],
         ['coupons', 'Coupons', 'admin/coupons', 'tag'],
         ['reviews', 'Reviews', 'admin/reviews', 'chat'],

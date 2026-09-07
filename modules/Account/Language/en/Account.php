@@ -222,6 +222,8 @@ return [
         'class_cancelled'        => '{0} on {1} has been cancelled by us.',
         'class_cancelled_action' => 'See what happens next',
         'transfer_pending'       => 'Your request to move {0} to another date is with us.',
+        'transfer_moved'         => 'Your booking for {0} has been moved. Your new date is in your courses below.',
+        'transfer_declined'      => 'We were not able to move your booking for {0}. Your original place is unchanged.',
 
         'upcoming'         => 'Coming up',
         'upcoming_none'    => 'You have no classes booked at the moment.',
