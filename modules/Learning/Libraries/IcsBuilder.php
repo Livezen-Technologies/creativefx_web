@@ -26,6 +26,8 @@ class IcsBuilder
      */
     public static function build(array $events, string $organiserName, string $organiserEmail): string
     {
+        helper('norlanka');
+
         $lines = [
             'BEGIN:VCALENDAR',
             'VERSION:2.0',
@@ -38,7 +40,7 @@ class IcsBuilder
         ];
 
         foreach ($events as $event) {
-            $tz    = new \DateTimeZone($event['timezone'] ?? 'Asia/Colombo');
+            $tz    = safe_timezone($event['timezone'] ?? null);
             $start = new \DateTimeImmutable($event['start'], $tz);
             $end   = new \DateTimeImmutable($event['end'], $tz);
 

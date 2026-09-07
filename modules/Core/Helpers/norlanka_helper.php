@@ -592,3 +592,45 @@ if (! function_exists('post_url')) {
         return locale_url('blog/' . $slug);
     }
 }
+
+if (! function_exists('safe_timezone')) {
+    /**
+     * A timezone that exists, whatever the database says.
+     *
+     * `course_sessions.timezone` and `venues.timezone` are free-text admin
+     * fields validated only for length, and `new DateTimeZone('Asia/Colobmo')`
+     * throws. Nine places built one straight from a column and one of them
+     * wrapped it — so a single typo in the admin took down the learner's
+     * joining page, the session page, the city page and the JSON-LD on all of
+     * them, with a 500 rather than a wrong time.
+     *
+     * Falling back is the right failure here: a class shown in the school's own
+     * zone is slightly wrong for a learner abroad, and a page that will not
+     * render is wrong for everybody. The fallback is logged so the typo is
+     * findable rather than merely survivable.
+     */
+    function safe_timezone(?string $id, string $fallback = 'Asia/Colombo'): DateTimeZone
+    {
+        $id = trim((string) $id);
+
+        if ($id !== '') {
+            try {
+                return new DateTimeZone($id);
+            } catch (Throwable) {
+                log_message('warning', 'Invalid timezone "{tz}" in the database; falling back to {fallback}.', [
+                    'tz'       => $id,
+                    'fallback' => $fallback,
+                ]);
+            }
+        }
+
+        try {
+            return new DateTimeZone($fallback);
+        } catch (Throwable) {
+            // The fallback is a literal in this file, so this is unreachable
+            // unless the timezone database itself is missing — in which case
+            // UTC is the only thing left that is guaranteed to exist.
+            return new DateTimeZone('UTC');
+        }
+    }
+}

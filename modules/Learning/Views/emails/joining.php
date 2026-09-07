@@ -38,8 +38,9 @@ ob_start(); ?>
             This is a self-paced course. Everything is already in your account and stays there.
         </td></tr>
     <?php else:
-        $start = new DateTimeImmutable($session['start_date'] . ' ' . ($session['daily_start'] ?: '09:00'), new DateTimeZone($tz));
-        $end   = new DateTimeImmutable(($session['end_date'] ?: $session['start_date']) . ' ' . ($session['daily_end'] ?: '16:00'), new DateTimeZone($tz));
+        $zone  = safe_timezone($tz);
+        $start = new DateTimeImmutable($session['start_date'] . ' ' . ($session['daily_start'] ?: '09:00'), $zone);
+        $end   = new DateTimeImmutable(($session['end_date'] ?: $session['start_date']) . ' ' . ($session['daily_end'] ?: '16:00'), $zone);
     ?>
         <tr><td style="padding:14px 16px;font-size:14px;border-bottom:1px solid #eef0f7;">
             <strong>When</strong><br>

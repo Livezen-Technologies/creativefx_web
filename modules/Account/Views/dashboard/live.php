@@ -46,8 +46,8 @@
 helper(['norlanka', 'catalog', 'commerce', 'url']);
 
 $classZoneName = (string) ($session['timezone'] ?: 'Asia/Colombo');
-$classZone     = new DateTimeZone($classZoneName);
-$secondZone    = new DateTimeZone($learnerTz ?? 'UTC');
+$classZone     = safe_timezone($classZoneName);
+$secondZone    = safe_timezone($learnerTz, 'UTC');
 
 // Printing the same time twice is noise, so the second column only appears when
 // it says something different.

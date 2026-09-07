@@ -82,7 +82,9 @@ if (! function_exists('session_times')) {
             return '';
         }
 
-        $zone = new DateTimeZone((string) ($session['timezone'] ?: 'Asia/Colombo'));
+        helper('norlanka');
+
+        $zone = safe_timezone($session['timezone'] ?? null);
         $day  = (string) ($session['start_date'] ?: date('Y-m-d'));
 
         return substr((string) $session['daily_start'], 0, 5)

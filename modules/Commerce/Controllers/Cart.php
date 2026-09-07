@@ -471,12 +471,11 @@ class Cart extends BaseController
      */
     private function displayZone(): DateTimeZone
     {
-        try {
-            return new DateTimeZone((string) setting('timezone', 'Asia/Colombo'));
-        } catch (Throwable) {
-            // A mistyped setting must not take the basket down.
-            return new DateTimeZone('Asia/Colombo');
-        }
+        // A mistyped setting must not take the basket down; safe_timezone()
+        // falls back to the school's own zone and logs the bad value.
+        helper('norlanka');
+
+        return safe_timezone((string) setting('timezone', 'Asia/Colombo'));
     }
 
     /** One render path, so the empty basket and the full one cannot drift apart. */

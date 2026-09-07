@@ -169,7 +169,9 @@ class WebinarModel extends Model
         }
 
         try {
-            return new DateTimeImmutable($raw, new DateTimeZone(self::zoneOf($webinar)));
+            helper('norlanka');
+
+            return new DateTimeImmutable($raw, safe_timezone(self::zoneOf($webinar)));
         } catch (Throwable) {
             return null;
         }

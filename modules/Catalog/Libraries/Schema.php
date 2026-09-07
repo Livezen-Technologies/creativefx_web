@@ -121,7 +121,7 @@ class Schema
             ];
 
             if (! empty($session['start_date'])) {
-                $tz    = new \DateTimeZone((string) ($session['timezone'] ?: 'Asia/Colombo'));
+                $tz    = safe_timezone($session['timezone'] ?? null);
                 $start = new \DateTimeImmutable($session['start_date'] . ' ' . ($session['daily_start'] ?: '09:00'), $tz);
                 $end   = new \DateTimeImmutable(($session['end_date'] ?: $session['start_date']) . ' ' . ($session['daily_end'] ?: '16:00'), $tz);
 
@@ -186,7 +186,7 @@ class Schema
             return [];
         }
 
-        $tz    = new \DateTimeZone((string) ($session['timezone'] ?: 'Asia/Colombo'));
+        $tz    = safe_timezone($session['timezone'] ?? null);
         $start = new \DateTimeImmutable($session['start_date'] . ' ' . ($session['daily_start'] ?: '09:00'), $tz);
         $end   = new \DateTimeImmutable(($session['end_date'] ?: $session['start_date']) . ' ' . ($session['daily_end'] ?: '16:00'), $tz);
 

@@ -49,7 +49,7 @@ $maxSeats = max(1, min(20, (int) ($session['seats_left'] ?? 20) ?: 20));
  */
 $utcTimes = '';
 if (! empty($session['daily_start']) && ! empty($session['daily_end'])) {
-    $tz      = new DateTimeZone($zone);
+    $tz      = safe_timezone($zone);
     $anchor  = (string) ($session['start_date'] ?: date('Y-m-d'));
     $utc     = new DateTimeZone('UTC');
     $utcTimes = (new DateTimeImmutable($anchor . ' ' . $session['daily_start'], $tz))->setTimezone($utc)->format('H:i')

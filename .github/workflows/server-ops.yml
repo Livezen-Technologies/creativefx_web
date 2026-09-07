@@ -30,6 +30,10 @@ on:
         description: Email for Let's Encrypt (setup-tls-certbot only)
         required: false
         default: ''
+      le_account:
+        description: "setup-tls-certbot only: ACME account id to issue under. Leave empty to reuse the account that already holds a certificate in this zone."
+        required: false
+        default: ''
       hero_args:
         description: "hero-images only: e.g. `list`, `add /media/uploads/x.jpg`, `remove 12`"
         required: false
@@ -148,38 +152,74 @@ jobs:
             echo "===== running panel/web services ====="
             systemctl list-units --type=service --state=running 2>/dev/null | grep -Ei 'nginx|apache|httpd|lsws|litespeed|cyber|cloudbox|panel|caddy'
             echo
+            # Which port actually belongs to this site?
+            #
+            # Everything below used to be probed over :443 unconditionally. On a
+            # box with twenty vhosts the default :443 server belongs to somebody
+            # else, and this one answers 200 with its own single-page index for
+            # *every* path — so "the pages that take money -> 200" got printed
+            # while our application was never asked anything at all. A check that
+            # reports success for a site it never reached is worse than no check.
+            #
+            # So: use :443 only when the certificate it presents actually covers
+            # this domain, and prove each 200 came from us rather than from
+            # whoever owns the default server.
+            if echo | openssl s_client -connect 127.0.0.1:443 -servername "${DOMAIN}" 2>/dev/null \
+                 | openssl x509 -noout -text 2>/dev/null | grep -qF "${DOMAIN}"; then
+              BASE="https://127.0.0.1"
+              echo "===== probing over https (the :443 certificate covers ${DOMAIN}) ====="
+            else
+              BASE="http://127.0.0.1"
+              echo "===== probing over http — :443 presents a certificate that does NOT cover ${DOMAIN}, so :443 is not this site ====="
+            fi
+
+            # A body marker per address, because the status code alone cannot
+            # tell our 200 from the default server's.
+            probe() {
+              P="$1"; MARK="$2"
+              CODE=$(curl -s -k -m 10 -o /tmp/probe.out -w '%{http_code}' "${BASE}${P}" -H "Host: ${DOMAIN}")
+              if [ "$CODE" = 200 ] && grep -qF "$MARK" /tmp/probe.out; then
+                printf '  %-34s -> %s ok\n' "$P" "$CODE"
+              elif [ "$CODE" = 200 ]; then
+                printf '  %-34s -> %s  *** 200 FROM A DIFFERENT SITE (no "%s" in the body) ***\n' "$P" "$CODE" "$MARK"
+              else
+                printf '  %-34s -> %s\n' "$P" "$CODE"
+              fi
+            }
+
+            # `nl_preloaded` is in the inline head script of our layout, so it is
+            # on every page we render and on nobody else's.
+            MARK_PAGE='nl_preloaded'
+
             # Probe what this site actually serves. A diagnostic that reports
             # 404 on every run for files nobody ships teaches people to skim
             # past its output, which is the one thing it must not do.
-            echo "===== static assets (served over :443) ====="
+            echo "===== static assets ====="
             for f in /media/learnplus/emblem.svg /favicon.ico /robots.txt; do
               echo "--- $f ---"
-              curl -s -I -k -m 10 "https://127.0.0.1${f}" -H "Host: ${DOMAIN}" 2>&1 | grep -iE 'HTTP/|content-type|content-length|accept-ranges'
+              curl -s -I -k -m 10 "${BASE}${f}" -H "Host: ${DOMAIN}" 2>&1 | grep -iE 'HTTP/|content-type|content-length|accept-ranges'
             done
             echo "--- built bundle referenced by the page ---"
-            curl -s -k -m 10 "https://127.0.0.1/" -H "Host: ${DOMAIN}" \
+            curl -s -k -m 10 "${BASE}/" -H "Host: ${DOMAIN}" \
               | grep -oE '/build/assets/app-[A-Za-z0-9_-]+\.(js|css)' | sort -u | while read -r a; do
                 printf '  %s -> ' "$a"
-                curl -s -o /dev/null -w '%{http_code}\n' -k -m 10 "https://127.0.0.1${a}" -H "Host: ${DOMAIN}"
+                curl -s -o /dev/null -w '%{http_code}\n' -k -m 10 "${BASE}${a}" -H "Host: ${DOMAIN}"
               done
             # The assistant's endpoint, against the real database. It works
             # locally on SQLite and runs on MySQL here, so "it passed on my
             # machine" is not evidence about this one.
             echo "===== assistant endpoint ====="
             for L in en si; do
-              printf '  /%s/assistant/ask -> ' "$L"
-              curl -s -k -m 10 "https://127.0.0.1/$L/assistant/ask?q=photoshop" -H "Host: ${DOMAIN}" \
-                -o /tmp/asst.json -w '%{http_code} '
-              head -c 90 /tmp/asst.json | tr -d '\n'; echo
+              probe "/$L/assistant/ask?q=photoshop" '"links"'
             done
             # The commercial spine. A 200 on the home page says nothing about
             # whether anybody can actually buy anything, and these are the four
             # addresses that decide that.
             echo "===== the pages that take money ====="
-            for P in /en/courses /en/course/photoshop-level-1 /en/schedule /en/cart /sitemap.xml; do
-              printf '  %-34s -> ' "$P"
-              curl -s -o /dev/null -w '%{http_code}\n' -k -m 10 "https://127.0.0.1${P}" -H "Host: ${DOMAIN}"
+            for P in /en/courses /en/course/photoshop-level-1 /en/schedule /en/cart; do
+              probe "$P" "$MARK_PAGE"
             done
+            probe /sitemap.xml '<urlset'
             # Seat counts, from the live database. The one number on this site
             # that must never be guessed.
             echo "===== seat inventory consistency ====="
@@ -321,7 +361,30 @@ jobs:
               echo "==> installing certbot (additive; does not alter other sites)"
               apt-get update -qq && apt-get install -y certbot python3-certbot-nginx
             fi
+            # Certbot refuses to choose between ACME accounts non-interactively,
+            # and a box that has hosted sites for years has more than one. Left
+            # to guess it aborts with "Please choose an account" and nothing is
+            # issued. Reuse the account that already holds a certificate in this
+            # zone — proven to work for these names — and fall back to whichever
+            # account issued the most certificates here.
+            ACCOUNT="${{ github.event.inputs.le_account }}"
+            ZONE="${DOMAIN#*.}"
+            if [ -z "$ACCOUNT" ]; then
+              ACCOUNT=$(awk '/^account/{print $3}' /etc/letsencrypt/renewal/*."${ZONE}".conf 2>/dev/null | head -1)
+            fi
+            if [ -z "$ACCOUNT" ]; then
+              ACCOUNT=$(awk '/^account/{print $3}' /etc/letsencrypt/renewal/*.conf 2>/dev/null \
+                | sort | uniq -c | sort -rn | head -1 | awk '{print $2}')
+            fi
+            if [ -n "$ACCOUNT" ]; then
+              echo "==> issuing under existing ACME account $ACCOUNT"
+              set -- --account "$ACCOUNT"
+            else
+              echo "==> no existing ACME account found; certbot will register one for $LE_EMAIL"
+              set --
+            fi
+
             echo "==> issuing/installing cert for ONLY $DOMAIN"
-            certbot --nginx -d "$DOMAIN" --non-interactive --agree-tos -m "$LE_EMAIL" --redirect --keep-until-expiring
+            certbot --nginx -d "$DOMAIN" --non-interactive --agree-tos -m "$LE_EMAIL" --redirect --keep-until-expiring "$@"
             nginx -t && systemctl reload nginx
             echo "==> done; certbot will auto-renew via its systemd timer"
