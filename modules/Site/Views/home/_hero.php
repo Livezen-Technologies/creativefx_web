@@ -68,7 +68,22 @@ $heroImage = $heroImage ?? null;
       // quietest text to 3.23:1. Revealing a decoration nobody has ever seen is
       // not part of adding a hero image, so the no-photograph hero is left
       // exactly as it renders today. The dead aurora is worth its own change. ?>
-<section class="site-hero on-dark relative <?= $heroImage ? 'isolate' : '' ?> overflow-hidden bg-brand-black pb-16 pt-32 sm:pt-40">
+<?php // Full height, and `svh` rather than `vh` or `dvh` on purpose.
+      //
+      // `100vh` on a phone is the classic version of this: it means the viewport
+      // with the browser chrome *hidden*, so on load — chrome visible — the last
+      // hundred-odd pixels of the hero sit below the fold, which is where the
+      // dates strip is. `100dvh` follows the chrome as it hides and shows, so
+      // the hero resizes while somebody is scrolling it. `100svh` is the small
+      // viewport: stable, and never taller than what is actually visible.
+      //
+      // A minimum rather than a height. A laptop at 768px tall cannot fit this
+      // headline, the sub-heading, two buttons, a note and three dates, and a
+      // fixed height there would either crop them or scroll them under the
+      // fold; `min-h` lets the section grow past the viewport when the content
+      // needs it. Browsers too old for svh get the natural content height,
+      // which is exactly how this rendered yesterday. ?>
+<section class="site-hero on-dark relative flex min-h-svh flex-col justify-center <?= $heroImage ? 'isolate' : '' ?> overflow-hidden bg-brand-black pb-12 pt-28 sm:pb-16 sm:pt-32">
     <?php if ($heroImage): ?>
         <?php
         // Eager and high priority: this is the largest element above the fold,

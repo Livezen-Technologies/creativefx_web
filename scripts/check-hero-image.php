@@ -44,6 +44,19 @@ $check = static function (string $what, $got, $want) use (&$fail): void {
 // — valid HTML that every browser reads correctly, and unreadable to a
 // substring match. Asserting against the decoded form keeps the expectations
 // written the way somebody would write them by hand.
+/**
+ * Does the hero section carry the `isolate` class?
+ *
+ * Matched inside the class attribute rather than as the literal string
+ * "relative isolate": the first version of this asserted the two were adjacent
+ * and started failing the moment layout utilities were added between them,
+ * which is a test reporting on the order somebody typed class names in.
+ */
+$isolated = static fn (string $html): bool => (bool) preg_match(
+    '/<section[^>]*class="[^"]*\bisolate\b/',
+    $html
+);
+
 $home = static fn (): string => html_entity_decode(
     (string) @file_get_contents($base . '/en'),
     ENT_QUOTES | ENT_HTML5,
@@ -75,7 +88,7 @@ try {
     $check('and the aurora is the backdrop',
         str_contains($before, 'hero-aurora'), true);
     $check('and nothing is isolated',
-        str_contains($before, 'relative isolate'), false);
+        $isolated($before), false);
     $check('the headline is still there',
         str_contains($before, 'site-hero'), true);
 
@@ -95,7 +108,7 @@ try {
     // Three things the photograph needs in order to be seen at all, each of
     // which was missing at some point while this was written.
     $check('the section is isolated so -z layers paint',
-        str_contains($after, 'relative isolate'), true);
+        $isolated($after), true);
     $check('the opaque aurora steps aside',
         str_contains($after, 'hero-aurora'), false);
     $check('a scrim is laid over the photograph',
