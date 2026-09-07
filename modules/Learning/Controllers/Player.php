@@ -190,11 +190,28 @@ class Player extends BaseController
         $attempts = $quiz === null ? [] : $this->attempts($userId, (int) $quiz['id']);
 
         if ($quiz !== null) {
-            // The clock starts when the questions are rendered, and it is
+            // The clock starts when the questions are first rendered, and it is
             // stored in the session where the learner cannot edit it. A hidden
             // field carrying the start time would be a hidden field carrying
             // whatever the learner would like the start time to have been.
-            session()->set('quiz_started_' . (int) $quiz['id'], time());
+            //
+            // Stamped only when no attempt is in flight. Re-stamping on every
+            // render — which is what this did — left the limit unenforceable:
+            // opening the lesson in a second tab, or simply refreshing it at
+            // minute 29 of 30, put the clock back to zero, and a timed
+            // assessment with a resettable clock is an untimed one.
+            //
+            // A window that is already past its limit is dead and gets a fresh
+            // stamp, so somebody returning to a lesson days later is not met
+            // with "your time expired" before they have answered anything.
+            $key     = 'quiz_started_' . (int) $quiz['id'];
+            $started = session()->get($key);
+            $limit   = (int) ($quiz['time_limit_min'] ?? 0);
+
+            if (! is_int($started)
+                || ($limit > 0 && time() - $started > $limit * 60 + self::QUIZ_GRACE_SEC)) {
+                session()->set($key, time());
+            }
         }
 
         $current = $progress[$lessonId] ?? null;
@@ -810,13 +827,16 @@ class Player extends BaseController
         return $clean;
     }
 
-    /** This learner's enrolment on this course, or 0 when the row has gone. */
+    /**
+     * The enrolment this learner's work here belongs to, or 0 when it has gone.
+     *
+     * The same row `entitled()` let them in on — see
+     * EnrolmentModel::accessRowFor() for why picking a different one silently
+     * costs self-paced learners their certificates.
+     */
     private function enrolmentId(int $userId, int $courseId): int
     {
-        $row = (new EnrolmentModel())
-            ->where('user_id', $userId)->where('course_id', $courseId)
-            ->whereIn('status', ['active', 'completed'])
-            ->orderBy('id', 'ASC')->first();
+        $row = (new EnrolmentModel())->accessRowFor($userId, $courseId);
 
         return (int) ($row['id'] ?? 0);
     }

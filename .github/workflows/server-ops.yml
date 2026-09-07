@@ -199,12 +199,21 @@ jobs:
               echo "--- $f ---"
               curl -s -I -k -m 10 "${BASE}${f}" -H "Host: ${DOMAIN}" 2>&1 | grep -iE 'HTTP/|content-type|content-length|accept-ranges'
             done
+            # -L because "/" redirects to the locale home, and the redirect body
+            # names no assets: without it this printed an empty list on every
+            # run since the day it was written, which reads exactly like a page
+            # with nothing wrong.
             echo "--- built bundle referenced by the page ---"
-            curl -s -k -m 10 "${BASE}/" -H "Host: ${DOMAIN}" \
-              | grep -oE '/build/assets/app-[A-Za-z0-9_-]+\.(js|css)' | sort -u | while read -r a; do
-                printf '  %s -> ' "$a"
+            curl -s -k -L -m 10 "${BASE}/" -H "Host: ${DOMAIN}" \
+              | grep -oE '/build/assets/app-[A-Za-z0-9_-]+\.(js|css)' | sort -u > /tmp/bundle.list
+            if [ -s /tmp/bundle.list ]; then
+              while read -r a; do
+                printf '  %-46s -> ' "$a"
                 curl -s -o /dev/null -w '%{http_code}\n' -k -m 10 "${BASE}${a}" -H "Host: ${DOMAIN}"
-              done
+              done < /tmp/bundle.list
+            else
+              echo "  *** the home page references no built bundle — the front end did not build ***"
+            fi
             # The assistant's endpoint, against the real database. It works
             # locally on SQLite and runs on MySQL here, so "it passed on my
             # machine" is not evidence about this one.
@@ -219,7 +228,8 @@ jobs:
             for P in /en/courses /en/course/photoshop-level-1 /en/schedule /en/cart; do
               probe "$P" "$MARK_PAGE"
             done
-            probe /sitemap.xml '<urlset'
+            # An index of the per-section sitemaps, not a list of URLs.
+            probe /sitemap.xml '<sitemapindex'
             # Seat counts, from the live database. The one number on this site
             # that must never be guessed.
             echo "===== seat inventory consistency ====="
