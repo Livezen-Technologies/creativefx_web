@@ -255,13 +255,25 @@ jobs:
             echo "===== the home page hero ====="
             curl -s -k -m 10 -o /tmp/probe.out "${BASE}/en" -H "Host: ${DOMAIN}"
             if grep -q 'fetchpriority="high"' /tmp/probe.out; then
-              SRC=$(grep -o 'src="[^"]*"[^>]*fetchpriority' /tmp/probe.out | head -1 | sed 's/.*src="//; s/".*//')
-              printf '  hero <img> present, src %s\n' "${SRC:-?}"
-              # And the file it points at is actually served, because an <img>
-              # with a 404 behind it is a hero that renders as nothing.
-              HREF=$(printf '%s' "$SRC" | sed 's/&#x2F;/\//g; s/&#x3F;/?/g; s/&#x3D;/=/g')
-              printf '  that file                          -> %s\n' \
-                "$(curl -s -k -m 10 -o /dev/null -w '%{http_code}' "${BASE}${HREF}" -H "Host: ${DOMAIN}")"
+              # Newlines squashed first: the hero <img> is written across
+              # several lines, so `src` and `fetchpriority` are never on the
+              # same one and a line-wise grep for both finds nothing. It found
+              # nothing quietly, reported an empty src, and then fetched the
+              # site root instead of the photograph — a 302 that read like a
+              # broken image on a hero that was in fact rendering.
+              SRC=$(tr '\n' ' ' < /tmp/probe.out \
+                    | grep -o '<img [^>]*fetchpriority="high"[^>]*>' | head -1 \
+                    | grep -o 'src="[^"]*"' | sed 's/src="//; s/"$//')
+              # esc(..., 'attr') encodes the slashes too, so the src in the HTML
+              # is not a path until these are put back.
+              HREF=$(printf '%s' "$SRC" | sed 's/&#x2F;/\//g; s/&#x3F;/?/g; s/&#x3D;/=/g; s/&amp;/\&/g')
+              printf '  hero <img> present, src %s\n' "${HREF:-*** COULD NOT READ SRC ***}"
+              if [ -n "$HREF" ]; then
+                # And the file it points at is actually served: an <img> with a
+                # 404 behind it is a hero that renders as nothing.
+                printf '  that file                          -> %s\n' \
+                  "$(curl -s -k -m 10 -o /dev/null -w '%{http_code}' "${BASE}${HREF}" -H "Host: ${DOMAIN}")"
+              fi
             else
               echo "  *** no hero <img> on the home page — it is showing the empty state ***"
             fi
