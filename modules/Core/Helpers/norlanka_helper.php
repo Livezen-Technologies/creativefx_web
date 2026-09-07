@@ -550,6 +550,29 @@ if (! function_exists('publishable')) {
     }
 }
 
+if (! function_exists('blog_url')) {
+    /**
+     * The blog listing, optionally filtered.
+     *
+     * The section moved from /news to /blog in the rebrand and three
+     * hand-built URLs did not move with it — the "All" chip, every category
+     * chip and the whole pager, on the index and on each article. They all
+     * pointed at a route that does not exist, so the articles were reachable
+     * and nothing else on the page was.
+     *
+     * @param array<string,string|int|null> $params category, page
+     */
+    function blog_url(array $params = []): string
+    {
+        $query = http_build_query(array_filter(
+            $params,
+            static fn ($v): bool => $v !== null && $v !== '' && $v !== 1,
+        ));
+
+        return locale_url('blog') . ($query === '' ? '' : '?' . $query);
+    }
+}
+
 if (! function_exists('post_url')) {
     /**
      * The address of a blog post.

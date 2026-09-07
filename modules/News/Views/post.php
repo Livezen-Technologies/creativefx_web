@@ -58,10 +58,10 @@ $renderBody = static function (string $text): string {
         <div class="hero-wash-foot--page absolute inset-0 -z-20"></div>
         <div class="hero-red-glow absolute inset-0 -z-10"></div>
         <div class="container-x flex min-h-[36vh] flex-col justify-end pb-10 pt-36">
-            <a href="<?= esc(locale_url('news')) ?>" class="mb-4 text-xs uppercase tracking-widest text-brand-red hover:underline">← <?= esc(lang('Site.news.back')) ?></a>
+            <a href="<?= esc(blog_url()) ?>" class="mb-4 text-xs uppercase tracking-widest text-brand-red hover:underline">← <?= esc(lang('Site.news.back')) ?></a>
             <div class="flex flex-wrap items-center gap-2 text-[11px] font-semibold uppercase tracking-widest text-white/50" data-gsap="reveal">
                 <?php if ($catName !== ''): ?>
-                    <a href="<?= esc(locale_url('news') . '?category=' . ($category['slug'] ?? '')) ?>" class="text-brand-red hover:underline"><?= esc($catName) ?></a>
+                    <a href="<?= esc(blog_url(['category' => $category['slug'] ?? ''])) ?>" class="text-brand-red hover:underline"><?= esc($catName) ?></a>
                     <span aria-hidden="true">·</span>
                 <?php endif; ?>
                 <?php if ($pDate !== ''): ?><time datetime="<?= esc(date('Y-m-d', strtotime($post['published_at'])), 'attr') ?>"><?= esc($pDate) ?></time><?php endif; ?>

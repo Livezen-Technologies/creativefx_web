@@ -14,7 +14,7 @@ $newsUrl = static function (int $page = 1) use ($activeCategory): string {
         'category' => $activeCategory['slug'] ?? null,
         'page'     => $page > 1 ? $page : null,
     ]));
-    return locale_url('news') . ($qs !== '' ? '?' . $qs : '');
+    return locale_url('blog') . ($qs !== '' ? '?' . $qs : '');
 };
 
 // On the first unfiltered page the newest article becomes the large lead card.
@@ -48,9 +48,9 @@ if ($currentPage === 1 && $activeCategory === null && $posts !== []) {
             <?php $chip = static fn (bool $on): string => $on
                 ? 'rounded-full bg-brand-red px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-white'
                 : 'rounded-full border border-white/15 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-white/60 transition hover:border-brand-red/50 hover:text-white'; ?>
-            <a href="<?= esc(locale_url('news')) ?>" class="<?= $chip($activeCategory === null) ?>"><?= esc(lang('Site.news.all')) ?></a>
+            <a href="<?= esc(blog_url()) ?>" class="<?= $chip($activeCategory === null) ?>"><?= esc(lang('Site.news.all')) ?></a>
             <?php foreach ($categories as $c): ?>
-                <a href="<?= esc(locale_url('news') . '?category=' . $c['slug']) ?>"
+                <a href="<?= esc(blog_url(['category' => $c['slug']])) ?>"
                    class="<?= $chip(($activeCategory['slug'] ?? '') === $c['slug']) ?>"><?= esc($catNames[(int) $c['id']]) ?></a>
             <?php endforeach; ?>
         </nav>
