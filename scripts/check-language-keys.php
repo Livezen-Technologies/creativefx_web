@@ -44,6 +44,22 @@ if ($locale === '--parity') {
         return $out;
     };
 
+    // Same walk, but keeping the strings — the key-only version cannot compare
+    // what the translations actually say.
+    $flattenValues = static function (array $a, string $prefix = '') use (&$flattenValues): array {
+        $out = [];
+        foreach ($a as $k => $v) {
+            $key = $prefix === '' ? (string) $k : $prefix . '.' . $k;
+            if (is_array($v)) {
+                $out += $flattenValues($v, $key);
+            } else {
+                $out[$key] = $v;
+            }
+        }
+
+        return $out;
+    };
+
     $locales = [];
     foreach (glob($root . '/modules/*/Language/*', GLOB_ONLYDIR) ?: [] as $dir) {
         $locales[basename($dir)] = true;
@@ -52,15 +68,17 @@ if ($locale === '--parity') {
 
     $exit = 0;
     foreach (array_keys($locales) as $other) {
-        $missingTotal = 0;
-        $extraTotal   = 0;
-        $lines        = [];
+        $missingTotal        = 0;
+        $extraTotal          = 0;
+        $lines               = [];
+        $placeholderProblems = [];
 
         foreach (glob($root . '/modules/*/Language/en/*.php') ?: [] as $enFile) {
             $module  = basename(dirname(dirname(dirname($enFile))));
             $bundle  = basename($enFile);
             $otherFile = dirname(dirname($enFile)) . '/' . $other . '/' . $bundle;
 
+            $enFlat = $flattenValues(require $enFile);
             $enKeys = $flatten(require $enFile);
             $count  = count($enKeys);
 
@@ -71,9 +89,40 @@ if ($locale === '--parity') {
                 continue;
             }
 
+            $otherFlat = $flattenValues(require $otherFile);
             $otherKeys = $flatten(require $otherFile);
             $missing   = array_diff_key($enKeys, $otherKeys);
             $extra     = array_diff_key($otherKeys, $enKeys);
+
+            // Placeholders must survive the translation.
+            //
+            // `{0}` is CodeIgniter's positional argument, and a translation that
+            // drops one prints a sentence with a hole where the price was; one
+            // that renumbers them puts the seat count where the course title
+            // belongs. Neither errors, and neither is visible to anyone reading
+            // only the English.
+            foreach ($enFlat as $key => $english) {
+                if (! isset($otherFlat[$key])) {
+                    continue;
+                }
+                preg_match_all('/\{\d+\}/', (string) $english, $a);
+                preg_match_all('/\{\d+\}/', (string) $otherFlat[$key], $b);
+                $want = array_count_values($a[0]);
+                $got  = array_count_values($b[0]);
+                ksort($want);
+                ksort($got);
+                if ($want !== $got) {
+                    $placeholderProblems[] = sprintf(
+                        '  %-10s %-14s %s expects %s, %s has %s',
+                        $module,
+                        $bundle,
+                        $key,
+                        $want === [] ? 'none' : implode(' ', array_keys($want)),
+                        $other,
+                        $got === [] ? 'none' : implode(' ', array_keys($got))
+                    );
+                }
+            }
 
             $missingTotal += count($missing);
             $extraTotal   += count($extra);
@@ -96,7 +145,14 @@ if ($locale === '--parity') {
             echo $line . "\n";
         }
 
-        if ($missingTotal > 0 || $extraTotal > 0) {
+        if ($placeholderProblems !== []) {
+            printf("%d placeholder mismatch(es):\n", count($placeholderProblems));
+            foreach ($placeholderProblems as $line) {
+                echo $line . "\n";
+            }
+        }
+
+        if ($missingTotal > 0 || $extraTotal > 0 || $placeholderProblems !== []) {
             $exit = 1;
         }
     }
